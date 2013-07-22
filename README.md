@@ -1,76 +1,30 @@
-![Screenshot](https://raw.github.com/plasm/simplemodal/master/logotipo.png)
-
-http://simplemodal.plasm.it
----------------------------
-Modal - A simple modal window
+skinny.js: Slim little jQuery plugins
 ===========================================
-SIMPLE MODAL is a small [MooTools](http://mootools.net/) plugin to create modal windows.
-It can be used to generate alert or confirm messages with few lines of code. Confirm configuration involves the use of callbacks to be applied to affirmative action; it can work in asynchronous mode and retrieve content from external pages or getting the inline content.
-SIMPLE MODAL is not a lightbox although the possibility to hide parts of its layout may partially make it similar.
+skinny.js is a response to having used too many JavaScript frameworks that require you to buy into a particular philosophy, coding style, or architecture. Instead, skinny.js embraces the single responsibility principle, and aims to create tiny, granular libraries with minimal dependencies.
 
-How to Use
+skinny.js libraries depend only on jQuery, and in a few cases, each other. They are not intended to be used as a bundle; so if you need one library, you are encouraged to use only it and its dependencies.
+
+Skinny libraries
 ----------
+* jQuery.msAjax: Microsoft freindly AJAX
+* jQuery.loadPartial: A more practical version of jQuery.load
+* jQuery.clientRect: Efficient
+* jQuery.delimitedString: Base class for parsing delimited strings, such as querystrings or CSS styles
+* jQuery.queryString: Parses querystrings (the opposite of jQuery.param())
+* jQuery.css: Parses and serializes CSS style strings
+* jQuery.url: Parses and serializes URLs.
+* jQuery.disableEvent: Temporarily disables/enables all event handlers for a DOM element
+* jQuery.hostIframe: Manages references between iframe content and their host window
+* jQuery.hoverDelay: Simplified, more practical version of jQuery.hoverIntent plugin. TODO reference
+* jQuery.htmlEncode: Bare bones HTML encoding
+* jQuery.imageSize: Some utilities for dealing with image sizes, async loading, and fitting images to a bounding box
+* jQuery.isVisibleKeyCode: Extension to jQuery.Event which indicates if a keypress is a visible character (i.e. not a function or modifier key)
+* jQuery.ns: Declare namespaces without boilerplate
+* jQuery.postMessage: Provides cross-document messaging support, works on all browsers to IE6 (without URL fragments and polling).
+* jQuery.proxyAll: Binds functions to their host object (like jQuery.proxy(), but for all functions declared as properties of an object at once)
+* jQuery.uncomment: Allows lazy evaluation of HTML blobs by removing them from comment blocks
 
-Minimal configuration
-
-
-ALERT INTEGRATION 
------------------
-Snippet code Javascript:
-
-    #JS
-    
-    $("myElement").addEvent("click", function(){
-      var SM = new SimpleModal({"btn_ok":"Alert button"});
-          SM.show({
-            "title":"Title",
-            "contents":"Your message..."
-          });
-    });
-
-Snippet code HTML:
-
-    #HTML
-    
-    <a id="myElement" href="javascript;">Alert</a>
-
-
-MODAL-AJAX INTEGRATION
-----------------------
-Snippet code Javascript:
-
-    #JS
-
-    $("myElement").addEvent("click", function(){
-      var SM = new SimpleModal({"width":600});
-          SM.addButton("Action button", "btn primary", function(){
-              this.hide();
-          });
-          SM.addButton("Cancel", "btn");
-          SM.show({
-            "model":"modal-ajax",
-            "title":"Title",
-            "param":{
-              "url":"file-content.php",
-              "onRequestComplete": function(){ /* Action on request complete */ }
-            }
-          });
-    });
-
-Snippet code HTML:
-
-    #HTML
-
-    <a id="myElement" href="javascript;">Open Modal</a>
-
-
-LIGHTBOX SUPPORT
-----------------
-Automatic lightbox support:
-
-        #HTML
-        
-        <a href="bigpicture.jpg" rel="simplemodal[mygroup]" title="Picture 1">
-            <img alt="Example" src="thumbpicture.jpg" />
-        </a>
-        
+Skinny UI components
+----------
+* jQuery.menu: A traditional heirarchical menu widget, designed from the ground up to be both touch and mouse friendly. TODO: Get existing docs from the wiki
+* jQuery.modalDialog: A powerful modal dialog system that works across all devices: TODO: Get existing docs from the wiki
