@@ -1,0 +1,173 @@
+/* Note: This CSS is specially crafted to work in IE6 (by avoiding selectors which target two classes on the same element, i.e. ".class1.class2"). */
+
+.menu-skin-tools
+{
+    float:right;
+    position:relative;
+    border-left:1px #000 solid;    
+}
+
+.menu-skin-tools .menu-item
+{
+    color:#4d4d4f;
+}
+
+.menu-skin-tools .menu-item-top > a
+{
+    padding:5px 10px 5px 10px;
+    background-color: #0e0e0e;
+    background: -webkit-gradient(linear,
+                               left top,
+                               left bottom,
+                               color-stop(0, #4d4d4f),
+                               color-stop(1, #000));
+    background: -webkit-linear-gradient(top,
+                                  #4d4d4f,
+                                  #000);
+    background: -ms-linear-gradient(top,
+                                  #4d4d4f,
+                                  #000);
+    background: -moz-linear-gradient(center top,
+                                   #4d4d4f 0%,
+                                   #000 100%);
+    background: -o-linear-gradient(center top,
+                                   #4d4d4f 0%,
+                                   #000 100%);
+    background: linear-gradient(to bottom,
+                                  #4d4d4f,
+                                  #000);		
+}
+.menu-skin-tools .menu-item-top > a:hover,
+.menu-skin-tools .menu-item-top.selected > a
+{
+    background-color: #055aa5;
+    background: -webkit-gradient(linear,
+                               left top,
+                               left bottom,
+                               color-stop(0, #055aa5),
+                               color-stop(1, #1d82c6));
+    background: -webkit-linear-gradient(top,
+                                  #055aa5,
+                                  #1d82c6);
+    background: -ms-linear-gradient(top,
+                                  #055aa5,
+                                  #1d82c6);
+    background: -moz-linear-gradient(center top,
+                                   #055aa5 0%,
+                                   #1d82c6 100%);
+    background: -o-linear-gradient(center top,
+                                   #055aa5 0%,
+                                   #1d82c6 100%);
+    background: linear-gradient(to bottom,
+                                  #055aa5,
+                                  #1d82c6);		
+}
+
+.menu-skin-tools .menu-item-with-submenu
+{
+    background-image:url(/vp/images/b09/common/button/graphical/arrow-rt-disabled.png);
+    background-position:right center;
+    background-repeat:no-repeat;
+}
+
+.menu-skin-tools .menu-item-top
+{
+    border-right:1px #4d4d4f solid;
+    color:#fff;
+    font-size:12px;
+    font-weight:bold;
+    background-image:none; /* prevent the submenu 'arrow' from showing in the top nav */
+}
+
+.menu-skin-tools .menu-item-top a,
+.menu-skin-tools .menu-item-top a:link,
+.menu-skin-tools .menu-item-top a:visited
+{
+	color:#fff;
+	text-decoration:none;
+	display:block;
+    padding:9px 20px;
+}
+
+/* 
+HACK: Prevent a flash of unstyled content:
+.menu-item-top is added via javascript. To select the top level menu-items only, 
+target all items, and then remove the attributes for lower level items.
+*/
+
+.menu-skin-tools .menu-item
+{
+	float:left;
+}
+
+.menu-skin-tools .menu-item .menu-item
+{
+	float:none;
+}
+
+/*
+END HACK
+*/
+
+.menu-skin-tools .menu-panel
+{
+    border:1px #ccc solid;
+    background-color:white;
+    width:250px;
+    color:#666;
+    font-weight:normal;
+    
+    -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.6);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.6);
+}
+
+.menu-skin-tools a.menu-item 
+{
+    display:block;
+}
+
+.menu-skin-tools .hover 
+{
+    background-color:#4d4d4f;
+    color:white;
+}
+
+.menu-skin-tools .hover a,
+.menu-skin-tools a.hover
+{
+    color:white;
+    text-decoration:none;
+}
+
+.menu-skin-tools .menu-panel a, 
+.menu-skin-tools .menu-panel a:link, 
+.menu-skin-tools .menu-panel a:visited, 
+.menu-skin-tools .menu-panel a.hover,
+.menu-skin-tools .menu-panel .hover
+{
+     color: #4d4d4f;
+}
+
+.menu-skin-tools .menu-panel .menu-item-with-submenu a
+{
+	color:#4d4d4f;
+}
+
+.menu-skin-tools .menu-panel .hover .nohover a,
+.menu-skin-tools .menu-panel .hover .nohover
+{
+	color:#4d4d4f;
+}
+
+.menu-skin-tools .menu-panel a.hover,
+.menu-skin-tools .menu-panel .hover,
+.menu-skin-tools .menu-panel .hover a
+{
+	color:#ffffff;
+}
+
+.menu-skin-tools .menu-panel .menu-panel-content /* for menu content that is not a link */
+{
+    padding:9px 20px;
+}

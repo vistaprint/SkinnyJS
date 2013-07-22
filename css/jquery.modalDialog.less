@@ -1,0 +1,272 @@
+@import url(/vp/css/common/includes/common_mixins.less);
+
+// hide scrollbar on desktop
+// ::-webkit-scrollbar { 
+//     display: none;
+// }
+
+.dialog-content
+{
+	display: none;
+}
+
+.dialog-content-container .dialog-content
+{
+	display: inherit;
+}
+
+// Core dialog structure
+.dialog-background
+{
+	position: absolute;
+	position: fixed; // if fixed isn't available, falls back to absolute
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: 10000;
+	display: none;
+
+	&.dialog-veil
+	{
+		background-color: rgba(0, 0, 0, .6); // gracefully degrades to transparent for IE7-8
+	}
+
+	&.dialog-veil-opaque
+	{
+		background-color: #4F514F;
+	}
+
+	.dialog-loading-indicator // dialog-loading-indicator-container
+	{
+		position: absolute;
+		margin: auto;
+		top: 50%;
+		margin-top: -25px;
+		height: 50px;
+		width: 100%;
+		text-align: center;
+		z-index: 10001;
+
+		span // dialog-loading-indicator
+		{
+			display: inline-block;
+			background-image: url(/vp/images/B11/common/spinners/spinning-clock.gif);
+			width: 49px;
+			height: 50px;
+		}
+	}
+}
+
+.dialog-container
+{
+	z-index: 10002;
+	position: absolute;
+	top: -700px; // this is corrected client-side, @see jquery.modalDialog.js
+
+	// on a small screen we scroll back to top,
+	// so we can enforce all positions via css
+	&.smallscreen
+	{
+		width: 95%;
+		.box-sizing(border-box);
+	}
+
+	// add spacing in case this is a large dialog
+	// padding-bottom: 10px; // padding breaks the drop shadows
+
+	.dialog-header
+	{
+		.clearfix();
+		padding: 3px;
+		height: 40px;
+
+		h1
+		{
+			float: left;
+			margin-left: 10px;
+			margin-top: 13px;
+		}
+
+		.dialog-close-button
+		{
+			float: right;
+			display: block;				
+		}
+
+		&.draggable
+		{
+			cursor: move;
+		}
+	}
+
+	.dialog-content-container
+	{
+		position: relative;
+
+		iframe
+		{
+			background-color: transparent;
+		}
+	}
+}
+
+// Dialog skins
+@border-rounding-amount: 10px;
+
+.dialog-default-close-button()
+{
+	.dialog-close-button
+	{
+		margin-top: 5px;
+		margin-right: 5px;
+		color: transparent;
+		text-decoration: none;
+		.rounded(12px);
+		height: 24px;
+		width: 24px;
+		background-color: @white;				
+	}
+
+	.dialog-close-button-icon
+	{
+		display: inline-block;
+		background-image: url(/vp/images/mobile/common/icons/icons-18-black.png); 
+		background-repeat: no-repeat;
+		background-position: -72px 50%;
+		height: 18px;
+		width: 18px;
+		margin: 3px;
+		.opacity(.7);
+
+		// TODO use global variables for the media query and sprite width, once those variables are accessible from outside the mobile site
+		@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-resolution: 200dpi) 
+		{
+			background-image: url(/vp/images/mobile/common/icons/icons-36-black.png); 
+			.background-size(812px 18px); 
+		}
+	}
+}
+
+// Primary skin
+.dialog-skin-primary.dialog-container, .dialog-skin-neutral.dialog-container
+{
+	.rounded(@border-rounding-amount);
+
+	.dialog-header
+	{
+		.border-radius(@border-rounding-amount, 0, 0, @border-rounding-amount);
+		.gradient(@graphite, @graphite, @charcoal);
+
+		h1
+		{
+			font-size: 16px;
+			color: white;
+		}
+
+		.dialog-default-close-button;
+	}
+
+	.dialog-content-container
+	{
+		background-color: @white;
+		.border-radius(0, @border-rounding-amount, @border-rounding-amount, 0);
+		padding-bottom: @border-rounding-amount;
+	}
+
+	// Only put the drop shadow on when it's visible
+	&.dialog-visible
+	{
+		.drop-shadow();
+	}
+}
+
+// Neutral skin, inherits from primary
+.dialog-skin-neutral.dialog-container
+{
+	.dialog-header
+	{
+		@lightGraphite: lighten(@graphite, 20%);
+		.gradient(@lightGraphite, @lightGraphite, @graphite);
+	}
+
+	.dialog-content-container
+	{
+		background-color: @white;
+	}
+}
+
+// Neutral skin, inherits from primary
+.dialog-skin-lightbox
+{
+	&.dialog-background
+	{
+		&.dialog-veil
+		{
+			background-color: rgba(0, 0, 0, .6); // gracefully degrades to transparent for IE7-8
+		}
+
+		// used on small mobile
+		&.dialog-veil-opaque
+		{
+			display: none;
+			background-color: @charcoal;
+		}
+	}
+
+	&.dialog-container
+	{
+		// on small screens, we turn the lightbox to 100% fullscreen
+		&.smallscreen
+		{
+			position: fixed;
+			top: 0 !important;
+			left: 0 !important;
+			width: 100% !important;
+			height: 100% !important;
+			margin: 0;
+
+			// on mobile we can also keep the header "fixed"
+			// .dialog-header.fixed
+			// {
+			// 	position: fixed;
+			// 	top: 0;
+			// 	left: 0;
+			// 	width: 100%;
+			// }
+		}
+
+		.dialog-header
+		{
+			background-color: @charcoal;
+			// .gradient(@graphite, @graphite, @charcoal);
+			// height: auto;
+
+			h1
+			{
+				font-size: 16px;
+				color: white;
+				// min-height: 40px;
+			}
+
+			.dialog-default-close-button;
+		}
+
+		.dialog-content-container
+		{
+			background-color: @charcoal;
+			color: @white;
+
+			a:hover {
+				color: inherit;
+			}
+		}
+
+		.dialog-content
+		{
+			margin: 0;
+			padding: 0 13px;
+			min-height: 100px;
+		}
+	}
+}

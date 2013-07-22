@@ -1,0 +1,125 @@
+﻿/* Note: This CSS is specially crafted to work in IE6 (by avoiding selectors which target two classes on the same element, i.e. ".class1.class2"). */
+
+.menu-skin-basic
+{
+    background-image:url(/vp/images/b11/common/page-bg/top-nav/sr1-sprite.png);
+    clear:both;
+    width:100%;
+    position:relative;
+}
+
+.menu-skin-basic .menu-item
+{
+    color:#4d4d4f;
+}
+
+.menu-skin-basic .menu-item a
+{
+    padding:5px 10px 5px 10px;
+}
+
+.menu-skin-basic .menu-item-with-submenu
+{
+    background-image:url(/vp/images/b09/common/button/graphical/arrow-rt-disabled.png);
+    background-position:right center;
+    background-repeat:no-repeat;
+}
+
+.menu-skin-basic .menu-item-top
+{
+    border-right:1px #054376 solid;
+    border-left:1px #96c4e5 solid;
+    color:#fff;
+    font-size:12px;
+    font-weight:bold;
+    background-image:none; /* prevent the submenu 'arrow' from showing in the top nav */
+}
+
+.menu-skin-basic .menu-item-top a,
+.menu-skin-basic .menu-item-top a:link,
+.menu-skin-basic .menu-item-top a:visited
+{
+	color:#fff;
+	text-decoration:none;
+	display:block;
+}
+
+/* 
+HACK: Prevent a flash of unstyled content:
+.menu-item-top is added via javascript. To select the top level menu-items only, 
+target all items, and then remove the attributes for lower level items.
+*/
+
+.menu-skin-basic .menu-item
+{
+	float:left;
+}
+
+.menu-skin-basic .menu-item .menu-item
+{
+	float:none;
+}
+
+/*
+END HACK
+*/
+
+.menu-skin-basic .menu-panel
+{
+    border:1px #ccc solid;
+    background-color:white;
+    width:250px;
+    color:#666;
+    font-weight:normal;
+    
+    -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.6);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.6);
+}
+
+.menu-skin-basic a.menu-item 
+{
+    display:block;
+}
+
+.menu-skin-basic .hover 
+{
+    background-color:#4d4d4f;
+    color:white;
+}
+
+.menu-skin-basic .hover a,
+.menu-skin-basic a.hover
+{
+    color:white;
+    text-decoration:none;
+}
+
+.menu-skin-basic .menu-panel a, 
+.menu-skin-basic .menu-panel a:link, 
+.menu-skin-basic .menu-panel a:visited, 
+.menu-skin-basic .menu-panel a.hover,
+.menu-skin-basic .menu-panel .hover
+{
+     color: #4d4d4f;
+}
+
+.menu-skin-basic .menu-panel .menu-item-with-submenu a
+{
+	color:#4d4d4f;
+}
+
+.menu-skin-basic .menu-panel .hover .nohover a,
+.menu-skin-basic .menu-panel .hover .nohover
+{
+	color:#4d4d4f;
+}
+
+.menu-skin-basic .menu-panel a.hover,
+.menu-skin-basic .menu-panel .hover,
+.menu-skin-basic .menu-panel .hover a
+{
+	color:#ffffff;
+}
+
+

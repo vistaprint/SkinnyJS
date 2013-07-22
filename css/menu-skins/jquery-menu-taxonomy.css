@@ -1,0 +1,130 @@
+.menu-skin-taxonomy
+{
+    position: relative;
+}
+
+/* menu panel */
+.menu-skin-taxonomy .menu-panel
+{
+    border-width:3px 1px 1px 1px;
+    border-style:solid;
+    border-color:#636363 #ccc #ccc #ccc;
+    background-color: #fff;
+    color: #666;
+    font-weight: normal;
+    min-width:200px;
+    z-index:5;
+    
+    padding-top: 13px;
+    padding-bottom: 13px;
+    
+    -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.6);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.6);
+}
+
+.left-nav-container .menu-skin-taxonomy .menu-panel
+{
+    border-top-color:transparent;
+}
+
+/* menu items */
+.menu-skin-taxonomy .menu-item,
+.menu-skin-taxonomy a.menu-item 
+{
+    display:block;
+}
+
+.menu-skin-taxonomy .menu-item
+{
+	float: left;
+	white-space: nowrap;
+}
+
+.menu-skin-taxonomy .menu-item .menu-item
+{
+	float: none;
+}
+
+.menu-skin-taxonomy .menu-panel .menu-item a,
+.menu-skin-taxonomy .menu-panel .inactive-menu-item
+{
+    padding: 0 33px 0 20px;
+    width: auto;
+    display: block;
+}
+
+.menu-skin-taxonomy .menu-panel .menu-item .menu-item-inner
+{
+	display:block;
+	border-bottom:1px dotted #ccc;
+	padding: 7px 0 7px 0;
+}
+
+/* menu items with submenu */
+.menu-skin-taxonomy .menu-item-with-submenu
+{
+    background-image: url(/vp/images/B11/common/bullet/arrow-dark-offset-001.gif);
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+.menu-skin-taxonomy .menu-item-with-submenu.hover
+{
+    background-image: url(/vp/images/B11/common/bullet/arrow-light-offset-001.gif);
+}
+
+.ie6to8 .left-nav-container .menu-skin-taxonomy .menu-item-with-submenu.hover span,
+.ie6to8 .left-nav-container .menu-skin-taxonomy .menu-item-with-submenu .menu-item-with-submenu .menu-panel .menu-item
+{
+    background-image:none; /* covers IE bug where the background image inherits to an item's children */
+}
+
+/* underlining */
+.menu-skin-taxonomy a
+{
+    text-decoration: none;
+}
+
+.menu-skin-taxonomy .menu-panel .menu-item.hover a 
+{
+    text-decoration: underline;
+}
+
+.menu-skin-taxonomy .menu-panel .menu-item.nohover a
+{
+    text-decoration: none;
+}
+
+/* menu item colors */
+.menu-skin-taxonomy .menu-panel .menu-item.hover 
+{
+    background-color: #7e7e7e;    
+}
+
+.menu-skin-taxonomy .menu-panel .menu-item.hover a, 
+.menu-skin-taxonomy .menu-panel .menu-item.hover a:link, 
+.menu-skin-taxonomy .menu-panel .menu-item.hover a:visited
+{
+    color:#fff;
+}
+
+.menu-skin-taxonomy .menu-panel .menu-item.nohover a, 
+.menu-skin-taxonomy .menu-panel .menu-item.nohover a:link, 
+.menu-skin-taxonomy .menu-panel .menu-item.nohover a:visited
+{
+    color:#4d4d4f;
+}
+
+/* inactive and indented elements */
+.menu-skin-taxonomy .inactive-menu-item
+{
+    color:#4d4d4f;
+    font-style:italic;
+    padding-left: 20px;
+}
+
+.menu-skin-taxonomy div.indented-menu-panel .menu-item a
+{
+    padding-left: 33px;
+}

@@ -1,0 +1,88 @@
+﻿/* Note: This CSS is specially crafted to work in IE6 (by avoiding selectors which target two classes on the same element, i.e. ".class1.class2"). */
+
+.menu-skin-minimal
+{
+    position:relative;
+}
+
+.menu-skin-minimal .menu-item-with-submenu
+{
+    background-image:url(/vp/images/b09/common/button/graphical/arrow-rt-disabled.png);
+    background-position:right center;
+    background-repeat:no-repeat;
+}
+
+.menu-skin-minimal .menu-item-top
+{
+    background-image:none; /* prevent the submenu 'arrow' from showing in the top nav */
+    padding: 0; /* top item should be unstyled, since this skin is minimal */
+}
+
+.menu-skin-minimal div.menu-item-top
+{
+    color:inherit;
+    background-color:Transparent;
+}
+
+.menu-skin-minimal .menu-panel
+{
+    border:1px #ccc solid;
+    background-color:white;
+    width:250px;
+    
+    -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.6);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.6);
+}
+
+.menu-skin-minimal .menu-panel .menu-item
+{
+    padding:5px 10px 5px 10px;
+}
+
+.menu-skin-minimal a.menu-item 
+{
+    display:block;
+}
+
+.menu-skin-minimal .hover 
+{
+    background-color:#4d4d4f;
+    color:white;
+}
+
+.menu-skin-minimal .hover a,
+.menu-skin-minimal a.hover
+{
+    color:white;
+    text-decoration:none;
+}
+
+.menu-skin-minimal .menu-panel a, 
+.menu-skin-minimal .menu-panel a:link, 
+.menu-skin-minimal .menu-panel a:visited, 
+.menu-skin-minimal .menu-panel a.hover,
+.menu-skin-minimal .menu-panel .hover
+{
+     color: #4d4d4f;
+}
+
+.menu-skin-minimal .menu-panel .menu-item-with-submenu a
+{
+	color:#4d4d4f;
+}
+
+.menu-skin-minimal .menu-panel .hover .nohover a,
+.menu-skin-minimal .menu-panel .hover .nohover
+{
+	color:#4d4d4f;
+}
+
+.menu-skin-minimal .menu-panel a.hover,
+.menu-skin-minimal .menu-panel .hover,
+.menu-skin-minimal .menu-panel .hover a
+{
+	color:#ffffff;
+}
+
+

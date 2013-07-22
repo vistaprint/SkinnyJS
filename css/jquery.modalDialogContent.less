@@ -1,0 +1,34 @@
+// HACK for jQuery mobile: the data-role="content" containers end up scrolling
+.ui-content
+{
+	overflow: inherit;
+}
+
+// HACK for jQuery mobile: the page gets assigned a min height, which is inappropriate for dialogs.
+.ui-mobile .ui-page
+{
+	min-height: inherit;
+}
+
+body.ui-mobile-viewport 
+{
+	margin: 10px;
+	height: inherit;
+}
+
+.ui-mobile [data-role=page]
+{
+	position: inherit;
+}
+
+.ui-mobile
+{
+	height: inherit;
+}
+
+div.ui-input-text input.ui-input-text, 
+div.ui-input-text textarea.ui-input-text, 
+.ui-input-search input.ui-input-text
+{
+	width: auto;
+}

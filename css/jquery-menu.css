@@ -1,0 +1,24 @@
+/* Core styles for all menu skins */
+
+.clear
+{
+    clear:both;
+}
+
+.menu-item-top
+{
+	position:relative;
+}
+
+.menu-panel
+{
+	position:absolute;
+	display:none;
+	z-index:1;
+}
+
+.menu-item
+{
+    cursor:default;
+    position:relative;
+}
