@@ -10,7 +10,6 @@
     "mkdirp": "~0.3.4",
     "optimist": "~0.3.5",
     "requirejs": "~2.1.4",
-    "underscore": "~1.4.4",
     "marked": "~0.2.8",
     "matchdep": "~0.1.2",
     "grunt": "~0.4.0",
