@@ -38,19 +38,23 @@ $.fn.clientRect = function()
     var elem = this[0];
     var doc = elem.ownerDocument;
     var docElem = doc.documentElement;
+    var box;
 
     // Make sure we're not dealing with a disconnected DOM node
-    if (!$.contains( docElem, elem ))
+    if (!$.contains(docElem, elem))
     {
         return rect;
     }
 
     if ($.support.getBoundingClientRect)
     {
-        try {
+        try 
+        {
             box = elem.getBoundingClientRect();
-        } catch(e) {}
-
+        } 
+        catch(e) 
+        {
+        }
         
         if ( !box ) {
             return rect;
@@ -69,8 +73,9 @@ $.fn.clientRect = function()
             scrollTop  = win.pageYOffset || $.support.boxModel && docElem.scrollTop  || body.scrollTop,
             scrollLeft = win.pageXOffset || $.support.boxModel && docElem.scrollLeft || body.scrollLeft;
 
-        rect.top  = box.top  + scrollTop  - clientTop,
-        rect.left = box.left + scrollLeft - clientLeft;
+        // TODO operator precidence
+        rect.top  = box.top  + (scrollTop  - clientTop);
+        rect.left = box.left + (scrollLeft - clientLeft);
 
         rect.width = box.right - box.left;
         rect.height = box.bottom - box.top;

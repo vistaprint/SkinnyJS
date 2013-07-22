@@ -11,7 +11,7 @@
             {
                 if (e.level === 0)
                 {
-                    var left = parseInt("-" + e.$item.css("borderLeftWidth")) || 0;
+                    var left = parseInt("-" + e.$item.css("borderLeftWidth"), 10) || 0;
                     var top = e.$item.outerHeight() + 4;
 
                     // Render the panel so it can be measured, but keep it hidden.
@@ -34,21 +34,21 @@
                     }
 
                     e.$panel.css({
-    			        top: top,
+                        top: top,
                         left: left,
                         visibility: "",
                         display: "none"
-    		        });
+                    });
 
-    	            return;
+                    return;
                 }
-    		
+            
                 var pos = e.$item.position();
  
                 e.$panel.css({
-    		            left: pos.left + e.$item.innerWidth(), 
-    		            top: 0
-    	            });
+                        left: pos.left + e.$item.innerWidth(), 
+                        top: 0
+                    });
             },
 
             animationShow: function(e, callback)

@@ -4,6 +4,8 @@
 /// <reference path="jquery.customEvent.js" />
 /// <reference path="jquery.modalDialog.common.js" />
 
+/* globals DIALOG_TYPE_IFRAME */
+
 // This is a library for use in content windows that live inside a FramedDialog.
 // All its methods work cross-domain.
 
@@ -153,7 +155,12 @@ $.modalDialog.create()
 
         getWindow: function()
         {
-            return this._window = this._window || parent.frames[this.settings._fullId];
+            if (!this._window)
+            {
+                this._window = this._window || parent.frames[this.settings._fullId];
+            }
+
+            return this._window;
         },
 
         setHeight: function(contentHeight, center, skipAnimation)

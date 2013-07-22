@@ -8,14 +8,23 @@
 /// <reference path="jquery.clientRect.js" />
 /// <reference path="jquery.hostIframe.js" />
 /// <reference path="jquery.modalDialog.common.js" />
+/* globals DIALOG_TYPE_NODE, DIALOG_TYPE_IFRAME, DIALOG_TYPE_AJAX */
 
 // Note: jQuery Mobile and some other dialog frameworks have URL/history management via pushState/hashchange built in.
 // I find this to be too inflexible, and should be implemented by callers as a separate concern.
 
-if (!Object.keys) {
-    Object.keys = function(obj) {
+if (!Object.keys) 
+{
+    Object.keys = function(obj) 
+    {
         var keys = [];
-        for (var key in obj) if (obj.hasOwnProperty(key)) keys[keys.length] = key;
+        for (var key in obj) 
+        {
+            if (obj.hasOwnProperty(key)) 
+            {
+                keys[keys.length] = key;
+            }
+        }
         return keys;
     };
 }
@@ -27,13 +36,21 @@ if (!Object.keys) {
         throw new Error("Attempt to load jquery.modalDialogContent.js in the same window as jquery.modalDialog.js.");
     }
 
-    var ua = window.ua = (function() {
+    var ua = window.ua = (function() 
+    {
         var ua = navigator.userAgent;
         // Internet Explorer 7 specific checks
-        if (ua.indexOf('MSIE 7.0') > 0) return {ie: true, ie7: true, version: 7, compat: ua.indexOf('compatible') > 0};
+        if (ua.indexOf('MSIE 7.0') > 0) 
+        {
+            return {ie: true, ie7: true, version: 7, compat: ua.indexOf('compatible') > 0};
+        }
 
         // Internet Explorer 8 specific checks
-        if (ua.indexOf('MSIE 8.0') > 0) return {ie: true, ie8: true, version: 8, compat: ua.indexOf('compatible') > 0};
+        if (ua.indexOf('MSIE 8.0') > 0) 
+        {
+            return {ie: true, ie8: true, version: 8, compat: ua.indexOf('compatible') > 0};
+        }
+
         return {};
     })();
 
@@ -1099,7 +1116,7 @@ if (!Object.keys) {
     {
         setHeight: function(dialog, qs)
         {
-            dialog.setHeight(parseInt(qs.height), qs.center === "true", qs.skipAnimation === "true");
+            dialog.setHeight(parseInt(qs.height, 10), qs.center === "true", qs.skipAnimation === "true");
         },
 
         setTitle: function(dialog, qs)

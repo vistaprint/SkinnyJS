@@ -8,7 +8,6 @@
  *
  * @author Laban Eilers leilers@vistaprint.com
  */
-
 (function(window, $)
 {
     //Because we want to surface ajax errors (and trap them with global error handlers for logging), 

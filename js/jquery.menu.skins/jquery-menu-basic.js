@@ -11,19 +11,19 @@
             {
                 if (e.level === 0)
                 {
-    	            e.$panel.css({
-    			            top: e.$item.innerHeight(),
+                    e.$panel.css({
+                            top: e.$item.innerHeight(),
                             left: "-" + e.$item.css("borderLeftWidth")
-    		            });
-    	            return;
+                        });
+                    return;
                 }
-    		
+            
                 var pos = e.$item.position();
  
                 e.$panel.css({
-    		            left: pos.left + e.$item.innerWidth(), 
-    		            top: 0
-    	            });
+                        left: pos.left + e.$item.innerWidth(), 
+                        top: 0
+                    });
             },
 
             animationShow: function(e, callback)

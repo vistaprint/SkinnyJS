@@ -1,6 +1,6 @@
 /*jsl:option explicit*/
 /// <reference path="jquery.modalDialog.js" />
-
+/* jshint evil: true */
 /*
 Uses declarative syntax to define a dialog. Syntax:
 

@@ -3,6 +3,8 @@
 /// <reference path="jquery.modalDialog.js" />
 /// <reference path="jquery.disableEvent.js" />
 
+/* globals DIALOG_TYPE_IFRAME */
+
 // iOS
 // iOS has a bug where text fields in an iFrame misbehave if there are touch events assigned to the 
 // host window. This fix disables them while iFrame dialogs are open.
@@ -36,7 +38,7 @@
         // When removing the host window content from the DOM, make the veil opaque to hide it.
         $.modalDialog.veilClass = "dialog-veil-opaque";
 
-        function preventWindowTouchEvents(dialog, fix)
+        var preventWindowTouchEvents = function(dialog, fix)
         {
             // The bug only affects iFrame dialogs
             if (dialog.dialogType != DIALOG_TYPE_IFRAME)
@@ -45,7 +47,7 @@
             }
 
             $([window, document]).enableEvent("touchmove touchstart touchend", !fix);
-        }
+        };
 
         var SHIM_KEY = "androidDialogShim";
         var SELECTOR_MAIN_PANEL = "[data-dialog-main-panel='true']";
@@ -54,7 +56,7 @@
         // Puts a fake element next to the specified element
         // of the exact same size, and hides the original element.
         // Passing 'enable' = false reverses this.
-        function createShims($els, enable)
+        var createShims = function($els, enable)
         {
             $els.each(function(i, el)
             {
@@ -79,9 +81,9 @@
                     $shim.hide();
                 }
             });
-        }
+        };
 
-        function initializeShimming()
+        var initializeShimming = function()
         {
             // First, see if the main panel is specified.
             // If so, it's the best choice of elements to hide.
@@ -110,7 +112,7 @@
                     }
                 });
             }
-        }
+        };
 
         $(function()
         {

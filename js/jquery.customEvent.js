@@ -60,7 +60,9 @@
     $.CustomEvent.create = function(obj, eventType)
     {
         var onEventType = "on" + eventType;
-        return obj[onEventType] = new $.CustomEvent(obj, eventType);
+        var evt = new $.CustomEvent(obj, eventType);
+        obj[onEventType] = evt;
+        return evt;
     };
 
 })(jQuery);

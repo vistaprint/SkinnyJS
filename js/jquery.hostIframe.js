@@ -10,7 +10,7 @@
     {
         return this.map(function(index, doc)
         {
-            if (!doc.nodeType == DOCUMENT_NODE)
+            if (doc.nodeType != DOCUMENT_NODE)
             {
                 throw new Error("Element is not a document");
             }

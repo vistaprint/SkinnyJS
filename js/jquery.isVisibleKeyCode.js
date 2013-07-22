@@ -34,7 +34,6 @@ jQuery.Event.prototype.isVisibleKeyCode = function ()
         case 91:
         case 145:
             return false;
-            break;
         default:
             return true;
     }

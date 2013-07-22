@@ -1,15 +1,7 @@
-/*jsl:option explicit*/
+/* global DocumentTouch */
 
 // TODO: Support modifying state in the future by storing an object using $.data(), implement $(selector).dropDownMenu("option", value);
 // TODO: Accessibility: Keyboard navigation (tab navigation already works)- close submenus on pressing enter (maybe)
-
-// IE console debugging
-//if (!window.console)
-//{
-//    window.console = {
-//        log: function(s) { }
-//    };
-//}
 
 (function($)
 {
@@ -39,7 +31,7 @@
     // Adapted from Modernizr. There's got to be a better way to reuse this kind of thing
     // optionally, without sucking in a ton of dependencies.
     var _isTouchScreen = ('ontouchstart' in window) || 
-        (window.DocumentTouch /*jsl:ignore*/ && document instanceof DocumentTouch /*jsl:end*/);
+        (window.DocumentTouch && document instanceof DocumentTouch);
 
     // Hover highlighting
     var highlightMenuItem = function($item, enabled)
@@ -377,6 +369,7 @@
                     return _siblings;
                 };
                 
+                // TODO use a jQuery event
                 // Creates a new "fake" event for passing to event handlers
                 var getEvent = function(e)
                 {
@@ -458,9 +451,11 @@
                         return;
                     }
 
+                    var ev;
+
                     if (me.$panel)
                     {
-                        var ev = getEvent(e);
+                        ev = getEvent(e);
                     
                         _options.beforeShowPanel.call(me, ev);
                     
@@ -607,7 +602,7 @@
                         return;
                     }
                     
-                    me.isOpen ? me.hideClick(e) : showClick(e);
+                    me[me.isOpen ? "hideClick" : "showClick"](e);
                     
                     if (!me.isTopLevel)
                     {

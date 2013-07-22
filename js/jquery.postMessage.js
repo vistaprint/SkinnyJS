@@ -1,5 +1,5 @@
 /*jsl:option explicit*/
-
+/* globals Window */
 /*
  * @fileoverview jQuery postMessage
  *

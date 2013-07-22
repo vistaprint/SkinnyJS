@@ -17,7 +17,7 @@ var isQuirksMode = function()
 
 var addMargin = function(node, styleProp, rectProp, rect)
 {
-    var margin = parseInt($(node).css(styleProp));
+    var margin = parseInt($(node).css(styleProp), 10);
     if (margin)
     {
         rect[rectProp] += margin;
@@ -27,6 +27,8 @@ var addMargin = function(node, styleProp, rectProp, rect)
 // size gets continuously populated as this recurses through the DOM, building the max size of the page.
 var gatherSize = function(size, node, includeChildrenOnly, includeWidth, includeHeight)
 {
+    var rect;
+
     // Only look at elements
     if (node.nodeType != 1)
     {
@@ -37,7 +39,7 @@ var gatherSize = function(size, node, includeChildrenOnly, includeWidth, include
     {
         try
         {
-            var rect = $(node).clientRect();
+            rect = $(node).clientRect();
         }
         catch (ex)
         {

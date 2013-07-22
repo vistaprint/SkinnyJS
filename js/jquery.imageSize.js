@@ -24,7 +24,7 @@
 
                 if (callback)
                 {
-                    callback.call(img, boundedSize);
+                    callback.call(img, size);
                 }
             };
 
@@ -43,12 +43,15 @@
         var containerHeight = $container.height();
         var containerWidth = $container.width();
         var containerAspectRatio = containerWidth / containerHeight;
+        var scale;
+        var margin = 0;
+
        // alert("size " + rect.width + " " + rect.height + " " + containerWidth + " " + containerHeight);
         // The container is skinnier than the image so we need to move the image to the left
         if (containerAspectRatio < aspectRatio)
         {
-            var scale = Math.round(aspectRatio / containerAspectRatio * 100);
-            var margin = 0;
+            scale = Math.round(aspectRatio / containerAspectRatio * 100);
+            
             if (scale > 100) 
             {
                 margin = Math.round((scale-100) / 2);
@@ -63,8 +66,8 @@
         // The container is fatter than the image so we need to move the image up
         else
         {
-            var scale = Math.round(containerAspectRatio / aspectRatio * 100);
-            var margin = 0;
+            scale = Math.round(containerAspectRatio / aspectRatio * 100);
+
             if (scale > 100) 
             {
                 margin = Math.round((scale-100) / 2);
