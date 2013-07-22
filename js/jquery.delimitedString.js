@@ -1,10 +1,3 @@
-/** 
- * @fileoverview Contains the VistaPrint Web library for dealing with query strings, cookies, and other web-specific issues.
- */
-
-/*jsl:option explicit*/
-/// <reference path="../jquery-current.js" />
-
 (function($)
 {
 

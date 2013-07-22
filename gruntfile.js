@@ -9,7 +9,23 @@ module.exports = function(grunt)
         pkg: grunt.file.readJSON('package.json'),
         jshint:
         {
-            files: ['gruntfile.js', 'js/**/*.js'],
+            uses_defaults: ['gruntfile.js', 'js/**/*.js'],
+            with_overrides: 
+            {
+                options:
+                {
+                    globals: {
+                        "$": true,
+                        "module": true,
+                        "test": true,
+                        "equal": true
+                    }
+                },
+                files: 
+                {
+                    src: ['test/**/*.js']
+                }
+            },
             options:
             {
                 boss: false,

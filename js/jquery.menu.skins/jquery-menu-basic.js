@@ -1,5 +1,3 @@
-/*jsl:option explicit*/
-
 (function($)
 {
     var TRANSITION_TIME = 300;

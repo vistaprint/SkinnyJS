@@ -1,5 +1,3 @@
-/*jsl:option explicit*/
-/// <reference path="../jquery-current.js" />
 /// <reference path="jquery.modalDialog.js" />
 /// <reference path="jquery.disableEvent.js" />
 

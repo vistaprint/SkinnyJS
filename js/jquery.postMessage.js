@@ -1,7 +1,7 @@
-/*jsl:option explicit*/
 /* globals Window */
+
 /*
- * @fileoverview jQuery postMessage
+ * jQuery postMessage plugin
  *
  * Wraps HTML5 postMessage for cross-origin message sending between windows.
  * Fallback implementation works on browsers that don't support postMessage.
@@ -10,10 +10,9 @@
  * @contributor Benjamin Hutchins bhutchins@vistaprint.com (Jan, 2013)
  *
  * Based on concepts from: http://benalman.com/projects/jquery-postmessage-plugin/
- * Improved by using iframes for communication instead of via url fragments and
- * polling. This technique eliminates race conditions where messages sent
- * in rapid succession might not be received. It also removes the need for
- * polling.
+ * Improved for non-awesome browsers by using iframes for communication instead of  
+ * url fragments and polling. This technique eliminates race conditions where messages sent
+ * in rapid succession might not be received. It also removes the need for polling.
  */
 
 (function(window, $) {

@@ -1,5 +1,3 @@
-/*jsl:option explicit*/
-/// <reference path="../jquery-current.js" />
 /// <reference path="jquery.delimitedString.js" />
 
 (function($)

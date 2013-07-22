@@ -1,4 +1,5 @@
-/*jsl:option explicit*/
+
+
 /// <reference path="jquery.querystring.js" />
 /// <reference path="jquery.contentSize.js" />
 /// <reference path="jquery.customEvent.js" />

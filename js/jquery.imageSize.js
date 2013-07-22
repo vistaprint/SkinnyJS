@@ -1,5 +1,3 @@
-/*jsl:option explicit*/
-
 (function($)
 {
 

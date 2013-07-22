@@ -1,4 +1,3 @@
-/* jsl:option explicit */
 /// <reference path="jquery.querystring.js" />
 
 (function($)

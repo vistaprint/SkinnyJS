@@ -1,6 +1,3 @@
-/*jsl:option explicit*/
-/// <reference path="../jquery-current.js" />
-
 (function($)
 {
     // Given an object, will bind its methods' context to the object using $.proxy()

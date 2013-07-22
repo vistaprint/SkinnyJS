@@ -1,5 +1,3 @@
-/*jsl:option explicit*/
-/// <reference path="../jquery-current.js" />
 /// <reference path="../plugins/jquery.transit.js" />
 /// <reference path="jquery.querystring.js" />
 /// <reference path="jquery.postMessage.js" />
@@ -8,6 +6,7 @@
 /// <reference path="jquery.clientRect.js" />
 /// <reference path="jquery.hostIframe.js" />
 /// <reference path="jquery.modalDialog.common.js" />
+
 /* globals DIALOG_TYPE_NODE, DIALOG_TYPE_IFRAME, DIALOG_TYPE_AJAX */
 
 // Note: jQuery Mobile and some other dialog frameworks have URL/history management via pushState/hashchange built in.

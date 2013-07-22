@@ -1,6 +1,4 @@
-﻿/* jsl:option explicit*/
-
-$(document).ready(function()
+﻿$(document).ready(function()
 {
     module("jquery.css methods");
 

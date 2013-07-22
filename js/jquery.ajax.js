@@ -1,5 +1,3 @@
-/*jsl:option explicit*/
-/// <reference path="../jquery-current.js" />
 /// <reference path="../../ThirdParty/json2.js" />
 /// <reference path="../../ThirdParty/js-iso8601.js" />
 

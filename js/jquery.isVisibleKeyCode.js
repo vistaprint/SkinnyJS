@@ -1,6 +1,4 @@
-﻿/// <reference path="../jquery-current.js" />
-
-/**
+﻿/**
 * Returns true if the key pressed in a keyboard event is a visible character filters out keys such as function and shift. 
 */
 jQuery.Event.prototype.isVisibleKeyCode = function () 

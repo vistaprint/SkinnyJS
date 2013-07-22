@@ -1,6 +1,3 @@
-/*jsl:option explicit*/
-/// <reference path="../jquery-current.js" />
-
 (function($)
 {
     var DOCUMENT_NODE = 9;

@@ -1,5 +1,3 @@
-/*jsl:option explicit*/
-
 // This plugin allows disabling of all event handlers for a specific event type and element.
 
 (function($)

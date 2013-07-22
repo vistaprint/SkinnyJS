@@ -1,10 +1,4 @@
-/** 
- * @fileoverview Contains the VistaPrint UI library for manipulating the DOM.
- */
- 
-/*jsl:option explicit*/
-/// <reference path="../../jquery/jquery-current.js" />
-/// <reference path="../../jquery/vpextensions/jquery.delimitedString.js" />
+/// <reference path="jquery.delimitedString.js" />
 
 (function($)
 {
