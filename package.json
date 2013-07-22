@@ -1,0 +1,52 @@
+{
+  "name": "SkinnyJS",
+  "version": "0.0.1",
+  "description": "SkinnyJS is a collection of granular jQuery plugins.",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "file": "0.2.1",
+    "mkdirp": "~0.3.4",
+    "optimist": "~0.3.5",
+    "requirejs": "~2.1.4",
+    "underscore": "~1.4.4",
+    "marked": "~0.2.8",
+    "matchdep": "~0.1.2",
+    "grunt": "~0.4.0",
+    "grunt-contrib-jshint": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-watch": "~0.3.1",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-copy": "~0.4.0",
+    "grunt-contrib-requirejs": "~0.4.0"
+  },
+  "devDependencies": {
+    "grunt-contrib-qunit": "~0.2.0",
+    "grunt-contrib-nodeunit": "~0.2.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "main": "./lib/cli",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/labaneilers/SkinnyJS.git"
+  },
+  "bugs": {
+    "url": "https://github.com/labaneilers/SkinnyJS/issues"
+  },
+  "keywords": [
+    "javascript",
+    "jQuery"
+  ],
+  "author": {
+    "name": "Laban Eilers",
+    "url": "http://www.vistaprint.com"
+  },
+  "contributors": [
+    { "name": "Benjamin Hutchins" },
+    { "name": "Ilya Volodin" }
+  ],
+  "license": "Apache 2"
+}
