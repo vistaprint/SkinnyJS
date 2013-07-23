@@ -37,7 +37,7 @@ module.exports = function(grunt)
         },
         groc:
         {
-            javascript: ["js/**/*.js"],
+            javascript: ["js/**/*.js", "README.md"],
             options: 
             {
                 out: ".git/docs-temp/"
