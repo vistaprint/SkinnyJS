@@ -1,26 +1,33 @@
+// jQuery.clientRect()
+// --------------------
+// Returns a rectangle object containing the height, width, top, left, bottom, and right coordinates 
+// for a given element relative to the document.
+// Highly performant, and cross browser.
+
+// Note: jQuery's offset and dimensions methods are inefficient due to an API that 
+// won't give you the whole rectangle, so getBoundingClientRect() is called multiple times.
+// jQuery.clientRect() can be orders of magnitude more performant (depending on the size and complexity of the DOM).
+// That said, for cases where you're just calling this once in a while, just use jQuery.offset() and jQuery.height()/width()
+
 (function($)
 {
 
 // Expose support flag. Aids in unit testing.
 $.support.getBoundingClientRect = "getBoundingClientRect" in document.documentElement;
 
-function getWindow( elem ) {
-    return $.isWindow( elem ) ?
+// Gets the window containing the specified element.
+function getWindow(elem) 
+{
+    return $.isWindow(elem) ?
         elem :
         elem.nodeType === 9 ?
             elem.defaultView || elem.parentWindow :
             false;
 }
 
-/**
- * Gets the rectangle measurements for a given element.
- * Highly performant, and cross browser.
- * Coordinate system is based on the browser client area, with the top left of the window being 0, 0.
- * Note: jQuery's offset and dimensions methods are inefficient due to an API that 
- *    won't give you the whole rectangle, so getBoundingClientRect() is called multiple times.
- *    That said, for cases where you're just calling this once in a while, just use jQuery.offset() and jQuery.height()/width()
- * @return {Object} A rectangle object with left, top, bottom, and right properties.
- */
+// Public API
+// --------------------
+// Returns a rect for the first element in the jQuery object.
 $.fn.clientRect = function()
 {
     var rect = {
@@ -43,26 +50,39 @@ $.fn.clientRect = function()
         return rect;
     }
 
+    // All modern browsers support getBoundingClientRect.
+    // It gets a DOM element's coordinates directly from the render tree, 
+    // which is much faster than reading CSS properties and having to calculate offsets
+    // from parent elements.
+    // https://developer.mozilla.org/en-US/docs/Web/API/element.getBoundingClientRect
     if ($.support.getBoundingClientRect)
     {
+        // This is derived from the internals of jQuery.fn.offset
         try 
         {
             box = elem.getBoundingClientRect();
         } 
         catch(e) 
         {
+            // OldIE throws an exception when trying to get a client rect for an element
+            // that hasn't been rendered, or isn't in the DOM.
+            // For consistency, return a 0 rect.
         }
         
-        if ( !box ) {
-            return rect;
-        }
-
-        if (box.right === box.left &&
-            box.top == box.bottom)
+        if (!box) 
         {
             return rect;
         }
 
+        // TODO needs a unit test to verify the returned rect always has the same properties (i.e. bottom, right)
+        // If the rect has no area, it needs no further processing
+        if (box.right === box.left &&
+            box.top === box.bottom)
+        {
+            return rect;
+        }
+
+        // Handles some quirks in the oldIE box model, including some bizarre behavior around the starting coordinates.
         var body = doc.body,
             win = getWindow( doc ),
             clientTop  = docElem.clientTop  || body.clientTop  || 0,
@@ -70,7 +90,6 @@ $.fn.clientRect = function()
             scrollTop  = win.pageYOffset || $.support.boxModel && docElem.scrollTop  || body.scrollTop,
             scrollLeft = win.pageXOffset || $.support.boxModel && docElem.scrollLeft || body.scrollLeft;
 
-        // TODO operator precidence
         rect.top  = box.top  + (scrollTop  - clientTop);
         rect.left = box.left + (scrollLeft - clientLeft);
 
@@ -79,6 +98,7 @@ $.fn.clientRect = function()
     }
     else
     {   
+        // Support ancient browsers by falling back to jQuery.innerWidth/Height()
         if (this.css("display") == "none")
         {
             return rect;

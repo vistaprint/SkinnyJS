@@ -54,15 +54,24 @@ module.exports = function(grunt)
         },
         qunit: {
           all: ['test/**/*.html']
+        },
+        groc:
+        {
+            javascript: ["js/**/*.js"],
+            options: 
+            {
+                out: "docs/"
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-qunit');
+    grunt.loadNpmTasks('grunt-groc');
 
     // Travis CI task.
     grunt.registerTask('travis', 'default');
 
     // Default task(s).
-    grunt.registerTask('default', ['jshint', 'qunit']);
+    grunt.registerTask('default', ['jshint', 'qunit', 'groc']);
 };
