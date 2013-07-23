@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="en"><head><title>js\jquery.clientRect</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="js\jquery.clientRect"><meta name="groc-project-path" content="js\jquery.clientRect.js"><meta name="groc-github-url" content="https://github.com/labaneilers/SkinnyJS"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/labaneilers/SkinnyJS/blob/master/js\jquery.clientRect.js">js\jquery.clientRect.js</a></div></div><div id="document"><div class="segment"><div class="comments"><div class="wrapper"><h2 id="jqueryclientrect">jQuery.clientRect()</h2>
+
+<p>Returns a rectangle object containing the height, width, top, left, bottom, and right coordinates 
+for a given element relative to the document.
+Highly performant, and cross browser.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Note: jQuery's offset and dimensions methods are inefficient due to an API that 
+won't give you the whole rectangle, so getBoundingClientRect() is called multiple times.
+jQuery.clientRect() can be orders of magnitude more performant (depending on the size and complexity of the DOM).
+That said, for cases where you're just calling this once in a while, just use jQuery.offset() and jQuery.height()/width()</p></div></div><div class="code"><div class="wrapper"><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span>
+<span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Expose support flag. Aids in unit testing.</p></div></div><div class="code"><div class="wrapper"><span class="nx">$</span><span class="p">.</span><span class="nx">support</span><span class="p">.</span><span class="nx">getBoundingClientRect</span> <span class="o">=</span> <span class="s2">&quot;getBoundingClientRect&quot;</span> <span class="k">in</span> <span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Gets the window containing the specified element.</p></div></div><div class="code"><div class="wrapper"><span class="kd">function</span> <span class="nx">getWindow</span><span class="p">(</span><span class="nx">elem</span><span class="p">)</span> 
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">isWindow</span><span class="p">(</span><span class="nx">elem</span><span class="p">)</span> <span class="o">?</span>
+        <span class="nx">elem</span> <span class="o">:</span>
+        <span class="nx">elem</span><span class="p">.</span><span class="nx">nodeType</span> <span class="o">===</span> <span class="mi">9</span> <span class="o">?</span>
+            <span class="nx">elem</span><span class="p">.</span><span class="nx">defaultView</span> <span class="o">||</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">parentWindow</span> <span class="o">:</span>
+            <span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="public-api">Public API</h2>
+
+<p>Returns a rect for the first element in the jQuery object.</p></div></div><div class="code"><div class="wrapper"><span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">clientRect</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">rect</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nx">top</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nx">left</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nx">width</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> 
+        <span class="nx">height</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nx">bottom</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nx">right</span><span class="o">:</span> <span class="mi">0</span>
+    <span class="p">};</span>
+
+    <span class="kd">var</span> <span class="nx">elem</span> <span class="o">=</span> <span class="k">this</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="kd">var</span> <span class="nx">doc</span> <span class="o">=</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">ownerDocument</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">docElem</span> <span class="o">=</span> <span class="nx">doc</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">box</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Make sure we're not dealing with a disconnected DOM node</p></div></div><div class="code"><div class="wrapper">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">$</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="nx">docElem</span><span class="p">,</span> <span class="nx">elem</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">rect</span><span class="p">;</span>
+    <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>All modern browsers support getBoundingClientRect.
+It gets a DOM element's coordinates directly from the render tree, 
+which is much faster than reading CSS properties and having to calculate offsets
+from parent elements.
+https://developer.mozilla.org/en-US/docs/Web/API/element.getBoundingClientRect</p></div></div><div class="code"><div class="wrapper">    <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">support</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">)</span>
+    <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>This is derived from the internals of jQuery.fn.offset</p></div></div><div class="code"><div class="wrapper">        <span class="k">try</span> 
+        <span class="p">{</span>
+            <span class="nx">box</span> <span class="o">=</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
+        <span class="p">}</span> 
+        <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> 
+        <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>OldIE throws an exception when trying to get a client rect for an element
+that hasn't been rendered, or isn't in the DOM.
+For consistency, return a 0 rect.</p></div></div><div class="code"><div class="wrapper">        <span class="p">}</span>
+        
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">box</span><span class="p">)</span> 
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">rect</span><span class="p">;</span>
+        <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>TODO needs a unit test to verify the returned rect always has the same properties (i.e. bottom, right)
+If the rect has no area, it needs no further processing</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">box</span><span class="p">.</span><span class="nx">right</span> <span class="o">===</span> <span class="nx">box</span><span class="p">.</span><span class="nx">left</span> <span class="o">&amp;&amp;</span>
+            <span class="nx">box</span><span class="p">.</span><span class="nx">top</span> <span class="o">===</span> <span class="nx">box</span><span class="p">.</span><span class="nx">bottom</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">rect</span><span class="p">;</span>
+        <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Handles some quirks in the oldIE box model, including some bizarre behavior around the starting coordinates.</p></div></div><div class="code"><div class="wrapper">        <span class="kd">var</span> <span class="nx">body</span> <span class="o">=</span> <span class="nx">doc</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span>
+            <span class="nx">win</span> <span class="o">=</span> <span class="nx">getWindow</span><span class="p">(</span> <span class="nx">doc</span> <span class="p">),</span>
+            <span class="nx">clientTop</span>  <span class="o">=</span> <span class="nx">docElem</span><span class="p">.</span><span class="nx">clientTop</span>  <span class="o">||</span> <span class="nx">body</span><span class="p">.</span><span class="nx">clientTop</span>  <span class="o">||</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="nx">clientLeft</span> <span class="o">=</span> <span class="nx">docElem</span><span class="p">.</span><span class="nx">clientLeft</span> <span class="o">||</span> <span class="nx">body</span><span class="p">.</span><span class="nx">clientLeft</span> <span class="o">||</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="nx">scrollTop</span>  <span class="o">=</span> <span class="nx">win</span><span class="p">.</span><span class="nx">pageYOffset</span> <span class="o">||</span> <span class="nx">$</span><span class="p">.</span><span class="nx">support</span><span class="p">.</span><span class="nx">boxModel</span> <span class="o">&amp;&amp;</span> <span class="nx">docElem</span><span class="p">.</span><span class="nx">scrollTop</span>  <span class="o">||</span> <span class="nx">body</span><span class="p">.</span><span class="nx">scrollTop</span><span class="p">,</span>
+            <span class="nx">scrollLeft</span> <span class="o">=</span> <span class="nx">win</span><span class="p">.</span><span class="nx">pageXOffset</span> <span class="o">||</span> <span class="nx">$</span><span class="p">.</span><span class="nx">support</span><span class="p">.</span><span class="nx">boxModel</span> <span class="o">&amp;&amp;</span> <span class="nx">docElem</span><span class="p">.</span><span class="nx">scrollLeft</span> <span class="o">||</span> <span class="nx">body</span><span class="p">.</span><span class="nx">scrollLeft</span><span class="p">;</span>
+
+        <span class="nx">rect</span><span class="p">.</span><span class="nx">top</span>  <span class="o">=</span> <span class="nx">box</span><span class="p">.</span><span class="nx">top</span>  <span class="o">+</span> <span class="p">(</span><span class="nx">scrollTop</span>  <span class="o">-</span> <span class="nx">clientTop</span><span class="p">);</span>
+        <span class="nx">rect</span><span class="p">.</span><span class="nx">left</span> <span class="o">=</span> <span class="nx">box</span><span class="p">.</span><span class="nx">left</span> <span class="o">+</span> <span class="p">(</span><span class="nx">scrollLeft</span> <span class="o">-</span> <span class="nx">clientLeft</span><span class="p">);</span>
+
+        <span class="nx">rect</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">box</span><span class="p">.</span><span class="nx">right</span> <span class="o">-</span> <span class="nx">box</span><span class="p">.</span><span class="nx">left</span><span class="p">;</span>
+        <span class="nx">rect</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">box</span><span class="p">.</span><span class="nx">bottom</span> <span class="o">-</span> <span class="nx">box</span><span class="p">.</span><span class="nx">top</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Support ancient browsers by falling back to jQuery.innerWidth/Height()</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;display&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;none&quot;</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">rect</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="nx">rect</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">offset</span><span class="p">();</span>
+        <span class="nx">rect</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">innerWidth</span><span class="p">();</span>
+        <span class="nx">rect</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">innerHeight</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nx">rect</span><span class="p">.</span><span class="nx">bottom</span> <span class="o">=</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">top</span> <span class="o">+</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
+    <span class="nx">rect</span><span class="p">.</span><span class="nx">right</span> <span class="o">=</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">left</span> <span class="o">+</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">width</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="nx">rect</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span></div></div></div></div></body></html>

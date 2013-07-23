@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="en"><head><title>js\jquery.modalDialog.deviceFixes</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="js\jquery.modalDialog.deviceFixes"><meta name="groc-project-path" content="js\jquery.modalDialog.deviceFixes.js"><meta name="groc-github-url" content="https://github.com/labaneilers/SkinnyJS"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/labaneilers/SkinnyJS/blob/master/js\jquery.modalDialog.deviceFixes.js">js\jquery.modalDialog.deviceFixes.js</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="c1">/// &lt;reference path=&quot;jquery.modalDialog.js&quot; /&gt;</span>
+<span class="c1">/// &lt;reference path=&quot;jquery.disableEvent.js&quot; /&gt;</span>
+
+<span class="cm">/* globals DIALOG_TYPE_IFRAME */</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>iOS
+iOS has a bug where text fields in an iFrame misbehave if there are touch events assigned to the 
+host window. This fix disables them while iFrame dialogs are open.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Android
+Older versions of Android stock browser, particularly ones whose manufacturers customized the browser
+with proprietary text field overlays, have trouble with complex positioning and transforms.
+This becomes exacerbated by the complexity of the modal dialog DOM, especially when an IFrame 
+is involved.
+The result is that the proprietary text field overlays are positioned incorrectly (best case),
+or that they start producing nonsensical focus events, which cause the browser to scroll wildly.
+http://stackoverflow.com/questions/8860914/on-android-browser-the-whole-page-jumps-up-and-down-when-typing-inside-a-textbo</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Newer android browsers (4+) support the CSS property: -webkit-user-modify: read-write-plaintext-only;
+This will prevent the proprietary text field overlay from showing (though also HTML5 custom ones, such as email keyboards).
+http://stackoverflow.com/questions/9423101/disable-android-browsers-input-overlays
+https://code.google.com/p/android/issues/detail?id=30964</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>To work around this problem in older Android (2.3), we have to hide elements that have any CSS transforms.
+The cleanest way is to remove ALL content in the DOM in the main panel. This will make the screen behind the dialog turn
+completely gray, which isn't a big deal- many dialog frameworks do this anyway.
+To do this, add the attribute to the element:
+data-dialog-main-panel="true"</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Otherwise, you can hide specific problematic elements by adding this attribute:
+data-dialog-hide-onopen="true"</p></div></div><div class="code"><div class="wrapper"><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">isSmallScreen</span><span class="p">())</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>When removing the host window content from the DOM, make the veil opaque to hide it.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">veilClass</span> <span class="o">=</span> <span class="s2">&quot;dialog-veil-opaque&quot;</span><span class="p">;</span>
+
+        <span class="kd">var</span> <span class="nx">preventWindowTouchEvents</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">dialog</span><span class="p">,</span> <span class="nx">fix</span><span class="p">)</span>
+        <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The bug only affects iFrame dialogs</p></div></div><div class="code"><div class="wrapper">            <span class="k">if</span> <span class="p">(</span><span class="nx">dialog</span><span class="p">.</span><span class="nx">dialogType</span> <span class="o">!=</span> <span class="nx">DIALOG_TYPE_IFRAME</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="nx">$</span><span class="p">([</span><span class="nb">window</span><span class="p">,</span> <span class="nb">document</span><span class="p">]).</span><span class="nx">enableEvent</span><span class="p">(</span><span class="s2">&quot;touchmove touchstart touchend&quot;</span><span class="p">,</span> <span class="o">!</span><span class="nx">fix</span><span class="p">);</span>
+        <span class="p">};</span>
+
+        <span class="kd">var</span> <span class="nx">SHIM_KEY</span> <span class="o">=</span> <span class="s2">&quot;androidDialogShim&quot;</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">SELECTOR_MAIN_PANEL</span> <span class="o">=</span> <span class="s2">&quot;[data-dialog-main-panel=&#39;true&#39;]&quot;</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">SELECTOR_BAD_ELEMENT</span> <span class="o">=</span> <span class="s2">&quot;[data-dialog-hide-onopen=&#39;true&#39;]&quot;</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Puts a fake element next to the specified element
+of the exact same size, and hides the original element.
+Passing 'enable' = false reverses this.</p></div></div><div class="code"><div class="wrapper">        <span class="kd">var</span> <span class="nx">createShims</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$els</span><span class="p">,</span> <span class="nx">enable</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">$els</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">el</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">$el</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">el</span><span class="p">);</span>
+                <span class="kd">var</span> <span class="nx">$shim</span> <span class="o">=</span> <span class="nx">$el</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">SHIM_KEY</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">$shim</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="nx">$shim</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;&lt;div style=&#39;display:none;&#39;&gt;&lt;/div&gt;&quot;</span><span class="p">);</span>
+                    <span class="nx">$el</span><span class="p">.</span><span class="nx">before</span><span class="p">(</span><span class="nx">$shim</span><span class="p">);</span>
+                    <span class="nx">$el</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">SHIM_KEY</span><span class="p">,</span> <span class="nx">$shim</span><span class="p">);</span>
+                <span class="p">}</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="nx">enable</span><span class="p">)</span>
+                <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Ensure the size is correct with each load- it may have changed.</p></div></div><div class="code"><div class="wrapper">                    <span class="nx">$shim</span><span class="p">.</span><span class="nx">css</span><span class="p">({</span> <span class="nx">height</span><span class="o">:</span> <span class="nx">$el</span><span class="p">.</span><span class="nx">height</span><span class="p">(),</span> <span class="nx">width</span><span class="o">:</span> <span class="nx">$el</span><span class="p">.</span><span class="nx">width</span><span class="p">()</span> <span class="p">}).</span><span class="nx">show</span><span class="p">();</span>
+                    <span class="nx">$el</span><span class="p">.</span><span class="nx">hide</span><span class="p">();</span>
+                <span class="p">}</span>
+                <span class="k">else</span>
+                <span class="p">{</span>
+                    <span class="nx">$el</span><span class="p">.</span><span class="nx">show</span><span class="p">();</span>
+                    <span class="nx">$shim</span><span class="p">.</span><span class="nx">hide</span><span class="p">();</span>
+                <span class="p">}</span>
+            <span class="p">});</span>
+        <span class="p">};</span>
+
+        <span class="kd">var</span> <span class="nx">initializeShimming</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+        <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>First, see if the main panel is specified.
+If so, it's the best choice of elements to hide.</p></div></div><div class="code"><div class="wrapper">            <span class="kd">var</span> <span class="nx">$badEls</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">SELECTOR_MAIN_PANEL</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">$badEls</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Otherwise, look for individually marked bad elements to hide.</p></div></div><div class="code"><div class="wrapper">                <span class="nx">$badEls</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">SELECTOR_BAD_ELEMENT</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nx">$badEls</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">onopen</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">level</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="nx">createShims</span><span class="p">(</span><span class="nx">$badEls</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="p">});</span>
+
+                <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">onbeforeclose</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">level</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="nx">createShims</span><span class="p">(</span><span class="nx">$badEls</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="p">});</span>
+            <span class="p">}</span>
+        <span class="p">};</span>
+
+        <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span>
+        <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>This will run in a content window. They need the events disabled immediately.</p></div></div><div class="code"><div class="wrapper">            <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span> <span class="o">&amp;&amp;</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">_isContent</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">dialog</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">getCurrent</span><span class="p">();</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">dialog</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;load&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">preventWindowTouchEvents</span><span class="p">(</span><span class="nx">dialog</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span> <span class="p">});</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">else</span>
+            <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>This is for the host window.</p></div></div><div class="code"><div class="wrapper">                <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">onopen</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">preventWindowTouchEvents</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span> <span class="p">});</span>
+                <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">onbeforeclose</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">preventWindowTouchEvents</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span> <span class="p">});</span>
+
+                <span class="nx">initializeShimming</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span></div></div></div></div></body></html>

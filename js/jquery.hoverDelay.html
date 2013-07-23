@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="en"><head><title>js\jquery.hoverDelay</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="js\jquery.hoverDelay"><meta name="groc-project-path" content="js\jquery.hoverDelay.js"><meta name="groc-github-url" content="https://github.com/labaneilers/SkinnyJS"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/labaneilers/SkinnyJS/blob/master/js\jquery.hoverDelay.js">js\jquery.hoverDelay.js</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">//Simplified version of hoverIntent.</span>
+    <span class="c1">//Supports distinct over and out delays</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">hoverDelay</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">_defaults</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nx">over</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{},</span>
+            <span class="nx">out</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{},</span>
+            <span class="nx">delayOver</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="nx">delayOut</span><span class="o">:</span> <span class="mi">0</span>
+        <span class="p">};</span>
+        
+        <span class="kd">var</span> <span class="nx">_options</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">_defaults</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+        
+        <span class="c1">//For each element in the jQuery collection,</span>
+        <span class="c1">//assign a mouseover and mouseout event handlers</span>
+        <span class="c1">//that have been &quot;debounced&quot; (wrapped with setTimeouts).</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">overTimer</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+            <span class="kd">var</span> <span class="nx">outTimer</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+            
+            <span class="kd">var</span> <span class="nx">clearTimers</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">overTimer</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="nx">clearTimeout</span><span class="p">(</span><span class="nx">overTimer</span><span class="p">);</span>
+                <span class="p">}</span>
+                
+                <span class="k">if</span> <span class="p">(</span><span class="nx">outTimer</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="nx">clearTimeout</span><span class="p">(</span><span class="nx">outTimer</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">};</span>
+            
+            <span class="kd">var</span> <span class="nx">mouseOver</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+                <span class="nx">clearTimers</span><span class="p">();</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="nx">_options</span><span class="p">.</span><span class="nx">delayOver</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="nx">_options</span><span class="p">.</span><span class="nx">over</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">e</span><span class="p">);</span>
+                <span class="p">}</span>
+                <span class="k">else</span>
+                <span class="p">{</span>
+                    <span class="nx">overTimer</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">over</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">me</span><span class="p">,</span> <span class="nx">e</span><span class="p">);</span> <span class="p">},</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">delayOver</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">};</span>
+            
+            <span class="kd">var</span> <span class="nx">mouseOut</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+                <span class="nx">clearTimers</span><span class="p">();</span>
+                
+                <span class="k">if</span> <span class="p">(</span><span class="nx">_options</span><span class="p">.</span><span class="nx">delayOut</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="nx">_options</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">e</span><span class="p">);</span>
+                <span class="p">}</span>
+                <span class="k">else</span>
+                <span class="p">{</span>
+                    <span class="nx">outTimer</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">me</span><span class="p">,</span> <span class="nx">e</span><span class="p">);</span> <span class="p">},</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">delayOut</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">};</span>
+        
+            <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">hover</span><span class="p">(</span><span class="nx">mouseOver</span><span class="p">,</span> <span class="nx">mouseOut</span><span class="p">);</span>
+        <span class="p">});</span>
+        
+        <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    
+<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span></div></div></div></div></body></html>
