@@ -72,12 +72,10 @@
                 {
                     try 
                     {
-                        /*jsl:ignore*/
                         if (w.frames[0] instanceof Window && w.frames[f] === target)
                         {
                             return 'f,' + f;
                         }
-                        /*jsl:end*/
                     } 
                     catch (e) 
                     {

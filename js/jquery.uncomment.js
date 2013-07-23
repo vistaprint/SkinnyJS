@@ -1,6 +1,4 @@
-﻿/*jsl:option explicit*/
-
-(function($)
+﻿(function($)
 {
     $.fn.uncomment = function()
     {

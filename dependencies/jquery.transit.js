@@ -693,4 +693,3 @@
   // Export some functions for testable-ness.
   $.transit.getTransitionValue = getTransition;
 })(jQuery);
-/*jsl:end*/
