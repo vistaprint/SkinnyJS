@@ -19,7 +19,7 @@ Skinny libraries
 * [jQuery.htmlEncode](http://labaneilers.github.io/SkinnyJS/js/jquery.htmlEncode.html): Bare bones HTML encoding
 * [jQuery.imageSize](http://labaneilers.github.io/SkinnyJS/js/jquery.imageSize.html): Some utilities for dealing with image sizes, async loading, and fitting images to a bounding box
 * [jQuery.isVisibleKeyCode](http://labaneilers.github.io/SkinnyJS/js/jquery.isVisibleKeyCode.html): Extension to jQuery.Event which indicates if a keypress is a visible character (i.e. not a function or modifier key)
-* [jQuery.msAjax](http://labaneilers.github.io/SkinnyJS/js/jquery.msAjax.html): Microsoft freindly AJAX. Handles the quirks of ASMX, WCF, DataJsonContractSerializer, Microsoft's JSON date format, and provides an interface identical to jQuery.ajax().
+* [jQuery.msAjax](http://labaneilers.github.io/SkinnyJS/js/jquery.msAjax.html): Microsoft friendly AJAX. Handles the quirks of ASMX, WCF, DataJsonContractSerializer, Microsoft's JSON date format, and provides an interface identical to jQuery.ajax().
 * [jQuery.ns](http://labaneilers.github.io/SkinnyJS/js/jquery.ns.html): Declare namespaces without boilerplate
 * [jQuery.postMessage](http://labaneilers.github.io/SkinnyJS/js/jquery.postMessage.html): Provides cross-document messaging support, works on all browsers to IE6 (without URL fragments and polling).
 * [jQuery.proxyAll](http://labaneilers.github.io/SkinnyJS/js/jquery.proxyAll.html): Binds functions to their host object (like jQuery.proxy(), but for all functions declared as properties of an object at once)
@@ -29,5 +29,5 @@ Skinny libraries
 
 Skinny UI components
 ----------
-* jQuery.menu: A traditional heirarchical menu widget, designed from the ground up to be both touch and mouse friendly. TODO: Get existing docs from the wiki
+* jQuery.menu: A traditional hierarchical menu widget, designed from the ground up to be both touch and mouse friendly. TODO: Get existing docs from the wiki
 * jQuery.modalDialog: A powerful modal dialog system that works across all devices: TODO: Get existing docs from the wiki
