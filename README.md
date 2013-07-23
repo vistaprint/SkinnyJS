@@ -6,8 +6,7 @@ skinny.js libraries depend only on jQuery, and in a few cases, each other. They 
 
 Skinny libraries
 ----------
-* jQuery.partialLoad: Works like jQuery.load, but is more intelligent about executing downloaded scripts (i.e. don't re-run scripts that are already loaded)
-
+* [jQuery.partialLoad](http://labaneilers.github.io/SkinnyJS/js/jquery.partialLoad.html): Works like jQuery.load, but is more intelligent about executing downloaded scripts (i.e. don't re-run scripts that are already loaded)
 * [jQuery.clientRect](http://labaneilers.github.io/SkinnyJS/js/jquery.clientRect.html): Gets element coordinates several orders of magnitude more efficiently than jQuery.top()/left()
 * [jQuery.delimitedString](http://labaneilers.github.io/SkinnyJS/js/jquery.delimitedString.html): Base class for parsing delimited strings, such as querystrings or CSS styles
 * [jQuery.queryString](http://labaneilers.github.io/SkinnyJS/js/jquery.queryString.html): Parses querystrings (the opposite of jQuery.param())
