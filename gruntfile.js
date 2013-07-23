@@ -18,7 +18,8 @@ module.exports = function(grunt)
                         "$": true,
                         "module": true,
                         "test": true,
-                        "equal": true
+                        "equal": true,
+                        "jQuery": true
                     }
                 },
                 files: 
