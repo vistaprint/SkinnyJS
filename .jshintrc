@@ -1,0 +1,23 @@
+{
+    "boss": false,
+    "browser": true,
+    "curly": true,
+    "devel": false,
+    "eqeqeq": false,
+    "eqnull": true,
+    "expr": true,
+    "evil": false,
+    "immed": true,
+    "latedef": true,
+    "laxcomma": false,
+    "newcap": false,
+    "noarg": true,
+    "smarttabs": false,
+    "sub": true,
+    "trailing": false,
+    "undef": true,
+    "globals":
+    {
+        "jQuery": true
+    }
+}

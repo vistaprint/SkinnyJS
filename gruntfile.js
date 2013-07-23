@@ -29,27 +29,7 @@ module.exports = function(grunt)
             },
             options:
             {
-                boss: false,
-                browser: true,
-                curly: true,
-                devel: false,
-                eqeqeq: false,
-                eqnull: true,
-                expr: true,
-                evil: false,
-                immed: true,
-                latedef: true,
-                laxcomma: false,
-                newcap: false,
-                noarg: true,
-                smarttabs: false,
-                sub: true,
-                trailing: false,
-                undef: true,
-                globals:
-                {
-                    jQuery: true
-                }
+                jshintrc: '.jshintrc'
             }
         },
         qunit: {
@@ -60,8 +40,8 @@ module.exports = function(grunt)
             javascript: ["js/**/*.js"],
             options: 
             {
-                github: true,
-                "repository-url": "https://github.com/labaneilers/SkinnyJS.git"
+                github: true //,
+                //"repository-url": "https://github.com/labaneilers/SkinnyJS.git"
             }
         }
     });
@@ -70,12 +50,12 @@ module.exports = function(grunt)
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-groc');
 
-    // Travis CI task.
-    grunt.registerTask('travis', 'default');
-
     // Default task(s).
     grunt.registerTask('default', ['jshint', 'qunit']);
 
-    // Default task(s).
+    // Travis CI task.
+    grunt.registerTask('travis', 'default');
+
+    // Documentation task(s).
     grunt.registerTask('docs', ['groc']);
 };
