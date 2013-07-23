@@ -23,6 +23,8 @@ Skinny libraries
 * jQuery.postMessage: Provides cross-document messaging support, works on all browsers to IE6 (without URL fragments and polling).
 * jQuery.proxyAll: Binds functions to their host object (like jQuery.proxy(), but for all functions declared as properties of an object at once)
 * jQuery.uncomment: Allows lazy evaluation of HTML blobs by removing them from comment blocks
+* jQuery.customEvent: TODO
+* jQuery.cookie: TODO
 
 Skinny UI components
 ----------
