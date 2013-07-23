@@ -7,7 +7,7 @@
 // Note: jQuery's offset and dimensions methods are inefficient due to an API that 
 // won't give you the whole rectangle, so getBoundingClientRect() is called multiple times.
 // jQuery.clientRect() can be orders of magnitude more performant (depending on the size and complexity of the DOM).
-// That said, for cases where you're just calling this once in a while, just use jQuery.offset() and jQuery.height()/width()
+// That said, for cases where you're just calling this once in a while, just use jQuery.offset() and jQuery.height()/width().
 
 (function($)
 {
