@@ -8,6 +8,7 @@
  */
 (function(window, $)
 {
+    // TODO does this belong here?
     //Because we want to surface ajax errors (and trap them with global error handlers for logging), 
     //All ajax calls done in jquery.ajax which encounter an error should throw an exception
     //if they don't already have an explicit error handler specified.
