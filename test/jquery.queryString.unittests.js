@@ -2,33 +2,39 @@
 {
     module("jquery.querystring");
 
-    var UNDEFINED;
-
-    test("$.querystring decode", function()
+    function decodeTest(name, value, expected)
     {
-        var qs = {
-            keyString: "string 1 2 3",
-            keyStringNewLine: "string 1 2 3\nstring 1 2 3",
-            keyInt: 123,
-            keyFloat: 1.23,
-            keyZero: 0,
-            keyEmpty: "",
-            keyNull: null,
-            keyUndefined: UNDEFINED,
-            keyNaN: NaN
-        };
+        test("$.querystring decode: " + name, function()
+        {
+            var qs = {
+                keyString: value
+            };
 
-        var encoded = $.param(qs);
-        var decoded = $.deparam(encoded);
+            var encoded = $.param(qs);
+            var decoded = $.deparam(encoded);
 
-        equal(decoded.keyString, "string 1 2 3");
-        equal(decoded.keyStringNewLine, "string 1 2 3\nstring 1 2 3");
-        equal(decoded.keyInt, "123");
-        equal(decoded.keyFloat, "1.23");
-        equal(decoded.keyZero, "0");
-        equal(decoded.keyEmpty, "");
-        equal(decoded.keyNull, "null");
-        equal(decoded.keyUndefined, "undefined");
-        equal(decoded.keyNaN, "NaN");
-    });
+            equal(decoded.keyString, expected);
+        });
+    }
+
+    var BASIC_STRING = "string 1 2 3";
+    decodeTest("string", BASIC_STRING, BASIC_STRING);
+
+    var STRING_WITH_NEWLINE = "string 1 2 3\nstring 1 2 3";
+    decodeTest("string with newline", STRING_WITH_NEWLINE, STRING_WITH_NEWLINE);
+
+    decodeTest("int", 123, "123");
+
+    decodeTest("float", 1.23, "1.23");
+
+    decodeTest("zero", 0, "0");
+
+    decodeTest("empty string", "", "");
+
+    decodeTest("null", null, "");
+
+    var UNDEFINED;
+    decodeTest("undefined", UNDEFINED, "");
+
+    decodeTest("NaN", NaN, "NaN");
 });
