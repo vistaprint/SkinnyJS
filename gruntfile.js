@@ -40,7 +40,7 @@ module.exports = function(grunt)
             javascript: ["js/**/*.js"],
             options: 
             {
-                out: "../.git/docs-temp/"
+                out: ".git/docs-temp/"
             }
         }
     });
