@@ -50,11 +50,15 @@ module.exports = function(grunt)
                     jQuery: true
                 }
             }
+        },
+        qunit: {
+          all: ['test/**/*.html']
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-qunit');
 
     // Default task(s).
-    grunt.registerTask('default', ['jshint']);
+    grunt.registerTask('default', ['jshint', 'qunit']);
 };
