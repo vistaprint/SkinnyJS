@@ -74,5 +74,8 @@ module.exports = function(grunt)
     grunt.registerTask('travis', 'default');
 
     // Default task(s).
-    grunt.registerTask('default', ['jshint', 'qunit', 'groc']);
+    grunt.registerTask('default', ['jshint', 'qunit']);
+
+    // Default task(s).
+    grunt.registerTask('docs', ['groc']);
 };
