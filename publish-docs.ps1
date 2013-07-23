@@ -6,3 +6,13 @@ git checkout gh-pages
 
 copy -Force -Recurse .git\docs-temp\* .
 
+pause
+
+git add .
+git commit -m "Updating documentation"
+git push
+
+pause
+
+git checkout master
+
