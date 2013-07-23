@@ -60,7 +60,8 @@ module.exports = function(grunt)
             javascript: ["js/**/*.js"],
             options: 
             {
-                out: "docs/"
+                github: true,
+                "repository-url": "https://github.com/labaneilers/SkinnyJS.git"
             }
         }
     });
