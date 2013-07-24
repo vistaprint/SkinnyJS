@@ -1,32 +1,43 @@
+// ## jQuery.partialLoad
+
 // Similar to $.load(), though this will execute scripts on the target page more intelligently.
+
 // If a target selector is passed, it will load only the target DOM fragment into the current DOM element.
-// In this case, it will execute all javascripts in the target DOM. Inline scripts in the target DOM will also be executed.
+// In this case, it will execute all scripts in the target DOM. Inline scripts in the target DOM will also be executed.
 // If no target selector is passed, it will load ALL scripts on the requested page, 
 // EXCEPT for scripts that have been loaded on the host page already.
 // Inline scripts from the whole page will be executed.
 
+// ### Usage
+
+//     $(".contentRegion").partialLoad( // The jQuery object's DOM element will be populated with the web service content
+//          "/some-html-content", // The URL of the web service
+//          ".interesting-part", // A selector defining the DOM elements you want to extract from the HTML returned by the web service
+//          { somekey: "somevalue" }, // (optional) A data object. If supplied, it will be POSTed to the web service
+//          myCallback); // A callback fired when the load is complete (or fails)
+
+// ### Source
+
 (function(window, $)
 {
-    $.fn.partialLoad = function (url, target, params, callback) 
+    $.fn.partialLoad = function (url, target, data, callback) 
     {
         // Default to a GET request
         var type = "GET";
 
-        // If the third parameter was provided
-        if (params) 
+        // Overload simulation
+        if (data) 
         {
-            // If it's a function
-            if (jQuery.isFunction(params)) 
+            // If the third param is a function, assume that it's the callback
+            if (jQuery.isFunction(data)) 
             {
-                // We assume that it's the callback
-                callback = params;
-                params = undefined;
-
-            // Otherwise, build a param string
+                callback = data;
+                data = undefined;
             } 
-            else if (typeof params === "object") 
+            // Otherwise, its data to POST
+            else if (typeof data === "object") 
             {
-                params = jQuery.param(params, jQuery.ajaxSettings.traditional);
+                data = jQuery.param(data, jQuery.ajaxSettings.traditional);
                 type = "POST";
             }
         }
@@ -38,23 +49,29 @@
             url: url,
             type: type,
             dataType: "html",
-            data: params,
+            data: data,
             // Complete callback (responseText is used internally)
-            complete: function( jqXHR, status, responseText ) {
+            complete: function( jqXHR, status, responseText ) 
+            {
+                // This section derived from the internals of jQuery.fn.load()
+
                 // Store the response as specified by the jqXHR object
                 responseText = jqXHR.responseText;
+
                 // If successful, inject the HTML into all the matched elements
-                if ( jqXHR.isResolved() ) {
-                    // #4825: Get the actual response in case
+                if (jqXHR.isResolved()) 
+                {
+                    // jQuery Bug 4825: Get the actual response in case
                     // a dataFilter is present in ajaxSettings
-                    jqXHR.done(function( r ) {
+                    jqXHR.done(function(r) 
+                    {
                         responseText = r;
                     });
 
                     var scripts = [];
                     var fragment = getFragmentAndScripts(responseText, target, self, scripts);
 
-                    // this call might have exceptions, but we still want the callbacks to happen
+                    // This call might cause exceptions, but we still want the callbacks to happen
                     try 
                     {
                         // See if a selector was specified
@@ -66,7 +83,7 @@
                             {
                                 if (elem.src) 
                                 {
-                                    // Load scripts that haven't yet beeb loaded
+                                    // Load scripts that haven't yet been loaded
                                     execScriptUnique(elem.src);
                                 } 
                                 else 
@@ -88,7 +105,8 @@
                 }
             }
         });
-
+        
+        // TODO: I think there's a jQuery API way to provide access the resulting promise.
         return this;
     };
 
@@ -98,7 +116,6 @@
 
         // Build a 'set' of already loaded scripts so we can ensure
         // that they don't get loaded more than once.
-
         if (!window.__currentScripts)
         {
             window.__currentScripts = {};
@@ -146,7 +163,6 @@
         else
         {
             // No selector was specified. Load all scripts on the page, as long as they haven't been loaded before.
-
             var fragment = $.buildFragment([responseText], context, scripts);
 
             if (scripts.length) 
