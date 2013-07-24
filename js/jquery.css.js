@@ -1,5 +1,26 @@
 /// <reference path="jquery.delimitedString.js" />
 
+// ## jQuery.contentSize
+
+// Returns the height and width of the specified page's content: the total scrolling size.
+
+// Measures the document content using a more accurate approach relying on body.scrollHeight,
+// especially when the content is in an iframe- in which case, the body.scrollHeight always returns
+// the viewport size, even if the content is smaller.
+
+// ### Usage
+
+//     // Gets the content width, including scrollbars
+//     var rect = $(window).contentSize();
+//     
+//     // Gets the content width, excluding scrollbars
+//     var rect = $(window).contentSize(true);
+//     
+//     // Works in a window inside an iframe
+//     var rect = $(iframeWindow).contentSize();
+
+// ### Source
+
 (function($)
 {
     var _mapCamelToDash = {};

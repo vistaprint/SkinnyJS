@@ -1,7 +1,6 @@
 /// <reference path="jquery.clientRect.js" />
 
 // ## jQuery.contentSize
-
 // Returns the height and width of the specified page's content: the total scrolling size.
 
 // Measures the document content using a more accurate approach relying on body.scrollHeight,
@@ -18,6 +17,9 @@
 //     
 //     // Works in a window inside an iframe
 //     var rect = $(iframeWindow).contentSize();
+
+// ### Dependencies
+// This library uses jquery.clientRect (part of skinny.js) to measure elements efficiently.
 
 // ### Source
 
