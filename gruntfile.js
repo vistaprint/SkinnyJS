@@ -1,6 +1,8 @@
 /*jshint node: true */
 /*global module */
 
+var generateHomepage = require("./site/generate-homepage");
+
 module.exports = function(grunt)
 {
     // Project configuration.
@@ -37,7 +39,7 @@ module.exports = function(grunt)
         },
         groc:
         {
-            javascript: ["js/**/*.js", "README.md"],
+            javascript: ["js/**/*.js"],
             options: 
             {
                 out: ".git/docs-temp/"
@@ -56,5 +58,6 @@ module.exports = function(grunt)
     grunt.registerTask('travis', 'default');
 
     // Documentation task(s).
-    grunt.registerTask('docs', ['groc']);
+    grunt.registerTask('gen-homepage', "Generates index.html from README.md", generateHomepage);
+    grunt.registerTask('docs', ['gen-homepage', 'groc']);
 };
