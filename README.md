@@ -1,13 +1,12 @@
 skinny.js: Slim little jQuery plugins [![Build Status](https://secure.travis-ci.org/labaneilers/SkinnyJS.png?branch=master)](http://travis-ci.org/labaneilers/SkinnyJS)
 ===========================================
+
+[View the project page](http://labaneilers.github.io/SkinnyJS)
+
 <!--ContentStart-->
 skinny.js is a collection of jQuery plugins that are useful for building web applications. Its design is a response to having used too many JavaScript frameworks that require you to buy into a particular philosophy, coding style, or architecture. Instead, skinny.js embraces the single responsibility principle, and aims to create tiny, granular libraries with minimal dependencies.
 
 skinny.js libraries depend only on jQuery, and in a few cases, each other. They are not intended to be used as a bundle; so if you need one library, you are encouraged to use only it and its dependencies.
-
-[View the source on Github](https://github.com/labaneilers/SkinnyJS)
-
-[View the project page](http://labaneilers.github.io/SkinnyJS)
 
 Skinny libraries
 ----------
