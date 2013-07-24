@@ -6,39 +6,6 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
 
   tableOfContents = [
     {
-      "type": "file",
-      "data": {
-        "language": {
-          "nameMatchers": [".md"],
-          "commentsOnly": true,
-          "name": "Markdown"
-        },
-        "sourcePath": "C:\\dev\\skinny\\README.md",
-        "projectPath": "README.md",
-        "targetPath": "index",
-        "title": "index"
-      },
-      "depth": 1,
-      "outline": [
-        {
-          "type": "heading",
-          "data": {
-            "level": 2,
-            "title": "Skinny libraries",
-            "slug": "skinny-libraries"
-          },
-          "depth": 2
-        }, {
-          "type": "heading",
-          "data": {
-            "level": 2,
-            "title": "Skinny UI components",
-            "slug": "skinny-ui-components"
-          },
-          "depth": 2
-        }
-      ]
-    }, {
       "type": "folder",
       "data": {
         "path": "js",
