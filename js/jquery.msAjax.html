@@ -1,61 +1,47 @@
 <!DOCTYPE html><html lang="en"><head><title>js\jquery.msAjax</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="js\jquery.msAjax"><meta name="groc-project-path" content="js\jquery.msAjax.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">js\jquery.msAjax.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="c1">/// &lt;reference path=&quot;../dependencies/json2.js&quot; /&gt;</span>
-<span class="c1">/// &lt;reference path=&quot;../dependencies/js-iso8601-ms.js&quot; /&gt;</span>
+<span class="c1">/// &lt;reference path=&quot;../dependencies/js-iso8601-ms.js&quot; /&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="jquerymsajax-plugin">jQuery.msAjax plugin</h2>
 
-<span class="cm">/** </span>
-<span class="cm"> * Support Microsoft web services (ASMX, WCF, JsonDataContractSerializer)</span>
-<span class="cm"> *</span>
-<span class="cm"> * @author Laban Eilers leilers@vistaprint.com</span>
-<span class="cm"> */</span>
-<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">$</span><span class="p">)</span>
-<span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>TODO does this belong here?</p></div></div><div class="code"><div class="wrapper">    <span class="c1">//Because we want to surface ajax errors (and trap them with global error handlers for logging), </span>
-    <span class="c1">//All ajax calls done in jquery.ajax which encounter an error should throw an exception</span>
-    <span class="c1">//if they don&#39;t already have an explicit error handler specified.</span>
-    <span class="c1">//NOTE: adding a fail() handler to the Deferred object returned by $.ajax() doesn&#39;t prevent</span>
-    <span class="c1">//this default logging. You would explicitly need to handle the error by specifying a </span>
-    <span class="c1">//settings.error handler.</span>
+<p>Eases the pain of dealing with legacy Microsoft web services technologies (ASMX, WCF, JsonDataContractSerializer).</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Note: This is not necessary when using ASP.NET MVC 4+ with Web API, as long as you're configured to use JSON.NET.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="dependencies">Dependencies</h3>
 
-    <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ajaxError</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">xhr</span><span class="p">,</span> <span class="nx">settings</span><span class="p">,</span> <span class="nx">ex</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">settings</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="c1">//TODO can we publish the actual json with the exception?</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="nx">ex</span> <span class="o">+</span> <span class="s2">&quot; from $.ajax(): &quot;</span> <span class="o">+</span> <span class="nx">settings</span><span class="p">.</span><span class="nx">url</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">});</span>
-
-    <span class="cm">/**</span>
-<span class="cm">    * Remove ASMX specific metadata from JSON</span>
-<span class="cm">    */</span>
-    <span class="kd">var</span> <span class="nx">msJsonSanitizer</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span>
+<p>To use this plugin with less-than-awesome browsers that don't support JSON.parse() or JSON.stringify(), you should include
+a polyfill, such as <a href="https://github.com/douglascrockford/JSON-js/blob/master/json2.js">Doug Crockford's json2.js</a>. </p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="example-usage">Example Usage:</h3></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h4 id="asmx">ASMX</h4></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>$.ajaxMs({
+    url: 'PersonWebService.asmx', 
+    methodName: 'GetPerson', 
+    data: {'personId': 1}, 
+    success: function(oPerson) { alert(oPerson.Name); },
+    error: function() { logSomething(arguments); }
+});
+</code></pre></div></div><div class="code"><div class="wrapper"> </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h4 id="wcf-rest-style">WCF (REST style)</h4></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>$.ajaxMs({
+    url: 'PersonWebService.svc/People/1', 
+    success: function(oPerson) { alert(oPerson.Name); },
+    error: function() { logSomething(arguments); }
+});
+</code></pre></div></div><div class="code"><div class="wrapper"><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">$</span><span class="p">)</span>
+<span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Remove ASMX specific metadata from JSON</p></div></div><div class="code"><div class="wrapper">    <span class="kd">var</span> <span class="nx">msJsonSanitizer</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
+    <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Rehydrade date values</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span>
         <span class="p">{</span>   
             <span class="k">return</span> <span class="nx">msJsonDateOnlySanitizer</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
         <span class="p">}</span>
         <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;object&quot;</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">&amp;&amp;</span> <span class="nx">value</span><span class="p">.</span><span class="nx">__type</span><span class="p">)</span>
+        <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>ASMX adds a "__type" property to aid in return-trip deserialization.
+This isn't useful most of the time.</p></div></div><div class="code"><div class="wrapper">            <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">&amp;&amp;</span> <span class="nx">value</span><span class="p">.</span><span class="nx">__type</span><span class="p">)</span>
             <span class="p">{</span>
-                <span class="k">delete</span> <span class="nx">value</span><span class="p">.</span><span class="nx">__type</span><span class="p">;</span> <span class="c1">//ASMX adds a &quot;__type&quot; property which is unnecessary.</span>
+                <span class="k">delete</span> <span class="nx">value</span><span class="p">.</span><span class="nx">__type</span><span class="p">;</span> 
             <span class="p">}</span>
         <span class="p">}</span>
 
         <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
     <span class="p">};</span>
-    
-    <span class="kd">var</span> <span class="nx">msJsonDateOnlySanitizer</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Converts date strings in ISO8601 or Microsoft format to JavaScript dates</p></div></div><div class="code"><div class="wrapper">    <span class="kd">var</span> <span class="nx">msJsonDateOnlySanitizer</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span>
         <span class="p">{</span>   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Perform strict parsing so that strings that are not full dates are not parsed as dates
 Example of a partial date:       "2013"
-Example of a full ISO8601 date:  "2013-08-07T21:40:05.121+06:00"</p></div></div><div class="code"><div class="wrapper">            
-            <span class="kd">var</span> <span class="nx">date</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parseISO8601</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span> <span class="c1">//Depends on ms date parsing in js-iso8601.js. True indicates to perform strict parsing.</span>
+Example of a full ISO8601 date:  "2013-08-07T21:40:05.121+06:00"</p></div></div><div class="code"><div class="wrapper">            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Depends on ms date parsing in js-iso8601-ms.js. True indicates to perform strict parsing.</p></div></div><div class="code"><div class="wrapper">            <span class="kd">var</span> <span class="nx">date</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parseISO8601</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span> 
             <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">date</span><span class="p">))</span>
             <span class="p">{</span>
                 <span class="k">return</span> <span class="nx">date</span><span class="p">;</span>
-            <span class="p">}</span>
-
-            <span class="nx">date</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parseMsDate</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span> <span class="c1">//Depends on ms date parsing in js-iso8601.js. This function is already strict.</span>
+            <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Depends on ms date parsing in js-iso8601.js. This function is already strict.</p></div></div><div class="code"><div class="wrapper">            <span class="nx">date</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parseMsDate</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span> 
             <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">date</span><span class="p">))</span>
             <span class="p">{</span>
                 <span class="k">return</span> <span class="nx">date</span><span class="p">;</span>
@@ -63,12 +49,7 @@ Example of a full ISO8601 date:  "2013-08-07T21:40:05.121+06:00"</p></div></div>
         <span class="p">}</span>
 
         <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
-    <span class="p">};</span>
-
-    <span class="cm">/**</span>
-<span class="cm">    * Parses Microsoft JSON, removes the outer container, and revives it.</span>
-<span class="cm">    */</span>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">parseMsJSON</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">preserveType</span><span class="p">)</span>
+    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Parses Microsoft JSON, removes the outer container, and revives it.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">.</span><span class="nx">parseMsJSON</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">preserveType</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">text</span><span class="p">)</span>
         <span class="p">{</span>
@@ -80,14 +61,8 @@ Example of a full ISO8601 date:  "2013-08-07T21:40:05.121+06:00"</p></div></div>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">json</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="k">return</span> <span class="p">{};</span>
-        <span class="p">}</span>
-
-        <span class="c1">//ASMX puts all JSON in a &quot;d&quot; property.</span>
-
-        <span class="k">return</span> <span class="k">typeof</span> <span class="nx">json</span><span class="p">.</span><span class="nx">d</span> <span class="o">!=</span> <span class="s2">&quot;undefined&quot;</span> <span class="o">?</span> <span class="nx">json</span><span class="p">.</span><span class="nx">d</span> <span class="o">:</span> <span class="nx">json</span><span class="p">;</span>
-    <span class="p">};</span>
-
-    <span class="kd">var</span> <span class="nx">recurseJSON</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">holder</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">reviver</span><span class="p">)</span> 
+        <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>ASMX puts all JSON in a "d" property.</p></div></div><div class="code"><div class="wrapper">        <span class="k">return</span> <span class="k">typeof</span> <span class="nx">json</span><span class="p">.</span><span class="nx">d</span> <span class="o">!=</span> <span class="s2">&quot;undefined&quot;</span> <span class="o">?</span> <span class="nx">json</span><span class="p">.</span><span class="nx">d</span> <span class="o">:</span> <span class="nx">json</span><span class="p">;</span>
+    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Recurses through a JSON object and applies the specified reviver</p></div></div><div class="code"><div class="wrapper">    <span class="kd">var</span> <span class="nx">recurseJSON</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">holder</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">reviver</span><span class="p">)</span> 
     <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">holder</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="nx">value</span> <span class="o">==</span> <span class="s2">&quot;object&quot;</span><span class="p">)</span> 
@@ -133,9 +108,7 @@ Example of a full ISO8601 date:  "2013-08-07T21:40:05.121+06:00"</p></div></div>
         <span class="p">}</span>
     <span class="p">};</span>
 
-    <span class="kd">var</span> <span class="nx">reISO</span> <span class="o">=</span> <span class="sr">/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/</span><span class="p">;</span> 
-
-    <span class="nx">$</span><span class="p">.</span><span class="nx">stringifyMsDate</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> 
+    <span class="kd">var</span> <span class="nx">reISO</span> <span class="o">=</span> <span class="sr">/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/</span><span class="p">;</span> </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>A reviver/replacer for JSON.stringify() that converts dates into Microsoft format</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">.</span><span class="nx">stringifyMsDate</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> 
     <span class="p">{</span> 
         <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">value</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span> 
         <span class="p">{</span> 
@@ -148,14 +121,8 @@ Example of a full ISO8601 date:  "2013-08-07T21:40:05.121+06:00"</p></div></div>
             <span class="p">}</span> 
         <span class="p">}</span> 
         <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
-    <span class="p">};</span>
-
-    <span class="cm">/**</span>
-<span class="cm">    * Invoke $.ajax() with all the correct settings and wrappers for Microsoft script services such as ASMX and WCF.</span>
-<span class="cm">    * Otherwise identical to $.ajax() (same settings, arguments, and return values).</span>
-<span class="cm">    * @return jQuery.Deferred</span>
-<span class="cm">    */</span>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">ajaxMs</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">settings</span><span class="p">)</span>
+    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke $.ajax() with all the correct settings and wrappers for Microsoft script services such as ASMX and WCF.
+Otherwise identical to $.ajax() (same settings, arguments, and return values).</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">.</span><span class="nx">msAjax</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">settings</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">settings</span><span class="p">)</span>
         <span class="p">{</span>
@@ -169,37 +136,23 @@ Example of a full ISO8601 date:  "2013-08-07T21:40:05.121+06:00"</p></div></div>
         <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">url</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="nx">settings</span><span class="p">.</span><span class="nx">url</span> <span class="o">=</span> <span class="nx">url</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="c1">//Validate settings</span>
-
-        <span class="nx">validateSetting</span><span class="p">(</span><span class="nx">settings</span><span class="p">,</span> <span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="s2">&quot;$.ajaxAsmx&quot;</span><span class="p">);</span>
-
-        <span class="c1">//Format the data as JSON before post</span>
-
-        <span class="k">if</span> <span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span>
+        <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Validate settings</p></div></div><div class="code"><div class="wrapper">        <span class="nx">validateSetting</span><span class="p">(</span><span class="nx">settings</span><span class="p">,</span> <span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="s2">&quot;$.ajaxAsmx&quot;</span><span class="p">);</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Format the data as JSON before post</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="nx">settings</span><span class="p">.</span><span class="nx">data</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">data</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">stringifyMsDate</span><span class="p">);</span> 
-        <span class="p">}</span>
-
-        <span class="c1">//In ASMX (and REST in general), web service method name gets appended to the URL</span>
-
-        <span class="k">if</span> <span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">methodName</span><span class="p">)</span>
+        <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>In ASMX (and REST in general), web service method name gets appended to the URL</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">methodName</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="nx">settings</span><span class="p">.</span><span class="nx">url</span> <span class="o">+=</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="nx">settings</span><span class="p">.</span><span class="nx">methodName</span><span class="p">;</span> 
         <span class="p">}</span>
 
         <span class="kd">var</span> <span class="nx">coalescedSettings</span> <span class="o">=</span> <span class="p">{};</span>
         <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="nx">coalescedSettings</span><span class="p">,</span> <span class="nx">AJAX_SETTINGS_DEFAULTS</span><span class="p">,</span> <span class="nx">settings</span><span class="p">);</span>
-        
-        <span class="c1">//Useful for testing invalid json</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>   settings.dataFilter = function(data, type)
-   {
-       return "{d:{ 'foo': '/Date(1325394000000-0500)/' }}";
-   };
-</code></pre></div></div><div class="code"><div class="wrapper">        
-        <span class="c1">//For a sync call, return the parsed JSON</span>
-
-        <span class="k">if</span> <span class="p">(</span><span class="nx">coalescedSettings</span><span class="p">.</span><span class="nx">async</span> <span class="o">===</span> <span class="kc">false</span><span class="p">)</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Useful for testing invalid json</p></div></div><div class="code"><div class="wrapper">        <span class="cm">/*       </span>
+<span class="cm">        settings.dataFilter = function(data, type)</span>
+<span class="cm">        {</span>
+<span class="cm">           return &quot;{d:{ &#39;foo&#39;: &#39;/Date(1325394000000-0500)/&#39; }}&quot;;</span>
+<span class="cm">        };</span>
+<span class="cm">        */</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>For a sync call, return the parsed JSON</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">coalescedSettings</span><span class="p">.</span><span class="nx">async</span> <span class="o">===</span> <span class="kc">false</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="kd">var</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">(</span><span class="nx">coalescedSettings</span><span class="p">);</span>
             <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">parseMsJSON</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">,</span> <span class="nx">coalescedSettings</span><span class="p">.</span><span class="nx">preserveType</span><span class="p">);</span>
