@@ -10,20 +10,24 @@ and revives dates into a JavaScript Date object.
 </ul></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><strong>Note</strong>: This is not necessary when using ASP.NET MVC 4+ with Web API (which uses <a href="http://james.newtonking.com/projects/json-net.aspx">JSON.NET</a>) 
 by default). WebAPI uses ISO8601 dates and doesn't add any Microsoft specific properties to JSON objects.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="dependencies">Dependencies</h3>
 
-<p>Depends on date-parse.js.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>To use this plugin with less-than-awesome browsers that don't support JSON.parse() or JSON.stringify(), you should include
-a polyfill, such as <a href="https://github.com/douglascrockford/JSON-js/blob/master/json2.js">Doug Crockford's json2.js</a>. </p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="example-usage">Example Usage:</h3></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h4 id="asmx">ASMX</h4></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>$.ajaxMs({
+<p>jQuery.msAjax has two dependencies:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><ul>
+<li>date-parse.js (also part of skinny.js).</li>
+</ul></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><ul>
+<li>For less-than-awesome browsers that don't support JSON.parse() or JSON.stringify(), you should include
+a polyfill, such as <a href="https://github.com/douglascrockford/JSON-js/blob/master/json2.js">Doug Crockford's json2.js</a>. </li>
+</ul></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="example-usage">Example Usage:</h3></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h4 id="asmx">ASMX</h4></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>$.msAjax({
     url: 'PersonWebService.asmx', 
     methodName: 'GetPerson', 
     data: {'personId': 1}, 
     success: function(oPerson) { alert(oPerson.Name); },
     error: function() { logSomething(arguments); }
 });
-</code></pre></div></div><div class="code"><div class="wrapper"> </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h4 id="wcf-rest-style">WCF (REST style)</h4></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>$.ajaxMs({
+</code></pre></div></div><div class="code"><div class="wrapper"> </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h4 id="wcf-rest-style">WCF (REST style)</h4></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>$.msAjax({
     url: 'PersonWebService.svc/People/1', 
     success: function(oPerson) { alert(oPerson.Name); },
     error: function() { logSomething(arguments); }
 });
-</code></pre></div></div><div class="code"><div class="wrapper"><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">$</span><span class="p">)</span>
+</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="source">Source</h3></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">$</span><span class="p">)</span>
 <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Remove ASMX specific metadata from JSON</p></div></div><div class="code"><div class="wrapper">    <span class="kd">var</span> <span class="nx">msJsonSanitizer</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
     <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Rehydrate date values</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span>
         <span class="p">{</span>   

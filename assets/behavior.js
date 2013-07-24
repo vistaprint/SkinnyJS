@@ -73,6 +73,14 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "depth": 4
                     }
                   ]
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 3,
+                    "title": "Source",
+                    "slug": "source"
+                  },
+                  "depth": 3
                 }
               ]
             }
@@ -97,18 +105,29 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "type": "heading",
               "data": {
                 "level": 2,
-                "title": "jQuery.clientRect()",
+                "title": "jQuery.clientRect",
                 "slug": "jqueryclientrect"
               },
-              "depth": 2
-            }, {
-              "type": "heading",
-              "data": {
-                "level": 2,
-                "title": "Public API",
-                "slug": "public-api"
-              },
-              "depth": 2
+              "depth": 2,
+              "children": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 3,
+                    "title": "Usage",
+                    "slug": "usage"
+                  },
+                  "depth": 3
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 3,
+                    "title": "Source",
+                    "slug": "source"
+                  },
+                  "depth": 3
+                }
+              ]
             }
           ]
         }, {
@@ -469,6 +488,14 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "depth": 4
                     }
                   ]
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 3,
+                    "title": "Source",
+                    "slug": "source"
+                  },
+                  "depth": 3
                 }
               ]
             }
