@@ -1,23 +1,44 @@
 /// <reference path="jquery.delimitedString.js" />
 
-// ## jQuery.contentSize
+// ## jQuery.css
+// Parses/encodes CSS strings. For example, the following CSS string:
 
-// Returns the height and width of the specified page's content: the total scrolling size.
+//     "background-color:red; width:25px; border-left: 1px black solid;
 
-// Measures the document content using a more accurate approach relying on body.scrollHeight,
-// especially when the content is in an iframe- in which case, the body.scrollHeight always returns
-// the viewport size, even if the content is smaller.
+// can be transformed into a JavaScript object:
+
+//     {
+//         "backgroundColor": "red",
+//         "width": "25px",
+//         "borderLeft": "1px black solid"
+//     }
+
+// or vice-versa.
 
 // ### Usage
 
-//     // Gets the content width, including scrollbars
-//     var rect = $(window).contentSize();
-//     
-//     // Gets the content width, excluding scrollbars
-//     var rect = $(window).contentSize(true);
-//     
-//     // Works in a window inside an iframe
-//     var rect = $(iframeWindow).contentSize();
+// Parse a CSS string to a JavaScript object:
+
+//     var parsed = $.parseCssString("color: blue; padding-top: 3px");
+//     parsed.paddingTop === "3px";  // true
+
+// Encode a JavaScript object as a CSS string:
+
+//     var encoded = $.encodeCssString({ color: "blue", paddingTop: "3px" });
+//     encoded === "color:blue;padding-top:3px";  // true
+
+// Transform camel-cased CSS properties (for JavaScript) to dash case (for CSS):
+
+//     var dashCased = $.camelToDashCase("paddingTop");
+//     dashCased === "padding-top";  // true
+
+// Transform dash case (for CSS) to camel-cased CSS properties (for JavaScript):
+
+//     var camelCased = $.dashToCamelCase("padding-top");
+//     camelCased === "paddingTop";  // true
+
+// ### Dependencies
+// This library uses jquery.delimitedString (part of skinny.js), which abstracts encoding/decoding of key-value pairs.
 
 // ### Source
 
@@ -25,33 +46,30 @@
 {
     var _mapCamelToDash = {};
 
-    /**
-    * Takes a css property in object syntax (i.e. "textAlign") and converts it to CSS string syntax (i.e. "text-align")
-    * @param {string} sProperty A css property name in object syntax
-    * @return {string}
-    */
+
+    // Takes a css property in object syntax (i.e. "textAlign") and converts it to CSS string syntax (i.e. "text-align")
     $.camelToDashCase = function(prop)
     {
         //Cache for performance- big win.
-        if (!_mapCamelToDash[prop])
+        var value = _mapCamelToDash[prop];
+        if (!value)
         {
-            _mapCamelToDash[prop] = prop.replace(/([A-Z])/g, "-$1").toLowerCase();
+            value = prop.replace(/([A-Z])/g, "-$1").toLowerCase();
+            _mapCamelToDash[prop] = value;
         }
     
-        return _mapCamelToDash[prop];
+        return value;
     };
 
     var _mapDashToCamel = {};
 
-    /**
-    * Takes a css property in css syntax (i.e. "text-align") and converts it to object syntax (i.e. "textAlign")
-    * @param {string} sProperty A css property name in css syntax
-    * @return {string}
-    */
+    // Takes a css property in css syntax (i.e. "text-align") and converts it to object syntax (i.e. "textAlign")
     $.dashToCamelCase = function(sProperty)
     {
+        var value = _mapDashToCamel[sProperty];
+
         //Cache for performance: big win
-        if (!_mapDashToCamel[sProperty])
+        if (!value)
         {
             if (sProperty.indexOf("-") != -1)
             {
@@ -72,15 +90,17 @@
                     }
                 }
         
-                _mapDashToCamel[sProperty] = aOut.join("");
+                value = aOut.join("");
             }
             else
             {
-                _mapDashToCamel[sProperty] = sProperty;
+                value = sProperty;
             }
+
+            _mapDashToCamel[sProperty] = value;
         }
     
-        return _mapDashToCamel[sProperty];
+        return value;
     };
 
     var cssKeyEncoder = function(s)

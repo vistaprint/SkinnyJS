@@ -9,13 +9,16 @@
 
 // ### Usage
 
-//     // Gets the content width, including scrollbars
+// Gets the content width, including scrollbars:
+
 //     var rect = $(window).contentSize();
-//     
-//     // Gets the content width, excluding scrollbars
+
+// Gets the content width, excluding scrollbars: 
+
 //     var rect = $(window).contentSize(true);
-//     
-//     // Works in a window inside an iframe
+
+// Works in a window inside an iframe:
+
 //     var rect = $(iframeWindow).contentSize();
 
 // ### Dependencies
