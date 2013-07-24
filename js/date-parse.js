@@ -53,7 +53,6 @@
 
         strict = !!strict;
 
-        // 1 YYYY or ±YYYYYY 2 MM 3 DD 4 HH 5 mm 6 ss 7 msec 8 Z 9 ± 10 tzHH 11 tzmm
         // Example date string: +002011-06-15T21:40:05.121+06:00
 
         if (!strict)
@@ -69,13 +68,13 @@
 
         if (struct)
         {
-            // avoid NaN timestamps caused by "undefined" values being passed to Date.UTC
+            // Avoid NaN timestamps caused by "undefined" values being passed to Date.UTC
             for (var i = 0, k; (k = numericKeys[i]); ++i)
             {
                 struct[k] = +struct[k] || 0;
             }
 
-            // allow undefined days and months
+            // Allow undefined days and months
             struct[2] = (+struct[2] || 1) - 1;
             struct[3] = +struct[3] || 1;
 
