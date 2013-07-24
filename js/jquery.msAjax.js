@@ -4,7 +4,14 @@
 // ## jQuery.msAjax plugin
 // Eases the pain of dealing with legacy Microsoft web services technologies (ASMX, WCF, JsonDataContractSerializer).
 
-// Note: This is not necessary when using ASP.NET MVC 4+ with Web API, as long as you're configured to use JSON.NET.
+// * Correctly serializes/deserializes [Microsoft's date format](http://msdn.microsoft.com/en-us/library/bb299886.aspx#intro_to_json_sidebarb) 
+// and revives dates into a JavaScript Date object.
+// ** Supports ISO8601 dates as well.
+// * Remove Microsoft specific JSON wrappers, including the "d" property, the embedded "__type" property
+// * Wont do any of this if the JSON object isn't Microsoft-styled
+
+// **Note**: This is not necessary when using ASP.NET MVC 4+ with Web API (which uses [JSON.NET](http://james.newtonking.com/projects/json-net.aspx)) 
+// by default). WebAPI uses ISO8601 dates and doesn't add any Microsoft specific properties to JSON objects.
 
 // ### Dependencies
 // To use this plugin with less-than-awesome browsers that don't support JSON.parse() or JSON.stringify(), you should include
@@ -35,7 +42,7 @@
     // Remove ASMX specific metadata from JSON
     var msJsonSanitizer = function(key, value)
     {
-        // Rehydrade date values
+        // Rehydrate date values
         if (typeof(value) == "string")
         {   
             return msJsonDateOnlySanitizer(key, value);
@@ -69,7 +76,7 @@
                 return date;
             }
 
-            // Depends on ms date parsing in js-iso8601.js. This function is already strict.
+            // Depends on ms date parsing in js-iso8601-ms.js. This function is already strict.
             date = Date.parseMsDate(value); 
             if (!isNaN(date))
             {
