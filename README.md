@@ -4,6 +4,9 @@ skinny.js is a collection of jQuery plugins that are useful for building web app
 
 skinny.js libraries depend only on jQuery, and in a few cases, each other. They are not intended to be used as a bundle; so if you need one library, you are encouraged to use only it and its dependencies.
 
+[View the source on Github](https://github.com/labaneilers/SkinnyJS)
+[View the project page](http://labaneilers.github.io/SkinnyJS)
+
 Skinny libraries
 ----------
 * [jQuery.partialLoad](http://labaneilers.github.io/SkinnyJS/js/jquery.partialLoad.html): Works like jQuery.load, but is more intelligent about executing downloaded scripts (i.e. don't re-run scripts that are already loaded)
