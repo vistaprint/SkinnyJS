@@ -1,5 +1,5 @@
 /// <reference path="../dependencies/json2.js" />
-/// <reference path="../dependencies/js-iso8601-ms.js" />
+/// <reference path="date-parse.js" />
 
 // ## jQuery.msAjax plugin
 // Eases the pain of dealing with legacy Microsoft web services technologies (ASMX, WCF, JsonDataContractSerializer).
@@ -14,6 +14,8 @@
 // by default). WebAPI uses ISO8601 dates and doesn't add any Microsoft specific properties to JSON objects.
 
 // ### Dependencies
+// Depends on date-parse.js.
+
 // To use this plugin with less-than-awesome browsers that don't support JSON.parse() or JSON.stringify(), you should include
 // a polyfill, such as [Doug Crockford's json2.js](https://github.com/douglascrockford/JSON-js/blob/master/json2.js). 
 
