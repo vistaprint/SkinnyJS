@@ -535,11 +535,30 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             {
               "type": "heading",
               "data": {
-                "level": 1,
-                "title": "4825: Get the actual response in case",
-                "slug": "4825-get-the-actual-response-in-case"
+                "level": 2,
+                "title": "jQuery.partialLoad",
+                "slug": "jquerypartialload"
               },
-              "depth": 1
+              "depth": 2,
+              "children": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 3,
+                    "title": "Usage",
+                    "slug": "usage"
+                  },
+                  "depth": 3
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 3,
+                    "title": "Source",
+                    "slug": "source"
+                  },
+                  "depth": 3
+                }
+              ]
             }
           ]
         }, {
