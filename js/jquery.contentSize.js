@@ -1,17 +1,28 @@
 /// <reference path="jquery.clientRect.js" />
 
+// ## jQuery.contentSize
+
+// Returns the height and width of the specified page's content: the total scrolling size.
+
+// Measures the document content using a more accurate approach relying on body.scrollHeight,
+// especially when the content is in an iframe- in which case, the body.scrollHeight always returns
+// the viewport size, even if the content is smaller.
+
+// ### Usage
+
+//     // Gets the content width, including scrollbars
+//     var rect = $(window).contentSize();
+//     
+//     // Gets the content width, excluding scrollbars
+//     var rect = $(window).contentSize(true);
+//     
+//     // Works in a window inside an iframe
+//     var rect = $(iframeWindow).contentSize();
+
+// ### Source
+
 (function($)
 {
-
-var isQuirksMode = function()
-{
-    if (!document.all)
-    {
-        return false;
-    }
-    
-    return document.compatMode != "CSS1Compat";
-};
 
 var addMargin = function(node, styleProp, rectProp, rect)
 {
@@ -22,7 +33,7 @@ var addMargin = function(node, styleProp, rectProp, rect)
     }
 };
 
-// size gets continuously populated as this recurses through the DOM, building the max size of the page.
+// Size gets continuously populated as this recurses through the DOM, building the max size of the page.
 var gatherSize = function(size, node, includeChildrenOnly, includeWidth, includeHeight)
 {
     var rect;
@@ -41,7 +52,8 @@ var gatherSize = function(size, node, includeChildrenOnly, includeWidth, include
         }
         catch (ex)
         {
-            return;  //Couldn't get the size, so let's just return.
+            // Couldn't get the size, so let's just return.
+            return;  
         }
 
         //if the node is not rendered, don't factor in its size
@@ -66,28 +78,28 @@ var gatherSize = function(size, node, includeChildrenOnly, includeWidth, include
             size.width = Math.max(rect.right, size.width);
         }
 
-        //If the node is a vertical scrolling container, don't look at its children for the purposes of calculating height
+        // If the node is a vertical scrolling container, don't look at its children for the purposes of calculating height
         if ($(node).css("overflowX") != "visible" && 
             ($(node).css("height") != "auto" || $(node).css("maxHeight") != "none"))
         {
             includeHeight = false;
         }
 
-        //If the node is a horizontal scrolling container, don't look at its children for the purposes of calculating width
+        // If the node is a horizontal scrolling container, don't look at its children for the purposes of calculating width
         if ($(node).css("overflowY") != "visible" && 
             ($(node).css("width") != "auto" || $(node).css("maxWidth") != "none"))
         {
             includeWidth = false;
         }
 
-        //optimization- if we don't need to measure any children, stop recursing.
+        // Optimization- if we don't need to measure any children, stop recursing.
         if (!includeHeight && !includeWidth)
         {
             return;
         }
     }
 
-    //Recurse
+    // Recurse
     if (node.tagName !== "OBJECT")
     {
         var len = node.childNodes.length;
@@ -98,12 +110,7 @@ var gatherSize = function(size, node, includeChildrenOnly, includeWidth, include
     }
 };
 
-/**
- * Measures the document content using a more accurate approach relying on body.scrollHeight
- * especially when used in an iframe.
- * Returns the height and width of the total page: the total scrolling size.
- * @return {vp.ISize}
- */
+// Returns the height and width of the total page: the total scrolling size.
 $.fn.contentSize = function(excludeScrollbars)
 {
     var el = this[0];
