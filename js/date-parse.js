@@ -41,6 +41,8 @@
 //     // returns a Date
 //     var date = Date.parseMsDate("\/Date(628318530718)\/");
 
+// ### Source
+
 (function (Date, undefined)
 {
     var origParse = Date.parse, numericKeys = [1, 4, 5, 6, 7, 10, 11];

@@ -14,16 +14,18 @@
 // by default). WebAPI uses ISO8601 dates and doesn't add any Microsoft specific properties to JSON objects.
 
 // ### Dependencies
-// Depends on date-parse.js.
+// jQuery.msAjax has two dependencies:
 
-// To use this plugin with less-than-awesome browsers that don't support JSON.parse() or JSON.stringify(), you should include
+// * date-parse.js (also part of skinny.js).
+
+// * For less-than-awesome browsers that don't support JSON.parse() or JSON.stringify(), you should include
 // a polyfill, such as [Doug Crockford's json2.js](https://github.com/douglascrockford/JSON-js/blob/master/json2.js). 
 
 // ### Example Usage:
 
 // #### ASMX
 
-//     $.ajaxMs({
+//     $.msAjax({
 //         url: 'PersonWebService.asmx', 
 //         methodName: 'GetPerson', 
 //         data: {'personId': 1}, 
@@ -33,11 +35,13 @@
  
 // #### WCF (REST style)
 
-//     $.ajaxMs({
+//     $.msAjax({
 //         url: 'PersonWebService.svc/People/1', 
 //         success: function(oPerson) { alert(oPerson.Name); },
 //         error: function() { logSomething(arguments); }
 //     });
+
+// ### Source
 
 (function(window, $)
 {

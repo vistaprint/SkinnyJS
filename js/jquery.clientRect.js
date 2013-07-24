@@ -1,13 +1,23 @@
-// jQuery.clientRect()
-// --------------------
+// ## jQuery.clientRect
+
 // Returns a rectangle object containing the height, width, top, left, bottom, and right coordinates 
 // for a given element relative to the document.
+
 // Highly performant, and cross browser.
 
-// Note: jQuery's offset and dimensions methods are inefficient due to an API that 
-// won't give you the whole rectangle, so getBoundingClientRect() is called multiple times.
+// Note: jQuery's jQuery.height()/width() methods are inefficient (read: wicked slow) for two reasons:
+
+// 1. They don't use [getBoundingClientRect()](https://developer.mozilla.org/en-US/docs/Web/API/element.getBoundingClientRect), 
+// which gets a DOM element's coordinates directly from the render tree, and is much faster than reading CSS properties 
+// and having to calculate offsets from parent elements by walking the DOM. All modern browsers support getBoundingClientRect.
+// 2. Even if they did use it, the API requires two separate calls to get height/width, which makes it inherently twice as slow.
 // jQuery.clientRect() can be orders of magnitude more performant (depending on the size and complexity of the DOM).
-// That said, for cases where you're just calling this once in a while, just use jQuery.offset() and jQuery.height()/width().
+
+// ### Usage
+
+//     var rect = $(".something").clientRect();
+
+// ### Source
 
 (function($)
 {
@@ -25,8 +35,6 @@ function getWindow(elem)
             false;
 }
 
-// Public API
-// --------------------
 // Returns a rect for the first element in the jQuery object.
 $.fn.clientRect = function()
 {
@@ -50,11 +58,7 @@ $.fn.clientRect = function()
         return rect;
     }
 
-    // All modern browsers support getBoundingClientRect.
-    // It gets a DOM element's coordinates directly from the render tree, 
-    // which is much faster than reading CSS properties and having to calculate offsets
-    // from parent elements.
-    // https://developer.mozilla.org/en-US/docs/Web/API/element.getBoundingClientRect
+    // Make modern browsers wicked fast
     if ($.support.getBoundingClientRect)
     {
         // This is derived from the internals of jQuery.fn.offset
