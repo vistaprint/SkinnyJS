@@ -2,6 +2,7 @@
 /*global module */
 
 var generateHomepage = require("./site/generate-homepage");
+var addDocsLinks = require("./site/add-docs-links");
 
 module.exports = function(grunt)
 {
@@ -59,5 +60,6 @@ module.exports = function(grunt)
 
     // Documentation task(s).
     grunt.registerTask('gen-homepage', "Generates index.html from README.md", generateHomepage);
-    grunt.registerTask('docs', ['gen-homepage', 'groc']);
+    grunt.registerTask('add-docs-links', "Adds links to documentation pages", addDocsLinks);
+    grunt.registerTask('docs', ['gen-homepage', 'groc', 'add-docs-links']);
 };
