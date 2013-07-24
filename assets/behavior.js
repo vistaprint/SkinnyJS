@@ -22,6 +22,70 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
+            "sourcePath": "C:\\dev\\skinny\\js\\date-parse.js",
+            "projectPath": "js\\date-parse.js",
+            "targetPath": "js\\date-parse",
+            "title": "date-parse"
+          },
+          "depth": 2,
+          "outline": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 2,
+                "title": "Date.parse",
+                "slug": "dateparse"
+              },
+              "depth": 2,
+              "children": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 3,
+                    "title": "Usage",
+                    "slug": "usage"
+                  },
+                  "depth": 3,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 4,
+                        "title": "Date.parse(date)",
+                        "slug": "dateparsedate"
+                      },
+                      "depth": 4
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 4,
+                        "title": "Date.parseISO8601(date)",
+                        "slug": "dateparseiso8601date"
+                      },
+                      "depth": 4
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 4,
+                        "title": "Date.parseMsDate(date)",
+                        "slug": "dateparsemsdatedate"
+                      },
+                      "depth": 4
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }, {
+          "type": "file",
+          "data": {
+            "language": {
+              "nameMatchers": [".js"],
+              "pygmentsLexer": "javascript",
+              "singleLineComment": ["//"],
+              "name": "JavaScript"
+            },
             "sourcePath": "C:\\dev\\skinny\\js\\jquery.clientRect.js",
             "projectPath": "js\\jquery.clientRect.js",
             "targetPath": "js\\jquery.clientRect",

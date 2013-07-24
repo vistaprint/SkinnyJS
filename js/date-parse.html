@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="en"><head><title>js\date-parse</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="js\date-parse"><meta name="groc-project-path" content="js\date-parse.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">js\date-parse.js</div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="dateparse">Date.parse</h2></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Enhances Date.parse() to support ISO8601 and Microsoft-style dates</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Based on Colin Snover's <a href="https://github.com/csnover/js-iso8601">js-iso8601.js</a></p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="usage">Usage</h3>
+
+<p>This library provides 3 methods:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h4 id="dateparsedate">Date.parse(date)</h4>
+
+<p>Enhanced version of JavaScript's native Date.parse()
+If 'date' is a date in either ISO8601, <a href="http://msdn.microsoft.com/en-us/library/bb299886.aspx#intro_to_json_sidebarb">Microsoft's date format</a>, 
+or in any format the browser's Date.parse() implementation supports, a Date object is returned, otherwise NaN.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>// returns a date using native Date.parse()
+var date = Date.parse("Aug 9, 1995");
+
+// returns a Date, knows about ISO8601 dates
+var date = Date.parse("2011-10-10T14:48:00");
+
+// returns a Date, knows about [Microsoft's date format](http://msdn.microsoft.com/en-us/library/bb299886.aspx#intro_to_json_sidebarb)
+var date = Date.parse("\/Date(628318530718)\/");
+</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h4 id="dateparseiso8601date">Date.parseISO8601(date)</h4>
+
+<p>If 'date' is an ISO8601 date, a Date object is returned, otherwise NaN.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>// returns NaN because the date is not ISO8601
+var date = Date.parseISO8601("Aug 9, 1995");
+
+// returns a Date
+var date = Date.parseISO8601("2011-10-10T14:48:00");
+</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h4 id="dateparsemsdatedate">Date.parseMsDate(date)</h4>
+
+<p>If 'date' is a date in <a href="http://msdn.microsoft.com/en-us/library/bb299886.aspx#intro_to_json_sidebarb">Microsoft's date format</a>, 
+a Date object is returned, otherwise NaN.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>// returns NaN because the date is not in Microsoft format
+var date = Date.parseMsDate("Aug 9, 1995");
+
+// returns a Date
+var date = Date.parseMsDate("\/Date(628318530718)\/");
+</code></pre></div></div><div class="code"><div class="wrapper"><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nb">Date</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">origParse</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parse</span><span class="p">,</span> <span class="nx">numericKeys</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">];</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Parses the date in ISO8601 format
+If "strict" is true Whether or not to perform a strict parse, which requires all parts of the date to be present</p></div></div><div class="code"><div class="wrapper">    <span class="nb">Date</span><span class="p">.</span><span class="nx">parseISO8601</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">date</span><span class="p">,</span> <span class="nx">strict</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">struct</span><span class="p">,</span> <span class="nx">minutesOffset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+        <span class="nx">strict</span> <span class="o">=</span> <span class="o">!!</span><span class="nx">strict</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>1 YYYY or �YYYYYY 2 MM 3 DD 4 HH 5 mm 6 ss 7 msec 8 Z 9 � 10 tzHH 11 tzmm
+Example date string: +002011-06-15T21:40:05.121+06:00</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">strict</span><span class="p">)</span>
+        <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Non-strict parsing</p></div></div><div class="code"><div class="wrapper">            <span class="nx">struct</span> <span class="o">=</span> <span class="sr">/^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">date</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+        <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Strict parsing</p></div></div><div class="code"><div class="wrapper">            <span class="nx">struct</span> <span class="o">=</span> <span class="sr">/^(\d{4}|[+\-]\d{6})\-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\.(\d{3})(?:(Z)|([+\-]))(\d{2}):(\d{2})$/</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">date</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">struct</span><span class="p">)</span>
+        <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>avoid NaN timestamps caused by "undefined" values being passed to Date.UTC</p></div></div><div class="code"><div class="wrapper">            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">k</span><span class="p">;</span> <span class="p">(</span><span class="nx">k</span> <span class="o">=</span> <span class="nx">numericKeys</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="nx">struct</span><span class="p">[</span><span class="nx">k</span><span class="p">]</span> <span class="o">=</span> <span class="o">+</span><span class="nx">struct</span><span class="p">[</span><span class="nx">k</span><span class="p">]</span> <span class="o">||</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>allow undefined days and months</p></div></div><div class="code"><div class="wrapper">            <span class="nx">struct</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">+</span><span class="nx">struct</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">||</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="nx">struct</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="o">+</span><span class="nx">struct</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">||</span> <span class="mi">1</span><span class="p">;</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nx">struct</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">!==</span> <span class="s1">&#39;Z&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">!==</span> <span class="kc">undefined</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="nx">minutesOffset</span> <span class="o">=</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">11</span><span class="p">];</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="nx">struct</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">===</span> <span class="s1">&#39;+&#39;</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="nx">minutesOffset</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">-</span> <span class="nx">minutesOffset</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">UTC</span><span class="p">(</span><span class="nx">struct</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="nx">minutesOffset</span><span class="p">,</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">7</span><span class="p">]);</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="kc">NaN</span><span class="p">;</span>
+    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Parses the date in Microsoft format</p></div></div><div class="code"><div class="wrapper">    <span class="nb">Date</span><span class="p">.</span><span class="nx">parseMsDate</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">date</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">struct</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">((</span><span class="nx">struct</span> <span class="o">=</span> <span class="sr">/^\/Date\((d|-|.*)\)[\/|\\]$/</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">date</span><span class="p">)))</span>
+        <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">v</span> <span class="o">=</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">split</span><span class="p">(</span><span class="sr">/[-+,.]/</span><span class="p">);</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">?</span> <span class="o">+</span><span class="nx">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">:</span> <span class="mi">0</span> <span class="o">-</span> <span class="o">+</span><span class="nx">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="kc">NaN</span><span class="p">;</span>
+    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Enhances the native JavaScript Date.parse function to support ISO8601 and Microsoft format dates.
+Note: ES5 15.9.4.2 states that the string should attempt to be parsed as a an ISO8601 string
+before falling back to any implementation-specific date parsing. The native Date.parse() doesn't 
+do this on all browsers, so it needs to be overwritten to force this behavior and ensure consistency.</p></div></div><div class="code"><div class="wrapper">    <span class="nb">Date</span><span class="p">.</span><span class="nx">parse</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">date</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">timestamp</span><span class="p">;</span>
+
+        <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parseISO8601</span><span class="p">(</span><span class="nx">date</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">timestamp</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">timestamp</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parseMsDate</span><span class="p">(</span><span class="nx">date</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">timestamp</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">timestamp</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="nx">origParse</span> <span class="o">?</span> <span class="nx">origParse</span><span class="p">(</span><span class="nx">date</span><span class="p">)</span> <span class="o">:</span> <span class="kc">NaN</span><span class="p">;</span>
+    <span class="p">};</span>
+
+<span class="p">}</span> <span class="p">(</span><span class="nb">Date</span><span class="p">));</span></div></div></div></div></body></html>

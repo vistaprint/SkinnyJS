@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><title>js\jquery.msAjax</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="js\jquery.msAjax"><meta name="groc-project-path" content="js\jquery.msAjax.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">js\jquery.msAjax.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="c1">/// &lt;reference path=&quot;../dependencies/json2.js&quot; /&gt;</span>
-<span class="c1">/// &lt;reference path=&quot;../dependencies/js-iso8601-ms.js&quot; /&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="jquerymsajax-plugin">jQuery.msAjax plugin</h2>
+<span class="c1">/// &lt;reference path=&quot;date-parse.js&quot; /&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="jquerymsajax-plugin">jQuery.msAjax plugin</h2>
 
 <p>Eases the pain of dealing with legacy Microsoft web services technologies (ASMX, WCF, JsonDataContractSerializer).</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><ul>
 <li>Correctly serializes/deserializes <a href="http://msdn.microsoft.com/en-us/library/bb299886.aspx#intro_to_json_sidebarb">Microsoft's date format</a> 
@@ -10,7 +10,7 @@ and revives dates into a JavaScript Date object.
 </ul></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><strong>Note</strong>: This is not necessary when using ASP.NET MVC 4+ with Web API (which uses <a href="http://james.newtonking.com/projects/json-net.aspx">JSON.NET</a>) 
 by default). WebAPI uses ISO8601 dates and doesn't add any Microsoft specific properties to JSON objects.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="dependencies">Dependencies</h3>
 
-<p>To use this plugin with less-than-awesome browsers that don't support JSON.parse() or JSON.stringify(), you should include
+<p>Depends on date-parse.js.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>To use this plugin with less-than-awesome browsers that don't support JSON.parse() or JSON.stringify(), you should include
 a polyfill, such as <a href="https://github.com/douglascrockford/JSON-js/blob/master/json2.js">Doug Crockford's json2.js</a>. </p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="example-usage">Example Usage:</h3></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h4 id="asmx">ASMX</h4></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>$.ajaxMs({
     url: 'PersonWebService.asmx', 
     methodName: 'GetPerson', 
