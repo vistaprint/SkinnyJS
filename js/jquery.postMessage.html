@@ -188,7 +188,7 @@ way to get to it. This makes for a yucky API, unfortunately.</p></div></div><div
                               (i.e. http://www.something.com)
 * {Window} targetWindow: A reference to the target window to which the message should be sent
 * {string} targetWindowName: If the target window is a child window (not a frame), the window name
-                              is required for browsers that don't support postMessage() natively.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">.</span><span class="nx">postMessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">targetHost</span><span class="p">,</span> <span class="nx">targetWindow</span><span class="p">,</span> <span class="nx">targetWindowName</span><span class="p">)</span> 
+                              is required for browsers that don't support postMessage() natively.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">.</span><span class="nx">postMessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">targetHost</span><span class="p">,</span> <span class="nx">targetWindow</span><span class="p">,</span> <span class="cm">/* optional */</span> <span class="nx">targetWindowName</span><span class="p">)</span> 
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">targetHost</span><span class="p">)</span>
         <span class="p">{</span>
@@ -289,6 +289,19 @@ Messages sent between top level windows will fail. Unfortunately, we don't know 
 an IFrame or top-level window. To work around, listen for calls from the polyfill technique for IE in all cases.</p></div></div><div class="code"><div class="wrapper">    <span class="nb">window</span><span class="p">.</span><span class="nx">__receiveMessageHook</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">origin</span><span class="p">)</span> 
     <span class="p">{</span>
         <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="nb">decodeURIComponent</span><span class="p">(</span><span class="nx">message</span><span class="p">),</span> <span class="nx">origin</span><span class="p">);</span>
+    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Convenience wrapper for windows wrapped in jQuery objects</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">postMessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">targetHost</span><span class="p">,</span> <span class="cm">/* optional */</span> <span class="nx">targetWindowName</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">el</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nx">el</span> <span class="k">instanceof</span> <span class="nx">Window</span><span class="p">))</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;postMessage can only be sent to a window&quot;</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="nx">$</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">targetHost</span><span class="p">,</span> <span class="nx">el</span><span class="p">,</span> <span class="nx">targetWindowName</span><span class="p">);</span>
+        <span class="p">});</span>
+
+        <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
     <span class="p">};</span>
 
 <span class="p">})(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">jQuery</span><span class="p">);</span></div></div></div></div></body></html>
