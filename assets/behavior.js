@@ -192,6 +192,22 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
+            "sourcePath": "C:\\dev\\skinny\\js\\jquery.cookie.js",
+            "projectPath": "js\\jquery.cookie.js",
+            "targetPath": "js\\jquery.cookie",
+            "title": "jquery.cookie"
+          },
+          "depth": 2,
+          "outline": []
+        }, {
+          "type": "file",
+          "data": {
+            "language": {
+              "nameMatchers": [".js"],
+              "pygmentsLexer": "javascript",
+              "singleLineComment": ["//"],
+              "name": "JavaScript"
+            },
             "sourcePath": "C:\\dev\\skinny\\js\\jquery.css.js",
             "projectPath": "js\\jquery.css.js",
             "targetPath": "js\\jquery.css",
@@ -679,7 +695,55 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "title": "jquery.postMessage"
           },
           "depth": 2,
-          "outline": []
+          "outline": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 2,
+                "title": "jQuery postMessage plugin",
+                "slug": "jquery-postmessage-plugin"
+              },
+              "depth": 2,
+              "children": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 3,
+                    "title": "Usage",
+                    "slug": "usage"
+                  },
+                  "depth": 3,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 4,
+                        "title": "Sending a message to another window",
+                        "slug": "sending-a-message-to-another-window"
+                      },
+                      "depth": 4
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 4,
+                        "title": "Listening to messages from another window",
+                        "slug": "listening-to-messages-from-another-window"
+                      },
+                      "depth": 4
+                    }
+                  ]
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 3,
+                    "title": "Source",
+                    "slug": "source"
+                  },
+                  "depth": 3
+                }
+              ]
+            }
+          ]
         }, {
           "type": "file",
           "data": {
