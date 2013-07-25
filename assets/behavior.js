@@ -876,7 +876,63 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "title": "jquery.url"
           },
           "depth": 2,
-          "outline": []
+          "outline": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 2,
+                "title": "jQuery.Url",
+                "slug": "jqueryurl"
+              },
+              "depth": 2,
+              "children": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 3,
+                    "title": "Usage",
+                    "slug": "usage"
+                  },
+                  "depth": 3,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 4,
+                        "title": "Parse a URL:",
+                        "slug": "parse-a-url"
+                      },
+                      "depth": 4
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 4,
+                        "title": "Manipulating the querystring",
+                        "slug": "manipulating-the-querystring"
+                      },
+                      "depth": 4
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 4,
+                        "title": "Serializing back to a URL string",
+                        "slug": "serializing-back-to-a-url-string"
+                      },
+                      "depth": 4
+                    }
+                  ]
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 3,
+                    "title": "Source",
+                    "slug": "source"
+                  },
+                  "depth": 3
+                }
+              ]
+            }
+          ]
         }
       ]
     }
