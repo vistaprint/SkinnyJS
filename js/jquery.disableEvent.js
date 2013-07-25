@@ -1,4 +1,21 @@
-// This plugin allows disabling of all event handlers for a specific event type and element.
+// ## jQuery.disableEvent
+// This plugin allows temporary disabling/enabling of all event handlers for a specific event type and element.
+
+// ### Usage
+// To disable an event for a link:
+
+//     $(".disabled-link").disableEvent("click");
+
+// Click handlers set with jQuery will no longer fire.
+// These event handlers can be re-enabled:
+
+//     $(".disabled-link").enableEvent("click");
+
+// These methods take any number of space-delimited event names:
+
+//     $(".disabled-link").disableEvent("click touchstart touchdown mousedown");
+
+// ### Source
 
 (function($)
 {
@@ -175,5 +192,4 @@
         });
     };
 
-    
 })(jQuery);
