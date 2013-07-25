@@ -251,7 +251,7 @@
     // * {Window} targetWindow: A reference to the target window to which the message should be sent
     // * {string} targetWindowName: If the target window is a child window (not a frame), the window name
     //                               is required for browsers that don't support postMessage() natively.
-    $.postMessage = function(message, targetHost, targetWindow, targetWindowName) 
+    $.postMessage = function(message, targetHost, targetWindow, /* optional */ targetWindowName) 
     {
         if (!targetHost)
         {
@@ -375,6 +375,22 @@
     window.__receiveMessageHook = function(message, origin) 
     {
         $(window).trigger('message', decodeURIComponent(message), origin);
+    };
+
+    // Convenience wrapper for windows wrapped in jQuery objects
+    $.fn.postMessage = function(message, targetHost, /* optional */ targetWindowName)
+    {
+        this.each(function(i, el)
+        {
+            if (!(el instanceof Window))
+            {
+                throw new Error("postMessage can only be sent to a window");
+            }
+
+            $.postMessage(message, targetHost, el, targetWindowName);
+        });
+
+        return this;
     };
 
 })(window, jQuery);
