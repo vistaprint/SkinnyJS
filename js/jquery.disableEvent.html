@@ -3,7 +3,15 @@
 <a href="https://raw.github.com/labaneilers/SkinnyJS/master/js/jquery.disableEvent.js" target="_blank">Download this file</a>
 
 <hr style="height: 1px; border:0; background-color:#4A525A">
-<p>This plugin allows disabling of all event handlers for a specific event type and element.</p></div></div><div class="code"><div class="wrapper"><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span>
+<h2 id="jquerydisableevent">jQuery.disableEvent</h2>
+
+<p>This plugin allows temporary disabling/enabling of all event handlers for a specific event type and element.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="usage">Usage</h3>
+
+<p>To disable an event for a link:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>$(".disabled-link").disableEvent("click");
+</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Click handlers set with jQuery will no longer fire.
+These event handlers can be re-enabled:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>$(".disabled-link").enableEvent("click");
+</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>These methods take any number of space-delimited event names:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>$(".disabled-link").disableEvent("click touchstart touchdown mousedown");
+</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="source">Source</h3></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span>
 <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Ensures that a data object is associated with a jQuery object
 If an object already exists, return it. If not, store and return the default object.</p></div></div><div class="code"><div class="wrapper">    <span class="kd">function</span> <span class="nx">ensureData</span><span class="p">(</span><span class="nx">$el</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">defaultObject</span><span class="p">)</span>
     <span class="p">{</span>
@@ -132,5 +140,4 @@ Handlers added after this is called will be cached, but not actually added</p></
         <span class="p">});</span>
     <span class="p">};</span>
 
-    
 <span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span></div></div></div></div></body></html>
