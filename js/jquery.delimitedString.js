@@ -1,6 +1,14 @@
+// ## jQuery.delimitedString
+// Parses key-value pairs from strings to objects, and vice-versa. 
+// This is the basis for skinny.js's CSS and querystring parsing/encoding.
+
+// ### Source
+
 (function($)
 {
 
+// Takes a plain javascript object (key value pairs), and encodes it as a string 
+// using the specified delimiters and encoders
 $.encodeDelimitedString = function(data, itemDelimiter, pairDelimiter, keyEncoder, valueEncoder)
 {
     if (!data)
@@ -24,6 +32,8 @@ $.encodeDelimitedString = function(data, itemDelimiter, pairDelimiter, keyEncode
     return sb.join(itemDelimiter);
 };
 
+// Takes an encoded string, and parses it into a plain javascript object (key value pairs)
+// using the specified delimiters and decoders
 $.parseDelimitedString = function(delimitedString, itemDelimiter, pairDelimiter, keyDecoder, valueDecoder)
 {
     keyDecoder = keyDecoder || function(s) { return s; };
