@@ -1,89 +1,99 @@
 /// <reference path="jquery.querystring.js" />
 
+// ## jQuery.Url
+// This class parses/encodes URLs, and provides an interface that is almost identical to that of the browser's Location object. 
+
+// Note: This class doesn't support some of the more esoteric features of URLs.
+// If you need this kind of support, you should use a more robust (and heavyweight) implementation such as
+// [node.js's Url module](https://github.com/joyent/node/blob/master/lib/url.js).
+
+// ### Usage
+// ####Parse a URL:
+
+//     var url = new $.Url("http://www.foo.com:8080/pages/page1.html?key1=value1&key2=value2#someAnchor")
+//     url.hash === "#someAnchor"; // true
+//     url.protocol === "http"; // true
+//     url.hostname === "www.foo.com"; // true
+//     url.host === "www.foo.com:8080"; // true
+//     url.port === "8080"; // true
+//     url.queryString === "key1=value1&key2=value2"; // true
+//     url.search === "?key1=value1&key2=value2"; // true
+//     url.pathname === "/pages/page1.html"; // true
+
+// ####Manipulating the querystring
+// Once the URL is parsed, you can manipulate the querystring:
+
+//     // Adds a parameter, or overwrites one if it already exists
+//     url.setItem("key3", "value3")
+//     
+//     // Gets the value of an existing parameter
+//     var key1Value = url.getItem("key1")
+//     
+//     // Gets the value of an existing parameter, 
+//     // specifying a default in case the value doesn't exist
+//     var key1Value = url.getItem("key1", "some default value")
+//     
+//     // Removes a parameter
+//     url.removeItem("key3")
+
+// #### Serializing back to a URL string
+// The *toString()* method of $.Url will write back to a string:
+
+//     document.location = url.toString();
+
+// ### Source
+
 (function($)
 {
 
-/**
- * @class Parses and manipulates a URL. 
- * Allows manipulation of any component of the URL including querystring keys/values.
- * Mimics the document.location object in the DOM, 
- * but provides additional features such as querystring manipulation
- * @constructor
- * @param {string} sUrl The URL to parse.
- * @author Laban Eilers, leilers@vistaprint.com
- */
+// Parses and manipulates a URL. 
 $.Url = function(url)
 {
-    var _url = url.toString();
     var me = this;
 
-    /**
-    * The anchor link- text after the # character
-    * @type String
-    */
+    // The anchor link- text after the # character
     this.hash = "";
 
-    /**
-    * http: or https:
-    * @type String
-    */
+    // http: or https:
     this.protocol = "";
 
-    /**
-    * The server name- example: www.vistaprint.com
-    * @type String
-    */
+    // The server name- example: www.vistaprint.com
     this.hostname = "";
 
-    /**
-    * The server name- example: www.vistaprint.com
-    * Includes port string if specified- example www.vistaprint.com:80
-    * @type String
-    */
+    // The server name- example: www.vistaprint.com
+    // Includes port string if specified- example www.vistaprint.com:80
     this.host = "";
 
-    /**
-    * The TCP port (if specified)
-    * @type String
-    */
+    // The TCP port (if specified)
     this.port = "";
 
-    /**
-    * The querystring- example: val1=foo&val2=bar
-    * @type String
-    */
+    // The querystring- example: val1=foo&val2=bar
     this.queryString = "";
 
-    /**
-    * The querystring with the initial ? if specified- example: ?val1=foo&val2=bar
-    * @type String
-    */
+    // The querystring with the initial ? if specified- example: ?val1=foo&val2=bar
     this.search = "";
 
-    /**
-    * The root relative path to the file- example: /vp/myfile.htm
-    * @type String
-    */
+    // The root relative path to the file- example: /vp/myfile.htm
     this.pathname = "";
 
-    var load = function()
+    var load = function(url)
     {
-        var iNextPart;
-        var sTemp = _url;
+        var nextPartPos;
+        var temp = url;
 
-        //protocol: "http:" or "https:"
-        if (sTemp.search(/https\:\/\/+/i) === 0) //The ending + is to prevent comment removers from messing up this line
+        // protocol: "http:" or "https:"
+        if (temp.search(/https\:\/\/+/i) === 0) //The ending + is to prevent comment removers from messing up this line
         {
             me.protocol = "https:";
-            sTemp = _url.substr(8);
+            temp = url.substr(8);
         }
-        else if (sTemp.search(/http\:\/\/+/i) === 0) //The ending + is to prevent comment removers from messing up this line
+        else if (temp.search(/http\:\/\/+/i) === 0) //The ending + is to prevent comment removers from messing up this line
         {
             me.protocol = "http:";
-            sTemp = _url.substr(7);
+            temp = url.substr(7);
         }
 
-        if (sTemp.length === 0)
+        if (temp.length === 0)
         {
             return;
         }
@@ -92,25 +102,25 @@ $.Url = function(url)
         if (me.protocol !== "")
         {
             //match a slash, hash, colon, or question mark
-            iNextPart = sTemp.search(/[\/\?\#]/i);
-            if (iNextPart == -1)
+            nextPartPos = temp.search(/[\/\?\#]/i);
+            if (nextPartPos == -1)
             {
-                me.host = sTemp;
+                me.host = temp;
                 return;
             }
 
-            me.host = sTemp.substring(0, iNextPart);
-            sTemp = sTemp.substr(iNextPart);
+            me.host = temp.substring(0, nextPartPos);
+            temp = temp.substr(nextPartPos);
         }
 
-        //seperate hostname & port from host
+        // Separate hostname & port from host
         if (me.host && me.host !== "")
         {
-            var iColon = me.host.indexOf(':');
-            if (iColon != -1)
+            var colorPos = me.host.indexOf(':');
+            if (colorPos != -1)
             {
-                me.hostname = me.host.substr(0, iColon);
-                me.port = me.host.substr(iColon + 1, me.host.length);
+                me.hostname = me.host.substr(0, colorPos);
+                me.port = me.host.substr(colorPos + 1, me.host.length);
             }
             else
             {
@@ -118,60 +128,60 @@ $.Url = function(url)
             }
         }
 
-        if (sTemp.length === 0)
+        if (temp.length === 0)
         {
             return;
         }
 
-        iNextPart = sTemp.search(/[\?\#]/i);
+        nextPartPos = temp.search(/[\?\#]/i);
 
         //pathname: i.e. /vp/mypage.htm
-        if (iNextPart !== 0)
+        if (nextPartPos !== 0)
         {
-            if (iNextPart == -1)
+            if (nextPartPos == -1)
             {
-                me.pathname = sTemp;
+                me.pathname = temp;
                 return;
             }
 
-            me.pathname = sTemp.substr(0, iNextPart);
-            sTemp = sTemp.substr(iNextPart);
+            me.pathname = temp.substr(0, nextPartPos);
+            temp = temp.substr(nextPartPos);
         }
 
-        if (sTemp.length === 0)
+        if (temp.length === 0)
         {
             return;
         }
 
-        //queryString (i.e. myval1=1&myval2=2)
-        //search: same as querystring with initial question mark (i.e. ?myval1=1&myval2=2)
-        if (sTemp.indexOf('?') === 0)
+        // queryString (i.e. myval1=1&myval2=2)
+        // search: same as querystring with initial question mark (i.e. ?myval1=1&myval2=2)
+        if (temp.indexOf('?') === 0)
         {
-            iNextPart = sTemp.indexOf("#");
+            nextPartPos = temp.indexOf("#");
 
-            if (iNextPart == -1)
+            if (nextPartPos == -1)
             {
-                me.queryString = sTemp.substr(1); //cut off the initial ?
-                sTemp = "";
+                me.queryString = temp.substr(1); //cut off the initial ?
+                temp = "";
             }
             else
             {
-                me.queryString = sTemp.substring(1, iNextPart);
-                sTemp = sTemp.substr(iNextPart);
+                me.queryString = temp.substring(1, nextPartPos);
+                temp = temp.substr(nextPartPos);
             }
 
             updateSearch();
         }
 
-        if (sTemp.length === 0)
+        if (temp.length === 0)
         {
             return;
         }
 
         //hash (i.e. anchor link- #myanchor)
-        if (sTemp.indexOf("#") === 0)
+        if (temp.indexOf("#") === 0)
         {
-            me.hash = sTemp;
+            me.hash = temp;
         }
     };
 
@@ -184,10 +194,7 @@ $.Url = function(url)
         }
     };
 
-    /**
-    * Gets the URL as a string
-    * @return {string} The URL as a string
-    */
+    // Gets the URL as a string
     this.toString = function()
     {
         var sPort = me.port;
@@ -204,10 +211,7 @@ $.Url = function(url)
         return sProtocol + me.hostname + sPort + me.pathname + me.search + me.hash;
     };
 
-    /**
-    * Gets a specific querystring value from its key name
-    * @return {string} The querystring value
-    */
+    // Gets a specific querystring value from its key name
     this.getItem = function(key, defaultValue)
     {
         var qs = $.deparam(me.queryString);
@@ -223,9 +227,7 @@ $.Url = function(url)
 
     this.getItemOrDefault = this.getItem;
 
-    /**
-    * Sets a specific querystring value by its key name
-    */
+    // Sets a specific querystring value by its key name
     this.setItem = function(key, value)
     {
         var qs = $.deparam(me.queryString);
@@ -245,9 +247,7 @@ $.Url = function(url)
         updateSearch();
     };
 
-    /**
-    * Removes a specific querystring value by its key name
-    */
+    // Removes a specific querystring value by its key name
     this.removeItem = function(key)
     {
         var qs = $.deparam(me.queryString);
@@ -261,7 +261,7 @@ $.Url = function(url)
         }
     };
 
-    load();
+    load(url.toString());
 };
 
 })(jQuery);
