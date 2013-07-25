@@ -1,53 +1,53 @@
-<!DOCTYPE html><html lang="en"><head><title>js\jquery.queryString</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="js\jquery.queryString"><meta name="groc-project-path" content="js\jquery.queryString.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">js\jquery.queryString.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="c1">/// &lt;reference path=&quot;jquery.delimitedString.js&quot; /&gt;</span>
-
-<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">PLUS_RE</span> <span class="o">=</span> <span class="sr">/\+/gi</span><span class="p">;</span>
-
-    <span class="kd">var</span> <span class="nx">urlDecode</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
-    <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><a href="http://labaneilers.github.io/SkinnyJS/">Homepage</a> | 
+<!DOCTYPE html><html lang="en"><head><title>js\jquery.queryString</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="js\jquery.queryString"><meta name="groc-project-path" content="js\jquery.queryString.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">js\jquery.queryString.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="c1">/// &lt;reference path=&quot;jquery.delimitedString.js&quot; /&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><a href="http://labaneilers.github.io/SkinnyJS/">Homepage</a> | 
 <a href="https://github.com/labaneilers/SkinnyJS/blob/master/js/jquery.queryString.js" target="_blank">View this file on Github</a> | 
 <a href="https://raw.github.com/labaneilers/SkinnyJS/master/js/jquery.queryString.js" target="_blank">Download this file</a>
 
 <hr style="height: 1px; border:0; background-color:#4A525A">
-<p>Replace plus with space- jQuery.param() explicitly encodes them,
-and decodeURIComponent explicitly does not.</p></div></div><div class="code"><div class="wrapper">        <span class="k">return</span> <span class="nb">decodeURIComponent</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">PLUS_RE</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">));</span>
-    <span class="p">};</span>
+<h2 id="jqueryquerystring">jQuery.queryString</h2>
 
-    <span class="cm">/**</span>
-<span class="cm">    * Given a querystring (as a string), deserializes it to a javascript object.</span>
-<span class="cm">    * @param {string} queryString The querystring to deserialize.</span>
-<span class="cm">    * @return {object}</span>
-<span class="cm">    */</span>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">deparam</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">queryString</span><span class="p">)</span>
+<p>Parses querystrings. For example, the following querystring:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>"name=John&amp;address=1%202%20West%20St&amp;phone=(123)%20123-1234"
+</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>can be transformed into a JavaScript object:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>{
+    "name": "John",
+    "address": "12 West St",
+    "phone": "(123) 123-1234"
+}
+</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>This is the inverse of <a href="http://api.jquery.com/jQuery.param/">jQuery.param()</a></p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="usage">Usage</h3></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h4 id="deparamquerystring">$.deparam(queryString)</h4>
+
+<p>Parse a querystring to a JavaScript object:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>var qs = $.deparam("icecream=vanilla&amp;brownie=chocolate");
+qs.brownie === "chocolate";  // true
+</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h4 id="currentquerystring">$.currentQueryString()</h4>
+
+<p>Get the querystring from the current document.location as a parsed object:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>// Current document.location: http://www.foo.com?icecream=vanilla&amp;brownie=chocolate
+var qs = $.currentQueryString();
+qs.icecream === "vanilla"; // true
+</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h4 id="appendquerystringurl-parsedquerystring">$.appendQueryString(url, parsedQueryString)</h4>
+
+<p>There's also a method to append a parsed querystring to a URL:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>var url = $.appendQueryString("http://www.foo.com", { "icecream": "vanilla", "brownie": "chocolate"});
+url === "http://www.foo.com?icecream=vanilla&amp;brownie=chocolate";  // true
+</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="dependencies">Dependencies</h3>
+
+<p>This library uses jquery.delimitedString (part of skinny.js), which abstracts encoding/decoding of key-value pairs.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="source">Source</h3></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">PLUS_RE</span> <span class="o">=</span> <span class="sr">/\+/gi</span><span class="p">;</span>
+
+    <span class="kd">var</span> <span class="nx">urlDecode</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+    <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Replace plus with space- jQuery.param() explicitly encodes them,
+and decodeURIComponent explicitly does not.</p></div></div><div class="code"><div class="wrapper">        <span class="k">return</span> <span class="nb">decodeURIComponent</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">PLUS_RE</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">));</span>
+    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Given a querystring (as a string), deserializes it to a javascript object.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">.</span><span class="nx">deparam</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">queryString</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">queryString</span> <span class="o">!=</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;$.deparam() expects a string for &#39;queryString&#39; argument.&quot;</span><span class="p">);</span>
-        <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Remove "?" which starts querystrings</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">queryString</span> <span class="o">&amp;&amp;</span> <span class="nx">queryString</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;?&quot;</span><span class="p">)</span>
+        <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Remove "?", which starts querystrings</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">queryString</span> <span class="o">&amp;&amp;</span> <span class="nx">queryString</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;?&quot;</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="nx">queryString</span> <span class="o">=</span> <span class="nx">queryString</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">queryString</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
         <span class="p">}</span>
 
         <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">parseDelimitedString</span><span class="p">(</span><span class="nx">queryString</span><span class="p">,</span> <span class="s2">&quot;&amp;&quot;</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="nx">urlDecode</span><span class="p">);</span>
-    <span class="p">};</span>
-
-    <span class="cm">/**</span>
-<span class="cm">    * Gets the querystring from the current document.location as a javascript object.</span>
-<span class="cm">    * @return {object}</span>
-<span class="cm">    */</span>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">currentQueryString</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Alias</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">.</span><span class="nx">parseQueryString</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">deparam</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Gets the querystring from the current document.location as a javascript object.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">.</span><span class="nx">currentQueryString</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">deparam</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="p">);</span>
-    <span class="p">};</span>
-
-    <span class="cm">/**</span>
-<span class="cm">    * Given a url (pathname) and an object representing a querystring, constructs a full URL</span>
-<span class="cm">    * @param {string} url The base url (pathname only)</span>
-<span class="cm">    * @param {object} parsedQueryString The querystring to append</span>
-<span class="cm">    * @return {string}</span>
-<span class="cm">    */</span>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">appendQueryString</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">parsedQueryString</span><span class="p">)</span>
+    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Given a url (pathname) and an object representing a querystring, constructs a full URL</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">.</span><span class="nx">appendQueryString</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">parsedQueryString</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">qs</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">param</span><span class="p">(</span><span class="nx">parsedQueryString</span><span class="p">);</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">qs</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
