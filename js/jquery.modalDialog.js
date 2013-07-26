@@ -4,9 +4,6 @@
 /// <reference path="jquery.customEvent.js" />
 /// <reference path="jquery.clientRect.js" />
 /// <reference path="jquery.hostIframe.js" />
-/// <reference path="jquery.modalDialog.common.js" />
-
-/* globals DIALOG_TYPE_NODE, DIALOG_TYPE_IFRAME, DIALOG_TYPE_AJAX */
 
 // Note: jQuery Mobile and some other dialog frameworks have URL/history management via pushState/hashchange built in.
 // I find this to be too inflexible, and should be implemented by callers as a separate concern.
@@ -127,7 +124,7 @@ if (!Object.keys)
         }
     }
 
-    ModalDialog.prototype.dialogType = DIALOG_TYPE_NODE;
+    ModalDialog.prototype.dialogType = "node";
 
     /**
     * Creates a custom event on this object with the specified event name
@@ -702,7 +699,7 @@ if (!Object.keys)
 
     $.extend(FramedModalDialog.prototype, ModalDialog.prototype);
 
-    FramedModalDialog.prototype.dialogType = DIALOG_TYPE_IFRAME;
+    FramedModalDialog.prototype.dialogType = "iframe";
 
     FramedModalDialog.prototype._setupCustomEvent = function(eventName)
     {
@@ -856,7 +853,7 @@ if (!Object.keys)
 
     $.extend(AjaxModalDialog.prototype, ModalDialog.prototype);
 
-    AjaxModalDialog.prototype.dialogType = DIALOG_TYPE_AJAX;
+    AjaxModalDialog.prototype.dialogType = "ajax";
 
     AjaxModalDialog.prototype.open = function()
     {

@@ -1,7 +1,8 @@
-
-
 /// <reference path="jquery.modalDialog.js" />
+
+// Evil is necessary to turn inline HTML handlers into functions
 /* jshint evil: true */
+
 /*
 Uses declarative syntax to define a dialog. Syntax:
 

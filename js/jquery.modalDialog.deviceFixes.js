@@ -1,8 +1,6 @@
 /// <reference path="jquery.modalDialog.js" />
 /// <reference path="jquery.disableEvent.js" />
 
-/* globals DIALOG_TYPE_IFRAME */
-
 // iOS
 // iOS has a bug where text fields in an iFrame misbehave if there are touch events assigned to the 
 // host window. This fix disables them while iFrame dialogs are open.
@@ -39,7 +37,7 @@
         var preventWindowTouchEvents = function(dialog, fix)
         {
             // The bug only affects iFrame dialogs
-            if (dialog.dialogType != DIALOG_TYPE_IFRAME)
+            if (dialog.dialogType != "iframe")
             {
                 return;
             }

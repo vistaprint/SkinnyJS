@@ -1,11 +1,6 @@
-
-
 /// <reference path="jquery.querystring.js" />
 /// <reference path="jquery.contentSize.js" />
 /// <reference path="jquery.customEvent.js" />
-/// <reference path="jquery.modalDialog.common.js" />
-
-/* globals DIALOG_TYPE_IFRAME */
 
 // This is a library for use in content windows that live inside a FramedDialog.
 // All its methods work cross-domain.
@@ -127,7 +122,7 @@ $.modalDialog.create()
     // but uses postMessage() to communicate with the parent.
     FramedDialogProxy.prototype = 
     {
-        dialogType: DIALOG_TYPE_IFRAME,
+        dialogType: "iframe",
 
         open: function()
         {
