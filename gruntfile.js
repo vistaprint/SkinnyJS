@@ -138,13 +138,10 @@ module.exports = function(grunt)
               dest: 'dist/jquery.modalDialogContent.js'
             }
         },
-        uglify:
+        clean:
         {
-            dist:
-            {
-                files: getUglifyConfig()
-            }
-        }            
+            build: ['dist']
+        }         
     };
 
     // Project configuration.
@@ -155,10 +152,26 @@ module.exports = function(grunt)
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-groc');
 
+    // Delay loading the uglify configuration until all files are copied
+    // to the dist dir. This gives us some indirection to concat files. 
+    grunt.registerTask('uglifyDist', function()
+    {
+        config.uglify = 
+        { 
+            dist: 
+            { 
+                files: getUglifyConfig() 
+            } 
+        };
+
+        grunt.task.run('uglify');
+    });
+
     // Default task(s).
-    grunt.registerTask('default', ['jshint', 'qunit', 'copy:dist', 'concat', 'uglify']);
+    grunt.registerTask('default', ['jshint', 'qunit', 'clean', 'copy:dist', 'concat', 'uglifyDist']);
 
     // Travis CI task.
     grunt.registerTask('travis', 'default');
