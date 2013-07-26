@@ -170,13 +170,16 @@ module.exports = function(grunt)
         grunt.task.run('uglify');
     });
 
-    // Default task(s).
-    grunt.registerTask('default', ['jshint', 'qunit', 'clean', 'copy:dist', 'concat', 'uglifyDist']);
+    // Default tasks.
+    grunt.registerTask('default', ['verify', 'clean', 'copy:dist', 'concat', 'uglifyDist']);
+
+    // Verification tasks
+    grunt.registerTask('verify', ['jshint', 'qunit']);
 
     // Travis CI task.
     grunt.registerTask('travis', 'default');
 
-    // Documentation task(s).
+    // Documentation tasks.
     grunt.registerTask('gen-homepage', "Generates index.html from README.md", generateHomepage);
     grunt.registerTask('add-docs-links', "Adds links to documentation pages", addDocsLinks);
     grunt.registerTask('docs', ['gen-homepage', 'groc', 'add-docs-links', 'copy:docs']);
