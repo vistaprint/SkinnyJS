@@ -43,7 +43,6 @@
 <p><a href="http://labaneilers.github.io/SkinnyJS">View the project page</a></p>
 <p><!--ContentStart-->
 skinny.js is a collection of jQuery plugins that are useful for building web applications. Its design is a response to having used too many JavaScript frameworks that require you to buy into a particular philosophy, coding style, or architecture. Instead, skinny.js embraces the single responsibility principle, and aims to create tiny, granular libraries with minimal dependencies.</p>
-<p>skinny.js libraries depend only on jQuery, and in a few cases, each other. They are not intended to be used as a bundle; so if you need one library, you are encouraged to use only it and its dependencies.</p>
 <h2>Skinny libraries</h2>
 <ul>
 <li><a href="http://labaneilers.github.io/SkinnyJS/js/jquery.partialLoad.html">jQuery.partialLoad</a>: Works like jQuery.load, but is more intelligent about executing downloaded scripts (i.e. don&#39;t re-run scripts that are already loaded)</li>
@@ -71,6 +70,12 @@ skinny.js is a collection of jQuery plugins that are useful for building web app
 <li><a href="http://labaneilers.github.io/SkinnyJS/js/jquery.menu.html">jQuery.menu</a>: A traditional hierarchical menu widget, designed from the ground up to be both touch and mouse friendly. TODO: Get existing docs from the wiki</li>
 <li><a href="http://labaneilers.github.io/SkinnyJS/js/jquery.modalDialog.html">jQuery.modalDialog</a>: A powerful modal dialog system that works across all devices: TODO: Get existing docs from the wiki</li>
 </ul>
+<h2>Dependencies</h2>
+<p>skinny.js libraries were designed to have minimal dependencies, and are not intended to be used as a bundle. For this reason, we don&#39;t provide a concatenated, minified version of the whole set of libraries. Take the libraries you need, include their dependencies, and concatenate/minify to your
+heart&#39;s content using your own project&#39;s build system. </p>
+<h3>How do I know what dependencies my file has?</h3>
+<p>All dependencies in skinny.js plugins are marked at the top using the following syntax:</p>
+<pre><code>/// &lt;reference path=&quot;{path}&quot; /&gt;</code></pre>
 
         </article>
       </div>
