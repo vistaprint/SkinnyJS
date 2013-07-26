@@ -1,3 +1,16 @@
+// ## jQuery.ns
+
+// Declare namespaces with no boilerplate.
+// Won't overwrite existing namespaces.
+
+// ### Usage
+
+//     $.ns("widgetco.util.html")
+//     
+//     widgetco.util.html.writeHeader = function() { // ...
+
+// ### Source
+
 (function($)
 {
     /**
