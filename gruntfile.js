@@ -148,7 +148,8 @@ module.exports = function(grunt)
             {
                 template: "site/template.html",
                 src: ["./README.md"],
-                dest: './.git/docs-temp/index.html'
+                dest: './.git/docs-temp/index.html',
+                urlBase: "http://labaneilers.github.io/SkinnyJS/"
             },
             others: 
             {

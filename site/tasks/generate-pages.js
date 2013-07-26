@@ -2,6 +2,10 @@ var marked = require("marked");
 var path = require("path");
 var CONTENT_TOKEN = "<!--ContentStart-->";
 
+function escapeRegExp(str) {
+  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+}
+
 module.exports = function(grunt)
 {
     grunt.registerMultiTask('gen-pages', 'Generate pages from markdown', function() 
@@ -22,6 +26,11 @@ module.exports = function(grunt)
 
             var processedMarkdown = marked(markdown);
             var processedTemplate = template.replace("#content#", processedMarkdown);
+
+            if (this.data.urlBase)
+            {
+                processedTemplate = processedTemplate.replace(new RegExp(escapeRegExp(this.data.urlBase), 'gim'), "");
+            }
 
             var outputPath;
 
