@@ -6,10 +6,8 @@ skinny.js: Slim little jQuery plugins [![Build Status](https://secure.travis-ci.
 <!--ContentStart-->
 skinny.js is a collection of jQuery plugins that are useful for building web applications. Its design is a response to having used too many JavaScript frameworks that require you to buy into a particular philosophy, coding style, or architecture. Instead, skinny.js embraces the single responsibility principle, and aims to create tiny, granular libraries with minimal dependencies.
 
-skinny.js libraries depend only on jQuery, and in a few cases, each other. They are not intended to be used as a bundle; so if you need one library, you are encouraged to use only it and its dependencies.
+## Skinny libraries
 
-Skinny libraries
-----------
 * [jQuery.partialLoad](http://labaneilers.github.io/SkinnyJS/js/jquery.partialLoad.html): Works like jQuery.load, but is more intelligent about executing downloaded scripts (i.e. don't re-run scripts that are already loaded)
 * [jQuery.clientRect](http://labaneilers.github.io/SkinnyJS/js/jquery.clientRect.html): Gets element coordinates several orders of magnitude more efficiently than jQuery.top()/left()
 * [jQuery.delimitedString](http://labaneilers.github.io/SkinnyJS/js/jquery.delimitedString.html): Base class for parsing delimited strings, such as querystrings or CSS styles
@@ -30,7 +28,17 @@ Skinny libraries
 * [jQuery.customEvent](http://labaneilers.github.io/SkinnyJS/js/jquery.customEvent.html): TODO
 * [jQuery.cookie](http://labaneilers.github.io/SkinnyJS/js/jquery.cookie.html): TODO
 
-Skinny UI components
-----------
+## Skinny UI components
+
 * [jQuery.menu](http://labaneilers.github.io/SkinnyJS/js/jquery.menu.html): A traditional hierarchical menu widget, designed from the ground up to be both touch and mouse friendly. TODO: Get existing docs from the wiki
 * [jQuery.modalDialog](http://labaneilers.github.io/SkinnyJS/js/jquery.modalDialog.html): A powerful modal dialog system that works across all devices: TODO: Get existing docs from the wiki
+
+## Dependencies
+
+skinny.js libraries were designed to have minimal dependencies, and are not intended to be used as a bundle. For this reason, we don't provide a concatenated, minified version of the whole set of libraries. Take the libraries you need, include their dependencies, and concatenate/minify to your
+heart's content using your own project's build system. 
+
+### How do I know what dependencies my file has?
+All dependencies in skinny.js plugins are marked at the top using the following syntax:
+
+    /// <reference path="{path}" />
