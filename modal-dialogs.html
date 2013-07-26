@@ -8,7 +8,9 @@
 
   <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
   <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <link rel="stylesheet" href="highlight/tomorrow-night-bright.css"/>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="highlight/highlight.pack.js"></script>
   <script type="text/javascript" src="javascripts/script.js"></script>
 
   <title>skinny.js</title>
@@ -39,7 +41,76 @@
         <span class="blc"></span><span class="trc"></span>
         </div>
         <article class="markdown-body">
-          <h2>Modal dialogs</h2>
+          <pre><code>var booty = new Booty();</code></pre>
+          <h1>Modal dialogs</h1>
+<h2>Features</h2>
+<p>For a dialog&#39;s content, the framework can use one of the following techniques:</p>
+<ul>
+<li>Use an element on the page (&quot;node dialog&quot;)</li>
+<li>Display a different page within the dialog (&quot;IFrame dialog&quot;)</li>
+<li>Load content via AJAX (&quot;ajax dialog&quot;)</li>
+</ul>
+<p>Other features:</p>
+<ul>
+<li>The API for IFrame dialogs works seamlessly across different domains (i.e. www.vistaprint.com vs secure.vistaprint.com) by internally using window.postMessage()</li>
+<li>A dialog&#39;s height is based on the content size. There is no explicit method to specify the height.</li>
+<li>The dialog framework supports mobile devices via responsive design.</li>
+</ul>
+<h2>Usage</h2>
+<h3>Adding jQuery.modalDialog to your site:</h3>
+<p>TODO: Look at JQueryModalDialog and copy the HTML</p>
+<h3>Creating a dialog</h3>
+<p>To create a dialog, use the following method:</p>
+<pre><code>$.modalDialog.create()</code></pre>
+<h4>Settings</h4>
+<p><code>$.modalDialog.create()</code> takes a settings object as an argument. Here are the available settings:</p>
+<ul>
+<li><strong>title</strong>: The title to display in the title bar of the dialog.</li>
+<li><strong>id</strong>: The internal ID of the dialog. If the same ID is passed to <code>$.modalDialog.create()</code> more than once, the existing dialog is reused.</li>
+<li><strong>maxWidth</strong>: Sets the maximum width of the dialog. Note that on small mobile devices, the actual width may be smaller, so you should design the dialog content accordingly. Defaults to 600.</li>
+<li><strong>skin</strong>:  The name of the skin to use for the dialog. Defaults to &quot;primary&quot;.</li>
+<li><strong>ajax</strong>:  Determines how the &#39;&#39;url&#39;&#39; setting is interpreted. If true, the URL is the source for an AJAX dialog. If false, it will be the URL of an IFrame dialog.</li>
+<li><strong>url</strong>:  The URL for the content of an IFrame or AJAX dialog.</li>
+<li><strong>content</strong>:  A CSS selector or jQuery object for a content node to use for a node dialog.</li>
+<li><strong>destroyOnClose</strong>:  If true, the dialog DOM will be destroyed and all events removed when the dialog closes. Defaults to &#39;&#39;false&#39;&#39;.</li>
+<li><strong>containerElement</strong>:  A CSS selector or jQuery object for the element that should be the parent for the dialog DOM (useful for working with jQuery mobile). Defaults to &quot;body&quot;.</li>
+<li><strong>preventEventBubbling</strong>:  If true, click and touch events are prevented from bubbling up to the document. Defaults to &#39;&#39;true&#39;&#39;.</li>
+<li><strong>onbeforeopen</strong>: A handler for the &#39;&#39;beforeopen&#39;&#39; event. See [[#Events| events]] below.</li>
+<li><strong>onopen</strong>: A handler for the &#39;&#39;open&#39;&#39; event. See [[#Events| events]] below.</li>
+<li><strong>onclose</strong>: A handler for the &#39;&#39;close&#39;&#39; event. See [[#Events| events]] below.</li>
+<li><strong>onbeforeclose</strong>: A handler for the &#39;&#39;beforeclose&#39;&#39; event. See [[#Events| events]] below.</li>
+<li><strong>onajaxerror</strong>:  A handler for the &#39;&#39;ajaxerror&#39;&#39; event. See [[#Events| events]] below.</li>
+</ul>
+<h3>Dialog object methods</h3>
+<p><code>$.modalDialog.create()</code> returns a dialog object with the following methods:</p>
+<ul>
+<li><strong>open()</strong>: Opens the dialog</li>
+<li><strong>close()</strong>: Closes the dialog</li>
+<li><strong>center()</strong>: Centers the dialog based on the current dimensions</li>
+<li><strong>setTitle()</strong>: Sets the title displayed in the dialog&#39;s title bar</li>
+<li><strong>getWindow()</strong>: Gets a reference to the window for the dialog. For an IFrame dialog, this is the content window, for node or AJAX dialogs, it is the host window. This is useful for sending messages between dialogs.</li>
+<li><strong>getParent()</strong>: Gets a reference to the dialog object immediately below the current dialog in visual stacking order (usually the one that opened it). This will be null for a dialog that was opened directly from the host window, and has no parent dialog.</li>
+</ul>
+<h3>Node dialogs</h3>
+<p>A node dialog is created using an element on the page. To open a node dialog, use the following syntax:</p>
+<pre><code>var dialog = $.modalDialog.create({ content: &quot;.color-dialog&quot;, title: JSLM_ColorDialogTitle });
+dialog.open();
+
+//close dialog
+dialog.close();</code></pre>
+<p>There is also an alternative jQuery-centric syntax. This is completely equivalent to the previous snippet:</p>
+<pre><code>// Opens the dialog immediately
+$(&quot;.color-dialog&quot;).modalDialog({ title: JSLM_ColorDialogTitle });
+
+// Closes the dialog
+$(&quot;.color-dialog&quot;).modalDialog(&quot;close&quot;);</code></pre>
+<h3>AJAX dialogs</h3>
+<p>An AJAX dialog is created using content which is dynamically loaded from a URL. To create an AJAX dialog, use the following syntax:</p>
+<pre><code>var dialog = $.modalDialog.create({ url: &quot;/warning.aspx&quot;, ajax: true });
+dialog.open();
+
+//close dialog
+dialog.close();</code></pre>
 
         </article>
       </div>
@@ -55,7 +126,9 @@
     <a href="https://github.com/labaneilers/SkinnyJS/tarball/master" class="tar">tar</a><a href="https://github.com/labaneilers/SkinnyJS/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
     <p class="name"></p>
   </div>
-
-  
+  <script>
+  hljs.tabReplace = '    ';
+  hljs.initHighlightingOnLoad();
+  </script>
 </body>
 </html>

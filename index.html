@@ -8,7 +8,9 @@
 
   <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
   <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <link rel="stylesheet" href="highlight/tomorrow-night-bright.css"/>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="highlight/highlight.pack.js"></script>
   <script type="text/javascript" src="javascripts/script.js"></script>
 
   <title>skinny.js</title>
@@ -39,6 +41,7 @@
         <span class="blc"></span><span class="trc"></span>
         </div>
         <article class="markdown-body">
+          <pre><code>var booty = new Booty();</code></pre>
           <p>skinny.js is a collection of jQuery plugins that are useful for building web applications. Its design is a response to having used too many JavaScript frameworks that require you to buy into a particular philosophy, coding style, or architecture. Instead, skinny.js embraces the single responsibility principle, and aims to create tiny, granular libraries with minimal dependencies.</p>
 <h2>Skinny libraries</h2>
 <ul>
@@ -89,7 +92,9 @@ heart&#39;s content using your own project&#39;s build system. </p>
     <a href="https://github.com/labaneilers/SkinnyJS/tarball/master" class="tar">tar</a><a href="https://github.com/labaneilers/SkinnyJS/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
     <p class="name"></p>
   </div>
-
-  
+  <script>
+  hljs.tabReplace = '    ';
+  hljs.initHighlightingOnLoad();
+  </script>
 </body>
 </html>

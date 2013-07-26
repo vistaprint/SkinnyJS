@@ -8,7 +8,9 @@
 
   <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
   <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <link rel="stylesheet" href="highlight/tomorrow-night-bright.css"/>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="highlight/highlight.pack.js"></script>
   <script type="text/javascript" src="javascripts/script.js"></script>
 
   <title>skinny.js</title>
@@ -39,6 +41,7 @@
         <span class="blc"></span><span class="trc"></span>
         </div>
         <article class="markdown-body">
+          <pre><code>var booty = new Booty();</code></pre>
           #content#
         </article>
       </div>
@@ -54,7 +57,9 @@
     <a href="https://github.com/labaneilers/SkinnyJS/tarball/master" class="tar">tar</a><a href="https://github.com/labaneilers/SkinnyJS/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
     <p class="name"></p>
   </div>
-
-  
+  <script>
+  hljs.tabReplace = '    ';
+  hljs.initHighlightingOnLoad();
+  </script>
 </body>
 </html>
