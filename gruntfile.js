@@ -116,7 +116,8 @@ module.exports = function(grunt)
                 { expand: true, flatten: true, src: ["site/*.html"], dest: ".git/docs-temp/" },
                 { expand: true, flatten: true, src: ["site/images/*"], dest: ".git/docs-temp/images/" },
                 { expand: true, flatten: true, src: ["site/javascripts/*"], dest: ".git/docs-temp/javascripts/" },
-                { expand: true, flatten: true, src: ["site/stylesheets/*"], dest: ".git/docs-temp/stylesheets/" }
+                { expand: true, flatten: true, src: ["site/stylesheets/*"], dest: ".git/docs-temp/stylesheets/" },
+                { expand: true, flatten: true, src: ["site/highlight/**"], dest: ".git/docs-temp/highlight/" }
             ]
           }
         },
