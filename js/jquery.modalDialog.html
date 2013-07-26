@@ -1,13 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><title>js\jquery.modalDialog</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="js\jquery.modalDialog"><meta name="groc-project-path" content="js\jquery.modalDialog.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">js\jquery.modalDialog.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="c1">/// &lt;reference path=&quot;../plugins/jquery.transit.js&quot; /&gt;</span>
+<!DOCTYPE html><html lang="en"><head><title>js\jquery.modalDialog</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="js\jquery.modalDialog"><meta name="groc-project-path" content="js\jquery.modalDialog.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">js\jquery.modalDialog.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="c1">/// &lt;reference path=&quot;../dependencies/jquery.transit.js&quot; /&gt;</span>
 <span class="c1">/// &lt;reference path=&quot;jquery.querystring.js&quot; /&gt;</span>
 <span class="c1">/// &lt;reference path=&quot;jquery.postMessage.js&quot; /&gt;</span>
 <span class="c1">/// &lt;reference path=&quot;jquery.customEvent.js&quot; /&gt;</span>
 <span class="c1">/// &lt;reference path=&quot;jquery.clientRect.js&quot; /&gt;</span>
-<span class="c1">/// &lt;reference path=&quot;jquery.clientRect.js&quot; /&gt;</span>
-<span class="c1">/// &lt;reference path=&quot;jquery.hostIframe.js&quot; /&gt;</span>
-<span class="c1">/// &lt;reference path=&quot;jquery.modalDialog.common.js&quot; /&gt;</span>
-
-<span class="cm">/* globals DIALOG_TYPE_NODE, DIALOG_TYPE_IFRAME, DIALOG_TYPE_AJAX */</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><a href="http://labaneilers.github.io/SkinnyJS/">Homepage</a> | 
+<span class="c1">/// &lt;reference path=&quot;jquery.hostIframe.js&quot; /&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><a href="../index.html">Homepage</a> | 
 <a href="https://github.com/labaneilers/SkinnyJS/blob/master/js/jquery.modalDialog.js" target="_blank">View this file on Github</a> | 
 <a href="https://raw.github.com/labaneilers/SkinnyJS/master/js/jquery.modalDialog.js" target="_blank">Download this file</a>
 
@@ -104,7 +100,7 @@ would use _.bindAll if underscore was loaded though</p></div></div><div class="c
         <span class="p">}</span>
     <span class="p">}</span>
 
-    <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">dialogType</span> <span class="o">=</span> <span class="nx">DIALOG_TYPE_NODE</span><span class="p">;</span>
+    <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">dialogType</span> <span class="o">=</span> <span class="s2">&quot;node&quot;</span><span class="p">;</span>
 
     <span class="cm">/**</span>
 <span class="cm">    * Creates a custom event on this object with the specified event name</span>
@@ -598,7 +594,7 @@ Where you gonna drag to?</p></div></div><div class="code"><div class="wrapper"> 
 
     <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
 
-    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">dialogType</span> <span class="o">=</span> <span class="nx">DIALOG_TYPE_IFRAME</span><span class="p">;</span>
+    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">dialogType</span> <span class="o">=</span> <span class="s2">&quot;iframe&quot;</span><span class="p">;</span>
 
     <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_setupCustomEvent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">eventName</span><span class="p">)</span>
     <span class="p">{</span>
@@ -744,7 +740,7 @@ Where you gonna drag to?</p></div></div><div class="code"><div class="wrapper"> 
 
     <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">AjaxModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
 
-    <span class="nx">AjaxModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">dialogType</span> <span class="o">=</span> <span class="nx">DIALOG_TYPE_AJAX</span><span class="p">;</span>
+    <span class="nx">AjaxModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">dialogType</span> <span class="o">=</span> <span class="s2">&quot;ajax&quot;</span><span class="p">;</span>
 
     <span class="nx">AjaxModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">open</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span>

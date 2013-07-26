@@ -582,22 +582,6 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.modalDialog.common.js",
-            "projectPath": "js\\jquery.modalDialog.common.js",
-            "targetPath": "js\\jquery.modalDialog.common",
-            "title": "jquery.modalDialog.common"
-          },
-          "depth": 2,
-          "outline": []
-        }, {
-          "type": "file",
-          "data": {
-            "language": {
-              "nameMatchers": [".js"],
-              "pygmentsLexer": "javascript",
-              "singleLineComment": ["//"],
-              "name": "JavaScript"
-            },
             "sourcePath": "C:\\dev\\skinny\\js\\jquery.modalDialog.deviceFixes.js",
             "projectPath": "js\\jquery.modalDialog.deviceFixes.js",
             "targetPath": "js\\jquery.modalDialog.deviceFixes",
