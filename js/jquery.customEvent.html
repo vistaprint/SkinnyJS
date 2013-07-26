@@ -46,20 +46,19 @@ object.</p></div></div></div><div class="segment"><div class="comments"><div cla
     }
 }
 </code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="source">Source</h3></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> 
-<span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Utility class to manage multiple callbacks.
-@param {string} eventType The event type (i.e. "close", open")</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">.</span><span class="nx">CustomEvent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">host</span><span class="p">,</span> <span class="nx">eventType</span><span class="p">)</span>
+<span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Utility class to manage multiple callbacks.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><ul>
+<li>{object} host: The object owning the event</li>
+<li>{string} eventType: The event type (i.e. "close", open")</li>
+</ul></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">.</span><span class="nx">CustomEvent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">host</span><span class="p">,</span> <span class="nx">eventType</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">_host</span> <span class="o">=</span> <span class="nx">host</span><span class="p">;</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">eventType</span> <span class="o">=</span> <span class="nx">eventType</span><span class="p">;</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">_callbacks</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Callbacks</span><span class="p">();</span>
-    <span class="p">};</span>
-
-    <span class="cm">/**</span>
-<span class="cm">    * Triggers the event</span>
-<span class="cm">    * @param {object} data Any data that should appended to the event object</span>
-<span class="cm">    * @param {object} host Defines &quot;this&quot; in handlers. If not specified, the default host object is used.</span>
-<span class="cm">    * @return {object} The event object</span>
-<span class="cm">    */</span>
+    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Triggers the event, and returns a jQuery.Event object.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><ul>
+<li>{object} data: Any data that should appended to the event object</li>
+<li>{object} host: Defines "this" in handlers. If not specified, the default host object is used.</li>
+</ul></div></div><div class="code"><div class="wrapper">    <span class="o">*</span> <span class="err">@</span><span class="k">return</span> <span class="p">{</span><span class="nx">object</span><span class="p">}</span> <span class="nx">The</span> <span class="nx">event</span> <span class="nx">object</span>
+    <span class="o">*</span><span class="err">/</span>
     <span class="nx">$</span><span class="p">.</span><span class="nx">CustomEvent</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">fire</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">host</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">evt</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Event</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">eventType</span><span class="p">);</span>
@@ -69,37 +68,29 @@ object.</p></div></div></div><div class="segment"><div class="comments"><div cla
         <span class="k">this</span><span class="p">.</span><span class="nx">_callbacks</span><span class="p">.</span><span class="nx">fireWith</span><span class="p">(</span><span class="nx">host</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">_host</span><span class="p">,</span> <span class="p">[</span><span class="nx">evt</span><span class="p">]);</span>
 
         <span class="k">return</span> <span class="nx">evt</span><span class="p">;</span>
-    <span class="p">};</span>
-
-    <span class="cm">/**</span>
-<span class="cm">    * Assigns an event handler</span>
-<span class="cm">    * @param {Function} callback The event handler</span>
-<span class="cm">    */</span>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">CustomEvent</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">add</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span>
+    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Assigns an event handler</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><ul>
+<li>{Function} callback: The event handler</li>
+</ul></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">.</span><span class="nx">CustomEvent</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">add</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">callback</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="k">this</span><span class="p">.</span><span class="nx">_callbacks</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">callback</span><span class="p">);</span>
         <span class="p">}</span>
-    <span class="p">};</span>
-
-    <span class="cm">/**</span>
-<span class="cm">    * Assigns an event handler</span>
-<span class="cm">    * @param {Function} callback The event handler</span>
-<span class="cm">    */</span>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">CustomEvent</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">remove</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span>
+    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Assigns an event handler
+* {Function} callback: The event handler</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">.</span><span class="nx">CustomEvent</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">remove</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">callback</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="k">this</span><span class="p">.</span><span class="nx">_callbacks</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">callback</span><span class="p">);</span>
         <span class="p">}</span>
-    <span class="p">};</span>
-
-    <span class="nx">$</span><span class="p">.</span><span class="nx">CustomEvent</span><span class="p">.</span><span class="nx">create</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">eventType</span><span class="p">)</span>
+    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Utility for adding an even to an object more tersely</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><ul>
+<li>{object} host: The object owning the event</li>
+<li>{string} eventType: The event type (i.e. "close", open")</li>
+</ul></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">.</span><span class="nx">CustomEvent</span><span class="p">.</span><span class="nx">create</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">host</span><span class="p">,</span> <span class="nx">eventType</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">onEventType</span> <span class="o">=</span> <span class="s2">&quot;on&quot;</span> <span class="o">+</span> <span class="nx">eventType</span><span class="p">;</span>
-        <span class="kd">var</span> <span class="nx">evt</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">CustomEvent</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">eventType</span><span class="p">);</span>
-        <span class="nx">obj</span><span class="p">[</span><span class="nx">onEventType</span><span class="p">]</span> <span class="o">=</span> <span class="nx">evt</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">evt</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">CustomEvent</span><span class="p">(</span><span class="nx">host</span><span class="p">,</span> <span class="nx">eventType</span><span class="p">);</span>
+        <span class="nx">host</span><span class="p">[</span><span class="nx">onEventType</span><span class="p">]</span> <span class="o">=</span> <span class="nx">evt</span><span class="p">;</span>
         <span class="k">return</span> <span class="nx">evt</span><span class="p">;</span>
     <span class="p">};</span>
 
