@@ -4,6 +4,7 @@
 /// <reference path="jquery.customEvent.js" />
 /// <reference path="jquery.clientRect.js" />
 /// <reference path="jquery.hostIframe.js" />
+/// <reference path="jquery.proxyAll.js" />
 
 // Note: jQuery Mobile and some other dialog frameworks have URL/history management via pushState/hashchange built in.
 // I find this to be too inflexible, and should be implemented by callers as a separate concern.
@@ -116,12 +117,8 @@ if (!Object.keys)
         // Creates event objects on the dialog and copies handlers from settings
         $.each(["open", "beforeopen", "close", "beforeclose", "ajaxerror"], $.proxy(this._setupCustomEvent, this));
 
-        // removed dependency on $.proxyAll, this is less code and faster
-        // would use _.bindAll if underscore was loaded though
-        var methods = ["_drag", "_startDrag", "_stopDrag", "_close"];
-        for (var i=0; i<methods.length; i++) {
-            this[methods[i]] = $.proxy(this[methods[i]], this);
-        }
+        // Bind methods called as handlers so "this" works
+        $.proxyAll(this, "_drag", "_startDrag", "_stopDrag", "_close");
     }
 
     ModalDialog.prototype.dialogType = "node";

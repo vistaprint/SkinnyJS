@@ -1,6 +1,18 @@
-﻿/**
-* Returns true if the key pressed in a keyboard event is a visible character filters out keys such as function and shift. 
-*/
+﻿// ## jQuery.isVisibleKeyCode
+
+// Enhances jQuery.Event with the method *isVisibleKeyCode()*, which returns true if the key 
+// pressed in a keyboard event is a visible character. Useful to filter out keys such as function and shift. 
+
+// ### Usage
+
+//     $(".text-field").on("keypress", function(e) {
+//        if (e.isVisibleKeyCode())
+//        {
+//            doSomething(e.keyCode);
+//        });
+
+// ### Source
+
 jQuery.Event.prototype.isVisibleKeyCode = function () 
 {
     
@@ -9,11 +21,13 @@ jQuery.Event.prototype.isVisibleKeyCode = function ()
         return false;
     }
 
-    //F keys
+    // F keys
     if (this.keyCode >= 112 && this.keyCode <= 123) 
     {
         return false;
     }
+
+    // TODO this needs better (any) commenting.
 
     if (this.keyCode >= 33 && this.keyCode <= 40) 
     {
