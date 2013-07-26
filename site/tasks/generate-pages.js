@@ -1,5 +1,6 @@
 var marked = require("marked");
 var path = require("path");
+var CONTENT_TOKEN = "<!--ContentStart-->";
 
 module.exports = function(grunt)
 {
@@ -12,6 +13,13 @@ module.exports = function(grunt)
         for (var i=0; i<files.length; i++)
         {
             var markdown = grunt.file.read(files[i]);
+
+            var contentStartPos = markdown.indexOf(CONTENT_TOKEN);
+            if (contentStartPos >= 0)
+            {
+                markdown = markdown.substr(contentStartPos + CONTENT_TOKEN.length);
+            }
+
             var processedMarkdown = marked(markdown);
             var processedTemplate = template.replace("#content#", processedMarkdown);
 
