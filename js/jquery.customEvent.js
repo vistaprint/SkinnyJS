@@ -66,7 +66,9 @@
 {
 
     // Utility class to manage multiple callbacks.
-    // @param {string} eventType The event type (i.e. "close", open")
+
+    // * {object} host: The object owning the event
+    // * {string} eventType: The event type (i.e. "close", open")
     $.CustomEvent = function(host, eventType)
     {
         this._host = host;
@@ -74,10 +76,11 @@
         this._callbacks = new $.Callbacks();
     };
 
-    /**
-    * Triggers the event
-    * @param {object} data Any data that should appended to the event object
-    * @param {object} host Defines "this" in handlers. If not specified, the default host object is used.
+
+    // Triggers the event, and returns a jQuery.Event object.
+
+    // * {object} data: Any data that should appended to the event object
+    // * {object} host: Defines "this" in handlers. If not specified, the default host object is used.
     * @return {object} The event object
     */
     $.CustomEvent.prototype.fire = function(data, host)
@@ -91,10 +94,10 @@
         return evt;
     };
 
-    /**
-    * Assigns an event handler
-    * @param {Function} callback The event handler
-    */
+
+    // Assigns an event handler
+
+    // * {Function} callback: The event handler
     $.CustomEvent.prototype.add = function(callback)
     {
         if (callback)
@@ -103,10 +106,8 @@
         }
     };
 
-    /**
-    * Assigns an event handler
-    * @param {Function} callback The event handler
-    */
+    // Assigns an event handler
+    // * {Function} callback: The event handler
     $.CustomEvent.prototype.remove = function(callback)
     {
         if (callback)
@@ -115,11 +116,15 @@
         }
     };
 
-    $.CustomEvent.create = function(obj, eventType)
+    // Utility for adding an even to an object more tersely
+
+    // * {object} host: The object owning the event
+    // * {string} eventType: The event type (i.e. "close", open")
+    $.CustomEvent.create = function(host, eventType)
     {
         var onEventType = "on" + eventType;
-        var evt = new $.CustomEvent(obj, eventType);
-        obj[onEventType] = evt;
+        var evt = new $.CustomEvent(host, eventType);
+        host[onEventType] = evt;
         return evt;
     };
 
