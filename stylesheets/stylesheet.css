@@ -74,6 +74,11 @@ h1.title {
   font-style: italic;
   font-family:Georgia, serif;
   text-align: center;
+  position: relative;
+}
+
+.logo-image {
+  height: 60px;
 }
 
 .wrapper {
