@@ -51,4 +51,9 @@ var processPages = function(directory)
     }
 };
 
-module.exports = function() { processPages(DOCS_ROOT); };
+module.exports = function(grunt)
+{
+    grunt.registerTask("add-docs-links", "Adds shared header links to groc generated files", function() {
+        processPages(DOCS_ROOT);
+    });
+};

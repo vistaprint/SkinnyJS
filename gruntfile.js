@@ -1,6 +1,4 @@
 /* globals require, module */
-var generateHomepage = require("./site/generate-homepage");
-var addDocsLinks = require("./site/add-docs-links");
 var fs = require("fs");
 
 function getFilesSync(directory, buffer)
@@ -115,6 +113,7 @@ module.exports = function(grunt)
           {
             files: 
             [
+                { expand: true, flatten: true, src: ["site/*.html"], dest: ".git/docs-temp/" },
                 { expand: true, flatten: true, src: ["site/images/*"], dest: ".git/docs-temp/images/" },
                 { expand: true, flatten: true, src: ["site/javascripts/*"], dest: ".git/docs-temp/javascripts/" },
                 { expand: true, flatten: true, src: ["site/stylesheets/*"], dest: ".git/docs-temp/stylesheets/" }
@@ -140,8 +139,25 @@ module.exports = function(grunt)
         },
         clean:
         {
-            build: ['dist']
-        }         
+            build: ['dist'],
+            docs: ['./.git/docs-temp']
+        },
+        "gen-pages":
+        {
+            homepage: 
+            {
+                template: "site/template.html",
+                src: ["./README.md"],
+                dest: './.git/docs-temp/index.html'
+            },
+            others: 
+            {
+                template: "site/template.html",
+                src: ["./site/*.md"],
+                dest: './.git/docs-temp/',
+                remove: "./site/"
+            }
+        }
     };
 
     // Project configuration.
@@ -180,7 +196,6 @@ module.exports = function(grunt)
     grunt.registerTask('travis', 'default');
 
     // Documentation tasks.
-    grunt.registerTask('gen-homepage', "Generates index.html from README.md", generateHomepage);
-    grunt.registerTask('add-docs-links', "Adds links to documentation pages", addDocsLinks);
-    grunt.registerTask('docs', ['gen-homepage', 'groc', 'add-docs-links', 'copy:docs']);
+    grunt.loadTasks("./site/tasks");
+    grunt.registerTask('docs', ['gen-pages', 'groc', 'add-docs-links', 'copy:docs']);
 };
