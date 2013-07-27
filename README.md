@@ -33,7 +33,7 @@ Skinny UI components
 ------------------
 
 * [jQuery.menu](http://labaneilers.github.io/SkinnyJS/js/jquery.menu.html): A traditional hierarchical menu widget, designed from the ground up to be both touch and mouse friendly. TODO: Get existing docs from the wiki
-* [jQuery.modalDialog](http://labaneilers.github.io/SkinnyJS/js/jquery.modalDialog.html): A powerful modal dialog system that works across all devices: TODO: Get existing docs from the wiki
+* [jQuery.modalDialog](http://labaneilers.github.io/SkinnyJS/modal-dialogs.html): A powerful modal dialog system that works across all devices: TODO: Get existing docs from the wiki
 
 Dependencies
 ------------------
