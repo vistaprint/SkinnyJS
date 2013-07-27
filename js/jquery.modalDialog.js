@@ -14,7 +14,7 @@
 // Note: jQuery Mobile and some other dialog frameworks have URL/history management via pushState/hashchange built in.
 // I find this to be too inflexible, and should be implemented by callers as a separate concern.
 
-/// ### Source
+// ### Source
 
 // Minimal polyfill for Object.keys
 // <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys>
@@ -93,15 +93,12 @@ if (!Object.keys)
     var _animateMethod = $.fn.transition ? "transition" : "animate";
     var _easing = $.fn.transition ? "out" : "swing";
 
-    /**
-    * Returns true if we're on a small screen device like a smartphone.
-    * Dialogs behave slightly different on small screens, by convention.
-    * @returns {bool}
-    * @private
-    */
+
+    // Returns true if we're on a small screen device like a smartphone.
+    // Dialogs behave slightly different on small screens, by convention.
     function isSmallScreen()
     {
-        // Screw... er.. detect.. Internet Explorer 7/8, force them to desktop mode
+        // Detect Internet Explorer 7/8, force them to desktop mode
         if (ua.ie7 || ua.ie8) {
             return false;
         }
@@ -112,12 +109,7 @@ if (!Object.keys)
 
     $.isSmallScreen = isSmallScreen;
 
-    /**
-    * @class 
-    * Creates a jQuery mobile dialog with an embedded iframe.
-    * @constructor
-    * @param {object} settings Settings for the dialog
-    */
+    // Class which creates a jQuery mobile dialog
     function ModalDialog(settings)
     {
         this.settings = settings;
@@ -132,11 +124,7 @@ if (!Object.keys)
 
     ModalDialog.prototype.dialogType = "node";
 
-    /**
-    * Creates a custom event on this object with the specified event name
-    * @param {string} eventName The event name
-    * @private
-    */
+    // Creates a custom event on this object with the specified event name
     ModalDialog.prototype._setupCustomEvent = function(i, eventName)
     {
         var onEvent = "on" + eventName;
@@ -151,9 +139,7 @@ if (!Object.keys)
         return evt;
     };
 
-    /**
-    * Opens the dialog
-    */
+    // Opens the dialog
     ModalDialog.prototype.open = function()
     {
         // TODO: Re-evaluate settings, change DOM if settings have changed.
@@ -258,10 +244,8 @@ if (!Object.keys)
         this.$loadingIndicator = null;
     };
 
-    /**
-    * Closes the dialog. 
-    * @param {bool} isDialogCloseButton Indicates the cancel button in the dialog's header was clicked.
-    */
+    // Closes the dialog. 
+    // isDialogCloseButton Indicates the cancel button in the dialog's header was clicked.
     ModalDialog.prototype.close = function(isDialogCloseButton)
     {
         if ($.modalDialog.getCurrent() !== this)
@@ -336,10 +320,7 @@ if (!Object.keys)
         this.$el.remove();
     };
 
-    /**
-    * Builds the DOM for the dialog chrome
-    * @private
-    */
+    // Builds the DOM for the dialog chrome
     ModalDialog.prototype._build = function()
     {
         if (this._destroyed)
@@ -379,10 +360,12 @@ if (!Object.keys)
                 }
             }
 
-            // if (this.settings.preventEventBubbling)
-            // {
-            //     this.$el.on("click mousemove mousedown mouseup touchstart touchmove touchend", function(e) { e.stopPropagation(); });
-            // }
+            /*          
+            if (this.settings.preventEventBubbling)
+            {
+                this.$el.on("click mousemove mousedown mouseup touchstart touchmove touchend", function(e) { e.stopPropagation(); });
+            }
+            */
 
             this.$contentContainer = this.$el.find(".dialog-content-container");
             this.$header = this.$el.find(".dialog-header");
@@ -522,27 +505,10 @@ if (!Object.keys)
         e.preventDefault();
         e.stopPropagation();
 
-//        //If the mouse moves out of the window, and then releases the mouse,
-//        //older versions of IE don't fire the mouseup event. To work around, use
-//        //event.button to detect if the button has been released.
-//        //IE < 9 reports button == 0 when no button is pressed.
-//        if (vp.browser.isIE && vp.browser.ver < 9 && e.button === 0)
-//        {
-//            //if the mouse button is up, stop dragging/resizing
-//            stopDrag(e);
-//            return;
-//        }
-
         var mousePos = getMousePos(e);
 
         var deltaTop = mousePos.top - this._initialMousePos.top;
         var deltaLeft = mousePos.left - this._initialMousePos.left;
-
-        // This constrains the dialog to window boundaries
-//        var newPos = {
-//            top: Math.max(this._initialDialogPos.top + deltaTop, -this._parentRect.top),
-//            left: Math.max(this._initialDialogPos.left + deltaLeft, -this._parentRect.left)
-//        };
 
         var newPos = {
             top: this._initialDialogPos.top + deltaTop,
@@ -579,11 +545,8 @@ if (!Object.keys)
         this._isDragging = false;
     };
 
-    /**
-    * Gets the current mouse position
-    * @param {Event} e The event object
-    * @return {object} An object with top and left
-    */
+    // Gets the current mouse position from the event object.
+    // returns an object with top and left
     var getMousePos = function(e)
     {
         var touches = e.originalEvent.touches;
@@ -613,30 +576,23 @@ if (!Object.keys)
         return mousePos;
     };
 
-    /**
-    * Builds the DOM for the content node.
-    * Should be overridden by subclasses.
-    * @private
-    */
+    // Builds the DOM for the content node.
+    // Should be overridden by subclasses.
     ModalDialog.prototype._buildContent = function()
     {
         this.$content = $(this.settings.content);
         this.$content.detach();
     };
 
-    /**
-    * Gets a reference to the current window.
-    * This will be overriden by an iframe dialog.
-    */
+    // Gets a reference to the current window.
+    // This will be overriden by an iframe dialog.
     ModalDialog.prototype.getWindow = function()
     {
         return window;
     };
 
-    /**
-    * Gets a reference to the dialog that opened this dialog.
-    * This is null if the dialog was opened by the main window.
-    */
+    // Gets a reference to the dialog that opened this dialog.
+    // This is null if the dialog was opened by the main window.
     ModalDialog.prototype.getParent = function()
     {
         if (this.settings.parentId)
@@ -647,18 +603,14 @@ if (!Object.keys)
         return null;
     };
 
-    /**
-    * Sets the height of the content in pixels.
-    */
+    // Sets the height of the content in pixels.
     ModalDialog.prototype.center = function()
     {
         var pos = this._getDefaultPosition();
         this.$container[_animateMethod]({ top: pos.top }, 400);
     };
 
-    /**
-     * Reposition the dialog to the correct position.
-     */
+    // Reposition the dialog to the correct position.
     ModalDialog.prototype.pos = function(animate)
     {
         // stop any currently running animations
@@ -678,21 +630,13 @@ if (!Object.keys)
         }
     };
 
-    /**
-    * Sets the title of the dialog in the header.
-    */
+    // Sets the title of the dialog in the header.
     ModalDialog.prototype.setTitle = function(title)
     {
         this.$container.find(".dialog-header h1").text(title);
     };
 
-    /**
-    * @class 
-    * @base ModalDialog
-    * Extends ModalDialog such that the content is an iframe.
-    * @constructor
-    * @param {object} settings Settings for the dialog
-    */
+    // Extends ModalDialog such that the content is an iframe.
     var FramedModalDialog = function(settings)
     {
         ModalDialog.apply(this, arguments);
@@ -724,10 +668,7 @@ if (!Object.keys)
         }
     };
 
-    /**
-    * Override the _buildContent method to construct an iframe
-    * @private
-    */
+    // Override the _buildContent method to construct an iframe
     FramedModalDialog.prototype._finishClose = function(e)
     {
         ModalDialog.prototype._finishClose.call(this, e);
@@ -740,10 +681,7 @@ if (!Object.keys)
         this.$el.remove();
     };
 
-    /**
-    * Override the _buildContent method to construct an iframe
-    * @private
-    */
+    // Override the _buildContent method to construct an iframe
     FramedModalDialog.prototype._buildContent = function()
     {
         this.$frame = $('<iframe src="' + this.settings.url + '" name="' + this.settings._fullId + '" seamless allowtransparency="true" width="100%" style="height:' + this.settings.initialHeight + 'px;" class="dialog-frame" scrolling="no" frameborder="0" framespacing="0" />');
@@ -764,13 +702,10 @@ if (!Object.keys)
         return this.$frame.iframeWindow()[0];
     };
 
-    /**
-    * Sends a message to the iframe content window. 
-    * Used for orchestrating cross-window communication with dialog proxies.
-    * @param {string} command The name of the command to send to the content window
-    * @param {object} data A simple data object to serialize (as a querystring) and send with the command
-    * @private
-    */
+    // Sends a message to the iframe content window. 
+    // Used for orchestrating cross-window communication with dialog proxies.
+    // * {string} command: The name of the command to send to the content window
+    // * {object} data: A simple data object to serialize (as a querystring) and send with the command
     FramedModalDialog.prototype._postMessageToContent = function(command, data)
     {
         var messageData = { dialogCmd: command };
@@ -819,17 +754,13 @@ if (!Object.keys)
         this.settings.initialHeight = contentHeight;
     };
 
-    /**
-    * Sets the height of the iframe to the detected height of the iframe content document.
-    */
+    // Sets the height of the iframe to the detected height of the iframe content document.
     FramedModalDialog.prototype.setHeightFromContent = function(center, skipAnimation)
     {
         this._postMessageToContent("setHeightFromContent", { center: !!center, skipAnimation: !!skipAnimation});
     };
 
-    /**
-    * Sets the title of the dialog in the header from the HTML title tag of the iframe content document.
-    */
+    // Sets the title of the dialog in the header from the HTML title tag of the iframe content document.
     FramedModalDialog.prototype.setTitleFromContent = function(command, data)
     {
         this._postMessageToContent("setTitleFromContent");
@@ -846,12 +777,8 @@ if (!Object.keys)
     {
     };
 
-    /**
-    * @class
-    * @base ModalDialog
-    * AjaxModalDialog: Loads content via ajax
-    * @constructor
-    */
+    // AjaxModalDialog: Extends ModalDialog 
+    // Loads content via ajax
     var AjaxModalDialog = function(settings)
     {
         ModalDialog.apply(this, arguments);
@@ -918,15 +845,12 @@ if (!Object.keys)
     var _dialogIdCounter = -1;
     var DIALOG_NAME_PREFIX = "dialog";
 
-    /**
-    * Takes a settings object and calculates derived settings.
-    * Settings go in order:
-    *  1. default value
-    *  2. setting provided on content element
-    *  3. settings passed
-    * @param {object} settings Settings for the dialog
-    * @private
-    */
+    //Takes a settings object and calculates derived settings.
+    //Settings go in order:
+
+    // 1. default value
+    // 2. setting provided on content element
+    // 3. settings passed
     var ensureSettings = function(s)
     {
         var settings = $.extend({}, _defaults);
@@ -975,40 +899,26 @@ if (!Object.keys)
         return settings;
     };
 
-    /**
-    * Gets the dialog by the fullId.
-    * @param {string} fullId The full ID of the dialog (including all parent ids)
-    * @private
-    */
+    // Gets the dialog by the fullId.
+
+    // * {string} fullId The full ID of the dialog (including all parent ids)
     var getDialog = function(fullId)
     {
         return _fullIdMap[fullId];
     };
 
-    /**
-    * Public sub-namespace for modal dialogs.
-    */
+    // Public sub-namespace for modal dialogs.
     $.modalDialog = {};
 
-    /**
-    * Used to prevent the content window script from loading over this one
-    * @private
-    */
+    // Used to prevent the content window script from loading over this one
     $.modalDialog._isHost = true;
 
-    /**
-     * On small screens we make the background opaque to hide the content because
-     * we will be hiding all content within the DOM and scrolling them to top.
-     *
-     * When removing the host window content from the DOM, make the veil opaque to hide it.
-     */
+    // On small screens we make the background opaque to hide the content because
+    // we will be hiding all content within the DOM and scrolling them to top.
+    // When removing the host window content from the DOM, make the veil opaque to hide it.
     $.modalDialog.veilClass = isSmallScreen() ? 'dialog-veil-opaque' : 'dialog-veil';
 
-    /**
-    * Creates a new dialog from the specified settings.
-    * @param {object} settings Settings for the dialog
-    * @return {ModalDialog}
-    */
+    // Creates a new dialog from the specified settings.
     $.modalDialog.create = function(settings)
     {
         settings = ensureSettings(settings);
@@ -1057,10 +967,7 @@ if (!Object.keys)
         return dialog;
     };
 
-    /**
-    * Gets the currently active dialog (topmost visually).
-    * @return {ModalDialog}
-    */
+    // Gets the currently active dialog (topmost visually).
     $.modalDialog.getCurrent = function()
     {
         return _dialogStack.length > 0 ? _dialogStack[_dialogStack.length-1] : null;
@@ -1079,10 +986,7 @@ if (!Object.keys)
         return !dialog ? this.data(JQUERY_DATA_KEY) : this.data(JQUERY_DATA_KEY, dialog);
     };
 
-    /**
-    * Idiomatic jQuery interface for node dialogs.
-    * @return {jQuery}
-    */
+    // Idiomatic jQuery interface for node dialogs.
     $.fn.modalDialog = function(settings)
     {
         var dialog;
@@ -1153,8 +1057,6 @@ if (!Object.keys)
 
     var messageHandler = function(e)
     {
-        //console.log("parent receive: " + (e.originalEvent ? e.originalEvent.data : e.data));
-
         var qs;
 
         try
