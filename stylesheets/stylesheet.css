@@ -599,3 +599,11 @@ h4
 {
   visibility: hidden;
 }
+
+h1.title a:link,
+h1.title a:hover,
+h1.title a:active
+{
+  color: #444444;
+  text-decoration: none;
+}
