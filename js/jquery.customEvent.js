@@ -81,8 +81,6 @@
 
     // * {object} data: Any data that should appended to the event object
     // * {object} host: Defines "this" in handlers. If not specified, the default host object is used.
-    * @return {object} The event object
-    */
     $.CustomEvent.prototype.fire = function(data, host)
     {
         var evt = new $.Event(this.eventType);
