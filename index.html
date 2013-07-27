@@ -69,7 +69,7 @@
 <h2>Skinny UI components</h2>
 <ul>
 <li><a href="js/jquery.menu.html">jQuery.menu</a>: A traditional hierarchical menu widget, designed from the ground up to be both touch and mouse friendly. TODO: Get existing docs from the wiki</li>
-<li><a href="js/jquery.modalDialog.html">jQuery.modalDialog</a>: A powerful modal dialog system that works across all devices: TODO: Get existing docs from the wiki</li>
+<li><a href="modal-dialogs.html">jQuery.modalDialog</a>: A powerful modal dialog system that works across all devices: TODO: Get existing docs from the wiki</li>
 </ul>
 <h2>Dependencies</h2>
 <p>skinny.js libraries were designed to have minimal dependencies, and are not intended to be used as a bundle. For this reason, we don&#39;t provide a concatenated, minified version of the whole set of libraries. Take the libraries you need, include their dependencies, and concatenate/minify to your
@@ -95,6 +95,15 @@ heart&#39;s content using your own project&#39;s build system. </p>
   <script>
   hljs.tabReplace = '    ';
   hljs.initHighlightingOnLoad();
+  $("pre code").each(function(i, el) 
+    {
+      var $this = $(this);
+      
+      if ($this.text().indexOf("<") !== 0)
+      {
+        $this.addClass("javascript");
+      }
+    });
   </script>
 </body>
 </html>

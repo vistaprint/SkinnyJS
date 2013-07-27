@@ -61,6 +61,15 @@
   <script>
   hljs.tabReplace = '    ';
   hljs.initHighlightingOnLoad();
+  $("pre code").each(function(i, el) 
+    {
+      var $this = $(this);
+      
+      if ($this.text().indexOf("<") !== 0)
+      {
+        $this.addClass("javascript");
+      }
+    });
   </script>
 </body>
 </html>

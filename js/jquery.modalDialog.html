@@ -9,8 +9,11 @@
 <a href="https://raw.github.com/labaneilers/SkinnyJS/master/js/jquery.modalDialog.js" target="_blank">Download this file</a>
 
 <hr style="height: 1px; border:0; background-color:#4A525A">
-<p>Note: jQuery Mobile and some other dialog frameworks have URL/history management via pushState/hashchange built in.
-I find this to be too inflexible, and should be implemented by callers as a separate concern.</p></div></div><div class="code"><div class="wrapper"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">)</span> 
+<h2 id="jquerymodaldialog">jQuery.modalDialog</h2></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="documentation">Documentation</h3>
+
+<p>Full documentation is available at <a href="http://labaneilers.github.io/SkinnyJS/modal-dialogs.html">http://labaneilers.github.io/SkinnyJS/modal-dialogs.html</a></p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Note: jQuery Mobile and some other dialog frameworks have URL/history management via pushState/hashchange built in.
+I find this to be too inflexible, and should be implemented by callers as a separate concern.</p></div></div><div class="code"><div class="wrapper"><span class="c1">/// ### Source</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Minimal polyfill for Object.keys
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys</a></p></div></div><div class="code"><div class="wrapper"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">)</span> 
 <span class="p">{</span>
     <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> 
     <span class="p">{</span>

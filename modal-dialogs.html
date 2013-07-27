@@ -43,6 +43,8 @@
         <article class="markdown-body">
           <pre><code>var booty = new Booty();</code></pre>
           <h1>Modal dialogs</h1>
+<h2>Source</h2>
+<p>You can view the <a href="js/jquery.modalDialog.html">full annotated source</a></p>
 <h2>Features</h2>
 <p>For a dialog&#39;s content, the framework can use one of the following techniques:</p>
 <ul>
@@ -111,6 +113,116 @@ dialog.open();
 
 //close dialog
 dialog.close();</code></pre>
+<h4>Defining the content for an AJAX dialog</h4>
+<h5>Layout pages for AJAX dialog content</h5>
+<p>TODO: remove VPisms
+AJAX dialogs&#39; content should have no layout page; just render the content to display. In Razor, you would use this:</p>
+<pre><code>@{ this.Layout = null; }</code></pre>
+<h5>JavaScripts in AJAX dialog content</h5>
+<p>Any scripts included in the content will get loaded dynamically, after the DOM elements have been loaded. Scripts that are already loaded in the window will be ignored (not run a second time), but script snippets will be executed.</p>
+<h3>IFrame dialogs</h3>
+<p>IFrame dialogs contain an embedded IFrame that shows a self-contained webpage. These are particularly useful for a few reasons:</p>
+<ul>
+<li>They can encapsulate the dialog&#39;s content completely.</li>
+<li>HTML, scripts, and CSS are completely isolated from the parent window.</li>
+<li>They can load content cross-domain.</li>
+</ul>
+<p>To create an IFrame dialog, use the following syntax:</p>
+<pre><code>var dialog = $.modalDialog.create({ url: &quot;/studio/color-dialog.aspx&quot; });
+dialog.open();
+
+//close dialog
+dialog.close();</code></pre>
+<p>In an IFrame dialog, the height of the dialog is determined by the content.</p>
+<h4>Defining the content of an IFrame dialog</h4>
+<h5>Layout page</h5>
+<p>TODO remove VPisms
+IFrame dialogs should use the Razor layout page:</p>
+<pre><code>this.Layout = &quot;~/Sales/Mobile/Mvc/Views/Shared/_DialogMobileLayout.cshtml&quot;;</code></pre>
+<h5>Notifying the parent window when the IFrame is rendered and ready to show</h5>
+<p>The dialog framework waits to show an IFrame dialog until it&#39;s content window notifies it that it is fully rendered. By default, this happens on window.onload.</p>
+<p>In certain cases, a dialog may require extra initialization (i.e. it may use JavaScript to render some content), and is not necessarily ready on window.onload. To handle this, you would want to disable manual notification to the framework that the dialog is ready by setting the following property:</p>
+<pre><code>$.modalDialog.manualNotifyReady = true;</code></pre>
+<p>Then, when your dialog&#39;s content is fully rendered, call:</p>
+<pre><code>$.modalDialog.getCurrent().notifyReady();</code></pre>
+<h5>Dialog size</h5>
+<p>The size of the dialog is determined automatically based on the size of the content in the IFrame. Because it can be tricky to determine the height of content in HTML, there are a few configuration options to help the framework determine the size:</p>
+<ul>
+<li><strong>$.modalDialog.autoSizing</strong>: If enabled, the dialog framework looks for changes to content size and adjust the dialog size automatically. True by default.</li>
+<li><strong>$.modalDialog.sizeElement</strong>: A CSS selector for an element that the framework should measure to get the size of the content. By default, it looks for an element matching the selector .dialog-content-size.</li>
+</ul>
+<p>If $.modalDialog.autoSizing&#39; is set false, then you will want to resize the dialog manually using one of the following methods:</p>
+<pre><code>// Set height explicitly
+$.modalDialog.getCurrent().setHeight(400);
+
+// Set height based on content
+$.modalDialog.getCurrent().setHeightFromContent();</code></pre>
+<h5>Dialog title</h5>
+<p>The title displayed in the dialog is driven by the HTML title tag of the document in the IFrame. You can override this by specifically calling:</p>
+<pre><code>$.modalDialog.getCurrent().setTitle(&quot;New title&quot;);</code></pre>
+<h5>Cross-domain support</h5>
+<p>If your IFrame content is in a different domain than the parent window, you need to tell the content window how to reach the parent window:</p>
+<pre><code>$.modalDialog.parentHostName = &quot;http://www.vistaprint.com&quot;;</code></pre>
+<h3>Creating multiple active dialogs</h3>
+<p>Dialogs can be opened in succession (i.e. a dialog can open another dialog). This even works from an IFrame dialog, and even across domains.</p>
+<p>To open a dialog from another dialog (including an IFrame dialog), simply use <code>$.modalDialog.create()</code>.</p>
+<p><strong>Warning</strong>: There is one important exception: An IFrame dialog cannot open a node dialog. This is because the IFrame is, by definition, in a different window than the host window, and cannot share its DOM with the parent window. You can, however, open an AJAX dialog, or another IFrame dialog from an IFrame dialog.</p>
+<h3>Events</h3>
+<p>Dialogs support a number of lifecycle events:</p>
+<ul>
+<li><strong>beforeopen</strong>: Fires before the dialog opens. Calling event.preventDefault() on the event object will cancel the opening of the dialog.</li>
+<li><strong>open</strong>: Fires after the dialog has opened, and has animated into place.</li>
+<li><strong>beforeclose</strong>: Fires before the dialog closes. Calling event.preventDefault() on the event object will cancel the closing of the dialog. The property event.isDialogCloseButton indicates that the top dialog close button was clicked.</li>
+<li><strong>close</strong>: Fires after the dialog closes. The property event.isDialogCloseButton indicates that the top dialog close button was clicked.</li>
+<li><strong>ajaxerror</strong>: Fires if an error occurs loading an AJAX dialog.</li>
+</ul>
+<h4>Handling events</h4>
+<p>There are two ways to assign event handlers, as options to <code>$.modalDialog.create()</code>, or by adding event handlers to the dialog object returned by <code>$.modalDialog.create()</code>.</p>
+<p>Here is an example of using the beforeopen event:</p>
+<pre><code>$.modalDialog.create({ 
+    url: &quot;/foo.aspx&quot;, 
+    onbeforeopen: function(e) 
+    { 
+        if (!confirm(&quot;Are you sure you want to open this dialog?&quot;)) 
+        {
+            e.preventDefault(); 
+        }
+    });</code></pre>
+<p>This example is completely equivalent:</p>
+<pre><code>var dialog = $.modalDialog.create({ url: &quot;/foo.aspx&quot; });
+dialog.onbeforeopen.add(function(e) 
+{ 
+    if (!confirm(&quot;Are you sure you want to open this dialog?&quot;)) 
+    { 
+        e.preventDefault(); 
+    }
+});</code></pre>
+<p><strong>Tip</strong>: These events are even supported in cross-domain IFrame dialogs!</p>
+<h3>Unobtrusive usage</h3>
+<p>The dialog framework also supports an unobtrusive, declarative syntax:
+Open an iFrame dialog:</p>
+<pre><code>&lt;a href=&quot;/content.aspx&quot; data-rel=&quot;modalDialog&quot;&gt;Open content&lt;/a&gt;</code></pre>
+<p>Open a node dialog:</p>
+<pre><code>&lt;a href=&quot;#content&quot; data-rel=&quot;modalDialog&quot;&gt;Open content&lt;/a&gt;
+
+&lt;!-- Note the &#39;dialog-content&#39; class. This ensures the content is invisible before the dialog is shown --&gt;
+&lt;div id=&quot;content&quot; class=&quot;dialog-content&quot;&gt;Here&#39;s some content&lt;/div&gt;</code></pre>
+<p>Any options supported in the $.modalDialog.create() method are supported declaratively, with the prefix data-dialog-:</p>
+<pre><code>&lt;a href=&quot;#content&quot; data-rel=&quot;modalDialog&quot; data-dialog-onclose=&quot;updateContent(e);&quot;&gt;Show color picker&lt;/a&gt;</code></pre>
+<h4>Unobtrusive dialog events</h4>
+<p>If you want to assign handlers unobtrusively, you can access the dialog when it is created with the dialogcreate event:</p>
+<pre><code>&lt;a href=&quot;#colorPicker&quot; data-rel=&quot;modalDialog&quot; id=&quot;colorPickerLink&quot;&gt;Show color picker&lt;/a&gt;</code></pre>
+<p>Then, in script, you can access the dialog:</p>
+<pre><code>$(&quot;#colorPickerLink&quot;).on(&quot;dialogcreate&quot;, function(e)
+{
+    e.dialog.onopen.add(function() { alert(&quot;opened&quot;); });
+});</code></pre>
+<h3>Defining buttons in a dialog</h3>
+<p>TODO: figure out how this should work outside VP</p>
+<pre><code>&lt;div class=&quot;dialog-button-group&quot;&gt;
+    &lt;a href=&quot;#&quot; class=&quot;dialog-button primary&quot;&gt;OK&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;dialog-button&quot;&gt;Cancel&lt;/a&gt;
+&lt;/div&gt;</code></pre>
 
         </article>
       </div>
@@ -129,6 +241,15 @@ dialog.close();</code></pre>
   <script>
   hljs.tabReplace = '    ';
   hljs.initHighlightingOnLoad();
+  $("pre code").each(function(i, el) 
+    {
+      var $this = $(this);
+      
+      if ($this.text().indexOf("<") !== 0)
+      {
+        $this.addClass("javascript");
+      }
+    });
   </script>
 </body>
 </html>
