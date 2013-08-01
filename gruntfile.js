@@ -113,7 +113,6 @@ module.exports = function(grunt)
           {
             files: 
             [
-                { expand: true, flatten: true, src: ["site/*.html"], dest: ".git/docs-temp/" },
                 { expand: true, flatten: true, src: ["site/images/*"], dest: ".git/docs-temp/images/" },
                 { expand: true, flatten: true, src: ["site/javascripts/*"], dest: ".git/docs-temp/javascripts/" },
                 { expand: true, flatten: true, src: ["site/stylesheets/*"], dest: ".git/docs-temp/stylesheets/" },
@@ -149,18 +148,28 @@ module.exports = function(grunt)
         {
             homepage: 
             {
-                template: "site/template.html",
+                template: "site/main-template.html",
                 src: ["./README.md"],
                 dest: './.git/docs-temp/index.html',
                 urlBase: "http://labaneilers.github.io/SkinnyJS/"
             },
-            others: 
+            markdown: 
             {
-                template: "site/template.html",
+                template: "site/main-template.html",
                 src: ["./site/*.md"],
                 dest: './.git/docs-temp/',
                 remove: "./site/"
+            },
+            html: 
+            {
+                template: "site/main-template.html",
+                src: ["./site/*.html"],
+                dest: './.git/docs-temp/',
+                filter: "-template.html",
+                remove: "./site/",
+                rawHtml: true
             }
+
         }
     };
 
@@ -201,5 +210,8 @@ module.exports = function(grunt)
 
     // Documentation tasks.
     grunt.loadTasks("./site/tasks");
-    grunt.registerTask('docs', ['default', 'gen-pages', 'groc', 'add-docs-links', 'copy:docs']);
+    grunt.registerTask('docs', ['default', 'groc', 'add-docs-links', 'pages']);
+
+    grunt.registerTask('pages', ['gen-pages', 'copy:docs']);
 };
+

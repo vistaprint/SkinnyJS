@@ -1,10 +1,7 @@
-var tree = 
+
+
+(function($, tree)
 {
-	"jquery.modalDialog" : [ "jquery.queryString", "jquery.postMessage", "jquery.customEvent", "jquery.clientRect", "jquery.hostIframe", "jquery.proxyAll" ],
-	"jquery.queryString": [ "jquery.delimitedString" ],
-	"jquery.postMessage": [],
-	"jquery.delimitedString": []
-};
 
 var treeRev = (function(tree)
 {
@@ -26,8 +23,6 @@ var treeRev = (function(tree)
 	return rev;
 
 })(tree);
-
-
 
 var buildDeps = function(moduleName, deps)
 {
@@ -164,6 +159,7 @@ var updateUI = function()
 
 var buildUI = function()
 {
+	// Generate checkboxes for each dependency via a template
 	var template = $("#dependencyTemplate").html();
 
 	var html = _.keys(tree).map(function(moduleName)
@@ -171,11 +167,11 @@ var buildUI = function()
 		return _.template(template, { escapedModuleName: escapeModuleName(moduleName), moduleName: moduleName });	
 	});
 
-	$("form[name=dependencies]").append(html.join("\n"));
+	$(".dependencies-container").prepend(html.join("\n"));
 
-	$("#generate").click(generate);
+	$(".generate-button").click(generate);
 
-	$("form[name=dependencies] input[type=checkbox]").click(updateUI);
+	$(".dependencies-container input[type=checkbox]").click(updateUI);
 
 	var modulesQs = $.currentQueryString()["modules"];
 	if (modulesQs)
@@ -189,3 +185,5 @@ var buildUI = function()
 };
 
 $(document).on("ready", buildUI);
+
+})(jQuery, dependencyTree);

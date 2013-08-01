@@ -12,7 +12,7 @@ var processError = function(err)
 };
 
 var DOCS_ROOT = "./.git/docs-temp/js";
-var template = fs.readFileSync("./site/docfile-template.html", "utf-8");
+var template = fs.readFileSync("./site/partials/docfile-header-partial.html", "utf-8");
 
 var processPages = function(directory)
 {
