@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="javascripts/jquery.js"></script>
+	<script type="text/javascript" src="javascripts/underscore-min.js"></script>
+	<script type="text/javascript" src="dist/jquery.delimitedString.js"></script>
+	<script type="text/javascript" src="dist/jquery.queryString.js"></script>
+	<script type="text/javascript" src="javascripts/download-builder.js"></script>
+</head>
+<body>
+	<form name="dependencies">
+		<input type="button" id="generate" value="generate" /> <br />
+	</form>
+
+	<textarea id="output"></textarea>
+
+	<script type="text/template" id="dependencyTemplate">
+	<input type="checkbox" id="<%= escapedModuleName %>" value="<%= moduleName %>" /> <label for="<%= escapedModuleName %>"><%= moduleName %></label><br />
+	</script>
+</body>
