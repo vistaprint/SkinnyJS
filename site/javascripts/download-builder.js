@@ -119,7 +119,6 @@ var generate = function()
 	var promises = _.map(moduleNames, function(moduleName) {
 		return $.get("dist/" + moduleName + ".min.js").promise().then(function(responseText) 
 		{
-			console.log(moduleName);
 			content[moduleName] = responseText;
 		});
 	});
