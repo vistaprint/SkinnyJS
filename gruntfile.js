@@ -117,7 +117,9 @@ module.exports = function(grunt)
                 { expand: true, flatten: true, src: ["site/images/*"], dest: ".git/docs-temp/images/" },
                 { expand: true, flatten: true, src: ["site/javascripts/*"], dest: ".git/docs-temp/javascripts/" },
                 { expand: true, flatten: true, src: ["site/stylesheets/*"], dest: ".git/docs-temp/stylesheets/" },
-                { expand: true, flatten: true, src: ["site/highlight/**"], dest: ".git/docs-temp/highlight/" }
+                { expand: true, flatten: true, src: ["site/highlight/**"], dest: ".git/docs-temp/highlight/" },
+                { expand: true, flatten: true, src: ["site/dist/**"], dest: ".git/docs-temp/dist/" },
+                { expand: true, flatten: true, src: ["LICENSE"], processFile: true, dest: ".git/docs-temp/" }
             ]
           }
         },
@@ -199,5 +201,5 @@ module.exports = function(grunt)
 
     // Documentation tasks.
     grunt.loadTasks("./site/tasks");
-    grunt.registerTask('docs', ['gen-pages', 'groc', 'add-docs-links', 'copy:docs']);
+    grunt.registerTask('docs', ['default', 'gen-pages', 'groc', 'add-docs-links', 'copy:docs']);
 };
