@@ -41,8 +41,32 @@
         <span class="blc"></span><span class="trc"></span>
         </div>
         <article class="markdown-body">
-          <h2>Menus</h2>
+          
+	<link rel="stylesheet" href="stylesheets/download-builder.css" />
 
+	<h1>Download Builder</h1>
+
+	Select the libraries you'd like to include in your custom build:
+	<form name="dependencies">
+		<div class="dependencies-container"></div>
+
+		<input type="button" class="generate-button" value="Generate" /> <br />
+
+		<label class="output-label" for="output">Minified output:</label>
+		<textarea id="output" readonly></textarea>
+	</form>
+
+	<script type="text/template" id="dependencyTemplate">
+	<input type="checkbox" id="<%= escapedModuleName %>" value="<%= moduleName %>" /> <label for="<%= escapedModuleName %>"><%= moduleName %></label><br />
+	</script>
+
+
+	<script type="text/javascript" src="javascripts/underscore-min.js"></script>
+	<script type="text/javascript" src="dist/jquery.delimitedString.js"></script>
+	<script type="text/javascript" src="dist/jquery.queryString.js"></script>
+	<script type="text/javascript" src="javascripts/dependency-tree.js"></script>	
+	<script type="text/javascript" src="javascripts/download-builder.js"></script>
+	
         </article>
       </div>
     </div>

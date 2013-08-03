@@ -1,0 +1,26 @@
+var dependencyTree = 
+{
+	"date-parse": [],
+	"jquery.clientRect": [],
+	"jquery.contentSize": ["jquery.clientRect"],
+	"jquery.css": ["jquery.delimitedString"],
+	"jquery.customEvent": [],
+	"jquery.delimitedString": [],
+	"jquery.disableEvent": [],
+	"jquery.hostIframe": [],
+	"jquery.hoverDelay": [],
+	"jquery.htmlEncode": [],
+	"jquery.imageSize": [],
+	"jquery.isVisibleKeyCode": [],
+	"jquery.menu": [],
+	"jquery.modalDialog": ["jquery.queryString","jquery.postMessage","jquery.customEvent","jquery.clientRect","jquery.hostIframe","jquery.proxyAll"],
+	"jquery.modalDialogContent": ["jquery.queryString", "jquery.contentSize", "jquery.customEvent"],
+	"jquery.msAjax": ["date-parse"],
+	"jquery.ns": [],
+	"jquery.partialLoad": [],
+	"jquery.postMessage": [],
+	"jquery.proxyAll": [],
+	"jquery.queryString": ["jquery.delimitedString"],
+	"jquery.uncomment": [],
+	"jquery.url": ["jquery.queryString"]
+};
