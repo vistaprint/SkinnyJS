@@ -117,7 +117,7 @@ module.exports = function(grunt)
                 { expand: true, flatten: true, src: ["site/javascripts/*"], dest: ".git/docs-temp/javascripts/" },
                 { expand: true, flatten: true, src: ["site/stylesheets/*"], dest: ".git/docs-temp/stylesheets/" },
                 { expand: true, flatten: true, src: ["site/highlight/**"], dest: ".git/docs-temp/highlight/" },
-                { expand: true, flatten: true, src: ["site/dist/**"], dest: ".git/docs-temp/dist/" },
+                { expand: true, flatten: true, src: ["dist/**"], dest: ".git/docs-temp/dist-pub/" },
                 { expand: true, flatten: true, src: ["LICENSE"], processFile: true, dest: ".git/docs-temp/" }
             ]
           }
