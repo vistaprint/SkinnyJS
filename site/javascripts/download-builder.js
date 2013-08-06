@@ -9,7 +9,7 @@ var treeRev = (function(tree)
 
 	for (var prop in tree)
 	{
-		var deps = tree[prop];
+		var deps = tree[prop].deps;
 		for (var i=0; i<deps.length; i++)
 		{
 			if (!rev[deps[i]])
@@ -32,11 +32,11 @@ var buildDeps = function(moduleName, deps)
 	}
 
 	var moduleDeps = tree[moduleName];
-	if (moduleDeps && moduleDeps.length > 0)
+	if (moduleDeps && moduleDeps.deps.length > 0)
 	{
-		for (var i=0; i<moduleDeps.length; i++)
+		for (var i=0; i<moduleDeps.deps.length; i++)
 		{
-			buildDeps(moduleDeps[i], deps);
+			buildDeps(moduleDeps.deps[i], deps);
 		}
 	}
 
