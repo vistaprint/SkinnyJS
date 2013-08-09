@@ -32,6 +32,11 @@ function getUglifyConfig()
     var files = getFilesSync("dist");
     for (var i=0; i<files.length; i++)
     {
+        if (files[i].indexOf(".js") < 0)
+        {
+            continue;
+        }
+
         var minFile = files[i].replace(".js", ".min.js");
         ret[minFile] = [ files[i] ];
     }
@@ -57,6 +62,29 @@ function getCopyConfig()
             dest: "dist/",
             flatten: true
         });
+    }
+
+    return ret;
+}
+
+function getLessConfig()
+{
+    var ret = {};
+
+    var files = getFilesSync("css");
+    for (var i=0; i<files.length; i++)
+    {
+        if (files[i].indexOf(".less") < 0)
+        {
+            continue;
+        }
+
+        if (files[i].indexOf("_lib.less") >= 0)
+        {
+            continue;
+        }
+
+        ret["dist/" + files[i].replace(".less", ".css")] = files[i];
     }
 
     return ret;
@@ -117,7 +145,9 @@ module.exports = function(grunt)
                 { expand: true, flatten: true, src: ["site/javascripts/*"], dest: ".git/docs-temp/javascripts/" },
                 { expand: true, flatten: true, src: ["site/stylesheets/*"], dest: ".git/docs-temp/stylesheets/" },
                 { expand: true, flatten: true, src: ["site/highlight/**"], dest: ".git/docs-temp/highlight/" },
-                { expand: true, flatten: true, src: ["dist/**"], dest: ".git/docs-temp/dist-pub/" },
+                { expand: true, flatten: true, src: ["dist/*"], dest: ".git/docs-temp/dist-pub/" },
+                { expand: true, flatten: true, src: ["dist/css/*"], dest: ".git/docs-temp/dist-pub/css/" },
+                { expand: true, flatten: true, src: ["css/*.less"], dest: ".git/docs-temp/dist-pub/css/" },
                 { expand: true, flatten: true, src: ["LICENSE"], processFile: true, dest: ".git/docs-temp/" }
             ]
           }
@@ -170,6 +200,13 @@ module.exports = function(grunt)
                 rawHtml: true
             }
 
+        },
+        less: 
+        {
+            main:
+            {
+                files: getLessConfig()
+            }
         }
     };
 
@@ -178,6 +215,7 @@ module.exports = function(grunt)
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
@@ -200,7 +238,7 @@ module.exports = function(grunt)
     });
 
     // Default tasks.
-    grunt.registerTask('default', ['verify', 'clean', 'copy:dist', 'concat', 'uglifyDist']);
+    grunt.registerTask('default', ['verify', 'clean', 'less', 'copy:dist', 'concat', 'uglifyDist']);
 
     // Verification tasks
     grunt.registerTask('verify', ['jshint', 'qunit']);
