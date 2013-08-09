@@ -144,7 +144,8 @@ var generate = function()
 					name: moduleName,
 					content: responseText,
 					single: module.single, 
-					notes: module.notes
+					notes: module.notes,
+					other: module.other
 				};
 			});
 	});
@@ -157,27 +158,27 @@ var generate = function()
 			return allContent[moduleName];
 		});
 
-		var concatableContent = _.filter(allModuleContent, function(moduleContent)
+		var mainModuleContent = _.filter(allModuleContent, function(moduleContent)
 		{
 			return !moduleContent.single;
 		});
 
-		var concatableContentNames = _.map(concatableContent, function(moduleContent)
+		var mainModuleContentNames = _.map(mainModuleContent, function(moduleContent)
 		{
 			return moduleContent.name;
 		});
 
 		// Filter down to just the non-single modules, then concatenate them
 		// to create a final downloaded file
-		var finalContent = 
-			getLicense(concatableContentNames) + 
-			_.map(concatableContent, function(moduleContent)
+		var mainModuleFinalContent = 
+			getLicense(mainModuleContentNames) + 
+			_.map(mainModuleContent, function(moduleContent)
 			{
 				return moduleContent.content;
 			})
 			.join(";");
 
-		var html = buildModuleOutput({ name: "skinny.js main module", notes: "", content: finalContent });
+		var html = buildModuleOutput({ name: "skinny.js main module", notes: "", content: mainModuleFinalContent });
 
 		var $form = $("form[name='dependencies']"); 
 
@@ -195,6 +196,21 @@ var generate = function()
 					"<div class='module-notes'>" + (moduleContent.notes || "") + "<div>" +
 					"<textarea class='module-output'>" + content + "</textarea>";
 			});
+
+		var otherContentList = _.filter(allModuleContent, function(item)
+		{
+			return !!item.other;
+		});
+
+		var downloadTemplate = _.template($("#downloadTemplate").html());
+
+		_.each(otherContentList, function(item)
+		{
+			for (var i=0; i<item.other.length; i++)
+			{
+				html += downloadTemplate(item.other[i]);
+			}
+		});
 
 		$outputArea.html(html);
 	});
