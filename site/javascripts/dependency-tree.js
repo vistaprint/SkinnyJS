@@ -13,8 +13,20 @@ var dependencyTree =
 	"jquery.imageSize": { deps: [] },
 	"jquery.isVisibleKeyCode": { deps: [] },
 	"jquery.menu": { deps: [] },
-	"jquery.modalDialog": { deps: ["jquery.queryString","jquery.postMessage","jquery.customEvent","jquery.clientRect","jquery.hostIframe","jquery.proxyAll"] },
-	"jquery.modalDialogContent": { deps: ["jquery.queryString", "jquery.contentSize", "jquery.customEvent"] },
+	"jquery.modalDialog": 
+	{ 
+		deps: ["jquery.queryString","jquery.postMessage","jquery.customEvent","jquery.clientRect","jquery.hostIframe","jquery.proxyAll"], 
+		single: true, 
+		notes: "Should be included separately, after other skinny.js modules, on pages that open modal dialogs, " +
+			"but NOT in iframe dialog content window documents. Should not be included on the same document as jquery.modalDialogContent." 
+	},
+	"jquery.modalDialogContent": 
+	{ 
+		deps: ["jquery.queryString","jquery.contentSize","jquery.customEvent"], 
+		single: true, 
+		notes: "Should be included separately, after other skinny.js modules, in iframe dialog content windows. " +
+			"Should NOT be included on the same document as jquery.modalDialog." 
+	},
 	"jquery.msAjax": { deps: ["date-parse"] },
 	"jquery.ns": { deps: [] },
 	"jquery.partialLoad": { deps: [] },
