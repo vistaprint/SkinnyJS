@@ -115,7 +115,7 @@ var buildModuleOutput = function(module)
 
 var generate = function()
 {
-	var requestedModules = $("form[name=dependencies] input:checked").map(
+	var requestedModules = $(".dependencies-container input:checked").map(
 		function(i, el)
 		{
 			return unescapeModuleName(el.value);
@@ -134,9 +134,11 @@ var generate = function()
 
 	var allContent = {};
 
+	var suffix = (!!$("#minified").prop("checked")) ? ".min.js" : ".js";
+
 	var promises = _.map(moduleNames, function(moduleName) 
 	{
-		return $.ajax({ url: "dist-pub/" + moduleName + ".min.js", dataType: "text"})
+		return $.ajax({ url: "dist-pub/" + moduleName + suffix, dataType: "text"})
 			.then(function(responseText) 
 			{
 				var module = tree[moduleName];
