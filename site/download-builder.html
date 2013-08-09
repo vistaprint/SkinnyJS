@@ -22,16 +22,16 @@
 	<input type="checkbox" id="<%= escapedModuleName %>" value="<%= moduleName %>" /> <label for="<%= escapedModuleName %>"><%= moduleName %></label><br />
 	</script>
 
-	<script type="text/template" id="downloadTemplate">
-	<div class="module-title"><%= name %></div>
-	<div class="module-notes"><%= notes %></div>
-	<a href="<%= path %>" class="module-download"><%= path %></a>
-	</script>
-
 	<script type="text/template" id="outputTemplate">
 	<div class="module-title"><%= name %></div>
 	<div class="module-notes"><%= notes %></div>
 	<textarea class="module-output" readonly><%= content %></textarea>
+	</script>
+
+	<script type="text/template" id="downloadTemplate">
+	<div class="module-title"><%= name %></div>
+	<div class="module-notes"><%= notes %></div>
+	<a href="<%= path %>" class="module-download" target="_blank">Download file...</a>
 	</script>
 
 	<script type="text/javascript" src="javascripts/underscore-min.js"></script>

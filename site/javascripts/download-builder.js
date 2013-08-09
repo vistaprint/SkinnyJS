@@ -178,7 +178,7 @@ var generate = function()
 			})
 			.join(";");
 
-		var html = buildModuleOutput({ name: "skinny.js main module", notes: "", content: mainModuleFinalContent });
+		var html = buildModuleOutput({ name: "skinny.js library modules (combined)", notes: "", content: mainModuleFinalContent });
 
 		var $form = $("form[name='dependencies']"); 
 
@@ -197,6 +197,8 @@ var generate = function()
 					"<textarea class='module-output'>" + content + "</textarea>";
 			});
 
+		// Generate "other content" downloads: includes CSS and images
+
 		var otherContentList = _.filter(allModuleContent, function(item)
 		{
 			return !!item.other;
@@ -208,7 +210,11 @@ var generate = function()
 		{
 			for (var i=0; i<item.other.length; i++)
 			{
-				html += downloadTemplate(item.other[i]);
+				html += downloadTemplate({
+					path: "dist-pub/" + item.other[i].path,
+					name: item.other[i].name,
+					notes: item.other[i].notes
+				});
 			}
 		});
 
