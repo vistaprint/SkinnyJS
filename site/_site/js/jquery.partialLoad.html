@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="en"><head><title>js\jquery.partialLoad</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="js\jquery.partialLoad"><meta name="groc-project-path" content="js\jquery.partialLoad.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">js\jquery.partialLoad.js</div></div><div id="document"><div class="segment"><div class="comments"><div class="wrapper"><a href="../index.html">Homepage</a> | 
+<a href="https://github.com/labaneilers/SkinnyJS/blob/master/js/jquery.partialLoad.js" target="_blank">View this file on Github</a> | 
+<a href="https://raw.github.com/labaneilers/SkinnyJS/master/js/jquery.partialLoad.js" target="_blank">Download this file</a>
+
+<hr style="height: 1px; border:0; background-color:#4A525A">
+<h2 id="jquerypartialload">jQuery.partialLoad</h2></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Similar to $.load(), though this will execute scripts on the target page more intelligently.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If a target selector is passed, it will load only the target DOM fragment into the current DOM element.
+In this case, it will execute all scripts in the target DOM. Inline scripts in the target DOM will also be executed.
+If no target selector is passed, it will load ALL scripts on the requested page, 
+EXCEPT for scripts that have been loaded on the host page already.
+Inline scripts from the whole page will be executed.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="usage">Usage</h3></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>$(".contentRegion").partialLoad( // The jQuery object's DOM element will be populated with the web service content
+     "/some-html-content", // The URL of the web service
+     ".interesting-part", // A selector defining the DOM elements you want to extract from the HTML returned by the web service
+     { somekey: "somevalue" }, // (optional) A data object. If supplied, it will be POSTed to the web service
+     myCallback); // A callback fired when the load is complete (or fails)
+</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="source">Source</h3></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">$</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">partialLoad</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">target</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> 
+    <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Default to a GET request</p></div></div><div class="code"><div class="wrapper">        <span class="kd">var</span> <span class="nx">type</span> <span class="o">=</span> <span class="s2">&quot;GET&quot;</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Overload simulation</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> 
+        <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If the third param is a function, assume that it's the callback</p></div></div><div class="code"><div class="wrapper">            <span class="k">if</span> <span class="p">(</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">isFunction</span><span class="p">(</span><span class="nx">data</span><span class="p">))</span> 
+            <span class="p">{</span>
+                <span class="nx">callback</span> <span class="o">=</span> <span class="nx">data</span><span class="p">;</span>
+                <span class="nx">data</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
+            <span class="p">}</span> </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Otherwise, its data to POST</p></div></div><div class="code"><div class="wrapper">            <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">data</span> <span class="o">===</span> <span class="s2">&quot;object&quot;</span><span class="p">)</span> 
+            <span class="p">{</span>
+                <span class="nx">data</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">.</span><span class="nx">param</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">jQuery</span><span class="p">.</span><span class="nx">ajaxSettings</span><span class="p">.</span><span class="nx">traditional</span><span class="p">);</span>
+                <span class="nx">type</span> <span class="o">=</span> <span class="s2">&quot;POST&quot;</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Request the remote document</p></div></div><div class="code"><div class="wrapper">        <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+            <span class="nx">url</span><span class="o">:</span> <span class="nx">url</span><span class="p">,</span>
+            <span class="nx">type</span><span class="o">:</span> <span class="nx">type</span><span class="p">,</span>
+            <span class="nx">dataType</span><span class="o">:</span> <span class="s2">&quot;html&quot;</span><span class="p">,</span>
+            <span class="nx">data</span><span class="o">:</span> <span class="nx">data</span><span class="p">,</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Complete callback (responseText is used internally)</p></div></div><div class="code"><div class="wrapper">            <span class="nx">complete</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">jqXHR</span><span class="p">,</span> <span class="nx">status</span><span class="p">,</span> <span class="nx">responseText</span> <span class="p">)</span> 
+            <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>This section derived from the internals of jQuery.fn.load()</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Store the response as specified by the jqXHR object</p></div></div><div class="code"><div class="wrapper">                <span class="nx">responseText</span> <span class="o">=</span> <span class="nx">jqXHR</span><span class="p">.</span><span class="nx">responseText</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If successful, inject the HTML into all the matched elements</p></div></div><div class="code"><div class="wrapper">                <span class="k">if</span> <span class="p">(</span><span class="nx">jqXHR</span><span class="p">.</span><span class="nx">isResolved</span><span class="p">())</span> 
+                <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>jQuery Bug 4825: Get the actual response in case
+a dataFilter is present in ajaxSettings</p></div></div><div class="code"><div class="wrapper">                    <span class="nx">jqXHR</span><span class="p">.</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span> 
+                    <span class="p">{</span>
+                        <span class="nx">responseText</span> <span class="o">=</span> <span class="nx">r</span><span class="p">;</span>
+                    <span class="p">});</span>
+
+                    <span class="kd">var</span> <span class="nx">scripts</span> <span class="o">=</span> <span class="p">[];</span>
+                    <span class="kd">var</span> <span class="nx">fragment</span> <span class="o">=</span> <span class="nx">getFragmentAndScripts</span><span class="p">(</span><span class="nx">responseText</span><span class="p">,</span> <span class="nx">target</span><span class="p">,</span> <span class="nx">self</span><span class="p">,</span> <span class="nx">scripts</span><span class="p">);</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>This call might cause exceptions, but we still want the callbacks to happen</p></div></div><div class="code"><div class="wrapper">                    <span class="k">try</span> 
+                    <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>See if a selector was specified</p></div></div><div class="code"><div class="wrapper">                        <span class="nx">self</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">fragment</span><span class="p">);</span>
+
+                        <span class="k">if</span> <span class="p">(</span><span class="nx">scripts</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> 
+                        <span class="p">{</span>
+                            <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">scripts</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">elem</span><span class="p">)</span> 
+                            <span class="p">{</span>
+                                <span class="k">if</span> <span class="p">(</span><span class="nx">elem</span><span class="p">.</span><span class="nx">src</span><span class="p">)</span> 
+                                <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Load scripts that haven't yet been loaded</p></div></div><div class="code"><div class="wrapper">                                    <span class="nx">execScriptUnique</span><span class="p">(</span><span class="nx">elem</span><span class="p">.</span><span class="nx">src</span><span class="p">);</span>
+                                <span class="p">}</span> 
+                                <span class="k">else</span> 
+                                <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Execute inline scripts. No way to de-dupe these.</p></div></div><div class="code"><div class="wrapper">                                    <span class="nx">$</span><span class="p">.</span><span class="nx">globalEval</span><span class="p">((</span><span class="nx">elem</span><span class="p">.</span><span class="nx">text</span> <span class="o">||</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">||</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="nx">rcleanScript</span><span class="p">,</span> <span class="s2">&quot;/*$0*/&quot;</span><span class="p">));</span>
+                                <span class="p">}</span>
+                            <span class="p">});</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                    <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>suppressing these errors</p></div></div><div class="code"><div class="wrapper">                    <span class="p">}</span>
+                <span class="p">}</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="nx">callback</span><span class="p">)</span> 
+                <span class="p">{</span>
+                    <span class="nx">self</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">callback</span><span class="p">,</span> <span class="p">[</span><span class="nx">responseText</span><span class="p">,</span> <span class="nx">status</span><span class="p">,</span> <span class="nx">jqXHR</span><span class="p">]);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>TODO: I think there's a jQuery API way to provide access the resulting promise.</p></div></div><div class="code"><div class="wrapper">        <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    <span class="kd">var</span> <span class="nx">execScriptUnique</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">src</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">srcLower</span> <span class="o">=</span> <span class="nx">src</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">();</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Build a 'set' of already loaded scripts so we can ensure
+that they don't get loaded more than once.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">__currentScripts</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nb">window</span><span class="p">.</span><span class="nx">__currentScripts</span> <span class="o">=</span> <span class="p">{};</span>
+
+            <span class="kd">var</span> <span class="nx">currentScripts</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">&quot;SCRIPT&quot;</span><span class="p">);</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">currentScripts</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">currentScripts</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">src</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="nb">window</span><span class="p">.</span><span class="nx">__currentScripts</span><span class="p">[</span><span class="nx">currentScripts</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">src</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>This script is already loaded. Don't load it again.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">__currentScripts</span><span class="p">[</span><span class="nx">srcLower</span><span class="p">])</span>
+        <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="nb">window</span><span class="p">.</span><span class="nx">__currentScripts</span><span class="p">[</span><span class="nx">srcLower</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+        <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+            <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+            <span class="nx">global</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+            <span class="nx">url</span><span class="o">:</span> <span class="nx">src</span><span class="p">,</span>
+            <span class="nx">async</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+            <span class="nx">dataType</span><span class="o">:</span> <span class="s2">&quot;script&quot;</span>
+        <span class="p">});</span>
+    <span class="p">};</span>
+
+    <span class="kd">var</span> <span class="nx">rcleanScript</span> <span class="o">=</span> <span class="sr">/^\s*&lt;!(?:\[CDATA\[|\-\-)/</span><span class="p">;</span>
+
+    <span class="kd">var</span> <span class="nx">getFragmentAndScripts</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">responseText</span><span class="p">,</span> <span class="nx">selector</span><span class="p">,</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">scripts</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">temp</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;&lt;div&gt;&quot;</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">selector</span><span class="p">)</span>
+        <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>A selector was specified. Load only the fragment.
+This will cause scripts in the fragment to be executed by R.html().</p></div></div><div class="code"><div class="wrapper">            <span class="nx">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">responseText</span><span class="p">;</span>
+            <span class="k">return</span> <span class="nx">temp</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">selector</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+        <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>No selector was specified. Load all scripts on the page, as long as they haven't been loaded before.</p></div></div><div class="code"><div class="wrapper">            <span class="kd">var</span> <span class="nx">fragment</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">buildFragment</span><span class="p">([</span><span class="nx">responseText</span><span class="p">],</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">scripts</span><span class="p">);</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nx">scripts</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> 
+            <span class="p">{</span>
+                <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">scripts</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">elem</span><span class="p">)</span> 
+                <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="nx">elem</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="nx">elem</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">elem</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="p">});</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="nx">fragment</span><span class="p">.</span><span class="nx">fragment</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+
+<span class="p">})(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">jQuery</span><span class="p">);</span></div></div></div></div></body></html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="en"><head><title>js\jquery.url</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="js\jquery.url"><meta name="groc-project-path" content="js\jquery.url.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">js\jquery.url.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="c1">/// &lt;reference path=&quot;jquery.querystring.js&quot; /&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><a href="../index.html">Homepage</a> | 
+<a href="https://github.com/labaneilers/SkinnyJS/blob/master/js/jquery.url.js" target="_blank">View this file on Github</a> | 
+<a href="https://raw.github.com/labaneilers/SkinnyJS/master/js/jquery.url.js" target="_blank">Download this file</a>
+
+<hr style="height: 1px; border:0; background-color:#4A525A">
+<h2 id="jqueryurl">jQuery.Url</h2>
+
+<p>This class parses/encodes URLs, and provides an interface that is almost identical to that of the browser's Location object. </p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Note: This class doesn't support some of the more esoteric features of URLs.
+If you need this kind of support, you should use a more robust (and heavyweight) implementation such as
+<a href="https://github.com/joyent/node/blob/master/lib/url.js">node.js's Url module</a>.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="usage">Usage</h3>
+
+<h4 id="parse-a-url">Parse a URL:</h4></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>var url = new $.Url("http://www.foo.com:8080/pages/page1.html?key1=value1&amp;key2=value2#someAnchor")
+url.hash === "#someAnchor"; // true
+url.protocol === "http"; // true
+url.hostname === "www.foo.com"; // true
+url.host === "www.foo.com:8080"; // true
+url.port === "8080"; // true
+url.queryString === "key1=value1&amp;key2=value2"; // true
+url.search === "?key1=value1&amp;key2=value2"; // true
+url.pathname === "/pages/page1.html"; // true
+</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h4 id="manipulating-the-querystring">Manipulating the querystring</h4>
+
+<p>Once the URL is parsed, you can manipulate the querystring:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>// Adds a parameter, or overwrites one if it already exists
+url.setItem("key3", "value3")
+
+// Gets the value of an existing parameter
+var key1Value = url.getItem("key1")
+
+// Gets the value of an existing parameter, 
+// specifying a default in case the value doesn't exist
+var key1Value = url.getItem("key1", "some default value")
+
+// Removes a parameter
+url.removeItem("key3")
+</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h4 id="serializing-back-to-a-url-string">Serializing back to a URL string</h4>
+
+<p>The <em>toString()</em> method of $.Url will write back to a string:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>document.location = url.toString();
+</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="source">Source</h3></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span>
+<span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Parses and manipulates a URL. </p></div></div><div class="code"><div class="wrapper"><span class="nx">$</span><span class="p">.</span><span class="nx">Url</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The anchor link- text after the # character</p></div></div><div class="code"><div class="wrapper">    <span class="k">this</span><span class="p">.</span><span class="nx">hash</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>http: or https:</p></div></div><div class="code"><div class="wrapper">    <span class="k">this</span><span class="p">.</span><span class="nx">protocol</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The server name- example: www.vistaprint.com</p></div></div><div class="code"><div class="wrapper">    <span class="k">this</span><span class="p">.</span><span class="nx">hostname</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The server name- example: www.vistaprint.com
+Includes port string if specified- example www.vistaprint.com:80</p></div></div><div class="code"><div class="wrapper">    <span class="k">this</span><span class="p">.</span><span class="nx">host</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The TCP port (if specified)</p></div></div><div class="code"><div class="wrapper">    <span class="k">this</span><span class="p">.</span><span class="nx">port</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The querystring- example: val1=foo&amp;val2=bar</p></div></div><div class="code"><div class="wrapper">    <span class="k">this</span><span class="p">.</span><span class="nx">queryString</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The querystring with the initial ? if specified- example: ?val1=foo&amp;val2=bar</p></div></div><div class="code"><div class="wrapper">    <span class="k">this</span><span class="p">.</span><span class="nx">search</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The root relative path to the file- example: /vp/myfile.htm</p></div></div><div class="code"><div class="wrapper">    <span class="k">this</span><span class="p">.</span><span class="nx">pathname</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+    <span class="kd">var</span> <span class="nx">load</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">nextPartPos</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">temp</span> <span class="o">=</span> <span class="nx">url</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>protocol: "http:" or "https:"</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">temp</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="sr">/https\:\/\/+/i</span><span class="p">)</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="c1">//The ending + is to prevent comment removers from messing up this line</span>
+        <span class="p">{</span>
+            <span class="nx">me</span><span class="p">.</span><span class="nx">protocol</span> <span class="o">=</span> <span class="s2">&quot;https:&quot;</span><span class="p">;</span>
+            <span class="nx">temp</span> <span class="o">=</span> <span class="nx">url</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">8</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">temp</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="sr">/http\:\/\/+/i</span><span class="p">)</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="c1">//The ending + is to prevent comment removers from messing up this line</span>
+        <span class="p">{</span>
+            <span class="nx">me</span><span class="p">.</span><span class="nx">protocol</span> <span class="o">=</span> <span class="s2">&quot;http:&quot;</span><span class="p">;</span>
+            <span class="nx">temp</span> <span class="o">=</span> <span class="nx">url</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">7</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">temp</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">//host: contains hostname and port if specified (i.e. www.vistaprint.com:80)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">protocol</span> <span class="o">!==</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">//match a slash, hash, colon, or question mark</span>
+            <span class="nx">nextPartPos</span> <span class="o">=</span> <span class="nx">temp</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="sr">/[\/\?\#]/i</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">nextPartPos</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="nx">me</span><span class="p">.</span><span class="nx">host</span> <span class="o">=</span> <span class="nx">temp</span><span class="p">;</span>
+                <span class="k">return</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="nx">me</span><span class="p">.</span><span class="nx">host</span> <span class="o">=</span> <span class="nx">temp</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">nextPartPos</span><span class="p">);</span>
+            <span class="nx">temp</span> <span class="o">=</span> <span class="nx">temp</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="nx">nextPartPos</span><span class="p">);</span>
+        <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Separate hostname &amp; port from host</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">host</span> <span class="o">&amp;&amp;</span> <span class="nx">me</span><span class="p">.</span><span class="nx">host</span> <span class="o">!==</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">colorPos</span> <span class="o">=</span> <span class="nx">me</span><span class="p">.</span><span class="nx">host</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">colorPos</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="nx">me</span><span class="p">.</span><span class="nx">hostname</span> <span class="o">=</span> <span class="nx">me</span><span class="p">.</span><span class="nx">host</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">colorPos</span><span class="p">);</span>
+                <span class="nx">me</span><span class="p">.</span><span class="nx">port</span> <span class="o">=</span> <span class="nx">me</span><span class="p">.</span><span class="nx">host</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="nx">colorPos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">me</span><span class="p">.</span><span class="nx">host</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">else</span>
+            <span class="p">{</span>
+                <span class="nx">me</span><span class="p">.</span><span class="nx">hostname</span> <span class="o">=</span> <span class="nx">me</span><span class="p">.</span><span class="nx">host</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">temp</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="nx">nextPartPos</span> <span class="o">=</span> <span class="nx">temp</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="sr">/[\?\#]/i</span><span class="p">);</span>
+
+        <span class="c1">//pathname: i.e. /vp/mypage.htm</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">nextPartPos</span> <span class="o">!==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">nextPartPos</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="nx">me</span><span class="p">.</span><span class="nx">pathname</span> <span class="o">=</span> <span class="nx">temp</span><span class="p">;</span>
+                <span class="k">return</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="nx">me</span><span class="p">.</span><span class="nx">pathname</span> <span class="o">=</span> <span class="nx">temp</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">nextPartPos</span><span class="p">);</span>
+            <span class="nx">temp</span> <span class="o">=</span> <span class="nx">temp</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="nx">nextPartPos</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">temp</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>queryString (i.e. myval1=1&amp;myval2=2)
+search: same as querystring with initial question mark (i.e. ?myval1=1&amp;myval2=2)</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">temp</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">nextPartPos</span> <span class="o">=</span> <span class="nx">temp</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">);</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nx">nextPartPos</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="nx">me</span><span class="p">.</span><span class="nx">queryString</span> <span class="o">=</span> <span class="nx">temp</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">//cut off the initial ?</span>
+                <span class="nx">temp</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span>
+            <span class="p">{</span>
+                <span class="nx">me</span><span class="p">.</span><span class="nx">queryString</span> <span class="o">=</span> <span class="nx">temp</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">nextPartPos</span><span class="p">);</span>
+                <span class="nx">temp</span> <span class="o">=</span> <span class="nx">temp</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="nx">nextPartPos</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="nx">updateSearch</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">temp</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">//hash (i.e. anchor link- #myanchor)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">temp</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">me</span><span class="p">.</span><span class="nx">hash</span> <span class="o">=</span> <span class="nx">temp</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="kd">var</span> <span class="nx">updateSearch</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nx">me</span><span class="p">.</span><span class="nx">search</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">queryString</span> <span class="o">&amp;&amp;</span> <span class="nx">me</span><span class="p">.</span><span class="nx">queryString</span> <span class="o">!==</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">me</span><span class="p">.</span><span class="nx">search</span> <span class="o">=</span> <span class="s2">&quot;?&quot;</span> <span class="o">+</span> <span class="nx">me</span><span class="p">.</span><span class="nx">queryString</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Gets the URL as a string</p></div></div><div class="code"><div class="wrapper">    <span class="k">this</span><span class="p">.</span><span class="nx">toString</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">sPort</span> <span class="o">=</span> <span class="nx">me</span><span class="p">.</span><span class="nx">port</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">sProtocol</span> <span class="o">=</span> <span class="nx">me</span><span class="p">.</span><span class="nx">protocol</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">sPort</span> <span class="o">&amp;&amp;</span> <span class="nx">sPort</span> <span class="o">!==</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">sPort</span> <span class="o">=</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">sPort</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">sProtocol</span> <span class="o">&amp;&amp;</span> <span class="nx">sProtocol</span> <span class="o">!==</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">sProtocol</span> <span class="o">=</span> <span class="nx">sProtocol</span> <span class="o">+</span> <span class="s2">&quot;//&quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nx">sProtocol</span> <span class="o">+</span> <span class="nx">me</span><span class="p">.</span><span class="nx">hostname</span> <span class="o">+</span> <span class="nx">sPort</span> <span class="o">+</span> <span class="nx">me</span><span class="p">.</span><span class="nx">pathname</span> <span class="o">+</span> <span class="nx">me</span><span class="p">.</span><span class="nx">search</span> <span class="o">+</span> <span class="nx">me</span><span class="p">.</span><span class="nx">hash</span><span class="p">;</span>
+    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Gets a specific querystring value from its key name</p></div></div><div class="code"><div class="wrapper">    <span class="k">this</span><span class="p">.</span><span class="nx">getItem</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">defaultValue</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">qs</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">deparam</span><span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">queryString</span><span class="p">);</span>
+
+        <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">qs</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">value</span> <span class="o">==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">defaultValue</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">getItemOrDefault</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getItem</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Sets a specific querystring value by its key name</p></div></div><div class="code"><div class="wrapper">    <span class="k">this</span><span class="p">.</span><span class="nx">setItem</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">qs</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">deparam</span><span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">queryString</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">===</span> <span class="kc">null</span> <span class="o">||</span> <span class="k">typeof</span> <span class="nx">value</span> <span class="o">==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">value</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">value</span> <span class="o">!=</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">value</span> <span class="o">=</span> <span class="nx">value</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="nx">qs</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+        <span class="nx">me</span><span class="p">.</span><span class="nx">queryString</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">param</span><span class="p">(</span><span class="nx">qs</span><span class="p">);</span>
+
+        <span class="nx">updateSearch</span><span class="p">();</span>
+    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Removes a specific querystring value by its key name</p></div></div><div class="code"><div class="wrapper">    <span class="k">this</span><span class="p">.</span><span class="nx">removeItem</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">qs</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">deparam</span><span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">queryString</span><span class="p">);</span>
+        <span class="k">delete</span> <span class="nx">qs</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+        <span class="nx">me</span><span class="p">.</span><span class="nx">queryString</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">param</span><span class="p">(</span><span class="nx">qs</span><span class="p">);</span>
+
+        <span class="nx">me</span><span class="p">.</span><span class="nx">search</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">queryString</span> <span class="o">!==</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">me</span><span class="p">.</span><span class="nx">search</span> <span class="o">=</span> <span class="s1">&#39;?&#39;</span> <span class="o">+</span> <span class="nx">me</span><span class="p">.</span><span class="nx">queryString</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="nx">load</span><span class="p">(</span><span class="nx">url</span><span class="p">.</span><span class="nx">toString</span><span class="p">());</span>
+<span class="p">};</span>
+
+<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span></div></div></div></div></body></html>
