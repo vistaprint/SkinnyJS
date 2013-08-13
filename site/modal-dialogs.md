@@ -1,3 +1,8 @@
+---
+layout: main
+title: jQuery.modalDialog
+---
+
 # Modal dialogs
 
 ## Source
@@ -27,7 +32,9 @@ TODO: Look at JQueryModalDialog and copy the HTML
 
 To create a dialog, use the following method:
 
-    $.modalDialog.create()
+{% highlight javascript %}
+$.modalDialog.create()
+{% endhighlight %}
 
 #### Settings
 
@@ -43,11 +50,11 @@ To create a dialog, use the following method:
 * **destroyOnClose**:  If true, the dialog DOM will be destroyed and all events removed when the dialog closes. Defaults to ''false''.
 * **containerElement**:  A CSS selector or jQuery object for the element that should be the parent for the dialog DOM (useful for working with jQuery mobile). Defaults to "body".
 * **preventEventBubbling**:  If true, click and touch events are prevented from bubbling up to the document. Defaults to ''true''.
-* **onbeforeopen**: A handler for the ''beforeopen'' event. See [[#Events| events]] below.
-* **onopen**: A handler for the ''open'' event. See [[#Events| events]] below.
-* **onclose**: A handler for the ''close'' event. See [[#Events| events]] below.
-* **onbeforeclose**: A handler for the ''beforeclose'' event. See [[#Events| events]] below.
-* **onajaxerror**:  A handler for the ''ajaxerror'' event. See [[#Events| events]] below.
+* **onbeforeopen**: A handler for the ''beforeopen'' event. See [Events](#events) below.
+* **onopen**: A handler for the ''open'' event. See [Events](#events) below.
+* **onclose**: A handler for the ''close'' event. See [Events](#events)] below.
+* **onbeforeclose**: A handler for the ''beforeclose'' event. See [Events](#events) below.
+* **onajaxerror**:  A handler for the ''ajaxerror'' event. See [Events](#events) below.
 
 ### Dialog object methods
 
@@ -64,29 +71,35 @@ To create a dialog, use the following method:
 
 A node dialog is created using an element on the page. To open a node dialog, use the following syntax:
 
-    var dialog = $.modalDialog.create({ content: ".color-dialog", title: JSLM_ColorDialogTitle });
-    dialog.open();
-     
-    //close dialog
-    dialog.close();
+{% highlight javascript %}
+var dialog = $.modalDialog.create({ content: ".color-dialog", title: JSLM_ColorDialogTitle });
+dialog.open();
+ 
+//close dialog
+dialog.close();
+{% endhighlight %}
 
 There is also an alternative jQuery-centric syntax. This is completely equivalent to the previous snippet:
 
-    // Opens the dialog immediately
-    $(".color-dialog").modalDialog({ title: JSLM_ColorDialogTitle });
-    
-    // Closes the dialog
-    $(".color-dialog").modalDialog("close");
+{% highlight javascript %}
+// Opens the dialog immediately
+$(".color-dialog").modalDialog({ title: JSLM_ColorDialogTitle });
+
+// Closes the dialog
+$(".color-dialog").modalDialog("close");
+{% endhighlight %}
 
 ### AJAX dialogs
 
 An AJAX dialog is created using content which is dynamically loaded from a URL. To create an AJAX dialog, use the following syntax:
 
-    var dialog = $.modalDialog.create({ url: "/warning.aspx", ajax: true });
-    dialog.open();
-     
-    //close dialog
-    dialog.close();
+{% highlight javascript %}
+var dialog = $.modalDialog.create({ url: "/warning.aspx", ajax: true });
+dialog.open();
+ 
+//close dialog
+dialog.close();
+{% endhighlight %}
 
 #### Defining the content for an AJAX dialog
 
@@ -110,11 +123,13 @@ IFrame dialogs contain an embedded IFrame that shows a self-contained webpage. T
 
 To create an IFrame dialog, use the following syntax:
 
+{% highlight javascript %}
     var dialog = $.modalDialog.create({ url: "/studio/color-dialog.aspx" });
     dialog.open();
      
     //close dialog
     dialog.close();
+{% endhighlight %}
 
 In an IFrame dialog, the height of the dialog is determined by the content.
 
@@ -131,11 +146,15 @@ The dialog framework waits to show an IFrame dialog until it's content window no
 
 In certain cases, a dialog may require extra initialization (i.e. it may use JavaScript to render some content), and is not necessarily ready on window.onload. To handle this, you would want to disable manual notification to the framework that the dialog is ready by setting the following property:
 
-    $.modalDialog.manualNotifyReady = true;
+{% highlight javascript %}
+$.modalDialog.manualNotifyReady = true;
+{% endhighlight %}
 
 Then, when your dialog's content is fully rendered, call:
 
-    $.modalDialog.getCurrent().notifyReady();
+{% highlight javascript %}
+$.modalDialog.getCurrent().notifyReady();
+{% endhighlight %}
 
 ##### Dialog size
 The size of the dialog is determined automatically based on the size of the content in the IFrame. Because it can be tricky to determine the height of content in HTML, there are a few configuration options to help the framework determine the size:
@@ -145,21 +164,27 @@ The size of the dialog is determined automatically based on the size of the cont
 
 If $.modalDialog.autoSizing' is set false, then you will want to resize the dialog manually using one of the following methods:
 
-    // Set height explicitly
-    $.modalDialog.getCurrent().setHeight(400);
-    
-    // Set height based on content
-    $.modalDialog.getCurrent().setHeightFromContent();
+{% highlight javascript %}
+// Set height explicitly
+$.modalDialog.getCurrent().setHeight(400);
+
+// Set height based on content
+$.modalDialog.getCurrent().setHeightFromContent();
+{% endhighlight %}
 
 ##### Dialog title
 The title displayed in the dialog is driven by the HTML title tag of the document in the IFrame. You can override this by specifically calling:
 
+{% highlight javascript %}
     $.modalDialog.getCurrent().setTitle("New title");
+{% endhighlight %}
 
 ##### Cross-domain support
 If your IFrame content is in a different domain than the parent window, you need to tell the content window how to reach the parent window:
 
+{% highlight javascript %}
     $.modalDialog.parentHostName = "http://www.vistaprint.com";
+{% endhighlight %}
 
 ### Creating multiple active dialogs
 
@@ -184,26 +209,30 @@ There are two ways to assign event handlers, as options to `$.modalDialog.create
 
 Here is an example of using the beforeopen event:
 
-    $.modalDialog.create({ 
-        url: "/foo.aspx", 
-        onbeforeopen: function(e) 
-        { 
-            if (!confirm("Are you sure you want to open this dialog?")) 
-            {
-                e.preventDefault(); 
-            }
-        });
-
-This example is completely equivalent:
-
-    var dialog = $.modalDialog.create({ url: "/foo.aspx" });
-    dialog.onbeforeopen.add(function(e) 
+{% highlight javascript %}
+$.modalDialog.create({ 
+    url: "/foo.aspx", 
+    onbeforeopen: function(e) 
     { 
         if (!confirm("Are you sure you want to open this dialog?")) 
-        { 
+        {
             e.preventDefault(); 
         }
     });
+{% endhighlight %}
+
+This example is completely equivalent:
+
+{% highlight javascript %}
+var dialog = $.modalDialog.create({ url: "/foo.aspx" });
+dialog.onbeforeopen.add(function(e) 
+{ 
+    if (!confirm("Are you sure you want to open this dialog?")) 
+    { 
+        e.preventDefault(); 
+    }
+});
+{% endhighlight %}
 
 **Tip**: These events are even supported in cross-domain IFrame dialogs!
 
@@ -212,31 +241,41 @@ This example is completely equivalent:
 The dialog framework also supports an unobtrusive, declarative syntax:
 Open an iFrame dialog:
 
-    <a href="/content.aspx" data-rel="modalDialog">Open content</a>
+{% highlight html %}
+<a href="/content.aspx" data-rel="modalDialog">Open content</a>
+{% endhighlight %}
 
 Open a node dialog:
 
-    <a href="#content" data-rel="modalDialog">Open content</a>
-    
-    <!-- Note the 'dialog-content' class. This ensures the content is invisible before the dialog is shown -->
-    <div id="content" class="dialog-content">Here's some content</div>
+{% highlight html %}
+<a href="#content" data-rel="modalDialog">Open content</a>
+
+<!-- Note the 'dialog-content' class. This ensures the content is invisible before the dialog is shown -->
+<div id="content" class="dialog-content">Here's some content</div>
+{% endhighlight %}
 
 Any options supported in the $.modalDialog.create() method are supported declaratively, with the prefix data-dialog-:
 
-    <a href="#content" data-rel="modalDialog" data-dialog-onclose="updateContent(e);">Show color picker</a>
+{% highlight html %}
+<a href="#content" data-rel="modalDialog" data-dialog-onclose="updateContent(e);">Show color picker</a>
+{% endhighlight %}
 
 #### Unobtrusive dialog events
 
 If you want to assign handlers unobtrusively, you can access the dialog when it is created with the dialogcreate event:
 
-    <a href="#colorPicker" data-rel="modalDialog" id="colorPickerLink">Show color picker</a>
+{% highlight html %}
+<a href="#colorPicker" data-rel="modalDialog" id="colorPickerLink">Show color picker</a>
+{% endhighlight %}
 
 Then, in script, you can access the dialog:
 
-    $("#colorPickerLink").on("dialogcreate", function(e)
-    {
-        e.dialog.onopen.add(function() { alert("opened"); });
-    });
+{% highlight javascript %}
+$("#colorPickerLink").on("dialogcreate", function(e)
+{
+    e.dialog.onopen.add(function() { alert("opened"); });
+});
+{% endhighlight %}
 
 ### Defining buttons in a dialog
 

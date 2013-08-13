@@ -128,7 +128,7 @@ module.exports = function(grunt)
             javascript: ["js/**/*.js"],
             options: 
             {
-                out: ".git/docs-temp/"
+                out: "./site/_site/"
             }
         },
         copy: 
@@ -137,18 +137,42 @@ module.exports = function(grunt)
           {
             files: getCopyConfig()
           },
-          docs: 
+          docs:
           {
             files: 
             [
-                { expand: true, flatten: true, src: ["site/images/*"], dest: ".git/docs-temp/images/" },
-                { expand: true, flatten: true, src: ["site/javascripts/*"], dest: ".git/docs-temp/javascripts/" },
-                { expand: true, flatten: true, src: ["site/stylesheets/*"], dest: ".git/docs-temp/stylesheets/" },
-                { expand: true, flatten: true, src: ["site/highlight/**"], dest: ".git/docs-temp/highlight/" },
-                { expand: true, flatten: true, src: ["dist/*"], dest: ".git/docs-temp/dist-pub/" },
-                { expand: true, flatten: true, src: ["dist/css/*"], dest: ".git/docs-temp/dist-pub/css/" },
-                { expand: true, flatten: true, src: ["css/*.less"], dest: ".git/docs-temp/dist-pub/css/" },
-                { expand: true, flatten: true, src: ["LICENSE"], processFile: true, dest: ".git/docs-temp/" }
+                // { 
+                //     expand: true, 
+                //     flatten: true, 
+                //     src: ["README.md"], 
+                //     dest: "./site", 
+                //     rename: function(dest, src) 
+                //     { 
+                //         console.log("called:" + dest + " " + src);
+                //         return "./site/index.md"; 
+                //     } 
+                // },
+                { expand: true, cwd: "./dist", src: ["**"], dest: "./site/_site/dist-pub/" },
+                { expand: true, flatten: true, src: ["LICENSE"], processFile: true, dest: "./site/_site/" }
+            ]
+          },
+          deploy: 
+          {
+            files: 
+            [
+                { 
+                    expand: true, 
+                    cwd: "./site/_site/", 
+                    flatten: false, 
+                    src: ["**"], 
+                    dest: "./.git/docs-temp/" }
+            ]
+          },
+          readme: 
+          {
+            files: 
+            [
+                { flatten: true, src: ["./site/_site/readme.html"], dest: "./readme.html" }
             ]
           }
         },
@@ -172,40 +196,53 @@ module.exports = function(grunt)
         clean:
         {
             build: ['dist'],
-            docs: ['./.git/docs-temp']
+            deploy: ['./.git/docs-temp'],
+            docs: ['./site/_site']
         },
-        "gen-pages":
-        {
-            homepage: 
-            {
-                template: "site/main-template.html",
-                src: ["./README.md"],
-                dest: './.git/docs-temp/index.html',
-                urlBase: "http://labaneilers.github.io/SkinnyJS/"
-            },
-            markdown: 
-            {
-                template: "site/main-template.html",
-                src: ["./site/*.md"],
-                dest: './.git/docs-temp/',
-                remove: "./site/"
-            },
-            html: 
-            {
-                template: "site/main-template.html",
-                src: ["./site/*.html"],
-                dest: './.git/docs-temp/',
-                filter: "-template.html",
-                remove: "./site/",
-                rawHtml: true
-            }
+        // "gen-pages":
+        // {
+        //     homepage: 
+        //     {
+        //         template: "site/main-template.html",
+        //         src: ["./README.md"],
+        //         dest: './.git/docs-temp/index.html',
+        //         urlBase: "http://labaneilers.github.io/SkinnyJS/"
+        //     },
+        //     markdown: 
+        //     {
+        //         template: "site/main-template.html",
+        //         src: ["./site/*.md"],
+        //         dest: './.git/docs-temp/',
+        //         remove: "./site/"
+        //     },
+        //     html: 
+        //     {
+        //         template: "site/main-template.html",
+        //         src: ["./site/*.html"],
+        //         dest: './.git/docs-temp/',
+        //         filter: "-template.html",
+        //         remove: "./site/",
+        //         rawHtml: true
+        //     }
 
-        },
+        // },
         less: 
         {
             main:
             {
                 files: getLessConfig()
+            }
+        },
+        jekyll:
+        {
+            docs:
+            {
+                options: 
+                {
+                    src: "./site/",
+                    config: "./site/_config.yml",
+                    dest: "./site/_site"
+                }
             }
         }
     };
@@ -247,9 +284,12 @@ module.exports = function(grunt)
     grunt.registerTask('travis', 'default');
 
     // Documentation tasks.
+    grunt.loadNpmTasks('grunt-jekyll');
     grunt.loadTasks("./site/tasks");
-    grunt.registerTask('docs', ['default', 'groc', 'add-docs-links', 'pages']);
+    grunt.registerTask('docs', ['default', 'pages', 'groc', 'add-docs-links', 'copy:docs', 'copy:deploy']);
 
-    grunt.registerTask('pages', ['gen-pages', 'copy:docs']);
+    grunt.registerTask('pages', ['jekyll']);
+
+    grunt.registerTask('readme', ['jekyll', 'copy:readme']);
 };
 

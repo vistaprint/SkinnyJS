@@ -11,8 +11,8 @@ var processError = function(err)
     }
 };
 
-var DOCS_ROOT = "./.git/docs-temp/js";
-var template = fs.readFileSync("./site/partials/docfile-header-partial.html", "utf-8");
+var DOCS_ROOT = "./site/_site/js";
+var template = fs.readFileSync("./site/_includes/docfile-header-partial.html", "utf-8");
 
 var processPages = function(directory)
 {

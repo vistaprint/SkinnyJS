@@ -226,5 +226,7 @@ pip-log.txt
 #############
 node_modules/
 
-
-site/dist-pub/
+#############
+## Project specific
+#############
+site/_site/
