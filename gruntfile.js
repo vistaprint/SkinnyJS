@@ -167,13 +167,6 @@ module.exports = function(grunt)
                     src: ["**"], 
                     dest: "./.git/docs-temp/" }
             ]
-          },
-          readme: 
-          {
-            files: 
-            [
-                { flatten: true, src: ["./site/_site/readme.html"], dest: "./readme.html" }
-            ]
           }
         },
         concat: 
@@ -191,6 +184,11 @@ module.exports = function(grunt)
             {
               src: ['js/jquery.modalDialog.common.js', 'js/jquery.modalDialogContent.js'],
               dest: 'dist/jquery.modalDialogContent.js'
+            },
+            readme: 
+            {
+              src: ['site/readme-header.md', 'site/_includes/index-content.md'],
+              dest: 'README.md'
             }
         },
         clean:
@@ -275,7 +273,7 @@ module.exports = function(grunt)
     });
 
     // Default tasks.
-    grunt.registerTask('default', ['verify', 'clean', 'less', 'copy:dist', 'concat', 'uglifyDist']);
+    grunt.registerTask('default', ['verify', 'clean', 'less', 'copy:dist', 'concat:modalDialog', 'concat:modalDialogContent', 'uglifyDist']);
 
     // Verification tasks
     grunt.registerTask('verify', ['jshint', 'qunit']);
@@ -290,6 +288,6 @@ module.exports = function(grunt)
 
     grunt.registerTask('pages', ['jekyll']);
 
-    grunt.registerTask('readme', ['jekyll', 'copy:readme']);
+    grunt.registerTask('readme', ['jekyll', 'concat:readme']);
 };
 
