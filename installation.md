@@ -11,6 +11,12 @@ Install easy_install
 Install Jekyll: http://jekyllrb.com/docs/installation/
 * Needed to uninstall pygments 5.2 and install 5.0: http://stackoverflow.com/questions/17364028/jekyll-on-windows-pygments-not-working
 
+Install node:
+* http://nodejs.org/download/ windows installer
+
+Install grunt
+* npm install -g grunt-cli
+
 Bug in phantomjs:
 C:\dev\skinny\node_modules\grunt-contrib-qunit\node_modules\grunt-lib-phantomjs\node_modules\phantomjs\lib\location.js is being written without escaped backslashes in windows
 
