@@ -1,8 +1,5 @@
 /// <reference path="jquery.modalDialog.js" />
 
-// Evil is necessary to turn inline HTML handlers into functions
-/* jshint evil: true */
-
 /*
 Uses declarative syntax to define a dialog. Syntax:
 
@@ -30,76 +27,6 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
 (function($) 
 {
-    var ATTR_PREFIX = "data-dialog-";
-
-    var parseNone = function(s)
-    {
-        return s || null;
-    };
-
-    var parseBool = function(s)
-    {
-        if (s)
-        {
-            s = s.toString().toLowerCase();
-            switch (s)
-            {
-                case "true":
-                case "yes":
-                case "1":
-                    return true;
-                default:
-                    break;
-            }
-        }
-
-        return false;
-    };
-
-    var parseFunction = function(body)
-    {
-        if (!body) 
-        {
-            return null;
-        }
-
-        return new Function("event", body);
-    };
-
-    // The properties to copy from HTML data-dialog-* attributes
-    // to the dialog settings object
-    var _props = [
-        ["title", parseNone],         
-        ["onopen", parseFunction],
-        ["onbeforeopen", parseFunction],         
-        ["onclose", parseFunction],        
-        ["onbeforeclose", parseFunction],        
-        ["maxWidth", parseInt],   
-        ["initialHeight", parseInt],    
-        ["ajax", parseBool],  
-        ["onajaxerror", parseFunction],
-        ["destroyOnClose", parseBool],     
-        ["skin", parseNone]   
-    ];
-
-    // Copies the HTML data-dialog-* attributes to the settings object
-    var applyAttributesToSettings = function($el, settings)
-    {
-        for (var i=0; i<_props.length; i++)
-        {
-            var name = _props[i][0];
-            var parser = _props[i][1];
-
-            // $.fn.attr is case insensitive
-            var value = $el.attr(ATTR_PREFIX + name);
-            value = parser(value);
-            if (value)
-            {
-                settings[name] = value;
-            }
-        }
-    };
-
     var DIALOG_DATA_KEY = "modalDialogUnobtrusive";
 
     // Click handler for all links which open dialogs
@@ -136,8 +63,6 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
             if ($hrefTarget && $hrefTarget.length > 0) // its a content node
             {
                 settings.content = $hrefTarget;
-
-                applyAttributesToSettings($hrefTarget, settings);
             }
             else // its the url for an iframe dialog
             {
@@ -145,7 +70,8 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
             }
 
             // Duplicate values on the link will win over values on the dialog node
-            applyAttributesToSettings($link, settings);
+            var linkSettings = $.modalDialog.getSettings($link);
+            $.extend(settings, linkSettings);
 
             // Give unobtrusive scripts a chance to modify the settings
             var evt = new $.Event("dialogsettingscreate");

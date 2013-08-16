@@ -1,5 +1,5 @@
 /// <reference path="../dependencies/jquery.transit.js" />
-/// <reference path="jquery.querystring.js" />
+/// <reference path="jquery.queryString.js" />
 /// <reference path="jquery.postMessage.js" />
 /// <reference path="jquery.customEvent.js" />
 /// <reference path="jquery.clientRect.js" />
@@ -110,7 +110,7 @@ if (!Object.keys)
     $.isSmallScreen = isSmallScreen;
 
     // Class which creates a jQuery mobile dialog
-    function ModalDialog(settings)
+    var ModalDialog = function(settings)
     {
         this.settings = settings;
         this.parent = $(this.settings.containerElement || 'body');
@@ -120,7 +120,7 @@ if (!Object.keys)
 
         // Bind methods called as handlers so "this" works
         $.proxyAll(this, "_drag", "_startDrag", "_stopDrag", "_close");
-    }
+    };
 
     ModalDialog.prototype.dialogType = "node";
 
@@ -851,25 +851,20 @@ if (!Object.keys)
     // 1. default value
     // 2. setting provided on content element
     // 3. settings passed
-    var ensureSettings = function(s)
+    var ensureSettings = function(explicitSettings)
     {
         var settings = $.extend({}, _defaults);
 
-        // allow settings to come from data attributes
-        if (s.content)
+        // Read settings specified on the target node's custom HTML attributes
+        if (explicitSettings.content)
         {
-            // $.extend(settings, _.pick($(s.content).data(), _.keys(_defaults)));
-            var obj = $(s.content).data();
-
-            $.each(Object.keys(_defaults), function(i, key) {
-                if (key in obj) {
-                    settings[key] = obj[key];
-                }
-            });
+            var $target = $(explicitSettings.content);
+            var targetSettings = $.modalDialog.getSettings($target);
+            $.extend(settings, targetSettings);
         }
 
-        // now extend with passed settings
-        $.extend(settings, s);
+        // The explicitly specified settings take precidence
+        $.extend(settings, explicitSettings);
 
         var id;
 
@@ -1131,5 +1126,82 @@ if (!Object.keys)
                 preventEventBubbling: false
             });
     });
+
+    // Support reading settings from a node dialog's element
+
+    var ATTR_PREFIX = "data-dialog-";
+
+    var parseNone = function(s)
+    {
+        return s || null;
+    };
+
+    var parseBool = function(s)
+    {
+        if (s)
+        {
+            s = s.toString().toLowerCase();
+            switch (s)
+            {
+                case "true":
+                case "yes":
+                case "1":
+                    return true;
+                default:
+                    break;
+            }
+        }
+
+        return false;
+    };
+
+    var parseFunction = function(body)
+    {
+        // Evil is necessary to turn inline HTML handlers into functions
+        /* jshint evil: true */
+
+        if (!body) 
+        {
+            return null;
+        }
+
+        return new Function("event", body);
+    };
+    
+    // The properties to copy from HTML data-dialog-* attributes
+    // to the dialog settings object
+    var _props = 
+    {
+        "title": parseNone,         
+        "onopen": parseFunction,
+        "onbeforeopen": parseFunction,         
+        "onclose": parseFunction,        
+        "onbeforeclose": parseFunction,        
+        "maxWidth": parseInt,   
+        "initialHeight": parseInt,    
+        "ajax": parseBool,  
+        "onajaxerror": parseFunction,
+        "destroyOnClose": parseBool,     
+        "skin": parseNone   
+    };
+
+    // Copies the HTML data-dialog-* attributes to the settings object
+    $.modalDialog.getSettings = function($el)
+    {
+        var settings = {};
+
+        $.each(Object.keys(_props), function(i, key) 
+        {
+            // $.fn.attr is case insensitive
+            var value = $el.attr(ATTR_PREFIX + key);
+            if (typeof value != "undefined")
+            {
+                var parser = _props[key];
+                settings[key] = parser(value);
+            }
+        });
+
+        return settings;
+    };
 
 })(jQuery);
