@@ -152,7 +152,7 @@ module.exports = function(grunt)
                 //         return "./site/index.md"; 
                 //     } 
                 // },
-                { expand: true, cwd: "./dist", src: ["**"], dest: "./site/_site/dist-pub/" },
+                { expand: true, cwd: "./dist", src: ["**"], dest: "./site/_site/dist/" },
                 { expand: true, flatten: true, src: ["LICENSE"], processFile: true, dest: "./site/_site/" }
             ]
           },
