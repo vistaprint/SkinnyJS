@@ -1,5 +1,5 @@
 /// <reference path="../dependencies/jquery.transit.js" />
-/// <reference path="jquery.querystring.js" />
+/// <reference path="jquery.queryString.js" />
 /// <reference path="jquery.postMessage.js" />
 /// <reference path="jquery.customEvent.js" />
 /// <reference path="jquery.clientRect.js" />
@@ -1131,5 +1131,78 @@ if (!Object.keys)
                 preventEventBubbling: false
             });
     });
+
+    // Support reading settings from a node dialog's element
+
+    var ATTR_PREFIX = "data-dialog-";
+
+    var parseNone = function(s)
+    {
+        return s || null;
+    };
+
+    var parseBool = function(s)
+    {
+        if (s)
+        {
+            s = s.toString().toLowerCase();
+            switch (s)
+            {
+                case "true":
+                case "yes":
+                case "1":
+                    return true;
+                default:
+                    break;
+            }
+        }
+
+        return false;
+    };
+
+    var parseFunction = function(body)
+    {
+        if (!body) 
+        {
+            return null;
+        }
+
+        return new Function("event", body);
+    };
+    
+    // The properties to copy from HTML data-dialog-* attributes
+    // to the dialog settings object
+    var _props = 
+    {
+        "title": parseNone,         
+        "onopen": parseFunction,
+        "onbeforeopen": parseFunction,         
+        "onclose": parseFunction,        
+        "onbeforeclose": parseFunction,        
+        "maxWidth": parseInt,   
+        "initialHeight": parseInt,    
+        "ajax": parseBool,  
+        "onajaxerror": parseFunction,
+        "destroyOnClose": parseBool,     
+        "skin": parseNone   
+    };
+
+    // Copies the HTML data-dialog-* attributes to the settings object
+    $.modalDialog.applyAttributesToSettings = function($el, settings)
+    {
+        $.each(_props.keys(), function(i, key) 
+        {
+            parser = mapping[key];
+
+            // $.fn.attr is case insensitive
+            var value = $el.attr(ATTR_PREFIX + key);
+            value = parser(value);
+            if (value)
+            {
+                settings[key] = value;
+            }
+
+        });
+    };
 
 })(jQuery);
