@@ -9,6 +9,7 @@ Install easy_install
 * https://pypi.python.org/pypi/setuptools
 
 Install Jekyll: http://jekyllrb.com/docs/installation/
+* sudo gem install jekyll
 * Needed to uninstall pygments 5.2 and install 5.0: http://stackoverflow.com/questions/17364028/jekyll-on-windows-pygments-not-working
 
 Install node:
