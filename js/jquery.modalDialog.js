@@ -1157,12 +1157,9 @@ if (!Object.keys)
 
     var parseFunction = function(body)
     {
-<<<<<<< HEAD
         // Evil is necessary to turn inline HTML handlers into functions
         /* jshint evil: true */
 
-=======
->>>>>>> 6b05ff19d82aaa9688ca04817157f4c7578aa71b
         if (!body) 
         {
             return null;
@@ -1189,7 +1186,6 @@ if (!Object.keys)
     };
 
     // Copies the HTML data-dialog-* attributes to the settings object
-<<<<<<< HEAD
     $.modalDialog.getSettings = function($el)
     {
         var settings = {};
@@ -1206,23 +1202,6 @@ if (!Object.keys)
         });
 
         return settings;
-=======
-    $.modalDialog.applyAttributesToSettings = function($el, settings)
-    {
-        $.each(_props.keys(), function(i, key) 
-        {
-            parser = mapping[key];
-
-            // $.fn.attr is case insensitive
-            var value = $el.attr(ATTR_PREFIX + key);
-            value = parser(value);
-            if (value)
-            {
-                settings[key] = value;
-            }
-
-        });
->>>>>>> 6b05ff19d82aaa9688ca04817157f4c7578aa71b
     };
 
 })(jQuery);
