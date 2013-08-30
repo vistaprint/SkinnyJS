@@ -193,7 +193,8 @@ module.exports = function(grunt)
         },
         clean:
         {
-            build: ['dist'],
+            options: { force: true },
+            build: ['./dist'],
             deploy: ['./.git/docs-temp'],
             docs: ['./site/_site']
         },
