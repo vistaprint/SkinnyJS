@@ -141,17 +141,6 @@ module.exports = function(grunt)
           {
             files: 
             [
-                // { 
-                //     expand: true, 
-                //     flatten: true, 
-                //     src: ["README.md"], 
-                //     dest: "./site", 
-                //     rename: function(dest, src) 
-                //     { 
-                //         console.log("called:" + dest + " " + src);
-                //         return "./site/index.md"; 
-                //     } 
-                // },
                 { expand: true, cwd: "./dist", src: ["**"], dest: "./site/_site/dist/" },
                 { expand: true, flatten: true, src: ["LICENSE"], processFile: true, dest: "./site/_site/" }
             ]
@@ -198,33 +187,6 @@ module.exports = function(grunt)
             deploy: ['./.git/docs-temp'],
             docs: ['./site/_site']
         },
-        // "gen-pages":
-        // {
-        //     homepage: 
-        //     {
-        //         template: "site/main-template.html",
-        //         src: ["./README.md"],
-        //         dest: './.git/docs-temp/index.html',
-        //         urlBase: "http://labaneilers.github.io/SkinnyJS/"
-        //     },
-        //     markdown: 
-        //     {
-        //         template: "site/main-template.html",
-        //         src: ["./site/*.md"],
-        //         dest: './.git/docs-temp/',
-        //         remove: "./site/"
-        //     },
-        //     html: 
-        //     {
-        //         template: "site/main-template.html",
-        //         src: ["./site/*.html"],
-        //         dest: './.git/docs-temp/',
-        //         filter: "-template.html",
-        //         remove: "./site/",
-        //         rawHtml: true
-        //     }
-
-        // },
         less: 
         {
             main:
