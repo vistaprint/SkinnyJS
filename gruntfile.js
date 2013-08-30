@@ -152,7 +152,7 @@ module.exports = function(grunt)
                 //         return "./site/index.md"; 
                 //     } 
                 // },
-                { expand: true, cwd: "./dist", src: ["**"], dest: "./site/_site/dist-pub/" },
+                { expand: true, cwd: "./dist", src: ["**"], dest: "./site/_site/dist/" },
                 { expand: true, flatten: true, src: ["LICENSE"], processFile: true, dest: "./site/_site/" }
             ]
           },
@@ -177,12 +177,12 @@ module.exports = function(grunt)
             },
             modalDialog: 
             {
-              src: ['js/jquery.modalDialog.common.js', 'js/jquery.modalDialog.js', 'js/jquery.modalDialog.deviceFixes.js', 'js/jquery.modalDialog.unobtrusive.js'],
+              src: ['js/jquery.modalDialog.getSettings.js', 'js/jquery.modalDialog.js', 'js/jquery.modalDialog.deviceFixes.js', 'js/jquery.modalDialog.unobtrusive.js'],
               dest: 'dist/jquery.modalDialog.js'
             },
             modalDialogContent: 
             {
-              src: ['js/jquery.modalDialog.common.js', 'js/jquery.modalDialogContent.js'],
+              src: ['js/jquery.modalDialog.getSettings.js', 'js/jquery.modalDialogContent.js', 'js/jquery.modalDialog.unobtrusive.js'],
               dest: 'dist/jquery.modalDialogContent.js'
             },
             readme: 

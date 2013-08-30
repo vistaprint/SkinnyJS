@@ -1,6 +1,8 @@
 /// <reference path="jquery.querystring.js" />
 /// <reference path="jquery.contentSize.js" />
 /// <reference path="jquery.customEvent.js" />
+/// <reference path="jquery.postMessage.js" />
+/// <reference path="jquery.modalDialog.getSettings.js" />
 
 // This is a library for use in content windows that live inside a FramedDialog.
 // All its methods work cross-domain.
@@ -358,7 +360,7 @@ $.modalDialog.create()
     var _fullIdMap = {};
 
     // Duplicates the host window static API, but acts on FramedDialogProxy objects
-    $.modalDialog = {};
+    $.modalDialog = $.modalDialog || {};
 
     $.modalDialog._isContent = true;
 

@@ -16,12 +16,16 @@ Install python easy_install
 * https://pypi.python.org/pypi/setuptools (use setuptools 1.1)
 * Setup instructions for windows: https://pypi.python.org/pypi/setuptools/1.1#windows
 
-Install pygments (python)
+Install Pygments (python)
 * http://pygments.org/download/
 * easy_install Pygments
 
+Install easy_install
+* https://pypi.python.org/pypi/setuptools
+
 Install Jekyll: http://jekyllrb.com/docs/installation/
-* gem install jekyll
+* (windows) gem install jekyll
+* (mac) sudo gem install jekyll
 * Needed to uninstall pygments 5.2 and install 5.0: http://stackoverflow.com/questions/17364028/jekyll-on-windows-pygments-not-working
 
 Install node:
@@ -29,3 +33,13 @@ Install node:
 
 Install grunt
 * npm install -g grunt-cli
+
+Bug in phantomjs:
+C:\dev\skinny\node_modules\grunt-contrib-qunit\node_modules\grunt-lib-phantomjs\node_modules\phantomjs\lib\location.js is being written without escaped backslashes in windows
+
+Debugging:
+* Use node-inspector
+* node-inspector --web-port=8081
+
+Debug grunt: 
+node --debug-brk C:\Users\{username}\AppData\Roaming\npm\node_modules\grunt-cli\bin\grunt

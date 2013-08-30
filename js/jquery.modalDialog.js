@@ -1,10 +1,11 @@
 /// <reference path="../dependencies/jquery.transit.js" />
-/// <reference path="jquery.querystring.js" />
+/// <reference path="jquery.queryString.js" />
 /// <reference path="jquery.postMessage.js" />
 /// <reference path="jquery.customEvent.js" />
 /// <reference path="jquery.clientRect.js" />
 /// <reference path="jquery.hostIframe.js" />
 /// <reference path="jquery.proxyAll.js" />
+/// <reference path="jquery.modalDialog.getSettings.js" />
 
 // ## jQuery.modalDialog
 
@@ -110,7 +111,7 @@ if (!Object.keys)
     $.isSmallScreen = isSmallScreen;
 
     // Class which creates a jQuery mobile dialog
-    function ModalDialog(settings)
+    var ModalDialog = function(settings)
     {
         this.settings = settings;
         this.parent = $(this.settings.containerElement || 'body');
@@ -120,7 +121,7 @@ if (!Object.keys)
 
         // Bind methods called as handlers so "this" works
         $.proxyAll(this, "_drag", "_startDrag", "_stopDrag", "_close");
-    }
+    };
 
     ModalDialog.prototype.dialogType = "node";
 
@@ -851,25 +852,20 @@ if (!Object.keys)
     // 1. default value
     // 2. setting provided on content element
     // 3. settings passed
-    var ensureSettings = function(s)
+    var ensureSettings = function(explicitSettings)
     {
         var settings = $.extend({}, _defaults);
 
-        // allow settings to come from data attributes
-        if (s.content)
+        // Read settings specified on the target node's custom HTML attributes
+        if (explicitSettings.content)
         {
-            // $.extend(settings, _.pick($(s.content).data(), _.keys(_defaults)));
-            var obj = $(s.content).data();
-
-            $.each(Object.keys(_defaults), function(i, key) {
-                if (key in obj) {
-                    settings[key] = obj[key];
-                }
-            });
+            var $target = $(explicitSettings.content);
+            var targetSettings = $.modalDialog.getSettings($target);
+            $.extend(settings, targetSettings);
         }
 
-        // now extend with passed settings
-        $.extend(settings, s);
+        // The explicitly specified settings take precidence
+        $.extend(settings, explicitSettings);
 
         var id;
 
@@ -908,7 +904,7 @@ if (!Object.keys)
     };
 
     // Public sub-namespace for modal dialogs.
-    $.modalDialog = {};
+    $.modalDialog = $.modalDialog || {};
 
     // Used to prevent the content window script from loading over this one
     $.modalDialog._isHost = true;
