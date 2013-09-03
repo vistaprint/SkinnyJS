@@ -239,7 +239,7 @@ module.exports = function(grunt)
                     replacements: [
                         {
                             pattern: /\.\.\/dist\//ig,
-                            replacement: "dist/"
+                            replacement: "dist-pub/"
                         }
                     ]
                 }
