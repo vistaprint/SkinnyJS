@@ -1,5 +1,5 @@
 .dialog-background .dialog-loading-indicator span {
-  background-image: url(images/clock.gif);
+  background-image: url(../images/clock.gif);
   width: 49px;
   height: 50px;
 }
@@ -60,7 +60,7 @@
 .dialog-skin-primary.dialog-container .dialog-header .dialog-close-button-icon,
 .dialog-skin-neutral.dialog-container .dialog-header .dialog-close-button-icon {
   display: inline-block;
-  background-image: url(images/close.png);
+  background-image: url(../images/close.png);
   background-repeat: no-repeat;
   height: 18px;
   width: 18px;
@@ -149,7 +149,7 @@
 }
 .dialog-skin-lightbox.dialog-container .dialog-header .dialog-close-button-icon {
   display: inline-block;
-  background-image: url(images/close.png);
+  background-image: url(../images/close.png);
   background-repeat: no-repeat;
   height: 18px;
   width: 18px;
