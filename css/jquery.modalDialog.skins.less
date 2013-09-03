@@ -1,6 +1,12 @@
 @import url(mixin_lib.less);
 
-// Dialog skins
+// This file contains implementations of modal dialogs skins.
+// It is intended to be modified by the user to skin modal dialogs.
+
+@gradient-top:      #4D4D4F;
+@gradient-bottom:      #313131;
+@white:         #fff;
+
 @border-rounding-amount: 10px;
 
 .dialog-background
@@ -50,7 +56,7 @@
     .dialog-header
     {
         .border-radius(@border-rounding-amount, 0, 0, @border-rounding-amount);
-        .gradient(@graphite, @graphite, @charcoal);
+        .gradient(@gradient-top, @gradient-top, @gradient-bottom);
 
         h1
         {
@@ -80,8 +86,8 @@
 {
     .dialog-header
     {
-        @lightGraphite: lighten(@graphite, 20%);
-        .gradient(@lightGraphite, @lightGraphite, @graphite);
+        @lightgradient-top: lighten(@gradient-top, 20%);
+        .gradient(@lightgradient-top, @lightgradient-top, @gradient-top);
     }
 
     .dialog-content-container
@@ -104,7 +110,7 @@
         &.dialog-veil-opaque
         {
             display: none;
-            background-color: @charcoal;
+            background-color: @gradient-bottom;
         }
     }
 
@@ -123,15 +129,12 @@
 
         .dialog-header
         {
-            background-color: @charcoal;
-            // .gradient(@graphite, @graphite, @charcoal);
-            // height: auto;
+            background-color: @gradient-bottom;
 
             h1
             {
                 font-size: 16px;
                 color: white;
-                // min-height: 40px;
             }
 
             .dialog-default-close-button;
@@ -139,7 +142,7 @@
 
         .dialog-content-container
         {
-            background-color: @charcoal;
+            background-color: @gradient-bottom;
             color: @white;
 
             a:hover {
