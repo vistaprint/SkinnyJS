@@ -1,6 +1,3 @@
-/// <reference path="jquery.modalDialog.js" />
-/// <reference path="jquery.disableEvent.js" />
-
 // iOS
 // iOS has a bug where text fields in an iFrame misbehave if there are touch events assigned to the 
 // host window. This fix disables them while iFrame dialogs are open.

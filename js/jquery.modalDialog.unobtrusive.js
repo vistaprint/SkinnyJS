@@ -1,5 +1,3 @@
-/// <reference path="jquery.modalDialog.js" />
-
 /*
 Uses declarative syntax to define a dialog. Syntax:
 

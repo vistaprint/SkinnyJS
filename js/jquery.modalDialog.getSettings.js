@@ -1,4 +1,3 @@
-
 // Support reading settings from a node dialog's element
 
 (function($)
