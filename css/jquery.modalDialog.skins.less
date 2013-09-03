@@ -3,6 +3,19 @@
 // Dialog skins
 @border-rounding-amount: 10px;
 
+.dialog-background
+{
+    .dialog-loading-indicator // dialog-loading-indicator-container
+    {
+        span // dialog-loading-indicator
+        {
+            background-image: url(images/clock.gif);
+            width: 49px;
+            height: 50px;
+        }
+    }
+}
+
 .dialog-default-close-button()
 {
     .dialog-close-button
@@ -20,20 +33,12 @@
     .dialog-close-button-icon
     {
         display: inline-block;
-        background-image: url(/vp/images/mobile/common/icons/icons-18-black.png); 
+        background-image: url(images/close.png); 
         background-repeat: no-repeat;
-        background-position: -72px 50%;
         height: 18px;
         width: 18px;
         margin: 3px;
         .opacity(.7);
-
-        // TODO use global variables for the media query and sprite width, once those variables are accessible from outside the mobile site
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-resolution: 200dpi) 
-        {
-            background-image: url(/vp/images/mobile/common/icons/icons-36-black.png); 
-            .background-size(812px 18px); 
-        }
     }
 }
 
@@ -114,15 +119,6 @@
             width: 100% !important;
             height: 100% !important;
             margin: 0;
-
-            // on mobile we can also keep the header "fixed"
-            // .dialog-header.fixed
-            // {
-            //  position: fixed;
-            //  top: 0;
-            //  left: 0;
-            //  width: 100%;
-            // }
         }
 
         .dialog-header

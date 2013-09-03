@@ -48,6 +48,7 @@ function getCopyConfig()
 {
     var ret = [];
 
+    // Get JavaScript
     var files = getFilesSync("js");
     for (var i=0; i<files.length; i++)
     {
@@ -63,6 +64,14 @@ function getCopyConfig()
             flatten: true
         });
     }
+
+    // Get Images
+
+    ret.push({
+            expand: true,
+            src: ["./images/**"],
+            dest: "dist/"
+        });
 
     return ret;
 }
