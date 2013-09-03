@@ -44,11 +44,10 @@ function getUglifyConfig()
     return ret;
 }
 
-function getCopyConfig()
+function appendJsCopyConfig(config)
 {
-    var ret = [];
+    config = config || [];
 
-    // Get JavaScript
     var files = getFilesSync("js");
     for (var i=0; i<files.length; i++)
     {
@@ -57,7 +56,7 @@ function getCopyConfig()
             continue;
         }
 
-        ret.push({
+        config.push({
             expand: true,
             src: [files[i]],
             dest: "dist/",
@@ -65,15 +64,7 @@ function getCopyConfig()
         });
     }
 
-    // Get Images
-
-    ret.push({
-            expand: true,
-            src: ["./images/**"],
-            dest: "dist/"
-        });
-
-    return ret;
+    return config;
 }
 
 function getLessConfig()
@@ -144,7 +135,20 @@ module.exports = function(grunt)
         {
           dist: 
           {
-            files: getCopyConfig()
+            files: appendJsCopyConfig(
+            [
+                
+                {
+                    expand: true,
+                    src: ["./images/**"],
+                    dest: "dist/"
+                },
+                {
+                    expand: true,
+                    src: ["./css/jquery.modalDialog.skins.less"],
+                    dest: "dist/"
+                }
+            ])
           },
           docs:
           {
