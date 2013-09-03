@@ -1,0 +1,12 @@
+.dialog-background.dialog-veil {
+  filter: alpha(opacity=60);
+  background-color: #000;
+}
+.dialog-skin-primary.dialog-visible .dialog-container,
+.dialog-skin-neutral.dialog-visible .dialog-container {
+  background-color: #fff;
+  border: 1px #555 solid;
+}
+.dialog-content-container .dialog-content {
+  display: block;
+}

@@ -1,0 +1,157 @@
+@import url(mixin_lib.less);
+
+// Dialog skins
+@border-rounding-amount: 10px;
+
+.dialog-background
+{
+    .dialog-loading-indicator // dialog-loading-indicator-container
+    {
+        span // dialog-loading-indicator
+        {
+            background-image: url(images/clock.gif);
+            width: 49px;
+            height: 50px;
+        }
+    }
+}
+
+.dialog-default-close-button()
+{
+    .dialog-close-button
+    {
+        margin-top: 5px;
+        margin-right: 5px;
+        color: transparent;
+        text-decoration: none;
+        .rounded(12px);
+        height: 24px;
+        width: 24px;
+        background-color: @white;               
+    }
+
+    .dialog-close-button-icon
+    {
+        display: inline-block;
+        background-image: url(images/close.png); 
+        background-repeat: no-repeat;
+        height: 18px;
+        width: 18px;
+        margin: 3px;
+        .opacity(.7);
+    }
+}
+
+// Primary skin
+.dialog-skin-primary.dialog-container, .dialog-skin-neutral.dialog-container
+{
+    .rounded(@border-rounding-amount);
+
+    .dialog-header
+    {
+        .border-radius(@border-rounding-amount, 0, 0, @border-rounding-amount);
+        .gradient(@graphite, @graphite, @charcoal);
+
+        h1
+        {
+            font-size: 16px;
+            color: white;
+        }
+
+        .dialog-default-close-button;
+    }
+
+    .dialog-content-container
+    {
+        background-color: @white;
+        .border-radius(0, @border-rounding-amount, @border-rounding-amount, 0);
+        padding-bottom: @border-rounding-amount;
+    }
+
+    // Only put the drop shadow on when it's visible
+    &.dialog-visible
+    {
+        .drop-shadow();
+    }
+}
+
+// Neutral skin, inherits from primary
+.dialog-skin-neutral.dialog-container
+{
+    .dialog-header
+    {
+        @lightGraphite: lighten(@graphite, 20%);
+        .gradient(@lightGraphite, @lightGraphite, @graphite);
+    }
+
+    .dialog-content-container
+    {
+        background-color: @white;
+    }
+}
+
+// Neutral skin, inherits from primary
+.dialog-skin-lightbox
+{
+    &.dialog-background
+    {
+        &.dialog-veil
+        {
+            background-color: rgba(0, 0, 0, .6); // gracefully degrades to transparent for IE7-8
+        }
+
+        // used on small mobile
+        &.dialog-veil-opaque
+        {
+            display: none;
+            background-color: @charcoal;
+        }
+    }
+
+    &.dialog-container
+    {
+        // on small screens, we turn the lightbox to 100% fullscreen
+        &.smallscreen
+        {
+            position: fixed;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            margin: 0;
+        }
+
+        .dialog-header
+        {
+            background-color: @charcoal;
+            // .gradient(@graphite, @graphite, @charcoal);
+            // height: auto;
+
+            h1
+            {
+                font-size: 16px;
+                color: white;
+                // min-height: 40px;
+            }
+
+            .dialog-default-close-button;
+        }
+
+        .dialog-content-container
+        {
+            background-color: @charcoal;
+            color: @white;
+
+            a:hover {
+                color: inherit;
+            }
+        }
+
+        .dialog-content
+        {
+            margin: 0;
+            padding: 0 13px;
+            min-height: 100px;
+        }
+    }
+}

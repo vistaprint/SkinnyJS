@@ -1,0 +1,337 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
+  <link rel="stylesheet" href="stylesheets/syntax-highlighting.css"/>
+  <script type="text/javascript" src="javascripts/jquery.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>skinny.js</title>
+  <meta name="description" content="Skinny JS">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title"><a href="/SkinnyJS">skinny.js</a> <!-- <img src="images/skinny-jeans.png" class="logo-image" /> --></h1>
+    </header>
+    <div id="container">
+      <!--
+      jQuery plugins that won't add unsightly pounds
+    -->
+      <p class="tagline">Low calorie jQuery plugins</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/labaneilers/SkinnyJS/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/labaneilers/SkinnyJS/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/labaneilers/SkinnyJS" class="code">View skinny.js on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1 id='modal_dialogs'>Modal dialogs</h1>
+
+<h2 id='source'>Source</h2>
+
+<p>You can view the <a href='js/jquery.modalDialog.html'>full annotated source</a></p>
+
+<h2 id='features'>Features</h2>
+
+<p>For a dialog&#8217;s content, the framework can use one of the following techniques:</p>
+
+<ul>
+<li>Use an element on the page (&#8220;node dialog&#8221;)</li>
+
+<li>Display a different page within the dialog (&#8220;IFrame dialog&#8221;)</li>
+
+<li>Load content via AJAX (&#8220;ajax dialog&#8221;)</li>
+</ul>
+
+<p>Other features:</p>
+
+<ul>
+<li>The API for IFrame dialogs works seamlessly across different domains (i.e. www.vistaprint.com vs secure.vistaprint.com) by internally using window.postMessage()</li>
+
+<li>A dialog&#8217;s height is based on the content size. There is no explicit method to specify the height.</li>
+
+<li>The dialog framework supports mobile devices via responsive design.</li>
+</ul>
+
+<h2 id='usage'>Usage</h2>
+
+<h3 id='adding_jquerymodaldialog_to_your_site'>Adding jQuery.modalDialog to your site:</h3>
+
+<p>TODO: Look at JQueryModalDialog and copy the HTML</p>
+
+<h3 id='creating_a_dialog'>Creating a dialog</h3>
+
+<p>To create a dialog, use the following method:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>()</span>
+</code></pre></div>
+<h4 id='settings'>Settings</h4>
+
+<p><code>$.modalDialog.create()</code> takes a settings object as an argument. Here are the available settings:</p>
+
+<ul>
+<li><strong>title</strong>: The title to display in the title bar of the dialog.</li>
+
+<li><strong>id</strong>: The internal ID of the dialog. If the same ID is passed to <code>$.modalDialog.create()</code> more than once, the existing dialog is reused.</li>
+
+<li><strong>maxWidth</strong>: Sets the maximum width of the dialog. Note that on small mobile devices, the actual width may be smaller, so you should design the dialog content accordingly. Defaults to 600.</li>
+
+<li><strong>skin</strong>: The name of the skin to use for the dialog. Defaults to &#8220;primary&#8221;.</li>
+
+<li><strong>ajax</strong>: Determines how the &#8221;url&#8221; setting is interpreted. If true, the URL is the source for an AJAX dialog. If false, it will be the URL of an IFrame dialog.</li>
+
+<li><strong>url</strong>: The URL for the content of an IFrame or AJAX dialog.</li>
+
+<li><strong>content</strong>: A CSS selector or jQuery object for a content node to use for a node dialog.</li>
+
+<li><strong>destroyOnClose</strong>: If true, the dialog DOM will be destroyed and all events removed when the dialog closes. Defaults to &#8221;false&#8221;.</li>
+
+<li><strong>containerElement</strong>: A CSS selector or jQuery object for the element that should be the parent for the dialog DOM (useful for working with jQuery mobile). Defaults to &#8220;body&#8221;.</li>
+
+<li><strong>preventEventBubbling</strong>: If true, click and touch events are prevented from bubbling up to the document. Defaults to &#8221;true&#8221;.</li>
+
+<li><strong>onbeforeopen</strong>: A handler for the &#8221;beforeopen&#8221; event. See <a href='#events'>Events</a> below.</li>
+
+<li><strong>onopen</strong>: A handler for the &#8221;open&#8221; event. See <a href='#events'>Events</a> below.</li>
+
+<li><strong>onclose</strong>: A handler for the &#8221;close&#8221; event. See <a href='#events'>Events</a>] below.</li>
+
+<li><strong>onbeforeclose</strong>: A handler for the &#8221;beforeclose&#8221; event. See <a href='#events'>Events</a> below.</li>
+
+<li><strong>onajaxerror</strong>: A handler for the &#8221;ajaxerror&#8221; event. See <a href='#events'>Events</a> below.</li>
+</ul>
+
+<h3 id='dialog_object_methods'>Dialog object methods</h3>
+
+<p><code>$.modalDialog.create()</code> returns a dialog object with the following methods:</p>
+
+<ul>
+<li><strong>open()</strong>: Opens the dialog</li>
+
+<li><strong>close()</strong>: Closes the dialog</li>
+
+<li><strong>center()</strong>: Centers the dialog based on the current dimensions</li>
+
+<li><strong>setTitle()</strong>: Sets the title displayed in the dialog&#8217;s title bar</li>
+
+<li><strong>getWindow()</strong>: Gets a reference to the window for the dialog. For an IFrame dialog, this is the content window, for node or AJAX dialogs, it is the host window. This is useful for sending messages between dialogs.</li>
+
+<li><strong>getParent()</strong>: Gets a reference to the dialog object immediately below the current dialog in visual stacking order (usually the one that opened it). This will be null for a dialog that was opened directly from the host window, and has no parent dialog.</li>
+</ul>
+
+<h3 id='node_dialogs'>Node dialogs</h3>
+
+<p>A node dialog is created using an element on the page. To open a node dialog, use the following syntax:</p>
+<div class='highlight'><pre><code class='javascript'><span class='kd'>var</span> <span class='nx'>dialog</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>({</span> <span class='nx'>content</span><span class='o'>:</span> <span class='s2'>&quot;.color-dialog&quot;</span><span class='p'>,</span> <span class='nx'>title</span><span class='o'>:</span> <span class='nx'>JSLM_ColorDialogTitle</span> <span class='p'>});</span>
+<span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>open</span><span class='p'>();</span>
+ 
+<span class='c1'>//close dialog</span>
+<span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>close</span><span class='p'>();</span>
+</code></pre></div>
+<p>There is also an alternative jQuery-centric syntax. This is completely equivalent to the previous snippet:</p>
+<div class='highlight'><pre><code class='javascript'><span class='c1'>// Opens the dialog immediately</span>
+<span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.color-dialog&quot;</span><span class='p'>).</span><span class='nx'>modalDialog</span><span class='p'>({</span> <span class='nx'>title</span><span class='o'>:</span> <span class='nx'>JSLM_ColorDialogTitle</span> <span class='p'>});</span>
+
+<span class='c1'>// Closes the dialog</span>
+<span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.color-dialog&quot;</span><span class='p'>).</span><span class='nx'>modalDialog</span><span class='p'>(</span><span class='s2'>&quot;close&quot;</span><span class='p'>);</span>
+</code></pre></div>
+<h3 id='ajax_dialogs'>AJAX dialogs</h3>
+
+<p>An AJAX dialog is created using content which is dynamically loaded from a URL. To create an AJAX dialog, use the following syntax:</p>
+<div class='highlight'><pre><code class='javascript'><span class='kd'>var</span> <span class='nx'>dialog</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>({</span> <span class='nx'>url</span><span class='o'>:</span> <span class='s2'>&quot;/warning.aspx&quot;</span><span class='p'>,</span> <span class='nx'>ajax</span><span class='o'>:</span> <span class='kc'>true</span> <span class='p'>});</span>
+<span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>open</span><span class='p'>();</span>
+ 
+<span class='c1'>//close dialog</span>
+<span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>close</span><span class='p'>();</span>
+</code></pre></div>
+<h4 id='defining_the_content_for_an_ajax_dialog'>Defining the content for an AJAX dialog</h4>
+
+<h5 id='layout_pages_for_ajax_dialog_content'>Layout pages for AJAX dialog content</h5>
+
+<p>TODO: remove VPisms AJAX dialogs&#8217; content should have no layout page; just render the content to display. In Razor, you would use this:</p>
+
+<pre><code>@{ this.Layout = null; }</code></pre>
+
+<h5 id='javascripts_in_ajax_dialog_content'>JavaScripts in AJAX dialog content</h5>
+
+<p>Any scripts included in the content will get loaded dynamically, after the DOM elements have been loaded. Scripts that are already loaded in the window will be ignored (not run a second time), but script snippets will be executed.</p>
+
+<h3 id='iframe_dialogs'>IFrame dialogs</h3>
+
+<p>IFrame dialogs contain an embedded IFrame that shows a self-contained webpage. These are particularly useful for a few reasons:</p>
+
+<ul>
+<li>They can encapsulate the dialog&#8217;s content completely.</li>
+
+<li>HTML, scripts, and CSS are completely isolated from the parent window.</li>
+
+<li>They can load content cross-domain.</li>
+</ul>
+
+<p>To create an IFrame dialog, use the following syntax:</p>
+<div class='highlight'><pre><code class='javascript'>    <span class='kd'>var</span> <span class='nx'>dialog</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>({</span> <span class='nx'>url</span><span class='o'>:</span> <span class='s2'>&quot;/studio/color-dialog.aspx&quot;</span> <span class='p'>});</span>
+    <span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>open</span><span class='p'>();</span>
+     
+    <span class='c1'>//close dialog</span>
+    <span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>close</span><span class='p'>();</span>
+</code></pre></div>
+<p>In an IFrame dialog, the height of the dialog is determined by the content.</p>
+
+<h4 id='defining_the_content_of_an_iframe_dialog'>Defining the content of an IFrame dialog</h4>
+
+<h5 id='layout_page'>Layout page</h5>
+
+<p>TODO remove VPisms IFrame dialogs should use the Razor layout page:</p>
+
+<pre><code>this.Layout = &quot;~/Sales/Mobile/Mvc/Views/Shared/_DialogMobileLayout.cshtml&quot;;</code></pre>
+
+<h5 id='notifying_the_parent_window_when_the_iframe_is_rendered_and_ready_to_show'>Notifying the parent window when the IFrame is rendered and ready to show</h5>
+
+<p>The dialog framework waits to show an IFrame dialog until it&#8217;s content window notifies it that it is fully rendered. By default, this happens on window.onload.</p>
+
+<p>In certain cases, a dialog may require extra initialization (i.e. it may use JavaScript to render some content), and is not necessarily ready on window.onload. To handle this, you would want to disable manual notification to the framework that the dialog is ready by setting the following property:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>manualNotifyReady</span> <span class='o'>=</span> <span class='kc'>true</span><span class='p'>;</span>
+</code></pre></div>
+<p>Then, when your dialog&#8217;s content is fully rendered, call:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>getCurrent</span><span class='p'>().</span><span class='nx'>notifyReady</span><span class='p'>();</span>
+</code></pre></div>
+<h5 id='dialog_size'>Dialog size</h5>
+
+<p>The size of the dialog is determined automatically based on the size of the content in the IFrame. Because it can be tricky to determine the height of content in HTML, there are a few configuration options to help the framework determine the size:</p>
+
+<ul>
+<li><strong>$.modalDialog.autoSizing</strong>: If enabled, the dialog framework looks for changes to content size and adjust the dialog size automatically. True by default.</li>
+
+<li><strong>$.modalDialog.sizeElement</strong>: A CSS selector for an element that the framework should measure to get the size of the content. By default, it looks for an element matching the selector .dialog-content-size.</li>
+</ul>
+
+<p>If $.modalDialog.autoSizing&#8217; is set false, then you will want to resize the dialog manually using one of the following methods:</p>
+<div class='highlight'><pre><code class='javascript'><span class='c1'>// Set height explicitly</span>
+<span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>getCurrent</span><span class='p'>().</span><span class='nx'>setHeight</span><span class='p'>(</span><span class='mi'>400</span><span class='p'>);</span>
+
+<span class='c1'>// Set height based on content</span>
+<span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>getCurrent</span><span class='p'>().</span><span class='nx'>setHeightFromContent</span><span class='p'>();</span>
+</code></pre></div>
+<h5 id='dialog_title'>Dialog title</h5>
+
+<p>The title displayed in the dialog is driven by the HTML title tag of the document in the IFrame. You can override this by specifically calling:</p>
+<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>getCurrent</span><span class='p'>().</span><span class='nx'>setTitle</span><span class='p'>(</span><span class='s2'>&quot;New title&quot;</span><span class='p'>);</span>
+</code></pre></div>
+<h5 id='crossdomain_support'>Cross-domain support</h5>
+
+<p>If your IFrame content is in a different domain than the parent window, you need to tell the content window how to reach the parent window:</p>
+<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>parentHostName</span> <span class='o'>=</span> <span class='s2'>&quot;http://www.vistaprint.com&quot;</span><span class='p'>;</span>
+</code></pre></div>
+<h3 id='creating_multiple_active_dialogs'>Creating multiple active dialogs</h3>
+
+<p>Dialogs can be opened in succession (i.e. a dialog can open another dialog). This even works from an IFrame dialog, and even across domains.</p>
+
+<p>To open a dialog from another dialog (including an IFrame dialog), simply use <code>$.modalDialog.create()</code>.</p>
+
+<p><strong>Warning</strong>: There is one important exception: An IFrame dialog cannot open a node dialog. This is because the IFrame is, by definition, in a different window than the host window, and cannot share its DOM with the parent window. You can, however, open an AJAX dialog, or another IFrame dialog from an IFrame dialog.</p>
+
+<h3 id='events'>Events</h3>
+
+<p>Dialogs support a number of lifecycle events:</p>
+
+<ul>
+<li><strong>beforeopen</strong>: Fires before the dialog opens. Calling event.preventDefault() on the event object will cancel the opening of the dialog.</li>
+
+<li><strong>open</strong>: Fires after the dialog has opened, and has animated into place.</li>
+
+<li><strong>beforeclose</strong>: Fires before the dialog closes. Calling event.preventDefault() on the event object will cancel the closing of the dialog. The property event.isDialogCloseButton indicates that the top dialog close button was clicked.</li>
+
+<li><strong>close</strong>: Fires after the dialog closes. The property event.isDialogCloseButton indicates that the top dialog close button was clicked.</li>
+
+<li><strong>ajaxerror</strong>: Fires if an error occurs loading an AJAX dialog.</li>
+</ul>
+
+<h4 id='handling_events'>Handling events</h4>
+
+<p>There are two ways to assign event handlers, as options to <code>$.modalDialog.create()</code>, or by adding event handlers to the dialog object returned by <code>$.modalDialog.create()</code>.</p>
+
+<p>Here is an example of using the beforeopen event:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>({</span> 
+    <span class='nx'>url</span><span class='o'>:</span> <span class='s2'>&quot;/foo.aspx&quot;</span><span class='p'>,</span> 
+    <span class='nx'>onbeforeopen</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> 
+    <span class='p'>{</span> 
+        <span class='k'>if</span> <span class='p'>(</span><span class='o'>!</span><span class='nx'>confirm</span><span class='p'>(</span><span class='s2'>&quot;Are you sure you want to open this dialog?&quot;</span><span class='p'>))</span> 
+        <span class='p'>{</span>
+            <span class='nx'>e</span><span class='p'>.</span><span class='nx'>preventDefault</span><span class='p'>();</span> 
+        <span class='p'>}</span>
+    <span class='p'>});</span>
+</code></pre></div>
+<p>This example is completely equivalent:</p>
+<div class='highlight'><pre><code class='javascript'><span class='kd'>var</span> <span class='nx'>dialog</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>({</span> <span class='nx'>url</span><span class='o'>:</span> <span class='s2'>&quot;/foo.aspx&quot;</span> <span class='p'>});</span>
+<span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>onbeforeopen</span><span class='p'>.</span><span class='nx'>add</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> 
+<span class='p'>{</span> 
+    <span class='k'>if</span> <span class='p'>(</span><span class='o'>!</span><span class='nx'>confirm</span><span class='p'>(</span><span class='s2'>&quot;Are you sure you want to open this dialog?&quot;</span><span class='p'>))</span> 
+    <span class='p'>{</span> 
+        <span class='nx'>e</span><span class='p'>.</span><span class='nx'>preventDefault</span><span class='p'>();</span> 
+    <span class='p'>}</span>
+<span class='p'>});</span>
+</code></pre></div>
+<p><strong>Tip</strong>: These events are even supported in cross-domain IFrame dialogs!</p>
+
+<h3 id='unobtrusive_usage'>Unobtrusive usage</h3>
+
+<p>The dialog framework also supports an unobtrusive, declarative syntax: Open an iFrame dialog:</p>
+<div class='highlight'><pre><code class='html'><span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;/content.aspx&quot;</span> <span class='na'>data-rel=</span><span class='s'>&quot;modalDialog&quot;</span><span class='nt'>&gt;</span>Open content<span class='nt'>&lt;/a&gt;</span>
+</code></pre></div>
+<p>Open a node dialog:</p>
+<div class='highlight'><pre><code class='html'><span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;#content&quot;</span> <span class='na'>data-rel=</span><span class='s'>&quot;modalDialog&quot;</span><span class='nt'>&gt;</span>Open content<span class='nt'>&lt;/a&gt;</span>
+
+<span class='c'>&lt;!-- Note the &#39;dialog-content&#39; class. This ensures the content is invisible before the dialog is shown --&gt;</span>
+<span class='nt'>&lt;div</span> <span class='na'>id=</span><span class='s'>&quot;content&quot;</span> <span class='na'>class=</span><span class='s'>&quot;dialog-content&quot;</span><span class='nt'>&gt;</span>Here&#39;s some content<span class='nt'>&lt;/div&gt;</span>
+</code></pre></div>
+<p>Any options supported in the $.modalDialog.create() method are supported declaratively, with the prefix data-dialog-:</p>
+<div class='highlight'><pre><code class='html'><span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;#content&quot;</span> <span class='na'>data-rel=</span><span class='s'>&quot;modalDialog&quot;</span> <span class='na'>data-dialog-onclose=</span><span class='s'>&quot;updateContent(e);&quot;</span><span class='nt'>&gt;</span>Show color picker<span class='nt'>&lt;/a&gt;</span>
+</code></pre></div>
+<h4 id='unobtrusive_dialog_events'>Unobtrusive dialog events</h4>
+
+<p>If you want to assign handlers unobtrusively, you can access the dialog when it is created with the dialogcreate event:</p>
+<div class='highlight'><pre><code class='html'><span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;#colorPicker&quot;</span> <span class='na'>data-rel=</span><span class='s'>&quot;modalDialog&quot;</span> <span class='na'>id=</span><span class='s'>&quot;colorPickerLink&quot;</span><span class='nt'>&gt;</span>Show color picker<span class='nt'>&lt;/a&gt;</span>
+</code></pre></div>
+<p>Then, in script, you can access the dialog:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;#colorPickerLink&quot;</span><span class='p'>).</span><span class='nx'>on</span><span class='p'>(</span><span class='s2'>&quot;dialogcreate&quot;</span><span class='p'>,</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span>
+<span class='p'>{</span>
+    <span class='nx'>e</span><span class='p'>.</span><span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>onopen</span><span class='p'>.</span><span class='nx'>add</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span> <span class='nx'>alert</span><span class='p'>(</span><span class='s2'>&quot;opened&quot;</span><span class='p'>);</span> <span class='p'>});</span>
+<span class='p'>});</span>
+</code></pre></div>
+<h3 id='defining_buttons_in_a_dialog'>Defining buttons in a dialog</h3>
+
+<p>TODO: figure out how this should work outside VP</p>
+
+<pre><code>&lt;div class=&quot;dialog-button-group&quot;&gt;
+    &lt;a href=&quot;#&quot; class=&quot;dialog-button primary&quot;&gt;OK&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;dialog-button&quot;&gt;Cancel&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+        <p><a href="https://github.com/labaneilers" class="avatar"><img src="https://secure.gravatar.com/avatar/25508160264d1801b1b7a1b9309e4c39?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" /></a> <a href="https://github.com/labaneilers">labaneilers</a> maintains <a href="https://github.com/labaneilers/SkinnyJS">skinny.js</a></p>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/labaneilers/SkinnyJS/tarball/master" class="tar">tar</a><a href="https://github.com/labaneilers/SkinnyJS/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+</body>
+</html>

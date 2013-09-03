@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="en"><head><title>js\jquery.proxyAll</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="js\jquery.proxyAll"><meta name="groc-project-path" content="js\jquery.proxyAll.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">js\jquery.proxyAll.js</div></div><div id="document"><div class="segment"><div class="comments"><div class="wrapper"><a href="../index.html">Homepage</a> | 
+<a href="https://github.com/labaneilers/SkinnyJS/blob/master/js/jquery.proxyAll.js" target="_blank">View this file on Github</a> | 
+<a href="https://raw.github.com/labaneilers/SkinnyJS/master/js/jquery.proxyAll.js" target="_blank">Download this file</a>
+
+<hr style="height: 1px; border:0; background-color:#4A525A">
+<h2 id="jqueryproxyall">jQuery.proxyAll</h2>
+
+<p>Uses jQuery.proxy() to bind all methods of an object to the object in a batch.
+Binding a method to an object ensures that the "this" variable always refers to the object.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="usage">Usage</h3></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>var Car = function()
+{
+    $.proxyAll(this);
+};
+
+Car.prototype = 
+{
+    drive: function(speed)
+    {
+        // some implementation
+    },
+
+    driveFast: function()
+    {
+        this.drive("120mph");
+    },
+
+    driveSlow: function()
+    {
+        this.drive("15mph");
+    }
+};
+</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="source">Source</h3></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span>
+<span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Given an object, will bind its methods' context to the object using $.proxy()</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">.</span><span class="nx">proxyAll</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">methods</span><span class="p">)</span>
+    <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If no methods are specified, use all properties of obj that are functions</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">methods</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">methods</span> <span class="o">=</span> <span class="p">[];</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">prop</span> <span class="k">in</span> <span class="nx">obj</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">obj</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="nx">methods</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">prop</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If methods is not an array, parse arguments as a param array</p></div></div><div class="code"><div class="wrapper">        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">$</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">methods</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="nx">methods</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Create a bound proxy function for specified methods on obj</p></div></div><div class="code"><div class="wrapper">        <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">methods</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">method</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">obj</span><span class="p">[</span><span class="nx">method</span><span class="p">]</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="nx">obj</span><span class="p">[</span><span class="nx">method</span><span class="p">],</span> <span class="nx">obj</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">};</span>
+
+<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span></div></div></div></div></body></html>

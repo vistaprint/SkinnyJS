@@ -1,0 +1,93 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
+  <link rel="stylesheet" href="stylesheets/syntax-highlighting.css"/>
+  <script type="text/javascript" src="javascripts/jquery.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>skinny.js</title>
+  <meta name="description" content="Skinny JS">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title"><a href="/SkinnyJS">skinny.js</a> <!-- <img src="images/skinny-jeans.png" class="logo-image" /> --></h1>
+    </header>
+    <div id="container">
+      <!--
+      jQuery plugins that won't add unsightly pounds
+    -->
+      <p class="tagline">Low calorie jQuery plugins</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/labaneilers/SkinnyJS/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/labaneilers/SkinnyJS/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/labaneilers/SkinnyJS" class="code">View skinny.js on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <link rel="stylesheet" href="stylesheets/download-builder.css" />
+
+<h1>Download Builder</h1>
+
+Select the libraries you'd like to include in your custom build:
+<form name="dependencies">
+	<div class="dependencies-container"></div>
+
+	<input type="button" class="generate-button" value="Generate" />
+	<input type="checkbox" id="minified" checked /> <label for="minified">Minified</label>
+
+	<div id="outputArea"></div>
+</form>
+
+<script type="text/template" id="dependencyTemplate">
+<input type="checkbox" id="<%= escapedModuleName %>" value="<%= moduleName %>" /> <label for="<%= escapedModuleName %>"><%= moduleName %></label><br />
+</script>
+
+<script type="text/template" id="outputTemplate">
+<div class="module-title"><%= name %></div>
+<div class="module-notes"><%= notes %></div>
+<textarea class="module-output" readonly><%= content %></textarea>
+</script>
+
+<script type="text/template" id="downloadTemplate">
+<div class="module-title"><%= name %></div>
+<div class="module-notes"><%= notes %></div>
+<a href="<%= path %>" class="module-download" target="_blank">Download file...</a>
+</script>
+
+<script type="text/javascript" src="javascripts/underscore-min.js"></script>
+<script type="text/javascript" src="../dist/jquery.delimitedString.js"></script>
+<script type="text/javascript" src="../dist/jquery.queryString.js"></script>
+<script type="text/javascript" src="javascripts/dependency-tree.js"></script>
+<script type="text/javascript" src="javascripts/download-builder.js"></script>
+
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+        <p><a href="https://github.com/labaneilers" class="avatar"><img src="https://secure.gravatar.com/avatar/25508160264d1801b1b7a1b9309e4c39?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" /></a> <a href="https://github.com/labaneilers">labaneilers</a> maintains <a href="https://github.com/labaneilers/SkinnyJS">skinny.js</a></p>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/labaneilers/SkinnyJS/tarball/master" class="tar">tar</a><a href="https://github.com/labaneilers/SkinnyJS/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+</body>
+</html>
