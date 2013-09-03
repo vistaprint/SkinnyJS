@@ -205,6 +205,18 @@ module.exports = function(grunt)
                     dest: "./site/_site"
                 }
             }
+        },
+        compress: 
+        {
+            main: {
+                options: 
+                {
+                    archive: './site/skinnyjs.zip'
+                },
+                files: [
+                    { expand: true, src: ['**'], cwd: "./dist", dest: '', filter: 'isFile' } // includes files in path
+                ]
+            }
         }
     };
 
@@ -241,13 +253,15 @@ module.exports = function(grunt)
     // Verification tasks
     grunt.registerTask('verify', ['jshint', 'qunit']);
 
+    grunt.loadNpmTasks('grunt-contrib-compress');
+
     // Travis CI task.
     grunt.registerTask('travis', 'default');
 
     // Documentation tasks.
     grunt.loadNpmTasks('grunt-jekyll');
     grunt.loadTasks("./site/tasks");
-    grunt.registerTask('docs', ['default', 'pages', 'groc', 'add-docs-links', 'copy:docs', 'copy:deploy']);
+    grunt.registerTask('docs', ['default', 'compress', 'pages', 'groc', 'add-docs-links', 'copy:docs', 'copy:deploy']);
 
     grunt.registerTask('pages', ['jekyll']);
 

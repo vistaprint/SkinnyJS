@@ -22,7 +22,8 @@
   },
   "devDependencies": {
     "grunt-groc": "~0.3.0",
-    "grunt-jekyll": "~0.3.8"
+    "grunt-jekyll": "~0.3.8",
+    "grunt-contrib-compress": "~0.5.2"
   },
   "scripts": {
     "test": "grunt test"
