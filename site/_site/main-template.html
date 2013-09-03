@@ -7,8 +7,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
   <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
-  <link rel="stylesheet" href="stylesheets/syntax-highlighting.css"/>
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <link rel="stylesheet" href="highlight/tomorrow-night-bright.css"/>
   <script type="text/javascript" src="javascripts/jquery.js"></script>
+  <script type="text/javascript" src="highlight/highlight.pack.js"></script>
   <script type="text/javascript" src="javascripts/script.js"></script>
 
   <title>skinny.js</title>
@@ -39,42 +41,7 @@
         <span class="blc"></span><span class="trc"></span>
         </div>
         <article class="markdown-body">
-          <link rel="stylesheet" href="stylesheets/download-builder.css" />
-
-<h1>Download Builder</h1>
-
-Select the libraries you'd like to include in your custom build:
-<form name="dependencies">
-	<div class="dependencies-container"></div>
-
-	<input type="button" class="generate-button" value="Generate" />
-	<input type="checkbox" id="minified" checked /> <label for="minified">Minified</label>
-
-	<div id="outputArea"></div>
-</form>
-
-<script type="text/template" id="dependencyTemplate">
-<input type="checkbox" id="<%= escapedModuleName %>" value="<%= moduleName %>" /> <label for="<%= escapedModuleName %>"><%= moduleName %></label><br />
-</script>
-
-<script type="text/template" id="outputTemplate">
-<div class="module-title"><%= name %></div>
-<div class="module-notes"><%= notes %></div>
-<textarea class="module-output" readonly><%= content %></textarea>
-</script>
-
-<script type="text/template" id="downloadTemplate">
-<div class="module-title"><%= name %></div>
-<div class="module-notes"><%= notes %></div>
-<a href="<%= path %>" class="module-download" target="_blank">Download file...</a>
-</script>
-
-<script type="text/javascript" src="javascripts/underscore-min.js"></script>
-<script type="text/javascript" src="dist/jquery.delimitedString.js"></script>
-<script type="text/javascript" src="dist/jquery.queryString.js"></script>
-<script type="text/javascript" src="javascripts/dependency-tree.js"></script>
-<script type="text/javascript" src="javascripts/download-builder.js"></script>
-
+          #content#
         </article>
       </div>
     </div>
@@ -89,5 +56,18 @@ Select the libraries you'd like to include in your custom build:
     <a href="https://github.com/labaneilers/SkinnyJS/tarball/master" class="tar">tar</a><a href="https://github.com/labaneilers/SkinnyJS/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
     <p class="name"></p>
   </div>
+  <script>
+  hljs.tabReplace = '    ';
+  hljs.initHighlightingOnLoad();
+  $("pre code").each(function(i, el) 
+    {
+      var $this = $(this);
+      
+      if ($this.text().indexOf("<") !== 0)
+      {
+        $this.addClass("javascript");
+      }
+    });
+  </script>
 </body>
 </html>

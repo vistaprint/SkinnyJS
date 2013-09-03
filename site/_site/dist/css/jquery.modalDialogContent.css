@@ -1,0 +1,21 @@
+.ui-content {
+  overflow: inherit;
+}
+.ui-mobile .ui-page {
+  min-height: inherit;
+}
+body.ui-mobile-viewport {
+  margin: 10px;
+  height: inherit;
+}
+.ui-mobile [data-role=page] {
+  position: inherit;
+}
+.ui-mobile {
+  height: inherit;
+}
+div.ui-input-text input.ui-input-text,
+div.ui-input-text textarea.ui-input-text,
+.ui-input-search input.ui-input-text {
+  width: auto;
+}
