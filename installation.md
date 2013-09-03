@@ -27,6 +27,8 @@ Install Jekyll: http://jekyllrb.com/docs/installation/
 * (windows) gem install jekyll
 * (mac) sudo gem install jekyll
 * Needed to uninstall pygments 5.2 and install 5.0: http://stackoverflow.com/questions/17364028/jekyll-on-windows-pygments-not-working
+** gem uninstall pygments.rb --version "=0.5.2"
+** gem install pygments.rb --version "=0.5.0"
 
 Install node:
 * http://nodejs.org/download/ windows installer
