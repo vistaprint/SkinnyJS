@@ -154,7 +154,8 @@ module.exports = function(grunt)
                     cwd: "./site/_site/", 
                     flatten: false, 
                     src: ["**"], 
-                    dest: "./.git/docs-temp/" }
+                    dest: "./.git/docs-temp/" 
+                }
             ]
           }
         },
@@ -217,6 +218,32 @@ module.exports = function(grunt)
                     { expand: true, src: ['**'], cwd: "./dist", dest: '', filter: 'isFile' } // includes files in path
                 ]
             }
+        },
+        'string-replace': 
+        {
+            pages: 
+            {
+                files: 
+                [
+                    { 
+                        expand: true, 
+                        cwd: "./site/_site/", 
+                        flatten: false, 
+                        src: ["*.html"], 
+                        dest: "./.git/docs-temp/" 
+                    }
+                ],
+                options: 
+                {
+                    cwd: "./site/_site/",
+                    replacements: [
+                        {
+                            pattern: /\.\.\/dist\//ig,
+                            replacement: "dist/"
+                        }
+                    ]
+                }
+            }
         }
     };
 
@@ -253,7 +280,10 @@ module.exports = function(grunt)
     // Verification tasks
     grunt.registerTask('verify', ['jshint', 'qunit']);
 
+    // For zipping distribution files
     grunt.loadNpmTasks('grunt-contrib-compress');
+
+    grunt.loadNpmTasks('grunt-string-replace');
 
     // Travis CI task.
     grunt.registerTask('travis', 'default');
@@ -261,7 +291,7 @@ module.exports = function(grunt)
     // Documentation tasks.
     grunt.loadNpmTasks('grunt-jekyll');
     grunt.loadTasks("./site/tasks");
-    grunt.registerTask('docs', ['default', 'compress', 'pages', 'groc', 'add-docs-links', 'copy:docs', 'copy:deploy']);
+    grunt.registerTask('docs', ['default', 'compress', 'pages', 'groc', 'add-docs-links', 'copy:docs', 'copy:deploy', 'string-replace:pages']);
 
     grunt.registerTask('pages', ['jekyll']);
 
