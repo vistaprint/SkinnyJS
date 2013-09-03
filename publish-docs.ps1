@@ -14,8 +14,6 @@ if ($LASTEXITCODE -ne  0)
 
 copy -Force -Recurse .git\docs-temp\* .
 
-pause
-
 git add .
 git commit -m "Updating documentation"
 
