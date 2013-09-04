@@ -183,11 +183,11 @@ module.exports = function(grunt)
                 src: [
                     'js/jquery.modalDialog.header.js', 
                     'js/jquery.modalDialog.userAgent.js', 
-                    'js/jquery.modalDialog.getSettings.js'
+                    'js/jquery.modalDialog.getSettings.js',
                     'js/jquery.modalDialog.js',
                     'js/jquery.modalDialog.deviceFixes.js',
                     'js/jquery.modalDialog.unobtrusive.js'
-                ]
+                ],
                 dest: 'dist/jquery.modalDialog.js'
             },
             modalDialogContent: 
