@@ -3,6 +3,43 @@
 /// <reference path="jquery.customEvent.js" />
 /// <reference path="jquery.postMessage.js" />
 
+(function($)
+{
+    $.modalDialog = $.modalDialog || {};
+
+    var _ua = $.modalDialog._ua = (function() 
+    {
+        var ua = navigator.userAgent;
+        
+        // Internet Explorer 7 specific checks
+        if (ua.indexOf('MSIE 7.0') > 0) 
+        {
+            return {ie: true, ie7: true, version: 7, compat: ua.indexOf('compatible') > 0};
+        }
+
+        // Internet Explorer 8 specific checks
+        if (ua.indexOf('MSIE 8.0') > 0) 
+        {
+            return {ie: true, ie8: true, version: 8, compat: ua.indexOf('compatible') > 0};
+        }
+
+        return {};
+    })();
+
+    // Returns true if we're on a small screen device like a smartphone.
+    // Dialogs behave slightly different on small screens, by convention.
+    _ua.isSmallScreen = function()
+    {
+        // Detect Internet Explorer 7/8, force them to desktop mode
+        if (_ua.ie7 || _ua.ie8) {
+            return false;
+        }
+
+        var w = $(window);
+        return (typeof window.orientation == "number" ? Math.min(w.width(), w.height()) : w.width()) <= 480;
+    };
+
+})(jQuery);
 // Support reading settings from a node dialog's element
 
 (function($)
@@ -332,8 +369,15 @@ $.modalDialog.create()
             // Don't animate, the dialog is invisible anyway
             this._setHeightFromContentInternal(false, true);
 
+            var hostname = document.location.protocol + "//" + document.location.hostname;
+
+            if (document.location.port)
+            {
+                hostname += ":" + document.location.port;
+            }
+
             // Pass the hostname of the window so that subsequent postMessage() requests can be directed to the right domain.
-            this._postMessage("notifyReady", { hostname: document.location.protocol + document.location.hostname });
+            this._postMessage("notifyReady", { hostname: hostname });
 
             // Poll for content size changes. This appears to be more foolproof and cheaper than any other method
             // (i.e. manually calling it, etc
@@ -639,7 +683,7 @@ $.modalDialog.create()
 
 (function ($)
 {
-    if ($.isSmallScreen()) {
+    if ($.modalDialog._ua.isSmallScreen()) {
         // When removing the host window content from the DOM, make the veil opaque to hide it.
         $.modalDialog.veilClass = "dialog-veil-opaque";
 

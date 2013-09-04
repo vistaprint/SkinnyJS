@@ -746,6 +746,22 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.modalDialog.userAgent.js",
+            "projectPath": "js\\jquery.modalDialog.userAgent.js",
+            "targetPath": "js\\jquery.modalDialog.userAgent",
+            "title": "jquery.modalDialog.userAgent"
+          },
+          "depth": 2,
+          "outline": []
+        }, {
+          "type": "file",
+          "data": {
+            "language": {
+              "nameMatchers": [".js"],
+              "pygmentsLexer": "javascript",
+              "singleLineComment": ["//"],
+              "name": "JavaScript"
+            },
             "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.modalDialogContent.js",
             "projectPath": "js\\jquery.modalDialogContent.js",
             "targetPath": "js\\jquery.modalDialogContent",

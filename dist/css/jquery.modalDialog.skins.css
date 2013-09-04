@@ -65,10 +65,6 @@
   height: 18px;
   width: 18px;
   margin: 3px;
-  filter: alpha(opacity=70);
-  -webkit-opacity: 0.7;
-  -moz-opacity: 0.7;
-  opacity: 0.7;
 }
 .dialog-skin-primary.dialog-container .dialog-content-container,
 .dialog-skin-neutral.dialog-container .dialog-content-container {
@@ -154,10 +150,6 @@
   height: 18px;
   width: 18px;
   margin: 3px;
-  filter: alpha(opacity=70);
-  -webkit-opacity: 0.7;
-  -moz-opacity: 0.7;
-  opacity: 0.7;
 }
 .dialog-skin-lightbox.dialog-container .dialog-content-container {
   background-color: #313131;
@@ -170,4 +162,9 @@
   margin: 0;
   padding: 0 13px;
   min-height: 100px;
+}
+.dialog-skin-primary.dialog-visible.dialog-container,
+.dialog-skin-neutral.dialog-visible.dialog-container {
+  background-color: #fff\9;
+  border: 1px #555 solid\9;
 }

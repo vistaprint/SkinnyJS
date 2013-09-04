@@ -44,7 +44,6 @@
         height: 18px;
         width: 18px;
         margin: 3px;
-        .opacity(.7);
     }
 }
 
@@ -156,5 +155,16 @@
             padding: 0 13px;
             min-height: 100px;
         }
+    }
+}
+
+// OldIE fixes for skins
+.dialog-skin-primary, .dialog-skin-neutral
+{
+    // Only put the drop shadow on when its visible
+    &.dialog-visible.dialog-container
+    {
+        background-color: #fff\9;
+        border: 1px #555 solid\9;
     }
 }

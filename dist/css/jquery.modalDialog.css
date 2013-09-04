@@ -3,6 +3,7 @@
 }
 .dialog-content-container .dialog-content {
   display: inherit;
+  *display: block;
 }
 .dialog-background {
   position: absolute;
