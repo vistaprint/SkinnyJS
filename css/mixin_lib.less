@@ -276,11 +276,9 @@
 	{
 		clear: both;
 	}
-	.ie7 &, 
-	.ie6 & // IE 6 and 7 don't support :before and :after, so they get this backfill
-	{
-		zoom: 1;
-	}
+	
+  // IE 6 and 7 don't support :before and :after, so they get this backfill
+	*zoom: 1;
 }
 
 
