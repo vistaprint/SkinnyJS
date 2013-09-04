@@ -619,26 +619,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                   "singleLineComment": ["//"],
                   "name": "JavaScript"
                 },
-                "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.menu.skins\\jquery-menu-basic.js",
-                "projectPath": "js\\jquery.menu.skins\\jquery-menu-basic.js",
-                "targetPath": "js\\jquery.menu.skins\\jquery-menu-basic",
-                "title": "jquery-menu-basic"
-              },
-              "depth": 3,
-              "outline": []
-            }, {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".js"],
-                  "pygmentsLexer": "javascript",
-                  "singleLineComment": ["//"],
-                  "name": "JavaScript"
-                },
-                "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.menu.skins\\jquery-menu-minimal.js",
-                "projectPath": "js\\jquery.menu.skins\\jquery-menu-minimal.js",
-                "targetPath": "js\\jquery.menu.skins\\jquery-menu-minimal",
-                "title": "jquery-menu-minimal"
+                "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.menu.skins\\jquery-menu-exampleskin.js",
+                "projectPath": "js\\jquery.menu.skins\\jquery-menu-exampleskin.js",
+                "targetPath": "js\\jquery.menu.skins\\jquery-menu-exampleskin",
+                "title": "jquery-menu-exampleskin"
               },
               "depth": 3,
               "outline": []

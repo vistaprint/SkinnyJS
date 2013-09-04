@@ -130,8 +130,16 @@ Otherwise, you could end up pushing it on to the stack more than once.</p></div>
                     <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&quot;dialog-visible&quot;</span><span class="p">);</span>
 
                     <span class="k">if</span> <span class="p">(</span><span class="nx">isSmallScreen</span><span class="p">())</span>
-                    <span class="p">{</span>
-                        <span class="k">this</span><span class="p">.</span><span class="nx">_orientationchange</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">pos</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+                    <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>TODO: I question this change. Should it be decoupled from the dialog framework?
+It could be put into mobile fixes.
+Is this even mobile specific?
+Original comment:
+Force dialogs that are on small screens to trigger a window resize event when closed, just in case we have resized since the dialog opened.</p></div></div><div class="code"><div class="wrapper">                        <span class="k">this</span><span class="p">.</span><span class="nx">triggerWindowResize</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+                        <span class="k">this</span><span class="p">.</span><span class="nx">_orientationchange</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="k">this</span><span class="p">.</span><span class="nx">triggerWindowResize</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+                            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">pos</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
+                        <span class="p">},</span> <span class="k">this</span><span class="p">);</span>
+
                         <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;orientationchange resize&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_orientationchange</span><span class="p">);</span>
                     <span class="p">}</span>
 
@@ -227,6 +235,11 @@ isDialogCloseButton Indicates the cancel button in the dialog's header was click
         <span class="k">this</span><span class="p">.</span><span class="nx">onclose</span><span class="p">.</span><span class="nx">fire</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
 
         <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">onclose</span><span class="p">.</span><span class="nx">fire</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">isSmallScreen</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">triggerWindowResize</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;resize&#39;</span><span class="p">);</span>
+        <span class="p">}</span>
     <span class="p">};</span>
 
     <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_destroy</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
@@ -247,8 +260,8 @@ It could be used again.</p></div></div><div class="code"><div class="wrapper">  
             <span class="k">this</span><span class="p">.</span><span class="nx">$container</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span>
                 <span class="s1">&#39;&lt;div class=&quot;dialog-container&quot; id=&quot;&#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">_fullId</span> <span class="o">+</span> <span class="s1">&#39;Container&quot;&gt;&#39;</span> <span class="o">+</span>
                 <span class="s1">&#39;  &lt;div class=&quot;dialog-header&quot;&gt;&#39;</span> <span class="o">+</span>
-                <span class="s1">&#39;    &lt;h1&gt;&#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">title</span> <span class="o">+</span> <span class="s1">&#39;&lt;/h1&gt;&#39;</span> <span class="o">+</span>
                 <span class="s1">&#39;    &lt;a href=&quot;#&quot; class=&quot;dialog-close-button&quot;&gt;&lt;span class=&quot;dialog-close-button-icon&quot;&gt;&lt;/span&gt;&lt;/a&gt;&#39;</span> <span class="o">+</span>
+                <span class="s1">&#39;    &lt;h1&gt;&#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">title</span> <span class="o">+</span> <span class="s1">&#39;&lt;/h1&gt;&#39;</span> <span class="o">+</span>
                 <span class="s1">&#39;  &lt;/div&gt;&#39;</span><span class="o">+</span>
                 <span class="s1">&#39;  &lt;div class=&quot;dialog-content-container&quot;&gt;&#39;</span> <span class="o">+</span>
                 <span class="s1">&#39;  &lt;/div&gt;&#39;</span> <span class="o">+</span>
@@ -327,7 +340,9 @@ No need to consider contentHeight.</p></div></div></div><div class="segment"><di
         <span class="p">{</span>
             <span class="nx">contentHeight</span> <span class="o">=</span> <span class="nx">contentHeight</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">$content</span><span class="p">.</span><span class="nx">height</span><span class="p">();</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get the new container height with the proposed content height</p></div></div><div class="code"><div class="wrapper">            <span class="kd">var</span> <span class="nx">containerHeight</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getChromeHeight</span><span class="p">()</span> <span class="o">+</span> <span class="nx">contentHeight</span><span class="p">;</span>
 
-            <span class="kd">var</span> <span class="nx">idealTop</span> <span class="o">=</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">parent</span><span class="p">.</span><span class="nx">height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="nx">containerHeight</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
+            <span class="kd">var</span> <span class="nx">parentHeight</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">parent</span><span class="p">.</span><span class="nx">is</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">)</span> <span class="o">?</span> <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">height</span><span class="p">()</span> <span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">parent</span><span class="p">.</span><span class="nx">height</span><span class="p">();</span>
+            <span class="kd">var</span> <span class="nx">idealTop</span> <span class="o">=</span> <span class="p">(</span><span class="nx">parentHeight</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="nx">containerHeight</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
+
             <span class="nx">pos</span><span class="p">.</span><span class="nx">top</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">idealTop</span><span class="p">,</span> <span class="nx">pos</span><span class="p">.</span><span class="nx">top</span><span class="p">);</span>
         <span class="p">}</span>
 

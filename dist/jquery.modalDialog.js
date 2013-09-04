@@ -285,7 +285,18 @@ if (!Object.keys)
 
                     if (isSmallScreen())
                     {
-                        this._orientationchange = $.proxy(this.pos, this);
+                        // TODO: I question this change. Should it be decoupled from the dialog framework?
+                        // It could be put into mobile fixes.
+                        // Is this even mobile specific?
+                        // Original comment:
+                        // Force dialogs that are on small screens to trigger a window resize event when closed, just in case we have resized since the dialog opened.
+
+                        this.triggerWindowResize = false;
+                        this._orientationchange = $.proxy(function(event) {
+                            this.triggerWindowResize = true;
+                            return this.pos(event);
+                        }, this);
+
                         $(window).on("orientationchange resize", this._orientationchange);
                     }
 
@@ -393,6 +404,11 @@ if (!Object.keys)
         this.onclose.fire(e);
 
         $.modalDialog.onclose.fire(e, this);
+
+        if (isSmallScreen() && this.triggerWindowResize)
+        {
+            $(window).trigger('resize');
+        }
     };
 
     ModalDialog.prototype._destroy = function()
@@ -421,8 +437,8 @@ if (!Object.keys)
             this.$container = $(
                 '<div class="dialog-container" id="' + this.settings._fullId + 'Container">' +
                 '  <div class="dialog-header">' +
-                '    <h1>' + this.settings.title + '</h1>' +
                 '    <a href="#" class="dialog-close-button"><span class="dialog-close-button-icon"></span></a>' +
+                '    <h1>' + this.settings.title + '</h1>' +
                 '  </div>'+
                 '  <div class="dialog-content-container">' +
                 '  </div>' +
@@ -520,7 +536,9 @@ if (!Object.keys)
             // Get the new container height with the proposed content height
             var containerHeight = this._getChromeHeight() + contentHeight;
 
-            var idealTop = (this.parent.height() / 2) - (containerHeight / 2);
+            var parentHeight = this.parent.is('body') ? $(window).height() : this.parent.height();
+            var idealTop = (parentHeight / 2) - (containerHeight / 2);
+
             pos.top = Math.max(idealTop, pos.top);
         }
 
