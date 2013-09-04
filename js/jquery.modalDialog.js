@@ -33,24 +33,6 @@ if (!Object.keys)
         throw new Error("Attempt to load jquery.modalDialogContent.js in the same window as jquery.modalDialog.js.");
     }
 
-    var ua = window.ua = (function() 
-    {
-        var ua = navigator.userAgent;
-        // Internet Explorer 7 specific checks
-        if (ua.indexOf('MSIE 7.0') > 0) 
-        {
-            return {ie: true, ie7: true, version: 7, compat: ua.indexOf('compatible') > 0};
-        }
-
-        // Internet Explorer 8 specific checks
-        if (ua.indexOf('MSIE 8.0') > 0) 
-        {
-            return {ie: true, ie8: true, version: 8, compat: ua.indexOf('compatible') > 0};
-        }
-
-        return {};
-    })();
-
     var MARGIN = 10; // @see MARGIN in jquery.modalDialog.less
     var DURATION = 600;
     var STARTING_TOP = "-700px";
@@ -85,21 +67,7 @@ if (!Object.keys)
     var _animateMethod = $.fn.transition ? "transition" : "animate";
     var _easing = $.fn.transition ? "out" : "swing";
 
-
-    // Returns true if we're on a small screen device like a smartphone.
-    // Dialogs behave slightly different on small screens, by convention.
-    function isSmallScreen()
-    {
-        // Detect Internet Explorer 7/8, force them to desktop mode
-        if (ua.ie7 || ua.ie8) {
-            return false;
-        }
-
-        var w = $(window);
-        return (typeof window.orientation == "number" ? Math.min(w.width(), w.height()) : w.width()) <= 480;
-    }
-
-    $.isSmallScreen = isSmallScreen;
+    var _ua = $.modalDialog._ua;
 
     // Class which creates a jQuery mobile dialog
     var ModalDialog = function(settings)
@@ -168,7 +136,7 @@ if (!Object.keys)
         this._build();
 
         // add or remove the 'smallscreen' class (which can also be checked using CSS media queries)
-        this.$container.stop()[isSmallScreen() ? 'addClass' : 'removeClass' ]("smallscreen");
+        this.$container.stop()[_ua.isSmallScreen() ? 'addClass' : 'removeClass' ]("smallscreen");
 
         this.$el.show();
 
@@ -192,7 +160,7 @@ if (!Object.keys)
                 {
                     this.$el.addClass("dialog-visible");
 
-                    if (isSmallScreen())
+                    if (_ua.isSmallScreen())
                     {
                         // TODO: I question this change. Should it be decoupled from the dialog framework?
                         // It could be put into mobile fixes.
@@ -314,7 +282,7 @@ if (!Object.keys)
 
         $.modalDialog.onclose.fire(e, this);
 
-        if (isSmallScreen() && this.triggerWindowResize)
+        if (_ua.isSmallScreen() && this.triggerWindowResize)
         {
             $(window).trigger('resize');
         }
@@ -387,7 +355,7 @@ if (!Object.keys)
 
             // only enable dragging if the dialog is over the entire window
             // and we are not in Internet Explorer 7, because it handles positioning oddly.
-            if ((this.parent.is('body') || this.parent.hasClass('ui-page-active')) && !ua.ie7) {
+            if ((this.parent.is('body') || this.parent.hasClass('ui-page-active')) && !_ua.ie7) {
                 this._makeDraggable();
             }
         }
@@ -423,11 +391,11 @@ if (!Object.keys)
         pos.top = $(document).scrollTop() + MARGIN;
         pos.left = (windowWidth - pos.width) / 2;
 
-        if (ua.ie7) {
+        if (_ua.ie7) {
             pos.top = MARGIN;
         }
 
-        if (isSmallScreen()) {
+        if (_ua.isSmallScreen()) {
             if (this.settings.skin == 'lightbox') {
                 pos.width = '100%';
                 pos.left = 0;
@@ -459,7 +427,7 @@ if (!Object.keys)
         // Small devices shouldn't have the dialog be draggable.
         // Where you gonna drag to?
 
-        if (isSmallScreen())
+        if (_ua.isSmallScreen())
         {
             return;
         }
@@ -921,7 +889,7 @@ if (!Object.keys)
     // On small screens we make the background opaque to hide the content because
     // we will be hiding all content within the DOM and scrolling them to top.
     // When removing the host window content from the DOM, make the veil opaque to hide it.
-    $.modalDialog.veilClass = isSmallScreen() ? 'dialog-veil-opaque' : 'dialog-veil';
+    $.modalDialog.veilClass = _ua.isSmallScreen() ? 'dialog-veil-opaque' : 'dialog-veil';
 
     // Creates a new dialog from the specified settings.
     $.modalDialog.create = function(settings)

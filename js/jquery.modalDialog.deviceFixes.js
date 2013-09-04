@@ -27,7 +27,7 @@
 
 (function ($)
 {
-    if ($.isSmallScreen()) {
+    if ($.modalDialog._ua.isSmallScreen()) {
         // When removing the host window content from the DOM, make the veil opaque to hide it.
         $.modalDialog.veilClass = "dialog-veil-opaque";
 

@@ -8,6 +8,9 @@
 .dialog-content-container .dialog-content
 {
 	display: inherit;
+	
+	// IE7 does not properly recalculate display:inherit; when the parent changes
+	*display: block;
 }
 
 // Core dialog structure

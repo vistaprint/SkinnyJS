@@ -180,18 +180,32 @@ module.exports = function(grunt)
             },
             modalDialog: 
             {
-              src: ['js/jquery.modalDialog.header.js', 'js/jquery.modalDialog.getSettings.js', 'js/jquery.modalDialog.js', 'js/jquery.modalDialog.deviceFixes.js', 'js/jquery.modalDialog.unobtrusive.js'],
-              dest: 'dist/jquery.modalDialog.js'
+                src: [
+                    'js/jquery.modalDialog.header.js', 
+                    'js/jquery.modalDialog.userAgent.js', 
+                    'js/jquery.modalDialog.getSettings.js'
+                    'js/jquery.modalDialog.js',
+                    'js/jquery.modalDialog.deviceFixes.js',
+                    'js/jquery.modalDialog.unobtrusive.js'
+                ]
+                dest: 'dist/jquery.modalDialog.js'
             },
             modalDialogContent: 
             {
-              src: ['js/jquery.modalDialogContent.header.js', 'js/jquery.modalDialog.getSettings.js', 'js/jquery.modalDialogContent.js', 'js/jquery.modalDialog.deviceFixes.js', 'js/jquery.modalDialog.unobtrusive.js'],
-              dest: 'dist/jquery.modalDialogContent.js'
+                src: [
+                    'js/jquery.modalDialogContent.header.js',
+                    'js/jquery.modalDialog.userAgent.js',
+                    'js/jquery.modalDialog.getSettings.js',
+                    'js/jquery.modalDialogContent.js',
+                    'js/jquery.modalDialog.deviceFixes.js', 
+                    'js/jquery.modalDialog.unobtrusive.js'
+                ],
+                dest: 'dist/jquery.modalDialogContent.js'
             },
             readme: 
             {
-              src: ['site/readme-header.md', 'site/_includes/index-content.md'],
-              dest: 'README.md'
+                src: ['site/readme-header.md', 'site/_includes/index-content.md'],
+                dest: 'README.md'
             }
         },
         clean:

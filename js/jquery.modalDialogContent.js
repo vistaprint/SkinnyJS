@@ -245,8 +245,15 @@ $.modalDialog.create()
             // Don't animate, the dialog is invisible anyway
             this._setHeightFromContentInternal(false, true);
 
+            var hostname = document.location.protocol + "//" + document.location.hostname;
+
+            if (document.location.port)
+            {
+                hostname += ":" + document.location.port;
+            }
+
             // Pass the hostname of the window so that subsequent postMessage() requests can be directed to the right domain.
-            this._postMessage("notifyReady", { hostname: document.location.protocol + document.location.hostname });
+            this._postMessage("notifyReady", { hostname: hostname });
 
             // Poll for content size changes. This appears to be more foolproof and cheaper than any other method
             // (i.e. manually calling it, etc
