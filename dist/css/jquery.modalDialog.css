@@ -46,6 +46,7 @@
   box-sizing: border-box;
 }
 .dialog-container .dialog-header {
+  *zoom: 1;
   padding: 3px;
   height: 40px;
 }
@@ -58,10 +59,6 @@
 }
 .dialog-container .dialog-header:after {
   clear: both;
-}
-.ie7 .dialog-container .dialog-header,
-.ie6 .dialog-container .dialog-header {
-  zoom: 1;
 }
 .dialog-container .dialog-header h1 {
   float: left;
