@@ -239,7 +239,7 @@
         return $.ajax(coalescedSettings);
     };
 
-    $.ajaxAsmx = $.ajaxMs;
-    $.ajaxWcf = $.ajaxMs;
+    $.ajaxAsmx = $.msAjax;
+    $.ajaxWcf = $.msAjax;
 
 })(window, jQuery);
