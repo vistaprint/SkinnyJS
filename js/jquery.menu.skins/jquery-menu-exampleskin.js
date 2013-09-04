@@ -3,7 +3,7 @@
     var TRANSITION_TIME = 300;
 
     $.registerDropDownMenuSkin(
-        "basic",
+        "exampleskin",
         {
             position: function(e)
             {
