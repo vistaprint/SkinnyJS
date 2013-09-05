@@ -158,7 +158,7 @@
 .dialog-skin-lightbox.dialog-container .dialog-content-container a:hover {
   color: inherit;
 }
-.dialog-skin-lightbox.dialog-container .dialog-content {
+.dialog-skin-lightbox .dialog-content {
   margin: 0;
   padding: 0 13px;
   min-height: 100px;

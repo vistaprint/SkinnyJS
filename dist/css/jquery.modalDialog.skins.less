@@ -148,13 +148,15 @@
                 color: inherit;
             }
         }
+    }
 
-        .dialog-content
-        {
-            margin: 0;
-            padding: 0 13px;
-            min-height: 100px;
-        }
+    // Note: Keep the specificity of this low so that it can be easily 
+    // overridden for specific pages.
+    .dialog-content
+    {
+        margin: 0;
+        padding: 0 13px;
+        min-height: 100px;
     }
 }
 
