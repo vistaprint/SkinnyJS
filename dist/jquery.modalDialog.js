@@ -32,7 +32,7 @@
 
     // Returns true if we're on a small screen device like a smartphone.
     // Dialogs behave slightly different on small screens, by convention.
-    _ua.isSmallScreen = function()
+    $.modalDialog.isSmallScreen = function()
     {
         // Detect Internet Explorer 7/8, force them to desktop mode
         if (_ua.ie7 || _ua.ie8) {
@@ -264,7 +264,7 @@ if (!Object.keys)
         this._build();
 
         // add or remove the 'smallscreen' class (which can also be checked using CSS media queries)
-        this.$container.stop()[_ua.isSmallScreen() ? 'addClass' : 'removeClass' ]("smallscreen");
+        this.$container.stop()[$.modalDialog.isSmallScreen() ? 'addClass' : 'removeClass' ]("smallscreen");
 
         this.$el.show();
 
@@ -288,7 +288,7 @@ if (!Object.keys)
                 {
                     this.$el.addClass("dialog-visible");
 
-                    if (_ua.isSmallScreen())
+                    if ($.modalDialog.isSmallScreen())
                     {
                         // TODO: I question this change. Should it be decoupled from the dialog framework?
                         // It could be put into mobile fixes.
@@ -410,7 +410,7 @@ if (!Object.keys)
 
         $.modalDialog.onclose.fire(e, this);
 
-        if (_ua.isSmallScreen() && this.triggerWindowResize)
+        if ($.modalDialog.isSmallScreen() && this.triggerWindowResize)
         {
             $(window).trigger('resize');
         }
@@ -523,7 +523,7 @@ if (!Object.keys)
             pos.top = MARGIN;
         }
 
-        if (_ua.isSmallScreen()) {
+        if ($.modalDialog.isSmallScreen()) {
             if (this.settings.skin == 'lightbox') {
                 pos.width = '100%';
                 pos.left = 0;
@@ -555,7 +555,7 @@ if (!Object.keys)
         // Small devices shouldn't have the dialog be draggable.
         // Where you gonna drag to?
 
-        if (_ua.isSmallScreen())
+        if ($.modalDialog.isSmallScreen())
         {
             return;
         }
@@ -1017,7 +1017,7 @@ if (!Object.keys)
     // On small screens we make the background opaque to hide the content because
     // we will be hiding all content within the DOM and scrolling them to top.
     // When removing the host window content from the DOM, make the veil opaque to hide it.
-    $.modalDialog.veilClass = _ua.isSmallScreen() ? 'dialog-veil-opaque' : 'dialog-veil';
+    $.modalDialog.veilClass = $.modalDialog.isSmallScreen() ? 'dialog-veil-opaque' : 'dialog-veil';
 
     // Creates a new dialog from the specified settings.
     $.modalDialog.create = function(settings)
@@ -1264,7 +1264,7 @@ if (!Object.keys)
 
 (function ($)
 {
-    if ($.modalDialog._ua.isSmallScreen()) {
+    if ($.modalDialog.isSmallScreen()) {
         // When removing the host window content from the DOM, make the veil opaque to hide it.
         $.modalDialog.veilClass = "dialog-veil-opaque";
 
@@ -1346,6 +1346,11 @@ if (!Object.keys)
 
         $(function()
         {
+            if (!$.modalDialog.isSmallScreen())
+            {
+                return;
+            }
+
             // This will run in a content window. They need the events disabled immediately.
             if ($.modalDialog && $.modalDialog._isContent)
             {

@@ -28,7 +28,7 @@
 
     // Returns true if we're on a small screen device like a smartphone.
     // Dialogs behave slightly different on small screens, by convention.
-    _ua.isSmallScreen = function()
+    $.modalDialog.isSmallScreen = function()
     {
         // Detect Internet Explorer 7/8, force them to desktop mode
         if (_ua.ie7 || _ua.ie8) {
@@ -683,7 +683,7 @@ $.modalDialog.create()
 
 (function ($)
 {
-    if ($.modalDialog._ua.isSmallScreen()) {
+    if ($.modalDialog.isSmallScreen()) {
         // When removing the host window content from the DOM, make the veil opaque to hide it.
         $.modalDialog.veilClass = "dialog-veil-opaque";
 
@@ -765,6 +765,11 @@ $.modalDialog.create()
 
         $(function()
         {
+            if (!$.modalDialog.isSmallScreen())
+            {
+                return;
+            }
+
             // This will run in a content window. They need the events disabled immediately.
             if ($.modalDialog && $.modalDialog._isContent)
             {

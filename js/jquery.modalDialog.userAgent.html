@@ -20,7 +20,7 @@
 
         <span class="k">return</span> <span class="p">{};</span>
     <span class="p">})();</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Returns true if we're on a small screen device like a smartphone.
-Dialogs behave slightly different on small screens, by convention.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">_ua</span><span class="p">.</span><span class="nx">isSmallScreen</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+Dialogs behave slightly different on small screens, by convention.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">isSmallScreen</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Detect Internet Explorer 7/8, force them to desktop mode</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">_ua</span><span class="p">.</span><span class="nx">ie7</span> <span class="o">||</span> <span class="nx">_ua</span><span class="p">.</span><span class="nx">ie8</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
         <span class="p">}</span>
