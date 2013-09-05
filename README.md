@@ -46,3 +46,9 @@ heart's content using your own project's build system.
 All dependencies in skinny.js plugins are marked at the top using the following syntax:
 
     /// <reference path="{path}" />
+
+Origin
+------------------
+The libraires that comprise skinny.js were written at [Vistaprint](http://www.vistaprint.com).
+
+Vistaprint empowers more than 15 million micro businesses and consumers annually with affordable, professional options to make an impression. With a unique business model supported by proprietary technologies, high-volume production facilities, and direct marketing expertise, Vistaprint offers a wide variety of products and services that micro businesses can use to expand their business. A global company, Vistaprint employs over 4,100 people, operates more than 25 localized websites globally and ships to more than 130 countries around the world. Vistaprint's broad range of products and services are easy to access online, 24 hours a day at www.vistaprint.com.
