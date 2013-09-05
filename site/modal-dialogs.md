@@ -26,19 +26,84 @@ Other features:
 
 ### Adding jQuery.modalDialog to your site:
 
-TODO: Look at JQueryModalDialog and copy the HTML
+Using the (skinny.js Download Builder)[http://labaneilers.github.com/SkinnyJS/download-builder.html], create a custom build which includes jquery.modalDialog, along with any other skinny.js libraries you want. Include the following CSS and JavaScript files:
+
+{% highlight html %}
+
+<!--Modal dialog structure-->
+<link rel="stylesheet" href="skinnyjs/css/jquery.modalDialog.css" />
+
+<!--The skins css file is designed to be customized by you-->
+<link rel="stylesheet" href="skinnyjs/css/jquery.modalDialog.skins.css" />
+
+<!--Custom build of skinny.js from the download builder-->
+<script type="text/javascript" src="skinnyjs/skinny.js"></script>
+
+<!--Modal dialog library-->
+<script type="text/javascript" src="skinnyjs/jquery.modalDialog.js"></script>
+{% endhighlight %}
 
 ### Creating a dialog
 
-To create a dialog, use the following method:
+Dialogs are designed to be used unobtrusively, but the entire programmatic API is exposed as well.
+
+Here's an example of unobtrusive usage:
+
+{% highlight html %}
+<!-- define a link to a dialog -->
+<a href="#fruitsAndNuts" data-rel="modalDialog">Fruits and Nuts</a>
+
+<!-- elsewhere in the document, define the content of the dialog... -->
+<div class="dialog-content" id="fruitsAndNuts" data-dialog-title="Fruits and Nuts">
+    Fruits and nuts are delicious, and good for you too.
+</div>
+{% endhighlight %}
+
+Note the *data-rel="modalDialog"* attribute: this automatically creates an event handler which will open a
+dialog using the target of the link's *href* as the dialog content.
+
+To create a dialog programmatically, use one of the following methods:
 
 {% highlight javascript %}
-$.modalDialog.create()
+// Returns a jQuery object. Used for function/jQuery style code/chaining.
+$("#fruitsAndNuts").modalDialog();
+
+// Returns a ModalDialog object that can be used in OO style code.
+$.modalDialog.create({ content: "#fruitsAndNuts" }).open();
+{% endhighlight %}
+
+For more information on the OO style, see [Dialog object methods](#dialog_object_methods).
+
+#### Declarative dialog attributes
+
+When using the programmatic syntax to open dialogs, you can use the following attributes to declaratively define settings for the dialog (note that these correspond
+exactly to the [Settings](#settings) you can pass to the modalDialog programmatic API):
+
+* **data-dialog-title**: Defines the title that shows in the title bar of the dialog         
+* **data-dialog-onopen**: An inline event handler that fires when the dialog is opened. See [Events](#events) for more information.
+* **data-dialog-onbeforeopen**: An inline event handler that fires before the dialog is opened. See [Events](#events) for more information.  
+* **data-dialog-onclose**: An inline event handler that fires when the dialog is closed. See [Events](#events) for more information.        
+* **data-dialog-onbeforeclose**: An inline event handler that fires before the dialog is closed. See [Events](#events) for more information.      
+* **data-dialog-maxWidth**: Sets the maximum width of the dialog. Note that on small mobile devices, the actual width may be smaller, so you should design the dialog content accordingly. Defaults to 600.
+* **data-dialog-destroyOnClose**: If true, the dialog DOM will be destroyed and all events removed when the dialog closes. Defaults to ''false''.   
+* **data-dialog-skin**: The name of the skin to use for the dialog. Defaults to "primary".   
+
+{% highlight html %}
+<a href="#fruitsAndNuts" data-rel="modalDialog">Fruits and Nuts</a>
+
+<div 
+    class="dialog-content" 
+    id="fruitsAndNuts" 
+    data-dialog-title="Fruits and Nuts" 
+    data-dialog-onbeforeopen="if (!confirm('Are you sure you want to learn about this?') { event.preventDefault(); }"
+    data-dialog-skin="secondary">
+    Fruits and nuts are delicious, and good for you too.
+</div>
 {% endhighlight %}
 
 #### Settings
 
-`$.modalDialog.create()` takes a settings object as an argument. Here are the available settings:
+`$(selector).modalDialog()` (and `$.modalDialog.create()`) takes a settings object as an argument. Here are the available settings:
 
 * **title**: The title to display in the title bar of the dialog.
 * **id**: The internal ID of the dialog. If the same ID is passed to <code>$.modalDialog.create()</code> more than once, the existing dialog is reused.
@@ -46,15 +111,34 @@ $.modalDialog.create()
 * **skin**:  The name of the skin to use for the dialog. Defaults to "primary".
 * **ajax**:  Determines how the ''url'' setting is interpreted. If true, the URL is the source for an AJAX dialog. If false, it will be the URL of an IFrame dialog.
 * **url**:  The URL for the content of an IFrame or AJAX dialog.
-* **content**:  A CSS selector or jQuery object for a content node to use for a node dialog.
+* **content**:  A CSS selector or jQuery object for a content node to use for a node dialog (omitted when using the $.fn.modalDialog() syntax)
 * **destroyOnClose**:  If true, the dialog DOM will be destroyed and all events removed when the dialog closes. Defaults to ''false''.
 * **containerElement**:  A CSS selector or jQuery object for the element that should be the parent for the dialog DOM (useful for working with jQuery mobile). Defaults to "body".
 * **preventEventBubbling**:  If true, click and touch events are prevented from bubbling up to the document. Defaults to ''true''.
-* **onbeforeopen**: A handler for the ''beforeopen'' event. See [Events](#events) below.
-* **onopen**: A handler for the ''open'' event. See [Events](#events) below.
-* **onclose**: A handler for the ''close'' event. See [Events](#events)] below.
-* **onbeforeclose**: A handler for the ''beforeclose'' event. See [Events](#events) below.
-* **onajaxerror**:  A handler for the ''ajaxerror'' event. See [Events](#events) below.
+* **onbeforeopen**: A handler for the ''beforeopen'' event. See [Events](#events) for more information.
+* **onopen**: A handler for the ''open'' event. See [Events](#events) for more information.
+* **onclose**: A handler for the ''close'' event. See [Events](#events)] for more information.
+* **onbeforeclose**: A handler for the ''beforeclose'' event. See [Events](#events) for more information.
+* **onajaxerror**:  A handler for the ''ajaxerror'' event. See [Events](#events) for more information.
+
+
+Here's an example. Note that you can (and usually should) do this all with *data-dialog* attributes:
+{% highlight javascript %}
+$("#fruitsAndNuts").modalDialog({ 
+    title: "Fruits and Nuts",
+    skin: "secondary",
+    onbeforeopen: function(e) { 
+        if (!confirm('Are you sure you want to learn about this?') { 
+            e.preventDefault(); 
+        }
+    }
+});
+{% endhighlight %}
+{% highlight html %}
+<div class="dialog-content" id="fruitsAndNuts">
+    Fruits and nuts are delicious, and good for you too.
+</div>
+{% endhighlight %}
 
 ### Dialog object methods
 
@@ -67,34 +151,37 @@ $.modalDialog.create()
 * **getWindow()**: Gets a reference to the window for the dialog. For an IFrame dialog, this is the content window, for node or AJAX dialogs, it is the host window. This is useful for sending messages between dialogs.
 * **getParent()**: Gets a reference to the dialog object immediately below the current dialog in visual stacking order (usually the one that opened it). This will be null for a dialog that was opened directly from the host window, and has no parent dialog.
 
-### Node dialogs
-
-A node dialog is created using an element on the page. To open a node dialog, use the following syntax:
+For example:
 
 {% highlight javascript %}
-var dialog = $.modalDialog.create({ content: ".color-dialog", title: JSLM_ColorDialogTitle });
+var dialog = $.modalDialog.create({ content: ".color-dialog" });
 dialog.open();
  
 //close dialog
 dialog.close();
 {% endhighlight %}
 
-There is also an alternative jQuery-centric syntax. This is completely equivalent to the previous snippet:
+### Node dialogs
 
-{% highlight javascript %}
-// Opens the dialog immediately
-$(".color-dialog").modalDialog({ title: JSLM_ColorDialogTitle });
-
-// Closes the dialog
-$(".color-dialog").modalDialog("close");
-{% endhighlight %}
+So far, all examples have created "Node dialogs". These are dialogs that use an element on the page as the dialog's content.
 
 ### AJAX dialogs
 
-An AJAX dialog is created using content which is dynamically loaded from a URL. To create an AJAX dialog, use the following syntax:
+An AJAX dialog is created using content which is dynamically loaded from a URL. 
+
+Some examples:
+
+{% highlight html %}
+<!-- using unobtrusive style -->
+<a href="/nutrition-information/fruits-and-nuts.html" 
+    data-rel="modalDialog" 
+    data-dialog-ajax="true" 
+    data-dialog-title="Fruits and Nuts">Fruits and Nuts</a>
+{% endhighlight %}
 
 {% highlight javascript %}
-var dialog = $.modalDialog.create({ url: "/warning.aspx", ajax: true });
+//Using OO style
+var dialog = $.modalDialog.create({ url: "/nutrition-information/fruits-and-nuts.html", ajax: true, title: "Fruits and Nuts" });
 dialog.open();
  
 //close dialog
