@@ -23,7 +23,7 @@
 
     // Returns true if we're on a small screen device like a smartphone.
     // Dialogs behave slightly different on small screens, by convention.
-    _ua.isSmallScreen = function()
+    $.modalDialog.isSmallScreen = function()
     {
         // Detect Internet Explorer 7/8, force them to desktop mode
         if (_ua.ie7 || _ua.ie8) {
