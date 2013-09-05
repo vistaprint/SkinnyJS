@@ -138,7 +138,7 @@ var generate = function()
 
 	var promises = _.map(moduleNames, function(moduleName) 
 	{
-		return $.ajax({ url: "dist-pub/" + moduleName + suffix, dataType: "text"})
+		return $.ajax({ url: "dist/" + moduleName + suffix, dataType: "text"})
 			.then(function(responseText) 
 			{
 				var module = tree[moduleName];
@@ -213,7 +213,7 @@ var generate = function()
 			for (var i=0; i<item.other.length; i++)
 			{
 				html += downloadTemplate({
-					path: "dist-pub/" + item.other[i].path,
+					path: "dist/" + item.other[i].path,
 					name: item.other[i].name,
 					notes: item.other[i].notes
 				});
