@@ -71,16 +71,78 @@
 
 <h3 id='adding_jquerymodaldialog_to_your_site'>Adding jQuery.modalDialog to your site:</h3>
 
-<p>TODO: Look at JQueryModalDialog and copy the HTML</p>
+<p>Using the (skinny.js Download Builder)<span>http://labaneilers.github.com/SkinnyJS/download-builder.html</span>, create a custom build which includes jquery.modalDialog, along with any other skinny.js libraries you want. Include the following CSS and JavaScript files:</p>
+<div class='highlight'><pre><code class='html'><span class='c'>&lt;!--Modal dialog structure--&gt;</span>
+<span class='nt'>&lt;link</span> <span class='na'>rel=</span><span class='s'>&quot;stylesheet&quot;</span> <span class='na'>href=</span><span class='s'>&quot;skinnyjs/css/jquery.modalDialog.css&quot;</span> <span class='nt'>/&gt;</span>
 
+<span class='c'>&lt;!--The skins css file is designed to be customized by you--&gt;</span>
+<span class='nt'>&lt;link</span> <span class='na'>rel=</span><span class='s'>&quot;stylesheet&quot;</span> <span class='na'>href=</span><span class='s'>&quot;skinnyjs/css/jquery.modalDialog.skins.css&quot;</span> <span class='nt'>/&gt;</span>
+
+<span class='c'>&lt;!--Custom build of skinny.js from the download builder--&gt;</span>
+<span class='nt'>&lt;script </span><span class='na'>type=</span><span class='s'>&quot;text/javascript&quot;</span> <span class='na'>src=</span><span class='s'>&quot;skinnyjs/skinny.js&quot;</span><span class='nt'>&gt;&lt;/script&gt;</span>
+
+<span class='c'>&lt;!--Modal dialog library--&gt;</span>
+<span class='nt'>&lt;script </span><span class='na'>type=</span><span class='s'>&quot;text/javascript&quot;</span> <span class='na'>src=</span><span class='s'>&quot;skinnyjs/jquery.modalDialog.js&quot;</span><span class='nt'>&gt;&lt;/script&gt;</span>
+</code></pre></div>
 <h3 id='creating_a_dialog'>Creating a dialog</h3>
 
-<p>To create a dialog, use the following method:</p>
-<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>()</span>
+<p>Dialogs are designed to be used unobtrusively, but the entire programmatic API is exposed as well.</p>
+
+<p>Here&#8217;s an example of unobtrusive usage:</p>
+<div class='highlight'><pre><code class='html'><span class='c'>&lt;!-- define a link to a dialog --&gt;</span>
+<span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;#fruitsAndNuts&quot;</span> <span class='na'>data-rel=</span><span class='s'>&quot;modalDialog&quot;</span><span class='nt'>&gt;</span>Fruits and Nuts<span class='nt'>&lt;/a&gt;</span>
+
+<span class='c'>&lt;!-- elsewhere in the document, define the content of the dialog... --&gt;</span>
+<span class='nt'>&lt;div</span> <span class='na'>class=</span><span class='s'>&quot;dialog-content&quot;</span> <span class='na'>id=</span><span class='s'>&quot;fruitsAndNuts&quot;</span> <span class='na'>data-dialog-title=</span><span class='s'>&quot;Fruits and Nuts&quot;</span><span class='nt'>&gt;</span>
+    Fruits and nuts are delicious, and good for you too.
+<span class='nt'>&lt;/div&gt;</span>
+</code></pre></div>
+<p>Note the <em>data-rel=&#8221;modalDialog&#8221;</em> attribute: this automatically creates an event handler which will open a dialog using the target of the link&#8217;s <em>href</em> as the dialog content.</p>
+
+<p>To create a dialog programmatically, use one of the following methods:</p>
+<div class='highlight'><pre><code class='javascript'><span class='c1'>// Returns a jQuery object. Used for function/jQuery style code/chaining.</span>
+<span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;#fruitsAndNuts&quot;</span><span class='p'>).</span><span class='nx'>modalDialog</span><span class='p'>();</span>
+
+<span class='c1'>// Returns a ModalDialog object that can be used in OO style code.</span>
+<span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>({</span> <span class='nx'>content</span><span class='o'>:</span> <span class='s2'>&quot;#fruitsAndNuts&quot;</span> <span class='p'>}).</span><span class='nx'>open</span><span class='p'>();</span>
+</code></pre></div>
+<p>For more information on the OO style, see <a href='#dialog_object_methods'>Dialog object methods</a>.</p>
+
+<h4 id='declarative_dialog_attributes'>Declarative dialog attributes</h4>
+
+<p>When using the programmatic syntax to open dialogs, you can use the following attributes to declaratively define settings for the dialog (note that these correspond exactly to the <a href='#settings'>Settings</a> you can pass to the modalDialog programmatic API):</p>
+
+<ul>
+<li><strong>data-dialog-title</strong>: Defines the title that shows in the title bar of the dialog</li>
+
+<li><strong>data-dialog-onopen</strong>: An inline event handler that fires when the dialog is opened. See <a href='#events'>Events</a> for more information.</li>
+
+<li><strong>data-dialog-onbeforeopen</strong>: An inline event handler that fires before the dialog is opened. See <a href='#events'>Events</a> for more information.</li>
+
+<li><strong>data-dialog-onclose</strong>: An inline event handler that fires when the dialog is closed. See <a href='#events'>Events</a> for more information.</li>
+
+<li><strong>data-dialog-onbeforeclose</strong>: An inline event handler that fires before the dialog is closed. See <a href='#events'>Events</a> for more information.</li>
+
+<li><strong>data-dialog-maxWidth</strong>: Sets the maximum width of the dialog. Note that on small mobile devices, the actual width may be smaller, so you should design the dialog content accordingly. Defaults to 600.</li>
+
+<li><strong>data-dialog-destroyOnClose</strong>: If true, the dialog DOM will be destroyed and all events removed when the dialog closes. Defaults to &#8221;false&#8221;.</li>
+
+<li><strong>data-dialog-skin</strong>: The name of the skin to use for the dialog. Defaults to &#8220;primary&#8221;.</li>
+</ul>
+<div class='highlight'><pre><code class='html'><span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;#fruitsAndNuts&quot;</span> <span class='na'>data-rel=</span><span class='s'>&quot;modalDialog&quot;</span><span class='nt'>&gt;</span>Fruits and Nuts<span class='nt'>&lt;/a&gt;</span>
+
+<span class='nt'>&lt;div</span> 
+    <span class='na'>class=</span><span class='s'>&quot;dialog-content&quot;</span> 
+    <span class='na'>id=</span><span class='s'>&quot;fruitsAndNuts&quot;</span> 
+    <span class='na'>data-dialog-title=</span><span class='s'>&quot;Fruits and Nuts&quot;</span> 
+    <span class='na'>data-dialog-onbeforeopen=</span><span class='s'>&quot;if (!confirm(&#39;Are you sure you want to learn about this?&#39;) { event.preventDefault(); }&quot;</span>
+    <span class='na'>data-dialog-skin=</span><span class='s'>&quot;secondary&quot;</span><span class='nt'>&gt;</span>
+    Fruits and nuts are delicious, and good for you too.
+<span class='nt'>&lt;/div&gt;</span>
 </code></pre></div>
 <h4 id='settings'>Settings</h4>
 
-<p><code>$.modalDialog.create()</code> takes a settings object as an argument. Here are the available settings:</p>
+<p><code>$(selector).modalDialog()</code> (and <code>$.modalDialog.create()</code>) takes a settings object as an argument. Here are the available settings:</p>
 
 <ul>
 <li><strong>title</strong>: The title to display in the title bar of the dialog.</li>
@@ -95,7 +157,7 @@
 
 <li><strong>url</strong>: The URL for the content of an IFrame or AJAX dialog.</li>
 
-<li><strong>content</strong>: A CSS selector or jQuery object for a content node to use for a node dialog.</li>
+<li><strong>content</strong>: A CSS selector or jQuery object for a content node to use for a node dialog (omitted when using the $.fn.modalDialog() syntax)</li>
 
 <li><strong>destroyOnClose</strong>: If true, the dialog DOM will be destroyed and all events removed when the dialog closes. Defaults to &#8221;false&#8221;.</li>
 
@@ -103,17 +165,31 @@
 
 <li><strong>preventEventBubbling</strong>: If true, click and touch events are prevented from bubbling up to the document. Defaults to &#8221;true&#8221;.</li>
 
-<li><strong>onbeforeopen</strong>: A handler for the &#8221;beforeopen&#8221; event. See <a href='#events'>Events</a> below.</li>
+<li><strong>onbeforeopen</strong>: A handler for the &#8221;beforeopen&#8221; event. See <a href='#events'>Events</a> for more information.</li>
 
-<li><strong>onopen</strong>: A handler for the &#8221;open&#8221; event. See <a href='#events'>Events</a> below.</li>
+<li><strong>onopen</strong>: A handler for the &#8221;open&#8221; event. See <a href='#events'>Events</a> for more information.</li>
 
-<li><strong>onclose</strong>: A handler for the &#8221;close&#8221; event. See <a href='#events'>Events</a>] below.</li>
+<li><strong>onclose</strong>: A handler for the &#8221;close&#8221; event. See <a href='#events'>Events</a>] for more information.</li>
 
-<li><strong>onbeforeclose</strong>: A handler for the &#8221;beforeclose&#8221; event. See <a href='#events'>Events</a> below.</li>
+<li><strong>onbeforeclose</strong>: A handler for the &#8221;beforeclose&#8221; event. See <a href='#events'>Events</a> for more information.</li>
 
-<li><strong>onajaxerror</strong>: A handler for the &#8221;ajaxerror&#8221; event. See <a href='#events'>Events</a> below.</li>
+<li><strong>onajaxerror</strong>: A handler for the &#8221;ajaxerror&#8221; event. See <a href='#events'>Events</a> for more information.</li>
 </ul>
 
+<p>Here&#8217;s an example. Note that you can (and usually should) do this all with <em>data-dialog</em> attributes:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;#fruitsAndNuts&quot;</span><span class='p'>).</span><span class='nx'>modalDialog</span><span class='p'>({</span> 
+    <span class='nx'>title</span><span class='o'>:</span> <span class='s2'>&quot;Fruits and Nuts&quot;</span><span class='p'>,</span>
+    <span class='nx'>skin</span><span class='o'>:</span> <span class='s2'>&quot;secondary&quot;</span><span class='p'>,</span>
+    <span class='nx'>onbeforeopen</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> <span class='p'>{</span> 
+        <span class='k'>if</span> <span class='p'>(</span><span class='o'>!</span><span class='nx'>confirm</span><span class='p'>(</span><span class='s1'>&#39;Are you sure you want to learn about this?&#39;</span><span class='p'>)</span> <span class='p'>{</span> 
+            <span class='nx'>e</span><span class='p'>.</span><span class='nx'>preventDefault</span><span class='p'>();</span> 
+        <span class='p'>}</span>
+    <span class='p'>}</span>
+<span class='p'>});</span>
+</code></pre></div><div class='highlight'><pre><code class='html'><span class='nt'>&lt;div</span> <span class='na'>class=</span><span class='s'>&quot;dialog-content&quot;</span> <span class='na'>id=</span><span class='s'>&quot;fruitsAndNuts&quot;</span><span class='nt'>&gt;</span>
+    Fruits and nuts are delicious, and good for you too.
+<span class='nt'>&lt;/div&gt;</span>
+</code></pre></div>
 <h3 id='dialog_object_methods'>Dialog object methods</h3>
 
 <p><code>$.modalDialog.create()</code> returns a dialog object with the following methods:</p>
@@ -132,26 +208,29 @@
 <li><strong>getParent()</strong>: Gets a reference to the dialog object immediately below the current dialog in visual stacking order (usually the one that opened it). This will be null for a dialog that was opened directly from the host window, and has no parent dialog.</li>
 </ul>
 
-<h3 id='node_dialogs'>Node dialogs</h3>
-
-<p>A node dialog is created using an element on the page. To open a node dialog, use the following syntax:</p>
-<div class='highlight'><pre><code class='javascript'><span class='kd'>var</span> <span class='nx'>dialog</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>({</span> <span class='nx'>content</span><span class='o'>:</span> <span class='s2'>&quot;.color-dialog&quot;</span><span class='p'>,</span> <span class='nx'>title</span><span class='o'>:</span> <span class='nx'>JSLM_ColorDialogTitle</span> <span class='p'>});</span>
+<p>For example:</p>
+<div class='highlight'><pre><code class='javascript'><span class='kd'>var</span> <span class='nx'>dialog</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>({</span> <span class='nx'>content</span><span class='o'>:</span> <span class='s2'>&quot;.color-dialog&quot;</span> <span class='p'>});</span>
 <span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>open</span><span class='p'>();</span>
  
 <span class='c1'>//close dialog</span>
 <span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>close</span><span class='p'>();</span>
 </code></pre></div>
-<p>There is also an alternative jQuery-centric syntax. This is completely equivalent to the previous snippet:</p>
-<div class='highlight'><pre><code class='javascript'><span class='c1'>// Opens the dialog immediately</span>
-<span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.color-dialog&quot;</span><span class='p'>).</span><span class='nx'>modalDialog</span><span class='p'>({</span> <span class='nx'>title</span><span class='o'>:</span> <span class='nx'>JSLM_ColorDialogTitle</span> <span class='p'>});</span>
+<h3 id='node_dialogs'>Node dialogs</h3>
 
-<span class='c1'>// Closes the dialog</span>
-<span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.color-dialog&quot;</span><span class='p'>).</span><span class='nx'>modalDialog</span><span class='p'>(</span><span class='s2'>&quot;close&quot;</span><span class='p'>);</span>
-</code></pre></div>
+<p>So far, all examples have created &#8220;Node dialogs&#8221;. These are dialogs that use an element on the page as the dialog&#8217;s content.</p>
+
 <h3 id='ajax_dialogs'>AJAX dialogs</h3>
 
-<p>An AJAX dialog is created using content which is dynamically loaded from a URL. To create an AJAX dialog, use the following syntax:</p>
-<div class='highlight'><pre><code class='javascript'><span class='kd'>var</span> <span class='nx'>dialog</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>({</span> <span class='nx'>url</span><span class='o'>:</span> <span class='s2'>&quot;/warning.aspx&quot;</span><span class='p'>,</span> <span class='nx'>ajax</span><span class='o'>:</span> <span class='kc'>true</span> <span class='p'>});</span>
+<p>An AJAX dialog is created using content which is dynamically loaded from a URL.</p>
+
+<p>Some examples:</p>
+<div class='highlight'><pre><code class='html'><span class='c'>&lt;!-- using unobtrusive style --&gt;</span>
+<span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;/nutrition-information/fruits-and-nuts.html&quot;</span> 
+    <span class='na'>data-rel=</span><span class='s'>&quot;modalDialog&quot;</span> 
+    <span class='na'>data-dialog-ajax=</span><span class='s'>&quot;true&quot;</span> 
+    <span class='na'>data-dialog-title=</span><span class='s'>&quot;Fruits and Nuts&quot;</span><span class='nt'>&gt;</span>Fruits and Nuts<span class='nt'>&lt;/a&gt;</span>
+</code></pre></div><div class='highlight'><pre><code class='javascript'><span class='c1'>//Using OO style</span>
+<span class='kd'>var</span> <span class='nx'>dialog</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>({</span> <span class='nx'>url</span><span class='o'>:</span> <span class='s2'>&quot;/nutrition-information/fruits-and-nuts.html&quot;</span><span class='p'>,</span> <span class='nx'>ajax</span><span class='o'>:</span> <span class='kc'>true</span><span class='p'>,</span> <span class='nx'>title</span><span class='o'>:</span> <span class='s2'>&quot;Fruits and Nuts&quot;</span> <span class='p'>});</span>
 <span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>open</span><span class='p'>();</span>
  
 <span class='c1'>//close dialog</span>
