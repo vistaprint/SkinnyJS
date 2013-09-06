@@ -71,7 +71,7 @@ If so, it's the best choice of elements to hide.</p></div></div><div class="code
 
             <span class="k">if</span> <span class="p">(</span><span class="nx">$badEls</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
             <span class="p">{</span>
-                <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">onopen</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+                <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">onopen</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span>
                 <span class="p">{</span>
                     <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">level</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
                     <span class="p">{</span>
@@ -79,7 +79,7 @@ If so, it's the best choice of elements to hide.</p></div></div><div class="code
                     <span class="p">}</span>
                 <span class="p">});</span>
 
-                <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">onbeforeclose</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+                <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">onbeforeclose</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span>
                 <span class="p">{</span>
                     <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">level</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
                     <span class="p">{</span>

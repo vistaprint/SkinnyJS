@@ -48,7 +48,7 @@ This example simply alerts every message it receives, from any origin:</p></div>
 
     <span class="kd">var</span> <span class="nx">browserSupportsPostMessage</span> <span class="o">=</span> <span class="o">!!</span><span class="nb">window</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Given a URL, returns the domain portion (i.e. http://www.somedomain.com)</p></div></div><div class="code"><div class="wrapper">    <span class="kd">function</span> <span class="nx">getDomainFromUrl</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span> 
     <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">url</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/([^:]+:\/\/[^\/]+).*/</span><span class="p">,</span> <span class="s1">&#39;$1&#39;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">url</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/([^:]+:\/\/[^\/]+).*/</span><span class="p">,</span> <span class="s2">&quot;$1&quot;</span><span class="p">);</span>
     <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Given a domain pattern (i.e. http://somedomain.com) matches against a specified domain</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><ul>
 <li>{String or Function} originPatternOrFunction: A pattern or a function to match against sourceOrigin</li>
 <li>{String} sourceOrigin: The string to match using the originPatternOrFunction</li>
@@ -84,7 +84,7 @@ and a provided window reference.</p></div></div></div><div class="segment"><div 
                     <span class="p">{</span>
                         <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">frames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">instanceof</span> <span class="nx">Window</span> <span class="o">&amp;&amp;</span> <span class="nb">window</span><span class="p">.</span><span class="nx">frames</span><span class="p">[</span><span class="nx">frame</span><span class="p">]</span> <span class="o">===</span> <span class="nx">target</span><span class="p">)</span>
                         <span class="p">{</span>
-                            <span class="k">return</span> <span class="s1">&#39;f,&#39;</span> <span class="o">+</span> <span class="nx">frame</span><span class="p">;</span>
+                            <span class="k">return</span> <span class="s2">&quot;f,&quot;</span> <span class="o">+</span> <span class="nx">frame</span><span class="p">;</span>
                         <span class="p">}</span>
                     <span class="p">}</span> 
                     <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> 
@@ -107,12 +107,12 @@ and a provided window reference.</p></div></div></div><div class="segment"><div 
 
         <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">parent</span> <span class="o">&amp;&amp;</span> <span class="nb">window</span><span class="p">.</span><span class="nx">parent</span> <span class="o">===</span> <span class="nx">target</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="k">return</span> <span class="s1">&#39;p&#39;</span><span class="p">;</span>
+            <span class="k">return</span> <span class="s2">&quot;p&quot;</span><span class="p">;</span>
         <span class="p">}</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">opener</span> <span class="o">&amp;&amp;</span> <span class="nb">window</span><span class="p">.</span><span class="nx">opener</span> <span class="o">===</span> <span class="nx">target</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="k">return</span> <span class="s1">&#39;o&#39;</span><span class="p">;</span>
+            <span class="k">return</span> <span class="s2">&quot;o&quot;</span><span class="p">;</span>
         <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>we have already transversed deep enough</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">level</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">)</span> 
         <span class="p">{</span>
             <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
@@ -127,7 +127,7 @@ and a provided window reference.</p></div></div></div><div class="segment"><div 
                 <span class="nx">ref</span> <span class="o">=</span> <span class="nx">transverseLevel</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">frames</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">target</span><span class="p">,</span> <span class="nx">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
                 <span class="k">if</span> <span class="p">(</span><span class="nx">ref</span><span class="p">)</span> 
                 <span class="p">{</span>
-                    <span class="k">return</span> <span class="s1">&#39;f,&#39;</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="nx">ref</span><span class="p">;</span>
+                    <span class="k">return</span> <span class="s2">&quot;f,&quot;</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="nx">ref</span><span class="p">;</span>
                 <span class="p">}</span>
             <span class="p">}</span>
         <span class="p">}</span>
@@ -163,16 +163,16 @@ Example: p.p translates to window.parent.parent</li>
     <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If the target window was opened with window.open(), its name is the only
 way to get to it. This makes for a yucky API, unfortunately.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="p">(</span><span class="nx">targetWindow</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="k">return</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">targetWindow</span><span class="p">;</span>
+            <span class="k">return</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="nx">targetWindow</span><span class="p">;</span>
         <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>first see if we can quickly find the reference</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">currentWindow</span> <span class="o">===</span> <span class="nx">targetWindow</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;Trying to postMessage to self. Pointlessly useless.&quot;</span><span class="p">);</span>
         <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>see if the target is simple the parent</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">currentWindow</span><span class="p">.</span><span class="nx">parent</span> <span class="o">&amp;&amp;</span> <span class="nx">currentWindow</span><span class="p">.</span><span class="nx">parent</span> <span class="o">!==</span> <span class="nx">currentWindow</span> <span class="o">&amp;&amp;</span> <span class="nx">currentWindow</span><span class="p">.</span><span class="nx">parent</span> <span class="o">===</span> <span class="nx">targetWindow</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="k">return</span> <span class="s1">&#39;p&#39;</span><span class="p">;</span>
+            <span class="k">return</span> <span class="s2">&quot;p&quot;</span><span class="p">;</span>
         <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>see if the target is simply the opener</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">currentWindow</span><span class="p">.</span><span class="nx">opener</span> <span class="o">&amp;&amp;</span> <span class="nx">currentWindow</span><span class="p">.</span><span class="nx">opener</span> <span class="o">!==</span> <span class="nx">currentWindow</span> <span class="o">&amp;&amp;</span> <span class="nx">currentWindow</span><span class="p">.</span><span class="nx">opener</span> <span class="o">===</span> <span class="nx">targetWindow</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="k">return</span> <span class="s1">&#39;o&#39;</span><span class="p">;</span>
+            <span class="k">return</span> <span class="s2">&quot;o&quot;</span><span class="p">;</span>
         <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Try to determine the relationship through recursion.</p></div></div><div class="code"><div class="wrapper">        <span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="nx">transverseLevel</span><span class="p">(</span><span class="nx">currentWindow</span><span class="p">,</span> <span class="nx">targetWindow</span><span class="p">);</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">ref</span><span class="p">)</span>
         <span class="p">{</span>
@@ -188,7 +188,7 @@ way to get to it. This makes for a yucky API, unfortunately.</p></div></div><div
                               (i.e. http://www.something.com)
 * {Window} targetWindow: A reference to the target window to which the message should be sent
 * {string} targetWindowName: If the target window is a child window (not a frame), the window name
-                              is required for browsers that don't support postMessage() natively.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">.</span><span class="nx">postMessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">targetHost</span><span class="p">,</span> <span class="nx">targetWindow</span><span class="p">,</span> <span class="cm">/* optional */</span> <span class="nx">targetWindowName</span><span class="p">)</span> 
+                              is required for browsers that don"t support postMessage() natively.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">.</span><span class="nx">postMessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">targetHost</span><span class="p">,</span> <span class="nx">targetWindow</span><span class="p">,</span> <span class="cm">/* optional */</span> <span class="nx">targetWindowName</span><span class="p">)</span> 
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">targetHost</span><span class="p">)</span>
         <span class="p">{</span>
@@ -238,13 +238,13 @@ Create an iframe in the same domain as the target window and use it as a proxy t
 to the target window. Pass the proxy information in an encoded URL fragment,
 (not a querystring, which would cause it to load from the server)</p></div></div><div class="code"><div class="wrapper">        <span class="kd">var</span> <span class="nx">serializedWindowRef</span> <span class="o">=</span> <span class="nx">serializeWindowReference</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">targetWindowName</span> <span class="o">||</span> <span class="nx">targetWindow</span><span class="p">),</span>
             <span class="nx">thisDomain</span> <span class="o">=</span> <span class="nx">getDomainFromUrl</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="p">),</span>
-            <span class="nx">iframe</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;iframe&#39;</span><span class="p">);</span>
+            <span class="nx">iframe</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;iframe&quot;</span><span class="p">);</span>
 
-        <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span>
             <span class="nx">$</span><span class="p">(</span><span class="nx">iframe</span><span class="p">)</span>
             <span class="p">.</span><span class="nx">hide</span><span class="p">()</span>
-            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">,</span> <span class="nx">targetHost</span> <span class="o">+</span> <span class="s1">&#39;/vp/JS-Lib/jQuery/plugins/postmessage.htm#&#39;</span> <span class="o">+</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>When server side debugging, add (+new Date()) here</p></div></div><div class="code"><div class="wrapper">                <span class="p">(</span><span class="o">+</span><span class="k">new</span> <span class="nb">Date</span><span class="p">())</span> <span class="o">+</span> <span class="nx">cacheBuster</span> <span class="o">+</span> <span class="s1">&#39;&amp;&#39;</span> <span class="o">+</span>
-                <span class="nx">serializedWindowRef</span> <span class="o">+</span> <span class="s1">&#39;&amp;&#39;</span> <span class="o">+</span> <span class="nx">thisDomain</span> <span class="o">+</span> <span class="s1">&#39;&amp;&#39;</span> <span class="o">+</span> <span class="nb">encodeURIComponent</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">,</span> <span class="nx">targetHost</span> <span class="o">+</span> <span class="s2">&quot;/vp/JS-Lib/jQuery/plugins/postmessage.htm#&quot;</span> <span class="o">+</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>When server side debugging, add (+new Date()) here</p></div></div><div class="code"><div class="wrapper">                <span class="p">(</span><span class="o">+</span><span class="k">new</span> <span class="nb">Date</span><span class="p">())</span> <span class="o">+</span> <span class="nx">cacheBuster</span> <span class="o">+</span> <span class="s2">&quot;&amp;&quot;</span> <span class="o">+</span>
+                <span class="nx">serializedWindowRef</span> <span class="o">+</span> <span class="s2">&quot;&amp;&quot;</span> <span class="o">+</span> <span class="nx">thisDomain</span> <span class="o">+</span> <span class="s2">&quot;&amp;&quot;</span> <span class="o">+</span> <span class="nb">encodeURIComponent</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>remove this DOM iframe once it is no longer needed</p></div></div><div class="code"><div class="wrapper">                <span class="nx">$</span><span class="p">(</span><span class="nx">iframe</span><span class="p">).</span><span class="nx">remove</span><span class="p">();</span>
             <span class="p">})</span>
@@ -268,7 +268,7 @@ to the target window. Pass the proxy information in an encoded URL fragment,
             <span class="nx">allowedOriginOrFunction</span> <span class="o">=</span> <span class="s2">&quot;*&quot;</span><span class="p">;</span>
         <span class="p">}</span>
 
-        <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">origin</span><span class="p">)</span> 
+        <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">origin</span><span class="p">)</span> 
         <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">data</span><span class="p">)</span> 
             <span class="p">{</span>
@@ -281,14 +281,14 @@ to the target window. Pass the proxy information in an encoded URL fragment,
             <span class="p">}</span>
 
             <span class="k">return</span> <span class="nx">isOriginMatch</span><span class="p">(</span><span class="nx">allowedOriginOrFunction</span><span class="p">,</span> <span class="nx">event</span><span class="p">.</span><span class="nx">originalEvent</span> <span class="o">?</span> <span class="nx">event</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">.</span><span class="nx">origin</span> <span class="o">:</span> <span class="nx">origin</span><span class="p">)</span> <span class="o">?</span>
-                <span class="nx">callback</span><span class="p">({</span> <span class="s1">&#39;data&#39;</span><span class="o">:</span> <span class="nx">data</span><span class="p">,</span> <span class="s1">&#39;origin&#39;</span><span class="o">:</span> <span class="nx">origin</span> <span class="p">})</span> <span class="o">:</span> 
+                <span class="nx">callback</span><span class="p">({</span> <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="nx">data</span><span class="p">,</span> <span class="s2">&quot;origin&quot;</span><span class="o">:</span> <span class="nx">origin</span> <span class="p">})</span> <span class="o">:</span> 
                 <span class="kc">false</span><span class="p">;</span>
         <span class="p">});</span>
     <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Windows in IE can only handle onmessage events from IFRAMEs within the same parent window only.
 Messages sent between top level windows will fail. Unfortunately, we don't know if the calling window is
 an IFrame or top-level window. To work around, listen for calls from the polyfill technique for IE in all cases.</p></div></div><div class="code"><div class="wrapper">    <span class="nb">window</span><span class="p">.</span><span class="nx">__receiveMessageHook</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">origin</span><span class="p">)</span> 
     <span class="p">{</span>
-        <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="nb">decodeURIComponent</span><span class="p">(</span><span class="nx">message</span><span class="p">),</span> <span class="nx">origin</span><span class="p">);</span>
+        <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="nb">decodeURIComponent</span><span class="p">(</span><span class="nx">message</span><span class="p">),</span> <span class="nx">origin</span><span class="p">);</span>
     <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Convenience wrapper for windows wrapped in jQuery objects</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">postMessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">targetHost</span><span class="p">,</span> <span class="cm">/* optional */</span> <span class="nx">targetWindowName</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">el</span><span class="p">)</span>

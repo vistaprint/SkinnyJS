@@ -75,7 +75,7 @@ Includes port string if specified- example www.vistaprint.com:80</p></div></div>
             <span class="nx">temp</span> <span class="o">=</span> <span class="nx">temp</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="nx">nextPartPos</span><span class="p">);</span>
         <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Separate hostname &amp; port from host</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">host</span> <span class="o">&amp;&amp;</span> <span class="nx">me</span><span class="p">.</span><span class="nx">host</span> <span class="o">!==</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">colorPos</span> <span class="o">=</span> <span class="nx">me</span><span class="p">.</span><span class="nx">host</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">);</span>
+            <span class="kd">var</span> <span class="nx">colorPos</span> <span class="o">=</span> <span class="nx">me</span><span class="p">.</span><span class="nx">host</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">);</span>
             <span class="k">if</span> <span class="p">(</span><span class="nx">colorPos</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
             <span class="p">{</span>
                 <span class="nx">me</span><span class="p">.</span><span class="nx">hostname</span> <span class="o">=</span> <span class="nx">me</span><span class="p">.</span><span class="nx">host</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">colorPos</span><span class="p">);</span>
@@ -111,7 +111,7 @@ Includes port string if specified- example www.vistaprint.com:80</p></div></div>
         <span class="p">{</span>
             <span class="k">return</span><span class="p">;</span>
         <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>queryString (i.e. myval1=1&amp;myval2=2)
-search: same as querystring with initial question mark (i.e. ?myval1=1&amp;myval2=2)</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">temp</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
+search: same as querystring with initial question mark (i.e. ?myval1=1&amp;myval2=2)</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">temp</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;?&quot;</span><span class="p">)</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="nx">nextPartPos</span> <span class="o">=</span> <span class="nx">temp</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">);</span>
 
@@ -155,7 +155,7 @@ search: same as querystring with initial question mark (i.e. ?myval1=1&amp;myval
 
         <span class="k">if</span> <span class="p">(</span><span class="nx">sPort</span> <span class="o">&amp;&amp;</span> <span class="nx">sPort</span> <span class="o">!==</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="nx">sPort</span> <span class="o">=</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">sPort</span><span class="p">;</span>
+            <span class="nx">sPort</span> <span class="o">=</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="nx">sPort</span><span class="p">;</span>
         <span class="p">}</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">sProtocol</span> <span class="o">&amp;&amp;</span> <span class="nx">sProtocol</span> <span class="o">!==</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="p">{</span>
@@ -201,7 +201,7 @@ search: same as querystring with initial question mark (i.e. ?myval1=1&amp;myval
         <span class="nx">me</span><span class="p">.</span><span class="nx">search</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">queryString</span> <span class="o">!==</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="nx">me</span><span class="p">.</span><span class="nx">search</span> <span class="o">=</span> <span class="s1">&#39;?&#39;</span> <span class="o">+</span> <span class="nx">me</span><span class="p">.</span><span class="nx">queryString</span><span class="p">;</span>
+            <span class="nx">me</span><span class="p">.</span><span class="nx">search</span> <span class="o">=</span> <span class="s2">&quot;?&quot;</span> <span class="o">+</span> <span class="nx">me</span><span class="p">.</span><span class="nx">queryString</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="p">};</span>
 

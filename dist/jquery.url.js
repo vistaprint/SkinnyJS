@@ -116,7 +116,7 @@ $.Url = function(url)
         // Separate hostname & port from host
         if (me.host && me.host !== "")
         {
-            var colorPos = me.host.indexOf(':');
+            var colorPos = me.host.indexOf(":");
             if (colorPos != -1)
             {
                 me.hostname = me.host.substr(0, colorPos);
@@ -155,7 +155,7 @@ $.Url = function(url)
 
         // queryString (i.e. myval1=1&myval2=2)
         // search: same as querystring with initial question mark (i.e. ?myval1=1&myval2=2)
-        if (temp.indexOf('?') === 0)
+        if (temp.indexOf("?") === 0)
         {
             nextPartPos = temp.indexOf("#");
 
@@ -202,7 +202,7 @@ $.Url = function(url)
 
         if (sPort && sPort !== "")
         {
-            sPort = ':' + sPort;
+            sPort = ":" + sPort;
         }
         if (sProtocol && sProtocol !== "")
         {
@@ -257,7 +257,7 @@ $.Url = function(url)
         me.search = "";
         if (me.queryString !== "")
         {
-            me.search = '?' + me.queryString;
+            me.search = "?" + me.queryString;
         }
     };
 

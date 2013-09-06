@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><title>js\jquery.menu</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="js\jquery.menu"><meta name="groc-project-path" content="js\jquery.menu.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">js\jquery.menu.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="cm">/* global DocumentTouch */</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><a href="../index.html">Homepage</a> | 
+<!DOCTYPE html><html lang="en"><head><title>js\jquery.menu</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="js\jquery.menu"><meta name="groc-project-path" content="js\jquery.menu.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">js\jquery.menu.js</div></div><div id="document"><div class="segment"><div class="comments"><div class="wrapper"><a href="../index.html">Homepage</a> | 
 <a href="https://github.com/labaneilers/SkinnyJS/blob/master/js/jquery.menu.js" target="_blank">View this file on Github</a> | 
 <a href="https://raw.github.com/labaneilers/SkinnyJS/master/js/jquery.menu.js" target="_blank">Download this file</a>
 
@@ -20,10 +20,7 @@ TODO: Accessibility: Keyboard navigation (tab navigation already works)- close s
         <span class="p">}</span>
 
         <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
-    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Touch screen detection
-Adapted from Modernizr. There's got to be a better way to reuse this kind of thing
-optionally, without sucking in a ton of dependencies.</p></div></div><div class="code"><div class="wrapper">    <span class="kd">var</span> <span class="nx">_isTouchScreen</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;ontouchstart&#39;</span> <span class="k">in</span> <span class="nb">window</span><span class="p">)</span> <span class="o">||</span> 
-        <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">DocumentTouch</span> <span class="o">&amp;&amp;</span> <span class="nb">document</span> <span class="k">instanceof</span> <span class="nx">DocumentTouch</span><span class="p">);</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Hover highlighting</p></div></div><div class="code"><div class="wrapper">    <span class="kd">var</span> <span class="nx">highlightMenuItem</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$item</span><span class="p">,</span> <span class="nx">enabled</span><span class="p">)</span>
+    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Hover highlighting</p></div></div><div class="code"><div class="wrapper">    <span class="kd">var</span> <span class="nx">highlightMenuItem</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$item</span><span class="p">,</span> <span class="nx">enabled</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="nx">$item</span><span class="p">.</span><span class="nx">swapClasses</span><span class="p">(</span><span class="s2">&quot;hover&quot;</span><span class="p">,</span> <span class="s2">&quot;nohover&quot;</span><span class="p">,</span> <span class="nx">enabled</span><span class="p">);</span>
     <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>TODO: It would be nice to have a jQuery.findUntil(selector)
@@ -469,8 +466,9 @@ cancel the default event so touching the menu doesn't cause navigation.</p></div
                     <span class="p">}</span>
                 <span class="p">};</span>
                 
-                <span class="kd">var</span> <span class="nx">showClick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">showClick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
                 <span class="p">{</span>
+                    
                     <span class="k">if</span> <span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">isTopLevel</span><span class="p">)</span>
                     <span class="p">{</span>
                         <span class="nx">_clickHoverActivated</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>

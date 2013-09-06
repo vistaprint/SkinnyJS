@@ -12,15 +12,15 @@
         var ua = navigator.userAgent;
         
         // Internet Explorer 7 specific checks
-        if (ua.indexOf('MSIE 7.0') > 0) 
+        if (ua.indexOf("MSIE 7.0") > 0) 
         {
-            return {ie: true, ie7: true, version: 7, compat: ua.indexOf('compatible') > 0};
+            return {ie: true, ie7: true, version: 7, compat: ua.indexOf("compatible") > 0};
         }
 
         // Internet Explorer 8 specific checks
-        if (ua.indexOf('MSIE 8.0') > 0) 
+        if (ua.indexOf("MSIE 8.0") > 0) 
         {
-            return {ie: true, ie8: true, version: 8, compat: ua.indexOf('compatible') > 0};
+            return {ie: true, ie8: true, version: 8, compat: ua.indexOf("compatible") > 0};
         }
 
         return {};
@@ -745,7 +745,7 @@ $.modalDialog.create()
 
             if ($badEls.length > 0)
             {
-                $.modalDialog.onopen.add(function(e)
+                $.modalDialog.onopen.add(function()
                 {
                     if (this.level === 0)
                     {
@@ -753,7 +753,7 @@ $.modalDialog.create()
                     }
                 });
 
-                $.modalDialog.onbeforeclose.add(function(e)
+                $.modalDialog.onbeforeclose.add(function()
                 {
                     if (this.level === 0)
                     {
@@ -823,6 +823,8 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     // Click handler for all links which open dialogs
     var dialogLinkHandler = function(e)
     {
+        e.preventDefault();
+        
         var $link = $(e.target);
 
         var dialog = $link.data(DIALOG_DATA_KEY);
@@ -836,8 +838,6 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
                 throw new Error("no href specified with data-rel='modalDialog'");
             }
 
-            e.preventDefault();
-        
             // Create a dialog settings object
             var settings = {};
 
@@ -899,7 +899,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     // Assign handlers to all dialog links
     $(document).ready(function()
     {
-        $("[data-rel='modalDialog']").on("click", dialogLinkHandler);
+        $(document).on("click", "[data-rel='modalDialog']", dialogLinkHandler);
     });
 
 })(jQuery);
