@@ -148,13 +148,6 @@
 
     var getFragmentAndScripts = function(responseText, selector, context, scripts)
     {
-        // HACK: jQuery 1.9 changed the signature of $.buildFragment() to expect a raw DOM document object,
-        // whereas previous versions expected a jQuery object, and would look up its ownerDocument.
-        if (parseFloat($.fn.jquery.substr(0, 3)) >= 1.9)
-        {
-            context = context[0].ownerDocument;
-        }
-
         var $target;
 
         if (selector)
@@ -174,6 +167,13 @@
         }
         else
         {
+            // HACK: jQuery 1.9 changed the signature of $.buildFragment() to expect a raw DOM document object,
+            // whereas previous versions expected a jQuery object, and would look up its ownerDocument.
+            if (parseFloat($.fn.jquery.substr(0, 3)) >= 1.9)
+            {
+                context = context[0].ownerDocument;
+            }
+
             // No selector was specified. Load all scripts on the page, as long as they haven't been loaded before.
             var fragment = $.buildFragment([responseText], context, scripts);
 

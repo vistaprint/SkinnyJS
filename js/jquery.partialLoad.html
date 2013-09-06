@@ -108,12 +108,7 @@ that they don't get loaded more than once.</p></div></div><div class="code"><div
     <span class="kd">var</span> <span class="nx">rcleanScript</span> <span class="o">=</span> <span class="sr">/^\s*&lt;!(?:\[CDATA\[|\-\-)/</span><span class="p">;</span>
 
     <span class="kd">var</span> <span class="nx">getFragmentAndScripts</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">responseText</span><span class="p">,</span> <span class="nx">selector</span><span class="p">,</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">scripts</span><span class="p">)</span>
-    <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>HACK: jQuery 1.9 changed the signature of $.buildFragment() to expect a raw DOM document object,
-whereas previous versions expected a jQuery object, and would look up its ownerDocument.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">jquery</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mf">1.9</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="nx">context</span> <span class="o">=</span> <span class="nx">context</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">ownerDocument</span><span class="p">;</span>
-        <span class="p">}</span>
-
+    <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">$target</span><span class="p">;</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="nx">selector</span><span class="p">)</span>
@@ -129,7 +124,11 @@ This will cause scripts in the fragment to be executed by jQuery.fn.html().</p><
             <span class="p">});</span>
         <span class="p">}</span>
         <span class="k">else</span>
-        <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>No selector was specified. Load all scripts on the page, as long as they haven't been loaded before.</p></div></div><div class="code"><div class="wrapper">            <span class="kd">var</span> <span class="nx">fragment</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">buildFragment</span><span class="p">([</span><span class="nx">responseText</span><span class="p">],</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">scripts</span><span class="p">);</span>
+        <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>HACK: jQuery 1.9 changed the signature of $.buildFragment() to expect a raw DOM document object,
+whereas previous versions expected a jQuery object, and would look up its ownerDocument.</p></div></div><div class="code"><div class="wrapper">            <span class="k">if</span> <span class="p">(</span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">jquery</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mf">1.9</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="nx">context</span> <span class="o">=</span> <span class="nx">context</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">ownerDocument</span><span class="p">;</span>
+            <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>No selector was specified. Load all scripts on the page, as long as they haven't been loaded before.</p></div></div><div class="code"><div class="wrapper">            <span class="kd">var</span> <span class="nx">fragment</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">buildFragment</span><span class="p">([</span><span class="nx">responseText</span><span class="p">],</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">scripts</span><span class="p">);</span>
 
             <span class="nx">$target</span> <span class="o">=</span> <span class="nx">fragment</span><span class="p">.</span><span class="nx">fragment</span> <span class="o">||</span> <span class="nx">fragment</span><span class="p">;</span>
         <span class="p">}</span>
