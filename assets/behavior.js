@@ -22,7 +22,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\date-parse.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\date-parse.js",
             "projectPath": "js\\date-parse.js",
             "targetPath": "js\\date-parse",
             "title": "date-parse"
@@ -94,7 +94,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.clientRect.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.clientRect.js",
             "projectPath": "js\\jquery.clientRect.js",
             "targetPath": "js\\jquery.clientRect",
             "title": "jquery.clientRect"
@@ -139,7 +139,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.contentSize.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.contentSize.js",
             "projectPath": "js\\jquery.contentSize.js",
             "targetPath": "js\\jquery.contentSize",
             "title": "jquery.contentSize"
@@ -192,7 +192,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.css.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.css.js",
             "projectPath": "js\\jquery.css.js",
             "targetPath": "js\\jquery.css",
             "title": "jquery.css"
@@ -245,7 +245,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.customEvent.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.customEvent.js",
             "projectPath": "js\\jquery.customEvent.js",
             "targetPath": "js\\jquery.customEvent",
             "title": "jquery.customEvent"
@@ -290,7 +290,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.delimitedString.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.delimitedString.js",
             "projectPath": "js\\jquery.delimitedString.js",
             "targetPath": "js\\jquery.delimitedString",
             "title": "jquery.delimitedString"
@@ -327,7 +327,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.disableEvent.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.disableEvent.js",
             "projectPath": "js\\jquery.disableEvent.js",
             "targetPath": "js\\jquery.disableEvent",
             "title": "jquery.disableEvent"
@@ -372,7 +372,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.hostIframe.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.hostIframe.js",
             "projectPath": "js\\jquery.hostIframe.js",
             "targetPath": "js\\jquery.hostIframe",
             "title": "jquery.hostIframe"
@@ -444,7 +444,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.hoverDelay.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.hoverDelay.js",
             "projectPath": "js\\jquery.hoverDelay.js",
             "targetPath": "js\\jquery.hoverDelay",
             "title": "jquery.hoverDelay"
@@ -489,7 +489,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.htmlEncode.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.htmlEncode.js",
             "projectPath": "js\\jquery.htmlEncode.js",
             "targetPath": "js\\jquery.htmlEncode",
             "title": "jquery.htmlEncode"
@@ -534,7 +534,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.imageSize.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.imageSize.js",
             "projectPath": "js\\jquery.imageSize.js",
             "targetPath": "js\\jquery.imageSize",
             "title": "jquery.imageSize"
@@ -550,7 +550,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.isVisibleKeyCode.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.isVisibleKeyCode.js",
             "projectPath": "js\\jquery.isVisibleKeyCode.js",
             "targetPath": "js\\jquery.isVisibleKeyCode",
             "title": "jquery.isVisibleKeyCode"
@@ -595,7 +595,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.menu.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.menu.js",
             "projectPath": "js\\jquery.menu.js",
             "targetPath": "js\\jquery.menu",
             "title": "jquery.menu"
@@ -619,7 +619,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                   "singleLineComment": ["//"],
                   "name": "JavaScript"
                 },
-                "sourcePath": "C:\\dev\\skinny\\js\\jquery.menu.skins\\jquery-menu-exampleskin.js",
+                "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.menu.skins\\jquery-menu-exampleskin.js",
                 "projectPath": "js\\jquery.menu.skins\\jquery-menu-exampleskin.js",
                 "targetPath": "js\\jquery.menu.skins\\jquery-menu-exampleskin",
                 "title": "jquery-menu-exampleskin"
@@ -637,7 +637,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.modalDialog.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.modalDialog.js",
             "projectPath": "js\\jquery.modalDialog.js",
             "targetPath": "js\\jquery.modalDialog",
             "title": "jquery.modalDialog"
@@ -682,7 +682,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.modalDialog.deviceFixes.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.modalDialog.deviceFixes.js",
             "projectPath": "js\\jquery.modalDialog.deviceFixes.js",
             "targetPath": "js\\jquery.modalDialog.deviceFixes",
             "title": "jquery.modalDialog.deviceFixes"
@@ -698,7 +698,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.modalDialog.getSettings.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.modalDialog.getSettings.js",
             "projectPath": "js\\jquery.modalDialog.getSettings.js",
             "targetPath": "js\\jquery.modalDialog.getSettings",
             "title": "jquery.modalDialog.getSettings"
@@ -714,7 +714,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.modalDialog.header.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.modalDialog.header.js",
             "projectPath": "js\\jquery.modalDialog.header.js",
             "targetPath": "js\\jquery.modalDialog.header",
             "title": "jquery.modalDialog.header"
@@ -730,7 +730,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.modalDialog.unobtrusive.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.modalDialog.unobtrusive.js",
             "projectPath": "js\\jquery.modalDialog.unobtrusive.js",
             "targetPath": "js\\jquery.modalDialog.unobtrusive",
             "title": "jquery.modalDialog.unobtrusive"
@@ -746,7 +746,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.modalDialog.userAgent.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.modalDialog.userAgent.js",
             "projectPath": "js\\jquery.modalDialog.userAgent.js",
             "targetPath": "js\\jquery.modalDialog.userAgent",
             "title": "jquery.modalDialog.userAgent"
@@ -762,7 +762,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.modalDialogContent.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.modalDialogContent.js",
             "projectPath": "js\\jquery.modalDialogContent.js",
             "targetPath": "js\\jquery.modalDialogContent",
             "title": "jquery.modalDialogContent"
@@ -778,7 +778,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.modalDialogContent.header.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.modalDialogContent.header.js",
             "projectPath": "js\\jquery.modalDialogContent.header.js",
             "targetPath": "js\\jquery.modalDialogContent.header",
             "title": "jquery.modalDialogContent.header"
@@ -794,7 +794,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.msAjax.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.msAjax.js",
             "projectPath": "js\\jquery.msAjax.js",
             "targetPath": "js\\jquery.msAjax",
             "title": "jquery.msAjax"
@@ -866,7 +866,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.ns.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.ns.js",
             "projectPath": "js\\jquery.ns.js",
             "targetPath": "js\\jquery.ns",
             "title": "jquery.ns"
@@ -911,7 +911,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.partialLoad.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.partialLoad.js",
             "projectPath": "js\\jquery.partialLoad.js",
             "targetPath": "js\\jquery.partialLoad",
             "title": "jquery.partialLoad"
@@ -956,7 +956,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.postMessage.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.postMessage.js",
             "projectPath": "js\\jquery.postMessage.js",
             "targetPath": "js\\jquery.postMessage",
             "title": "jquery.postMessage"
@@ -1020,7 +1020,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.proxyAll.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.proxyAll.js",
             "projectPath": "js\\jquery.proxyAll.js",
             "targetPath": "js\\jquery.proxyAll",
             "title": "jquery.proxyAll"
@@ -1065,7 +1065,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.queryString.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.queryString.js",
             "projectPath": "js\\jquery.queryString.js",
             "targetPath": "js\\jquery.queryString",
             "title": "jquery.queryString"
@@ -1145,7 +1145,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.uncomment.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.uncomment.js",
             "projectPath": "js\\jquery.uncomment.js",
             "targetPath": "js\\jquery.uncomment",
             "title": "jquery.uncomment"
@@ -1190,7 +1190,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "C:\\dev\\skinny\\js\\jquery.url.js",
+            "sourcePath": "C:\\vp\\playpens\\SkinnyJS\\js\\jquery.url.js",
             "projectPath": "js\\jquery.url.js",
             "targetPath": "js\\jquery.url",
             "title": "jquery.url"
