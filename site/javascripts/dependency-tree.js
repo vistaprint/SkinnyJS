@@ -15,7 +15,7 @@ var dependencyTree =
 	"jquery.menu": { deps: [] },
 	"jquery.modalDialog": 
 	{ 
-		deps: ["jquery.queryString","jquery.postMessage","jquery.customEvent","jquery.clientRect","jquery.hostIframe","jquery.proxyAll"], 
+		deps: ["jquery.queryString","jquery.postMessage","jquery.customEvent","jquery.clientRect","jquery.hostIframe","jquery.proxyAll", "jquery.partialLoad"], 
 		single: true, 
 		notes: "Should be included separately, after other skinny.js modules, on pages that open modal dialogs, " +
 			"but NOT in iframe dialog content window documents. Should not be included on the same document as jquery.modalDialogContent.",
