@@ -169,7 +169,7 @@
         {
             // HACK: jQuery 1.9 changed the signature of $.buildFragment() to expect a raw DOM document object,
             // whereas previous versions expected a jQuery object, and would look up its ownerDocument.
-            if (compareVersion(jqueryVersion(), { major: 1, minor: 9 }) >= 0)
+            if (compareVersion(jqueryVersion(), [1, 9, 0]) >= 0)
             {
                 context = context[0].ownerDocument;
             }
@@ -196,31 +196,24 @@
 
     function jqueryVersion()
     {
-        var ver = $.map(
+        return $.map(
             $.fn.jquery.split('.'), 
             function(value)
             {
                 return parseInt(value, 10);
             });
-
-        return {
-            major: ver[0],
-            minor: ver[1]
-        };
     }
 
     function compareVersion(v1, v2)
     {
-        if (v1.major != v2.major)
+        for (var i=0; i<3; i++)
         {
-            return (v1.major > v2.major) ? 1 : -1;
+            if (v1[i] != v2[i])
+            {
+                return (v1[i] > v2[i]) ? 1 : -1;
+            }
         }
-
-        if (v1.minor != v2.minor)
-        {
-            return (v1.minor > v2.minor) ? 1 : -1;
-        }
-
+        
         return 0;
     }
 
