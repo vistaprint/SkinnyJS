@@ -24,9 +24,16 @@
     {
         // Default to a GET request
         var type = "GET";
+        var response;
 
         // Overload simulation
-        if (data) 
+        // if target is a function, assume its a callback
+        if (jQuery.isFunction(target)) 
+        {
+            callback = target;
+            target = undefined;
+        } 
+        else if (data) 
         {
             // If the third param is a function, assume that it's the callback
             if (jQuery.isFunction(data)) 
@@ -44,69 +51,59 @@
 
         var self = this;
 
+        // This section derived from the internals of jQuery.fn.load()
+
         // Request the remote document
         $.ajax({
             url: url,
             type: type,
             dataType: "html",
-            data: data,
-            // Complete callback (responseText is used internally)
-            complete: function( jqXHR, status, responseText ) 
+            data: data
+        }).done(function(responseText)
+        {
+            // Save response for use in complete callback
+            response = arguments;
+
+            self.each(function(i, el)
             {
-                // This section derived from the internals of jQuery.fn.load()
+                var $el = $(el);
+                var scripts = [];
+                var fragment = getFragmentAndScripts(responseText, target, $el, scripts);
 
-                // Store the response as specified by the jqXHR object
-                responseText = jqXHR.responseText;
-
-                // If successful, inject the HTML into all the matched elements
-                if (jqXHR.isResolved()) 
+                // This call might cause exceptions, but we still want the callbacks to happen
+                try 
                 {
-                    // jQuery Bug 4825: Get the actual response in case
-                    // a dataFilter is present in ajaxSettings
-                    jqXHR.done(function(r) 
+                    // See if a selector was specified
+                    $el.html(fragment);
+
+                    if (scripts.length) 
                     {
-                        responseText = r;
-                    });
-
-                    var scripts = [];
-                    var fragment = getFragmentAndScripts(responseText, target, self, scripts);
-
-                    // This call might cause exceptions, but we still want the callbacks to happen
-                    try 
-                    {
-                        // See if a selector was specified
-                        self.html(fragment);
-
-                        if (scripts.length) 
+                        $.each(scripts, function(i, elem) 
                         {
-                            $.each(scripts, function(i, elem) 
+                            if (elem.src) 
                             {
-                                if (elem.src) 
-                                {
-                                    // Load scripts that haven't yet been loaded
-                                    execScriptUnique(elem.src);
-                                } 
-                                else 
-                                {
-                                    // Execute inline scripts. No way to de-dupe these.
-                                    $.globalEval((elem.text || elem.textContent || elem.innerHTML || "").replace(rcleanScript, "/*$0*/"));
-                                }
-                            });
-                        }
-                    }
-                    catch (e) {
-                        // suppressing these errors
+                                // Load scripts that haven't yet been loaded
+                                execScriptUnique(elem.src);
+                            } 
+                            else 
+                            {
+                                // Execute inline scripts. No way to de-dupe these.
+                                $.globalEval((elem.text || elem.textContent || elem.innerHTML || "").replace(rcleanScript, "/*$0*/"));
+                            }
+                        });
                     }
                 }
-
-                if (callback) 
+                catch (e) 
                 {
-                    self.each(callback, [responseText, status, jqXHR]);
+                    // suppressing these errors
                 }
-            }
+            });
+
+        }).complete(callback && function(jqXHR, status) 
+        {
+            self.each(callback, response || [jqXHR.responseText, status, jqXHR]);
         });
         
-        // TODO: I think there's a jQuery API way to provide access the resulting promise.
         return this;
     };
 
@@ -151,33 +148,50 @@
 
     var getFragmentAndScripts = function(responseText, selector, context, scripts)
     {
-        var temp = $("<div>");
+        // HACK: jQuery 1.9 changed the signature of $.buildFragment() to expect a raw DOM document object,
+        // whereas previous versions expected a jQuery object, and would look up its ownerDocument.
+        if (parseFloat($.fn.jquery.substr(0, 3)) >= 1.9)
+        {
+            context = context[0].ownerDocument;
+        }
+
+        var $target;
 
         if (selector)
         {
+            var $temp = $("<div>");
+
             // A selector was specified. Load only the fragment.
-            // This will cause scripts in the fragment to be executed by R.html().
-            temp[0].innerHTML = responseText;
-            return temp.find(selector);
+            // This will cause scripts in the fragment to be executed by jQuery.fn.html().
+            $temp[0].innerHTML = responseText;
+
+            $target = $temp.find(selector);
+
+            $target.find("script").map(function(i, elem)
+            {
+                scripts.push(elem);
+            });
         }
         else
         {
             // No selector was specified. Load all scripts on the page, as long as they haven't been loaded before.
             var fragment = $.buildFragment([responseText], context, scripts);
 
-            if (scripts.length) 
-            {
-                $.each(scripts, function(i, elem) 
-                {
-                    if (elem.parentNode)
-                    {
-                        elem.parentNode.removeChild(elem);
-                    }
-                });
-            }
-
-            return fragment.fragment;
+            $target = fragment.fragment || fragment;
         }
+
+        if (scripts.length) 
+        {
+            $.each(scripts, function(i, elem) 
+            {
+                if (elem.parentNode)
+                {
+                    elem.parentNode.removeChild(elem);
+                }
+            });
+        }
+
+        return $target;
     };
 
 })(window, jQuery);

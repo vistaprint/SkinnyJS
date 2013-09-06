@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>QUnit bootstrapper</title>
+  <link rel="stylesheet" href="../dependencies/qunit.css">
+</head>
+<body>
+  <div id="qunit"></div>
+  <div id="qunit-fixture"></div>
+
+  <div id="contentContainer"></div>
+
+  <script src="../dependencies/qunit.js"></script>
+  <!-- ensure jquery.partialLoad.js works with old jQuery: the signature of $.buildFragment() changes in 1.9-->
+  <script src="../dependencies/jquery-1.7.2.js"></script>
+  <script src="../js/jquery.partialLoad.js"></script>
+  <script src="content/jquery.partialLoad.contentScriptLoadOnce.js"></script>
+  <script src="jquery.partialLoad.unittests.js"></script>
+</body>
+</html>

@@ -121,7 +121,7 @@ module.exports = function(grunt)
             }
         },
         qunit: {
-          all: ['test/**/*.html']
+          all: ['test/*.html']
         },
         groc:
         {
