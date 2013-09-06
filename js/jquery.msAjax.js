@@ -175,7 +175,7 @@
         { 
             var a = reISO.exec(value); 
             if (a) { 
-                var val = '/Date(' + new Date(Date.UTC(+a[1], +a[2] - 1, +a[3], +a[4], +a[5], +a[6])).getTime() + '-0000)/';
+                var val = "/Date(" + new Date(Date.UTC(+a[1], +a[2] - 1, +a[3], +a[4], +a[5], +a[6])).getTime() + "-0000)/";
 
                 this[key] = val; 
                 return val; 
@@ -225,7 +225,7 @@
         /*       
         settings.dataFilter = function(data, type)
         {
-           return "{d:{ 'foo': '/Date(1325394000000-0500)/' }}";
+           return "{d:{ "foo": '/Date(1325394000000-0500)/' }}";
         };
         */
         

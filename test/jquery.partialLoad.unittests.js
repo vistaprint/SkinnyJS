@@ -1,5 +1,4 @@
-﻿/*global asyncTest, ok, start*/
-
+﻿
 $(document).ready(function()
 {
     function cleanup()
@@ -82,7 +81,7 @@ $(document).ready(function()
     {
         $("#contentContainer").partialLoad(
             "content/jquery.partialLoad.content.html", 
-            function(g) 
+            function() 
             { 
                 var content = $("#contentContainer #bodyContent .interesting-inner").html();
 

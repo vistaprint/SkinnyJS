@@ -94,34 +94,28 @@ module.exports = function(grunt)
 {
     var config = 
     {
-        pkg: grunt.file.readJSON('package.json'),
+        pkg: grunt.file.readJSON("package.json"),
         jshint:
         {
-            uses_defaults: ['gruntfile.js', 'js/**/*.js'],
+            uses_defaults: ["gruntfile.js", "js/**/*.js"],
             with_overrides: 
             {
                 options:
                 {
-                    globals: {
-                        "$": true,
-                        "module": true,
-                        "test": true,
-                        "equal": true,
-                        "jQuery": true
-                    }
+                    jshintrc: "test/.jshintrc"
                 },
                 files: 
                 {
-                    src: ['test/**/*.js']
+                    src: ["test/**/*.js"]
                 }
             },
             options:
             {
-                jshintrc: '.jshintrc'
+                jshintrc: ".jshintrc"
             }
         },
         qunit: {
-          all: ['test/*.html']
+          all: ["test/*.html"]
         },
         groc:
         {
@@ -176,44 +170,44 @@ module.exports = function(grunt)
         {
             options: 
             {
-              separator: '\n'
+              separator: "\n"
             },
             modalDialog: 
             {
                 src: [
-                    'js/jquery.modalDialog.header.js', 
-                    'js/jquery.modalDialog.userAgent.js', 
-                    'js/jquery.modalDialog.getSettings.js',
-                    'js/jquery.modalDialog.js',
-                    'js/jquery.modalDialog.deviceFixes.js',
-                    'js/jquery.modalDialog.unobtrusive.js'
+                    "js/jquery.modalDialog.header.js", 
+                    "js/jquery.modalDialog.userAgent.js", 
+                    "js/jquery.modalDialog.getSettings.js",
+                    "js/jquery.modalDialog.js",
+                    "js/jquery.modalDialog.deviceFixes.js",
+                    "js/jquery.modalDialog.unobtrusive.js"
                 ],
-                dest: 'dist/jquery.modalDialog.js'
+                dest: "dist/jquery.modalDialog.js"
             },
             modalDialogContent: 
             {
                 src: [
-                    'js/jquery.modalDialogContent.header.js',
-                    'js/jquery.modalDialog.userAgent.js',
-                    'js/jquery.modalDialog.getSettings.js',
-                    'js/jquery.modalDialogContent.js',
-                    'js/jquery.modalDialog.deviceFixes.js', 
-                    'js/jquery.modalDialog.unobtrusive.js'
+                    "js/jquery.modalDialogContent.header.js",
+                    "js/jquery.modalDialog.userAgent.js",
+                    "js/jquery.modalDialog.getSettings.js",
+                    "js/jquery.modalDialogContent.js",
+                    "js/jquery.modalDialog.deviceFixes.js", 
+                    "js/jquery.modalDialog.unobtrusive.js"
                 ],
-                dest: 'dist/jquery.modalDialogContent.js'
+                dest: "dist/jquery.modalDialogContent.js"
             },
             readme: 
             {
-                src: ['site/readme-header.md', 'site/_includes/index-content.md'],
-                dest: 'README.md'
+                src: ["site/readme-header.md", "site/_includes/index-content.md"],
+                dest: "README.md"
             }
         },
         clean:
         {
             options: { force: true },
-            build: ['./dist'],
-            deploy: ['./.git/docs-temp'],
-            docs: ['./site/_site']
+            build: ["./dist"],
+            deploy: ["./.git/docs-temp"],
+            docs: ["./site/_site"]
         },
         less: 
         {
@@ -239,14 +233,14 @@ module.exports = function(grunt)
             main: {
                 options: 
                 {
-                    archive: './site/skinnyjs.zip'
+                    archive: "./site/skinnyjs.zip"
                 },
                 files: [
-                    { expand: true, src: ['**'], cwd: "./dist", dest: '', filter: 'isFile' } // includes files in path
+                    { expand: true, src: ["**"], cwd: "./dist", dest: "", filter: "isFile" } // includes files in path
                 ]
             }
         },
-        'string-replace': 
+        "string-replace": 
         {
             pages: 
             {
@@ -277,18 +271,18 @@ module.exports = function(grunt)
     // Project configuration.
     grunt.initConfig(config);
 
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-contrib-qunit');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-groc');
+    grunt.loadNpmTasks("grunt-contrib-jshint");
+    grunt.loadNpmTasks("grunt-contrib-uglify");
+    grunt.loadNpmTasks("grunt-contrib-less");
+    grunt.loadNpmTasks("grunt-contrib-qunit");
+    grunt.loadNpmTasks("grunt-contrib-copy");
+    grunt.loadNpmTasks("grunt-contrib-concat");
+    grunt.loadNpmTasks("grunt-contrib-clean");
+    grunt.loadNpmTasks("grunt-groc");
 
     // Delay loading the uglify configuration until all files are copied
     // to the dist dir. This gives us some indirection to concat files. 
-    grunt.registerTask('uglifyDist', function()
+    grunt.registerTask("uglifyDist", function()
     {
         config.uglify = 
         { 
@@ -298,30 +292,30 @@ module.exports = function(grunt)
             } 
         };
 
-        grunt.task.run('uglify');
+        grunt.task.run("uglify");
     });
 
     // Default tasks.
-    grunt.registerTask('default', ['verify', 'clean', 'less', 'copy:dist', 'concat:modalDialog', 'concat:modalDialogContent', 'uglifyDist']);
+    grunt.registerTask("default", ["verify", "clean", "less", "copy:dist", "concat:modalDialog", "concat:modalDialogContent", "uglifyDist"]);
 
     // Verification tasks
-    grunt.registerTask('verify', ['jshint', 'qunit']);
+    grunt.registerTask("verify", ["jshint", "qunit"]);
 
     // For zipping distribution files
-    grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.loadNpmTasks("grunt-contrib-compress");
 
-    grunt.loadNpmTasks('grunt-string-replace');
+    grunt.loadNpmTasks("grunt-string-replace");
 
     // Travis CI task.
-    grunt.registerTask('travis', 'default');
+    grunt.registerTask("travis", "default");
 
     // Documentation tasks.
-    grunt.loadNpmTasks('grunt-jekyll');
+    grunt.loadNpmTasks("grunt-jekyll");
     grunt.loadTasks("./site/tasks");
-    grunt.registerTask('docs', ['default', 'compress', 'pages', 'groc', 'add-docs-links', 'copy:docs', 'copy:deploy', 'string-replace:pages']);
+    grunt.registerTask("docs", ["default", "compress", "pages", "groc", "add-docs-links", "copy:docs", "copy:deploy", "string-replace:pages"]);
 
-    grunt.registerTask('pages', ['jekyll']);
+    grunt.registerTask("pages", ["jekyll"]);
 
-    grunt.registerTask('readme', ['jekyll', 'concat:readme']);
+    grunt.registerTask("readme", ["jekyll", "concat:readme"]);
 };
 

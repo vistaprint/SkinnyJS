@@ -1,5 +1,3 @@
-/* global DocumentTouch */
-
 // TODO: Support modifying state in the future by storing an object using $.data(), implement $(selector).dropDownMenu("option", value);
 // TODO: Accessibility: Keyboard navigation (tab navigation already works)- close submenus on pressing enter (maybe)
 
@@ -26,12 +24,6 @@
 
         return this;
     };
-
-    // Touch screen detection
-    // Adapted from Modernizr. There's got to be a better way to reuse this kind of thing
-    // optionally, without sucking in a ton of dependencies.
-    var _isTouchScreen = ('ontouchstart' in window) || 
-        (window.DocumentTouch && document instanceof DocumentTouch);
 
     // Hover highlighting
     var highlightMenuItem = function($item, enabled)
@@ -614,8 +606,9 @@
                     }
                 };
                 
-                var showClick = function(e)
+                this.showClick = function(e)
                 {
+                    
                     if (me.isTopLevel)
                     {
                         _clickHoverActivated = true;

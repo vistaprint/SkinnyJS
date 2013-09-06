@@ -30,6 +30,8 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     // Click handler for all links which open dialogs
     var dialogLinkHandler = function(e)
     {
+        e.preventDefault();
+        
         var $link = $(e.target);
 
         var dialog = $link.data(DIALOG_DATA_KEY);
@@ -43,8 +45,6 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
                 throw new Error("no href specified with data-rel='modalDialog'");
             }
 
-            e.preventDefault();
-        
             // Create a dialog settings object
             var settings = {};
 
@@ -106,7 +106,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     // Assign handlers to all dialog links
     $(document).ready(function()
     {
-        $("[data-rel='modalDialog']").on("click", dialogLinkHandler);
+        $(document).on("click", "[data-rel='modalDialog']", dialogLinkHandler);
     });
 
 })(jQuery);

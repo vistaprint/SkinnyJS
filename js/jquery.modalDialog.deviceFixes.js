@@ -89,7 +89,7 @@
 
             if ($badEls.length > 0)
             {
-                $.modalDialog.onopen.add(function(e)
+                $.modalDialog.onopen.add(function()
                 {
                     if (this.level === 0)
                     {
@@ -97,7 +97,7 @@
                     }
                 });
 
-                $.modalDialog.onbeforeclose.add(function(e)
+                $.modalDialog.onbeforeclose.add(function()
                 {
                     if (this.level === 0)
                     {

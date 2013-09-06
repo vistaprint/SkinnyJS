@@ -7,15 +7,15 @@
         var ua = navigator.userAgent;
         
         // Internet Explorer 7 specific checks
-        if (ua.indexOf('MSIE 7.0') > 0) 
+        if (ua.indexOf("MSIE 7.0") > 0) 
         {
-            return {ie: true, ie7: true, version: 7, compat: ua.indexOf('compatible') > 0};
+            return {ie: true, ie7: true, version: 7, compat: ua.indexOf("compatible") > 0};
         }
 
         // Internet Explorer 8 specific checks
-        if (ua.indexOf('MSIE 8.0') > 0) 
+        if (ua.indexOf("MSIE 8.0") > 0) 
         {
-            return {ie: true, ie8: true, version: 8, compat: ua.indexOf('compatible') > 0};
+            return {ie: true, ie8: true, version: 8, compat: ua.indexOf("compatible") > 0};
         }
 
         return {};

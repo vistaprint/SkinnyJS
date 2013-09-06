@@ -197,7 +197,7 @@
     function jqueryVersion()
     {
         return $.map(
-            $.fn.jquery.split('.'), 
+            $.fn.jquery.split("."), 
             function(value)
             {
                 return parseInt(value, 10);

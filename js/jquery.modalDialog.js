@@ -73,7 +73,7 @@ if (!Object.keys)
     var ModalDialog = function(settings)
     {
         this.settings = settings;
-        this.parent = $(this.settings.containerElement || 'body');
+        this.parent = $(this.settings.containerElement || "body");
 
         // Creates event objects on the dialog and copies handlers from settings
         $.each(["open", "beforeopen", "close", "beforeclose", "ajaxerror"], $.proxy(this._setupCustomEvent, this));
@@ -136,7 +136,7 @@ if (!Object.keys)
         this._build();
 
         // add or remove the 'smallscreen' class (which can also be checked using CSS media queries)
-        this.$container.stop()[$.modalDialog.isSmallScreen() ? 'addClass' : 'removeClass' ]("smallscreen");
+        this.$container.stop()[$.modalDialog.isSmallScreen() ? "addClass" : "removeClass" ]("smallscreen");
 
         this.$el.show();
 
@@ -205,7 +205,7 @@ if (!Object.keys)
         {
             this.$loadingIndicator = $("<div class='dialog-loading-indicator'><span></span></div>")
                 .appendTo(this.$bg)
-                .css('z-index', parseInt(this.$bg.css('z-index'), 10) + 1);
+                .css("z-index", parseInt(this.$bg.css("z-index"), 10) + 1);
         }
     };
 
@@ -284,7 +284,7 @@ if (!Object.keys)
 
         if ($.modalDialog.isSmallScreen() && this.triggerWindowResize)
         {
-            $(window).trigger('resize');
+            $(window).trigger("resize");
         }
     };
 
@@ -299,6 +299,8 @@ if (!Object.keys)
     // Builds the DOM for the dialog chrome
     ModalDialog.prototype._build = function()
     {
+        /*jshint quotmark:false*/
+
         if (this._destroyed)
         {
             throw new Error("This dialog has been destroyed");
@@ -328,11 +330,11 @@ if (!Object.keys)
             // It's not for us to fix developer problems, if the container doesn't exist, this will break
             this.parent.append(this.$bg, this.$container);
 
-            if (!this.parent.is('body') && !this.parent.hasClass('ui-page-active')) {
-                this.$bg.css('position', 'absolute');
+            if (!this.parent.is("body") && !this.parent.hasClass("ui-page-active")) {
+                this.$bg.css("position", "absolute");
 
-                if (this.parent.css('position') == 'static') {
-                    this.parent.css('position', 'relative');
+                if (this.parent.css("position") == "static") {
+                    this.parent.css("position", "relative");
                 }
             }
 
@@ -355,7 +357,7 @@ if (!Object.keys)
 
             // only enable dragging if the dialog is over the entire window
             // and we are not in Internet Explorer 7, because it handles positioning oddly.
-            if ((this.parent.is('body') || this.parent.hasClass('ui-page-active')) && !_ua.ie7) {
+            if ((this.parent.is("body") || this.parent.hasClass("ui-page-active")) && !_ua.ie7) {
                 this._makeDraggable();
             }
         }
@@ -384,7 +386,7 @@ if (!Object.keys)
     ModalDialog.prototype._getDefaultPosition = function(contentHeight)
     {
         var $win = $(window),
-            windowWidth = this.parent.is('body') ? window.innerWidth || $win.width() : this.parent.width(),
+            windowWidth = this.parent.is("body") ? window.innerWidth || $win.width() : this.parent.width(),
             pos = {};
 
         pos.width = Math.min(windowWidth - (MARGIN * 2), this.settings.maxWidth);
@@ -396,8 +398,8 @@ if (!Object.keys)
         }
 
         if ($.modalDialog.isSmallScreen()) {
-            if (this.settings.skin == 'lightbox') {
-                pos.width = '100%';
+            if (this.settings.skin == "lightbox") {
+                pos.width = "100%";
                 pos.left = 0;
             }
         }
@@ -413,7 +415,7 @@ if (!Object.keys)
             // Get the new container height with the proposed content height
             var containerHeight = this._getChromeHeight() + contentHeight;
 
-            var parentHeight = this.parent.is('body') ? $(window).height() : this.parent.height();
+            var parentHeight = this.parent.is("body") ? $(window).height() : this.parent.height();
             var idealTop = (parentHeight / 2) - (containerHeight / 2);
 
             pos.top = Math.max(idealTop, pos.top);
@@ -432,7 +434,7 @@ if (!Object.keys)
             return;
         }
 
-        this.$header.addClass('draggable').on("mousedown touchstart", this._startDrag);
+        this.$header.addClass("draggable").on("mousedown touchstart", this._startDrag);
     };
 
     ModalDialog.prototype._startDrag = function(e)
@@ -615,7 +617,7 @@ if (!Object.keys)
     };
 
     // Extends ModalDialog such that the content is an iframe.
-    var FramedModalDialog = function(settings)
+    var FramedModalDialog = function()
     {
         ModalDialog.apply(this, arguments);
 
@@ -629,7 +631,7 @@ if (!Object.keys)
 
     FramedModalDialog.prototype.dialogType = "iframe";
 
-    FramedModalDialog.prototype._setupCustomEvent = function(eventName)
+    FramedModalDialog.prototype._setupCustomEvent = function()
     {
         var evt = ModalDialog.prototype._setupCustomEvent.apply(this, arguments);
         evt.add(_crossWindowEventHandler);
@@ -642,7 +644,10 @@ if (!Object.keys)
 
         for (var i=0; i<_dialogStack.length; i++)
         {
-            _dialogStack[i]._postMessageToContent("event" + e.type, $.extend({ _eventDialogId: this.settings._fullId}, e.data));
+            if (_dialogStack[i]._postMessageToContent)
+            {
+                _dialogStack[i]._postMessageToContent("event" + e.type, $.extend({ _eventDialogId: this.settings._fullId}, e.data));
+            }
         }
     };
 
@@ -662,14 +667,14 @@ if (!Object.keys)
     // Override the _buildContent method to construct an iframe
     FramedModalDialog.prototype._buildContent = function()
     {
+        /* jshint quotmark:false */
+
         this.$frame = $('<iframe src="' + this.settings.url + '" name="' + this.settings._fullId + '" seamless allowtransparency="true" width="100%" style="height:' + this.settings.initialHeight + 'px;" class="dialog-frame" scrolling="no" frameborder="0" framespacing="0" />');
         this.$content = this.$frame;
     };
 
     FramedModalDialog.prototype._alreadyBuilt = function()
     {
-        var $frame = this.$frame;
-
         this._buildContent();
 
         this.$contentContainer.append(this.$content);
@@ -714,9 +719,6 @@ if (!Object.keys)
 
     FramedModalDialog.prototype.setHeight = function(contentHeight, center, skipAnimation)
     {
-        var maxContainerHeight = $(window).height() - (MARGIN * 2);
-        var maxContentHeight = maxContainerHeight - this._getChromeHeight();
-
         var applyChange = skipAnimation ? 
             function($content, css) { $content.css(css); } :
             function($content, css) { $content.animate(css, { duration: 400 }); };
@@ -739,7 +741,7 @@ if (!Object.keys)
     };
 
     // Sets the title of the dialog in the header from the HTML title tag of the iframe content document.
-    FramedModalDialog.prototype.setTitleFromContent = function(command, data)
+    FramedModalDialog.prototype.setTitleFromContent = function()
     {
         this._postMessageToContent("setTitleFromContent");
     };
@@ -757,7 +759,7 @@ if (!Object.keys)
 
     // AjaxModalDialog: Extends ModalDialog 
     // Loads content via ajax
-    var AjaxModalDialog = function(settings)
+    var AjaxModalDialog = function()
     {
         ModalDialog.apply(this, arguments);
     };
@@ -781,15 +783,18 @@ if (!Object.keys)
                     function(responseText, status, xhr)
                     {
                         this._ajaxComplete = true;
+                        var isError = false;
 
-                        if (xhr.isRejected())
+                        xhr.fail(function()
                         {
                             this.onajaxerror.fire({ 
                                 xhr: xhr, 
                                 status: status, 
                                 responseText: responseText
                             });
-                        }
+
+                            isError = true;
+                        });
 
                         ModalDialog.prototype._finishOpen.call(this);
                     }, 
@@ -889,7 +894,7 @@ if (!Object.keys)
     // On small screens we make the background opaque to hide the content because
     // we will be hiding all content within the DOM and scrolling them to top.
     // When removing the host window content from the DOM, make the veil opaque to hide it.
-    $.modalDialog.veilClass = $.modalDialog.isSmallScreen() ? 'dialog-veil-opaque' : 'dialog-veil';
+    $.modalDialog.veilClass = $.modalDialog.isSmallScreen() ? "dialog-veil-opaque" : "dialog-veil";
 
     // Creates a new dialog from the specified settings.
     $.modalDialog.create = function(settings)
@@ -1012,7 +1017,7 @@ if (!Object.keys)
             dialog.close();
         },
 
-        create: function(dialog, qs)
+        create: function()
         {
             // do nothing- the dialog was created already
         },

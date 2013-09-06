@@ -82,7 +82,7 @@
     // Given a URL, returns the domain portion (i.e. http://www.somedomain.com)
     function getDomainFromUrl(url) 
     {
-        return url.replace(/([^:]+:\/\/[^\/]+).*/, '$1');
+        return url.replace(/([^:]+:\/\/[^\/]+).*/, "$1");
     }
 
     // Given a domain pattern (i.e. http://somedomain.com) matches against a specified domain
@@ -126,7 +126,7 @@
                     {
                         if (window.frames[0] instanceof Window && window.frames[frame] === target)
                         {
-                            return 'f,' + frame;
+                            return "f," + frame;
                         }
                     } 
                     catch (e) 
@@ -149,12 +149,12 @@
 
         if (window.parent && window.parent === target)
         {
-            return 'p';
+            return "p";
         }
 
         if (window.opener && window.opener === target)
         {
-            return 'o';
+            return "o";
         }
 
         // we have already transversed deep enough
@@ -172,7 +172,7 @@
                 ref = transverseLevel(window.frames[i], target, level + 1);
                 if (ref) 
                 {
-                    return 'f,' + i + '.' + ref;
+                    return "f," + i + "." + ref;
                 }
             }
         }
@@ -211,7 +211,7 @@
         // way to get to it. This makes for a yucky API, unfortunately.
         if (typeof (targetWindow) == "string")
         {
-            return ':' + targetWindow;
+            return ":" + targetWindow;
         }
 
         // first see if we can quickly find the reference
@@ -223,13 +223,13 @@
         // see if the target is simple the parent
         if (currentWindow.parent && currentWindow.parent !== currentWindow && currentWindow.parent === targetWindow)
         {
-            return 'p';
+            return "p";
         }
 
         // see if the target is simply the opener
         if (currentWindow.opener && currentWindow.opener !== currentWindow && currentWindow.opener === targetWindow)
         {
-            return 'o';
+            return "o";
         }
 
         // Try to determine the relationship through recursion.
@@ -250,7 +250,7 @@
     //                               (i.e. http://www.something.com)
     // * {Window} targetWindow: A reference to the target window to which the message should be sent
     // * {string} targetWindowName: If the target window is a child window (not a frame), the window name
-    //                               is required for browsers that don't support postMessage() natively.
+    //                               is required for browsers that don"t support postMessage() natively.
     $.postMessage = function(message, targetHost, targetWindow, /* optional */ targetWindowName) 
     {
         if (!targetHost)
@@ -314,15 +314,15 @@
         // (not a querystring, which would cause it to load from the server)
         var serializedWindowRef = serializeWindowReference(window, targetWindowName || targetWindow),
             thisDomain = getDomainFromUrl(document.location.href),
-            iframe = document.createElement('iframe');
+            iframe = document.createElement("iframe");
 
-        $('body').append(
+        $("body").append(
             $(iframe)
             .hide()
-            .attr('src', targetHost + '/vp/JS-Lib/jQuery/plugins/postmessage.htm#' +
+            .attr("src", targetHost + "/vp/JS-Lib/jQuery/plugins/postmessage.htm#" +
                 // When server side debugging, add (+new Date()) here
-                (+new Date()) + cacheBuster + '&' +
-                serializedWindowRef + '&' + thisDomain + '&' + encodeURIComponent(message)
+                (+new Date()) + cacheBuster + "&" +
+                serializedWindowRef + "&" + thisDomain + "&" + encodeURIComponent(message)
             )
             .load(function() {
                 // remove this DOM iframe once it is no longer needed
@@ -351,7 +351,7 @@
             allowedOriginOrFunction = "*";
         }
 
-        $(window).on('message', function(event, data, origin) 
+        $(window).on("message", function(event, data, origin) 
         {
             if (!data) 
             {
@@ -364,7 +364,7 @@
             }
 
             return isOriginMatch(allowedOriginOrFunction, event.originalEvent ? event.originalEvent.origin : origin) ?
-                callback({ 'data': data, 'origin': origin }) : 
+                callback({ "data": data, "origin": origin }) : 
                 false;
         });
     };
@@ -374,7 +374,7 @@
     // an IFrame or top-level window. To work around, listen for calls from the polyfill technique for IE in all cases.
     window.__receiveMessageHook = function(message, origin) 
     {
-        $(window).trigger('message', decodeURIComponent(message), origin);
+        $(window).trigger("message", decodeURIComponent(message), origin);
     };
 
     // Convenience wrapper for windows wrapped in jQuery objects

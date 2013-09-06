@@ -22,6 +22,13 @@
     "unused": true,
     "globals":
     {
-        "jQuery": true
+        "jQuery": true,
+        "module": true,
+        "ok": true,
+        "equal": true,
+        "test": true,
+        "asyncTest": true,
+        "start": true,
+        "$": true
     }
 }
