@@ -12,6 +12,9 @@ if ($LASTEXITCODE -ne  0)
     exit
 }
 
+git fetch origin
+git reset --hard origin/gh-pages
+
 copy -Force -Recurse .git\docs-temp\* .
 
 git add .
