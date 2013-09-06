@@ -4,7 +4,7 @@
 
     function decodeTest(name, value, expected)
     {
-        test("$.querystring decode: " + name, function()
+        test("decode: " + name, function()
         {
             var qs = {
                 keyString: value
