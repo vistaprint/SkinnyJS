@@ -20,27 +20,35 @@ polyfill technique to work.</p></div></div></div><div class="segment"><div class
     "http://www.foo.com",
     window.frames["fooWindow"]
     );
-</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h4 id="listening-to-messages-from-another-window">Listening to messages from another window</h4></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>$.receiveMessage() has the following signature:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>$.receiveMessage(
-    messageHandler, // The message to send (string)
-    allowedOriginOrFunction // Either a domain string (i.e. http://www.something.com), 
-                            // a wildcard (i.e. "*"), or a function that takes domain
-                            // strings and returns true or false.
-    );
-</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Example usage:
-This example simply alerts every message it receives, from any origin:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>$.receiveMessage(function(e) {
+</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h4 id="listening-to-messages-from-another-window">Listening to messages from another window</h4></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>To listen for messages from another window, use jQuery's built in event handling infrastructure and listen for "message" events on the window object:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>This example simply alerts every message it receives, from any origin:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>$(window).on("message", function(e) {
     alert(e.data); // Alerts "this is a message"
 });
-</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>This example alerts every message it receives, from http://www.foo.com:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>$.receiveMessage(
-    function(e) {
+</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>In general, its a good idea to filter out requests from unknown domains. This example filters messages not from http://www.foo.com:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>$(window).on("message", function(e) {
+        if (e.origin !== "http://www.foo.com")
+        {
+            return;
+        }
         alert(e.data); // Alerts "this is a message"
-    },
-    "http://www.foo.com");
-</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>This example alerts every message it receives, from any subdomain of foo.com:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>$.receiveMessage(
-    function(e) {
+    });
+</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>This example alerts every message it receives, from any subdomain of foo.com:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>$(window).on("message", function(e) {
+        if (origin.search(/http:\/\/[^\.]*\.foo\.com$/gi) &lt; 0)
+        {
+            return;
+        }
         alert(e.data); // Alerts "this is a message"
-    },
-    function(origin) {
-        return origin.search(/http:\/\/[^\.]*\.foo\.com$/gi) &gt;= 0;
+    });
+</code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Its also a common practice to "namespace" messages so your handlers don't respond to messages they don't know how to handle:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>$(window).on("message", function(e) {
+        if (e.origin !== "http://www.foo.com")
+        {
+            return;
+        }
+
+        if (e.data.indexOf("fruit:") !== 0)
+        {
+            return;
+        }
+
+        // TODO: Remove the "fruit:" namespace and do something with the message
     });
 </code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="source">Source</h3></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">$</span><span class="p">)</span> 
 <span class="p">{</span>
