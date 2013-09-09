@@ -50,7 +50,7 @@
   <h2>Example: iframe dialog</h2>
 
   <div>
-    <a href="content.html" data-rel="modalDialog">Open</a>
+    <a href="http://localhost/site/dialog-harness/content.html" data-rel="modalDialog">Open</a>
   </div>
 </section>
 
@@ -63,9 +63,15 @@
 </section>
 
 <script type="text/javascript">
-  $.receiveMessage(function(message)
+  $(window).on("message", function(e)
   {
-      alert(message);
+      if (!e.data || e.data.indexOf("testmsg:") !== 0)
+      {
+          return;
+      }
+      
+      alert(e.origin);
+      alert(e.data);
   });
 </script>
   

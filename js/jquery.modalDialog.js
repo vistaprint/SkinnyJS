@@ -644,9 +644,9 @@ if (!Object.keys)
 
         for (var i=0; i<_dialogStack.length; i++)
         {
-            if (_dialogStack[i]._postMessageToContent)
+            if (_dialogStack[i]._postCommand)
             {
-                _dialogStack[i]._postMessageToContent("event" + e.type, $.extend({ _eventDialogId: this.settings._fullId}, e.data));
+                _dialogStack[i]._postCommand("event" + e.type, $.extend({ _eventDialogId: this.settings._fullId}, e.data));
             }
         }
     };
@@ -689,7 +689,7 @@ if (!Object.keys)
     // Used for orchestrating cross-window communication with dialog proxies.
     // * {string} command: The name of the command to send to the content window
     // * {object} data: A simple data object to serialize (as a querystring) and send with the command
-    FramedModalDialog.prototype._postMessageToContent = function(command, data)
+    FramedModalDialog.prototype._postCommand = function(command, data)
     {
         var messageData = { dialogCmd: command };
         if (data)
@@ -697,8 +697,18 @@ if (!Object.keys)
             $.extend(messageData, data);
         }
 
-        var win = this.getWindow();
         var message = $.param(messageData);
+
+        this.postMessage(message);
+    };
+
+    // Sends a message to the iframe content window. 
+    // Used for orchestrating cross-window communication with dialog proxies.
+    // * {string} command: The name of the command to send to the content window
+    // * {object} data: A simple data object to serialize (as a querystring) and send with the command
+    FramedModalDialog.prototype.postMessage = function(message)
+    {
+        var win = this.getWindow();
 
         var hostname = this.settings.frameHostname;
         if (!hostname)
@@ -737,13 +747,13 @@ if (!Object.keys)
     // Sets the height of the iframe to the detected height of the iframe content document.
     FramedModalDialog.prototype.setHeightFromContent = function(center, skipAnimation)
     {
-        this._postMessageToContent("setHeightFromContent", { center: !!center, skipAnimation: !!skipAnimation});
+        this._postCommand("setHeightFromContent", { center: !!center, skipAnimation: !!skipAnimation});
     };
 
     // Sets the title of the dialog in the header from the HTML title tag of the iframe content document.
     FramedModalDialog.prototype.setTitleFromContent = function()
     {
-        this._postMessageToContent("setTitleFromContent");
+        this._postCommand("setTitleFromContent");
     };
 
     FramedModalDialog.prototype.notifyReady = function(hostname)
@@ -1043,34 +1053,41 @@ if (!Object.keys)
         }
         catch (ex)
         {
-            //ignore- it wasn't a message for the dialog framework
+            // ignore- it wasn't a message for the dialog framework
         }
 
-        if (!qs.dialogCmd)
+        // messages in the dialog framework contain "dialogCmd"
+        if (qs && qs.dialogCmd)
         {
-            //ignore- it wasn't a message for the dialog framework
-            return;
+            var action = messageActions[qs.dialogCmd];
+            if (action)
+            {
+                var dialog;
+
+                if (qs._fullId)
+                {
+                    // If a fullId is passed, it can be either for a new dialog or an existing dialog.
+                    // $.modalDialog.create() handles both cases.
+                    dialog = $.modalDialog.create(qs);
+                }
+                else
+                {
+                    dialog = $.modalDialog.getCurrent();
+                }
+
+                action(dialog, qs);
+
+                return true;
+            }
         }
 
-        var action = messageActions[qs.dialogCmd];
-        if (action)
-        {
-            var dialog;
-
-            if (qs._fullId)
-            {
-                // If a fullId is passed, it can be either for a new dialog or an existing dialog.
-                // $.modalDialog.create() handles both cases.
-                dialog = $.modalDialog.create(qs);
-            }
-            else
-            {
-                dialog = $.modalDialog.getCurrent();
-            }
-
-            action(dialog, qs);
-        }
+        return false;
     };
+
+    // Note: It is a bit odd that even though we have the jquery.postMessage() plugin,
+    // we're still checking its availability and calling the native implementation here.
+    // The reason is that for most browsers (besides old IE) the plugin is unnecessary, 
+    // and it may not be desirable to load it at all.
 
     if ($.receiveMessage)
     {
@@ -1082,12 +1099,15 @@ if (!Object.keys)
     }
 
     // Global hook to simplify non-cross domain communication
-    window._dialogReceiveMessageManual = function(message, senderOrigin)
+    window._dialogReceiveMessageManual = function(message, origin)
     {
-        messageHandler({
-            data: message,
-            origin: senderOrigin
-        });
+        if (!messageHandler({ data: message, origin: origin}))
+        {
+            var evt = new $.Event("message");
+            evt.data = message;
+            evt.origin = origin;
+            $(window).trigger(evt, [message, origin]);
+        }
     };
 
     // jQuery mobile support

@@ -314,6 +314,40 @@ If your IFrame content is in a different domain than the parent window, you need
     $.modalDialog.parentHostName = "http://www.vistaprint.com";
 {% endhighlight %}
 
+##### Calling other dialog APIs from the iframe content window
+You can use any of the dialog APIs from the iframe content window. For example:
+
+{% highlight javascript %}
+    // Close the dialog
+    $.modalDialog.getCurrent().close();
+
+    // Center the dialog
+    $.modalDialog.getCurrent().center();
+{% endhighlight %}
+
+##### Sending messages between windows
+You can use the dialog framework to post messages between windows (uses either HTML5 postMessage() or the [jquery.postMessage plugin](js/jquery.postMessage.html) under the hood).
+
+For example, imagine you'd like to send a message to the host (parent) window from a dialog content window. Here's the code that you would call in the content window:
+{% highlight javascript %}
+    // Send a message using the skinny.js jquery.postMessage() plugin
+    $.modalDialog.getCurrent().postMessageToParent("hi parent, here's some data");
+{% endhighlight %}
+
+Then, you can receive the message in the parent window:
+{% highlight javascript %}
+    $(window).on("message", function(e) 
+    {
+        // Cross domain security
+        if (e.origin != "http://mydomain.com")
+        {
+            return;
+        }
+
+        alert("The message is: " + e.data);
+    });
+{% endhighlight %}
+
 ### Creating multiple active dialogs
 
 Dialogs can be opened in succession (i.e. a dialog can open another dialog). This even works from an IFrame dialog, and even across domains.

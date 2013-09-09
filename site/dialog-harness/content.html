@@ -43,12 +43,17 @@
 
 <br>
 <a href="#" id="postMessageTestLink">test post message to parent</a>
-  
+
+<br><br>
+<a href="#" onclick="$.modalDialog.getCurrent().close();return false;">Close the window</a>
+
 <script type="text/javascript">
   $("#postMessageTestLink").on("click", function()
   {
-      $.modalDialog.getCurrent().getWindow().parent.postMessage('hi there', "*");
+      $.modalDialog.getCurrent().postMessageToParent("testmsg:hi there", "*");
   });
+
+  $.modalDialog.parentHostName = "http://devleilers.vistaprint.net";
 </script>
 </body>
 </html>
