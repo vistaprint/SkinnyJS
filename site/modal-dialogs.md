@@ -331,7 +331,7 @@ You can use the dialog framework to post messages between windows (uses either H
 For example, imagine you'd like to send a message to the host (parent) window from a dialog content window. Here's the code that you would call in the content window:
 {% highlight javascript %}
     // Send a message using the skinny.js jquery.postMessage() plugin
-    $.modalDialog.getCurrent().postMessageToParent("hi parent, here's some data");
+    $.modalDialog.getCurrent().postMessageToParent("hi parent, here's some data from your child");
 {% endhighlight %}
 
 Then, you can receive the message in the parent window:
@@ -347,6 +347,13 @@ Then, you can receive the message in the parent window:
         alert("The message is: " + e.data);
     });
 {% endhighlight %}
+
+Or, conversely, you can send a message to the iframe dialog content window from the parent:
+
+{% highlight javascript %}
+    $.modalDialog.getCurrent().postMessage("hi child, here's some data from your parent");
+{% endhighlight %}
+
 
 ### Creating multiple active dialogs
 

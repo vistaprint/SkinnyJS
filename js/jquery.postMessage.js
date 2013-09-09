@@ -37,38 +37,48 @@
 
 // #### Listening to messages from another window
 
-// $.receiveMessage() has the following signature:
+// To listen for messages from another window, use jQuery's built in event handling infrastructure and listen for "message" events on the window object:
 
-//     $.receiveMessage(
-//         messageHandler, // The message to send (string)
-//         allowedOriginOrFunction // Either a domain string (i.e. http://www.something.com), 
-//                                 // a wildcard (i.e. "*"), or a function that takes domain
-//                                 // strings and returns true or false.
-//         );
-
-// Example usage:
 // This example simply alerts every message it receives, from any origin:
 
-//     $.receiveMessage(function(e) {
+//     $(window).on("message", function(e) {
 //         alert(e.data); // Alerts "this is a message"
 //     });
 
-// This example alerts every message it receives, from http://www.foo.com:
+// In general, its a good idea to filter out requests from unknown domains. This example filters messages not from http://www.foo.com:
 
-//     $.receiveMessage(
-//         function(e) {
+//     $(window).on("message", function(e) {
+//             if (e.origin !== "http://www.foo.com")
+//             {
+//                 return;
+//             }
 //             alert(e.data); // Alerts "this is a message"
-//         },
-//         "http://www.foo.com");
+//         });
 
 // This example alerts every message it receives, from any subdomain of foo.com:
 
-//     $.receiveMessage(
-//         function(e) {
+//     $(window).on("message", function(e) {
+//             if (origin.search(/http:\/\/[^\.]*\.foo\.com$/gi) < 0)
+//             {
+//                 return;
+//             }
 //             alert(e.data); // Alerts "this is a message"
-//         },
-//         function(origin) {
-//             return origin.search(/http:\/\/[^\.]*\.foo\.com$/gi) >= 0;
+//         });
+
+// Its also a common practice to "namespace" messages so your handlers don't respond to messages they don't know how to handle:
+
+//     $(window).on("message", function(e) {
+//             if (e.origin !== "http://www.foo.com")
+//             {
+//                 return;
+//             }
+//             
+//             if (e.data.indexOf("fruit:") !== 0)
+//             {
+//                 return;
+//             }
+//              
+//             // TODO: Remove the "fruit:" namespace and do something with the message
 //         });
 
 // ### Source
