@@ -10,7 +10,22 @@
 // url fragments and polling. This technique eliminates race conditions where messages sent
 // in rapid succession might not be received. It also removes the need for polling.
 
+// Supports almost any conceivable browser, tested with IE6+
+
 // ### Usage
+
+// #### Polyfill setup
+
+// To support IE6-7 (and IE8-10 for non-frame windows), you need to make the polyfill HTML file (postmessage.htm) available on your web server.
+// For example, you could put the file here:
+
+//     http://www.mysite.com/scripts/thirdparty/skinnyjs/postmessage.htm
+
+// IMPORTANT: This file must be on the same domain as the content you want to communicate with. It cannot be hosted on a different domain (i.e. Google CDN).
+
+// Once the file is available, you need to configure the postMessage plugin to point to it. Add this line anywhere on your page (or as the first/last line of jquery.postMessage.js):
+
+//     window._jqueryPostMessagePolyfillPath = "/scripts/thirdparty/skinnyjs/postmessage.htm";
 
 // #### Sending a message to another window
 

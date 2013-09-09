@@ -49,7 +49,16 @@ var dependencyTree =
 	"jquery.msAjax": { deps: ["date-parse"] },
 	"jquery.ns": { deps: [] },
 	"jquery.partialLoad": { deps: [] },
-	"jquery.postMessage": { deps: [] },
+	"jquery.postMessage": { 
+		deps: [], 
+		other: [
+			{
+				name: "postmessage polyfill",
+				path: "js/postmessage.htm",
+				notes: "postMessage polyfill file for browsers that don't support postMessage. Make this accessible on your web server, and configure jquery.postMessage to point to it."
+			}
+		] 
+	},
 	"jquery.proxyAll": { deps: [] },
 	"jquery.queryString": { deps: ["jquery.delimitedString"] },
 	"jquery.uncomment": { deps: [] },
