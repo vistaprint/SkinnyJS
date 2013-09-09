@@ -985,6 +985,14 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "type": "heading",
                       "data": {
                         "level": 4,
+                        "title": "Polyfill setup",
+                        "slug": "polyfill-setup"
+                      },
+                      "depth": 4
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 4,
                         "title": "Sending a message to another window",
                         "slug": "sending-a-message-to-another-window"
                       },
