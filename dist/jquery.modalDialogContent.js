@@ -234,7 +234,7 @@ $.modalDialog.create()
 
             this.settings._fullId = this.settings.parentId + "_" + getDialogId();
 
-            this._postMessage("create", this.settings);
+            this._postCommandToParent("create", this.settings);
         }
     };
 
@@ -246,12 +246,12 @@ $.modalDialog.create()
 
         open: function()
         {
-            this._postMessage("open");
+            this._postCommandToParent("open");
         },
 
         close: function()
         {
-            this._postMessage("close");
+            this._postCommandToParent("close");
         },
 
         getParent: function()
@@ -301,7 +301,7 @@ $.modalDialog.create()
 
             this._currentFrameHeight = contentHeight;
 
-            this._postMessage("setHeight", { height: contentHeight, center: !!center, skipAnimation: !!skipAnimation });
+            this._postCommandToParent("setHeight", { height: contentHeight, center: !!center, skipAnimation: !!skipAnimation });
         },
 
         setHeightFromContent: function(center, skipAnimation)
@@ -330,12 +330,12 @@ $.modalDialog.create()
 
         center: function()
         {
-            this._postMessage("center");
+            this._postCommandToParent("center");
         },
 
         setTitle: function(title)
         {
-            this._postMessage("setTitle", { title: title });
+            this._postCommandToParent("setTitle", { title: title });
         },
 
         setTitleFromContent: function()
@@ -377,7 +377,7 @@ $.modalDialog.create()
             }
 
             // Pass the hostname of the window so that subsequent postMessage() requests can be directed to the right domain.
-            this._postMessage("notifyReady", { hostname: hostname });
+            this._postCommandToParent("notifyReady", { hostname: hostname });
 
             // Poll for content size changes. This appears to be more foolproof and cheaper than any other method
             // (i.e. manually calling it, etc
@@ -412,23 +412,9 @@ $.modalDialog.create()
             }
         },
 
-        _postMessage: function(command, data)
+        postMessageToParent: function(message)
         {
-            var messageData = { 
-                dialogCmd: command,
-                _fullId: this.settings._fullId
-            };
-
-            if (data)
-            {
-                $.extend(messageData, data);
-            }
-
-            var message = $.param(messageData);
-
-            //console.log("content post: " + message);
-
-            // Try to detect if the parent window is directly accessable.
+            // Try to detect if the parent window is directly accessible.
             // This is significantly less expensive on old browsers that don't support postMessage.
             if (typeof this._postMessageDirect == "undefined")
             {
@@ -462,13 +448,30 @@ $.modalDialog.create()
                 // The postmessage plugin is loaded- its probably because we're on an old browser.
                 if ($.postMessage)
                 {
-                    $.postMessage(message, "*", parent);
+                    $.postMessage(message, $.modalDialog.parentHostName, parent);
                 }
                 else
                 {
                     parent.postMessage(message, $.modalDialog.parentHostName); 
                 }
             }
+        },
+
+        _postCommandToParent: function(command, data)
+        {
+            var messageData = { 
+                dialogCmd: command,
+                _fullId: this.settings._fullId
+            };
+
+            if (data)
+            {
+                $.extend(messageData, data);
+            }
+
+            var message = $.param(messageData);
+
+            this.postMessageToParent(message);
         },
 
         _trigger: function(eventType, data)

@@ -83,7 +83,7 @@ This is the one property that can be read from any window, across domains.</p></
 
             <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">_fullId</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">parentId</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nx">getDialogId</span><span class="p">();</span>
 
-            <span class="k">this</span><span class="p">.</span><span class="nx">_postMessage</span><span class="p">(</span><span class="s2">&quot;create&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">_postCommandToParent</span><span class="p">(</span><span class="s2">&quot;create&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Implements the same interface as the parent FramedDialog, 
 but uses postMessage() to communicate with the parent.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">FramedDialogProxy</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> 
@@ -92,12 +92,12 @@ but uses postMessage() to communicate with the parent.</p></div></div><div class
 
         <span class="nx">open</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span>
         <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">_postMessage</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">_postCommandToParent</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">);</span>
         <span class="p">},</span>
 
         <span class="nx">close</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span>
         <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">_postMessage</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">_postCommandToParent</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">);</span>
         <span class="p">},</span>
 
         <span class="nx">getParent</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span>
@@ -140,7 +140,7 @@ contentHeight might never match _currentFrameHeight.</p></div></div><div class="
 
             <span class="k">this</span><span class="p">.</span><span class="nx">_currentFrameHeight</span> <span class="o">=</span> <span class="nx">contentHeight</span><span class="p">;</span>
 
-            <span class="k">this</span><span class="p">.</span><span class="nx">_postMessage</span><span class="p">(</span><span class="s2">&quot;setHeight&quot;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">height</span><span class="o">:</span> <span class="nx">contentHeight</span><span class="p">,</span> <span class="nx">center</span><span class="o">:</span> <span class="o">!!</span><span class="nx">center</span><span class="p">,</span> <span class="nx">skipAnimation</span><span class="o">:</span> <span class="o">!!</span><span class="nx">skipAnimation</span> <span class="p">});</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">_postCommandToParent</span><span class="p">(</span><span class="s2">&quot;setHeight&quot;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">height</span><span class="o">:</span> <span class="nx">contentHeight</span><span class="p">,</span> <span class="nx">center</span><span class="o">:</span> <span class="o">!!</span><span class="nx">center</span><span class="p">,</span> <span class="nx">skipAnimation</span><span class="o">:</span> <span class="o">!!</span><span class="nx">skipAnimation</span> <span class="p">});</span>
         <span class="p">},</span>
 
         <span class="nx">setHeightFromContent</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">center</span><span class="p">,</span> <span class="nx">skipAnimation</span><span class="p">)</span>
@@ -167,12 +167,12 @@ contentHeight might never match _currentFrameHeight.</p></div></div><div class="
 
         <span class="nx">center</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span>
         <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">_postMessage</span><span class="p">(</span><span class="s2">&quot;center&quot;</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">_postCommandToParent</span><span class="p">(</span><span class="s2">&quot;center&quot;</span><span class="p">);</span>
         <span class="p">},</span>
 
         <span class="nx">setTitle</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">title</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">_postMessage</span><span class="p">(</span><span class="s2">&quot;setTitle&quot;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">title</span><span class="o">:</span> <span class="nx">title</span> <span class="p">});</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">_postCommandToParent</span><span class="p">(</span><span class="s2">&quot;setTitle&quot;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">title</span><span class="o">:</span> <span class="nx">title</span> <span class="p">});</span>
         <span class="p">},</span>
 
         <span class="nx">setTitleFromContent</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span>
@@ -203,7 +203,7 @@ Don't animate, the dialog is invisible anyway</p></div></div><div class="code"><
             <span class="k">if</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">port</span><span class="p">)</span>
             <span class="p">{</span>
                 <span class="nx">hostname</span> <span class="o">+=</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">port</span><span class="p">;</span>
-            <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Pass the hostname of the window so that subsequent postMessage() requests can be directed to the right domain.</p></div></div><div class="code"><div class="wrapper">            <span class="k">this</span><span class="p">.</span><span class="nx">_postMessage</span><span class="p">(</span><span class="s2">&quot;notifyReady&quot;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">hostname</span><span class="o">:</span> <span class="nx">hostname</span> <span class="p">});</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Poll for content size changes. This appears to be more foolproof and cheaper than any other method
+            <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Pass the hostname of the window so that subsequent postMessage() requests can be directed to the right domain.</p></div></div><div class="code"><div class="wrapper">            <span class="k">this</span><span class="p">.</span><span class="nx">_postCommandToParent</span><span class="p">(</span><span class="s2">&quot;notifyReady&quot;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">hostname</span><span class="o">:</span> <span class="nx">hostname</span> <span class="p">});</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Poll for content size changes. This appears to be more foolproof and cheaper than any other method
 (i.e. manually calling it, etc</p></div></div><div class="code"><div class="wrapper">            <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">autoSizing</span><span class="p">)</span>
             <span class="p">{</span>
                 <span class="k">this</span><span class="p">.</span><span class="nx">enableAutoSizing</span><span class="p">();</span>
@@ -235,21 +235,8 @@ Don't animate, the dialog is invisible anyway</p></div></div><div class="code"><
             <span class="p">}</span>
         <span class="p">},</span>
 
-        <span class="nx">_postMessage</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">messageData</span> <span class="o">=</span> <span class="p">{</span> 
-                <span class="nx">dialogCmd</span><span class="o">:</span> <span class="nx">command</span><span class="p">,</span>
-                <span class="nx">_fullId</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">_fullId</span>
-            <span class="p">};</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">messageData</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
-            <span class="p">}</span>
-
-            <span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">param</span><span class="p">(</span><span class="nx">messageData</span><span class="p">);</span>
-
-            <span class="c1">//console.log(&quot;content post: &quot; + message);</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Try to detect if the parent window is directly accessable.
+        <span class="nx">postMessageToParent</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+        <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Try to detect if the parent window is directly accessible.
 This is significantly less expensive on old browsers that don't support postMessage.</p></div></div><div class="code"><div class="wrapper">            <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="k">this</span><span class="p">.</span><span class="nx">_postMessageDirect</span> <span class="o">==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span>
             <span class="p">{</span>
                 <span class="k">try</span>
@@ -275,13 +262,30 @@ This is significantly less expensive on old browsers that don't support postMess
                     <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;Must specify $.modalDialog.parentHostName because the parent is in a different domain&quot;</span><span class="p">);</span>
                 <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The postmessage plugin is loaded- its probably because we're on an old browser.</p></div></div><div class="code"><div class="wrapper">                <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">)</span>
                 <span class="p">{</span>
-                    <span class="nx">$</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="nx">parent</span><span class="p">);</span>
+                    <span class="nx">$</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">parentHostName</span><span class="p">,</span> <span class="nx">parent</span><span class="p">);</span>
                 <span class="p">}</span>
                 <span class="k">else</span>
                 <span class="p">{</span>
                     <span class="nx">parent</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">parentHostName</span><span class="p">);</span> 
                 <span class="p">}</span>
             <span class="p">}</span>
+        <span class="p">},</span>
+
+        <span class="nx">_postCommandToParent</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">messageData</span> <span class="o">=</span> <span class="p">{</span> 
+                <span class="nx">dialogCmd</span><span class="o">:</span> <span class="nx">command</span><span class="p">,</span>
+                <span class="nx">_fullId</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">_fullId</span>
+            <span class="p">};</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">messageData</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">param</span><span class="p">(</span><span class="nx">messageData</span><span class="p">);</span>
+
+            <span class="k">this</span><span class="p">.</span><span class="nx">postMessageToParent</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
         <span class="p">},</span>
 
         <span class="nx">_trigger</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">eventType</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span>

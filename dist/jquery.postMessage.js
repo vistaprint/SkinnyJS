@@ -116,22 +116,30 @@
     // Will return a short reference string or false if cannot be found.
     function transverseLevel(window, target, level) 
     {
-        if (window.frames && window.frames.length > 0) 
+        var i;
+
+        if (typeof level == "undefined")
+        {
+            level = 0;
+        }
+
+        // Try to find the target in window.frames
+        if (window.frames) 
         {
             try 
             {
-                for (var frame in window.frames) 
+                for (i=0; i<window.frames.length; i++) 
                 {
                     try 
                     {
-                        if (window.frames[0] instanceof Window && window.frames[frame] === target)
+                        if (window.frames[i] === target)
                         {
-                            return "f," + frame;
+                            return "f," + i;
                         }
                     } 
                     catch (e) 
                     {
-                        if (e.number !== -2147024891)
+                        if (e.number !== -2147024891) // WTF is this?
                         {
                             throw e;
                         }
@@ -140,24 +148,27 @@
             } 
             catch (ex) 
             {
-                if (ex.number !== -2146823279)
+                if (ex.number !== -2146823279) // and, WTF is this?
                 {
                     throw ex;
                 }
             }
         }
 
+        // Try to find the target in window.parent
         if (window.parent && window.parent === target)
         {
             return "p";
         }
 
+        // Try to find the target in window.opener
         if (window.opener && window.opener === target)
         {
             return "o";
         }
 
-        // we have already transversed deep enough
+        // Prevent infinite recursion. 
+        // There's really no good reason you need 4 levels deep of frames!
         if (level >= 4) 
         {
             return false;
@@ -165,9 +176,10 @@
 
         var ref;
         
+        // Recurse through window.frames
         if (window.frames && window.frames.length > 0) 
         {
-            for (var i = 0; i < window.frames.length; i++) 
+            for (i = 0; i < window.frames.length; i++) 
             {
                 ref = transverseLevel(window.frames[i], target, level + 1);
                 if (ref) 
@@ -177,6 +189,7 @@
             }
         }
 
+        // Recurse through window.parent
         if (window.parent && window.parent !== window) 
         {
             ref = transverseLevel(window.parent, target, level + 1);
@@ -186,6 +199,7 @@
             }
         }
 
+        // Recurse through window.opener
         if (window.opener && window.opener !== window) 
         {
             ref = transverseLevel(window.opener, target, level + 1);
@@ -295,6 +309,7 @@
 
         // The browser does not support window.postMessage.
         // First, lets see if we can get direct access to the window instead.
+        // This will only work if the target window is in the same domain.
         try
         {
             var postMessageDirect = targetWindow.__receiveMessageHook;
@@ -316,10 +331,15 @@
             thisDomain = getDomainFromUrl(document.location.href),
             iframe = document.createElement("iframe");
 
+        if (!targetHost || targetHost == "*")
+        {
+            throw new Error("$.postMessage(): Must specify targetHost on browsers that don't support postMessage natively (cannot be '*').");
+        }
+
         $("body").append(
             $(iframe)
             .hide()
-            .attr("src", targetHost + "/vp/JS-Lib/jQuery/plugins/postmessage.htm#" +
+            .attr("src", targetHost + getPolyfillPath() + "#" +
                 // When server side debugging, add (+new Date()) here
                 (+new Date()) + cacheBuster + "&" +
                 serializedWindowRef + "&" + thisDomain + "&" + encodeURIComponent(message)
@@ -374,7 +394,11 @@
     // an IFrame or top-level window. To work around, listen for calls from the polyfill technique for IE in all cases.
     window.__receiveMessageHook = function(message, origin) 
     {
-        $(window).trigger("message", decodeURIComponent(message), origin);
+        var $evt = new $.Event("message");
+        $evt.data = message;
+        $evt.origin = origin;
+        
+        $(window).trigger($evt, [$evt.data, $evt.origin]);
     };
 
     // Convenience wrapper for windows wrapped in jQuery objects
@@ -391,6 +415,32 @@
         });
 
         return this;
+    };
+
+    $.event.special.message = 
+    {
+        add: function(handlerData) 
+        {
+            var origHandler = handlerData.handler;
+
+            handlerData.handler = function(e, message, origin)
+            {
+                e.data = e.originalEvent ? e.originalEvent.data : message;
+                e.origin = e.originalEvent ? e.originalEvent.origin : origin;
+
+                return origHandler.call(this, e, e.data, e.origin);
+            };
+        }
+    };
+
+    var getPolyfillPath = function()
+    {
+        if (!window._jqueryPostMessagePolyfillPath)
+        {
+            throw new Error("Must configure jquery.postMessage() with window._jqueryPostMessagePolyfillPath for IE7 support. Should be '/root-relative-path-on-my-server/postmessage.htm'");
+        }
+
+        return window._jqueryPostMessagePolyfillPath;
     };
 
 })(window, jQuery);

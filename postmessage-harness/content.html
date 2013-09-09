@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <script type="text/javascript" src="../../dependencies/jquery.js"></script>
+  <script type="text/javascript" src="../../js/jquery.postMessage.js" /></script>
+
+  <title>skinny.js</title>
+  <meta name="description" content="Skinny JS">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+<a href="#" id="postMessageTestLink">test post message to parent (wrapper)</a>
+<br>
+<a href="#" id="postMessageTestLinkNative">test post message to parent (native)</a>
+
+
+<script type="text/javascript">
+  if (!window.console)
+  {
+    window.console = {
+      log: function(data)
+      {
+        alert(data);
+      }
+    };
+  }
+
+  $("#postMessageTestLink").on("click", function(e)
+  {
+      e.preventDefault();
+      $.postMessage("hi there (wrapper)", "*", window.parent);
+  });
+
+  $("#postMessageTestLinkNative").on("click", function(e)
+  {
+      e.preventDefault();
+      window.parent.postMessage("hi there (native)", "*");
+  });
+
+  $(window).on("message", function(e, message, origin)
+  {
+      console.log("message received in iframe")
+      console.log("e.data: " + e.data);
+      console.log("e.origin: " + e.origin);
+      console.log("message: " + message);
+      console.log("origin: " + origin);
+  });
+
+  window._jqueryPostMessagePolyfillPath = "/js/postmessage.htm";
+
+</script>
+</body>
+</html>

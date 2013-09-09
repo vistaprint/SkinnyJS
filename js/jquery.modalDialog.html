@@ -504,9 +504,9 @@ This is null if the dialog was opened by the main window.</p></div></div><div cl
     <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Broadcasts events to all active dialogs so any window that has a proxy for the dialog can be notified.</p></div></div><div class="code"><div class="wrapper">    <span class="kd">var</span> <span class="nx">_crossWindowEventHandler</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
     <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>"this" is the dialog</p></div></div><div class="code"><div class="wrapper">        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">_dialogStack</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">_dialogStack</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">_postMessageToContent</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">_dialogStack</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">_postCommand</span><span class="p">)</span>
             <span class="p">{</span>
-                <span class="nx">_dialogStack</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">_postMessageToContent</span><span class="p">(</span><span class="s2">&quot;event&quot;</span> <span class="o">+</span> <span class="nx">e</span><span class="p">.</span><span class="nx">type</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span> <span class="nx">_eventDialogId</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">_fullId</span><span class="p">},</span> <span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">));</span>
+                <span class="nx">_dialogStack</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">_postCommand</span><span class="p">(</span><span class="s2">&quot;event&quot;</span> <span class="o">+</span> <span class="nx">e</span><span class="p">.</span><span class="nx">type</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span> <span class="nx">_eventDialogId</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">_fullId</span><span class="p">},</span> <span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">));</span>
             <span class="p">}</span>
         <span class="p">}</span>
     <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Override the _buildContent method to construct an iframe</p></div></div><div class="code"><div class="wrapper">    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_finishClose</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
@@ -540,7 +540,7 @@ This is null if the dialog was opened by the main window.</p></div></div><div cl
     <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Sends a message to the iframe content window. 
 Used for orchestrating cross-window communication with dialog proxies.
 * {string} command: The name of the command to send to the content window
-* {object} data: A simple data object to serialize (as a querystring) and send with the command</p></div></div><div class="code"><div class="wrapper">    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_postMessageToContent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span>
+* {object} data: A simple data object to serialize (as a querystring) and send with the command</p></div></div><div class="code"><div class="wrapper">    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_postCommand</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">messageData</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">dialogCmd</span><span class="o">:</span> <span class="nx">command</span> <span class="p">};</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span>
@@ -548,8 +548,15 @@ Used for orchestrating cross-window communication with dialog proxies.
             <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">messageData</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
         <span class="p">}</span>
 
-        <span class="kd">var</span> <span class="nx">win</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getWindow</span><span class="p">();</span>
         <span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">param</span><span class="p">(</span><span class="nx">messageData</span><span class="p">);</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
+    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Sends a message to the iframe content window. 
+Used for orchestrating cross-window communication with dialog proxies.
+* {string} command: The name of the command to send to the content window
+* {object} data: A simple data object to serialize (as a querystring) and send with the command</p></div></div><div class="code"><div class="wrapper">    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">postMessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">win</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getWindow</span><span class="p">();</span>
 
         <span class="kd">var</span> <span class="nx">hostname</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">frameHostname</span><span class="p">;</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">hostname</span><span class="p">)</span>
@@ -583,10 +590,10 @@ Used for orchestrating cross-window communication with dialog proxies.
         <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">initialHeight</span> <span class="o">=</span> <span class="nx">contentHeight</span><span class="p">;</span>
     <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Sets the height of the iframe to the detected height of the iframe content document.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setHeightFromContent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">center</span><span class="p">,</span> <span class="nx">skipAnimation</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">_postMessageToContent</span><span class="p">(</span><span class="s2">&quot;setHeightFromContent&quot;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">center</span><span class="o">:</span> <span class="o">!!</span><span class="nx">center</span><span class="p">,</span> <span class="nx">skipAnimation</span><span class="o">:</span> <span class="o">!!</span><span class="nx">skipAnimation</span><span class="p">});</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_postCommand</span><span class="p">(</span><span class="s2">&quot;setHeightFromContent&quot;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">center</span><span class="o">:</span> <span class="o">!!</span><span class="nx">center</span><span class="p">,</span> <span class="nx">skipAnimation</span><span class="o">:</span> <span class="o">!!</span><span class="nx">skipAnimation</span><span class="p">});</span>
     <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Sets the title of the dialog in the header from the HTML title tag of the iframe content document.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setTitleFromContent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">_postMessageToContent</span><span class="p">(</span><span class="s2">&quot;setTitleFromContent&quot;</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_postCommand</span><span class="p">(</span><span class="s2">&quot;setTitleFromContent&quot;</span><span class="p">);</span>
     <span class="p">};</span>
 
     <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">notifyReady</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">hostname</span><span class="p">)</span>
@@ -825,47 +832,48 @@ associated with the DOM element.</p></div></div><div class="code"><div class="wr
             <span class="nx">qs</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">deparam</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span> <span class="o">?</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">.</span><span class="nx">data</span> <span class="o">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
         <span class="p">}</span>
         <span class="k">catch</span> <span class="p">(</span><span class="nx">ex</span><span class="p">)</span>
+        <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>ignore- it wasn't a message for the dialog framework</p></div></div><div class="code"><div class="wrapper">        <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>messages in the dialog framework contain "dialogCmd"</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">qs</span> <span class="o">&amp;&amp;</span> <span class="nx">qs</span><span class="p">.</span><span class="nx">dialogCmd</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="c1">//ignore- it wasn&#39;t a message for the dialog framework</span>
-        <span class="p">}</span>
-
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">qs</span><span class="p">.</span><span class="nx">dialogCmd</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="c1">//ignore- it wasn&#39;t a message for the dialog framework</span>
-            <span class="k">return</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="kd">var</span> <span class="nx">action</span> <span class="o">=</span> <span class="nx">messageActions</span><span class="p">[</span><span class="nx">qs</span><span class="p">.</span><span class="nx">dialogCmd</span><span class="p">];</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">action</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">dialog</span><span class="p">;</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="nx">qs</span><span class="p">.</span><span class="nx">_fullId</span><span class="p">)</span>
-            <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If a fullId is passed, it can be either for a new dialog or an existing dialog.
-$.modalDialog.create() handles both cases.</p></div></div><div class="code"><div class="wrapper">                <span class="nx">dialog</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">qs</span><span class="p">);</span>
-            <span class="p">}</span>
-            <span class="k">else</span>
+            <span class="kd">var</span> <span class="nx">action</span> <span class="o">=</span> <span class="nx">messageActions</span><span class="p">[</span><span class="nx">qs</span><span class="p">.</span><span class="nx">dialogCmd</span><span class="p">];</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">action</span><span class="p">)</span>
             <span class="p">{</span>
-                <span class="nx">dialog</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">getCurrent</span><span class="p">();</span>
+                <span class="kd">var</span> <span class="nx">dialog</span><span class="p">;</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="nx">qs</span><span class="p">.</span><span class="nx">_fullId</span><span class="p">)</span>
+                <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If a fullId is passed, it can be either for a new dialog or an existing dialog.
+$.modalDialog.create() handles both cases.</p></div></div><div class="code"><div class="wrapper">                    <span class="nx">dialog</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">qs</span><span class="p">);</span>
+                <span class="p">}</span>
+                <span class="k">else</span>
+                <span class="p">{</span>
+                    <span class="nx">dialog</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">getCurrent</span><span class="p">();</span>
+                <span class="p">}</span>
+
+                <span class="nx">action</span><span class="p">(</span><span class="nx">dialog</span><span class="p">,</span> <span class="nx">qs</span><span class="p">);</span>
+
+                <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
             <span class="p">}</span>
-
-            <span class="nx">action</span><span class="p">(</span><span class="nx">dialog</span><span class="p">,</span> <span class="nx">qs</span><span class="p">);</span>
         <span class="p">}</span>
-    <span class="p">};</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">receiveMessage</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Note: It is a bit odd that even though we have the jquery.postMessage() plugin,
+we're still checking its availability and calling the native implementation here.
+The reason is that for most browsers (besides old IE) the plugin is unnecessary, 
+and it may not be desirable to load it at all.</p></div></div><div class="code"><div class="wrapper">    <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">receiveMessage</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="nx">$</span><span class="p">.</span><span class="nx">receiveMessage</span><span class="p">(</span><span class="nx">messageHandler</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">);</span>
     <span class="p">}</span>
     <span class="k">else</span>
     <span class="p">{</span>
         <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="nx">messageHandler</span><span class="p">);</span>
-    <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Global hook to simplify non-cross domain communication</p></div></div><div class="code"><div class="wrapper">    <span class="nb">window</span><span class="p">.</span><span class="nx">_dialogReceiveMessageManual</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">senderOrigin</span><span class="p">)</span>
+    <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Global hook to simplify non-cross domain communication</p></div></div><div class="code"><div class="wrapper">    <span class="nb">window</span><span class="p">.</span><span class="nx">_dialogReceiveMessageManual</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">origin</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="nx">messageHandler</span><span class="p">({</span>
-            <span class="nx">data</span><span class="o">:</span> <span class="nx">message</span><span class="p">,</span>
-            <span class="nx">origin</span><span class="o">:</span> <span class="nx">senderOrigin</span>
-        <span class="p">});</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">messageHandler</span><span class="p">({</span> <span class="nx">data</span><span class="o">:</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">origin</span><span class="o">:</span> <span class="nx">origin</span><span class="p">}))</span>
+        <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">evt</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Event</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">);</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nx">data</span> <span class="o">=</span> <span class="nx">message</span><span class="p">;</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nx">origin</span> <span class="o">=</span> <span class="nx">origin</span><span class="p">;</span>
+            <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span> <span class="p">[</span><span class="nx">message</span><span class="p">,</span> <span class="nx">origin</span><span class="p">]);</span>
+        <span class="p">}</span>
     <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>jQuery mobile support</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">$</span><span class="p">.</span><span class="nx">mobile</span><span class="p">)</span>

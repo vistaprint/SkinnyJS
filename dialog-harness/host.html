@@ -50,7 +50,7 @@
   <h2>Example: iframe dialog</h2>
 
   <div>
-    <a href="content.html" data-rel="modalDialog">Open</a>
+    <a href="http://localhost/site/dialog-harness/content.html" data-rel="modalDialog">Open</a>
   </div>
 </section>
 
@@ -61,6 +61,19 @@
     <a href="content-ajax.html" data-rel="modalDialog" data-dialog-ajax="true">Open</a>
   </div>
 </section>
+
+<script type="text/javascript">
+  $(window).on("message", function(e)
+  {
+      if (!e.data || e.data.indexOf("testmsg:") !== 0)
+      {
+          return;
+      }
+      
+      alert(e.origin);
+      alert(e.data);
+  });
+</script>
   
 </body>
 </html>
