@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="../../dist/css/jquery.modalDialogContent.css" />
   <link rel="stylesheet" href="../stylesheets/modal-dialogs-demo.css" />
 
-  <script type="text/javascript" src="../javascripts/jquery.js"></script>
+  <script type="text/javascript" src="../../dependencies/jquery.js"></script>
   <script type="text/javascript" src="../../js/jquery.delimitedString.js" /></script>
   <script type="text/javascript" src="../../js/jquery.queryString.js" /></script>
   <script type="text/javascript" src="../../js/jquery.postMessage.js" /></script>
@@ -38,7 +38,17 @@
   <div>
     <a href="content.html" data-rel="modalDialog">Open</a>
   </div>
+
 </section>
+
+<br>
+<a href="#" id="postMessageTestLink">test post message to parent</a>
   
+<script type="text/javascript">
+  $("#postMessageTestLink").on("click", function()
+  {
+      $.modalDialog.getCurrent().getWindow().parent.postMessage('hi there', "*");
+  });
+</script>
 </body>
 </html>

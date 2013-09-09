@@ -1,0 +1,71 @@
+<html>
+<script type="text/javascript">
+(function(){
+    var win, data = document.location.hash.split("&");
+    if (data.length < 4) throw new Error("Invalid hash for postmessage");
+
+    // Refernece is a name (string)
+    if (data[1].substr(0, 1) === ':') {
+        win = window.open("", winRef[1].substr(1));
+    }
+    else {
+        // make win currently back to the window
+        // this iframe was injected into
+        win = window.parent;
+
+        // breakup the reference
+        var winRef = data[1].split(".");
+
+        for (var r in winRef) {
+            var refType = winRef[r],
+                refData = null;
+
+            // look for data (used for frames)
+            var parts = refType.split(',');
+            if (parts.length == 2) {
+                refType = parts[0];
+                refData = parts[1];
+            }
+
+            switch (refType) {
+                case 'frames':
+                case 'f':
+                    win = win.frames[ refData ];
+                    break;
+
+                case 'parent':
+                case 'p':
+                    win = win.parent;
+                    break;
+
+                case 'opener':
+                case 'o':
+                    win = win.opener;
+                    break;
+            }
+        }
+    }
+
+    if (!win) {
+        throw new Error("Window reference: " + data[1] + " couldn't be resolved");
+    }
+
+    var message = decodeURIComponent(data[3]);
+    var origin = decodeURIComponent(data[2]);
+
+    try {
+        if (win.__receiveMessageHook)
+            win.__receiveMessageHook(message, origin);
+    }
+    catch (ex) {
+        if (data[1].indexOf('p') !== -1 && (ex.number & 0x0FFFF) == 70) {
+            // Not 100% accurate, but gets this to work for case between child window and opener in IE
+            if (win.opener && win.opener.__receiveMessageHook)
+                win.opener.__receiveMessageHook(message, origin);
+        } else {
+            throw ex;
+        }
+    }
+})();
+</script>
+</html>

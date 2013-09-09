@@ -141,6 +141,10 @@ module.exports = function(grunt)
                     expand: true,
                     src: ["./css/jquery.modalDialog.skins.less"],
                     dest: "dist/"
+                },
+                {
+                    src: ["./js/postmessage.htm"],
+                    dest: "dist/"
                 }
             ])
           },
