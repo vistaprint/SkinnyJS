@@ -1,7 +1,7 @@
 // ## jQuery.modalDialog
 
 // ### Documentation
-// Full documentation is available at <http://labaneilers.github.io/SkinnyJS/modal-dialogs.html>
+// Full documentation is available at <http://vistaprint.github.io/SkinnyJS/modal-dialogs.html>
 
 // Note: jQuery Mobile and some other dialog frameworks have URL/history management via pushState/hashchange built in.
 // I find this to be too inflexible, and should be implemented by callers as a separate concern.

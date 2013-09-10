@@ -1,4 +1,4 @@
-skinny.js: Slim little jQuery plugins [![Build Status](https://secure.travis-ci.org/labaneilers/SkinnyJS.png?branch=master)](http://travis-ci.org/labaneilers/SkinnyJS)
+skinny.js: Slim little jQuery plugins [![Build Status](https://secure.travis-ci.org/vistaprint/SkinnyJS.png?branch=master)](http://travis-ci.org/vistaprint/SkinnyJS)
 ===========================================
 
-[View the project page](http://labaneilers.github.io/SkinnyJS)
+[View the project page](http://vistaprint.github.io/SkinnyJS)

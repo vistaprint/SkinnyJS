@@ -32,20 +32,23 @@
   "main": "./lib/cli",
   "repository": {
     "type": "git",
-    "url": "git://github.com/labaneilers/SkinnyJS.git"
+    "url": "git://github.com/vistaprint/SkinnyJS.git"
   },
   "bugs": {
-    "url": "https://github.com/labaneilers/SkinnyJS/issues"
+    "url": "https://github.com/vistaprint/SkinnyJS/issues"
   },
   "keywords": [
     "javascript",
     "jQuery"
   ],
   "author": {
-    "name": "Laban Eilers",
+    "name": "Vistaprint",
     "url": "http://www.vistaprint.com"
   },
   "contributors": [
+    {
+      "name": "Laban Eilers"
+    },
     {
       "name": "Benjamin Hutchins"
     },
