@@ -102,8 +102,8 @@ var escapeModuleName = function(unescaped)
 
 var getLicense = function(modules, requiredModules)
 {
-	return "/*! skinny.js v0.0.1 | Copyright 2013 Laban Eilers | labaneilers.github.io/SkinnyJS/LICENSE \n" +
-		"http://labaneilers.github.io/SkinnyJS/download-builder.html?modules=" + modules.join(",") + 
+	return "/*! skinny.js v0.0.1 | Copyright 2013 Vistaprint | vistaprint.github.io/SkinnyJS/LICENSE \n" +
+		"http://vistaprint.github.io/SkinnyJS/download-builder.html?modules=" + modules.join(",") + 
 		"*/\n\n";
 };
 
