@@ -24,11 +24,6 @@ var dependencyTree =
 				name: "modal dialog styles", 
 				path: "css/jquery.modalDialog.css", 
 				notes: "CSS file for modal dialogs. Include with jquery.modalDialog.js" 
-			},
-			{ 
-				name: "modal dialog styles for old IE", 
-				path: "css/jquery.modalDialog.oldie.css", 
-				notes: "CSS file for modal dialog old IE (IE 8 or less) workarounds. Include with jquery.modalDialog.js in IE only" 
 			}
 		]
 	},
