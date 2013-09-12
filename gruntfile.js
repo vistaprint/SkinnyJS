@@ -257,7 +257,7 @@ module.exports = function(grunt)
                         cwd: "./site/_site/", 
                         flatten: false, 
                         src: ["*.html"], 
-                        dest: "./.git/docs-temp/" 
+                        dest: "./site/_site/" 
                     }
                 ],
                 options: 
@@ -302,10 +302,10 @@ module.exports = function(grunt)
     });
 
     // Default tasks.
-    grunt.registerTask("default", ["verify", "clean", "less", "copy:dist", "concat:modalDialog", "concat:modalDialogContent", "uglifyDist"]);
+    grunt.registerTask("default", ["clean", "less", "copy:dist", "concat:modalDialog", "concat:modalDialogContent", "uglifyDist"]);
 
     // Verification tasks
-    grunt.registerTask("verify", ["jshint", "qunit"]);
+    //grunt.registerTask("verify", ["jshint", "qunit"]);
 
     // For zipping distribution files
     grunt.loadNpmTasks("grunt-contrib-compress");
@@ -318,7 +318,7 @@ module.exports = function(grunt)
     // Documentation tasks.
     grunt.loadNpmTasks("grunt-jekyll");
     grunt.loadTasks("./site/tasks");
-    grunt.registerTask("docs", ["default", "compress", "pages", "groc", "add-docs-links", "copy:docs", "copy:deploy", "string-replace:pages"]);
+    grunt.registerTask("docs", ["default", "compress", "pages", "groc", "add-docs-links", "string-replace:pages", "copy:docs", "copy:deploy"]);
 
     grunt.registerTask("pages", ["jekyll"]);
 
