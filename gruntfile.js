@@ -302,10 +302,10 @@ module.exports = function(grunt)
     });
 
     // Default tasks.
-    grunt.registerTask("default", ["clean", "less", "copy:dist", "concat:modalDialog", "concat:modalDialogContent", "uglifyDist"]);
+    grunt.registerTask("default", ["verify", "clean", "less", "copy:dist", "concat:modalDialog", "concat:modalDialogContent", "uglifyDist"]);
 
     // Verification tasks
-    //grunt.registerTask("verify", ["jshint", "qunit"]);
+    grunt.registerTask("verify", ["jshint", "qunit"]);
 
     // For zipping distribution files
     grunt.loadNpmTasks("grunt-contrib-compress");
