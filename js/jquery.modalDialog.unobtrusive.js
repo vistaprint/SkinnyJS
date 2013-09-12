@@ -48,23 +48,32 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
             // Create a dialog settings object
             var settings = {};
 
-            // Check to see if the href is a node or a url
-            var $hrefTarget;
-            try
+            // If a link has a target on it, and we're in an iframe dialog,
+            // let the parent window figure out what the href refers to.
+            if ($link.attr("target") == "parent" && $.modalDialog.getCurrent().dialogType == "iframe")
             {
-                $hrefTarget = $(href);
+                settings.contentOrUrl = href;
             }
-            catch (ex)
+            else
             {
-            }
+                // Check to see if the href is a node or a url
+                var $hrefTarget;
+                try
+                {
+                    $hrefTarget = $(href);
+                }
+                catch (ex)
+                {
+                }
 
-            if ($hrefTarget && $hrefTarget.length > 0) // its a content node
-            {
-                settings.content = $hrefTarget;
-            }
-            else // its the url for an iframe dialog
-            {
-                settings.url = href;
+                if ($hrefTarget && $hrefTarget.length > 0) // its a content node
+                {
+                    settings.content = $hrefTarget;
+                }
+                else // its the url for an iframe dialog
+                {
+                    settings.url = href;
+                }
             }
 
             // Duplicate values on the link will win over values on the dialog node
@@ -104,9 +113,13 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     };
 
     // Assign handlers to all dialog links
-    $(document).ready(function()
+    $(document).on("click", "[data-rel='modalDialog']", dialogLinkHandler);
+
+    // Helpful utility: A
+    $(document).on("click", ".close-dialog", function(e)
     {
-        $(document).on("click", "[data-rel='modalDialog']", dialogLinkHandler);
+        e.preventDefault();
+        $.modalDialog.getCurrent().close();
     });
 
 })(jQuery);

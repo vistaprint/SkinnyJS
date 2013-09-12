@@ -26,7 +26,8 @@
     $.modalDialog.isSmallScreen = function()
     {
         // Detect Internet Explorer 7/8, force them to desktop mode
-        if (_ua.ie7 || _ua.ie8) {
+        if (_ua.ie7 || _ua.ie8) 
+        {
             return false;
         }
 
