@@ -22,6 +22,7 @@
   <script type="text/javascript" src="dist/jquery.hostIframe.js" /></script>
   <script type="text/javascript" src="dist/jquery.proxyAll.js" /></script>
   <script type="text/javascript" src="dist/jquery.partialLoad.js" /></script>
+  <script type="text/javascript" src="dist/jquery.disableEvent.js" /></script>
   <script type="text/javascript" src="dist/jquery.modalDialog.js" /></script>
 
   <script type="text/javascript" src="javascripts/modal-dialogs-demo.js" /></script>
@@ -39,10 +40,21 @@
   <h2>Example: Node dialog, unobtrusive</h2>
 
   <div>
-    <a href="#dialogUnobtrusive" data-rel="modalDialog">Open</a>
+    <a href="#vegDialog" data-rel="modalDialog">Open</a>
 
-    <div class="dialog-content" id="dialogUnobtrusive" data-dialog-title="This is the title">
-    This dialog was opened from an unobtrusive link.
+    <div class="dialog-content dialog-default-padding veg-dialog" id="vegDialog" data-dialog-title="Vegetables">
+      <div class="left-column">
+        <img src="images/veg.jpg" />
+      </div>
+      <div class="right-column">
+        <h2>What is a vegetable?</h2>
+        In culinary terms, a vegetable is an edible plant or its part, intended for cooking or eating raw. In biological terms, "vegetable" designates members of the plant kingdom.
+      </div>
+      <div class="clear"></div>
+
+      <div class="dialog-button-group">
+        <a href="#" class="close-dialog textbutton">Close</a>
+      </div>
     </div>
   </div>
 </section>
@@ -52,10 +64,6 @@
 
   <div>
     <a href="#" id="dialogFromScriptLink">Open</a>
-
-    <div class="dialog-content" id="dialogFromScript" data-dialog-title="This is the title">
-    This dialog was opened from a script link
-    </div>
   </div>
 </section>
 
@@ -71,7 +79,19 @@
   <h2>Example: ajax dialog, unobtrusive</h2>
 
   <div>
-    <a href="modal-dialogs-demo-content-ajax2.html" data-rel="modalDialog" data-dialog-ajax="true">Open</a>
+    <a href="modal-dialogs-demo-content-ajax.html" data-rel="modalDialog" data-dialog-ajax="true" data-dialog-title="Fruit">Open</a>
+  </div>
+</section>
+
+<section>
+  <h2>Example: Node dialog, lightbox style</h2>
+
+  <div>
+    <a href="#dialogLightbox" data-rel="modalDialog">Open</a>
+
+    <div class="dialog-content" id="dialogLightbox" data-dialog-skin="lightbox">
+        <img src="images/gallerypreview.jpg" />
+    </div>
   </div>
 </section>
   

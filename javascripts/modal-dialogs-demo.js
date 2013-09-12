@@ -5,7 +5,7 @@
 	{
 		$("#dialogFromScriptLink").on("click", function()
 		{
-			$.modalDialog.create({ content: "#dialogFromScript" }).open();
+			$.modalDialog.create({ content: "#vegDialog" }).open();
 		})
 	});
 

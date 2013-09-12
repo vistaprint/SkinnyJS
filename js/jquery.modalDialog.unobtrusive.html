@@ -45,22 +45,29 @@
             <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">href</span><span class="p">)</span>
             <span class="p">{</span>
                 <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;no href specified with data-rel=&#39;modalDialog&#39;&quot;</span><span class="p">);</span>
-            <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Create a dialog settings object</p></div></div><div class="code"><div class="wrapper">            <span class="kd">var</span> <span class="nx">settings</span> <span class="o">=</span> <span class="p">{};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Check to see if the href is a node or a url</p></div></div><div class="code"><div class="wrapper">            <span class="kd">var</span> <span class="nx">$hrefTarget</span><span class="p">;</span>
-            <span class="k">try</span>
+            <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Create a dialog settings object</p></div></div><div class="code"><div class="wrapper">            <span class="kd">var</span> <span class="nx">settings</span> <span class="o">=</span> <span class="p">{};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If a link has a target on it, and we're in an iframe dialog,
+let the parent window figure out what the href refers to.</p></div></div><div class="code"><div class="wrapper">            <span class="k">if</span> <span class="p">(</span><span class="nx">$link</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;target&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;parent&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">getCurrent</span><span class="p">().</span><span class="nx">dialogType</span> <span class="o">==</span> <span class="s2">&quot;iframe&quot;</span><span class="p">)</span>
             <span class="p">{</span>
-                <span class="nx">$hrefTarget</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">href</span><span class="p">);</span>
+                <span class="nx">settings</span><span class="p">.</span><span class="nx">contentOrUrl</span> <span class="o">=</span> <span class="nx">href</span><span class="p">;</span>
             <span class="p">}</span>
-            <span class="k">catch</span> <span class="p">(</span><span class="nx">ex</span><span class="p">)</span>
-            <span class="p">{</span>
-            <span class="p">}</span>
+            <span class="k">else</span>
+            <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Check to see if the href is a node or a url</p></div></div><div class="code"><div class="wrapper">                <span class="kd">var</span> <span class="nx">$hrefTarget</span><span class="p">;</span>
+                <span class="k">try</span>
+                <span class="p">{</span>
+                    <span class="nx">$hrefTarget</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">href</span><span class="p">);</span>
+                <span class="p">}</span>
+                <span class="k">catch</span> <span class="p">(</span><span class="nx">ex</span><span class="p">)</span>
+                <span class="p">{</span>
+                <span class="p">}</span>
 
-            <span class="k">if</span> <span class="p">(</span><span class="nx">$hrefTarget</span> <span class="o">&amp;&amp;</span> <span class="nx">$hrefTarget</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="c1">// its a content node</span>
-            <span class="p">{</span>
-                <span class="nx">settings</span><span class="p">.</span><span class="nx">content</span> <span class="o">=</span> <span class="nx">$hrefTarget</span><span class="p">;</span>
-            <span class="p">}</span>
-            <span class="k">else</span> <span class="c1">// its the url for an iframe dialog</span>
-            <span class="p">{</span>
-                <span class="nx">settings</span><span class="p">.</span><span class="nx">url</span> <span class="o">=</span> <span class="nx">href</span><span class="p">;</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">$hrefTarget</span> <span class="o">&amp;&amp;</span> <span class="nx">$hrefTarget</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="c1">// its a content node</span>
+                <span class="p">{</span>
+                    <span class="nx">settings</span><span class="p">.</span><span class="nx">content</span> <span class="o">=</span> <span class="nx">$hrefTarget</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">else</span> <span class="c1">// its the url for an iframe dialog</span>
+                <span class="p">{</span>
+                    <span class="nx">settings</span><span class="p">.</span><span class="nx">url</span> <span class="o">=</span> <span class="nx">href</span><span class="p">;</span>
+                <span class="p">}</span>
             <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Duplicate values on the link will win over values on the dialog node</p></div></div><div class="code"><div class="wrapper">            <span class="kd">var</span> <span class="nx">linkSettings</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">getSettings</span><span class="p">(</span><span class="nx">$link</span><span class="p">);</span>
             <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">settings</span><span class="p">,</span> <span class="nx">linkSettings</span><span class="p">);</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Give unobtrusive scripts a chance to modify the settings</p></div></div><div class="code"><div class="wrapper">            <span class="kd">var</span> <span class="nx">evt</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Event</span><span class="p">(</span><span class="s2">&quot;dialogsettingscreate&quot;</span><span class="p">);</span>
             <span class="nx">evt</span><span class="p">.</span><span class="nx">dialogSettings</span> <span class="o">=</span> <span class="nx">settings</span><span class="p">;</span>
@@ -86,9 +93,10 @@
         <span class="p">}</span>
 
         <span class="nx">dialog</span><span class="p">.</span><span class="nx">open</span><span class="p">();</span>
-    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Assign handlers to all dialog links</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span>
+    <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Assign handlers to all dialog links</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="s2">&quot;[data-rel=&#39;modalDialog&#39;]&quot;</span><span class="p">,</span> <span class="nx">dialogLinkHandler</span><span class="p">);</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Helpful utility: A</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="s2">&quot;.close-dialog&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="s2">&quot;[data-rel=&#39;modalDialog&#39;]&quot;</span><span class="p">,</span> <span class="nx">dialogLinkHandler</span><span class="p">);</span>
+        <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+        <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">getCurrent</span><span class="p">().</span><span class="nx">close</span><span class="p">();</span>
     <span class="p">});</span>
 
 <span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span></div></div></div></div></body></html>

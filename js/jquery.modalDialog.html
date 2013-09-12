@@ -307,17 +307,12 @@ and we are not in Internet Explorer 7, because it handles positioning oddly.</p>
         <span class="nx">pos</span><span class="p">.</span><span class="nx">top</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">scrollTop</span><span class="p">()</span> <span class="o">+</span> <span class="nx">MARGIN</span><span class="p">;</span>
         <span class="nx">pos</span><span class="p">.</span><span class="nx">left</span> <span class="o">=</span> <span class="p">(</span><span class="nx">windowWidth</span> <span class="o">-</span> <span class="nx">pos</span><span class="p">.</span><span class="nx">width</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="nx">_ua</span><span class="p">.</span><span class="nx">ie7</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">_ua</span><span class="p">.</span><span class="nx">ie7</span><span class="p">)</span> 
+        <span class="p">{</span>
             <span class="nx">pos</span><span class="p">.</span><span class="nx">top</span> <span class="o">=</span> <span class="nx">MARGIN</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">isSmallScreen</span><span class="p">())</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">skin</span> <span class="o">==</span> <span class="s2">&quot;lightbox&quot;</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">pos</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="s2">&quot;100%&quot;</span><span class="p">;</span>
-                <span class="nx">pos</span><span class="p">.</span><span class="nx">left</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-            <span class="p">}</span>
         <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>For small mobile devices, always position at the top.
-No need to consider contentHeight.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>For larger devices, center vertically.</p></div></div><div class="code"><div class="wrapper">        <span class="k">else</span>
+No need to consider contentHeight.
+For larger devices, center vertically.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">isSmallScreen</span><span class="p">())</span> 
         <span class="p">{</span>
             <span class="nx">contentHeight</span> <span class="o">=</span> <span class="nx">contentHeight</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">$content</span><span class="p">.</span><span class="nx">height</span><span class="p">();</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get the new container height with the proposed content height</p></div></div><div class="code"><div class="wrapper">            <span class="kd">var</span> <span class="nx">containerHeight</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getChromeHeight</span><span class="p">()</span> <span class="o">+</span> <span class="nx">contentHeight</span><span class="p">;</span>
 
@@ -674,12 +669,34 @@ Base implementation will be called manually.</p></div></div><div class="code"><d
 <li>settings passed</li>
 </ol></div></div><div class="code"><div class="wrapper">    <span class="kd">var</span> <span class="nx">ensureSettings</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">explicitSettings</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">settings</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">_defaults</span><span class="p">);</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Read settings specified on the target node's custom HTML attributes</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">explicitSettings</span><span class="p">.</span><span class="nx">content</span><span class="p">)</span>
+        <span class="kd">var</span> <span class="nx">settings</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">_defaults</span><span class="p">);</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>An iframe dialog may have sent a reference to dialog content,
+but it didn't know if it was a URL or a selector for a DOM node.
+Determine which it is.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">explicitSettings</span><span class="p">.</span><span class="nx">contentOrUrl</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">$hrefTarget</span><span class="p">;</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="nx">$hrefTarget</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">explicitSettings</span><span class="p">.</span><span class="nx">contentOrUrl</span><span class="p">);</span>
+            <span class="p">}</span> 
+            <span class="k">catch</span> <span class="p">(</span><span class="nx">ex</span><span class="p">)</span>
+            <span class="p">{}</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nx">$hrefTarget</span> <span class="o">&amp;&amp;</span> <span class="nx">$hrefTarget</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="nx">explicitSettings</span><span class="p">.</span><span class="nx">content</span> <span class="o">=</span> <span class="nx">$hrefTarget</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span>
+            <span class="p">{</span>
+                <span class="nx">explicitSettings</span><span class="p">.</span><span class="nx">url</span> <span class="o">=</span> <span class="nx">explicitSettings</span><span class="p">.</span><span class="nx">contentOrUrl</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="k">delete</span> <span class="nx">explicitSettings</span><span class="p">.</span><span class="nx">contentOrUrl</span><span class="p">;</span>
+        <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Read settings specified on the target node's custom HTML attributes</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">explicitSettings</span><span class="p">.</span><span class="nx">content</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="kd">var</span> <span class="nx">$target</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">explicitSettings</span><span class="p">.</span><span class="nx">content</span><span class="p">);</span>
             <span class="kd">var</span> <span class="nx">targetSettings</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">getSettings</span><span class="p">(</span><span class="nx">$target</span><span class="p">);</span>
             <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">settings</span><span class="p">,</span> <span class="nx">targetSettings</span><span class="p">);</span>
-        <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The explicitly specified settings take precidence</p></div></div><div class="code"><div class="wrapper">        <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">settings</span><span class="p">,</span> <span class="nx">explicitSettings</span><span class="p">);</span>
+        <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The explicitly specified settings take precedence</p></div></div><div class="code"><div class="wrapper">        <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">settings</span><span class="p">,</span> <span class="nx">explicitSettings</span><span class="p">);</span>
 
         <span class="kd">var</span> <span class="nx">id</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>A fullId was specified, passed from an existing dialog's content window via a message. 
 Calculate the parentId from the fullId.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">_fullId</span><span class="p">)</span>

@@ -35,7 +35,8 @@
     $.modalDialog.isSmallScreen = function()
     {
         // Detect Internet Explorer 7/8, force them to desktop mode
-        if (_ua.ie7 || _ua.ie8) {
+        if (_ua.ie7 || _ua.ie8) 
+        {
             return false;
         }
 
@@ -521,22 +522,16 @@ if (!Object.keys)
         pos.top = $(document).scrollTop() + MARGIN;
         pos.left = (windowWidth - pos.width) / 2;
 
-        if (_ua.ie7) {
+        if (_ua.ie7) 
+        {
             pos.top = MARGIN;
-        }
-
-        if ($.modalDialog.isSmallScreen()) {
-            if (this.settings.skin == "lightbox") {
-                pos.width = "100%";
-                pos.left = 0;
-            }
         }
 
         // For small mobile devices, always position at the top.
         // No need to consider contentHeight.
-
         // For larger devices, center vertically.
-        else
+
+        if (!$.modalDialog.isSmallScreen()) 
         {
             contentHeight = contentHeight || this.$content.height();
 
@@ -976,6 +971,31 @@ if (!Object.keys)
     {
         var settings = $.extend({}, _defaults);
 
+        // An iframe dialog may have sent a reference to dialog content,
+        // but it didn't know if it was a URL or a selector for a DOM node.
+        // Determine which it is.
+        if (explicitSettings.contentOrUrl)
+        {
+            var $hrefTarget;
+            try
+            {
+                $hrefTarget = $(explicitSettings.contentOrUrl);
+            } 
+            catch (ex)
+            {}
+
+            if ($hrefTarget && $hrefTarget.length >= 1)
+            {
+                explicitSettings.content = $hrefTarget;
+            }
+            else
+            {
+                explicitSettings.url = explicitSettings.contentOrUrl;
+            }
+
+            delete explicitSettings.contentOrUrl;
+        }
+
         // Read settings specified on the target node's custom HTML attributes
         if (explicitSettings.content)
         {
@@ -984,7 +1004,7 @@ if (!Object.keys)
             $.extend(settings, targetSettings);
         }
 
-        // The explicitly specified settings take precidence
+        // The explicitly specified settings take precedence
         $.extend(settings, explicitSettings);
 
         var id;
@@ -1447,23 +1467,32 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
             // Create a dialog settings object
             var settings = {};
 
-            // Check to see if the href is a node or a url
-            var $hrefTarget;
-            try
+            // If a link has a target on it, and we're in an iframe dialog,
+            // let the parent window figure out what the href refers to.
+            if ($link.attr("target") == "parent" && $.modalDialog.getCurrent().dialogType == "iframe")
             {
-                $hrefTarget = $(href);
+                settings.contentOrUrl = href;
             }
-            catch (ex)
+            else
             {
-            }
+                // Check to see if the href is a node or a url
+                var $hrefTarget;
+                try
+                {
+                    $hrefTarget = $(href);
+                }
+                catch (ex)
+                {
+                }
 
-            if ($hrefTarget && $hrefTarget.length > 0) // its a content node
-            {
-                settings.content = $hrefTarget;
-            }
-            else // its the url for an iframe dialog
-            {
-                settings.url = href;
+                if ($hrefTarget && $hrefTarget.length > 0) // its a content node
+                {
+                    settings.content = $hrefTarget;
+                }
+                else // its the url for an iframe dialog
+                {
+                    settings.url = href;
+                }
             }
 
             // Duplicate values on the link will win over values on the dialog node
@@ -1503,9 +1532,13 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     };
 
     // Assign handlers to all dialog links
-    $(document).ready(function()
+    $(document).on("click", "[data-rel='modalDialog']", dialogLinkHandler);
+
+    // Helpful utility: A
+    $(document).on("click", ".close-dialog", function(e)
     {
-        $(document).on("click", "[data-rel='modalDialog']", dialogLinkHandler);
+        e.preventDefault();
+        $.modalDialog.getCurrent().close();
     });
 
 })(jQuery);

@@ -3,6 +3,9 @@
   width: 49px;
   height: 50px;
 }
+.dialog-default-padding {
+  padding: 10px 10px 0 10px;
+}
 .dialog-skin-primary.dialog-container,
 .dialog-skin-neutral.dialog-container {
   -webkit-border-radius: 10px;
@@ -115,11 +118,11 @@
 }
 .dialog-skin-lightbox.dialog-container.smallscreen {
   position: fixed;
+  margin: 0;
   top: 0 !important;
   left: 0 !important;
   width: 100% !important;
   height: 100% !important;
-  margin: 0;
 }
 .dialog-skin-lightbox.dialog-container .dialog-header {
   background-color: #313131;

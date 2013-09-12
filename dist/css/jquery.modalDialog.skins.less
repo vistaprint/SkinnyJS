@@ -47,6 +47,11 @@
     }
 }
 
+.dialog-default-padding
+{
+    padding: 10px 10px 0 10px;
+}
+
 // Primary skin
 .dialog-skin-primary.dialog-container, .dialog-skin-neutral.dialog-container
 {
@@ -119,11 +124,13 @@
         &.smallscreen
         {
             position: fixed;
+            margin: 0;
+
+            // !important is to override inline styles set by the dialog framework
             top: 0 !important;
             left: 0 !important;
             width: 100% !important;
             height: 100% !important;
-            margin: 0;
         }
 
         .dialog-header
@@ -166,6 +173,7 @@
     // Only put the drop shadow on when its visible
     &.dialog-visible.dialog-container
     {
+        // The \9 is an IE hack that targets IE 6,7,8
         background-color: #fff\9;
         border: 1px #555 solid\9;
     }
