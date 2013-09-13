@@ -5,11 +5,12 @@ title: jQuery.modalDialog
 
 # Modal dialogs
 
-The jquery.modalDialog plugin is an extremely powerful and extensible UI widget. It supports responsive design, and is touch friendly.
+The **jquery.modalDialog** plugin is an extremely powerful and extensible UI widget. It supports responsive design, and is touch friendly.
 
 Example dialog (desktop):
 
 <img src="images/dialog-desktop.jpg" alt="Modal dialog: desktop" class="screenshot"/>
+
 
 Example dialog (mobile):
 
@@ -20,17 +21,39 @@ You can view the [full annotated source](js/jquery.modalDialog.html)
 
 ## Features
 
+### Content sources
 For a dialog's content, the framework can use one of the following techniques:
 
-* Use an element on the page ("node dialog")
-* Display a different page within the dialog ("IFrame dialog")
-* Load content via AJAX ("ajax dialog")
+* Use an element on the page ("node dialog").
+* Display a different page within the dialog ("IFrame dialog"). This is really useful for encapsulating the content of a dialog and isolating it from the parent page.
+* Load content via AJAX ("ajax dialog"). This is also useful for encapsulating the content of a dialog.
 
-Other features:
+### Cross domain support
 
 * The API for IFrame dialogs works seamlessly across different domains (i.e. www.vistaprint.com vs secure.vistaprint.com) by internally using window.postMessage()
+
+### Simple sizing rules
 * A dialog's height is based on the content size. There is no explicit method to specify the height.
-* The dialog framework supports mobile devices via responsive design.
+* Even iframe dialogs' height is based on automatic content size detection.
+
+### Mobile support (via responsive design)
+The dialog framework supports mobile devices via responsive design.
+
+* On desktops and tablets, modal dialogs act just like Windows/Mac modal dialogs (they are draggable/droppable)
+* On small mobile devices (i.e. phone/ipod), the dialogs snap to near-full screen, and are not draggable.
+
+### Unobtrusive syntax
+Dialogs can be created with a simple markup-based syntax, or, if you need more control, you can use the full rich dialog API.
+
+This unobtrusive syntax makes your dialogs SEO friendly, and will help you design sites that gracefully degrade on older devices.
+
+### Skinning support
+
+Dialogs can be skinned simply via CSS. Multiple skins are supported.
+
+### Event driven extensibility
+
+Dialogs publish [events](#events) that can be used to extend their functionality.
 
 ## Demo
 [Live demo >>](modal-dialogs-demo.html)
@@ -75,7 +98,7 @@ Here's an example of unobtrusive usage:
 </div>
 {% endhighlight %}
 
-Note the *data-rel="modalDialog"* attribute: this automatically creates an event handler which will open a
+Note the **data-rel="modalDialog"** attribute: this automatically creates an event handler which will open a
 dialog using the target of the link's *href* as the dialog content.
 
 To create a dialog programmatically, use one of the following methods:
@@ -434,3 +457,21 @@ $("#colorPickerLink").on("dialogcreate", function(e)
     e.dialog.onopen.add(function() { alert("opened"); });
 });
 {% endhighlight %}
+
+### Skinning
+
+To create a skin (theme) for a dialog, you simply create a CSS class. Then you can assign the skin using the **data-dialog-skin** attribute or settings option.
+
+Starter themes are provided:
+
+* **primary**: A basic theme.
+* **neutral**: A variation on the 'primary' theme.
+* **lightbox**: A variation that demonstrates the power of responsive design. On desktop/tablet, this displays as a regular dialog, but on a small mobile device, it will display in a lightbox/gallery style.
+
+Lightbox skin (desktop):
+
+<img src="images/lightbox-desktop.jpg" class="screenshot" />
+
+Lightbox skin (mobile):
+
+<img src="images/lightbox-mobile.jpg" class="screenshot" />
