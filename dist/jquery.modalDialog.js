@@ -1095,9 +1095,9 @@ if (!Object.keys)
         {
             dialog = $(settings.content).modalDialogInstance();
 
-            if (dialog && settings._fullId && dialog.settings._fullId !== settings._fullId)
+            if (dialog && settings._fullId && dialog.settings._fullId !== settings._fullId && dialog._open)
             {
-                throw new Error("An attempt was made to create a dialog with a content node which is already assigned to another dialog.");
+                throw new Error("An attempt was made to create a dialog with a content node which is already assigned to another open dialog.");
             }
         }
 

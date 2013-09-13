@@ -607,3 +607,10 @@ h1.title a:active
   color: #444444;
   text-decoration: none;
 }
+
+article img.screenshot
+{
+  width: inherit;
+  max-width: inherit;
+  border: 1px black solid;
+}
