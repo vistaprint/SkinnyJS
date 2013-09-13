@@ -53,7 +53,7 @@ var processPages = function(directory)
 
 module.exports = function(grunt)
 {
-    grunt.registerTask("add-docs-links", "Adds shared header links to groc generated files", function() {
+    grunt.registerTask("groc-add-links", "Adds shared header links to groc generated files", function() {
         processPages(DOCS_ROOT);
     });
 };

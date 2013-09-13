@@ -45,7 +45,7 @@ module.exports = function(grunt)
         },
         copy: 
         {
-            dist: 
+            distJs: 
             {
                 files:
                 [
@@ -54,15 +54,27 @@ module.exports = function(grunt)
                         cwd: "./js/",
                         src: ["**/*.js", "!*modalDialog*"],
                         dest: "dist/"
-                    },
-                    {
-                        expand: true,
-                        src: ["./images/**"],
-                        dest: "dist/"
-                    },
+                    }
+                ]
+            },
+            distCss:
+            {
+                files:
+                [
                     {
                         expand: true,
                         src: ["./css/jquery.modalDialog.skins.less"],
+                        dest: "dist/"
+                    }
+                ]
+            },
+            distOther:
+            {
+                files:
+                [
+                    {
+                        expand: true,
+                        src: ["./images/**"],
                         dest: "dist/"
                     },
                     {
@@ -73,7 +85,7 @@ module.exports = function(grunt)
                     }
                 ]
             },
-            docs:
+            distSite:
             {
                 files: 
                 [
@@ -84,15 +96,13 @@ module.exports = function(grunt)
             deploy: 
             {
                 files: 
-                [
-                    { 
-                        expand: true, 
-                        cwd: "./site/_site/", 
-                        flatten: false, 
-                        src: ["**"], 
-                        dest: "./.git/docs-temp/" 
-                    }
-                ]
+                [{ 
+                    expand: true, 
+                    cwd: "./site/_site/", 
+                    flatten: false, 
+                    src: ["**"], 
+                    dest: "./.git/docs-temp/" 
+                }]
               }
         },
         uglify:
@@ -117,7 +127,8 @@ module.exports = function(grunt)
             },
             modalDialog: 
             {
-                src: [
+                src: 
+                [
                     "js/jquery.modalDialog.header.js", 
                     "js/jquery.modalDialog.userAgent.js", 
                     "js/jquery.modalDialog.getSettings.js",
@@ -129,7 +140,8 @@ module.exports = function(grunt)
             },
             modalDialogContent: 
             {
-                src: [
+                src: 
+                [
                     "js/jquery.modalDialogContent.header.js",
                     "js/jquery.modalDialog.userAgent.js",
                     "js/jquery.modalDialog.getSettings.js",
@@ -182,19 +194,21 @@ module.exports = function(grunt)
         },
         compress: 
         {
-            main: {
+            main: 
+            {
                 options: 
                 {
                     archive: "./site/skinnyjs.zip"
                 },
-                files: [
+                files: 
+                [
                     { expand: true, src: ["**"], cwd: "./dist", dest: "", filter: "isFile" } // includes files in path
                 ]
             }
         },
         "string-replace": 
         {
-            pages: 
+            site: 
             {
                 files: 
                 [
@@ -209,7 +223,8 @@ module.exports = function(grunt)
                 options: 
                 {
                     cwd: "./site/_site/",
-                    replacements: [
+                    replacements:
+                    [
                         {
                             pattern: /\.\.\/dist\//ig,
                             replacement: "dist/"
@@ -223,17 +238,22 @@ module.exports = function(grunt)
             modalDialog: 
             {
                 files: ["./js/**/*.modalDialog.*.js"],
-                tasks: ["concat:modalDialog", "concat:modalDialogContent"]
+                tasks: ["concat:modalDialog", "concat:modalDialogContent", "copy:distSite"]
             },
-            copy: 
+            copyJs: 
             {
-                files: ["**/*.js", "!*modalDialog*"],
-                tasks: ["copy:dist"]
+                files: ["./js/**/*.js", "!*modalDialog*"],
+                tasks: ["copy:distJs", "copy:distSite"]
             },
             less:
             {
                 files: ["./css/**/*.less"],
-                tasks: ["less"]
+                tasks: ["less", "copy:distSite"]
+            },
+            jekyll:
+            {
+                files: ["./site/**/*", "!./site/_site/*"],
+                tasks: ["sitePages"]
             },
             options: 
             {
@@ -242,21 +262,38 @@ module.exports = function(grunt)
         }
     };
 
-    // on watch events configure less:main to only run on changed file
-    grunt.event.on("watch", function(action, filepath) 
+    // Utility to create watch event handlers that will overwrite the 
+    // configs for a task so that only a single file (the one that was modified)
+    // will get processed.
+    function setWatch(configFilesObj)
     {
-        grunt.config(["less", "main"], filepath);
-    });
+        var cwd = (configFilesObj.cwd || "").replace("\\", "/");
+        if (cwd[cwd.length-1] != "/")
+        {
+            cwd += "/";
+        }
+        if (cwd.indexOf("./") === 0)
+        {
+            cwd = cwd.substr(2);
+        }
 
-    // // on watch events configure copy:dist to only run on changed file
-    // grunt.event.on("watch", function(action, filepath) 
-    // {
-    //     grunt.config(["copy", "dist"], filepath);
-    // });
+        // on watch events configure less:main to only run on changed file
+        grunt.event.on("watch", function(action, filepath) 
+        {
+            filepath = filepath.replace("\\", "/");
+            filepath = filepath.replace(cwd, "");
+
+            configFilesObj.src = [filepath];
+        });
+    }
+
+    setWatch(config.less.main.files[0]);
+    setWatch(config.copy.distJs.files[0]);
 
     // Project configuration.
     grunt.initConfig(config);
 
+    // NPM tasks
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-contrib-less");
@@ -265,32 +302,28 @@ module.exports = function(grunt)
     grunt.loadNpmTasks("grunt-contrib-concat");
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-groc");
-
-    // Default tasks.
-    grunt.registerTask("default", ["verify", "build"]);
-
-    // Verification tasks
-    grunt.registerTask("verify", ["jshint", "qunit"]);
-
-    grunt.registerTask("build", ["clean", "less", "copy:dist", "concat:modalDialog", "concat:modalDialogContent", "uglify"]);
-
-    // For zipping distribution files
     grunt.loadNpmTasks("grunt-contrib-compress");
-
     grunt.loadNpmTasks("grunt-string-replace");
-
     grunt.loadNpmTasks("grunt-contrib-watch");
+    grunt.loadNpmTasks("grunt-jekyll");
 
-    // Travis CI task.
+    // Custom tasks
+    grunt.loadTasks("./site/tasks");
+
     grunt.registerTask("travis", "default");
 
-    // Documentation tasks.
-    grunt.loadNpmTasks("grunt-jekyll");
-    grunt.loadTasks("./site/tasks");
-    grunt.registerTask("docs", ["default", "compress", "pages", "groc", "add-docs-links", "string-replace:pages", "copy:docs", "copy:deploy"]);
+    grunt.registerTask("default", ["verify", "build"]);
 
-    grunt.registerTask("pages", ["jekyll"]);
+    grunt.registerTask("verify", ["jshint", "qunit"]);
 
-    grunt.registerTask("readme", ["jekyll", "concat:readme"]);
+    grunt.registerTask("copyDist", ["copy:distJs", "copy:distCss", "copy:distOther"]);
+
+    grunt.registerTask("build", ["clean", "less", "copyDist", "concat:modalDialog", "concat:modalDialogContent", "uglify"]);
+
+    grunt.registerTask("site", ["default", "compress", "sitePages", "groc", "groc-add-links", "copy:deploy"]);
+
+    grunt.registerTask("sitePages", ["jekyll", "string-replace:site", "copy:distSite"]);
+
+    grunt.registerTask("readme", ["sitePages", "concat:readme"]);
 };
 
