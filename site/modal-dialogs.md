@@ -5,6 +5,16 @@ title: jQuery.modalDialog
 
 # Modal dialogs
 
+The jquery.modalDialog plugin is an extremely powerful and extensible UI widget. It supports responsive design, and is touch friendly.
+
+Example dialog (desktop):
+
+<img src="images/dialog-desktop.jpg" alt="Modal dialog: desktop" class="screenshot"/>
+
+Example dialog (mobile):
+
+<img src="images/dialog-mobile.jpg" alt="Modal dialog: mobile" class="screenshot"/>
+
 ## Source
 You can view the [full annotated source](js/jquery.modalDialog.html)
 
@@ -23,7 +33,7 @@ Other features:
 * The dialog framework supports mobile devices via responsive design.
 
 ## Demo
-[Open live demo](modal-dialogs-demo.html)
+[Live demo >>](modal-dialogs-demo.html)
 
 ## Usage
 
