@@ -6,6 +6,10 @@
 .dialog-default-padding {
   padding: 10px 10px 0 10px;
 }
+.dialog-auto-scroll {
+  overflow-x: auto;
+  max-height: 450px;
+}
 .dialog-skin-primary.dialog-container,
 .dialog-skin-neutral.dialog-container {
   -webkit-border-radius: 10px;

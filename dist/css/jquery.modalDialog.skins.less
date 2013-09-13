@@ -1,4 +1,4 @@
-@import url(mixin_lib.less);
+@import url(lib/mixin_lib.less);
 
 // This file contains implementations of modal dialogs skins.
 // It is intended to be modified by the user to skin modal dialogs.
@@ -6,6 +6,7 @@
 @gradient-top:      #4D4D4F;
 @gradient-bottom:      #313131;
 @white:         #fff;
+
 
 @border-rounding-amount: 10px;
 
@@ -50,6 +51,12 @@
 .dialog-default-padding
 {
     padding: 10px 10px 0 10px;
+}
+
+.dialog-auto-scroll
+{
+    overflow-x: auto;
+    max-height: 450px;
 }
 
 // Primary skin
