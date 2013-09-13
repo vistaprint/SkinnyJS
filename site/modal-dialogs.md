@@ -22,6 +22,9 @@ Other features:
 * A dialog's height is based on the content size. There is no explicit method to specify the height.
 * The dialog framework supports mobile devices via responsive design.
 
+## Demo
+[Open live demo](modal-dialogs-demo.html)
+
 ## Usage
 
 ### Adding jQuery.modalDialog to your site:
