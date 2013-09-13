@@ -45,55 +45,55 @@ module.exports = function(grunt)
         },
         copy: 
         {
-          dist: 
-          {
-            files:
-            [
-                {
-                    expand: true,
-                    cwd: "./js/",
-                    src: ["**/*.js", "!*modalDialog*"],
-                    dest: "dist/"
-                },
-                {
-                    expand: true,
-                    src: ["./images/**"],
-                    dest: "dist/"
-                },
-                {
-                    expand: true,
-                    src: ["./css/jquery.modalDialog.skins.less"],
-                    dest: "dist/"
-                },
-                {
-                    expand: true,
-                    cwd: "./js/",
-                    src: ["./postmessage.htm"],
-                    dest: "dist/"
-                }
-            ]
-          },
-          docs:
-          {
-            files: 
-            [
-                { expand: true, cwd: "./dist", src: ["**"], dest: "./site/_site/dist/" },
-                { expand: true, flatten: true, src: ["LICENSE"], processFile: true, dest: "./site/_site/" }
-            ]
-          },
-          deploy: 
-          {
-            files: 
-            [
-                { 
-                    expand: true, 
-                    cwd: "./site/_site/", 
-                    flatten: false, 
-                    src: ["**"], 
-                    dest: "./.git/docs-temp/" 
-                }
-            ]
-          }
+            dist: 
+            {
+                files:
+                [
+                    {
+                        expand: true,
+                        cwd: "./js/",
+                        src: ["**/*.js", "!*modalDialog*"],
+                        dest: "dist/"
+                    },
+                    {
+                        expand: true,
+                        src: ["./images/**"],
+                        dest: "dist/"
+                    },
+                    {
+                        expand: true,
+                        src: ["./css/jquery.modalDialog.skins.less"],
+                        dest: "dist/"
+                    },
+                    {
+                        expand: true,
+                        cwd: "./js/",
+                        src: ["./postmessage.htm"],
+                        dest: "dist/"
+                    }
+                ]
+            },
+            docs:
+            {
+                files: 
+                [
+                    { expand: true, cwd: "./dist", src: ["**"], dest: "./site/_site/dist/" },
+                    { expand: true, flatten: true, src: ["LICENSE"], processFile: true, dest: "./site/_site/" }
+                ]
+            },
+            deploy: 
+            {
+                files: 
+                [
+                    { 
+                        expand: true, 
+                        cwd: "./site/_site/", 
+                        flatten: false, 
+                        src: ["**"], 
+                        dest: "./.git/docs-temp/" 
+                    }
+                ]
+              }
         },
         concat: 
         {
@@ -241,27 +241,27 @@ module.exports = function(grunt)
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-groc");
 
-    // Delay loading the uglify configuration until all files are copied
-    // to the dist dir. This gives us some indirection to concat files. 
-    grunt.registerTask("uglifyDist", function()
-    {
-        config.uglify = 
-        { 
-            dist: 
-            { 
-                files: 
-                [{
-                    expand: true,
-                    cwd: "dist",
-                    src: ["**.js"],
-                    dest: "dist",
-                    rename: renameFn(".js", ".min.js")
-                }]
-            } 
-        };
+    // // Delay loading the uglify configuration until all files are copied
+    // // to the dist dir. This gives us some indirection to concat files. 
+    // grunt.registerTask("uglifyDist", function()
+    // {
+    //     config.uglify = 
+    //     { 
+    //         dist: 
+    //         { 
+    //             files: 
+    //             [{
+    //                 expand: true,
+    //                 cwd: "dist",
+    //                 src: ["**.js"],
+    //                 dest: "dist",
+    //                 rename: renameFn(".js", ".min.js")
+    //             }]
+    //         } 
+    //     };
 
-        grunt.task.run("uglify");
-    });
+    //     grunt.task.run("uglify");
+    // });
 
     // Default tasks.
     grunt.registerTask("default", ["verify", "build"]);
