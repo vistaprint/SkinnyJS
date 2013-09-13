@@ -46,35 +46,10 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
             }
 
             // Create a dialog settings object
-            var settings = {};
-
-            // If a link has a target on it, and we're in an iframe dialog,
-            // let the parent window figure out what the href refers to.
-            if ($link.attr("target") == "parent" && $.modalDialog.getCurrent().dialogType == "iframe")
+            var settings = 
             {
-                settings.contentOrUrl = href;
-            }
-            else
-            {
-                // Check to see if the href is a node or a url
-                var $hrefTarget;
-                try
-                {
-                    $hrefTarget = $(href);
-                }
-                catch (ex)
-                {
-                }
-
-                if ($hrefTarget && $hrefTarget.length > 0) // its a content node
-                {
-                    settings.content = $hrefTarget;
-                }
-                else // its the url for an iframe dialog
-                {
-                    settings.url = href;
-                }
-            }
+                contentOrUrl: href
+            };
 
             // Duplicate values on the link will win over values on the dialog node
             var linkSettings = $.modalDialog.getSettings($link);

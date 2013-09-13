@@ -832,6 +832,44 @@ if (!Object.keys)
     var _dialogIdCounter = -1;
     var DIALOG_NAME_PREFIX = "dialog";
 
+    // Determines if the specified string is a CSS selector or a URL.
+    var isSelector = function(s)
+    {
+        var firstChar = s.charAt(0);
+        if (firstChar == "#")
+        {
+            // This is a #anchor
+            // Its a selector
+            return true;
+        }
+
+        if (s.indexOf("/") >= 0)
+        {
+            // Selectors never contain /
+            // This is a URL
+            return false;
+        }
+
+        if (firstChar == ".")
+        {
+            var secondChar = s.charAt(1);
+            if (secondChar == "." || secondChar == "/")
+            {
+                // Starts with .. or ./
+                // This is a URL, not a selector
+                return false;
+            }
+
+            // It's a CSS class:
+            // .foo
+            return true;
+        }
+
+        // We can't determine. Presume this is a URL.
+        // i.e. "something" or "something.something" can be a either URL or a selector
+        return false;
+    };
+
     //Takes a settings object and calculates derived settings.
     //Settings go in order:
 
@@ -847,17 +885,9 @@ if (!Object.keys)
         // Determine which it is.
         if (explicitSettings.contentOrUrl)
         {
-            var $hrefTarget;
-            try
+            if (isSelector(explicitSettings.contentOrUrl))
             {
-                $hrefTarget = $(explicitSettings.contentOrUrl);
-            } 
-            catch (ex)
-            {}
-
-            if ($hrefTarget && $hrefTarget.length >= 1)
-            {
-                explicitSettings.content = $hrefTarget;
+                explicitSettings.content = explicitSettings.contentOrUrl;
             }
             else
             {
