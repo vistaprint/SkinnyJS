@@ -660,7 +660,30 @@ Base implementation will be called manually.</p></div></div><div class="code"><d
     <span class="p">};</span>
 
     <span class="kd">var</span> <span class="nx">_dialogIdCounter</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-    <span class="kd">var</span> <span class="nx">DIALOG_NAME_PREFIX</span> <span class="o">=</span> <span class="s2">&quot;dialog&quot;</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">DIALOG_NAME_PREFIX</span> <span class="o">=</span> <span class="s2">&quot;dialog&quot;</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Determines if the specified string is a CSS selector or a URL.</p></div></div><div class="code"><div class="wrapper">    <span class="kd">var</span> <span class="nx">isSelector</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">firstChar</span> <span class="o">=</span> <span class="nx">s</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">firstChar</span> <span class="o">==</span> <span class="s2">&quot;#&quot;</span><span class="p">)</span>
+        <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>This is a #anchor
+Its a selector</p></div></div><div class="code"><div class="wrapper">            <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Selectors never contain /
+This is a URL</p></div></div><div class="code"><div class="wrapper">            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">firstChar</span> <span class="o">==</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">secondChar</span> <span class="o">=</span> <span class="nx">s</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">secondChar</span> <span class="o">==</span> <span class="s2">&quot;.&quot;</span> <span class="o">||</span> <span class="nx">secondChar</span> <span class="o">==</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+            <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Starts with .. or ./
+This is a URL, not a selector</p></div></div><div class="code"><div class="wrapper">                <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+            <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>It's a CSS class:
+.foo</p></div></div><div class="code"><div class="wrapper">            <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>We can't determine. Presume this is a URL.
+i.e. "something" or "something.something" can be a either URL or a selector</p></div></div><div class="code"><div class="wrapper">        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">};</span>
 
     <span class="c1">//Takes a settings object and calculates derived settings.</span>
     <span class="c1">//Settings go in order:</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><ol>
@@ -673,17 +696,9 @@ Base implementation will be called manually.</p></div></div><div class="code"><d
 but it didn't know if it was a URL or a selector for a DOM node.
 Determine which it is.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="p">(</span><span class="nx">explicitSettings</span><span class="p">.</span><span class="nx">contentOrUrl</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">$hrefTarget</span><span class="p">;</span>
-            <span class="k">try</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">isSelector</span><span class="p">(</span><span class="nx">explicitSettings</span><span class="p">.</span><span class="nx">contentOrUrl</span><span class="p">))</span>
             <span class="p">{</span>
-                <span class="nx">$hrefTarget</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">explicitSettings</span><span class="p">.</span><span class="nx">contentOrUrl</span><span class="p">);</span>
-            <span class="p">}</span> 
-            <span class="k">catch</span> <span class="p">(</span><span class="nx">ex</span><span class="p">)</span>
-            <span class="p">{}</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="nx">$hrefTarget</span> <span class="o">&amp;&amp;</span> <span class="nx">$hrefTarget</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="nx">explicitSettings</span><span class="p">.</span><span class="nx">content</span> <span class="o">=</span> <span class="nx">$hrefTarget</span><span class="p">;</span>
+                <span class="nx">explicitSettings</span><span class="p">.</span><span class="nx">content</span> <span class="o">=</span> <span class="nx">explicitSettings</span><span class="p">.</span><span class="nx">contentOrUrl</span><span class="p">;</span>
             <span class="p">}</span>
             <span class="k">else</span>
             <span class="p">{</span>

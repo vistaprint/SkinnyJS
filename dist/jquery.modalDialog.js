@@ -961,6 +961,44 @@ if (!Object.keys)
     var _dialogIdCounter = -1;
     var DIALOG_NAME_PREFIX = "dialog";
 
+    // Determines if the specified string is a CSS selector or a URL.
+    var isSelector = function(s)
+    {
+        var firstChar = s.charAt(0);
+        if (firstChar == "#")
+        {
+            // This is a #anchor
+            // Its a selector
+            return true;
+        }
+
+        if (s.indexOf("/") >= 0)
+        {
+            // Selectors never contain /
+            // This is a URL
+            return false;
+        }
+
+        if (firstChar == ".")
+        {
+            var secondChar = s.charAt(1);
+            if (secondChar == "." || secondChar == "/")
+            {
+                // Starts with .. or ./
+                // This is a URL, not a selector
+                return false;
+            }
+
+            // It's a CSS class:
+            // .foo
+            return true;
+        }
+
+        // We can't determine. Presume this is a URL.
+        // i.e. "something" or "something.something" can be a either URL or a selector
+        return false;
+    };
+
     //Takes a settings object and calculates derived settings.
     //Settings go in order:
 
@@ -976,17 +1014,9 @@ if (!Object.keys)
         // Determine which it is.
         if (explicitSettings.contentOrUrl)
         {
-            var $hrefTarget;
-            try
+            if (isSelector(explicitSettings.contentOrUrl))
             {
-                $hrefTarget = $(explicitSettings.contentOrUrl);
-            } 
-            catch (ex)
-            {}
-
-            if ($hrefTarget && $hrefTarget.length >= 1)
-            {
-                explicitSettings.content = $hrefTarget;
+                explicitSettings.content = explicitSettings.contentOrUrl;
             }
             else
             {
@@ -1465,35 +1495,10 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
             }
 
             // Create a dialog settings object
-            var settings = {};
-
-            // If a link has a target on it, and we're in an iframe dialog,
-            // let the parent window figure out what the href refers to.
-            if ($link.attr("target") == "parent" && $.modalDialog.getCurrent().dialogType == "iframe")
+            var settings = 
             {
-                settings.contentOrUrl = href;
-            }
-            else
-            {
-                // Check to see if the href is a node or a url
-                var $hrefTarget;
-                try
-                {
-                    $hrefTarget = $(href);
-                }
-                catch (ex)
-                {
-                }
-
-                if ($hrefTarget && $hrefTarget.length > 0) // its a content node
-                {
-                    settings.content = $hrefTarget;
-                }
-                else // its the url for an iframe dialog
-                {
-                    settings.url = href;
-                }
-            }
+                contentOrUrl: href
+            };
 
             // Duplicate values on the link will win over values on the dialog node
             var linkSettings = $.modalDialog.getSettings($link);
