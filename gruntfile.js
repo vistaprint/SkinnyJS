@@ -95,6 +95,20 @@ module.exports = function(grunt)
                 ]
               }
         },
+        uglify:
+        {
+            dist: 
+            { 
+                files: 
+                [{
+                    expand: true,
+                    cwd: "dist",
+                    src: ["**.js"],
+                    dest: "dist",
+                    rename: renameFn(".js", ".min.js")
+                }]
+            } 
+        },
         concat: 
         {
             options: 
@@ -211,6 +225,11 @@ module.exports = function(grunt)
                 files: ["./js/**/*.modalDialog.*.js"],
                 tasks: ["concat:modalDialog", "concat:modalDialogContent"]
             },
+            copy: 
+            {
+                files: ["**/*.js", "!*modalDialog*"],
+                tasks: ["copy:dist"]
+            },
             less:
             {
                 files: ["./css/**/*.less"],
@@ -229,6 +248,12 @@ module.exports = function(grunt)
         grunt.config(["less", "main"], filepath);
     });
 
+    // // on watch events configure copy:dist to only run on changed file
+    // grunt.event.on("watch", function(action, filepath) 
+    // {
+    //     grunt.config(["copy", "dist"], filepath);
+    // });
+
     // Project configuration.
     grunt.initConfig(config);
 
@@ -241,35 +266,13 @@ module.exports = function(grunt)
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-groc");
 
-    // // Delay loading the uglify configuration until all files are copied
-    // // to the dist dir. This gives us some indirection to concat files. 
-    // grunt.registerTask("uglifyDist", function()
-    // {
-    //     config.uglify = 
-    //     { 
-    //         dist: 
-    //         { 
-    //             files: 
-    //             [{
-    //                 expand: true,
-    //                 cwd: "dist",
-    //                 src: ["**.js"],
-    //                 dest: "dist",
-    //                 rename: renameFn(".js", ".min.js")
-    //             }]
-    //         } 
-    //     };
-
-    //     grunt.task.run("uglify");
-    // });
-
     // Default tasks.
     grunt.registerTask("default", ["verify", "build"]);
 
     // Verification tasks
     grunt.registerTask("verify", ["jshint", "qunit"]);
 
-    grunt.registerTask("build", ["clean", "less", "copy:dist", "concat:modalDialog", "concat:modalDialogContent", "uglifyDist"]);
+    grunt.registerTask("build", ["clean", "less", "copy:dist", "concat:modalDialog", "concat:modalDialogContent", "uglify"]);
 
     // For zipping distribution files
     grunt.loadNpmTasks("grunt-contrib-compress");
