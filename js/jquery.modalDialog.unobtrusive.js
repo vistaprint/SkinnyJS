@@ -90,7 +90,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     // Assign handlers to all dialog links
     $(document).on("click", "[data-rel='modalDialog']", dialogLinkHandler);
 
-    // Helpful utility: A
+    // Helpful utility: A class that will make a button close dialogs by default
     $(document).on("click", ".close-dialog", function(e)
     {
         e.preventDefault();
