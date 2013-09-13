@@ -67,29 +67,6 @@ function appendJsCopyConfig(config)
     return config;
 }
 
-function getLessConfig()
-{
-    var ret = {};
-
-    var files = getFilesSync("css");
-    for (var i=0; i<files.length; i++)
-    {
-        if (files[i].indexOf(".less") < 0)
-        {
-            continue;
-        }
-
-        if (files[i].indexOf("_lib.less") >= 0)
-        {
-            continue;
-        }
-
-        ret["dist/" + files[i].replace(".less", ".css")] = files[i];
-    }
-
-    return ret;
-}
-
 module.exports = function(grunt)
 {
     var config = 
@@ -219,7 +196,19 @@ module.exports = function(grunt)
         {
             main:
             {
-                files: getLessConfig()
+                files: 
+                [
+                    {
+                        expand: true,
+                        cwd: "./css",
+                        src: ["*.less"],
+                        dest: "./dist/css",
+                        rename: function(dest, matchedSrcPath)
+                        {
+                            return dest + "/" + matchedSrcPath.replace(".less", ".css");
+                        }
+                    }
+                ]
             }
         },
         jekyll:
@@ -271,8 +260,31 @@ module.exports = function(grunt)
                     ]
                 }
             }
+        },
+        watch: 
+        {
+            modalDialog: 
+            {
+                files: ["./js/**/*.modalDialog.*.js"],
+                tasks: ["concat:modalDialog", "concat:modalDialogContent"]
+            },
+            less:
+            {
+                files: ["./css/**/*.less"],
+                tasks: ["less"]
+            },
+            options: 
+            {
+                spawn: false
+            }
         }
     };
+
+    // on watch events configure less:main to only run on changed file
+    grunt.event.on("watch", function(action, filepath) 
+    {
+        grunt.config(["less", "main"], filepath);
+    });
 
     // Project configuration.
     grunt.initConfig(config);
@@ -313,6 +325,8 @@ module.exports = function(grunt)
     grunt.loadNpmTasks("grunt-contrib-compress");
 
     grunt.loadNpmTasks("grunt-string-replace");
+
+    grunt.loadNpmTasks("grunt-contrib-watch");
 
     // Travis CI task.
     grunt.registerTask("travis", "default");
