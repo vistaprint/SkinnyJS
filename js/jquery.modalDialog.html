@@ -698,7 +698,7 @@ Determine which it is.</p></div></div><div class="code"><div class="wrapper">   
         <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="nx">isSelector</span><span class="p">(</span><span class="nx">explicitSettings</span><span class="p">.</span><span class="nx">contentOrUrl</span><span class="p">))</span>
             <span class="p">{</span>
-                <span class="nx">explicitSettings</span><span class="p">.</span><span class="nx">content</span> <span class="o">=</span> <span class="nx">explicitSettings</span><span class="p">.</span><span class="nx">contentOrUrl</span><span class="p">;</span>
+                <span class="nx">explicitSettings</span><span class="p">.</span><span class="nx">content</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">explicitSettings</span><span class="p">.</span><span class="nx">contentOrUrl</span><span class="p">);</span>
             <span class="p">}</span>
             <span class="k">else</span>
             <span class="p">{</span>
@@ -747,6 +747,11 @@ When removing the host window content from the DOM, make the veil opaque to hide
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">dialog</span> <span class="o">&amp;&amp;</span> <span class="nx">settings</span><span class="p">.</span><span class="nx">content</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="nx">dialog</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">content</span><span class="p">).</span><span class="nx">modalDialogInstance</span><span class="p">();</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nx">dialog</span> <span class="o">&amp;&amp;</span> <span class="nx">settings</span><span class="p">.</span><span class="nx">_fullId</span> <span class="o">&amp;&amp;</span> <span class="nx">dialog</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">_fullId</span> <span class="o">!==</span> <span class="nx">settings</span><span class="p">.</span><span class="nx">_fullId</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;An attempt was made to create a dialog with a content node which is already assigned to another dialog.&quot;</span><span class="p">);</span>
+            <span class="p">}</span>
         <span class="p">}</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">dialog</span><span class="p">)</span>

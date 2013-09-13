@@ -1016,7 +1016,7 @@ if (!Object.keys)
         {
             if (isSelector(explicitSettings.contentOrUrl))
             {
-                explicitSettings.content = explicitSettings.contentOrUrl;
+                explicitSettings.content = $(explicitSettings.contentOrUrl);
             }
             else
             {
@@ -1094,6 +1094,11 @@ if (!Object.keys)
         if (!dialog && settings.content)
         {
             dialog = $(settings.content).modalDialogInstance();
+
+            if (dialog && settings._fullId && dialog.settings._fullId !== settings._fullId)
+            {
+                throw new Error("An attempt was made to create a dialog with a content node which is already assigned to another dialog.");
+            }
         }
 
         if (!dialog)
