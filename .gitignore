@@ -231,3 +231,4 @@ node_modules/
 #############
 site/_site/
 site/skinnyjs.zip
+web.config
