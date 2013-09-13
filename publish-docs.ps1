@@ -1,4 +1,4 @@
-grunt docs
+grunt site
 
 if ($LASTEXITCODE -ne  0)
 {
