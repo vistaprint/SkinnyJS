@@ -462,7 +462,7 @@ $("#colorPickerLink").on("dialogcreate", function(e)
 
 To create a skin (theme) for a dialog, you simply create a CSS class. Then you can assign the skin using the **data-dialog-skin** attribute or settings option.
 
-Starter themes are provided:
+Starter themes are provided in a LESS (css/jquery.modalDialog.skins.less) or corresponding CSS file (css/jquery.modalDialog.skins.css) if you do not use LESS. These files are designed to be customized by you.
 
 * **primary**: A basic theme.
 * **neutral**: A variation on the 'primary' theme.

@@ -1,7 +1,7 @@
 @import url(lib/mixin_lib.less);
 
 // This file contains implementations of modal dialogs skins.
-// It is intended to be modified by the user to skin modal dialogs.
+// It is intended to be modified by developers to skin modal dialogs.
 
 @gradient-top:      #4D4D4F;
 @gradient-bottom:      #313131;
@@ -10,11 +10,12 @@
 
 @border-rounding-amount: 10px;
 
+// Customize the "loading" image that appears when a dialog loads
 .dialog-background
 {
-    .dialog-loading-indicator // dialog-loading-indicator-container
+    .dialog-loading-indicator
     {
-        span // dialog-loading-indicator
+        span
         {
             background-image: url(../images/clock.gif);
             width: 49px;
@@ -59,7 +60,7 @@
     max-height: 450px;
 }
 
-// Primary skin
+// Primary and Neutral skins
 .dialog-skin-primary.dialog-container, .dialog-skin-neutral.dialog-container
 {
     .rounded(@border-rounding-amount);
@@ -107,7 +108,7 @@
     }
 }
 
-// Neutral skin, inherits from primary
+// Lightbox skin
 .dialog-skin-lightbox
 {
     &.dialog-background
