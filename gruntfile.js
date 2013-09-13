@@ -1,5 +1,13 @@
 /* globals module */
 
+function renameFn(extOld, extNew)
+{
+    return function(dest, path)
+    {
+        return dest + "/" + path.replace(extOld, extNew);
+    };
+}
+
 module.exports = function(grunt)
 {
     var config = 
@@ -141,10 +149,7 @@ module.exports = function(grunt)
                         cwd: "./css",
                         src: ["*.less"],
                         dest: "./dist/css",
-                        rename: function(dest, matchedSrcPath)
-                        {
-                            return dest + "/" + matchedSrcPath.replace(".less", ".css");
-                        }
+                        rename: renameFn(".less", ".css")
                     }
                 ]
             }
@@ -250,10 +255,7 @@ module.exports = function(grunt)
                     cwd: "dist",
                     src: ["**.js"],
                     dest: "dist",
-                    rename: function(dest, path)
-                    {
-                        return dest + "/" + path.replace(".js", ".min.js");
-                    }
+                    rename: renameFn(".js", ".min.js")
                 }]
             } 
         };
