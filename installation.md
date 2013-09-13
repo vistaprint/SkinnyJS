@@ -52,3 +52,9 @@ Working on documentation:
 ** If you want to run the full distribution (i.e. you're developing scripts and want to update the site), run "grunt docs" (takes longer)
 * Processed pages are updated in /site/_site
 ** Point a local web server to this directory to test
+
+Git (Windows only)
+* Add to git config: 
+
+[core]
+	autocrlf = true
