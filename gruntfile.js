@@ -237,12 +237,12 @@ module.exports = function(grunt)
         {
             modalDialog: 
             {
-                files: ["./js/**/*.modalDialog.*.js"],
+                files: ["./js/**/*.modalDialog*.js"],
                 tasks: ["concat:modalDialog", "concat:modalDialogContent", "copy:distSite"]
             },
             copyJs: 
             {
-                files: ["./js/**/*.js", "!*modalDialog*"],
+                files: ["./js/**/*.js", "!**modalDialog**"],
                 tasks: ["copy:distJs", "copy:distSite"]
             },
             less:
@@ -262,33 +262,33 @@ module.exports = function(grunt)
         }
     };
 
-    // Utility to create watch event handlers that will overwrite the 
-    // configs for a task so that only a single file (the one that was modified)
-    // will get processed.
-    function setWatch(configFilesObj)
-    {
-        var cwd = (configFilesObj.cwd || "").replace("\\", "/");
-        if (cwd[cwd.length-1] != "/")
-        {
-            cwd += "/";
-        }
-        if (cwd.indexOf("./") === 0)
-        {
-            cwd = cwd.substr(2);
-        }
+    // // Utility to create watch event handlers that will overwrite the 
+    // // configs for a task so that only a single file (the one that was modified)
+    // // will get processed.
+    // function setWatch(configFilesObj, msg)
+    // {
+    //     var cwd = (configFilesObj.cwd || "").replace("\\", "/");
+    //     if (cwd[cwd.length-1] != "/")
+    //     {
+    //         cwd += "/";
+    //     }
+    //     if (cwd.indexOf("./") === 0)
+    //     {
+    //         cwd = cwd.substr(2);
+    //     }
 
-        // on watch events configure less:main to only run on changed file
-        grunt.event.on("watch", function(action, filepath) 
-        {
-            filepath = filepath.replace("\\", "/");
-            filepath = filepath.replace(cwd, "");
+    //     // on watch events configure less:main to only run on changed file
+    //     grunt.event.on("watch", function(action, filepath) 
+    //     {
+    //         filepath = filepath.replace("\\", "/");
+    //         filepath = filepath.replace(cwd, "");
 
-            configFilesObj.src = [filepath];
-        });
-    }
+    //         configFilesObj.src = [filepath];
+    //     });
+    // }
 
-    setWatch(config.less.main.files[0]);
-    setWatch(config.copy.distJs.files[0]);
+    //setWatch(config.less.main.files[0], "less.main");
+    //setWatch(config.copy.distJs.files[0], "copy.distJs");
 
     // Project configuration.
     grunt.initConfig(config);
