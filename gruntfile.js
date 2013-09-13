@@ -1,71 +1,4 @@
-/* globals require, module */
-var fs = require("fs");
-
-function getFilesSync(directory, buffer)
-{
-    if (!buffer)
-    {
-        buffer = [];
-    }
-
-    var files = fs.readdirSync(directory);
-    for (var i=0; i<files.length; i++)
-    {
-        var file = directory + "/" + files[i];
-        if (fs.lstatSync(file).isDirectory())
-        {
-            getFilesSync(file, buffer);
-        }
-        else
-        {
-            buffer.push(file);
-        }
-    }
-
-    return buffer;
-}
-
-function getUglifyConfig()
-{
-    var ret = {};
-
-    var files = getFilesSync("dist");
-    for (var i=0; i<files.length; i++)
-    {
-        if (files[i].indexOf(".js") < 0)
-        {
-            continue;
-        }
-
-        var minFile = files[i].replace(".js", ".min.js");
-        ret[minFile] = [ files[i] ];
-    }
-
-    return ret;
-}
-
-function appendJsCopyConfig(config)
-{
-    config = config || [];
-
-    var files = getFilesSync("js");
-    for (var i=0; i<files.length; i++)
-    {
-        if (files[i].indexOf("js/jquery.modalDialog") === 0)
-        {
-            continue;
-        }
-
-        config.push({
-            expand: true,
-            src: [files[i]],
-            dest: "dist/",
-            flatten: true
-        });
-    }
-
-    return config;
-}
+/* globals module */
 
 module.exports = function(grunt)
 {
@@ -106,9 +39,14 @@ module.exports = function(grunt)
         {
           dist: 
           {
-            files: appendJsCopyConfig(
+            files:
             [
-                
+                {
+                    expand: true,
+                    cwd: "./js/",
+                    src: ["**/*.js", "!*modalDialog*"],
+                    dest: "dist/"
+                },
                 {
                     expand: true,
                     src: ["./images/**"],
@@ -125,7 +63,7 @@ module.exports = function(grunt)
                     src: ["./postmessage.htm"],
                     dest: "dist/"
                 }
-            ])
+            ]
           },
           docs:
           {
@@ -306,7 +244,17 @@ module.exports = function(grunt)
         { 
             dist: 
             { 
-                files: getUglifyConfig() 
+                files: 
+                [{
+                    expand: true,
+                    cwd: "dist",
+                    src: ["**.js"],
+                    dest: "dist",
+                    rename: function(dest, path)
+                    {
+                        return dest + "/" + path.replace(".js", ".min.js");
+                    }
+                }]
             } 
         };
 
