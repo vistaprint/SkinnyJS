@@ -41,7 +41,7 @@
         <article class="markdown-body">
           <h1 id='modal_dialogs'>Modal dialogs</h1>
 
-<p>The jquery.modalDialog plugin is an extremely powerful and extensible UI widget. It supports responsive design, and is touch friendly.</p>
+<p>The <strong>jquery.modalDialog</strong> plugin is an extremely powerful and extensible UI widget. It supports responsive design, and is touch friendly.</p>
 
 <p>Example dialog (desktop):</p>
 <img alt='Modal dialog: desktop' class='screenshot' src='images/dialog-desktop.jpg' />
@@ -53,25 +53,55 @@
 
 <h2 id='features'>Features</h2>
 
+<h3 id='content_sources'>Content sources</h3>
+
 <p>For a dialog&#8217;s content, the framework can use one of the following techniques:</p>
 
 <ul>
-<li>Use an element on the page (&#8220;node dialog&#8221;)</li>
+<li>Use an element on the page (&#8220;node dialog&#8221;).</li>
 
-<li>Display a different page within the dialog (&#8220;IFrame dialog&#8221;)</li>
+<li>Display a different page within the dialog (&#8220;IFrame dialog&#8221;). This is really useful for encapsulating the content of a dialog and isolating it from the parent page.</li>
 
-<li>Load content via AJAX (&#8220;ajax dialog&#8221;)</li>
+<li>Load content via AJAX (&#8220;ajax dialog&#8221;). This is also useful for encapsulating the content of a dialog.</li>
 </ul>
 
-<p>Other features:</p>
+<h3 id='cross_domain_support'>Cross domain support</h3>
 
 <ul>
 <li>The API for IFrame dialogs works seamlessly across different domains (i.e. www.vistaprint.com vs secure.vistaprint.com) by internally using window.postMessage()</li>
+</ul>
 
+<h3 id='simple_sizing_rules'>Simple sizing rules</h3>
+
+<ul>
 <li>A dialog&#8217;s height is based on the content size. There is no explicit method to specify the height.</li>
 
-<li>The dialog framework supports mobile devices via responsive design.</li>
+<li>Even iframe dialogs&#8217; height is based on automatic content size detection.</li>
 </ul>
+
+<h3 id='mobile_support_via_responsive_design'>Mobile support (via responsive design)</h3>
+
+<p>The dialog framework supports mobile devices via responsive design.</p>
+
+<ul>
+<li>On desktops and tablets, modal dialogs act just like Windows/Mac modal dialogs (they are draggable/droppable)</li>
+
+<li>On small mobile devices (i.e. phone/ipod), the dialogs snap to near-full screen, and are not draggable.</li>
+</ul>
+
+<h3 id='unobtrusive_syntax'>Unobtrusive syntax</h3>
+
+<p>Dialogs can be created with a simple markup-based syntax, or, if you need more control, you can use the full rich dialog API.</p>
+
+<p>This unobtrusive syntax makes your dialogs SEO friendly, and will help you design sites that gracefully degrade on older devices.</p>
+
+<h3 id='skinning_support'>Skinning support</h3>
+
+<p>Dialogs can be skinned simply via CSS. Multiple skins are supported.</p>
+
+<h3 id='event_driven_extensibility'>Event driven extensibility</h3>
+
+<p>Dialogs publish <a href='#events'>events</a> that can be used to extend their functionality.</p>
 
 <h2 id='demo'>Demo</h2>
 
@@ -110,7 +140,7 @@
     Fruits and nuts are delicious, and good for you too.
 <span class='nt'>&lt;/div&gt;</span>
 </code></pre></div>
-<p>Note the <em>data-rel=&#8221;modalDialog&#8221;</em> attribute: this automatically creates an event handler which will open a dialog using the target of the link&#8217;s <em>href</em> as the dialog content.</p>
+<p>Note the <strong>data-rel=&#8221;modalDialog&#8221;</strong> attribute: this automatically creates an event handler which will open a dialog using the target of the link&#8217;s <em>href</em> as the dialog content.</p>
 
 <p>To create a dialog programmatically, use one of the following methods:</p>
 <div class='highlight'><pre><code class='javascript'><span class='c1'>// Returns a jQuery object. Used for function/jQuery style code/chaining.</span>
@@ -449,6 +479,24 @@
     <span class='nx'>e</span><span class='p'>.</span><span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>onopen</span><span class='p'>.</span><span class='nx'>add</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span> <span class='nx'>alert</span><span class='p'>(</span><span class='s2'>&quot;opened&quot;</span><span class='p'>);</span> <span class='p'>});</span>
 <span class='p'>});</span>
 </code></pre></div>
+<h3 id='skinning'>Skinning</h3>
+
+<p>To create a skin (theme) for a dialog, you simply create a CSS class. Then you can assign the skin using the <strong>data-dialog-skin</strong> attribute or settings option.</p>
+
+<p>Starter themes are provided in a LESS (css/jquery.modalDialog.skins.less) or corresponding CSS file (css/jquery.modalDialog.skins.css) if you do not use LESS. These files are designed to be customized by you.</p>
+
+<ul>
+<li><strong>primary</strong>: A basic theme.</li>
+
+<li><strong>neutral</strong>: A variation on the &#8216;primary&#8217; theme.</li>
+
+<li><strong>lightbox</strong>: A variation that demonstrates the power of responsive design. On desktop/tablet, this displays as a regular dialog, but on a small mobile device, it will display in a lightbox/gallery style.</li>
+</ul>
+
+<p>Lightbox skin (desktop):</p>
+<img class='screenshot' src='images/lightbox-desktop.jpg' />
+<p>Lightbox skin (mobile):</p>
+<img class='screenshot' src='images/lightbox-mobile.jpg' />
         </article>
       </div>
     </div>
