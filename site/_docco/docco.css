@@ -76,9 +76,11 @@ hr {
 
 .docs pre code
 {
-  width: 400px;
+  width: 450px;
   overflow-y: auto;
   display: block;
+  background-color: #F5F5FF;
+  color: #272822;
 }
 
 table td {
@@ -96,7 +98,7 @@ table td {
   }
     .docs pre {
       margin: 15px 0 15px;
-      padding-left: 15px;
+      /* padding-left: 15px; */
     }
     .docs p tt, .docs p code {
       background: #f8f8ff;
