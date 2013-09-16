@@ -17,7 +17,7 @@ Example dialog (mobile):
 <img src="images/dialog-mobile.jpg" alt="Modal dialog: mobile" class="screenshot"/>
 
 ## Source
-You can view the [full annotated source](js/jquery.modalDialog.html)
+You can view the [full annotated source](docco/jquery.modalDialog.html)
 
 ## Features
 

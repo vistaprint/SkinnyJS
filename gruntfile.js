@@ -35,12 +35,22 @@ module.exports = function(grunt)
         qunit: {
           all: ["test/*.html"]
         },
-        groc:
+        docco:
         {
-            javascript: ["js/**/*.js"],
-            options: 
+            javascript: 
             {
-                out: "./site/_site/"
+                src: ["js/**/*.js"],
+                dest: "./site/_site/docco/"
+            }
+        },
+        mkdir:
+        {
+            docco:
+            {
+                options:
+                {
+                    create: ["./site/_site/docco/"]
+                }
             }
         },
         copy: 
@@ -91,6 +101,13 @@ module.exports = function(grunt)
                 [
                     { expand: true, cwd: "./dist", src: ["**"], dest: "./site/_site/dist/" },
                     { expand: true, flatten: true, src: ["LICENSE"], processFile: true, dest: "./site/_site/" }
+                ]
+            },
+            doccoFix:
+            {
+                files: 
+                [
+                    { expand: true, cwd: "./site/_docco/", src: ["**"], dest: "./site/_site/docco" }
                 ]
             },
             deploy: 
@@ -222,7 +239,6 @@ module.exports = function(grunt)
                 ],
                 options: 
                 {
-                    cwd: "./site/_site/",
                     replacements:
                     [
                         {
@@ -262,34 +278,6 @@ module.exports = function(grunt)
         }
     };
 
-    // // Utility to create watch event handlers that will overwrite the 
-    // // configs for a task so that only a single file (the one that was modified)
-    // // will get processed.
-    // function setWatch(configFilesObj, msg)
-    // {
-    //     var cwd = (configFilesObj.cwd || "").replace("\\", "/");
-    //     if (cwd[cwd.length-1] != "/")
-    //     {
-    //         cwd += "/";
-    //     }
-    //     if (cwd.indexOf("./") === 0)
-    //     {
-    //         cwd = cwd.substr(2);
-    //     }
-
-    //     // on watch events configure less:main to only run on changed file
-    //     grunt.event.on("watch", function(action, filepath) 
-    //     {
-    //         filepath = filepath.replace("\\", "/");
-    //         filepath = filepath.replace(cwd, "");
-
-    //         configFilesObj.src = [filepath];
-    //     });
-    // }
-
-    //setWatch(config.less.main.files[0], "less.main");
-    //setWatch(config.copy.distJs.files[0], "copy.distJs");
-
     // Project configuration.
     grunt.initConfig(config);
 
@@ -301,14 +289,15 @@ module.exports = function(grunt)
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-concat");
     grunt.loadNpmTasks("grunt-contrib-clean");
-    grunt.loadNpmTasks("grunt-groc");
+    grunt.loadNpmTasks("grunt-docco");
     grunt.loadNpmTasks("grunt-contrib-compress");
     grunt.loadNpmTasks("grunt-string-replace");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-jekyll");
+    grunt.loadNpmTasks("grunt-mkdir");
 
     // Custom tasks
-    grunt.loadTasks("./site/tasks");
+    grunt.loadTasks("./site/_tasks");
 
     grunt.registerTask("travis", "default");
 
@@ -319,8 +308,10 @@ module.exports = function(grunt)
     grunt.registerTask("copyDist", ["copy:distJs", "copy:distCss", "copy:distOther"]);
 
     grunt.registerTask("build", ["clean", "less", "copyDist", "concat:modalDialog", "concat:modalDialogContent", "uglify"]);
+    
+    grunt.registerTask("docs", ["mkdir:docco", "docco", "docco-add-links", "copy:doccoFix"]);
 
-    grunt.registerTask("site", ["default", "compress", "sitePages", "groc", "groc-add-links", "copy:deploy"]);
+    grunt.registerTask("site", ["default", "compress", "sitePages", "docs", "copy:deploy"]);
 
     grunt.registerTask("sitePages", ["jekyll", "string-replace:site", "copy:distSite"]);
 

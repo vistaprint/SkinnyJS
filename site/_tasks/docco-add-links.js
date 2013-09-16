@@ -1,6 +1,6 @@
 var fs = require("fs");
 
-var WRAPPER_HTML = "<div class=\"comments\"><div class=\"wrapper\">";
+var TARGET_HTML = "<th class=\"docs\">";
 
 var processError = function(err)
 {
@@ -11,7 +11,7 @@ var processError = function(err)
     }
 };
 
-var DOCS_ROOT = "./site/_site/js";
+var DOCS_ROOT = "./site/_site/docco";
 var template = fs.readFileSync("./site/_includes/docfile-header-partial.html", "utf-8");
 
 var processPages = function(directory)
@@ -33,7 +33,7 @@ var processPages = function(directory)
 
         var content = fs.readFileSync(filePath, "utf-8");
 
-        var wrapperPos = content.indexOf(WRAPPER_HTML);
+        var wrapperPos = content.indexOf(TARGET_HTML);
         if (wrapperPos < 0)
         {
             continue;
@@ -41,7 +41,7 @@ var processPages = function(directory)
 
         var processedTemplate = template.replace(/#file#/gim, file.replace(".html", ".js"));
 
-        wrapperPos += WRAPPER_HTML.length;
+        wrapperPos += TARGET_HTML.length;
 
         var newContent = content.substr(0, wrapperPos) +
             processedTemplate +
@@ -53,7 +53,7 @@ var processPages = function(directory)
 
 module.exports = function(grunt)
 {
-    grunt.registerTask("groc-add-links", "Adds shared header links to groc generated files", function() {
+    grunt.registerTask("docco-add-links", "Adds shared header links to docco generated files", function() {
         processPages(DOCS_ROOT);
     });
 };
