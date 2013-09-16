@@ -10,6 +10,16 @@
 	margin-bottom: 0;
 }
 
+@media (max-width: 500px) {
+
+	.spice-dialog .left-column,
+	.spice-dialog .right-column
+	{
+		float: inherit;
+		width: 100%;
+	}
+}
+
 .spice-dialog .left-column
 {
 	float: left;
@@ -22,12 +32,3 @@
 	width: 47%;
 }
 
-@media (max-width: 500px) {
-
-	.spice-dialog .left-column,
-	.spice-dialog .right-column
-	{
-		float: inherit;
-		width: 100%;
-	}
-}

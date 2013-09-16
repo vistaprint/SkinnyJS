@@ -1,0 +1,171 @@
+<!DOCTYPE html>  <html> <head>   <title>jquery.contentSize.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="date-parse.html">                 date-parse.js               </a>                                           <a class="source" href="jquery.clientRect.html">                 jquery.clientRect.js               </a>                                           <a class="source" href="jquery.contentSize.html">                 jquery.contentSize.js               </a>                                           <a class="source" href="jquery.css.html">                 jquery.css.js               </a>                                           <a class="source" href="jquery.customEvent.html">                 jquery.customEvent.js               </a>                                           <a class="source" href="jquery.delimitedString.html">                 jquery.delimitedString.js               </a>                                           <a class="source" href="jquery.disableEvent.html">                 jquery.disableEvent.js               </a>                                           <a class="source" href="jquery.hostIframe.html">                 jquery.hostIframe.js               </a>                                           <a class="source" href="jquery.hoverDelay.html">                 jquery.hoverDelay.js               </a>                                           <a class="source" href="jquery.htmlEncode.html">                 jquery.htmlEncode.js               </a>                                           <a class="source" href="jquery.imageSize.html">                 jquery.imageSize.js               </a>                                           <a class="source" href="jquery.isVisibleKeyCode.html">                 jquery.isVisibleKeyCode.js               </a>                                           <a class="source" href="jquery.menu.html">                 jquery.menu.js               </a>                                           <a class="source" href="jquery-menu-exampleskin.html">                 jquery-menu-exampleskin.js               </a>                                           <a class="source" href="jquery.modalDialog.deviceFixes.html">                 jquery.modalDialog.deviceFixes.js               </a>                                           <a class="source" href="jquery.modalDialog.getSettings.html">                 jquery.modalDialog.getSettings.js               </a>                                           <a class="source" href="jquery.modalDialog.header.html">                 jquery.modalDialog.header.js               </a>                                           <a class="source" href="jquery.modalDialog.html">                 jquery.modalDialog.js               </a>                                           <a class="source" href="jquery.modalDialog.unobtrusive.html">                 jquery.modalDialog.unobtrusive.js               </a>                                           <a class="source" href="jquery.modalDialog.userAgent.html">                 jquery.modalDialog.userAgent.js               </a>                                           <a class="source" href="jquery.modalDialogContent.header.html">                 jquery.modalDialogContent.header.js               </a>                                           <a class="source" href="jquery.modalDialogContent.html">                 jquery.modalDialogContent.js               </a>                                           <a class="source" href="jquery.msAjax.html">                 jquery.msAjax.js               </a>                                           <a class="source" href="jquery.ns.html">                 jquery.ns.js               </a>                                           <a class="source" href="jquery.partialLoad.html">                 jquery.partialLoad.js               </a>                                           <a class="source" href="jquery.postMessage.html">                 jquery.postMessage.js               </a>                                           <a class="source" href="jquery.proxyAll.html">                 jquery.proxyAll.js               </a>                                           <a class="source" href="jquery.queryString.html">                 jquery.queryString.js               </a>                                           <a class="source" href="jquery.uncomment.html">                 jquery.uncomment.js               </a>                                           <a class="source" href="jquery.url.html">                 jquery.url.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs"><a href="../index.html">Homepage</a> | 
+<a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.contentSize.js" target="_blank">View this file on Github</a> | 
+<a href="https://raw.github.com/vistaprint/SkinnyJS/master/js/jquery.contentSize.js" target="_blank">Download this file</a>
+
+<hr style="height: 1px; border:0; background-color:#4A525A">
+             <h1>               jquery.contentSize.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>/ <reference path="jquery.clientRect.js" /></p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h2>jQuery.contentSize</h2>
+
+<p>Returns the height and width of the specified page's content: the total scrolling size.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Measures the document content using a more accurate approach relying on body.scrollHeight,
+especially when the content is in an iframe- in which case, the body.scrollHeight always returns
+the viewport size, even if the content is smaller.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <h3>Usage</h3>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Gets the content width, including scrollbars:</p>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <pre><code>var rect = $(window).contentSize();
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Gets the content width, excluding scrollbars: </p>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <pre><code>var rect = $(window).contentSize(true);
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Works in a window inside an iframe:</p>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <pre><code>var rect = $(iframeWindow).contentSize();
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <h3>Dependencies</h3>
+
+<p>This library uses jquery.clientRect (part of skinny.js) to measure elements efficiently.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <h3>Source</h3>             </td>             <td class="code">               <div class="highlight"><pre>
+
+<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span>
+<span class="p">{</span>
+
+<span class="kd">var</span> <span class="nx">addMargin</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">styleProp</span><span class="p">,</span> <span class="nx">rectProp</span><span class="p">,</span> <span class="nx">rect</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">margin</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">node</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="nx">styleProp</span><span class="p">),</span> <span class="mi">10</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">margin</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">rect</span><span class="p">[</span><span class="nx">rectProp</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">margin</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>Size gets continuously populated as this recurses through the DOM, building the max size of the page.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+<span class="kd">var</span> <span class="nx">gatherSize</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">size</span><span class="p">,</span> <span class="nx">node</span><span class="p">,</span> <span class="nx">includeChildrenOnly</span><span class="p">,</span> <span class="nx">includeWidth</span><span class="p">,</span> <span class="nx">includeHeight</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">rect</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p>Only look at elements</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">nodeType</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">includeChildrenOnly</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">try</span>
+        <span class="p">{</span>
+            <span class="nx">rect</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">node</span><span class="p">).</span><span class="nx">clientRect</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="k">catch</span> <span class="p">(</span><span class="nx">ex</span><span class="p">)</span>
+        <span class="p">{</span>
+</pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p>Couldn't get the size, so let's just return.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">return</span><span class="p">;</span>  
+        <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <p>if the node is not rendered, don't factor in its size</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">rect</span><span class="p">.</span><span class="nx">height</span> <span class="o">===</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">width</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">tagName</span> <span class="o">==</span> <span class="s2">&quot;BODY&quot;</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">addMargin</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="s2">&quot;marginRight&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="nx">rect</span><span class="p">);</span>
+            <span class="nx">addMargin</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="s2">&quot;marginBottom&quot;</span><span class="p">,</span> <span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="nx">rect</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">includeHeight</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">size</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">rect</span><span class="p">.</span><span class="nx">bottom</span><span class="p">,</span> <span class="nx">size</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+        <span class="p">}</span>
+        
+        <span class="k">if</span> <span class="p">(</span><span class="nx">includeWidth</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">size</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">rect</span><span class="p">.</span><span class="nx">right</span><span class="p">,</span> <span class="nx">size</span><span class="p">.</span><span class="nx">width</span><span class="p">);</span>
+        <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <p>If the node is a vertical scrolling container, don't look at its children for the purposes of calculating height</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">node</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;overflowX&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;visible&quot;</span> <span class="o">&amp;&amp;</span> 
+            <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">node</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;height&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;auto&quot;</span> <span class="o">||</span> <span class="nx">$</span><span class="p">(</span><span class="nx">node</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;maxHeight&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;none&quot;</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="nx">includeHeight</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <p>If the node is a horizontal scrolling container, don't look at its children for the purposes of calculating width</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">node</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;overflowY&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;visible&quot;</span> <span class="o">&amp;&amp;</span> 
+            <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">node</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;auto&quot;</span> <span class="o">||</span> <span class="nx">$</span><span class="p">(</span><span class="nx">node</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;maxWidth&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;none&quot;</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="nx">includeWidth</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <p>Optimization- if we don't need to measure any children, stop recursing.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">includeHeight</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">includeWidth</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-20">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>               <p>Recurse</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">tagName</span> <span class="o">!==</span> <span class="s2">&quot;OBJECT&quot;</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">gatherSize</span><span class="p">(</span><span class="nx">size</span><span class="p">,</span> <span class="nx">node</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">includeWidth</span><span class="p">,</span> <span class="nx">includeHeight</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-21">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>               <p>Returns the height and width of the total page: the total scrolling size.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+<span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">contentSize</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">excludeScrollbars</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">el</span> <span class="o">=</span> <span class="k">this</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">el</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;Element required&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-22">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-22">&#182;</a>               </div>               <p>If el is a window or a document, pay attention to excludeScrollbars
+doc will be null if el is not a window or document</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="kd">var</span> <span class="nx">doc</span> <span class="o">=</span> <span class="nx">el</span><span class="p">.</span><span class="nb">document</span> <span class="o">||</span> <span class="p">(</span><span class="nx">el</span><span class="p">.</span><span class="nx">documentElement</span> <span class="o">?</span> <span class="nx">el</span> <span class="o">:</span> <span class="p">(</span><span class="nx">el</span><span class="p">.</span><span class="nx">tagName</span> <span class="o">==</span> <span class="s2">&quot;BODY&quot;</span> <span class="o">?</span> <span class="nx">el</span><span class="p">.</span><span class="nx">ownerDocument</span> <span class="o">:</span> <span class="kc">null</span><span class="p">));</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-23">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-23">&#182;</a>               </div>               <p>Exclude scrollbars- browsers don't offer any way to ignore the scrollbar
+when calculating content dimensions, so just hide/restore</p>             </td>             <td class="code">               <div class="highlight"><pre>
+
+    <span class="kd">var</span> <span class="nx">currentOverflow</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">excludeScrollbars</span> <span class="o">&amp;&amp;</span> <span class="nx">doc</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">currentOverflow</span> <span class="o">=</span> <span class="nx">doc</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">overflow</span><span class="p">;</span>
+        <span class="nx">doc</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">overflow</span> <span class="o">=</span> <span class="s2">&quot;hidden&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">var</span> <span class="nx">size</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">width</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mi">0</span> <span class="p">};</span>
+    <span class="kd">var</span> <span class="nx">startingNode</span> <span class="o">=</span> <span class="nx">doc</span> <span class="o">?</span> <span class="nx">doc</span><span class="p">.</span><span class="nx">body</span> <span class="o">:</span> <span class="nx">el</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">includeChildrenOnly</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">startingNode</span><span class="p">.</span><span class="nx">tagName</span> <span class="o">==</span> <span class="s2">&quot;BODY&quot;</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">includeChildrenOnly</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">gatherSize</span><span class="p">(</span><span class="nx">size</span><span class="p">,</span> <span class="nx">doc</span> <span class="o">?</span> <span class="nx">doc</span><span class="p">.</span><span class="nx">body</span> <span class="o">:</span> <span class="nx">el</span><span class="p">,</span> <span class="nx">includeChildrenOnly</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="nx">excludeScrollbars</span> <span class="o">&amp;&amp;</span> <span class="nx">doc</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">doc</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">overflow</span> <span class="o">=</span> <span class="nx">currentOverflow</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">size</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

@@ -1,0 +1,198 @@
+<!DOCTYPE html>  <html> <head>   <title>jquery.imageSize.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="date-parse.html">                 date-parse.js               </a>                                           <a class="source" href="jquery.clientRect.html">                 jquery.clientRect.js               </a>                                           <a class="source" href="jquery.contentSize.html">                 jquery.contentSize.js               </a>                                           <a class="source" href="jquery.css.html">                 jquery.css.js               </a>                                           <a class="source" href="jquery.customEvent.html">                 jquery.customEvent.js               </a>                                           <a class="source" href="jquery.delimitedString.html">                 jquery.delimitedString.js               </a>                                           <a class="source" href="jquery.disableEvent.html">                 jquery.disableEvent.js               </a>                                           <a class="source" href="jquery.hostIframe.html">                 jquery.hostIframe.js               </a>                                           <a class="source" href="jquery.hoverDelay.html">                 jquery.hoverDelay.js               </a>                                           <a class="source" href="jquery.htmlEncode.html">                 jquery.htmlEncode.js               </a>                                           <a class="source" href="jquery.imageSize.html">                 jquery.imageSize.js               </a>                                           <a class="source" href="jquery.isVisibleKeyCode.html">                 jquery.isVisibleKeyCode.js               </a>                                           <a class="source" href="jquery.menu.html">                 jquery.menu.js               </a>                                           <a class="source" href="jquery-menu-exampleskin.html">                 jquery-menu-exampleskin.js               </a>                                           <a class="source" href="jquery.modalDialog.deviceFixes.html">                 jquery.modalDialog.deviceFixes.js               </a>                                           <a class="source" href="jquery.modalDialog.getSettings.html">                 jquery.modalDialog.getSettings.js               </a>                                           <a class="source" href="jquery.modalDialog.header.html">                 jquery.modalDialog.header.js               </a>                                           <a class="source" href="jquery.modalDialog.html">                 jquery.modalDialog.js               </a>                                           <a class="source" href="jquery.modalDialog.unobtrusive.html">                 jquery.modalDialog.unobtrusive.js               </a>                                           <a class="source" href="jquery.modalDialog.userAgent.html">                 jquery.modalDialog.userAgent.js               </a>                                           <a class="source" href="jquery.modalDialogContent.header.html">                 jquery.modalDialogContent.header.js               </a>                                           <a class="source" href="jquery.modalDialogContent.html">                 jquery.modalDialogContent.js               </a>                                           <a class="source" href="jquery.msAjax.html">                 jquery.msAjax.js               </a>                                           <a class="source" href="jquery.ns.html">                 jquery.ns.js               </a>                                           <a class="source" href="jquery.partialLoad.html">                 jquery.partialLoad.js               </a>                                           <a class="source" href="jquery.postMessage.html">                 jquery.postMessage.js               </a>                                           <a class="source" href="jquery.proxyAll.html">                 jquery.proxyAll.js               </a>                                           <a class="source" href="jquery.queryString.html">                 jquery.queryString.js               </a>                                           <a class="source" href="jquery.uncomment.html">                 jquery.uncomment.js               </a>                                           <a class="source" href="jquery.url.html">                 jquery.url.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs"><a href="../index.html">Homepage</a> | 
+<a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.imageSize.js" target="_blank">View this file on Github</a> | 
+<a href="https://raw.github.com/vistaprint/SkinnyJS/master/js/jquery.imageSize.js" target="_blank">Download this file</a>
+
+<hr style="height: 1px; border:0; background-color:#4A525A">
+             <h1>               jquery.imageSize.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span>
+<span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">    * Scales and positions an image so that it totally fills the container specified by the &quot;closestSelector&quot;,</span>
+<span class="cm">    * it crops, rather than stretches, the image. The container should have overflow:hidden.</span>
+<span class="cm">    *</span>
+<span class="cm">    * @param {String} src The URL of the image to load</span>
+<span class="cm">    * @param {Object} closestSelector jQuery selector to determine the container to fill</span>
+<span class="cm">    * @param {Function} callback Optional callback once image has been resized</span>
+<span class="cm">    */</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">fillClosest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">src</span><span class="p">,</span> <span class="nx">closestSelector</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">img</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+
+            <span class="kd">var</span> <span class="nx">callbackWrapper</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">size</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">css</span> <span class="o">=</span> <span class="nx">fillClosest</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">img</span><span class="p">,</span> <span class="nx">size</span><span class="p">,</span> <span class="nx">closestSelector</span><span class="p">);</span>
+                <span class="nx">$</span><span class="p">(</span><span class="nx">img</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="nx">css</span><span class="p">);</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="nx">callback</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="nx">callback</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">img</span><span class="p">,</span> <span class="nx">size</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">};</span>
+
+            <span class="nx">$</span><span class="p">.</span><span class="nx">naturalSize</span><span class="p">(</span><span class="nx">src</span><span class="p">,</span> <span class="nx">callbackWrapper</span><span class="p">);</span>
+        <span class="p">});</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">,</span> <span class="nx">src</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    <span class="kd">var</span> <span class="nx">fillClosest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">rect</span><span class="p">,</span> <span class="nx">closestSelector</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">aspectRatio</span> <span class="o">=</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">width</span> <span class="o">/</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">$container</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">closest</span><span class="p">(</span><span class="nx">closestSelector</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">containerHeight</span> <span class="o">=</span> <span class="nx">$container</span><span class="p">.</span><span class="nx">height</span><span class="p">();</span>
+        <span class="kd">var</span> <span class="nx">containerWidth</span> <span class="o">=</span> <span class="nx">$container</span><span class="p">.</span><span class="nx">width</span><span class="p">();</span>
+        <span class="kd">var</span> <span class="nx">containerAspectRatio</span> <span class="o">=</span> <span class="nx">containerWidth</span> <span class="o">/</span> <span class="nx">containerHeight</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">scale</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">margin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>alert("size " + rect.width + " " + rect.height + " " + containerWidth + " " + containerHeight);
+The container is skinnier than the image so we need to move the image to the left</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">containerAspectRatio</span> <span class="o">&lt;</span> <span class="nx">aspectRatio</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">scale</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">aspectRatio</span> <span class="o">/</span> <span class="nx">containerAspectRatio</span> <span class="o">*</span> <span class="mi">100</span><span class="p">);</span>
+            
+            <span class="k">if</span> <span class="p">(</span><span class="nx">scale</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">)</span> 
+            <span class="p">{</span>
+                <span class="nx">margin</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">((</span><span class="nx">scale</span><span class="o">-</span><span class="mi">100</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
+            <span class="p">}</span>
+</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>alert("skinny " + scale + " " + aspectRatio + " " + containerAspectRatio + " " + margin);</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s2">&quot;margin-top&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;margin-left&quot;</span><span class="o">:</span> <span class="o">-</span><span class="nx">margin</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;width&quot;</span><span class="o">:</span> <span class="nx">scale</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span>
+            <span class="p">};</span>
+        <span class="p">}</span>
+</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>The container is fatter than the image so we need to move the image up</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="k">else</span>
+        <span class="p">{</span>
+            <span class="nx">scale</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">containerAspectRatio</span> <span class="o">/</span> <span class="nx">aspectRatio</span> <span class="o">*</span> <span class="mi">100</span><span class="p">);</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nx">scale</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">)</span> 
+            <span class="p">{</span>
+                <span class="nx">margin</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">((</span><span class="nx">scale</span><span class="o">-</span><span class="mi">100</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
+            <span class="p">}</span>
+</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>alert("fat " + scale + " " + aspectRatio + " " + containerAspectRatio + " " + margin);</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">return</span> <span class="p">{</span>      
+                <span class="s2">&quot;margin-left&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>      
+                <span class="s2">&quot;margin-top&quot;</span><span class="o">:</span> <span class="o">-</span><span class="nx">margin</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;width&quot;</span><span class="o">:</span> <span class="s2">&quot;100%&quot;</span>
+            <span class="p">};</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="cm">/**</span>
+<span class="cm">    * Scales and resizes an image DOM element so that it fits and is centered in a box with the specified width</span>
+<span class="cm">    * and height. </span>
+<span class="cm">    *</span>
+<span class="cm">    * @param {String} src The URL of the image to load</span>
+<span class="cm">    * @param {Object} boundingBox A rectangle with the maximum width and height</span>
+<span class="cm">    * @param {Function} callback Optional callback once image has been resized</span>
+<span class="cm">    */</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">fitToBoundingBox</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">src</span><span class="p">,</span> <span class="nx">boundingBox</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">img</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+
+            <span class="kd">var</span> <span class="nx">callbackWrapper</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">size</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">boundedSize</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">fitToBoundingBox</span><span class="p">(</span><span class="nx">size</span><span class="p">,</span> <span class="nx">boundingBox</span><span class="p">);</span>
+                <span class="nx">$</span><span class="p">(</span><span class="nx">img</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="nx">boundedSize</span><span class="p">);</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="nx">callback</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="nx">callback</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">img</span><span class="p">,</span> <span class="nx">boundedSize</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">};</span>
+
+            <span class="nx">$</span><span class="p">.</span><span class="nx">naturalSize</span><span class="p">(</span><span class="nx">src</span><span class="p">,</span> <span class="nx">callbackWrapper</span><span class="p">);</span>
+        <span class="p">});</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">,</span> <span class="nx">src</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="k">this</span><span class="p">;</span> <span class="c1">// TODO can this return a promise?</span>
+    <span class="p">};</span>
+
+    <span class="nx">$</span><span class="p">.</span><span class="nx">fitToBoundingBox</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">rect</span><span class="p">,</span> <span class="nx">boundingBox</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">aspectRatio</span> <span class="o">=</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">width</span> <span class="o">/</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">rectWithAspectRatio</span><span class="p">(</span><span class="nx">boundingBox</span><span class="p">,</span> <span class="nx">aspectRatio</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="cm">/**</span>
+<span class="cm">    * Preloads the specified image and calls back the specified function </span>
+<span class="cm">    * with a size (width/height) representing the intrinsic size of the image.</span>
+<span class="cm">    * @param {String} src The URL of the image to load</span>
+<span class="cm">    * @param {Function} success A function that takes a size object as its only argument</span>
+<span class="cm">    * @param {Function} error A function will be called if there is an error loading the image.</span>
+<span class="cm">    */</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">naturalSize</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">src</span><span class="p">,</span> <span class="nx">success</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">img</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Image</span><span class="p">();</span>
+
+        <span class="kd">var</span> <span class="nx">successWrapper</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+        <span class="p">{</span>
+</pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>HACK for IE7- With images that are cached, IE7
+fires image load events synchronously in the .src setter.
+The setter blocks while the onload event handlers execute, which can cause
+strange behavior in the caller of this method.
+Simulate behavior of other browsers by manually queuing the callback.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="nb">window</span><span class="p">.</span><span class="nx">setTimeout</span><span class="p">(</span>
+            <span class="kd">function</span><span class="p">()</span>
+            <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">size</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">width</span><span class="o">:</span> <span class="nx">img</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span> <span class="nx">img</span><span class="p">.</span><span class="nx">height</span> <span class="p">};</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="nx">success</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="nx">success</span><span class="p">(</span><span class="nx">size</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="mi">0</span><span class="p">);</span>
+        <span class="p">};</span>
+
+        <span class="nx">img</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="nx">successWrapper</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">img</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="nx">error</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nx">img</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">src</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>TODO return promise</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="p">};</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>TODO comment</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">rectWithAspectRatio</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">containerRect</span><span class="p">,</span> <span class="nx">aspectRatio</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">rect</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nx">top</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="nx">left</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="nx">width</span><span class="o">:</span> <span class="nx">containerRect</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span>
+            <span class="nx">height</span><span class="o">:</span> <span class="nx">containerRect</span><span class="p">.</span><span class="nx">height</span>
+        <span class="p">};</span>
+
+        <span class="kd">var</span> <span class="nx">containerAspectRatio</span> <span class="o">=</span> <span class="nx">containerRect</span><span class="p">.</span><span class="nx">width</span> <span class="o">/</span> <span class="nx">containerRect</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">containerAspectRatio</span> <span class="o">&lt;</span> <span class="nx">aspectRatio</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">rect</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">rect</span><span class="p">.</span><span class="nx">width</span> <span class="o">/</span> <span class="nx">aspectRatio</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+            <span class="nx">rect</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">rect</span><span class="p">.</span><span class="nx">height</span> <span class="o">*</span> <span class="nx">aspectRatio</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="nx">rect</span><span class="p">.</span><span class="nx">left</span> <span class="o">=</span> <span class="p">(</span><span class="nx">containerRect</span><span class="p">.</span><span class="nx">width</span> <span class="o">-</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">width</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="nx">rect</span><span class="p">.</span><span class="nx">top</span> <span class="o">=</span> <span class="p">(</span><span class="nx">containerRect</span><span class="p">.</span><span class="nx">height</span> <span class="o">-</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">height</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="nx">rect</span><span class="p">.</span><span class="nx">right</span> <span class="o">=</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">left</span> <span class="o">+</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">width</span><span class="p">;</span>
+        <span class="nx">rect</span><span class="p">.</span><span class="nx">bottom</span> <span class="o">=</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">top</span> <span class="o">+</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="nx">rect</span><span class="p">;</span>
+    <span class="p">};</span>
+
+<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

@@ -1,0 +1,260 @@
+<!DOCTYPE html>  <html> <head>   <title>jquery.msAjax.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="date-parse.html">                 date-parse.js               </a>                                           <a class="source" href="jquery.clientRect.html">                 jquery.clientRect.js               </a>                                           <a class="source" href="jquery.contentSize.html">                 jquery.contentSize.js               </a>                                           <a class="source" href="jquery.css.html">                 jquery.css.js               </a>                                           <a class="source" href="jquery.customEvent.html">                 jquery.customEvent.js               </a>                                           <a class="source" href="jquery.delimitedString.html">                 jquery.delimitedString.js               </a>                                           <a class="source" href="jquery.disableEvent.html">                 jquery.disableEvent.js               </a>                                           <a class="source" href="jquery.hostIframe.html">                 jquery.hostIframe.js               </a>                                           <a class="source" href="jquery.hoverDelay.html">                 jquery.hoverDelay.js               </a>                                           <a class="source" href="jquery.htmlEncode.html">                 jquery.htmlEncode.js               </a>                                           <a class="source" href="jquery.imageSize.html">                 jquery.imageSize.js               </a>                                           <a class="source" href="jquery.isVisibleKeyCode.html">                 jquery.isVisibleKeyCode.js               </a>                                           <a class="source" href="jquery.menu.html">                 jquery.menu.js               </a>                                           <a class="source" href="jquery-menu-exampleskin.html">                 jquery-menu-exampleskin.js               </a>                                           <a class="source" href="jquery.modalDialog.deviceFixes.html">                 jquery.modalDialog.deviceFixes.js               </a>                                           <a class="source" href="jquery.modalDialog.getSettings.html">                 jquery.modalDialog.getSettings.js               </a>                                           <a class="source" href="jquery.modalDialog.header.html">                 jquery.modalDialog.header.js               </a>                                           <a class="source" href="jquery.modalDialog.html">                 jquery.modalDialog.js               </a>                                           <a class="source" href="jquery.modalDialog.unobtrusive.html">                 jquery.modalDialog.unobtrusive.js               </a>                                           <a class="source" href="jquery.modalDialog.userAgent.html">                 jquery.modalDialog.userAgent.js               </a>                                           <a class="source" href="jquery.modalDialogContent.header.html">                 jquery.modalDialogContent.header.js               </a>                                           <a class="source" href="jquery.modalDialogContent.html">                 jquery.modalDialogContent.js               </a>                                           <a class="source" href="jquery.msAjax.html">                 jquery.msAjax.js               </a>                                           <a class="source" href="jquery.ns.html">                 jquery.ns.js               </a>                                           <a class="source" href="jquery.partialLoad.html">                 jquery.partialLoad.js               </a>                                           <a class="source" href="jquery.postMessage.html">                 jquery.postMessage.js               </a>                                           <a class="source" href="jquery.proxyAll.html">                 jquery.proxyAll.js               </a>                                           <a class="source" href="jquery.queryString.html">                 jquery.queryString.js               </a>                                           <a class="source" href="jquery.uncomment.html">                 jquery.uncomment.js               </a>                                           <a class="source" href="jquery.url.html">                 jquery.url.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs"><a href="../index.html">Homepage</a> | 
+<a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.msAjax.js" target="_blank">View this file on Github</a> | 
+<a href="https://raw.github.com/vistaprint/SkinnyJS/master/js/jquery.msAjax.js" target="_blank">Download this file</a>
+
+<hr style="height: 1px; border:0; background-color:#4A525A">
+             <h1>               jquery.msAjax.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>/ <reference path="../dependencies/json2.js" />
+/ <reference path="date-parse.js" /></p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h2>jQuery.msAjax plugin</h2>
+
+<p>Eases the pain of dealing with legacy Microsoft web services technologies (ASMX, WCF, JsonDataContractSerializer).</p>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <ul>
+<li>Correctly serializes/deserializes <a href="http://msdn.microsoft.com/en-us/library/bb299886.aspx#intro_to_json_sidebarb">Microsoft's date format</a> 
+and revives dates into a JavaScript Date object.
+** Supports ISO8601 dates as well.</li>
+<li>Remove Microsoft specific JSON wrappers, including the "d" property, the embedded "__type" property</li>
+<li>Wont do any of this if the JSON object isn't Microsoft-styled</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p><strong>Note</strong>: This is not necessary when using ASP.NET MVC 4+ with Web API (which uses <a href="http://james.newtonking.com/projects/json-net.aspx">JSON.NET</a>) 
+by default). WebAPI uses ISO8601 dates and doesn't add any Microsoft specific properties to JSON objects.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <h3>Dependencies</h3>
+
+<p>jQuery.msAjax has two dependencies:</p>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <ul>
+<li>date-parse.js (also part of skinny.js).</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <ul>
+<li>For less-than-awesome browsers that don't support JSON.parse() or JSON.stringify(), you should include
+a polyfill, such as <a href="https://github.com/douglascrockford/JSON-js/blob/master/json2.js">Doug Crockford's json2.js</a>. </li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <h3>Example Usage:</h3>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <h4>ASMX</h4>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <pre><code>$.msAjax({
+    url: 'PersonWebService.asmx', 
+    methodName: 'GetPerson', 
+    data: {'personId': 1}, 
+    success: function(oPerson) { alert(oPerson.Name); },
+    error: function() { logSomething(arguments); }
+});
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
+ 
+</pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <h4>WCF (REST style)</h4>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <pre><code>$.msAjax({
+    url: 'PersonWebService.svc/People/1', 
+    success: function(oPerson) { alert(oPerson.Name); },
+    error: function() { logSomething(arguments); }
+});
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <h3>Source</h3>             </td>             <td class="code">               <div class="highlight"><pre>
+
+<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">$</span><span class="p">)</span>
+<span class="p">{</span>
+</pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p>Remove ASMX specific metadata from JSON</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="kd">var</span> <span class="nx">msJsonSanitizer</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
+    <span class="p">{</span>
+</pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p>Rehydrate date values</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span>
+        <span class="p">{</span>   
+            <span class="k">return</span> <span class="nx">msJsonDateOnlySanitizer</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;object&quot;</span><span class="p">)</span>
+        <span class="p">{</span>
+</pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <p>ASMX adds a "__type" property to aid in return-trip deserialization.
+This isn't useful most of the time.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">&amp;&amp;</span> <span class="nx">value</span><span class="p">.</span><span class="nx">__type</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">delete</span> <span class="nx">value</span><span class="p">.</span><span class="nx">__type</span><span class="p">;</span> 
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="p">};</span>
+    
+</pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <p>Converts date strings in ISO8601 or Microsoft format to JavaScript dates</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="kd">var</span> <span class="nx">msJsonDateOnlySanitizer</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span>
+        <span class="p">{</span>   
+</pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <p>Perform strict parsing so that strings that are not full dates are not parsed as dates
+Example of a partial date:       "2013"
+Example of a full ISO8601 date:  "2013-08-07T21:40:05.121+06:00"</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            
+</pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <p>Depends on ms date parsing in js-iso8601-ms.js. True indicates to perform strict parsing.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="kd">var</span> <span class="nx">date</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parseISO8601</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span> 
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">date</span><span class="p">))</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nx">date</span><span class="p">;</span>
+            <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-20">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>               <p>Depends on ms date parsing in js-iso8601-ms.js. This function is already strict.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="nx">date</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parseMsDate</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span> 
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">date</span><span class="p">))</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nx">date</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="p">};</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-21">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>               <p>Parses Microsoft JSON, removes the outer container, and revives it.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">parseMsJSON</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">preserveType</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">text</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{};</span>
+        <span class="p">}</span>
+        
+        <span class="kd">var</span> <span class="nx">json</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">preserveType</span> <span class="o">?</span> <span class="nx">msJsonDateOnlySanitizer</span> <span class="o">:</span> <span class="nx">msJsonSanitizer</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">json</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{};</span>
+        <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-22">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-22">&#182;</a>               </div>               <p>ASMX puts all JSON in a "d" property.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+
+        <span class="k">return</span> <span class="k">typeof</span> <span class="nx">json</span><span class="p">.</span><span class="nx">d</span> <span class="o">!=</span> <span class="s2">&quot;undefined&quot;</span> <span class="o">?</span> <span class="nx">json</span><span class="p">.</span><span class="nx">d</span> <span class="o">:</span> <span class="nx">json</span><span class="p">;</span>
+    <span class="p">};</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-23">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-23">&#182;</a>               </div>               <p>Recurses through a JSON object and applies the specified reviver</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="kd">var</span> <span class="nx">recurseJSON</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">holder</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">reviver</span><span class="p">)</span> 
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">holder</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="nx">value</span> <span class="o">==</span> <span class="s2">&quot;object&quot;</span><span class="p">)</span> 
+        <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="nx">k</span> <span class="k">in</span> <span class="nx">value</span><span class="p">)</span> 
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">k</span><span class="p">))</span> 
+                <span class="p">{</span>
+                    <span class="nx">v</span> <span class="o">=</span> <span class="nx">recurseJSON</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">reviver</span><span class="p">);</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="nx">v</span> <span class="o">!==</span> <span class="kc">undefined</span><span class="p">)</span> 
+                    <span class="p">{</span>
+                        <span class="nx">value</span><span class="p">[</span><span class="nx">k</span><span class="p">]</span> <span class="o">=</span> <span class="nx">v</span><span class="p">;</span>
+                    <span class="p">}</span> 
+                    <span class="k">else</span> 
+                    <span class="p">{</span>
+                        <span class="k">delete</span> <span class="nx">value</span><span class="p">[</span><span class="nx">k</span><span class="p">];</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="nx">reviver</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">holder</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+    <span class="p">};</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-24">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-24">&#182;</a>               </div>               <p>Recurses over a json data structure and runs the specified reviver function</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">recurseJSON</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">json</span><span class="p">,</span> <span class="nx">reviver</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">recurseJSON</span><span class="p">({</span><span class="s2">&quot;&quot;</span><span class="o">:</span> <span class="nx">json</span><span class="p">},</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nx">reviver</span><span class="p">);</span>
+    <span class="p">};</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-25">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-25">&#182;</a>               </div>               <p>Recurses over a json data structure output by Microsoft JSON serialization, and revives it.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">reviveMsJSON</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">json</span><span class="p">,</span> <span class="nx">datesOnly</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">recurseJSON</span><span class="p">(</span><span class="nx">json</span><span class="p">,</span> <span class="nx">datesOnly</span> <span class="o">?</span> <span class="nx">msJsonDateOnlySanitizer</span> <span class="o">:</span> <span class="nx">msJsonSanitizer</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="kd">var</span> <span class="nx">AJAX_SETTINGS_DEFAULTS</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nx">dataType</span><span class="o">:</span> <span class="s2">&quot;json&quot;</span><span class="p">,</span>
+            <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;post&quot;</span><span class="p">,</span>
+            <span class="nx">contentType</span><span class="o">:</span> <span class="s2">&quot;application/json; charset=utf-8&quot;</span><span class="p">,</span>
+            <span class="nx">converters</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;text json&quot;</span><span class="o">:</span> <span class="nx">$</span><span class="p">.</span><span class="nx">parseMsJSON</span> <span class="p">}</span> <span class="c1">//Parse and sanitize the JSON returned by ASMX</span>
+        <span class="p">};</span>
+
+    <span class="kd">var</span> <span class="nx">validateSetting</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">settings</span><span class="p">,</span> <span class="nx">arg</span><span class="p">,</span> <span class="nx">methodName</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">settings</span><span class="p">[</span><span class="nx">arg</span><span class="p">])</span>
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="nx">methodName</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nx">arg</span> <span class="o">+</span> <span class="s2">&quot; not specified&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="kd">var</span> <span class="nx">reISO</span> <span class="o">=</span> <span class="sr">/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/</span><span class="p">;</span> 
+
+</pre></div>             </td>           </tr>                               <tr id="section-26">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-26">&#182;</a>               </div>               <p>A reviver/replacer for JSON.stringify() that converts dates into Microsoft format</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">stringifyMsDate</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> 
+    <span class="p">{</span> 
+        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">value</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span> 
+        <span class="p">{</span> 
+            <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">reISO</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span> 
+            <span class="k">if</span> <span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="p">{</span> 
+                <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="s2">&quot;/Date(&quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">UTC</span><span class="p">(</span><span class="o">+</span><span class="nx">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">+</span><span class="nx">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">+</span><span class="nx">a</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="o">+</span><span class="nx">a</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="o">+</span><span class="nx">a</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="o">+</span><span class="nx">a</span><span class="p">[</span><span class="mi">6</span><span class="p">])).</span><span class="nx">getTime</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;-0000)/&quot;</span><span class="p">;</span>
+
+                <span class="k">this</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">val</span><span class="p">;</span> 
+                <span class="k">return</span> <span class="nx">val</span><span class="p">;</span> 
+            <span class="p">}</span> 
+        <span class="p">}</span> 
+        <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="p">};</span>
+
+
+</pre></div>             </td>           </tr>                               <tr id="section-27">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-27">&#182;</a>               </div>               <p>Invoke $.ajax() with all the correct settings and wrappers for Microsoft script services such as ASMX and WCF.
+Otherwise identical to $.ajax() (same settings, arguments, and return values).</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">msAjax</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">settings</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">settings</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">settings</span> <span class="o">=</span> <span class="p">{};</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">url</span> <span class="o">==</span> <span class="s2">&quot;object&quot;</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">settings</span> <span class="o">=</span> <span class="nx">url</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">url</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">settings</span><span class="p">.</span><span class="nx">url</span> <span class="o">=</span> <span class="nx">url</span><span class="p">;</span>
+        <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-28">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-28">&#182;</a>               </div>               <p>Validate settings</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">validateSetting</span><span class="p">(</span><span class="nx">settings</span><span class="p">,</span> <span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="s2">&quot;$.ajaxAsmx&quot;</span><span class="p">);</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-29">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-29">&#182;</a>               </div>               <p>Format the data as JSON before post</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">settings</span><span class="p">.</span><span class="nx">data</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">data</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">stringifyMsDate</span><span class="p">);</span> 
+        <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-30">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-30">&#182;</a>               </div>               <p>In ASMX (and REST in general), web service method name gets appended to the URL</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">methodName</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">settings</span><span class="p">.</span><span class="nx">url</span> <span class="o">+=</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="nx">settings</span><span class="p">.</span><span class="nx">methodName</span><span class="p">;</span> 
+        <span class="p">}</span>
+
+        <span class="kd">var</span> <span class="nx">coalescedSettings</span> <span class="o">=</span> <span class="p">{};</span>
+        <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="nx">coalescedSettings</span><span class="p">,</span> <span class="nx">AJAX_SETTINGS_DEFAULTS</span><span class="p">,</span> <span class="nx">settings</span><span class="p">);</span>
+        
+</pre></div>             </td>           </tr>                               <tr id="section-31">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-31">&#182;</a>               </div>               <p>Useful for testing invalid json</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="cm">/*       </span>
+<span class="cm">        settings.dataFilter = function(data, type)</span>
+<span class="cm">        {</span>
+<span class="cm">           return &quot;{d:{ &quot;foo&quot;: &#39;/Date(1325394000000-0500)/&#39; }}&quot;;</span>
+<span class="cm">        };</span>
+<span class="cm">        */</span>
+        
+</pre></div>             </td>           </tr>                               <tr id="section-32">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-32">&#182;</a>               </div>               <p>For a sync call, return the parsed JSON</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">coalescedSettings</span><span class="p">.</span><span class="nx">async</span> <span class="o">===</span> <span class="kc">false</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">(</span><span class="nx">coalescedSettings</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">parseMsJSON</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">,</span> <span class="nx">coalescedSettings</span><span class="p">.</span><span class="nx">preserveType</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">(</span><span class="nx">coalescedSettings</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="nx">$</span><span class="p">.</span><span class="nx">ajaxAsmx</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">msAjax</span><span class="p">;</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">ajaxWcf</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">msAjax</span><span class="p">;</span>
+
+<span class="p">})(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">jQuery</span><span class="p">);</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
