@@ -1,14 +1,3 @@
-// ## jQuery.htmlEncode
-
-// Dead simple HTML encoding.
-
-// ### Usage
-
-//     var encoded = $.htmlEncode('<a href="somelink.html">some link</a>');
-//     encoded == "&lt;a href=&quot;somelink.html&quot;&rt;some link&lt;/a&rt;"; // true
-
-// ### Source
-
 (function($)
 {
     var map = {
