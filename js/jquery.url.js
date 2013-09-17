@@ -1,48 +1,5 @@
 /// <reference path="jquery.querystring.js" />
 
-// ## jQuery.Url
-// This class parses/encodes URLs, and provides an interface that is almost identical to that of the browser's Location object. 
-
-// Note: This class doesn't support some of the more esoteric features of URLs.
-// If you need this kind of support, you should use a more robust (and heavyweight) implementation such as
-// [node.js's Url module](https://github.com/joyent/node/blob/master/lib/url.js).
-
-// ### Usage
-// ####Parse a URL:
-
-//     var url = new $.Url("http://www.foo.com:8080/pages/page1.html?key1=value1&key2=value2#someAnchor")
-//     url.hash === "#someAnchor"; // true
-//     url.protocol === "http"; // true
-//     url.hostname === "www.foo.com"; // true
-//     url.host === "www.foo.com:8080"; // true
-//     url.port === "8080"; // true
-//     url.queryString === "key1=value1&key2=value2"; // true
-//     url.search === "?key1=value1&key2=value2"; // true
-//     url.pathname === "/pages/page1.html"; // true
-
-// ####Manipulating the querystring
-// Once the URL is parsed, you can manipulate the querystring:
-
-//     // Adds a parameter, or overwrites one if it already exists
-//     url.setItem("key3", "value3")
-//     
-//     // Gets the value of an existing parameter
-//     var key1Value = url.getItem("key1")
-//     
-//     // Gets the value of an existing parameter, 
-//     // specifying a default in case the value doesn't exist
-//     var key1Value = url.getItem("key1", "some default value")
-//     
-//     // Removes a parameter
-//     url.removeItem("key3")
-
-// #### Serializing back to a URL string
-// The *toString()* method of $.Url will write back to a string:
-
-//     document.location = url.toString();
-
-// ### Source
-
 (function($)
 {
 

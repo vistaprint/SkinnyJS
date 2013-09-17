@@ -1,47 +1,5 @@
 /// <reference path="jquery.delimitedString.js" />
 
-// ## jQuery.css
-// Parses/encodes CSS strings. For example, the following CSS string:
-
-//     "background-color:red; width:25px; border-left: 1px black solid;
-
-// can be transformed into a JavaScript object:
-
-//     {
-//         "backgroundColor": "red",
-//         "width": "25px",
-//         "borderLeft": "1px black solid"
-//     }
-
-// or vice-versa.
-
-// ### Usage
-
-// Parse a CSS string to a JavaScript object:
-
-//     var parsed = $.parseCssString("color: blue; padding-top: 3px");
-//     parsed.paddingTop === "3px";  // true
-
-// Encode a JavaScript object as a CSS string:
-
-//     var encoded = $.encodeCssString({ color: "blue", paddingTop: "3px" });
-//     encoded === "color:blue;padding-top:3px";  // true
-
-// Transform camel-cased CSS properties (for JavaScript) to dash case (for CSS):
-
-//     var dashCased = $.camelToDashCase("paddingTop");
-//     dashCased === "padding-top";  // true
-
-// Transform dash case (for CSS) to camel-cased CSS properties (for JavaScript):
-
-//     var camelCased = $.dashToCamelCase("padding-top");
-//     camelCased === "paddingTop";  // true
-
-// ### Dependencies
-// This library uses jquery.delimitedString (part of skinny.js), which abstracts encoding/decoding of key-value pairs.
-
-// ### Source
-
 (function($)
 {
     var _mapCamelToDash = {};

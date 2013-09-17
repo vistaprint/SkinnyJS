@@ -2964,3 +2964,12 @@ article img.screenshot
   max-width: inherit;
   border: 1px black solid;
 }
+
+.source-links
+{
+  background-color: #EFEFEF;
+  border: 1px #E5E5E5 solid;
+  padding: 5px;
+  display: inline-block;
+  float: right;
+}

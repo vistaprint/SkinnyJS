@@ -48,5 +48,8 @@ $(document).ready(function(){
     $(window).scrollTop(0);
     return false;
   })
+
+  $(".github-source-link")
+  
 });
 })(jQuery)

@@ -1,13 +1,3 @@
-// ## jQuery.modalDialog
-
-// ### Documentation
-// Full documentation is available at <http://vistaprint.github.io/SkinnyJS/modal-dialogs.html>
-
-// Note: jQuery Mobile and some other dialog frameworks have URL/history management via pushState/hashchange built in.
-// I find this to be too inflexible, and should be implemented by callers as a separate concern.
-
-// ### Source
-
 // Minimal polyfill for Object.keys
 // <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys>
 if (!Object.keys) 

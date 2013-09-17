@@ -1,6 +1,6 @@
 ---
 layout: main
-title: jQuery.menu
+title: jquery.menu
 ---
 
 ## jQuery.menu
