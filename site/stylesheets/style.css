@@ -343,17 +343,17 @@ svg:not(:root) {
 /* =Links
 -------------------------------------------------------------- */
 a {
-  color: #0066cc;
+  color: #1B770C;
   font-weight: 400;
-  text-decoration: none;
+  
 }
 
 a:hover,
 a:focus,
 a:active {
-  color: #444444;
+  color: #259A10;
   outline: 0;
-  text-decoration: none;
+  
 }
 
 ::selection {
@@ -716,7 +716,9 @@ form div {
 {
   font-family: Georgia, serif;
   font-style: italic;
+  font-weight: bold;
   color: #63A52A;
+  text-decoration: none;
 }
 
 .site-name {
@@ -964,7 +966,6 @@ form div {
   display: inline-block;
   margin: 0;
   padding: 0;
-  text-decoration: none;
 }
 
 #widgets form {
@@ -2730,7 +2731,7 @@ BDO[DIR="rtl"] {
 
 .markdown-body h2 {
   font-size: 24px;
-  color: #557398;
+  color: #63A52A;
 }
 
 .markdown-body h3 {
@@ -2967,9 +2968,29 @@ article img.screenshot
 
 .source-links
 {
-  background-color: #EFEFEF;
-  border: 1px #E5E5E5 solid;
   padding: 5px;
   display: inline-block;
   float: right;
+  clear: both;
+}
+
+ul.library-defs
+{
+  list-style: none;
+  list-style-type: none;
+  list-style-position: outside;
+  text-indent: 0;
+  padding-left: 0;
+}
+
+ul.library-defs li
+{
+  text-indent: 0;
+  margin: 0;
+  padding: 8px 0 8px 0;
+}
+
+ul.library-defs a
+{
+  font-weight: bold;
 }
