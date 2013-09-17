@@ -12,6 +12,21 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   margin-top: 0;
 }
 
+#githubLink
+{
+  position: absolute; 
+  top: 0; 
+  right: 0; 
+  border: 0;
+}
+
+@media screen and (max-width: 500px) {
+  #githubLink
+  {
+    width: 30%;
+  }
+}
+
 /*HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
   display: block;
@@ -830,17 +845,24 @@ form div {
   text-align: center;
 }
 
-#featured-image {
+#featured_image {
   margin: 40px 0 0 0;
 }
 
-#featured-image .fluid-width-video-wrapper {
+#featured_image .fluid-width-video-wrapper {
   margin-left: -20px;
 }
 
 .featured-image img {
   margin-top: 44px;
 }
+
+@media screen and (max-width: 500px) {
+  #featured_image img {
+    width: 50%;
+  }
+}
+
 
 /* =Post
 -------------------------------------------------------------- */
@@ -1074,7 +1096,7 @@ h3 {
   font-weight: 700;
   line-height: 23px;
   margin: 0;
-  padding: 0 0 20px 0;
+  padding: 0 0 10px 0;
   text-align: left;
 }
 
@@ -2667,4 +2689,9 @@ BDO[DIR="rtl"] {
 {
   float: left;
   margin-right: 6px;
+}
+
+.home-widgets .widget-wrapper
+{
+  min-height: 220px;
 }
