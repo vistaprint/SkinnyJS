@@ -167,11 +167,6 @@ module.exports = function(grunt)
                     "js/jquery.modalDialog.unobtrusive.js"
                 ],
                 dest: "dist/jquery.modalDialogContent.js"
-            },
-            readme: 
-            {
-                src: ["site/readme-header.md", "site/_includes/index-content.md"],
-                dest: "README.md"
             }
         },
         clean:
@@ -314,7 +309,5 @@ module.exports = function(grunt)
     grunt.registerTask("site", ["default", "compress", "sitePages", "docs", "copy:deploy"]);
 
     grunt.registerTask("sitePages", ["jekyll", "string-replace:site", "copy:distSite"]);
-
-    grunt.registerTask("readme", ["sitePages", "concat:readme"]);
 };
 
