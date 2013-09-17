@@ -31,8 +31,8 @@
             return false;
         }
 
-        var w = $(window);
-        return (typeof window.orientation == "number" ? Math.min(w.width(), w.height()) : w.width()) <= 480;
+        var width = $(window).width();
+        return (typeof window.orientation == "number" ? Math.min(width, $(window).height()) : width) <= 480;
     };
 
 })(jQuery);

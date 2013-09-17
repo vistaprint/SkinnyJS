@@ -373,8 +373,15 @@ if (!Object.keys)
         return this._chromeHeight;
     };
 
+    var getWindowHeight = function()
+    {
+        return window.innerHeight || $(window).height();
+    };
+
     ModalDialog.prototype._getDefaultPosition = function(contentHeight)
     {
+        var isSmallScreen = $.modalDialog.isSmallScreen();
+
         var $win = $(window),
             windowWidth = this.parent.is("body") ? window.innerWidth || $win.width() : this.parent.width(),
             pos = {};
@@ -383,7 +390,7 @@ if (!Object.keys)
         pos.top = $(document).scrollTop() + MARGIN;
         pos.left = (windowWidth - pos.width) / 2;
 
-        if (_ua.ie7) 
+        if (_ua.ie7 || isSmallScreen) 
         {
             pos.top = MARGIN;
         }
@@ -392,7 +399,7 @@ if (!Object.keys)
         // No need to consider contentHeight.
         // For larger devices, center vertically.
 
-        if (!$.modalDialog.isSmallScreen()) 
+        if (!isSmallScreen) 
         {
             contentHeight = contentHeight || this.$content.height();
 
@@ -943,7 +950,7 @@ if (!Object.keys)
     // On small screens we make the background opaque to hide the content because
     // we will be hiding all content within the DOM and scrolling them to top.
     // When removing the host window content from the DOM, make the veil opaque to hide it.
-    $.modalDialog.veilClass = $.modalDialog.isSmallScreen() ? "dialog-veil-opaque" : "dialog-veil";
+    $.modalDialog.veilClass = "dialog-veil";
 
     // Creates a new dialog from the specified settings.
     $.modalDialog.create = function(settings)

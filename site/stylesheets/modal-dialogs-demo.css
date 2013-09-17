@@ -51,6 +51,14 @@ img
 	text-align: center;
 }
 
+@media screen and (max-width: 500px) {
+
+	.dialog-button-group .textbutton
+	{
+		width: 80%;
+	}
+}
+
 .clear
 {
 	clear: both;
@@ -93,5 +101,10 @@ img
 	{
 		float: inherit;
 		width: 100%;
+	}
+
+	.veg-dialog img
+	{
+		width: 50%;
 	}
 }
