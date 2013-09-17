@@ -7,6 +7,11 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   vertical-align: baseline;
 }
 
+.widget-wrapper p
+{
+  margin-top: 0;
+}
+
 /*HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
   display: block;
@@ -517,25 +522,25 @@ h1, h2, h3, h4, h5, h6, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
 }
 
 h1 {
-  font-size: 2.625em; /* = 42px */
+  font-size: 40px;
   margin-bottom: .5em;
   margin-top: .5em;
 }
 
 h2 {
-  font-size: 2.250em; /* = 36px */
+  font-size: 30px;
   margin-bottom: .75em;
   margin-top: .75em;
 }
 
 h3 {
-  font-size: 1.875em; /* = 30px */
+  font-size: 28px; /* = 30px */
   margin-bottom: .857em;
   margin-top: .857em;
 }
 
 h4 {
-  font-size: 1.500em; /* = 24px */
+  font-size: 22px; /* = 24px */
   margin-bottom: 1em;
   margin-top: 1em;
 }
@@ -918,7 +923,7 @@ form div {
   background-color: #fff;
   border: 1px solid #e5e5e5;
   border-radius: 8px;
-  margin: 0 0 20px;
+  margin: 0 0 0px;
   padding: 20px;
 }
 
@@ -1063,9 +1068,9 @@ form div {
 }
 
 .widget-title,
-.widget-title-home h3 {
+h3 {
   display: block;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   line-height: 23px;
   margin: 0;
@@ -2658,4 +2663,8 @@ BDO[DIR="rtl"] {
   }
 }
 
-/*The last 29 days of the month are the hardest."- Nikola Tesla*/
+.callout-image
+{
+  float: left;
+  margin-right: 6px;
+}
