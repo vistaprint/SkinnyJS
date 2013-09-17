@@ -1,6 +1,9 @@
 <!doctype html>
-<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
-<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<!--[if !IE]>      <html class="no-js non-ie" lang="en-US"> <![endif]-->
+<!--[if IE 7 ]>    <html class="no-js ie7" lang="en-US"> <![endif]-->
+<!--[if IE 8 ]>    <html class="no-js ie8" lang="en-US"> <![endif]-->
+<!--[if IE 9 ]>    <html class="no-js ie9" lang="en-US"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js" lang="en-US"> <!--<![endif]-->
 <html>
 <head>
   <meta charset="utf-8">
@@ -8,119 +11,257 @@
 
   <!--[if lt IE 9]> <script src="javascripts/html5shiv.js"></script> <![endif]-->
 
-  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
+  <link rel='stylesheet' id='responsive-style-css' href='stylesheets/style.css' type='text/css' />
+  <link rel='stylesheet' id='responsive-media-queries-css'  href='stylesheets/media-queries.css' type='text/css'/>
   <link rel="stylesheet" href="stylesheets/syntax-highlighting.css"/>
-  <script type="text/javascript" src="javascripts/jquery.js"></script>
+
+  <script type='text/javascript' src='javascripts/jquery.js'></script>
+  <script type='text/javascript' src='javascripts/jquery-migrate.min.js'></script>
+  <script type='text/javascript' src='javascripts/responsive-modernizr.js'></script>
   <script type="text/javascript" src="javascripts/script.js"></script>
 
   <title>skinny.js</title>
-  <meta name="description" content="Skinny JS">
 
+  <meta name="description" content="Skinny JS">
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
 </head>
 
-<body>
-
-  <div class="wrapper">
-    <header>
-      <h1 class="title"><a href="/SkinnyJS">skinny.js</a> <!-- <img src="images/skinny-jeans.png" class="logo-image" /> --></h1>
-    </header>
-    <div id="container">
-      <!--
-      jQuery plugins that won't add unsightly pounds
-    -->
-      <p class="tagline">Low calorie jQuery plugins</p>
-      <div id="main" role="main">
-        <div class="download-bar">
-        <div class="inner">
-          <a href="https://github.com/vistaprint/SkinnyJS/tarball/master" class="download-button tar"><span>Download</span></a>
-          <a href="https://github.com/vistaprint/SkinnyJS/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/vistaprint/SkinnyJS" class="code">View skinny.js on GitHub</a>
+<body class="home blog front-page">
+                 
+  <div id="container" class="hfeed">
+           
+      <div id="header">
+                 
+        <div id="logo" class="skinny-logo">
+            <a href="./">skinny.js</a>
         </div>
-        <span class="blc"></span><span class="trc"></span>
-        </div>
-        <article class="markdown-body">
-          <p>skinny.js is a collection of jQuery plugins that are useful for building web applications. Its design is a response to having used too many JavaScript frameworks that require you to buy into a particular philosophy, coding style, or architecture. Instead, skinny.js embraces the single responsibility principle, and aims to create tiny, granular libraries with minimal dependencies.</p>
+            
+        <div class="main-nav">
+          <ul class="menu">
+            <li class="current_page_item"><a href="./" title="Home">Home</a></li>
+            <li class="page_item"><a href="download-builder.html">Download</a></li>
+            <li class="page_item"><a href="#">Documentation</a>
+              <ul class='children'>
+                <li class="page_item"><a href="#" onclick="return false;">Libraries</a>
+                  <ul class="children">
+                  <li class="page_item"><a href='docco/jquery.partialLoad.html'>jQuery.partialLoad</a></li>
 
-<p><a href='http://vistaprint.github.io/SkinnyJS/download-builder.html'>Download skinny.js</a></p>
+                  <li class="page_item"><a href='docco/jquery.clientRect.html'>jQuery.clientRect</a></li>
 
-<h2 id='skinny_libraries'>Skinny libraries</h2>
+                  <li class="page_item"><a href='docco/jquery.delimitedString.html'>jQuery.delimitedString</a></li>
 
-<ul>
-<li><a href='http://vistaprint.github.io/SkinnyJS/docco/jquery.partialLoad.html'>jQuery.partialLoad</a>: Works like jQuery.load, but is more intelligent about executing downloaded scripts (i.e. don&#8217;t re-run scripts that are already loaded)</li>
+                  <li class="page_item"><a href='docco/jquery.queryString.html'>jQuery.queryString</a></li>
 
-<li><a href='http://vistaprint.github.io/SkinnyJS/docco/jquery.clientRect.html'>jQuery.clientRect</a>: Gets element coordinates several orders of magnitude more efficiently than jQuery.top()/left()</li>
+                  <li class="page_item"><a href='docco/jquery.css.html'>jQuery.css</a></li>
 
-<li><a href='http://vistaprint.github.io/SkinnyJS/docco/jquery.delimitedString.html'>jQuery.delimitedString</a>: Base class for parsing delimited strings, such as querystrings or CSS styles</li>
+                  <li class="page_item"><a href='docco/jquery.url.html'>jQuery.url</a></li>
 
-<li><a href='http://vistaprint.github.io/SkinnyJS/docco/jquery.queryString.html'>jQuery.queryString</a>: Parses querystrings (the opposite of jQuery.param())</li>
+                  <li class="page_item"><a href='docco/jquery.disableEvent.html'>jQuery.disableEvent</a></li>
 
-<li><a href='http://vistaprint.github.io/SkinnyJS/docco/jquery.css.html'>jQuery.css</a>: Parses and serializes CSS style strings</li>
+                  <li class="page_item"><a href='docco/jquery.hostIframe.html'>jQuery.hostIframe</a></li>
 
-<li><a href='http://vistaprint.github.io/SkinnyJS/docco/jquery.url.html'>jQuery.url</a>: Parses and serializes URLs.</li>
+                  <li class="page_item"><a href='docco/jquery.hoverDelay.html'>jQuery.hoverDelay</a></li>
 
-<li><a href='http://vistaprint.github.io/SkinnyJS/docco/jquery.disableEvent.html'>jQuery.disableEvent</a>: Temporarily disables/enables all event handlers for a DOM element</li>
+                  <li class="page_item"><a href='docco/jquery.htmlEncode.html'>jQuery.htmlEncode</a></li>
 
-<li><a href='http://vistaprint.github.io/SkinnyJS/docco/jquery.hostIframe.html'>jQuery.hostIframe</a>: Manages references between iframe content and their host window</li>
+                  <li class="page_item"><a href='docco/jquery.imageSize.html'>jQuery.imageSize</a></li>
 
-<li><a href='http://vistaprint.github.io/SkinnyJS/docco/jquery.hoverDelay.html'>jQuery.hoverDelay</a>: Simplified, more practical version of jQuery.hoverIntent plugin. TODO reference</li>
+                  <li class="page_item"><a href='docco/jquery.isVisibleKeyCode.html'>jQuery.isVisibleKeyCode</a></li>
 
-<li><a href='http://vistaprint.github.io/SkinnyJS/docco/jquery.htmlEncode.html'>jQuery.htmlEncode</a>: Bare bones HTML encoding</li>
+                  <li class="page_item"><a href='docco/jquery.msAjax.html'>jQuery.msAjax</a></li>
 
-<li><a href='http://vistaprint.github.io/SkinnyJS/docco/jquery.imageSize.html'>jQuery.imageSize</a>: Some utilities for dealing with image sizes, async loading, and fitting images to a bounding box</li>
+                  <li class="page_item"><a href='docco/jquery.ns.html'>jQuery.ns</a></li>
 
-<li><a href='http://vistaprint.github.io/SkinnyJS/docco/jquery.isVisibleKeyCode.html'>jQuery.isVisibleKeyCode</a>: Extension to jQuery.Event which indicates if a keypress is a visible character (i.e. not a function or modifier key)</li>
+                  <li class="page_item"><a href='docco/jquery.postMessage.html'>jQuery.postMessage</a></li>
 
-<li><a href='http://vistaprint.github.io/SkinnyJS/docco/jquery.msAjax.html'>jQuery.msAjax</a>: Microsoft friendly AJAX. Handles the quirks of ASMX, WCF, DataJsonContractSerializer, Microsoft&#8217;s JSON date format, and provides an interface identical to jQuery.ajax().</li>
+                  <li class="page_item"><a href='docco/jquery.proxyAll.html'>jQuery.proxyAll</a></li>
 
-<li><a href='http://vistaprint.github.io/SkinnyJS/docco/jquery.ns.html'>jQuery.ns</a>: Declare namespaces without boilerplate</li>
+                  <li class="page_item"><a href='docco/jquery.uncomment.html'>jQuery.uncomment</a></li>
 
-<li><a href='http://vistaprint.github.io/SkinnyJS/docco/jquery.postMessage.html'>jQuery.postMessage</a>: Provides cross-document messaging support, works on all browsers to IE6 (without URL fragments and polling).</li>
+                  <li class="page_item"><a href='docco/jquery.customEvent.html'>jQuery.customEvent</a></li>
+                </ul>
+              </li>
+              <li class="page_item"><a href="#" onclick="return false;">UI Components</a>
+                  <ul class="children">
+                  <li class="page_item"><a href='docco/jquery.menu.html'>jQuery.menu</a></li>
 
-<li><a href='http://vistaprint.github.io/SkinnyJS/docco/jquery.proxyAll.html'>jQuery.proxyAll</a>: Binds functions to their host object (like jQuery.proxy(), but for all functions declared as properties of an object at once)</li>
-
-<li><a href='http://vistaprint.github.io/SkinnyJS/docco/jquery.uncomment.html'>jQuery.uncomment</a>: Allows lazy evaluation of HTML blobs by removing them from comment blocks</li>
-
-<li><a href='http://vistaprint.github.io/SkinnyJS/docco/jquery.customEvent.html'>jQuery.customEvent</a>: A class that implements an observable event, useful for cases where there&#8217;s no DOM element involved. <!-- * [jQuery.cookie](http://vistaprint.github.io/SkinnyJS/docco/jquery.cookie.html): TODO --></li>
-</ul>
-
-<h2 id='skinny_ui_components'>Skinny UI components</h2>
-
-<ul>
-<li><a href='http://vistaprint.github.io/SkinnyJS/docco/jquery.menu.html'>jQuery.menu</a>: A traditional hierarchical menu widget, designed from the ground up to be both touch and mouse friendly. TODO: Get existing docs from the wiki</li>
-
-<li><a href='http://vistaprint.github.io/SkinnyJS/modal-dialogs.html'>jQuery.modalDialog</a>: A powerful modal dialog system that works across all devices: TODO: Get existing docs from the wiki</li>
-</ul>
-
-<h2 id='dependencies'>Dependencies</h2>
-
-<p>skinny.js libraries were designed to have minimal dependencies, and are not intended to be used as a bundle. For this reason, we don&#8217;t provide a concatenated, minified version of the whole set of libraries. Take the libraries you need, include their dependencies, and concatenate/minify to your heart&#8217;s content using your own project&#8217;s build system.</p>
-
-<h3 id='how_do_i_know_what_dependencies_my_file_has'>How do I know what dependencies my file has?</h3>
-
-<p>All dependencies in skinny.js plugins are marked at the top using the following syntax:</p>
-
-<pre><code>/// &lt;reference path=&quot;{path}&quot; /&gt;</code></pre>
-
-<h2 id='origin'>Origin</h2>
-
-<p>The libraires that comprise skinny.js were written at <a href='http://www.vistaprint.com'>Vistaprint</a>.</p>
-
-<p>Vistaprint empowers more than 15 million micro businesses and consumers annually with affordable, professional options to make an impression. With a unique business model supported by proprietary technologies, high-volume production facilities, and direct marketing expertise, Vistaprint offers a wide variety of products and services that micro businesses can use to expand their business. A global company, Vistaprint employs over 4,100 people, operates more than 25 localized websites globally and ships to more than 130 countries around the world. Vistaprint&#8217;s broad range of products and services are easy to access online, 24 hours a day at www.vistaprint.com.</p>
-        </article>
-      </div>
+                  <li class="page_item"><a href='docco/jquery.modalDialog.html'>jQuery.modalDialog</a></li>
+                </ul>
+              </li>
+              </ul>
+            </li>
+          </ul>
+      </div>                
+                   
     </div>
-    <footer>
-      <div class="owner">
-        <p><a href="https://github.com/vistaprint" class="avatar"><img src="https://secure.gravatar.com/avatar/25508160264d1801b1b7a1b9309e4c39?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" /></a> <a href="https://github.com/labaneilers">labaneilers</a> maintains <a href="https://github.com/vistaprint/SkinnyJS">skinny.js</a> with the generous support of <a href="http://www.vistaprint.com">Vistaprint</a></p>
-      </div>
-    </footer>
-  </div>
-  <div class="current-section">
-    <a href="#top">Scroll to top</a>
-    <a href="https://github.com/vistaprint/SkinnyJS/tarball/master" class="tar">tar</a><a href="https://github.com/vistaprint/SkinnyJS/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
-    <p class="name"></p>
-  </div>
+          
+    <div id="wrapper" class="clearfix">
+
+      <a href="https://github.com/vistaprint/SkinnyJS" id="githubLink"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+            
+<div id="featured" class="grid col-940">
+
+    <div class="grid col-460">
+
+        <h1 class="featured-title skinny-logo">skinny.js</h1>
+        
+        <h2 class="featured-subtitle">Low calorie jQuery plugins</h2>
+        
+        <p>
+            skinny.js is a collection of wicked useful, granular jQuery plugins with minimal dependencies. You don't have to buy into any particular framework or coding style. Take what you need; cut the calories.
+        </p>
+    
+        <div class="call-to-action">
+            <a href="download-builder.html" class="blue button">Get skinny.js</a>
+        </div>
+    </div>
+
+    <div id="featured_image" class="grid col-460 fit">
+        <img class="aligncenter" src="../images/cellery.jpg" alt="" />
+    </div>
+
+</div>
+       
+<div id="widgets" class="home-widgets">
+    <div class="grid col-300">
+        <div class="widget-wrapper">
+    
+            <div class="widget-title-home"><h3>Tiny, focused libraries</h3></div>
+            <div class="textwidget"><img src="../images/carrot.jpg" class="callout-image">Querystring, URL, and CSS string parsing, cross-browser postMessage(), fast coordinates, enable/disable events, HTML encoding, custom events, and more... </div>
+    
+        </div>          
+    </div>
+
+    <div class="grid col-300">
+            
+        <div class="widget-wrapper">
+    
+            <div class="widget-title-home"><h3>UI widgets without the fat</h3></div>
+            <div class="textwidget"><img src="../images/cola.jpg" class="callout-image">Get <a href="modal-dialogs.html">modal dialogs</a> and <a href="menus.html">menus</a> that are responsive, powerful, and lightweight, and don't require a gigantic framework.</div>
+    
+        </div><!-- end of .widget-wrapper -->
+                
+    </div><!-- end of .col-300 -->
+
+    <div class="grid col-300 fit">
+            
+        <div class="widget-wrapper">
+    
+            <div class="widget-title-home"><h3>Browser compatibility</h3></div>
+            <div class="textwidget"><img src="../images/kale.jpg" class="callout-image">skinny.js libraries work on IE7+, Chrome, Firefox, Android 2.3+, iOS 5+, and all other modern browsers.</div>
+
+        </div><!-- end of .widget-wrapper -->
+                
+    </div><!-- end of .col-300 fit -->
+</div><!-- end of #widgets -->
+
+<div class="clearfix"></div>
+
+<div class="home-widgets">
+    <div class="grid col-460">
+        <div class="widget-wrapper">
+            <h3 id='skinny_libraries'>Skinny libraries</h3>
+
+            <ul>
+                <li><a href='docco/jquery.partialLoad.html'>jQuery.partialLoad</a>: Works like jQuery.load, but is more intelligent about executing downloaded scripts (i.e. don&#8217;t re-run scripts that are already loaded)</li>
+
+                <li><a href='docco/jquery.clientRect.html'>jQuery.clientRect</a>: Gets element coordinates several orders of magnitude more efficiently than jQuery.top()/left()</li>
+
+                <li><a href='docco/jquery.delimitedString.html'>jQuery.delimitedString</a>: Base class for parsing delimited strings, such as querystrings or CSS styles</li>
+
+                <li><a href='docco/jquery.queryString.html'>jQuery.queryString</a>: Parses querystrings (the opposite of jQuery.param())</li>
+
+                <li><a href='docco/jquery.css.html'>jQuery.css</a>: Parses and serializes CSS style strings</li>
+
+                <li><a href='docco/jquery.url.html'>jQuery.url</a>: Parses and serializes URLs.</li>
+
+                <li><a href='docco/jquery.disableEvent.html'>jQuery.disableEvent</a>: Temporarily disables/enables all event handlers for a DOM element</li>
+
+                <li><a href='docco/jquery.hostIframe.html'>jQuery.hostIframe</a>: Manages references between iframe content and their host window</li>
+
+                <li><a href='docco/jquery.hoverDelay.html'>jQuery.hoverDelay</a>: Simplified, more practical version of jQuery.hoverIntent plugin.</li>
+
+                <li><a href='docco/jquery.htmlEncode.html'>jQuery.htmlEncode</a>: Bare bones HTML encoding</li>
+
+                <li><a href='docco/jquery.imageSize.html'>jQuery.imageSize</a>: Some utilities for dealing with image sizes, async loading, and fitting images to a bounding box</li>
+
+                <li><a href='docco/jquery.isVisibleKeyCode.html'>jQuery.isVisibleKeyCode</a>: Extension to jQuery.Event which indicates if a keypress is a visible character (i.e. not a function or modifier key)</li>
+
+                <li><a href='docco/jquery.msAjax.html'>jQuery.msAjax</a>: Microsoft friendly AJAX. Handles the quirks of ASMX, WCF, DataJsonContractSerializer, Microsoft&#8217;s JSON date format, and provides an interface identical to jQuery.ajax().</li>
+
+                <li><a href='docco/jquery.ns.html'>jQuery.ns</a>: Declare namespaces without boilerplate</li>
+
+                <li><a href='docco/jquery.postMessage.html'>jQuery.postMessage</a>: Provides cross-document messaging support, works on all browsers to IE6 (without URL fragments and polling).</li>
+
+                <li><a href='docco/jquery.proxyAll.html'>jQuery.proxyAll</a>: Binds functions to their host object (like jQuery.proxy(), but for all functions declared as properties of an object at once)</li>
+
+                <li><a href='docco/jquery.uncomment.html'>jQuery.uncomment</a>: Allows lazy evaluation of HTML blobs by removing them from comment blocks</li>
+
+                <li><a href='docco/jquery.customEvent.html'>jQuery.customEvent</a>: A class that implements an observable event, useful for cases where there&#8217;s no DOM element involved. <!-- * [jQuery.cookie](docco/jquery.cookie.html): TODO --></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="grid col-460 fit">
+        <div class="widget-wrapper">
+            <h3 id='skinny_ui_components'>Skinny UI components</h3>
+
+            <ul>
+                <li><a href='docco/jquery.menu.html'>jQuery.menu</a>: A traditional hierarchical menu widget, designed from the ground up to be both touch and mouse friendly.</li>
+
+                <li><a href='modal-dialogs.html'>jQuery.modalDialog</a>: A powerful modal dialog system that works across all devices.</li>
+            </ul>
+
+            <h3 id='skinny_ui_components'>License</h3>
+
+            <p>
+                Skinny.js is open-source under the <a href="LICENSE">Apache 2 license</a>.
+            </p>
+
+            <h3 id='skinny_ui_components'>Sponsor</h3>
+
+            <p>
+                The libraires that comprise skinny.js were written at <a href="http://www.vistaprint.com" target="_blank">Vistaprint</a>.
+            </p>
+            <p>
+                Vistaprint empowers more than 15 million micro businesses and consumers annually with affordable, professional options to make an impression. With a unique business model supported by proprietary technologies, high-volume production facilities, and direct marketing expertise, Vistaprint offers a wide variety of products and services that micro businesses can use to expand their business. A global company, Vistaprint employs over 4,100 people, operates more than 25 localized websites globally and ships to more than 130 countries around the world. Vistaprint’s broad range of products and services are easy to access online, 24 hours a day at <a href="http://www.vistaprint.com" target="_blank">www.vistaprint.com</a>.
+            </p>
+
+        </div>
+    </div>
+</div>
+
+    </div><!-- end of #wrapper -->
+  </div><!-- end of #container -->
+
+  <div id="footer" class="clearfix">
+    
+      <div id="footer-wrapper">
+      
+          <div class="grid col-940">
+          
+            <div class="grid col-540"></div><!-- end of col-540 -->
+           
+            <div class="grid col-380 fit">
+              <ul class="social-icons"></ul><!-- end of .social-icons -->         
+            </div><!-- end of col-380 fit -->
+           
+          </div><!-- end of col-940 -->
+                               
+          <div class="grid col-300 copyright">
+              &copy; 2013 <a href="http://wp-themes.com/" title="Theme Preview">Vistaprint</a>
+          </div><!-- end of .copyright -->
+          
+          <div class="grid col-300 scroll-top"><a href="#scroll-top" title="scroll to top">&uarr;</a></div>
+          
+          <div class="grid col-300 fit powered">
+          </div><!-- end .powered -->
+          
+      </div><!-- end #footer-wrapper -->
+      
+  </div><!-- end #footer -->
+
+  <script type='text/javascript' src='responsive.js'></script>
 </body>
 </html>
