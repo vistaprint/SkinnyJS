@@ -1,21 +1,3 @@
-// Minimal polyfill for Object.keys
-// <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys>
-if (!Object.keys) 
-{
-    Object.keys = function(obj) 
-    {
-        var keys = [];
-        for (var key in obj) 
-        {
-            if (obj.hasOwnProperty(key)) 
-            {
-                keys[keys.length] = key;
-            }
-        }
-        return keys;
-    };
-}
-
 (function ($)
 {
     if ($.modalDialog && $.modalDialog._isContent)
@@ -371,11 +353,6 @@ if (!Object.keys)
         }
 
         return this._chromeHeight;
-    };
-
-    var getWindowHeight = function()
-    {
-        return window.innerHeight || $(window).height();
     };
 
     ModalDialog.prototype._getDefaultPosition = function(contentHeight)
