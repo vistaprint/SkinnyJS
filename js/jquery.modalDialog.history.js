@@ -85,10 +85,8 @@
         _pageIsAtInitialState = false;
     };
 
-    var popstateHandler = function(e)
+    var popstateHandler = function()
     {
-        console.log(e.type);
-
         if (_stateAlreadyProcessed)
         {
             _stateAlreadyProcessed = false;
