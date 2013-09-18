@@ -119,7 +119,11 @@
         alert(e.data);
     });
 
-    $(function() { window.scrollTo(0, 1); });
+    $(function() 
+    { 
+        window.scrollTo(0, 1); 
+        $.modalDialog.enableHistory();
+    });
   </script>
 </body>
 </html>

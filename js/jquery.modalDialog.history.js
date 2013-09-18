@@ -1,15 +1,23 @@
 /* globals History */
 
-jQuery(function() 
+(function($) 
 {
-    var $ = jQuery;
-    var url = "foo";
+    var url = "#dialog";
 
-    $.modalDialog.onopen.add(function()
+    $.modalDialog.enableHistory = function()
     {
-        History.pushState({ dialog: this }, null, url);
-    });
+        $.modalDialog.onopen.add(openHandler);
+        $.modalDialog.onclose.add(closeHandler);
+    };
 
-});
+    var openHandler = function()
+    {
+        History.pushState({ dialog: this, action: "open" }, null, url);
+    };
 
+    var closeHandler = function()
+    {
+        History.pushState({ dialog: this, action: "close" }, null, "");
+    };
 
+})(jQuery);
