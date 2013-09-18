@@ -40,12 +40,30 @@
             return false;
         }
 
-        var w = $(window);
-        return (typeof window.orientation == "number" ? Math.min(w.width(), w.height()) : w.width()) <= 480;
+        var width = $(window).width();
+        return (typeof window.orientation == "number" ? Math.min(width, $(window).height()) : width) <= 480;
     };
 
 })(jQuery);
 // Support reading settings from a node dialog's element
+
+// Minimal polyfill for Object.keys
+// <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys>
+if (!Object.keys) 
+{
+    Object.keys = function(obj) 
+    {
+        var keys = [];
+        for (var key in obj) 
+        {
+            if (obj.hasOwnProperty(key)) 
+            {
+                keys[keys.length] = key;
+            }
+        }
+        return keys;
+    };
+}
 
 (function($)
 {
@@ -127,24 +145,6 @@
     };
 
 })(jQuery);
-// Minimal polyfill for Object.keys
-// <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys>
-if (!Object.keys) 
-{
-    Object.keys = function(obj) 
-    {
-        var keys = [];
-        for (var key in obj) 
-        {
-            if (obj.hasOwnProperty(key)) 
-            {
-                keys[keys.length] = key;
-            }
-        }
-        return keys;
-    };
-}
-
 (function ($)
 {
     if ($.modalDialog && $.modalDialog._isContent)
@@ -504,6 +504,8 @@ if (!Object.keys)
 
     ModalDialog.prototype._getDefaultPosition = function(contentHeight)
     {
+        var isSmallScreen = $.modalDialog.isSmallScreen();
+
         var $win = $(window),
             windowWidth = this.parent.is("body") ? window.innerWidth || $win.width() : this.parent.width(),
             pos = {};
@@ -512,7 +514,7 @@ if (!Object.keys)
         pos.top = $(document).scrollTop() + MARGIN;
         pos.left = (windowWidth - pos.width) / 2;
 
-        if (_ua.ie7) 
+        if (_ua.ie7 || isSmallScreen) 
         {
             pos.top = MARGIN;
         }
@@ -521,7 +523,7 @@ if (!Object.keys)
         // No need to consider contentHeight.
         // For larger devices, center vertically.
 
-        if (!$.modalDialog.isSmallScreen()) 
+        if (!isSmallScreen) 
         {
             contentHeight = contentHeight || this.$content.height();
 
@@ -1072,7 +1074,7 @@ if (!Object.keys)
     // On small screens we make the background opaque to hide the content because
     // we will be hiding all content within the DOM and scrolling them to top.
     // When removing the host window content from the DOM, make the veil opaque to hide it.
-    $.modalDialog.veilClass = $.modalDialog.isSmallScreen() ? "dialog-veil-opaque" : "dialog-veil";
+    $.modalDialog.veilClass = "dialog-veil";
 
     // Creates a new dialog from the specified settings.
     $.modalDialog.create = function(settings)
@@ -1334,112 +1336,126 @@ if (!Object.keys)
 
 (function ($)
 {
-    if ($.modalDialog.isSmallScreen()) {
+    var SELECTOR_MAIN_PANEL = "[data-dialog-main-panel='true']";
+    var SELECTOR_BAD_ELEMENT = "[data-dialog-hide-onopen='true']";
+
+    var preventWindowTouchEvents = function(dialog, fix)
+    {
+        // The bug only affects iFrame dialogs
+        if (dialog.dialogType != "iframe")
+        {
+            return;
+        }
+
+        $([window, document]).enableEvent("touchmove touchstart touchend", !fix);
+    };
+
+    var getWindowHeight = function()
+    {
+        return window.innerHeight || $(window).height();
+    };
+
+    var initializeShimming = function()
+    {
+        // First, see if the main panel is specified.
+        // If so, it's the best choice of elements to hide.
+        var $badEls = $(SELECTOR_MAIN_PANEL);
+        if ($badEls.length === 0)
+        {
+            // Otherwise, look for individually marked bad elements to hide.
+            $badEls = $(SELECTOR_BAD_ELEMENT);
+        }
+
+        // Cache original values to restore when the dialog closes
+        var _scrollTop = 0;
+        var _height = 0;
+
+        $.modalDialog.onbeforeopen.add(function()
+        {
+            if (this.level === 0)
+            {
+                // Cache scroll height and body height so we can restore them when the dialog is closed
+                _scrollTop = $(document).scrollTop();
+                _height = document.body.style.height;
+
+                // Cache the parent for each element we need to remove from the DOM.
+                // This is important to fix the various WebKit text overlay bugs (described above in the header).
+                // Hiding them wont do it.
+                $badEls.each(function(i, el)
+                {
+                    $(el).data("dialog-parent", el.parentNode);
+                })
+                .detach();
+
+                // HACK: setting the body to be larger than the screen height prevents the address bar from showing up in iOS
+                document.body.style.height = (getWindowHeight() + 50) + "px";
+
+                window.scrollTo(0, 1);
+            }
+        });
+
+        $.modalDialog.onopen.add(function()
+        {
+            if (this.level === 0)
+            {
+                // Ensure the body/background is bigger than the dialog,
+                // otherwise we see the background "end" above the bottom
+                // of the dialog.
+                var height = Math.max(this.$container.height(), getWindowHeight()) + 20;
+
+                document.body.style.height = height+ "px";
+                $(".dialog-background").css({ height: height });
+
+                window.scrollTo(0, 1);
+            }
+        });
+
+        $.modalDialog.onclose.add(function()
+        {
+            if (this.level === 0)
+            {
+                // Restore body height, elements, and scroll position
+                document.body.style.height = _height;
+
+                $badEls.each(function(i, el)
+                {
+                    $($(el).data("dialog-parent")).append(el);
+                });
+
+                window.scrollTo(0, _scrollTop);
+            }
+        });
+    };
+
+    $(function()
+    {
+        if (!$.modalDialog.isSmallScreen())
+        {
+            return;
+        }
+
         // When removing the host window content from the DOM, make the veil opaque to hide it.
         $.modalDialog.veilClass = "dialog-veil-opaque";
 
-        var preventWindowTouchEvents = function(dialog, fix)
+        // This will run in a content window. They need the events disabled immediately.
+        if ($.modalDialog && $.modalDialog._isContent)
         {
-            // The bug only affects iFrame dialogs
-            if (dialog.dialogType != "iframe")
+            var dialog = $.modalDialog.getCurrent();
+            if (dialog)
             {
-                return;
+                $(window).on("load", function() { preventWindowTouchEvents(dialog, true); });
             }
-
-            $([window, document]).enableEvent("touchmove touchstart touchend", !fix);
-        };
-
-        var SHIM_KEY = "androidDialogShim";
-        var SELECTOR_MAIN_PANEL = "[data-dialog-main-panel='true']";
-        var SELECTOR_BAD_ELEMENT = "[data-dialog-hide-onopen='true']";
-
-        // Puts a fake element next to the specified element
-        // of the exact same size, and hides the original element.
-        // Passing 'enable' = false reverses this.
-        var createShims = function($els, enable)
+        }
+        else
         {
-            $els.each(function(i, el)
-            {
-                var $el = $(el);
-                var $shim = $el.data(SHIM_KEY);
-                if (!$shim)
-                {
-                    $shim = $("<div style='display:none;'></div>");
-                    $el.before($shim);
-                    $el.data(SHIM_KEY, $shim);
-                }
+            // This is for the host window.
+            $.modalDialog.onopen.add(function() { preventWindowTouchEvents(this, true); });
+            $.modalDialog.onbeforeclose.add(function() { preventWindowTouchEvents(this, false); });
 
-                if (enable)
-                {
-                    // Ensure the size is correct with each load- it may have changed.
-                    $shim.css({ height: $el.height(), width: $el.width() }).show();
-                    $el.hide();
-                }
-                else
-                {
-                    $el.show();
-                    $shim.hide();
-                }
-            });
-        };
+            initializeShimming();
+        }
+    });
 
-        var initializeShimming = function()
-        {
-            // First, see if the main panel is specified.
-            // If so, it's the best choice of elements to hide.
-            var $badEls = $(SELECTOR_MAIN_PANEL);
-            if ($badEls.length === 0)
-            {
-                // Otherwise, look for individually marked bad elements to hide.
-                $badEls = $(SELECTOR_BAD_ELEMENT);
-            }
-
-            if ($badEls.length > 0)
-            {
-                $.modalDialog.onopen.add(function()
-                {
-                    if (this.level === 0)
-                    {
-                        createShims($badEls, true);
-                    }
-                });
-
-                $.modalDialog.onbeforeclose.add(function()
-                {
-                    if (this.level === 0)
-                    {
-                        createShims($badEls, false);
-                    }
-                });
-            }
-        };
-
-        $(function()
-        {
-            if (!$.modalDialog.isSmallScreen())
-            {
-                return;
-            }
-
-            // This will run in a content window. They need the events disabled immediately.
-            if ($.modalDialog && $.modalDialog._isContent)
-            {
-                var dialog = $.modalDialog.getCurrent();
-                if (dialog)
-                {
-                    $(window).on("load", function() { preventWindowTouchEvents(dialog, true); });
-                }
-            }
-            else
-            {
-                // This is for the host window.
-                $.modalDialog.onopen.add(function() { preventWindowTouchEvents(this, true); });
-                $.modalDialog.onbeforeclose.add(function() { preventWindowTouchEvents(this, false); });
-
-                initializeShimming();
-            }
-        });
-    }
 })(jQuery);
 
 /*

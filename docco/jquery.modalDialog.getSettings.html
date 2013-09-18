@@ -2,7 +2,25 @@
 <a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.modalDialog.getSettings.js" target="_blank">View this file on Github</a>
 
 <hr style="height: 1px; border:0; background-color:#4A525A">
-             <h1>               jquery.modalDialog.getSettings.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>Support reading settings from a node dialog's element</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span>
+             <h1>               jquery.modalDialog.getSettings.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>Support reading settings from a node dialog's element</p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Minimal polyfill for Object.keys
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys</a></p>             </td>             <td class="code">               <div class="highlight"><pre>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">)</span> 
+<span class="p">{</span>
+    <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> 
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">keys</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">obj</span><span class="p">)</span> 
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span> 
+            <span class="p">{</span>
+                <span class="nx">keys</span><span class="p">[</span><span class="nx">keys</span><span class="p">.</span><span class="nx">length</span><span class="p">]</span> <span class="o">=</span> <span class="nx">key</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nx">keys</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">ATTR_PREFIX</span> <span class="o">=</span> <span class="s2">&quot;data-dialog-&quot;</span><span class="p">;</span>
 
@@ -32,7 +50,7 @@
 
     <span class="kd">var</span> <span class="nx">parseFunction</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">body</span><span class="p">)</span>
     <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Evil is necessary to turn inline HTML handlers into functions</p>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Evil is necessary to turn inline HTML handlers into functions</p>             </td>             <td class="code">               <div class="highlight"><pre>
         <span class="cm">/* jshint evil: true */</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">body</span><span class="p">)</span> 
@@ -43,7 +61,7 @@
         <span class="k">return</span> <span class="k">new</span> <span class="nb">Function</span><span class="p">(</span><span class="s2">&quot;event&quot;</span><span class="p">,</span> <span class="nx">body</span><span class="p">);</span>
     <span class="p">};</span>
     
-</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>The properties to copy from HTML data-dialog-* attributes
+</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>The properties to copy from HTML data-dialog-* attributes
 to the dialog settings object</p>             </td>             <td class="code">               <div class="highlight"><pre>
     <span class="kd">var</span> <span class="nx">_props</span> <span class="o">=</span> 
     <span class="p">{</span>
@@ -62,14 +80,14 @@ to the dialog settings object</p>             </td>             <td class="code"
 
     <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span> <span class="o">||</span> <span class="p">{};</span>
 
-</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Copies the HTML data-dialog-* attributes to the settings object</p>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Copies the HTML data-dialog-* attributes to the settings object</p>             </td>             <td class="code">               <div class="highlight"><pre>
     <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">getSettings</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$el</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">settings</span> <span class="o">=</span> <span class="p">{};</span>
 
         <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">_props</span><span class="p">),</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span> 
         <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>$.fn.attr is case insensitive</p>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>$.fn.attr is case insensitive</p>             </td>             <td class="code">               <div class="highlight"><pre>
             <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">$el</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="nx">ATTR_PREFIX</span> <span class="o">+</span> <span class="nx">key</span><span class="p">);</span>
             <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">value</span> <span class="o">!=</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span>
             <span class="p">{</span>

@@ -2,24 +2,7 @@
 <a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.modalDialog.js" target="_blank">View this file on Github</a>
 
 <hr style="height: 1px; border:0; background-color:#4A525A">
-             <h1>               jquery.modalDialog.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>Minimal polyfill for Object.keys
-<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys</a></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">)</span> 
-<span class="p">{</span>
-    <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> 
-    <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">keys</span> <span class="o">=</span> <span class="p">[];</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">obj</span><span class="p">)</span> 
-        <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span> 
-            <span class="p">{</span>
-                <span class="nx">keys</span><span class="p">[</span><span class="nx">keys</span><span class="p">.</span><span class="nx">length</span><span class="p">]</span> <span class="o">=</span> <span class="nx">key</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="nx">keys</span><span class="p">;</span>
-    <span class="p">};</span>
-<span class="p">}</span>
-
-<span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span>
+             <h1>               jquery.modalDialog.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span> <span class="o">&amp;&amp;</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">_isContent</span><span class="p">)</span>
     <span class="p">{</span>
@@ -378,6 +361,8 @@ and we are not in Internet Explorer 7, because it handles positioning oddly.</p>
 
     <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_getDefaultPosition</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">contentHeight</span><span class="p">)</span>
     <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">isSmallScreen</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">isSmallScreen</span><span class="p">();</span>
+
         <span class="kd">var</span> <span class="nx">$win</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">),</span>
             <span class="nx">windowWidth</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">parent</span><span class="p">.</span><span class="nx">is</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">)</span> <span class="o">?</span> <span class="nb">window</span><span class="p">.</span><span class="nx">innerWidth</span> <span class="o">||</span> <span class="nx">$win</span><span class="p">.</span><span class="nx">width</span><span class="p">()</span> <span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">parent</span><span class="p">.</span><span class="nx">width</span><span class="p">(),</span>
             <span class="nx">pos</span> <span class="o">=</span> <span class="p">{};</span>
@@ -386,7 +371,7 @@ and we are not in Internet Explorer 7, because it handles positioning oddly.</p>
         <span class="nx">pos</span><span class="p">.</span><span class="nx">top</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">scrollTop</span><span class="p">()</span> <span class="o">+</span> <span class="nx">MARGIN</span><span class="p">;</span>
         <span class="nx">pos</span><span class="p">.</span><span class="nx">left</span> <span class="o">=</span> <span class="p">(</span><span class="nx">windowWidth</span> <span class="o">-</span> <span class="nx">pos</span><span class="p">.</span><span class="nx">width</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="nx">_ua</span><span class="p">.</span><span class="nx">ie7</span><span class="p">)</span> 
+        <span class="k">if</span> <span class="p">(</span><span class="nx">_ua</span><span class="p">.</span><span class="nx">ie7</span> <span class="o">||</span> <span class="nx">isSmallScreen</span><span class="p">)</span> 
         <span class="p">{</span>
             <span class="nx">pos</span><span class="p">.</span><span class="nx">top</span> <span class="o">=</span> <span class="nx">MARGIN</span><span class="p">;</span>
         <span class="p">}</span>
@@ -395,7 +380,7 @@ and we are not in Internet Explorer 7, because it handles positioning oddly.</p>
 No need to consider contentHeight.
 For larger devices, center vertically.</p>             </td>             <td class="code">               <div class="highlight"><pre>
 
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">isSmallScreen</span><span class="p">())</span> 
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isSmallScreen</span><span class="p">)</span> 
         <span class="p">{</span>
             <span class="nx">contentHeight</span> <span class="o">=</span> <span class="nx">contentHeight</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">$content</span><span class="p">.</span><span class="nx">height</span><span class="p">();</span>
 
@@ -950,7 +935,7 @@ a child dialog. The child will become the "parent dialog" of the new dialog.</p>
 </pre></div>             </td>           </tr>                               <tr id="section-81">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-81">&#182;</a>               </div>               <p>On small screens we make the background opaque to hide the content because
 we will be hiding all content within the DOM and scrolling them to top.
 When removing the host window content from the DOM, make the veil opaque to hide it.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">veilClass</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">isSmallScreen</span><span class="p">()</span> <span class="o">?</span> <span class="s2">&quot;dialog-veil-opaque&quot;</span> <span class="o">:</span> <span class="s2">&quot;dialog-veil&quot;</span><span class="p">;</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">veilClass</span> <span class="o">=</span> <span class="s2">&quot;dialog-veil&quot;</span><span class="p">;</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-82">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-82">&#182;</a>               </div>               <p>Creates a new dialog from the specified settings.</p>             </td>             <td class="code">               <div class="highlight"><pre>
     <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">create</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">settings</span><span class="p">)</span>

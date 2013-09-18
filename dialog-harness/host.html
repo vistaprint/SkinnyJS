@@ -28,64 +28,92 @@
   <title>skinny.js</title>
   <meta name="description" content="Skinny JS">
 
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+<!--   <meta name="viewport" content="width=device-width,initial-scale=1"> -->
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 
 </head>
 
 <body>
+  <div data-dialog-main-panel="true">
+<!--     <div style="position:absolute; top: 0; left: 0; background-color:green; height: 504px; width: 5px;" onclick="alert(window.innerHeight);"></div>
+ -->
+  <section>
+    <h2>Example: Node dialog</h2>
 
-<section>
-  <h2>Example: Node dialog</h2>
+    <div>
+      <a href="#vegDialog" data-rel="modalDialog">Open</a>
 
-  <div>
-    <a href="#dialogUnobtrusive" data-rel="modalDialog">Open</a>
+      <div class="dialog-content dialog-default-padding veg-dialog" id="vegDialog" data-dialog-title="Vegetables">
+        <div class="dialog-scroll-panel">
+          <div class="left-column">
+            <img src="../images/veg-horiz.jpg" />
+          </div>
+          <div class="right-column">
+            <h3>What is a vegetable?</h3>
+            In culinary terms, a vegetable is an edible plant or its part, intended for cooking or eating raw. In biological terms, "vegetable" designates members of the plant kingdom.
 
-    <div class="dialog-content" id="dialogUnobtrusive" data-dialog-title="This is the title">
-    This dialog was opened from an unobtrusive link.
+            <p>
+              <a href="modal-dialogs-demo-content.html" data-rel="modalDialog">More about spices...</a>
+            </p>
+            <p>
+              <a href="modal-dialogs-demo-content-ajax.html" data-rel="modalDialog" data-dialog-ajax="true">More about fruit...</a>
+            </p>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="dialog-button-group">
+          <a href="#" class="close-dialog textbutton">Close</a>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section>
-  <h2>Example: iframe dialog</h2>
+  <section>
+    <h2>Example: iframe dialog</h2>
 
-  <div>
-    <a href="http://localhost/site/dialog-harness/content.html" data-rel="modalDialog">Open</a>
-  </div>
-</section>
-
-<section>
-  <h2>Example: ajax dialog</h2>
-
-  <div>
-    <a href="content-ajax.html" data-rel="modalDialog" data-dialog-ajax="true">Open</a>
-  </div>
-</section>
-
-<section>
-  <h2>Example: Node dialog, lightbox style</h2>
-
-  <div>
-    <a href="#dialogLightbox" data-rel="modalDialog">Open</a>
-
-    <div class="dialog-content" id="dialogLightbox" data-dialog-title="This is the title" data-dialog-skin="lightbox">
-    This should be in a lightbox
+    <div>
+      <a href="content.html" data-rel="modalDialog">Open</a>
     </div>
-  </div>
-</section>
+  </section>
+
+  <section>
+    <h2>Example: ajax dialog</h2>
+
+    <div>
+      <a href="content-ajax.html" data-rel="modalDialog" data-dialog-ajax="true">Open</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Example: Node dialog, lightbox style</h2>
+
+    <div>
+      <a href="#dialogLightbox" data-rel="modalDialog">Open</a>
+
+      <div class="dialog-content" id="dialogLightbox" data-dialog-title="This is the title" data-dialog-skin="lightbox">
+      This should be in a lightbox
+      </div>
+    </div>
+  </section>
+
+  <div style="height: 400px;"></div>
+
+  <a href="#vegDialog" data-rel="modalDialog">Open</a>
+</div>
 
 <script type="text/javascript">
-  $(window).on("message", function(e)
-  {
-      if (!e.data || e.data.indexOf("testmsg:") !== 0)
-      {
-          return;
-      }
-      
-      alert(e.origin);
-      alert(e.data);
-  });
-</script>
-  
+    $(window).on("message", function(e)
+    {
+        if (!e.data || e.data.indexOf("testmsg:") !== 0)
+        {
+            return;
+        }
+        
+        alert(e.origin);
+        alert(e.data);
+    });
+
+    $(function() { window.scrollTo(0, 1); });
+  </script>
 </body>
 </html>
