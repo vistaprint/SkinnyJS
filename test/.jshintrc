@@ -29,6 +29,7 @@
         "test": true,
         "asyncTest": true,
         "start": true,
+        "stop": true,
         "$": true
     }
 }

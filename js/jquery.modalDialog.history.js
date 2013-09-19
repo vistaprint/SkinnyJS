@@ -44,12 +44,6 @@
 
         var currentQs = $.currentQueryString();
 
-        if (currentQs.dialogId == qs.dialogId && 
-            currentQs.dialogType == qs.dialogType)
-        {
-            return;
-        }
-
         $.extend(currentQs, qs);
         var url = $.appendQueryString(document.location.pathname, currentQs);
 

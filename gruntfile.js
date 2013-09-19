@@ -298,7 +298,7 @@ module.exports = function(grunt)
 
     grunt.registerTask("default", ["verify", "build"]);
 
-    grunt.registerTask("verify", ["jshint", "qunit"]);
+    grunt.registerTask("verify", ["less", "jshint", "qunit"]);
 
     grunt.registerTask("copyDist", ["copy:distJs", "copy:distCss", "copy:distOther"]);
 

@@ -1,3 +1,6 @@
+// TODO finish success/failed callbacks for open() and close() methods
+// TODO what to do with preventEventBubbling?
+
 (function ($)
 {
     if ($.modalDialog && $.modalDialog._isContent)
@@ -71,16 +74,46 @@
         return evt;
     };
 
-    // Opens the dialog
-    ModalDialog.prototype.open = function()
+    ModalDialog.prototype._initDeferred = function(action, deferred)
     {
-        // TODO: Re-evaluate settings, change DOM if settings have changed.
+        this._deferreds = this._deferreds || {};
+        return this._deferreds[action] = deferred = (deferred || new $.Deferred());
+    };
+
+    ModalDialog.prototype._completeDeferred = function(action, resolution, args)
+    {
+        var deferred = this._deferreds[action];
+        if (deferred)
+        {
+            deferred[resolution + "With"](this, args);
+            this._deferreds[action] = null;
+
+            return deferred;
+        }
+
+        throw new Error("No deferred initialized for action '" + action + "'");
+    };
+
+    ModalDialog.prototype._resolveDeferred = function(action, args)
+    {
+        return this._completeDeferred(action, "resolve", args);
+    };
+
+    ModalDialog.prototype._rejectDeferred = function(action, args)
+    {
+        return this._completeDeferred(action, "reject", args);
+    };
+
+    // Opens the dialog
+    ModalDialog.prototype.open = function(deferred)
+    {
+        var deferred = this._initDeferred("open", deferred);
 
         // Ensure the dialog doesn't open once its already opened.. 
         // Otherwise, you could end up pushing it on to the stack more than once.
         if (this._open)
         {
-            return;
+            return this._rejectDeferred("open");
         }
 
         // Description
@@ -90,14 +123,14 @@
         var evt = this.onbeforeopen.fire();
         if (evt.isDefaultPrevented())
         {
-            return;
+            return this._rejectDeferred("open");
         }
 
         // Fire onbeforeopen globally
         evt = $.modalDialog.onbeforeopen.fire(null, this);
         if (evt.isDefaultPrevented())
         {
-            return;
+            return this._rejectDeferred("open");
         }
 
         // Keep track of the dialog stacking order
@@ -108,7 +141,10 @@
         this._build();
 
         // add or remove the 'smallscreen' class (which can also be checked using CSS media queries)
-        this.$container.stop()[$.modalDialog.isSmallScreen() ? "addClass" : "removeClass" ]("smallscreen");
+        this.$container[$.modalDialog.isSmallScreen() ? "addClass" : "removeClass" ]("smallscreen");
+
+        // Stop any animations on the container
+        this.$container.stop();
 
         this.$el.show();
 
@@ -141,10 +177,12 @@
                         // Force dialogs that are on small screens to trigger a window resize event when closed, just in case we have resized since the dialog opened.
 
                         this.triggerWindowResize = false;
-                        this._orientationchange = $.proxy(function(event) {
-                            this.triggerWindowResize = true;
-                            return this.pos(event);
-                        }, this);
+                        this._orientationchange = $.proxy(function(event) 
+                            {
+                                this.triggerWindowResize = true;
+                                return this.pos(event);
+                            }, 
+                            this);
 
                         $(window).on("orientationchange resize", this._orientationchange);
                     }
@@ -152,6 +190,8 @@
                     this.onopen.fire();
 
                     $.modalDialog.onopen.fire(null, this);
+
+                    this._resolveDeferred("open");
                 }, this)
             );
 
@@ -159,7 +199,8 @@
         };
 
         this._finishOpen();
-        return this;
+
+        return deferred;
     };
 
     ModalDialog.prototype._finishOpen = function()
@@ -189,8 +230,10 @@
 
     // Closes the dialog. 
     // isDialogCloseButton Indicates the cancel button in the dialog's header was clicked.
-    ModalDialog.prototype.close = function(isDialogCloseButton)
+    ModalDialog.prototype.close = function(isDialogCloseButton, deferred)
     {
+        var deferred = this._initDeferred("close", deferred);
+
         if ($.modalDialog.getCurrent() !== this)
         {
             throw new Error("Can't close a dialog that isn't currently displayed on top.");
@@ -201,13 +244,13 @@
         // Expose an event allowing consumers to cancel the close event
         if (this.onbeforeclose.fire(eventSettings).isDefaultPrevented())
         {
-            return;
+            return this._rejectDeferred("close");
         }
 
         // Expose a global event
         if ($.modalDialog.onbeforeclose.fire(eventSettings, this).isDefaultPrevented())
         {
-            return;
+            return this._rejectDeferred("close");
         }
 
         if ($.modalDialog.getCurrent() === this)
@@ -228,6 +271,8 @@
         {
             $(window).off("orientationchange resize", this._orientationchange);
         }
+
+        return deferred;
     };
 
     ModalDialog.prototype._close = function(e)
@@ -253,6 +298,8 @@
         this.onclose.fire(e);
 
         $.modalDialog.onclose.fire(e, this);
+
+        this._resolveDeferred("close");
 
         if ($.modalDialog.isSmallScreen() && this.triggerWindowResize)
         {
@@ -746,8 +793,10 @@
 
     AjaxModalDialog.prototype.dialogType = "ajax";
 
-    AjaxModalDialog.prototype.open = function()
+    AjaxModalDialog.prototype.open = function(success, failed)
     {
+        failed = failed || $.noop;
+
         ModalDialog.prototype.open.apply(this, arguments);
 
         if (!this._ajaxComplete)
@@ -772,7 +821,12 @@
                             });
 
                             isError = true;
+
+                            failed.apply(this);
                         });
+
+                        // TODO what to do when the ajax fails?
+                        // Close the dialog and call onerror?
 
                         ModalDialog.prototype._finishOpen.call(this);
                     }, 
@@ -965,6 +1019,11 @@
             }
             else if (settings.content)
             {
+                if ($(settings.content).length === 0)
+                {
+                    throw new Error("ModalDialog content not found");
+                }
+
                 dialog = new ModalDialog(settings);
 
                 if (!settings.destroyOnClose)
