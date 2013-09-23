@@ -186,14 +186,6 @@
         var coalescedSettings = {};
         $.extend(true, coalescedSettings, AJAX_SETTINGS_DEFAULTS, settings);
         
-        // Useful for testing invalid json
-        /*       
-        settings.dataFilter = function(data, type)
-        {
-           return "{d:{ "foo": '/Date(1325394000000-0500)/' }}";
-        };
-        */
-        
         // For a sync call, return the parsed JSON
         if (coalescedSettings.async === false)
         {

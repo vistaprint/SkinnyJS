@@ -12,6 +12,8 @@ $(document).ready(function()
             teardown: cleanup
         });
 
+    $.mockjaxSettings.logging = false;
+
     asyncTest("Ensure Microsoft json date format is deserialized", 2, function()
     {
         /* jshint quotmark:false */
@@ -106,6 +108,36 @@ $(document).ready(function()
         {
             // Mon, 06 Apr 2009 11:54:29 GMT
             equal(typeof data.__type, "undefined");
+            equal(status, "success");
+            start();
+        });
+        
+    });
+
+    asyncTest("Ensure posted date is in Microsoft JSON date format", 2, function()
+    {
+        /* jshint quotmark:false */
+
+        $.mockjax({
+            url: "/test.asmx",
+            type: "POST",
+            contentType: "application/json",
+            response: function(settings)
+            {
+                this.responseText = '{ "d": {} }';
+                equal(settings.data, '{"date":"\/Date(1239018869000-0000)\/"}');
+            }
+        });
+
+        $.msAjax(
+        {
+            url: "/test.asmx",
+            type: "POST",
+            data: { date: new Date(1239018869048) }
+        })
+        .done(function(data, status)
+        {
+            // Mon, 06 Apr 2009 11:54:29 GMT
             equal(status, "success");
             start();
         });
