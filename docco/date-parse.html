@@ -8,7 +8,7 @@
 
 </pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Parses the date in ISO8601 format
 If "strict" is true Whether or not to perform a strict parse, which requires all parts of the date to be present</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nb">Date</span><span class="p">.</span><span class="nx">parseISO8601</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">date</span><span class="p">,</span> <span class="nx">strict</span><span class="p">)</span>
+    <span class="nb">Date</span><span class="p">.</span><span class="nx">parseISO</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">date</span><span class="p">,</span> <span class="nx">strict</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">struct</span><span class="p">,</span> <span class="nx">minutesOffset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
@@ -63,7 +63,7 @@ If "strict" is true Whether or not to perform a strict parse, which requires all
         <span class="k">if</span> <span class="p">((</span><span class="nx">struct</span> <span class="o">=</span> <span class="sr">/^\/Date\((d|-|.*)\)[\/|\\]$/</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">date</span><span class="p">)))</span>
         <span class="p">{</span>
             <span class="kd">var</span> <span class="nx">v</span> <span class="o">=</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">split</span><span class="p">(</span><span class="sr">/[-+,.]/</span><span class="p">);</span>
-            <span class="k">return</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">?</span> <span class="o">+</span><span class="nx">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">:</span> <span class="mi">0</span> <span class="o">-</span> <span class="o">+</span><span class="nx">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+            <span class="k">return</span> <span class="nx">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">?</span> <span class="o">+</span><span class="nx">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">:</span> <span class="mi">0</span> <span class="o">-</span> <span class="o">+</span><span class="nx">v</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
         <span class="p">}</span>
 
         <span class="k">return</span> <span class="kc">NaN</span><span class="p">;</span>
@@ -77,7 +77,7 @@ do this on all browsers, so it needs to be overwritten to force this behavior an
     <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">timestamp</span><span class="p">;</span>
 
-        <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parseISO8601</span><span class="p">(</span><span class="nx">date</span><span class="p">);</span>
+        <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parseISO</span><span class="p">(</span><span class="nx">date</span><span class="p">);</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">timestamp</span><span class="p">))</span>
         <span class="p">{</span>

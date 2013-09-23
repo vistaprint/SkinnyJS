@@ -33,18 +33,25 @@
             // Example of a partial date:       "2013"
             // Example of a full ISO8601 date:  "2013-08-07T21:40:05.121+06:00"
             
-            // Depends on ms date parsing in js-iso8601-ms.js. True indicates to perform strict parsing.
-            var date = Date.parseISO8601(value, true); 
+            // Depends on ms date parsing in date-parse.js. True indicates to perform strict parsing.
+            var date = Date.parseISO(value, true); 
             if (!isNaN(date))
             {
-                return date;
+                return new Date(date);
             }
 
-            // Depends on ms date parsing in js-iso8601-ms.js. This function is already strict.
+            // Depends on ms date parsing in date-parse.js. This function is already strict.
             date = Date.parseMsDate(value); 
             if (!isNaN(date))
             {
-                return date;
+                return new Date(date);
+            }
+
+            // Fall back on default date parsing
+            date = Date.parse(value); 
+            if (!isNaN(date))
+            {
+                return new Date(date);
             }
         }
 
@@ -178,14 +185,6 @@
 
         var coalescedSettings = {};
         $.extend(true, coalescedSettings, AJAX_SETTINGS_DEFAULTS, settings);
-        
-        // Useful for testing invalid json
-        /*       
-        settings.dataFilter = function(data, type)
-        {
-           return "{d:{ "foo": '/Date(1325394000000-0500)/' }}";
-        };
-        */
         
         // For a sync call, return the parsed JSON
         if (coalescedSettings.async === false)
