@@ -20,9 +20,6 @@ Install Pygments (python)
 * http://pygments.org/download/
 * easy_install Pygments
 
-Install easy_install
-* https://pypi.python.org/pypi/setuptools
-
 Install Jekyll: http://jekyllrb.com/docs/installation/
 * (windows) gem install jekyll
 * (mac) sudo gem install jekyll
