@@ -1492,7 +1492,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     {
         e.preventDefault();
         
-        var $link = $(e.target);
+        var $link = $(e.currentTarget);
 
         var dialog = $link.data(DIALOG_DATA_KEY);
 

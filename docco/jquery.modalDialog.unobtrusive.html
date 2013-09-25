@@ -36,7 +36,7 @@
     <span class="p">{</span>
         <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
         
-        <span class="kd">var</span> <span class="nx">$link</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">$link</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">);</span>
 
         <span class="kd">var</span> <span class="nx">dialog</span> <span class="o">=</span> <span class="nx">$link</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">DIALOG_DATA_KEY</span><span class="p">);</span>
 
