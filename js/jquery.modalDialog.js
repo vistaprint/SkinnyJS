@@ -77,7 +77,9 @@
     ModalDialog.prototype._initDeferred = function(action, deferred)
     {
         this._deferreds = this._deferreds || {};
-        return this._deferreds[action] = deferred = (deferred || new $.Deferred());
+        deferred = deferred || new $.Deferred();
+        this._deferreds[action] = deferred;
+        return deferred;
     };
 
     ModalDialog.prototype._completeDeferred = function(action, resolution, args)
@@ -105,7 +107,7 @@
     };
 
     // Opens the dialog
-    ModalDialog.prototype.open = function(deferred)
+    ModalDialog.prototype.open = function()
     {
         var deferred = this._initDeferred("open", deferred);
 
@@ -230,7 +232,7 @@
 
     // Closes the dialog. 
     // isDialogCloseButton Indicates the cancel button in the dialog's header was clicked.
-    ModalDialog.prototype.close = function(isDialogCloseButton, deferred)
+    ModalDialog.prototype.close = function(isDialogCloseButton)
     {
         var deferred = this._initDeferred("close", deferred);
 

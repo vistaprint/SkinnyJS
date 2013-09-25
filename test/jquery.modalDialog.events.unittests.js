@@ -31,25 +31,25 @@ $(document).ready(function()
     //     expect(0);
     // });
 
-    asyncTest("Ensure node dialog open resolves promise", 1, function()
-    {
-        var dialog = $.modalDialog.create({ content: "#simpleDialog" });
+    // asyncTest("Ensure node dialog open resolves promise", 1, function()
+    // {
+    //     var dialog = $.modalDialog.create({ content: "#simpleDialog" });
 
 
-        dialog.open()
-            .done(function()
-            {
-                var dialogRef = $.modalDialog.getCurrent();
-                equal(dialogRef, dialog, "Current dialog refs match");
+    //     dialog.open()
+    //         .done(function()
+    //         {
+    //             var dialogRef = $.modalDialog.getCurrent();
+    //             equal(dialogRef, dialog, "Current dialog refs match");
 
-                start();
-            })
-            .fail(function()
-            {
-                ok(false, "promise was rejcted for dialog.open() method");
-                start();
-            });
-    });
+    //             start();
+    //         })
+    //         .fail(function()
+    //         {
+    //             ok(false, "promise was rejcted for dialog.open() method");
+    //             start();
+    //         });
+    // });
 
     // asyncTest("Ensure node dialog open fires onopen", 1, function()
     // {
