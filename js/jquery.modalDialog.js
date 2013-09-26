@@ -44,6 +44,8 @@
 
     var _ua = $.modalDialog._ua;
 
+    $.modalDialog.iframeLoadTimeout = 5000;
+
     // Class which creates a jQuery mobile dialog
     var ModalDialog = function(settings)
     {
@@ -88,7 +90,7 @@
         if (deferred)
         {
             deferred[resolution + "With"](this, args);
-            this._deferreds[action] = null;
+            //this._deferreds[action] = null;
 
             return deferred;
         }
@@ -105,6 +107,22 @@
     {
         return this._completeDeferred(action, "reject", args);
     };
+
+    ModalDialog.prototype._clearDeferred = function(action)
+    {
+        this._deferreds[action] = null;
+    };
+
+    ModalDialog.prototype._getDeferred = function(action)
+    {
+        return this._deferreds[action];
+    };
+
+    ModalDialog.prototype._isDeferredComplete = function(action)
+    {
+        var deferred = this._getDeferred(action);
+        return !deferred || deferred.state() != "pending";
+    }
 
     // Opens the dialog
     ModalDialog.prototype.open = function()
@@ -154,48 +172,57 @@
 
         this._finishOpenAction = function()
         {
-            this.$bg.addClass($.modalDialog.veilClass);
+            if (deferred.state() != "rejected")
+            {
+                this.$bg.addClass($.modalDialog.veilClass);
 
-            var initialPos = this._getDefaultPosition(),
-                initialTop = initialPos.top;
-            initialPos.top = STARTING_TOP; // we're going to animate this to slide down
-            this.$container.css(initialPos);
+                var initialPos = this._getDefaultPosition(),
+                    initialTop = initialPos.top;
+                initialPos.top = STARTING_TOP; // we're going to animate this to slide down
+                this.$container.css(initialPos);
 
-            // Animate with a CSS transition
-            this.$container[_animateMethod](
-                { top: initialTop },
-                DURATION,
-                _easing,
-                $.proxy(function()
-                {
-                    this.$el.addClass("dialog-visible");
-
-                    if ($.modalDialog.isSmallScreen())
+                // Animate with a CSS transition
+                this.$container[_animateMethod](
+                    { top: initialTop },
+                    DURATION,
+                    _easing,
+                    $.proxy(function()
                     {
-                        // TODO: I question this change. Should it be decoupled from the dialog framework?
-                        // It could be put into mobile fixes.
-                        // Is this even mobile specific?
-                        // Original comment:
-                        // Force dialogs that are on small screens to trigger a window resize event when closed, just in case we have resized since the dialog opened.
+                        this.$el.addClass("dialog-visible");
 
-                        this.triggerWindowResize = false;
-                        this._orientationchange = $.proxy(function(event) 
-                            {
-                                this.triggerWindowResize = true;
-                                return this.pos(event);
-                            }, 
-                            this);
+                        if ($.modalDialog.isSmallScreen())
+                        {
+                            // TODO: I question this change. Should it be decoupled from the dialog framework?
+                            // It could be put into mobile fixes.
+                            // Is this even mobile specific?
+                            // Original comment:
+                            // Force dialogs that are on small screens to trigger a window resize event when closed, just in case we have resized since the dialog opened.
 
-                        $(window).on("orientationchange resize", this._orientationchange);
-                    }
+                            this.triggerWindowResize = false;
+                            this._orientationchange = $.proxy(function(event) 
+                                {
+                                    this.triggerWindowResize = true;
+                                    return this.pos(event);
+                                }, 
+                                this);
 
-                    this.onopen.fire();
+                            $(window).on("orientationchange resize", this._orientationchange);
+                        }
 
-                    $.modalDialog.onopen.fire(null, this);
+                        this.onopen.fire();
 
-                    this._resolveDeferred("open");
-                }, this)
-            );
+                        $.modalDialog.onopen.fire(null, this);
+
+                        this._resolveDeferred("open");
+                        this._clearDeferred("open");
+
+                    }, this)
+                );
+            }
+            else
+            {
+                this._clearDeferred("open");
+            }
 
             this._hideLoadingIndicator();
         };
@@ -230,6 +257,14 @@
         this.$loadingIndicator = null;
     };
 
+    ModalDialog.prototype._popDialogStack = function()
+    {
+        if ($.modalDialog.getCurrent() === this)
+        {
+            _dialogStack.pop();
+        }
+    };
+
     // Closes the dialog. 
     // isDialogCloseButton Indicates the cancel button in the dialog's header was clicked.
     ModalDialog.prototype.close = function(isDialogCloseButton)
@@ -255,10 +290,7 @@
             return this._rejectDeferred("close");
         }
 
-        if ($.modalDialog.getCurrent() === this)
-        {
-            _dialogStack.pop();
-        }
+        this._popDialogStack();
 
         this.$el.removeClass("dialog-visible");
         this.$container[_animateMethod](
@@ -283,12 +315,25 @@
         this.close(true);
     };
 
-    ModalDialog.prototype._finishClose = function(e)
+    ModalDialog.prototype._reset = function()
     {
         this._open = false;
 
+        this.$container.stop();
+        this.$container.css({ top: STARTING_TOP });
         this.$bg.removeClass($.modalDialog.veilClass);
         this.$el.hide();
+    };
+
+    ModalDialog.prototype._resetFailed = function()
+    {
+        this._reset();
+        this._popDialogStack();
+    };
+
+    ModalDialog.prototype._finishClose = function(e)
+    {
+        this._reset();
 
         if (this.settings.destroyOnClose)
         {
@@ -686,7 +731,44 @@
     {
         /* jshint quotmark:false */
 
+        this._iframeLoadTimer = null;
+
         this.$frame = $('<iframe src="' + this.settings.url + '" name="' + this.settings._fullId + '" seamless allowtransparency="true" width="100%" style="height:' + this.settings.initialHeight + 'px;" class="dialog-frame" scrolling="no" frameborder="0" framespacing="0" />');
+        
+        // When the iframe loads, even if its a failed status (i.e. 404), the load event will fire.
+        // We expect that the dialog will call notifyReady(). If it doesn't, this timeout will
+        // eventually fire, causing the open() promise to be rejected, and the dialog state to be cleaned up.
+        this.$frame.on(
+            "load", 
+            $.proxy(function() 
+            { 
+                // The "open" promise has already been resolved: don't continue setting a timeout.
+                if (this._isDeferredComplete("open"))
+                {
+                    return;
+                }
+
+                // The iframe has $.modalDialog.iframeLoadTimeout milliseconds to call notifyReady() after the load event is called.
+                // Otherwise, the "open" promise will be rejected.
+                this._iframeLoadTimer = setTimeout(
+                    $.proxy(function() 
+                    { 
+                        if (this._isDeferredComplete("open"))
+                        {
+                            return;
+                        }
+                
+                        this.$frame.remove();
+                        this._resetFailed();
+
+                        this._rejectDeferred("open", { message: "iframe load timeout for url: " + this.settings.url });
+
+                    }, this),
+                    $.modalDialog.iframeLoadTimeout
+                    );
+            }, 
+            this));
+
         this.$content = this.$frame;
     };
 
@@ -775,6 +857,13 @@
 
     FramedModalDialog.prototype.notifyReady = function(hostname)
     {
+        // There may be a timer waiting for the iframe to load- cancel it.
+        if (this._iframeLoadTimer)
+        {
+            clearTimeout(this._iframeLoadTimer);
+            this._iframeLoadTimer = null;
+        }
+
         this.settings.frameHostname = hostname;
 
         ModalDialog.prototype._finishOpen.apply(this);
@@ -795,11 +884,9 @@
 
     AjaxModalDialog.prototype.dialogType = "ajax";
 
-    AjaxModalDialog.prototype.open = function(success, failed)
+    AjaxModalDialog.prototype.open = function()
     {
-        failed = failed || $.noop;
-
-        ModalDialog.prototype.open.apply(this, arguments);
+        var deferred = ModalDialog.prototype.open.apply(this, arguments);
 
         if (!this._ajaxComplete)
         {
@@ -812,23 +899,23 @@
                     function(responseText, status, xhr)
                     {
                         this._ajaxComplete = true;
-                        var isError = false;
 
-                        xhr.fail(function()
-                        {
-                            this.onajaxerror.fire({ 
-                                xhr: xhr, 
-                                status: status, 
-                                responseText: responseText
-                            });
+                        xhr.fail(
+                            $.proxy(function()
+                            {
+                                this._resetFailed();
 
-                            isError = true;
+                                var errEvent = { 
+                                    xhr: xhr, 
+                                    status: status, 
+                                    responseText: responseText
+                                };
 
-                            failed.apply(this);
-                        });
+                                this.onajaxerror.fire(errEvent);
 
-                        // TODO what to do when the ajax fails?
-                        // Close the dialog and call onerror?
+                                this._rejectDeferred("open", [errEvent]);
+
+                            }, this));
 
                         ModalDialog.prototype._finishOpen.call(this);
                     }, 
@@ -840,6 +927,8 @@
             // The content is already loaded
             ModalDialog.prototype._finishOpen.call(this);
         }
+
+        return deferred;
     };
 
     AjaxModalDialog.prototype._finishOpen = function()

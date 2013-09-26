@@ -6,10 +6,22 @@ $(document).ready(function()
         var dialog = $.modalDialog.getCurrent();
         if (dialog)
         {
-            dialog.close();
             stop();
+
+            dialog
+                .close()
+                .then(function()
+                {
+                    start();
+                },
+                function()
+                {
+                    throw new Error("Error cleaning up");
+                });
         }
     }
+
+    $.modalDialog.iframeLoadTimeout = 1000;
 
     module(
         "jquery.modalDialog.events",
@@ -18,61 +30,212 @@ $(document).ready(function()
             teardown: cleanup
         });
 
-    // test("Ensure content node can be shared between two dialogs", function()
-    // {
-    //     var dialog = $.modalDialog.create({ content: "#simpleDialog" });
+    asyncTest("Ensure content node can be shared between two dialogs", 1, function()
+    {
+        var dialog = $.modalDialog.create({ content: "#simpleDialog" });
+        var dialog2;
 
-    //     dialog.open();
+        dialog
+            .open()
+            .then(function()
+            {
+                return dialog.close();
+            })
+            .then(function()
+            {
+                dialog2 = $.modalDialog.create({ content: "#simpleDialog" });
+                return dialog2.open();
+            })
+            .then(function()
+            {
+                return dialog2.close();
+            })
+            .then(function() 
+            {
+                ok(true);
+                start();
+            });
+    });
 
-    //     var dialog2 = $.modalDialog.create({ content: "#simpleDialog" });
+    asyncTest("Ensure node dialog open resolves promise", 1, function()
+    {
+        var dialog = $.modalDialog.create({ content: "#simpleDialog" });
 
-    //     dialog2.open();
+        dialog
+            .open()
+            .then(
+                function()
+                {
+                    var dialogRef = $.modalDialog.getCurrent();
+                    equal(dialogRef, dialog, "Current dialog refs match");
+                },
+                function()
+                {
+                    ok(false, "promise was rejected for dialog.open() method");
+                    start();
+                })
+            .then(function()
+            {
+                return dialog.close();
+            })
+            .then(function()
+            {
+                start();
+            })
+    });
 
-    //     expect(0);
-    // });
+    asyncTest("Ensure node dialog open fires lifecycle events", 8, function()
+    {
+        var dialog = $.modalDialog.create({ content: "#simpleDialog" });
+        var phase = 0;
 
-    // asyncTest("Ensure node dialog open resolves promise", 1, function()
-    // {
-    //     var dialog = $.modalDialog.create({ content: "#simpleDialog" });
+        dialog.onbeforeopen.add(function()
+        {
+            equal(this, dialog, "Current dialog refs match");
+            equal(phase, 0);
+            phase++;
+        });
 
+        dialog.onopen.add(function()
+        {
+            equal(this, dialog, "Current dialog refs match");
+            equal(phase, 1);
+            phase++;
+        });
 
-    //     dialog.open()
-    //         .done(function()
-    //         {
-    //             var dialogRef = $.modalDialog.getCurrent();
-    //             equal(dialogRef, dialog, "Current dialog refs match");
+        dialog.onbeforeclose.add(function()
+        {
+            equal(this, dialog, "Current dialog refs match");
+            equal(phase, 2);
+            phase++;
+        });
 
-    //             start();
-    //         })
-    //         .fail(function()
-    //         {
-    //             ok(false, "promise was rejcted for dialog.open() method");
-    //             start();
-    //         });
-    // });
+        dialog.onclose.add(function()
+        {
+            equal(this, dialog, "Current dialog refs match");
+            equal(phase, 3);
+            phase++;
+        });
 
-    // asyncTest("Ensure node dialog open fires onopen", 1, function()
-    // {
-    //     var dialog = $.modalDialog.create({ content: "#simpleDialog" });
+        dialog
+            .open()
+            .then(function()
+            {
+                return dialog.close();
+            })
+            .then(function()
+            {
+                start();
+            });
+    });
 
-    //     dialog.onopen.add(function()
-    //     {
-    //         equal(this, dialog, "Current dialog refs match");
+    test("Ensure node dialog throws exception when passed non-existent element", function()
+    {
+        throws(function()
+        {
+            $.modalDialog.create({ content: "#iDontExist" });
+        },
+        "ModalDialog content not found");
+    });
 
-    //         setTimeout(start, 0);
-    //     });
+    asyncTest("Ensure ajax dialog rejects promise with 404", 3, function()
+    {
+        var dialog = $.modalDialog.create({ url: "/idontexist", ajax: true });
+        var dialog2;
 
-    //     dialog.open();
-    // });
+        dialog
+            .open()
+            .then(
+                function()
+                {
+                    ok(false, "Promise was resolved even though ajax URL was invalid");
+                    start();
+                },
+                function()
+                {
+                    ok(true, "Promise was rejected correctly");
 
-    // test("Ensure node dialog throws exception when passed non-existent element", function()
-    // {
-    //     throws(function()
-    //     {
-    //         $.modalDialog.create({ content: "#iDontExist" });
-    //     },
-    //     "ModalDialog content not found");
-        
-    // });
+                    // Verify that the state of the framework is not messed up from failing to load the previous dialog.
+                    ok(!$.modalDialog.getCurrent(), "There should be no current dialog");
+
+                    dialog2 = $.modalDialog.create({ url: "content/jquery.modalDialog.ajaxContent.html", ajax: true });
+                    return dialog2.open();
+                })
+            .then(
+                function()
+                {
+                    ok(true, "Second ajax dialog opened OK after first failed");
+                    return dialog2.close();
+                },
+                function()
+                {
+                    ok(false, "Second dialog failed to open properly");
+                    start();
+                })
+            .then(
+                function()
+                {
+                    start();
+                });
+    });
+
+    asyncTest("Ensure iframe dialog rejects promise with 404", 2, function()
+    {
+        var dialog = $.modalDialog.create({ url: "/idontexist" });
+        var dialog2;
+
+        dialog
+            .open()
+            .then(
+                function()
+                {
+                    ok(false, "Promise was resolved even though iframe URL was invalid");
+                    start();
+                },
+                function()
+                {
+                    ok(true, "Promise was rejected correctly");
+
+                    // Verify that the state of the framework is not messed up from failing to load the previous dialog.
+
+                    dialog2 = $.modalDialog.create({ url: "content/jquery.modalDialog.iframeContent.html" });
+                    return dialog2.open();
+                })
+            .then(
+                function()
+                {
+                    ok(true, "Second iframe dialog opened OK after first failed");
+                    return dialog2.close();
+                },
+                function()
+                {
+                    ok(false, "Second dialog failed to open properly");
+                    start();
+                })
+            .then(
+                function()
+                {
+                    start();
+                });
+    });
+
+    asyncTest("Ensure iframe dialog promises are fired", 1, function()
+    {
+        var dialog = $.modalDialog.create({ url: "content/jquery.modalDialog.iframeContent.html" });
+
+        dialog
+            .open()
+            .then(
+                function()
+                {
+                    ok(true, "Dialog opened");
+                    return dialog.close();
+                })
+            .then(
+                function()
+                {
+                    start();
+                });
+    });
 
 });

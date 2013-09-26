@@ -30,6 +30,7 @@
         "asyncTest": true,
         "start": true,
         "stop": true,
+        "throws": true,
         "$": true
     }
 }
