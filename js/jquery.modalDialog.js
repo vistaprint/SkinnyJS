@@ -9,7 +9,6 @@
     }
 
     var MARGIN = 10; // @see MARGIN in jquery.modalDialog.less
-    var DURATION = 600;
     var STARTING_TOP = "-700px";
 
     // A stack of dialogs in display order
@@ -45,6 +44,7 @@
     var _ua = $.modalDialog._ua;
 
     $.modalDialog.iframeLoadTimeout = 5000;
+    $.modalDialog.animationDuration = 600;
 
     // Class which creates a jQuery mobile dialog
     var ModalDialog = function(settings)
@@ -120,9 +120,14 @@
 
     ModalDialog.prototype._isDeferredComplete = function(action)
     {
+        console.log("is deferred complete called");
+
         var deferred = this._getDeferred(action);
+
+        console.log("is deferred complete: " + deferred.state());
+
         return !deferred || deferred.state() != "pending";
-    }
+    };
 
     // Opens the dialog
     ModalDialog.prototype.open = function()
@@ -172,6 +177,8 @@
 
         this._finishOpenAction = function()
         {
+            console.log("_finishOpenAction: " + deferred.state());
+
             if (deferred.state() != "rejected")
             {
                 this.$bg.addClass($.modalDialog.veilClass);
@@ -184,7 +191,7 @@
                 // Animate with a CSS transition
                 this.$container[_animateMethod](
                     { top: initialTop },
-                    DURATION,
+                    $.modalDialog.animationDuration,
                     _easing,
                     $.proxy(function()
                     {
@@ -295,7 +302,7 @@
         this.$el.removeClass("dialog-visible");
         this.$container[_animateMethod](
             {top: STARTING_TOP},
-            DURATION,
+            $.modalDialog.animationDuration,
             _easing,
             $.proxy(this._finishClose, this, eventSettings)
         );
@@ -738,36 +745,41 @@
         // When the iframe loads, even if its a failed status (i.e. 404), the load event will fire.
         // We expect that the dialog will call notifyReady(). If it doesn't, this timeout will
         // eventually fire, causing the open() promise to be rejected, and the dialog state to be cleaned up.
-        this.$frame.on(
-            "load", 
-            $.proxy(function() 
-            { 
-                // The "open" promise has already been resolved: don't continue setting a timeout.
-                if (this._isDeferredComplete("open"))
-                {
-                    return;
-                }
+        // this.$frame.on(
+        //     "load", 
+        //     $.proxy(function() 
+        //     { 
+        //         console.log("frame loaded!");
 
-                // The iframe has $.modalDialog.iframeLoadTimeout milliseconds to call notifyReady() after the load event is called.
-                // Otherwise, the "open" promise will be rejected.
-                this._iframeLoadTimer = setTimeout(
-                    $.proxy(function() 
-                    { 
-                        if (this._isDeferredComplete("open"))
-                        {
-                            return;
-                        }
-                
-                        this.$frame.remove();
-                        this._resetFailed();
+        //         // The "open" promise has already been resolved: don't continue setting a timeout.
+        //         if (this._isDeferredComplete("open"))
+        //         {
+        //             console.log("timer was complete");
+        //             return;
+        //         }
 
-                        this._rejectDeferred("open", { message: "iframe load timeout for url: " + this.settings.url });
+        //         console.log("created timer");
 
-                    }, this),
-                    $.modalDialog.iframeLoadTimeout
-                    );
-            }, 
-            this));
+        //         The iframe has $.modalDialog.iframeLoadTimeout milliseconds to call notifyReady() after the load event is called.
+        //         Otherwise, the "open" promise will be rejected.
+        //         this._iframeLoadTimer = setTimeout(
+        //             $.proxy(function() 
+        //             { 
+        //                 if (this._isDeferredComplete("open"))
+        //                 {
+        //                     return;
+        //                 }
+
+        //                 this.$frame.remove();
+        //                 this._resetFailed();
+
+        //                 this._rejectDeferred("open", { message: "iframe load timeout for url: " + this.settings.url });
+
+        //             }, this),
+        //             $.modalDialog.iframeLoadTimeout
+        //             );
+        //     }, 
+        //     this));
 
         this.$content = this.$frame;
     };
@@ -857,6 +869,8 @@
 
     FramedModalDialog.prototype.notifyReady = function(hostname)
     {
+        console.log("notifyReady");
+
         // There may be a timer waiting for the iframe to load- cancel it.
         if (this._iframeLoadTimer)
         {

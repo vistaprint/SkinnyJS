@@ -24,6 +24,7 @@
     {
         "jQuery": true,
         "module": true,
+        "QUnit": true,
         "ok": true,
         "equal": true,
         "test": true,

@@ -32,8 +32,13 @@ module.exports = function(grunt)
                 jshintrc: ".jshintrc"
             }
         },
-        qunit: {
-          all: ["test/*.html"]
+        qunit: 
+        {
+            options: 
+            {
+                "--web-security": "false"
+            },
+            all: ["test/*.html"]
         },
         docco:
         {
