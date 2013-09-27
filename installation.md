@@ -1,44 +1,48 @@
-Install Ruby
-* http://rubyinstaller.org/downloads/
-* Add ruby bin dir to your PATH environment variable
+# Installation
+Jekyll uses Pygments for syntax coloring.  Pygments requires Python and Ruby, and can be installed via easy_install.
 
-Install RubyDevKit
-* On windows, use RubyDevKit: http://rubyinstaller.org/downloads/
-* Follow installation instructions: https://github.com/oneclick/rubyinstaller/wiki/Development-Kit
+1. Install Ruby
+ * http://rubyinstaller.org/downloads/
+ * Add ruby bin dir to your PATH environment variable
 
-Install python 2.7
-* http://www.python.org/getit/
-** On windows, use Python 2.7.5 Windows X86-64 Installer
-* Ensure Python dir is on path
-** On windows, add C:\Python27;C:\Python27\Scripts
+2. Install RubyDevKit
+ * On windows, use RubyDevKit: http://rubyinstaller.org/downloads/
+ * Follow installation instructions: https://github.com/oneclick/rubyinstaller/wiki/Development-Kit
 
-Install python easy_install
-* https://pypi.python.org/pypi/setuptools (use setuptools 1.1)
-* Setup instructions for windows: https://pypi.python.org/pypi/setuptools/1.1#windows
+3. Install python 2.7
+ * http://www.python.org/getit/
+ * *On windows, use Python 2.7.5 Windows X86-64 Installer*
+ * Ensure Python dir is on path
+ * *On windows, add C:\Python27;C:\Python27\Scripts*
 
-Install Pygments (python)
-* http://pygments.org/download/
-* easy_install Pygments
+4. Install python easy_install
+ * https://pypi.python.org/pypi/setuptools (use setuptools 1.1)
+ * *Setup instructions for windows: https://pypi.python.org/pypi/setuptools/1.1#windows*
 
-Install easy_install
-* https://pypi.python.org/pypi/setuptools
+5. Install Pygments (python)
+ * http://pygments.org/download/
+ * easy_install Pygments
 
-Install Jekyll: http://jekyllrb.com/docs/installation/
-* (windows) gem install jekyll
-* (mac) sudo gem install jekyll
-* Needed to uninstall pygments 5.2 and install 5.0: http://stackoverflow.com/questions/17364028/jekyll-on-windows-pygments-not-working
-** gem uninstall pygments.rb --version "=0.5.2"
-** gem install pygments.rb --version "=0.5.0"
+6. Install Jekyll
+ * http://jekyllrb.com/docs/installation/
+ * (windows) gem install jekyll
+ * (mac) sudo gem install jekyll
+ * *If you need to uninstall pygments 5.2 and install 5.0:*
+ * *http://stackoverflow.com/questions/17364028/jekyll-on-windows-pygments-not-working*
+ * *gem uninstall pygments.rb --version "=0.5.2"*
+ * *gem install pygments.rb --version "=0.5.0"*
 
-Install node:
-* http://nodejs.org/download/ windows installer
+7. Install node:
+ * http://nodejs.org/download/ windows installer
 
-Install grunt
-* npm install -g grunt-cli
+8. Install grunt
+ * npm install -g grunt-cli
 
-Bug in phantomjs:
-C:\dev\skinny\node_modules\grunt-contrib-qunit\node_modules\grunt-lib-phantomjs\node_modules\phantomjs\lib\location.js is being written without escaped backslashes in windows
+9. Install SkinnyJS packages
+ * cd to the SkinnyJS directory
+ * npm install
 
+# Notes
 Debugging:
 * Use node-inspector
 * node-inspector --web-port=8081

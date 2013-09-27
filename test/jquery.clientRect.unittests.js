@@ -1,5 +1,20 @@
 $(document).ready(function()
 {
+    var cleanup = function()
+    {
+        while (_cleanEls.length > 0)
+        {
+            _cleanEls[0].remove();
+            _cleanEls.splice(0, 1);
+        }
+    };
+
+    module(
+        "jquery.clientRect",
+        {
+            teardown: cleanup
+        });
+
     var _cleanEls = [];
 
     var tempEl = function(html)
@@ -14,15 +29,6 @@ $(document).ready(function()
         return tempEl("<div />")
             .css({ position: "absolute", width: 100, height: 100, top: 100, left: 100 })
             .appendTo("body");
-    };
-
-    var cleanup = function()
-    {
-        while (_cleanEls.length > 0)
-        {
-            _cleanEls[0].remove();
-            _cleanEls.splice(0, 1);
-        }
     };
 
     var rectEquals = function(rect, top, left, width, height)
@@ -57,8 +63,6 @@ $(document).ready(function()
         var rect = $el.clientRect();
 
         rectEquals(rect, 100, 100, 100, 100);
-
-        cleanup();
     });
 
     testClientRect("detached element returns 0 rect", function() 
@@ -69,7 +73,6 @@ $(document).ready(function()
 
         rectEquals(rect, 0, 0, 0, 0);
 
-        cleanup();
     });
 
     testClientRect("hidden element returns 0 rect", function() 
@@ -80,7 +83,6 @@ $(document).ready(function()
 
         rectEquals(rect, 0, 0, 0, 0);
 
-        cleanup();
     });
 
     testClientRect("basic with margin", function() 
@@ -91,7 +93,6 @@ $(document).ready(function()
 
         rectEquals(rect, 110, 110, 100, 100);
 
-        cleanup();
     });
 
     testClientRect("basic with padding", function() 
@@ -102,7 +103,6 @@ $(document).ready(function()
 
         rectEquals(rect, 100, 100, 120, 120);
 
-        cleanup();
     });
 
     testClientRect("basic with border", function() 
@@ -113,7 +113,6 @@ $(document).ready(function()
 
         rectEquals(rect, 100, 100, 100, 100);
 
-        cleanup();
     });
 
     testClientRect("document element with margin", function() 
@@ -127,7 +126,6 @@ $(document).ready(function()
         rectEquals(rect, 100, 100, 100, 100);
 
         $(document).css("margin", 0);
-        cleanup();
     });
 
 
@@ -145,7 +143,6 @@ $(document).ready(function()
         rectEquals(rect, 100, 100, 100, 100);
 
         window.scrollTo(0, 0);
-        cleanup();
     });
 
     testClientRect("in element with overflow scroll", function() 
@@ -162,7 +159,6 @@ $(document).ready(function()
 
         rectEquals(rect, 250, 100, 20, 20);
 
-        cleanup();
     });
 
 });
