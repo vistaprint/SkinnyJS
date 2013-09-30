@@ -48,7 +48,7 @@ module.exports = function(grunt)
             {
                 options:
                 {
-                    urls: ["http://localhost:9001/test/jquery.modalDialog.events.unittests.html"]
+                    urls: ["test/*.unittests.html"]
                 }
             }
         },
@@ -308,6 +308,29 @@ module.exports = function(grunt)
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-jekyll");
     grunt.loadNpmTasks("grunt-mkdir");
+
+    // Wrap the qunit task
+    grunt.renameTask("qunit", "contrib-qunit");
+
+    grunt.registerTask("qunit", function(host, protocol) 
+    {
+        host = host || "localhost:9001";
+        protocol = protocol || "http";
+
+        var config = grunt.config.get("qunit");
+
+        // Turn qunit.files into urls for conrib-qunit
+        var urls = grunt.util._.map(grunt.file.expand(config.all.options.urls), function(file) 
+        {
+            return protocol + "://" + host + "/" + file;
+        });
+
+        config.all.options.urls = urls;
+
+        grunt.config.set("contrib-qunit", config);
+
+        grunt.task.run("contrib-qunit");
+    });
 
     // Custom tasks
     grunt.loadTasks("./site/_tasks");
