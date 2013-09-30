@@ -33,4 +33,9 @@ $(document).ready(function()
         equal(Date.parse("Mon, 06 Apr 2009 11:54:29 GMT"), 1239018869000);
     });
 
+    test("Ensure YYYY-MM-DD date format is supported via Date.parseISO", function()
+    {
+        equal(Date.parseISO("2014-01-30"), 1391040000000);
+    });
+
 });
