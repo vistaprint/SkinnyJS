@@ -2,6 +2,7 @@
 // TODO: Need to support stacking dialogs:
 // i.e. ?dialogs=#foo,ajax:/foo.html,iframe:/foo.html
 // TODO dialog methods should return Deferreds
+// TODO require history.js
 
 (function($) 
 {
