@@ -65,16 +65,11 @@ $.fn.clientRect = function()
             return rect;
         }
 
-        // Handles some quirks in the oldIE box model, including some bizarre behavior around the starting coordinates.
-        var body = doc.body,
-            win = getWindow( doc ),
-            clientTop  = docElem.clientTop  || body.clientTop  || 0,
-            clientLeft = docElem.clientLeft || body.clientLeft || 0,
-            scrollTop  = win.pageYOffset || $.support.boxModel && docElem.scrollTop  || body.scrollTop,
-            scrollLeft = win.pageXOffset || $.support.boxModel && docElem.scrollLeft || body.scrollLeft;
+        // Handles some quirks in the oldIE box model, including some bizarre behavior around the starting coordinates.;
+        var win = getWindow(doc);
 
-        rect.top  = box.top  + (scrollTop  - clientTop);
-        rect.left = box.left + (scrollLeft - clientLeft);
+        rect.top  = box.top  + (win.pageYOffset || docElem.scrollTop) - (docElem.clientTop  || 0);
+        rect.left = box.left + (win.pageXOffset || docElem.scrollLeft ) - (docElem.clientLeft || 0);
 
         rect.width = box.right - box.left;
         rect.height = box.bottom - box.top;
@@ -88,8 +83,8 @@ $.fn.clientRect = function()
         }
 
         rect = this.offset();
-        rect.width = this.innerWidth();
-        rect.height = this.innerHeight();
+        rect.width = this.outerWidth();
+        rect.height = this.outerHeight();
     }
 
     rect.bottom = rect.top + rect.height;

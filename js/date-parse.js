@@ -4,7 +4,7 @@
 
     // Parses the date in ISO8601 format
     // If "strict" is true Whether or not to perform a strict parse, which requires all parts of the date to be present
-    Date.parseISO8601 = function (date, strict)
+    Date.parseISO = function (date, strict)
     {
         var struct, minutesOffset = 0;
 
@@ -59,7 +59,7 @@
         if ((struct = /^\/Date\((d|-|.*)\)[\/|\\]$/.exec(date)))
         {
             var v = struct[1].split(/[-+,.]/);
-            return new Date(v[0] ? +v[0] : 0 - +v[1]);
+            return v[0] ? +v[0] : 0 - +v[1];
         }
 
         return NaN;
@@ -73,7 +73,7 @@
     {
         var timestamp;
 
-        timestamp = Date.parseISO8601(date);
+        timestamp = Date.parseISO(date);
 
         if (!isNaN(timestamp))
         {
