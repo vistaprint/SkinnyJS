@@ -120,12 +120,7 @@
 
     ModalDialog.prototype._isDeferredComplete = function(action)
     {
-        console.log("is deferred complete called");
-
         var deferred = this._getDeferred(action);
-
-        console.log("is deferred complete: " + deferred.state());
-
         return !deferred || deferred.state() != "pending";
     };
 
@@ -177,8 +172,6 @@
 
         this._finishOpenAction = function()
         {
-            console.log("_finishOpenAction: " + deferred.state());
-
             if (deferred.state() != "rejected")
             {
                 this.$bg.addClass($.modalDialog.veilClass);
@@ -741,45 +734,40 @@
         this._iframeLoadTimer = null;
 
         this.$frame = $('<iframe src="' + this.settings.url + '" name="' + this.settings._fullId + '" seamless allowtransparency="true" width="100%" style="height:' + this.settings.initialHeight + 'px;" class="dialog-frame" scrolling="no" frameborder="0" framespacing="0" />');
-        
+
         // When the iframe loads, even if its a failed status (i.e. 404), the load event will fire.
         // We expect that the dialog will call notifyReady(). If it doesn't, this timeout will
         // eventually fire, causing the open() promise to be rejected, and the dialog state to be cleaned up.
-        // this.$frame.on(
-        //     "load", 
-        //     $.proxy(function() 
-        //     { 
-        //         console.log("frame loaded!");
+        this.$frame.on(
+            "load", 
+            $.proxy(function() 
+            { 
+                // The "open" promise has already been resolved: don't continue setting a timeout.
+                if (this._isDeferredComplete("open"))
+                {
+                    return;
+                }
 
-        //         // The "open" promise has already been resolved: don't continue setting a timeout.
-        //         if (this._isDeferredComplete("open"))
-        //         {
-        //             console.log("timer was complete");
-        //             return;
-        //         }
+                // The iframe has $.modalDialog.iframeLoadTimeout milliseconds to call notifyReady() after the load event is called.
+                // Otherwise, the "open" promise will be rejected.
+                this._iframeLoadTimer = setTimeout(
+                    $.proxy(function() 
+                    { 
+                        if (this._isDeferredComplete("open"))
+                        {
+                            return;
+                        }
 
-        //         console.log("created timer");
+                        this.$frame.remove();
+                        this._resetFailed();
 
-        //         The iframe has $.modalDialog.iframeLoadTimeout milliseconds to call notifyReady() after the load event is called.
-        //         Otherwise, the "open" promise will be rejected.
-        //         this._iframeLoadTimer = setTimeout(
-        //             $.proxy(function() 
-        //             { 
-        //                 if (this._isDeferredComplete("open"))
-        //                 {
-        //                     return;
-        //                 }
+                        this._rejectDeferred("open", [{ message: "iframe load timeout for url: " + this.settings.url }]);
 
-        //                 this.$frame.remove();
-        //                 this._resetFailed();
-
-        //                 this._rejectDeferred("open", { message: "iframe load timeout for url: " + this.settings.url });
-
-        //             }, this),
-        //             $.modalDialog.iframeLoadTimeout
-        //             );
-        //     }, 
-        //     this));
+                    }, this),
+                    $.modalDialog.iframeLoadTimeout
+                    );
+            }, 
+            this));
 
         this.$content = this.$frame;
     };
@@ -869,8 +857,6 @@
 
     FramedModalDialog.prototype.notifyReady = function(hostname)
     {
-        console.log("notifyReady");
-
         // There may be a timer waiting for the iframe to load- cancel it.
         if (this._iframeLoadTimer)
         {

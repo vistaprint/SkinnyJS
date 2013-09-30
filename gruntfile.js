@@ -32,13 +32,25 @@ module.exports = function(grunt)
                 jshintrc: ".jshintrc"
             }
         },
+        connect: 
+        {
+            server: 
+            {
+                options: 
+                {
+                    port: 9001
+                }
+            }
+        },
         qunit: 
         {
-            options: 
+            all:
             {
-                "--web-security": "false"
-            },
-            all: ["test/*.html"]
+                options:
+                {
+                    urls: ["http://localhost:9001/test/jquery.modalDialog.events.unittests.html"]
+                }
+            }
         },
         docco:
         {
@@ -288,6 +300,7 @@ module.exports = function(grunt)
     grunt.loadNpmTasks("grunt-contrib-qunit");
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-concat");
+    grunt.loadNpmTasks("grunt-contrib-connect");
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-docco");
     grunt.loadNpmTasks("grunt-contrib-compress");
@@ -303,7 +316,9 @@ module.exports = function(grunt)
 
     grunt.registerTask("default", ["verify", "build"]);
 
-    grunt.registerTask("verify", ["less", "jshint", "qunit"]);
+    grunt.registerTask("test", ["connect", "qunit"]);
+
+    grunt.registerTask("verify", ["less", "jshint", "test"]);
 
     grunt.registerTask("copyDist", ["copy:distJs", "copy:distCss", "copy:distOther"]);
 
