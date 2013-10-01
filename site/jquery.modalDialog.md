@@ -180,8 +180,8 @@ $("#fruitsAndNuts").modalDialog({
 
 `$.modalDialog.create()` returns a dialog object with the following methods:
 
-* **open()**: Opens the dialog
-* **close()**: Closes the dialog
+* **open()**: Opens the dialog. Returns a promise that will be resolved when the open animation is complete.
+* **close()**: Closes the dialog. Returns a promise that will be resolved when the close animation is complete.
 * **center()**: Centers the dialog based on the current dimensions
 * **setTitle()**: Sets the title displayed in the dialog's title bar
 * **getWindow()**: Gets a reference to the window for the dialog. For an IFrame dialog, this is the content window, for node or AJAX dialogs, it is the host window. This is useful for sending messages between dialogs.
@@ -195,6 +195,26 @@ dialog.open();
  
 //close dialog
 dialog.close();
+{% endhighlight %}
+
+#### open(), close(), and promises
+open() and close() return promises. This allows chaining of actions:
+
+{% highlight javascript %}
+var dialog = $.modalDialog.create({ content: ".color-dialog" });
+dialog.open()
+    .then(function()
+    {
+        // The dialog is completely open
+
+        // Close the dialog (also returns a promise)
+        return this.close();
+    })
+    .then(function()
+    {
+        // The dialog is completely closed
+    });
+ 
 {% endhighlight %}
 
 ## Types of dialogs
@@ -454,6 +474,26 @@ $("#colorPickerLink").on("dialogcreate", function(e)
     e.dialog.onopen.add(function() { alert("opened"); });
 });
 {% endhighlight %}
+
+### Managing history (browser back/forward buttons)
+
+The dialog API has a built-in history management module. It can be enabled by calling:
+
+{% highlight javascript %}
+$.modalDialog.enableHistory();
+{% endhighlight %}
+
+When a dialog is opened, the URL is updated with a querystring parameter that encapsulates the state of the dialog. If the user hits the "back" button,
+the dialog is closed. The history module handles cases where the user refreshes, clicks forward, etc.
+
+You can override the default parameter name that the history management module uses:
+
+{% highlight javascript %}
+// This will make URLs look like: /url.html?someAlternateParameterName={opaque parameters}
+$.modalDialog.enableHistory("someAlternateParameterName");
+{% endhighlight %}
+
+The history management module is disabled by default to accommodate more advanced applications that wish to manage history themselves (i.e. using a router in Backbone.js).
 
 ### Skinning
 

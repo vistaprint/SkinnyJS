@@ -3,115 +3,106 @@ QUnit.config.testTimeout = 1000000;
 
 $(document).ready(function()
 {
-    function cleanup()
-    {
-        // var dialog = $.modalDialog.getCurrent();
-        // if (dialog)
-        // {
-        //     stop();
-
-        //     dialog
-        //         .close()
-        //         .then(function()
-        //         {
-        //             start();
-        //         },
-        //         function()
-        //         {
-        //             throw new Error("Error cleaning up");
-        //         });
-        // }
-    }
+    var DIALOG_PARAM_NAME = "testdialogparam";
 
     $.modalDialog.iframeLoadTimeout = 1000;
     $.modalDialog.animationDuration = 100;
+    $.modalDialog.enableHistory(DIALOG_PARAM_NAME);
 
-    $.modalDialog.enableHistory();
+    module("jquery.modalDialog.history");
 
-    module(
-        "jquery.modalDialog.history",
-        {
-            setup: cleanup,
-            teardown: cleanup
-        });
-
-    asyncTest("Ensure opening a node dialog modifies the URL", 8, function()
+    function testDialogHistoryManagement(dialogType, dialogOptions)
     {
-        var dialog = $.modalDialog.create({ content: "#simpleDialog" });
+        asyncTest("Ensure opening and closing a dialog modifies the URL and history", 8, function()
+        {
+            var dialog = $.modalDialog.create(dialogOptions);
 
-        dialog
-            .open()
-            .then(function()
-            {
-                // The dialog was opened. There should be dialog parameters in the URL.
-
-                var qs = $.currentQueryString();
-                equal(qs.dialogType, "node", "The dialog is open: there should be a dialogType in the URL");
-                equal(qs.dialogId, "#simpleDialog", "The dialog is open: there should be a dialogId in the URL");
-
-                var deferred = $.Deferred();
-                var closeHandler = function()
+            dialog
+                .open()
+                .then(function()
                 {
-                    setTimeout(deferred.resolve, 10);
-                    dialog.onclose.remove(closeHandler);
-                };
+                    equal(dialog.isOpen(), true, "Ensure dialog is closed");
 
-                dialog.onclose.add(closeHandler);
+                    // The dialog was opened. There should be dialog parameters in the URL.
 
-                window.history.back();
+                    var qs = $.currentQueryString();
+                    equal(typeof qs[DIALOG_PARAM_NAME], "string", "The dialog is open: there should be dialog parameters in the URL");
 
-                return deferred;
-            })
-            .then(function()
-            {
-                // We navigated back. There should not be any dialog parameters in the URL.
+                    var deferred = $.Deferred();
+                    var closeHandler = function()
+                    {
+                        setTimeout(deferred.resolve, 10);
+                        dialog.onclose.remove(closeHandler);
+                    };
 
-                var qs = $.currentQueryString();
-                equal(typeof qs.dialogType, "undefined", "The dialog is closed: there should be no dialogType in the URL");
-                equal(typeof qs.dialogId, "undefined", "The dialog is closed: there should be no dialogId in the URL");
+                    dialog.onclose.add(closeHandler);
 
-                // TODO verify dialog is actually closed
+                    window.history.back();
 
-                var deferred = $.Deferred();
-                var openHandler = function()
+                    return deferred;
+                })
+                .then(function()
                 {
-                    setTimeout(deferred.resolve, 10);
-                    dialog.onopen.remove(openHandler);
-                };
+                    // We navigated back. There should not be any dialog parameters in the URL.
 
-                dialog.onopen.add(openHandler);
+                    var qs = $.currentQueryString();
+                    equal(typeof qs[DIALOG_PARAM_NAME], "undefined", "The dialog is closed: there should not be dialog parameters in the URL");
 
-                window.history.forward();
+                    equal(dialog.isOpen(), false, "Ensure dialog is closed");
 
-                return deferred;
-            })
-            .then(function()
-            {
-                // We navigated forward. The dialog parameters should be back in the URL.
+                    var deferred = $.Deferred();
+                    var openHandler = function()
+                    {
+                        setTimeout(deferred.resolve, 10);
+                        dialog.onopen.remove(openHandler);
+                    };
 
-                var qs = $.currentQueryString();
-                equal(qs.dialogType, "node", "The dialog is open: there should be a dialogType in the URL");
-                equal(qs.dialogId, "#simpleDialog", "The dialog is open: there should be a dialogId in the URL");
+                    dialog.onopen.add(openHandler);
 
-                return dialog.close();
-            })
-            .then(function()
-            {
-                // TODO: Investigate why delay is required. Is it because the promise is being resolved before all close handlers are fired?
-                return $.timeout(100);
-            })
-            .then(function()
-            {
-                // We manually closed the dialog. The parameters should no longer be in the URL.
+                    window.history.forward();
 
-                var qs = $.currentQueryString();
-                equal(typeof qs.dialogType, "undefined", "The dialog is closed: there should be no dialogType in the URL");
-                equal(typeof qs.dialogId, "undefined", "The dialog is closed: there should be no dialogId in the URL");
+                    return deferred;
+                })
+                .then(function()
+                {
+                    // We navigated forward. The dialog parameters should be back in the URL.
 
-                start();
-            });
-    });
+                    var qs = $.currentQueryString();
+                    equal(typeof qs[DIALOG_PARAM_NAME], "string", "The dialog is open: there should be dialog parameters in the URL");
 
+                    equal(dialog.isOpen(), true, "Ensure dialog is open");
+
+                    return dialog.close();
+                })
+                .then(function()
+                {
+                    // Calling dialog.close() invokes history.back(), which is asynchronous (in most browsers).
+                    // We need a timeout to wait until the URL is really updated.
+
+                    // TODO it would be great to have a way to tell when the URL was really updated:
+                    // wrap up an API that would return a promise from history.back()
+
+                    return $.timeout(100);
+                })
+                .then(function()
+                {
+                    equal(dialog.isOpen(), false, "Ensure dialog is closed");
+
+                    // We manually closed the dialog. The parameters should no longer be in the URL.
+
+                    var qs = $.currentQueryString();
+                    equal(typeof qs[DIALOG_PARAM_NAME], "undefined", "The dialog is closed: there should not be dialog parameters in the URL");
+
+                    start();
+                });
+        });
+    }
+
+    testDialogHistoryManagement("node", { content: "#simpleDialog" });
+
+    testDialogHistoryManagement("iframe", { url: "content/jquery.modalDialog.iframeContent.html" });
+
+    testDialogHistoryManagement("ajax", { url: "content/jquery.modalDialog.ajaxContent.html", ajax: true });
 });
 
 window.onerror = function(msg)

@@ -168,7 +168,8 @@ module.exports = function(grunt)
                     "js/jquery.modalDialog.getSettings.js",
                     "js/jquery.modalDialog.js",
                     "js/jquery.modalDialog.deviceFixes.js",
-                    "js/jquery.modalDialog.unobtrusive.js"
+                    "js/jquery.modalDialog.unobtrusive.js",
+                    "js/jquery.modalDialog.history.js"
                 ],
                 dest: "dist/jquery.modalDialog.js"
             },

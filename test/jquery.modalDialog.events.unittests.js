@@ -87,50 +87,100 @@ $(document).ready(function()
             });
     });
 
-    asyncTest("Ensure node dialog open fires lifecycle events", 8, function()
+    var ensureLifecycleEvents = function(dialogType, dialogSettings)
     {
-        var dialog = $.modalDialog.create({ content: "#simpleDialog" });
-        var phase = 0;
-
-        dialog.onbeforeopen.add(function()
+        asyncTest("Ensure " + dialogType + " dialog fires lifecycle events", 16, function()
         {
-            equal(this, dialog, "Current dialog refs match");
-            equal(phase, 0);
-            phase++;
-        });
+            var dialog = $.modalDialog.create(dialogSettings);
+            var phase = 0;
 
-        dialog.onopen.add(function()
-        {
-            equal(this, dialog, "Current dialog refs match");
-            equal(phase, 1);
-            phase++;
-        });
-
-        dialog.onbeforeclose.add(function()
-        {
-            equal(this, dialog, "Current dialog refs match");
-            equal(phase, 2);
-            phase++;
-        });
-
-        dialog.onclose.add(function()
-        {
-            equal(this, dialog, "Current dialog refs match");
-            equal(phase, 3);
-            phase++;
-        });
-
-        dialog
-            .open()
-            .then(function()
+            dialog.onbeforeopen.add(function()
             {
-                return dialog.close();
-            })
-            .then(function()
-            {
-                start();
+                equal(this, dialog, "Current dialog refs match: beforeopen");
+                equal(phase, 0, "beforeopen");
+                phase++;
             });
-    });
+
+            var beforeOpenHandler = function()
+            {
+                equal(this, dialog, "Current dialog refs match: global beforeopen");
+                equal(phase, 1, "global beforeopen");
+                phase++;
+            };
+
+            $.modalDialog.onbeforeopen.add(beforeOpenHandler);
+
+            dialog.onopen.add(function()
+            {
+                equal(this, dialog, "Current dialog refs match: open");
+                equal(phase, 2, "open");
+                phase++;
+            });
+
+            var openHandler = function()
+            {
+                equal(this, dialog, "Current dialog refs match: global open");
+                equal(phase, 3, "global open");
+                phase++;
+            };
+
+            $.modalDialog.onopen.add(openHandler);
+
+            dialog.onbeforeclose.add(function()
+            {
+                equal(this, dialog, "Current dialog refs match: beforeclose");
+                equal(phase, 4, "beforeclose");
+                phase++;
+            });
+
+            var beforeCloseHandler = function()
+            {
+                equal(this, dialog, "Current dialog refs match: global beforeclose");
+                equal(phase, 5, "global beforeclose");
+                phase++;
+            };
+
+            $.modalDialog.onbeforeclose.add(beforeCloseHandler);
+
+            dialog.onclose.add(function()
+            {
+                equal(this, dialog, "Current dialog refs match: close");
+                equal(phase, 6, "close");
+                phase++;
+            });
+
+            var closeHandler = function()
+            {
+                equal(this, dialog, "Current dialog refs match: global close");
+                equal(phase, 7, "global close");
+                phase++;
+            };
+
+            $.modalDialog.onclose.add(closeHandler);
+
+            dialog
+                .open()
+                .then(function()
+                {
+                    return dialog.close();
+                })
+                .then(function()
+                {
+                    $.modalDialog.onbeforeopen.remove(beforeOpenHandler);
+                    $.modalDialog.onopen.remove(openHandler);
+                    $.modalDialog.onbeforeclose.remove(beforeCloseHandler);
+                    $.modalDialog.onclose.remove(closeHandler);
+
+                    start();
+                });
+        });
+    };
+
+    ensureLifecycleEvents("node", { content: "#simpleDialog" });
+
+    ensureLifecycleEvents("iframe", { url: "content/jquery.modalDialog.iframeContent.html" });
+
+    ensureLifecycleEvents("ajax", { url: "content/jquery.modalDialog.ajaxContent.html", ajax: true });
 
     test("Ensure node dialog throws exception when passed non-existent element", function()
     {
