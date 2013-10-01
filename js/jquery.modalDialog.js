@@ -1,4 +1,3 @@
-// TODO finish success/failed callbacks for open() and close() methods
 // TODO what to do with preventEventBubbling?
 
 (function ($)
