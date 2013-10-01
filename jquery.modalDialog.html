@@ -303,9 +303,9 @@
 <p><code>$.modalDialog.create()</code> returns a dialog object with the following methods:</p>
 
 <ul>
-<li><strong>open()</strong>: Opens the dialog</li>
+<li><strong>open()</strong>: Opens the dialog. Returns a promise that will be resolved when the open animation is complete.</li>
 
-<li><strong>close()</strong>: Closes the dialog</li>
+<li><strong>close()</strong>: Closes the dialog. Returns a promise that will be resolved when the close animation is complete.</li>
 
 <li><strong>center()</strong>: Centers the dialog based on the current dimensions</li>
 
@@ -322,6 +322,24 @@
  
 <span class='c1'>//close dialog</span>
 <span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>close</span><span class='p'>();</span>
+</code></pre></div>
+<h4 id='open_close_and_promises'>open(), close(), and promises</h4>
+
+<p>open() and close() return promises. This allows chaining of actions:</p>
+<div class='highlight'><pre><code class='javascript'><span class='kd'>var</span> <span class='nx'>dialog</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>({</span> <span class='nx'>content</span><span class='o'>:</span> <span class='s2'>&quot;.color-dialog&quot;</span> <span class='p'>});</span>
+<span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>open</span><span class='p'>()</span>
+    <span class='p'>.</span><span class='nx'>then</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span>
+    <span class='p'>{</span>
+        <span class='c1'>// The dialog is completely open</span>
+
+        <span class='c1'>// Close the dialog (also returns a promise)</span>
+        <span class='k'>return</span> <span class='k'>this</span><span class='p'>.</span><span class='nx'>close</span><span class='p'>();</span>
+    <span class='p'>})</span>
+    <span class='p'>.</span><span class='nx'>then</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span>
+    <span class='p'>{</span>
+        <span class='c1'>// The dialog is completely closed</span>
+    <span class='p'>});</span>
+ 
 </code></pre></div>
 <h2 id='types_of_dialogs'>Types of dialogs</h2>
 
@@ -544,6 +562,19 @@
     <span class='nx'>e</span><span class='p'>.</span><span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>onopen</span><span class='p'>.</span><span class='nx'>add</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span> <span class='nx'>alert</span><span class='p'>(</span><span class='s2'>&quot;opened&quot;</span><span class='p'>);</span> <span class='p'>});</span>
 <span class='p'>});</span>
 </code></pre></div>
+<h3 id='managing_history_browser_backforward_buttons'>Managing history (browser back/forward buttons)</h3>
+
+<p>The dialog API has a built-in history management module. It can be enabled by calling:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>enableHistory</span><span class='p'>();</span>
+</code></pre></div>
+<p>When a dialog is opened, the URL is updated with a querystring parameter that encapsulates the state of the dialog. If the user hits the &#8220;back&#8221; button, the dialog is closed. The history module handles cases where the user refreshes, clicks forward, etc.</p>
+
+<p>You can override the default parameter name that the history management module uses:</p>
+<div class='highlight'><pre><code class='javascript'><span class='c1'>// This will make URLs look like: /url.html?someAlternateParameterName={opaque parameters}</span>
+<span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>enableHistory</span><span class='p'>(</span><span class='s2'>&quot;someAlternateParameterName&quot;</span><span class='p'>);</span>
+</code></pre></div>
+<p>The history management module is disabled by default to accommodate more advanced applications that wish to manage history themselves (i.e. using a router in Backbone.js).</p>
+
 <h3 id='skinning'>Skinning</h3>
 
 <p>To create a skin (theme) for a dialog, you simply create a CSS class. Then you can assign the skin using the <strong>data-dialog-skin</strong> attribute or settings option.</p>
