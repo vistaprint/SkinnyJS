@@ -32,8 +32,25 @@ module.exports = function(grunt)
                 jshintrc: ".jshintrc"
             }
         },
-        qunit: {
-          all: ["test/*.html"]
+        connect: 
+        {
+            server: 
+            {
+                options: 
+                {
+                    port: 9001
+                }
+            }
+        },
+        qunit: 
+        {
+            all:
+            {
+                options:
+                {
+                    urls: ["test/*.unittests.html"]
+                }
+            }
         },
         docco:
         {
@@ -283,6 +300,7 @@ module.exports = function(grunt)
     grunt.loadNpmTasks("grunt-contrib-qunit");
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-concat");
+    grunt.loadNpmTasks("grunt-contrib-connect");
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-docco");
     grunt.loadNpmTasks("grunt-contrib-compress");
@@ -291,6 +309,29 @@ module.exports = function(grunt)
     grunt.loadNpmTasks("grunt-jekyll");
     grunt.loadNpmTasks("grunt-mkdir");
 
+    // Wrap the qunit task
+    grunt.renameTask("qunit", "contrib-qunit");
+
+    grunt.registerTask("qunit", function(host, protocol) 
+    {
+        host = host || "localhost:9001";
+        protocol = protocol || "http";
+
+        var config = grunt.config.get("qunit");
+
+        // Turn qunit.files into urls for conrib-qunit
+        var urls = grunt.util._.map(grunt.file.expand(config.all.options.urls), function(file) 
+        {
+            return protocol + "://" + host + "/" + file;
+        });
+
+        config.all.options.urls = urls;
+
+        grunt.config.set("contrib-qunit", config);
+
+        grunt.task.run("contrib-qunit");
+    });
+
     // Custom tasks
     grunt.loadTasks("./site/_tasks");
 
@@ -298,7 +339,9 @@ module.exports = function(grunt)
 
     grunt.registerTask("default", ["verify", "build"]);
 
-    grunt.registerTask("verify", ["jshint", "qunit"]);
+    grunt.registerTask("test", ["connect", "qunit"]);
+
+    grunt.registerTask("verify", ["less", "jshint", "test"]);
 
     grunt.registerTask("copyDist", ["copy:distJs", "copy:distCss", "copy:distOther"]);
 

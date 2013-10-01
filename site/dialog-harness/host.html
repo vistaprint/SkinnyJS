@@ -9,6 +9,13 @@
   <link rel="stylesheet" href="../stylesheets/modal-dialogs-demo.css" />
 
   <script type="text/javascript" src="../../dependencies/jquery.js"></script>
+
+  <script type="text/javascript" src="../../dependencies/history.adapter.jquery.js"></script>
+  <script type="text/javascript" src="../../dependencies/history.html4.js"></script>
+  <script type="text/javascript" src="../../dependencies/history.js"></script>
+  
+  
+
   <script type="text/javascript" src="../../js/jquery.delimitedString.js" /></script>
   <script type="text/javascript" src="../../js/jquery.queryString.js" /></script>
   <script type="text/javascript" src="../../js/jquery.postMessage.js" /></script>
@@ -24,6 +31,8 @@
   <script type="text/javascript" src="../../js/jquery.modalDialog.js"></script>
   <script type="text/javascript" src="../../js/jquery.modalDialog.deviceFixes.js"></script>
   <script type="text/javascript" src="../../js/jquery.modalDialog.unobtrusive.js"></script>
+
+  <script type="text/javascript" src="../../js/jquery.modalDialog.history.js"></script>
 
   <title>skinny.js</title>
   <meta name="description" content="Skinny JS">
@@ -113,7 +122,11 @@
         alert(e.data);
     });
 
-    $(function() { window.scrollTo(0, 1); });
+    $(function() 
+    { 
+        window.scrollTo(0, 1); 
+        $.modalDialog.enableHistory();
+    });
   </script>
 </body>
 </html>

@@ -24,11 +24,14 @@
     {
         "jQuery": true,
         "module": true,
+        "QUnit": true,
         "ok": true,
         "equal": true,
         "test": true,
         "asyncTest": true,
         "start": true,
+        "stop": true,
+        "throws": true,
         "$": true
     }
 }
