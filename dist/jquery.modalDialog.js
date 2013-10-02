@@ -145,7 +145,6 @@ if (!Object.keys)
     };
 
 })(jQuery);
-// TODO finish success/failed callbacks for open() and close() methods
 // TODO what to do with preventEventBubbling?
 
 (function ($)
@@ -328,8 +327,13 @@ if (!Object.keys)
             {
                 this.$bg.addClass($.modalDialog.veilClass);
 
-                var initialPos = this._getDefaultPosition(),
-                    initialTop = initialPos.top;
+                // Set the width first so that heights can be calculated based
+                // on the layout for that width.
+                var widthData = this._getDefaultWidthData();
+                this.$container.css({ width: widthData.width });
+
+                var initialPos = this._getDefaultPosition();
+                var initialTop = initialPos.top;
                 initialPos.top = STARTING_TOP; // we're going to animate this to slide down
                 this.$container.css(initialPos);
 
@@ -610,19 +614,32 @@ if (!Object.keys)
         return this._chromeHeight;
     };
 
+    ModalDialog.prototype._getDefaultWidthData = function()
+    {
+        var $win = $(window);
+        var windowWidth = this.parent.is("body") ? (window.innerWidth || $win.width()) : this.parent.width();
+
+        return {
+            windowWidth: windowWidth,
+            width: Math.min(windowWidth - (MARGIN * 2), this.settings.maxWidth)
+        };
+    };
+
     ModalDialog.prototype._getDefaultPosition = function(contentHeight)
     {
+        var widthData = this._getDefaultWidthData();
+
+        var pos = 
+        {
+            width: widthData.width,
+            top: $(document).scrollTop() + MARGIN
+        };
+
+        pos.left = (widthData.windowWidth - pos.width) / 2;
+
         var isSmallScreen = $.modalDialog.isSmallScreen();
 
-        var $win = $(window),
-            windowWidth = this.parent.is("body") ? window.innerWidth || $win.width() : this.parent.width(),
-            pos = {};
-
-        pos.width = Math.min(windowWidth - (MARGIN * 2), this.settings.maxWidth);
-        pos.top = $(document).scrollTop() + MARGIN;
-        pos.left = (windowWidth - pos.width) / 2;
-
-        if (_ua.ie7 || isSmallScreen) 
+        if (_ua.ie7 || isSmallScreen) // TODO why IE7?
         {
             pos.top = MARGIN;
         }
