@@ -1,5 +1,6 @@
 /**
- * jquery.timeout.js
+ * jquery.timeout.js 
+ * v1.1.0
  *
  * Copyright (c) 2011 Thomas Kemmer <tkemmer@computer.org>
  *

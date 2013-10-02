@@ -1,4 +1,3 @@
-// TODO finish success/failed callbacks for open() and close() methods
 // TODO what to do with preventEventBubbling?
 
 (function ($)
@@ -124,6 +123,11 @@
         return !deferred || deferred.state() != "pending";
     };
 
+    ModalDialog.prototype.isOpen = function()
+    {
+        return !!this._open;
+    };
+
     // Opens the dialog
     ModalDialog.prototype.open = function()
     {
@@ -176,8 +180,13 @@
             {
                 this.$bg.addClass($.modalDialog.veilClass);
 
-                var initialPos = this._getDefaultPosition(),
-                    initialTop = initialPos.top;
+                // Set the width first so that heights can be calculated based
+                // on the layout for that width.
+                var widthData = this._getDefaultWidthData();
+                this.$container.css({ width: widthData.width });
+
+                var initialPos = this._getDefaultPosition();
+                var initialTop = initialPos.top;
                 initialPos.top = STARTING_TOP; // we're going to animate this to slide down
                 this.$container.css(initialPos);
 
@@ -342,16 +351,25 @@
             delete _fullIdMap[this.settings._fullId];
         }
 
-        this.onclose.fire(e);
-
-        $.modalDialog.onclose.fire(e, this);
-
-        this._resolveDeferred("close");
-
         if ($.modalDialog.isSmallScreen() && this.triggerWindowResize)
         {
             $(window).trigger("resize");
         }
+
+        // Fire events on a timeout so that the event loop
+        // has a chance to process DOM changes. 
+        // Without this, close handlers can't re-open the same iframe dialog:
+        // the iframe isn't recognized as a new element.
+        setTimeout(
+            $.proxy(function()
+            {
+                this.onclose.fire(e);
+
+                $.modalDialog.onclose.fire(e, this);
+
+                this._resolveDeferred("close");
+            }, this), 
+            0);
     };
 
     ModalDialog.prototype._destroy = function()
@@ -392,8 +410,8 @@
 
             this.$el = $([this.$bg[0], this.$container[0]]).addClass('dialog-skin-' + this.settings.skin);
 
-            // Figure out where to put the dialog DOM. In jQuery mobile, the root element needs to be specific.
-            // It's not for us to fix developer problems, if the container doesn't exist, this will break
+            // HACK: Support jQuery mobile. In jQuery mobile, the root element needs to be specific.
+            // TODO: Move this to a jQuery mobile fixes specific module
             this.parent.append(this.$bg, this.$container);
 
             if (!this.parent.is("body") && !this.parent.hasClass("ui-page-active")) {
@@ -449,19 +467,32 @@
         return this._chromeHeight;
     };
 
+    ModalDialog.prototype._getDefaultWidthData = function()
+    {
+        var $win = $(window);
+        var windowWidth = this.parent.is("body") ? (window.innerWidth || $win.width()) : this.parent.width();
+
+        return {
+            windowWidth: windowWidth,
+            width: Math.min(windowWidth - (MARGIN * 2), this.settings.maxWidth)
+        };
+    };
+
     ModalDialog.prototype._getDefaultPosition = function(contentHeight)
     {
+        var widthData = this._getDefaultWidthData();
+
+        var pos = 
+        {
+            width: widthData.width,
+            top: $(document).scrollTop() + MARGIN
+        };
+
+        pos.left = (widthData.windowWidth - pos.width) / 2;
+
         var isSmallScreen = $.modalDialog.isSmallScreen();
 
-        var $win = $(window),
-            windowWidth = this.parent.is("body") ? window.innerWidth || $win.width() : this.parent.width(),
-            pos = {};
-
-        pos.width = Math.min(windowWidth - (MARGIN * 2), this.settings.maxWidth);
-        pos.top = $(document).scrollTop() + MARGIN;
-        pos.left = (windowWidth - pos.width) / 2;
-
-        if (_ua.ie7 || isSmallScreen) 
+        if (_ua.ie7 || isSmallScreen) // TODO why IE7?
         {
             pos.top = MARGIN;
         }
@@ -733,7 +764,15 @@
 
         this._iframeLoadTimer = null;
 
-        this.$frame = $('<iframe src="' + this.settings.url + '" name="' + this.settings._fullId + '" seamless allowtransparency="true" width="100%" style="height:' + this.settings.initialHeight + 'px;" class="dialog-frame" scrolling="no" frameborder="0" framespacing="0" />');
+        if (this.$frame && this.$frame.length > 0)
+        {
+            this.$frame.remove();
+        }
+
+        this.$frame = $('<iframe src="' + this.settings.url + 
+            '" name="' + this.settings._fullId + 
+            '" seamless allowtransparency="true" width="100%" style="height:' + 
+            this.settings.initialHeight + 'px;" class="dialog-frame" scrolling="no" frameborder="0" framespacing="0"></iframe>');
 
         // When the iframe loads, even if its a failed status (i.e. 404), the load event will fire.
         // We expect that the dialog will call notifyReady(). If it doesn't, this timeout will
@@ -776,6 +815,7 @@
     {
         this._buildContent();
 
+        // TODO Need to somehow notify the dialog content that it should fire notifyReady
         this.$contentContainer.append(this.$content);
     };
 
@@ -1081,11 +1121,15 @@
 
         var dialog = getDialog(settings._fullId);
 
+        // Validate that there isn't an existing dialog open using the same content
         if (!dialog && settings.content)
         {
-            dialog = $(settings.content).modalDialogInstance();
+            var existingDialog = $(settings.content).modalDialogInstance();
 
-            if (dialog && settings._fullId && dialog.settings._fullId !== settings._fullId && dialog._open)
+            if (existingDialog && 
+                settings._fullId && 
+                existingDialog.settings._fullId !== settings._fullId && 
+                existingDialog.isOpen())
             {
                 throw new Error("An attempt was made to create a dialog with a content node which is already assigned to another open dialog.");
             }
@@ -1137,6 +1181,50 @@
     $.modalDialog.getCurrent = function()
     {
         return _dialogStack.length > 0 ? _dialogStack[_dialogStack.length-1] : null;
+    };
+
+    // Gets an existing dialog if it's settings match the specified setting's content node or URL
+    $.modalDialog.getExisting = function(settings)
+    {
+        // Supresses warnings about using !! to coerce a falsy value to boolean
+        /* jshint -W018 */
+
+        var $content = $(settings.content);
+        var isMatch;
+
+        // Match a node dialog
+        if ($content && $content.length)
+        {
+            isMatch = function(existingSettings)
+            {
+                return existingSettings.content && 
+                    $(existingSettings.content)[0] === $content[0];
+            };
+        }
+        // match an iframe or ajax dialog
+        else if (settings.url)
+        {
+            isMatch = function(existingSettings)
+            {
+                return existingSettings.url && 
+                    existingSettings.url === settings.url && 
+                    !!existingSettings.ajax === !!settings.ajax;
+            };
+        }
+
+        if (isMatch)
+        {
+            for (var key in _fullIdMap)
+            {
+                var dialog = _fullIdMap[key];
+                if (isMatch(dialog.settings))
+                {
+                    return dialog;
+                }
+            }
+        }
+
+        return null;
     };
 
     // Global events (not associated with an instance)

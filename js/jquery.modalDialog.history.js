@@ -1,60 +1,109 @@
 /* globals History */
 // TODO: Need to support stacking dialogs:
 // i.e. ?dialogs=#foo,ajax:/foo.html,iframe:/foo.html
-// TODO dialog methods should return Deferreds
 // TODO require history.js
 
 (function($) 
 {
-    $.modalDialog.enableHistory = function()
+    var DEFAULT_DIALOG_PARAM_NAME = "sdialogid";
+    var _dialogParamName;
+
+    // Enables the history plugin, and returns a promise which
+    // resolves when either the dialog specified in the URL is opened,
+    // or if there is no dialog specified, immediately
+    $.modalDialog.enableHistory = function(dialogParamName)
     {
-        updateFromUrl(function()
-        {
-            $.modalDialog.onopen.add(openHandler);
-            $.modalDialog.onclose.add(closeHandler);
+        _dialogParamName = dialogParamName || DEFAULT_DIALOG_PARAM_NAME;
 
-            History.pushState(null, null, document.location.href);
+        var deferred = new $.Deferred();
 
-            History.Adapter.bind(window, "statechange", popstateHandler);
-        });
+        updateFromUrl()
+            .then(function()
+            {
+                $.modalDialog.onopen.add(openHandler);
+                $.modalDialog.onclose.add(closeHandler);
+
+                History.pushState(null, null, document.location.href);
+
+                History.Adapter.bind(window, "statechange", popstateHandler);
+
+                deferred.resolve();
+            });
+
+        return deferred;
     };
 
     var _pageIsAtInitialState = true;
     var _stateAlreadyProcessed = false;
     var _disableHandlers = false;
 
+    var parseDialogParams = function(data)
+    {
+        if (!data)
+        {
+            return null;
+        }
+
+        var delimPos = data.indexOf(",");
+
+        if (delimPos < 0)
+        {
+            return null;
+        }
+
+        return {
+            dialogType: data.substr(0, delimPos),
+            dialogId: data.substr(delimPos + 1)
+        };
+    };
+
+    var encodeDialogParams = function(dialogType, dialogId)
+    {
+        return dialogType + "," + dialogId;
+    };
+
+    // Handler for dialogs opening
     var openHandler = function()
     {
+        // Hook to ensure the history handler doesn't run infinitely
+        // when the dialog was opened by the history plugin itself
         if (_disableHandlers)
         {
             return;
         }
 
-        var qs = {};
+        // Build a querystring to encode the open state of the dialog
 
-        qs.dialogId = this.settings.content ? "#" + $(this.settings.content).prop("id") : null;
-        if (!qs.dialogId && this.settings.url)
+        var dialogType = "node";
+
+        // Get the ID of the selected element (for node dialogs)
+        var dialogId = this.settings.content ? "#" + $(this.settings.content).prop("id") : null;
+
+        // If its not a node dialog, use the URL as the ID
+        if (!dialogId && this.settings.url)
         {
-            qs.dialogType = this.settings.ajax ? "ajax" : "iframe";
-            qs.dialogId = this.settings.url;
-        }
-        else
-        {
-            qs.dialogType = "node";
+            dialogType = this.settings.ajax ? "ajax" : "iframe";
+            dialogId = this.settings.url;
         }
 
-        var currentQs = $.currentQueryString();
+        var qs = $.currentQueryString();
+        qs[_dialogParamName] = encodeDialogParams(dialogType, dialogId);
 
-        $.extend(currentQs, qs);
-        var url = $.appendQueryString(document.location.pathname, currentQs);
+        var url = $.appendQueryString(document.location.pathname, qs);
 
+        // Hook to notify the popstate handler that this URL change was triggered internally,
+        // and the dialog is already open, so it shouldn't do any more work.
         _stateAlreadyProcessed = true;
 
+        // Update the URL
         History.pushState(null, null, url);
 
+        // Mark the page as not in its initial state so the close handler will know if
+        // it should add a history entry when closing dialogs
         _pageIsAtInitialState = false;
     };
 
+    // Handler which fires when dialogs are closed
     var closeHandler = function()
     {
         if (_disableHandlers)
@@ -62,11 +111,12 @@
             return;
         }
 
+        // If the page is in its initial state (just loaded), then closing a dialog should
+        // create a new history entry so the back button will open the dialog again.
         if (_pageIsAtInitialState)
         {
             var qs = $.currentQueryString();
-            delete qs.dialogId;
-            delete qs.dialogType;
+            delete qs[_dialogParamName];
 
             var url = $.appendQueryString(document.location.pathname, qs);
 
@@ -74,14 +124,19 @@
         }
         else
         {
+            // If the page isn't in its initial state, then closing a dialog should go back
+            // one entry in history.
             History.back();
         }
 
         _pageIsAtInitialState = false;
     };
 
+    // Looks for changes in the URL and opens or closes dialogs accordingly
     var popstateHandler = function()
     {
+        // If the history plugin triggered the URL change itself,
+        // then the UI has been updated already, and we shouldn't update anything.
         if (_stateAlreadyProcessed)
         {
             _stateAlreadyProcessed = false;
@@ -91,25 +146,27 @@
         updateFromUrl();
     };
 
-    var updateFromUrl = function(callback)
+    var updateFromUrl = function()
     {
-        callback = callback || $.noop;
+        var deferred = new $.Deferred();
         var settings;
-
         var qs = $.currentQueryString();
+        var dialogParams = parseDialogParams(qs[_dialogParamName]);
 
-        if (qs.dialogId)
+        // If the URL is for a dialog, prepare to open the dialog
+        // Build a dialog settings object
+        if (dialogParams)
         {
-            if (qs.dialogType == "iframe")
+            if (dialogParams.dialogType == "iframe")
             {
-                settings = { url: qs.dialogId };
+                settings = { url: dialogParams.dialogId };
             }
-            else if (qs.dialogType == "ajax")
+            else if (dialogParams.dialogType == "ajax")
             {
                 settings = 
                 { 
                     ajax: true,
-                    url: qs.dialogId
+                    url: dialogParams.dialogId
                 };
             }
             else
@@ -117,7 +174,7 @@
                 var $content;
                 try
                 {
-                    $content = $(qs.dialogId);
+                    $content = $(dialogParams.dialogId);
                 }
                 catch(ex)
                 {}
@@ -132,49 +189,52 @@
 
         if (settings)
         {
-            var dialog = $.modalDialog.create(settings);
-            dialog.onopen.add(function() 
-                { 
-                    var callbackWrapper = function() 
-                    {
-                        callback();
-                        dialog.onopen.remove(callbackWrapper);
-                        _disableHandlers = false;
-                    };
+            // Try to reuse an existing, matching dialog if possible
+            var dialog = $.modalDialog.getExisting(settings);
 
-                    setTimeout(callbackWrapper, 0); 
-
-                });
+            // If it doesn't exist, create a new one
+            if (!dialog)
+            {
+                dialog = $.modalDialog.create(settings);
+            }
 
             _disableHandlers = true;
-            dialog.open();
+
+            dialog.open()
+                .then(function()
+                {
+                    setTimeout(function()
+                    {
+                        deferred.resolve();
+                        _disableHandlers = false;
+                    },
+                    0);
+                });
         }
         else
         {
             var currentDialog = $.modalDialog.getCurrent();
             if (currentDialog)
             {
-                currentDialog.onclose.add(function() 
-                { 
-                    var callbackWrapper = function() 
-                    {
-                        callback();
-                        currentDialog.onopen.remove(callbackWrapper);
-                        _disableHandlers = false;
-                    };
-
-                    setTimeout(callbackWrapper, 0); 
-
-                });
-
                 _disableHandlers = true;
-                currentDialog.close();
+                currentDialog.close()
+                    .then(function()
+                    {
+                        setTimeout(function() 
+                        {
+                            deferred.resolve();
+                            _disableHandlers = false;
+                        }, 
+                        0); 
+                    });
             }
             else
             {
-                callback();
+                deferred.resolve();
             }
         }
+
+        return deferred;
     };
 
 })(jQuery);
