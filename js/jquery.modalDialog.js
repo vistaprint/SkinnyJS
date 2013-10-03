@@ -238,7 +238,7 @@
 
         this._finishOpen();
 
-        return deferred;
+        return deferred.promise();
     };
 
     ModalDialog.prototype._finishOpen = function()
@@ -315,7 +315,7 @@
             $(window).off("orientationchange resize", this._orientationchange);
         }
 
-        return deferred;
+        return deferred.promise();
     };
 
     ModalDialog.prototype._close = function(e)
@@ -985,7 +985,7 @@
             ModalDialog.prototype._finishOpen.call(this);
         }
 
-        return deferred;
+        return deferred.promise();
     };
 
     AjaxModalDialog.prototype._finishOpen = function()
