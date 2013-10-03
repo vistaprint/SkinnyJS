@@ -157,7 +157,13 @@
             // No selector was specified. Load all scripts on the page, as long as they haven't been loaded before.
             var fragment = $.buildFragment([responseText], context, scripts);
 
-            $target = fragment.fragment || fragment;
+            fragment = fragment.fragment || fragment;
+            
+            var $fragment = $(fragment.childNodes);
+            $fragment.filter("title").remove();
+            $fragment.filter("meta").remove();
+
+            $target = fragment;
         }
 
         if (scripts.length) 
