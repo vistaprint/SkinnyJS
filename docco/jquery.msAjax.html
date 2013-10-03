@@ -125,14 +125,6 @@ Example of a full ISO8601 date:  "2013-08-07T21:40:05.121+06:00"</p>            
             <span class="nx">converters</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;text json&quot;</span><span class="o">:</span> <span class="nx">$</span><span class="p">.</span><span class="nx">parseMsJSON</span> <span class="p">}</span> <span class="c1">//Parse and sanitize the JSON returned by ASMX</span>
         <span class="p">};</span>
 
-    <span class="kd">var</span> <span class="nx">validateSetting</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">settings</span><span class="p">,</span> <span class="nx">arg</span><span class="p">,</span> <span class="nx">methodName</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">settings</span><span class="p">[</span><span class="nx">arg</span><span class="p">])</span>
-        <span class="p">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="nx">methodName</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nx">arg</span> <span class="o">+</span> <span class="s2">&quot; not specified&quot;</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">};</span>
-
     <span class="kd">var</span> <span class="nx">reISO</span> <span class="o">=</span> <span class="sr">/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/</span><span class="p">;</span> 
 
 </pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p>A reviver/replacer for JSON.stringify() that converts dates into Microsoft format</p>             </td>             <td class="code">               <div class="highlight"><pre>
@@ -171,7 +163,10 @@ Otherwise identical to $.ajax() (same settings, arguments, and return values).</
         <span class="p">}</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <p>Validate settings</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="nx">validateSetting</span><span class="p">(</span><span class="nx">settings</span><span class="p">,</span> <span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="s2">&quot;$.ajaxAsmx&quot;</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">settings</span><span class="p">.</span><span class="nx">url</span><span class="p">)</span> 
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;$.ajaxAsmx: url not specified&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <p>Format the data as JSON before post</p>             </td>             <td class="code">               <div class="highlight"><pre>
         <span class="k">if</span> <span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span>

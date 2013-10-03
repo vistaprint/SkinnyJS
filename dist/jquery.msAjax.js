@@ -123,14 +123,6 @@
             converters: {"text json": $.parseMsJSON } //Parse and sanitize the JSON returned by ASMX
         };
 
-    var validateSetting = function(settings, arg, methodName)
-    {
-        if (!settings[arg])
-        {
-            throw new Error(methodName + ": " + arg + " not specified");
-        }
-    };
-
     var reISO = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/; 
 
     // A reviver/replacer for JSON.stringify() that converts dates into Microsoft format
@@ -169,7 +161,10 @@
         }
 
         // Validate settings
-        validateSetting(settings, "url", "$.ajaxAsmx");
+        if (!settings.url) 
+        {
+            throw new Error("$.ajaxAsmx: url not specified");
+        }
 
         // Format the data as JSON before post
         if (settings.data)
