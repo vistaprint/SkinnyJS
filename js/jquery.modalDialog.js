@@ -55,7 +55,7 @@
         $.each(["open", "beforeopen", "close", "beforeclose", "ajaxerror"], $.proxy(this._setupCustomEvent, this));
 
         // Bind methods called as handlers so "this" works
-        $.proxyAll(this, "_drag", "_startDrag", "_stopDrag", "_close");
+        $.proxyAll(this, "_drag", "_startDrag", "_stopDrag", "_close", "_keydownHandler");
     };
 
     ModalDialog.prototype.dialogType = "node";
@@ -218,6 +218,8 @@
                             $(window).on("orientationchange resize", this._orientationchange);
                         }
 
+                        $(document).on("keydown", this._keydownHandler);
+
                         this.onopen.fire();
 
                         $.modalDialog.onopen.fire(null, this);
@@ -247,6 +249,17 @@
         {
             this._finishOpenAction();
             this._finishOpenAction = null;
+        }
+    };
+
+    ModalDialog.prototype._keydownHandler = function(e)
+    {
+        if (e.keyCode == 27)
+        {
+            if ($.modalDialog.getCurrent() === this)
+            {
+                this.close();
+            }
         }
     };
 
@@ -300,6 +313,8 @@
         }
 
         this._popDialogStack();
+
+        $(document).off("keydown", this._keydownHandler);
 
         this.$el.removeClass("dialog-visible");
         this.$container[_animateMethod](
