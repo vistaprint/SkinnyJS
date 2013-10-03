@@ -202,7 +202,7 @@ if (!Object.keys)
         $.each(["open", "beforeopen", "close", "beforeclose", "ajaxerror"], $.proxy(this._setupCustomEvent, this));
 
         // Bind methods called as handlers so "this" works
-        $.proxyAll(this, "_drag", "_startDrag", "_stopDrag", "_close");
+        $.proxyAll(this, "_drag", "_startDrag", "_stopDrag", "_close", "_keydownHandler");
     };
 
     ModalDialog.prototype.dialogType = "node";
@@ -315,11 +315,13 @@ if (!Object.keys)
         this.$container[$.modalDialog.isSmallScreen() ? "addClass" : "removeClass" ]("smallscreen");
 
         // Stop any animations on the container
-        this.$container.stop();
+        this.$container.stop(true, true);
 
         this.$el.show();
 
         this._showLoadingIndicator();
+
+        $(document).on("keydown", this._keydownHandler);
 
         this._finishOpenAction = function()
         {
@@ -337,43 +339,43 @@ if (!Object.keys)
                 initialPos.top = STARTING_TOP; // we're going to animate this to slide down
                 this.$container.css(initialPos);
 
-                // Animate with a CSS transition
-                this.$container[_animateMethod](
-                    { top: initialTop },
-                    $.modalDialog.animationDuration,
-                    _easing,
-                    $.proxy(function()
+                var animationCallback = $.proxy(function()
+                {
+                    this.$el.addClass("dialog-visible");
+
+                    if ($.modalDialog.isSmallScreen())
                     {
-                        this.$el.addClass("dialog-visible");
+                        // TODO: I question this change. Should it be decoupled from the dialog framework?
+                        // It could be put into mobile fixes.
+                        // Is this even mobile specific?
+                        // Original comment:
+                        // Force dialogs that are on small screens to trigger a window resize event when closed, just in case we have resized since the dialog opened.
 
-                        if ($.modalDialog.isSmallScreen())
-                        {
-                            // TODO: I question this change. Should it be decoupled from the dialog framework?
-                            // It could be put into mobile fixes.
-                            // Is this even mobile specific?
-                            // Original comment:
-                            // Force dialogs that are on small screens to trigger a window resize event when closed, just in case we have resized since the dialog opened.
+                        this.triggerWindowResize = false;
+                        this._orientationchange = $.proxy(function(event) 
+                            {
+                                this.triggerWindowResize = true;
+                                return this.pos(event);
+                            }, 
+                            this);
 
-                            this.triggerWindowResize = false;
-                            this._orientationchange = $.proxy(function(event) 
-                                {
-                                    this.triggerWindowResize = true;
-                                    return this.pos(event);
-                                }, 
-                                this);
+                        $(window).on("orientationchange resize", this._orientationchange);
+                    }
 
-                            $(window).on("orientationchange resize", this._orientationchange);
-                        }
+                    this.onopen.fire();
 
-                        this.onopen.fire();
+                    $.modalDialog.onopen.fire(null, this);
 
-                        $.modalDialog.onopen.fire(null, this);
+                    this._resolveDeferred("open");
+                    this._clearDeferred("open");
 
-                        this._resolveDeferred("open");
-                        this._clearDeferred("open");
+                }, this);
 
-                    }, this)
-                );
+                // Animate with a CSS transition if possible,
+                // otherwise, fallback on a jquery animation
+                this.$container[_animateMethod]({ top: initialTop }, $.modalDialog.animationDuration, _easing)
+                    .promise()
+                    .then(animationCallback, animationCallback);
             }
             else
             {
@@ -394,6 +396,33 @@ if (!Object.keys)
         {
             this._finishOpenAction();
             this._finishOpenAction = null;
+        }
+    };
+
+    // If a user hits the ESC key, close the dialog or cancel it's opening.
+    ModalDialog.prototype._keydownHandler = function(e)
+    {
+        if (e.keyCode == 27)
+        {
+            if ($.modalDialog.getCurrent() === this)
+            {
+                this.cancel();
+            }
+        }
+    };
+
+    ModalDialog.prototype.cancel = function()
+    {
+        // Don't move to the end state of the animation:
+        // stop it right where it is.
+        if (this.$container)
+        {
+            this.$container.stop(true, false);
+        }
+        
+        if (this.isOpen())
+        {
+            this.close();
         }
     };
 
@@ -448,6 +477,8 @@ if (!Object.keys)
 
         this._popDialogStack();
 
+        $(document).off("keydown", this._keydownHandler);
+
         this.$el.removeClass("dialog-visible");
         this.$container[_animateMethod](
             {top: STARTING_TOP},
@@ -475,7 +506,7 @@ if (!Object.keys)
     {
         this._open = false;
 
-        this.$container.stop();
+        this.$container.stop(true, true);
         this.$container.css({ top: STARTING_TOP });
         this.$bg.removeClass($.modalDialog.veilClass);
         this.$el.hide();
@@ -834,7 +865,7 @@ if (!Object.keys)
     ModalDialog.prototype.pos = function(animate)
     {
         // stop any currently running animations
-        this.$container.stop();
+        this.$container.stop(true, true);
 
         var pos = this._getDefaultPosition();
 
