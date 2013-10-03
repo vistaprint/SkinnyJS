@@ -1,10 +1,10 @@
 (function (Date, undefined)
 {
-    var origParse = Date.parse, numericKeys = [1, 4, 5, 6, 7, 10, 11];
+    var numericKeys = [1, 4, 5, 6, 7, 10, 11];
 
     // Parses the date in ISO8601 format
     // If "strict" is true Whether or not to perform a strict parse, which requires all parts of the date to be present
-    Date.parseISO = function (date, strict)
+    Date.parseISO8601 = function (date, strict)
     {
         var struct, minutesOffset = 0;
 
@@ -59,35 +59,10 @@
         if ((struct = /^\/Date\((d|-|.*)\)[\/|\\]$/.exec(date)))
         {
             var v = struct[1].split(/[-+,.]/);
-            return v[0] ? +v[0] : 0 - +v[1];
+            return new Date(v[0] ? +v[0] : 0 - +v[1]);
         }
 
         return NaN;
-    };
-
-    // Enhances the native JavaScript Date.parse function to support ISO8601 and Microsoft format dates.
-    // Note: ES5 15.9.4.2 states that the string should attempt to be parsed as a an ISO8601 string
-    // before falling back to any implementation-specific date parsing. The native Date.parse() doesn't 
-    // do this on all browsers, so it needs to be overwritten to force this behavior and ensure consistency.
-    Date.parse = function (date)
-    {
-        var timestamp;
-
-        timestamp = Date.parseISO(date);
-
-        if (!isNaN(timestamp))
-        {
-            return timestamp;
-        }
-
-        timestamp = Date.parseMsDate(date);
-
-        if (!isNaN(timestamp))
-        {
-            return timestamp;
-        }
-
-        return origParse ? origParse(date) : NaN;
     };
 
 } (Date));
