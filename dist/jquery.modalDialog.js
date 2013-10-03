@@ -169,7 +169,7 @@ if (!Object.keys)
     var _defaults = {
         title: "", // The title to display in the title bar of the dialog
         maxWidth: 600, // Sets the maximum width of the dialog. Note that on small mobile devices, the actual width may be smaller, so you should design the dialog content accordingly
-        initialHeight: 100, // Only FramedModalDialog uses this. Consider this internal for now.
+        initialHeight: 100, // Only IFrameDialog uses this. Consider this internal for now.
         skin: "primary", // The name of the skin to use for the dialog
         ajax: false, // Determines how the url setting is interpreted. If true, the URL is the source for an AJAX dialog. If false, it will be the URL of an IFrame dialog
         url: null, // The URL for the content of an IFrame or AJAX dialog
@@ -894,7 +894,7 @@ if (!Object.keys)
     };
 
     // Extends ModalDialog such that the content is an iframe.
-    var FramedModalDialog = function()
+    var IFrameDialog = function()
     {
         ModalDialog.apply(this, arguments);
 
@@ -904,11 +904,11 @@ if (!Object.keys)
         }
     };
 
-    $.extend(FramedModalDialog.prototype, ModalDialog.prototype);
+    $.extend(IFrameDialog.prototype, ModalDialog.prototype);
 
-    FramedModalDialog.prototype.dialogType = "iframe";
+    IFrameDialog.prototype.dialogType = "iframe";
 
-    FramedModalDialog.prototype._setupCustomEvent = function()
+    IFrameDialog.prototype._setupCustomEvent = function()
     {
         var evt = ModalDialog.prototype._setupCustomEvent.apply(this, arguments);
         evt.add(_crossWindowEventHandler);
@@ -929,20 +929,20 @@ if (!Object.keys)
     };
 
     // Override the _buildContent method to construct an iframe
-    FramedModalDialog.prototype._finishClose = function(e)
+    IFrameDialog.prototype._finishClose = function(e)
     {
         ModalDialog.prototype._finishClose.call(this, e);
 
         this.$frame.remove();
     };
 
-    FramedModalDialog.prototype._destroy = function()
+    IFrameDialog.prototype._destroy = function()
     {
         this.$el.remove();
     };
 
     // Override the _buildContent method to construct an iframe
-    FramedModalDialog.prototype._buildContent = function()
+    IFrameDialog.prototype._buildContent = function()
     {
         /* jshint quotmark:false */
 
@@ -995,7 +995,7 @@ if (!Object.keys)
         this.$content = this.$frame;
     };
 
-    FramedModalDialog.prototype._alreadyBuilt = function()
+    IFrameDialog.prototype._alreadyBuilt = function()
     {
         this._buildContent();
 
@@ -1003,7 +1003,7 @@ if (!Object.keys)
         this.$contentContainer.append(this.$content);
     };
 
-    FramedModalDialog.prototype.getWindow = function()
+    IFrameDialog.prototype.getWindow = function()
     {
         return this.$frame.iframeWindow()[0];
     };
@@ -1012,7 +1012,7 @@ if (!Object.keys)
     // Used for orchestrating cross-window communication with dialog proxies.
     // * {string} command: The name of the command to send to the content window
     // * {object} data: A simple data object to serialize (as a querystring) and send with the command
-    FramedModalDialog.prototype._postCommand = function(command, data)
+    IFrameDialog.prototype._postCommand = function(command, data)
     {
         var messageData = { dialogCmd: command };
         if (data)
@@ -1029,7 +1029,7 @@ if (!Object.keys)
     // Used for orchestrating cross-window communication with dialog proxies.
     // * {string} command: The name of the command to send to the content window
     // * {object} data: A simple data object to serialize (as a querystring) and send with the command
-    FramedModalDialog.prototype.postMessage = function(message)
+    IFrameDialog.prototype.postMessage = function(message)
     {
         var win = this.getWindow();
 
@@ -1050,7 +1050,7 @@ if (!Object.keys)
         }
     };
 
-    FramedModalDialog.prototype.setHeight = function(contentHeight, center, skipAnimation)
+    IFrameDialog.prototype.setHeight = function(contentHeight, center, skipAnimation)
     {
         var applyChange = skipAnimation ? 
             function($content, css) { $content.css(css); } :
@@ -1068,18 +1068,18 @@ if (!Object.keys)
     };
 
     // Sets the height of the iframe to the detected height of the iframe content document.
-    FramedModalDialog.prototype.setHeightFromContent = function(center, skipAnimation)
+    IFrameDialog.prototype.setHeightFromContent = function(center, skipAnimation)
     {
         this._postCommand("setHeightFromContent", { center: !!center, skipAnimation: !!skipAnimation});
     };
 
     // Sets the title of the dialog in the header from the HTML title tag of the iframe content document.
-    FramedModalDialog.prototype.setTitleFromContent = function()
+    IFrameDialog.prototype.setTitleFromContent = function()
     {
         this._postCommand("setTitleFromContent");
     };
 
-    FramedModalDialog.prototype.notifyReady = function(hostname)
+    IFrameDialog.prototype.notifyReady = function(hostname)
     {
         // There may be a timer waiting for the iframe to load- cancel it.
         if (this._iframeLoadTimer)
@@ -1093,22 +1093,22 @@ if (!Object.keys)
         ModalDialog.prototype._finishOpen.apply(this);
     };
 
-    FramedModalDialog.prototype._finishOpen = function()
+    IFrameDialog.prototype._finishOpen = function()
     {
     };
 
-    // AjaxModalDialog: Extends ModalDialog 
+    // AjaxDialog: Extends ModalDialog 
     // Loads content via ajax
-    var AjaxModalDialog = function()
+    var AjaxDialog = function()
     {
         ModalDialog.apply(this, arguments);
     };
 
-    $.extend(AjaxModalDialog.prototype, ModalDialog.prototype);
+    $.extend(AjaxDialog.prototype, ModalDialog.prototype);
 
-    AjaxModalDialog.prototype.dialogType = "ajax";
+    AjaxDialog.prototype.dialogType = "ajax";
 
-    AjaxModalDialog.prototype.open = function()
+    AjaxDialog.prototype.open = function()
     {
         var deferred = ModalDialog.prototype.open.apply(this, arguments);
 
@@ -1166,19 +1166,19 @@ if (!Object.keys)
         return deferred.promise();
     };
 
-    AjaxModalDialog.prototype._finishOpen = function()
+    AjaxDialog.prototype._finishOpen = function()
     {
         // no-op. Needds to wait for content to be ajaxed in asynchronously.
         // Base implementation will be called manually.
     };
 
-    AjaxModalDialog.prototype._buildContent = function()
+    AjaxDialog.prototype._buildContent = function()
     {
         // Create a container and ajax content into it.
         this.$content = $("<div class='dialog-content'></div>");
     };
 
-    AjaxModalDialog.prototype._destroy = function()
+    AjaxDialog.prototype._destroy = function()
     {
         this.$el.remove();
     };
@@ -1340,11 +1340,11 @@ if (!Object.keys)
                 }
                 else if (settings.ajax)
                 {
-                    dialog = new AjaxModalDialog(settings);
+                    dialog = new AjaxDialog(settings);
                 }
                 else
                 {
-                    dialog = new FramedModalDialog(settings);
+                    dialog = new IFrameDialog(settings);
                 }
             }
             else if (settings.content)
@@ -1465,7 +1465,7 @@ if (!Object.keys)
         return this;
     };
 
-    // A map of actions that can be passed as the "dialogCmd" argument in posted messages from FramedModalDialog dialog proxies.
+    // A map of actions that can be passed as the "dialogCmd" argument in posted messages from IFrameDialog dialog proxies.
     var messageActions = 
     {
         setHeight: function(dialog, qs)

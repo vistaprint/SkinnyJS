@@ -24,7 +24,7 @@
     <span class="kd">var</span> <span class="nx">_defaults</span> <span class="o">=</span> <span class="p">{</span>
         <span class="nx">title</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="c1">// The title to display in the title bar of the dialog</span>
         <span class="nx">maxWidth</span><span class="o">:</span> <span class="mi">600</span><span class="p">,</span> <span class="c1">// Sets the maximum width of the dialog. Note that on small mobile devices, the actual width may be smaller, so you should design the dialog content accordingly</span>
-        <span class="nx">initialHeight</span><span class="o">:</span> <span class="mi">100</span><span class="p">,</span> <span class="c1">// Only FramedModalDialog uses this. Consider this internal for now.</span>
+        <span class="nx">initialHeight</span><span class="o">:</span> <span class="mi">100</span><span class="p">,</span> <span class="c1">// Only IFrameDialog uses this. Consider this internal for now.</span>
         <span class="nx">skin</span><span class="o">:</span> <span class="s2">&quot;primary&quot;</span><span class="p">,</span> <span class="c1">// The name of the skin to use for the dialog</span>
         <span class="nx">ajax</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="c1">// Determines how the url setting is interpreted. If true, the URL is the source for an AJAX dialog. If false, it will be the URL of an IFrame dialog</span>
         <span class="nx">url</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span> <span class="c1">// The URL for the content of an IFrame or AJAX dialog</span>
@@ -749,7 +749,7 @@ This is null if the dialog was opened by the main window.</p>             </td> 
     <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-54">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-54">&#182;</a>               </div>               <p>Extends ModalDialog such that the content is an iframe.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">FramedModalDialog</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+    <span class="kd">var</span> <span class="nx">IFrameDialog</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
 
@@ -759,11 +759,11 @@ This is null if the dialog was opened by the main window.</p>             </td> 
         <span class="p">}</span>
     <span class="p">};</span>
 
-    <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">IFrameDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
 
-    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">dialogType</span> <span class="o">=</span> <span class="s2">&quot;iframe&quot;</span><span class="p">;</span>
+    <span class="nx">IFrameDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">dialogType</span> <span class="o">=</span> <span class="s2">&quot;iframe&quot;</span><span class="p">;</span>
 
-    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_setupCustomEvent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+    <span class="nx">IFrameDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_setupCustomEvent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">evt</span> <span class="o">=</span> <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_setupCustomEvent</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
         <span class="nx">evt</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">_crossWindowEventHandler</span><span class="p">);</span>
@@ -784,20 +784,20 @@ This is null if the dialog was opened by the main window.</p>             </td> 
     <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-57">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-57">&#182;</a>               </div>               <p>Override the _buildContent method to construct an iframe</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_finishClose</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+    <span class="nx">IFrameDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_finishClose</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_finishClose</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">e</span><span class="p">);</span>
 
         <span class="k">this</span><span class="p">.</span><span class="nx">$frame</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
     <span class="p">};</span>
 
-    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_destroy</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+    <span class="nx">IFrameDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_destroy</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
     <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-58">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-58">&#182;</a>               </div>               <p>Override the _buildContent method to construct an iframe</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_buildContent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+    <span class="nx">IFrameDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_buildContent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="cm">/* jshint quotmark:false */</span>
 
@@ -850,7 +850,7 @@ Otherwise, the "open" promise will be rejected.</p>             </td>           
         <span class="k">this</span><span class="p">.</span><span class="nx">$content</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$frame</span><span class="p">;</span>
     <span class="p">};</span>
 
-    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_alreadyBuilt</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+    <span class="nx">IFrameDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_alreadyBuilt</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">_buildContent</span><span class="p">();</span>
 
@@ -858,7 +858,7 @@ Otherwise, the "open" promise will be rejected.</p>             </td>           
         <span class="k">this</span><span class="p">.</span><span class="nx">$contentContainer</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$content</span><span class="p">);</span>
     <span class="p">};</span>
 
-    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getWindow</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+    <span class="nx">IFrameDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getWindow</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">$frame</span><span class="p">.</span><span class="nx">iframeWindow</span><span class="p">()[</span><span class="mi">0</span><span class="p">];</span>
     <span class="p">};</span>
@@ -867,7 +867,7 @@ Otherwise, the "open" promise will be rejected.</p>             </td>           
 Used for orchestrating cross-window communication with dialog proxies.
 * {string} command: The name of the command to send to the content window
 * {object} data: A simple data object to serialize (as a querystring) and send with the command</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_postCommand</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span>
+    <span class="nx">IFrameDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_postCommand</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">messageData</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">dialogCmd</span><span class="o">:</span> <span class="nx">command</span> <span class="p">};</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span>
@@ -884,7 +884,7 @@ Used for orchestrating cross-window communication with dialog proxies.
 Used for orchestrating cross-window communication with dialog proxies.
 * {string} command: The name of the command to send to the content window
 * {object} data: A simple data object to serialize (as a querystring) and send with the command</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">postMessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+    <span class="nx">IFrameDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">postMessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">win</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getWindow</span><span class="p">();</span>
 
@@ -905,7 +905,7 @@ Used for orchestrating cross-window communication with dialog proxies.
         <span class="p">}</span>
     <span class="p">};</span>
 
-    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setHeight</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">contentHeight</span><span class="p">,</span> <span class="nx">center</span><span class="p">,</span> <span class="nx">skipAnimation</span><span class="p">)</span>
+    <span class="nx">IFrameDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setHeight</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">contentHeight</span><span class="p">,</span> <span class="nx">center</span><span class="p">,</span> <span class="nx">skipAnimation</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">applyChange</span> <span class="o">=</span> <span class="nx">skipAnimation</span> <span class="o">?</span> 
             <span class="kd">function</span><span class="p">(</span><span class="nx">$content</span><span class="p">,</span> <span class="nx">css</span><span class="p">)</span> <span class="p">{</span> <span class="nx">$content</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="nx">css</span><span class="p">);</span> <span class="p">}</span> <span class="o">:</span>
@@ -923,18 +923,18 @@ Used for orchestrating cross-window communication with dialog proxies.
     <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-66">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-66">&#182;</a>               </div>               <p>Sets the height of the iframe to the detected height of the iframe content document.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setHeightFromContent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">center</span><span class="p">,</span> <span class="nx">skipAnimation</span><span class="p">)</span>
+    <span class="nx">IFrameDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setHeightFromContent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">center</span><span class="p">,</span> <span class="nx">skipAnimation</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">_postCommand</span><span class="p">(</span><span class="s2">&quot;setHeightFromContent&quot;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">center</span><span class="o">:</span> <span class="o">!!</span><span class="nx">center</span><span class="p">,</span> <span class="nx">skipAnimation</span><span class="o">:</span> <span class="o">!!</span><span class="nx">skipAnimation</span><span class="p">});</span>
     <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-67">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-67">&#182;</a>               </div>               <p>Sets the title of the dialog in the header from the HTML title tag of the iframe content document.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setTitleFromContent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+    <span class="nx">IFrameDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setTitleFromContent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">_postCommand</span><span class="p">(</span><span class="s2">&quot;setTitleFromContent&quot;</span><span class="p">);</span>
     <span class="p">};</span>
 
-    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">notifyReady</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">hostname</span><span class="p">)</span>
+    <span class="nx">IFrameDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">notifyReady</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">hostname</span><span class="p">)</span>
     <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-68">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-68">&#182;</a>               </div>               <p>There may be a timer waiting for the iframe to load- cancel it.</p>             </td>             <td class="code">               <div class="highlight"><pre>
         <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_iframeLoadTimer</span><span class="p">)</span>
@@ -948,22 +948,22 @@ Used for orchestrating cross-window communication with dialog proxies.
         <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_finishOpen</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
     <span class="p">};</span>
 
-    <span class="nx">FramedModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_finishOpen</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+    <span class="nx">IFrameDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_finishOpen</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span>
     <span class="p">};</span>
 
-</pre></div>             </td>           </tr>                               <tr id="section-69">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-69">&#182;</a>               </div>               <p>AjaxModalDialog: Extends ModalDialog 
+</pre></div>             </td>           </tr>                               <tr id="section-69">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-69">&#182;</a>               </div>               <p>AjaxDialog: Extends ModalDialog 
 Loads content via ajax</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">AjaxModalDialog</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+    <span class="kd">var</span> <span class="nx">AjaxDialog</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
     <span class="p">};</span>
 
-    <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">AjaxModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">AjaxDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
 
-    <span class="nx">AjaxModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">dialogType</span> <span class="o">=</span> <span class="s2">&quot;ajax&quot;</span><span class="p">;</span>
+    <span class="nx">AjaxDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">dialogType</span> <span class="o">=</span> <span class="s2">&quot;ajax&quot;</span><span class="p">;</span>
 
-    <span class="nx">AjaxModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">open</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+    <span class="nx">AjaxDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">open</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">deferred</span> <span class="o">=</span> <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">open</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
 
@@ -1021,19 +1021,19 @@ adding scripts, but not if they're already loaded.</p>             </td>        
         <span class="k">return</span> <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span>
     <span class="p">};</span>
 
-    <span class="nx">AjaxModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_finishOpen</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+    <span class="nx">AjaxDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_finishOpen</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-73">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-73">&#182;</a>               </div>               <p>no-op. Needds to wait for content to be ajaxed in asynchronously.
 Base implementation will be called manually.</p>             </td>             <td class="code">               <div class="highlight"><pre>
     <span class="p">};</span>
 
-    <span class="nx">AjaxModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_buildContent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+    <span class="nx">AjaxDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_buildContent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-74">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-74">&#182;</a>               </div>               <p>Create a container and ajax content into it.</p>             </td>             <td class="code">               <div class="highlight"><pre>
         <span class="k">this</span><span class="p">.</span><span class="nx">$content</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;&lt;div class=&#39;dialog-content&#39;&gt;&lt;/div&gt;&quot;</span><span class="p">);</span>
     <span class="p">};</span>
 
-    <span class="nx">AjaxModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_destroy</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+    <span class="nx">AjaxDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_destroy</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
     <span class="p">};</span>
@@ -1199,11 +1199,11 @@ When removing the host window content from the DOM, make the veil opaque to hide
                 <span class="p">}</span>
                 <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">ajax</span><span class="p">)</span>
                 <span class="p">{</span>
-                    <span class="nx">dialog</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AjaxModalDialog</span><span class="p">(</span><span class="nx">settings</span><span class="p">);</span>
+                    <span class="nx">dialog</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AjaxDialog</span><span class="p">(</span><span class="nx">settings</span><span class="p">);</span>
                 <span class="p">}</span>
                 <span class="k">else</span>
                 <span class="p">{</span>
-                    <span class="nx">dialog</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FramedModalDialog</span><span class="p">(</span><span class="nx">settings</span><span class="p">);</span>
+                    <span class="nx">dialog</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">IFrameDialog</span><span class="p">(</span><span class="nx">settings</span><span class="p">);</span>
                 <span class="p">}</span>
             <span class="p">}</span>
             <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">content</span><span class="p">)</span>
@@ -1324,7 +1324,7 @@ associated with the DOM element.</p>             </td>             <td class="co
         <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
     <span class="p">};</span>
 
-</pre></div>             </td>           </tr>                               <tr id="section-105">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-105">&#182;</a>               </div>               <p>A map of actions that can be passed as the "dialogCmd" argument in posted messages from FramedModalDialog dialog proxies.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-105">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-105">&#182;</a>               </div>               <p>A map of actions that can be passed as the "dialogCmd" argument in posted messages from IFrameDialog dialog proxies.</p>             </td>             <td class="code">               <div class="highlight"><pre>
     <span class="kd">var</span> <span class="nx">messageActions</span> <span class="o">=</span> 
     <span class="p">{</span>
         <span class="nx">setHeight</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">dialog</span><span class="p">,</span> <span class="nx">qs</span><span class="p">)</span>
