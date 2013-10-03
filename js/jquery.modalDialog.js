@@ -709,6 +709,12 @@
         this.$container.find(".dialog-header h1").text(title);
     };
 
+    // Gets the title of the dialog in the header.
+    ModalDialog.prototype.getTitle = function()
+    {
+        return this.$container.find(".dialog-header h1").text();
+    };
+
     // Extends ModalDialog such that the content is an iframe.
     var FramedModalDialog = function()
     {
@@ -956,6 +962,17 @@
                                 this._rejectDeferred("open", [errEvent]);
 
                             }, this));
+
+                        // Extract title from content if not explicitly specified
+                        var $title = this.$content.find("title");
+                        if (!this.settings.title)
+                        {
+                            if ($title.length >= 0)
+                            {
+                                this.setTitle($title.text());
+                            }
+                        }
+                        $title.remove();
 
                         ModalDialog.prototype._finishOpen.call(this);
                     }, 

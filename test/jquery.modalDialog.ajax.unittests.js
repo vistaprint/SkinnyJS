@@ -8,35 +8,58 @@ $(document).ready(function()
 
     module("jquery.modalDialog.ajax");
 
-    asyncTest("Ensure content node can be shared between two dialogs", 1, function()
+    asyncTest("Ensure ajax dialog content can be retrieved from a full HTML document", 2, function()
     {
         var dialog = $.modalDialog.create({ url: "content/jquery.modalDialog.ajaxContent.fullHtml.html", ajax: true });
 
         dialog
             .open()
-            // .then(function()
-            // {
-            //     return dialog.close();
-            // })
-            // .then(function()
-            // {
-            //     dialog2 = $.modalDialog.create({ content: "#simpleDialog" });
-            //     return dialog2.open();
-            // })
-            // .then(function()
-            // {
-            //     return dialog2.close();
-            // })
             .then(
-                function() 
-                {
-                    ok(true);
-                    start();
-                },
                 function()
                 {
-                    start();
-                });
+                    equal(dialog.getTitle(), "ModalDialog ajax content, full HTML", "Ensure title is extracted from the content's TITLE tag");
+
+                    equal($.trim(dialog.$container.find(".dialog-content").text()), "Here's some ajax content");
+
+                    return dialog.close();
+                })
+            .then(start);
+    });
+
+    asyncTest("Ensure ajax dialog content can be retrieved from a partial HTML document", 1, function()
+    {
+        var dialog = $.modalDialog.create({ url: "content/jquery.modalDialog.ajaxContent.html", ajax: true });
+
+        dialog
+            .open()
+            .then(
+                function()
+                {
+                    equal($.trim(dialog.$container.find(".dialog-content").text()), "Here's some ajax content");
+
+                    return dialog.close();
+                })
+            .then(start);
+    });
+
+    asyncTest("Ensure ajax dialog title is derived from settings if specified", 1, function()
+    {
+        var dialog = $.modalDialog.create({ 
+            url: "content/jquery.modalDialog.ajaxContent.fullHtml.html", 
+            ajax: true, 
+            title: "Title from settings"
+        });
+
+        dialog
+            .open()
+            .then(
+                function()
+                {
+                    equal(dialog.getTitle(), "Title from settings");
+
+                    return dialog.close();
+                })
+            .then(start);
     });
 });
 
