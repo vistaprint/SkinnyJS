@@ -385,7 +385,7 @@ if (!Object.keys)
 
         this._finishOpen();
 
-        return deferred;
+        return deferred.promise();
     };
 
     ModalDialog.prototype._finishOpen = function()
@@ -462,7 +462,7 @@ if (!Object.keys)
             $(window).off("orientationchange resize", this._orientationchange);
         }
 
-        return deferred;
+        return deferred.promise();
     };
 
     ModalDialog.prototype._close = function(e)
@@ -856,6 +856,12 @@ if (!Object.keys)
         this.$container.find(".dialog-header h1").text(title);
     };
 
+    // Gets the title of the dialog in the header.
+    ModalDialog.prototype.getTitle = function()
+    {
+        return this.$container.find(".dialog-header h1").text();
+    };
+
     // Extends ModalDialog such that the content is an iframe.
     var FramedModalDialog = function()
     {
@@ -1104,6 +1110,17 @@ if (!Object.keys)
 
                             }, this));
 
+                        // Extract title from content if not explicitly specified
+                        var $title = this.$content.find("title");
+                        if (!this.settings.title)
+                        {
+                            if ($title.length >= 0)
+                            {
+                                this.setTitle($title.text());
+                            }
+                        }
+                        $title.remove();
+
                         ModalDialog.prototype._finishOpen.call(this);
                     }, 
                     this)
@@ -1115,7 +1132,7 @@ if (!Object.keys)
             ModalDialog.prototype._finishOpen.call(this);
         }
 
-        return deferred;
+        return deferred.promise();
     };
 
     AjaxModalDialog.prototype._finishOpen = function()

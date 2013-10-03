@@ -358,8 +358,7 @@
 <span class='c'>--&gt;</span>
 <span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;/nutrition-information/fruits-and-nuts.html&quot;</span> 
     <span class='na'>data-rel=</span><span class='s'>&quot;modalDialog&quot;</span> 
-    <span class='na'>data-dialog-ajax=</span><span class='s'>&quot;true&quot;</span> 
-    <span class='na'>data-dialog-title=</span><span class='s'>&quot;Fruits and Nuts&quot;</span><span class='nt'>&gt;</span>Fruits and Nuts<span class='nt'>&lt;/a&gt;</span>
+    <span class='na'>data-dialog-ajax=</span><span class='s'>&quot;true&quot;</span><span class='nt'>&gt;</span>Fruits and Nuts<span class='nt'>&lt;/a&gt;</span>
 </code></pre></div><div class='highlight'><pre><code class='javascript'><span class='c1'>//Using OO style</span>
 <span class='kd'>var</span> <span class='nx'>dialog</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>({</span> <span class='nx'>url</span><span class='o'>:</span> <span class='s2'>&quot;/nutrition-information/fruits-and-nuts.html&quot;</span><span class='p'>,</span> <span class='nx'>ajax</span><span class='o'>:</span> <span class='kc'>true</span><span class='p'>,</span> <span class='nx'>title</span><span class='o'>:</span> <span class='s2'>&quot;Fruits and Nuts&quot;</span> <span class='p'>});</span>
 <span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>open</span><span class='p'>();</span>
@@ -369,7 +368,22 @@
 </code></pre></div>
 <h4 id='ajax_dialog_content'>AJAX dialog content</h4>
 
-<p>AJAX dialogs&#8217; content should have no HTML/head/body tag frame; just render the HTML that goes in the dialog.</p>
+<p>AJAX dialogs&#8217; content can be specified one of two ways: * <strong>Full HTML documents</strong>. The body of the document is extracted and added to the dialog. If there is a TITLE tag in the document, and a title wasn&#8217;t explicitly set in the dialog settings, the TITLE tag text will be used for the dialog title bar.</p>
+<div class='highlight'><pre><code class='html'><span class='cp'>&lt;!DOCTYPE html&gt;</span>
+<span class='nt'>&lt;html&gt;</span>
+<span class='nt'>&lt;head&gt;</span>
+  <span class='nt'>&lt;meta</span> <span class='na'>charset=</span><span class='s'>&quot;utf-8&quot;</span><span class='nt'>&gt;</span>
+  <span class='c'>&lt;!-- value of the TITLE tag will display in the dialog&#39;s title bar --&gt;</span>
+  <span class='nt'>&lt;title&gt;</span>Fruits and nuts<span class='nt'>&lt;/title&gt;</span>
+<span class='nt'>&lt;/head&gt;</span>
+<span class='nt'>&lt;body&gt;</span>
+    Here&#39;s some information about fruits and nuts
+<span class='nt'>&lt;/body&gt;</span>
+<span class='nt'>&lt;/html&gt;</span>
+</code></pre></div>
+<ul>
+<li><strong>Partial HTML</strong> (i.e. just the HTML that should go in the dialog content).</li>
+</ul>
 <div class='highlight'><pre><code class='html'><span class='c'>&lt;!-- </span>
 <span class='c'>    This document contains no HTML, head, or body tags.</span>
 <span class='c'>    It will get loaded via ajax.</span>
@@ -377,6 +391,8 @@
 <span class='nt'>&lt;div&gt;</span>Here&#39;s some information about fruits and nuts<span class='nt'>&lt;/div&gt;</span>
 </code></pre></div>
 <h5 id='javascripts_in_ajax_dialog_content'>JavaScripts in AJAX dialog content</h5>
+
+<p>No modal dialog specific scripts need to be included in the AJAX dialog content.</p>
 
 <p>Any scripts included in the content will get loaded/executed dynamically, after the DOM elements have been loaded. Script tags that refer to scripts which are are already loaded in the window will be ignored (not loaded/executed a second time), but inline script snippets will be executed.</p>
 
