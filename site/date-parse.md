@@ -1,6 +1,11 @@
+---
+layout: main
+title: date-parse
+---
+
 ## Date.parse
 
-Enhances Date.parse() to support ISO 8601 and Microsoft-style dates
+Enhances Date.parse() to support ISO 8601 and Microsoft-style dates.
 
 Based on Colin Snover's [js-iso8601.js](https://github.com/csnover/js-iso8601)
 
