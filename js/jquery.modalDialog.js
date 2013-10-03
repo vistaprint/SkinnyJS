@@ -224,16 +224,11 @@
 
                 }, this);
 
-                // Animate with a CSS transition
-                this.$container[_animateMethod](
-                    { top: initialTop },
-                    {
-                        duration: $.modalDialog.animationDuration,
-                        easing: _easing,
-                        done: animationCallback,
-                        fail: animationCallback
-                    }
-                );
+                // Animate with a CSS transition if possible,
+                // otherwise, fallback on a jquery animation
+                this.$container[_animateMethod]({ top: initialTop }, $.modalDialog.animationDuration, _easing)
+                    .promise()
+                    .then(animationCallback, animationCallback);
             }
             else
             {
@@ -273,8 +268,15 @@
     {
         // Don't move to the end state of the animation:
         // stop it right where it is.
-        this.$container.stop(true, false);
-        this.close();
+        if (this.$container)
+        {
+            this.$container.stop(true, false);
+        }
+        
+        if (this.isOpen())
+        {
+            this.close();
+        }
     };
 
     ModalDialog.prototype._showLoadingIndicator = function()
