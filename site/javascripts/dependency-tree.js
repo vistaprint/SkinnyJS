@@ -24,6 +24,16 @@ var dependencyTree =
 				name: "modal dialog styles", 
 				path: "css/jquery.modalDialog.css", 
 				notes: "CSS file for modal dialogs. Include with jquery.modalDialog.js" 
+			},
+			{ 
+				name: "jquery.transit.js", 
+				path: "dependencies/jquery.transit.js", 
+				notes: "Optional. Including the jquery.transit plugin with jquery.modalDialog will enable it to use CSS transitions when available." 
+			},
+			{ 
+				name: "History.js", 
+				path: "dependencies/History.js", 
+				notes: "Optional. History.js is required if you wish to use the <a href='jquery.modalDialog.html#managing_history_browser_backforward_buttons' target='_blank'>jquery.modalDialog history management module</a>." 
 			}
 		]
 	},
@@ -50,7 +60,7 @@ var dependencyTree =
 			{
 				name: "postmessage polyfill",
 				path: "js/postmessage.htm",
-				notes: "postMessage polyfill file for browsers that don't support postMessage. Make this accessible on your web server, and configure jquery.postMessage to point to it."
+				notes: "postMessage polyfill HTML file for browsers that don't support postMessage. Make this accessible on your web server, and <a href='#jquery.postMessage.js' target='_blank'>configure jquery.postMessage to point to it</a>."
 			}
 		] 
 	},

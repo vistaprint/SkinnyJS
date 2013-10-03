@@ -9,9 +9,8 @@ Wraps HTML5 postMessage for cross-origin message sending between windows.
 Fallback implementation works on browsers that don't support postMessage.
 
 Based on concepts from: <http://benalman.com/projects/jquery-postmessage-plugin/>
-Improved for non-awesome browsers by using iframes for communication instead of  
-url fragments and polling. This technique eliminates race conditions where messages sent
-in rapid succession might not be received. It also removes the need for polling.
+
+Improved for non-awesome browsers by using iframes for communication instead of url fragments and polling. This technique eliminates race conditions where messages sent in rapid succession might not be received. It also removes the need for polling.
 
 Supports almost any conceivable browser, tested with IE6+
 
