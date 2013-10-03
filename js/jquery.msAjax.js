@@ -161,7 +161,8 @@
         }
 
         // Validate settings
-        if (!settings.url) {
+        if (!settings.url) 
+        {
             throw new Error("$.ajaxAsmx: url not specified");
         }
 
