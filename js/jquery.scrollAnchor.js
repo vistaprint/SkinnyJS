@@ -32,14 +32,14 @@
     function onClick(event)
     {
         var target = jQuery(this),
-            href = target.attr('href');
+            href = target.attr('href'),
+            data = target.data();
 
-        if (localizedHash(href))
+        if (data.scrollSelector || localizedHash(href))
         {
             event.preventDefault();
 
-            var data = target.data(),
-                scrollToElement = $(data.scrollSelector || href.substr(href.indexOf('#'))),
+            var scrollToElement = $(data.scrollSelector || href.substr(href.indexOf('#'))),
                 destination = scrollToElement.offset().top - (data.scrollOffset || 30),
                 timing = data.scrollSpeed || 800;
 
