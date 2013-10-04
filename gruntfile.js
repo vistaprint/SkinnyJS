@@ -116,6 +116,12 @@ module.exports = function(grunt)
                         cwd: "./js/",
                         src: ["./postmessage.htm"],
                         dest: "dist/"
+                    },
+                    {
+                        expand: true,
+                        cwd: "./dependencies/",
+                        src: ["./*.js"],
+                        dest: "dist/dependencies/"
                     }
                 ]
             },
