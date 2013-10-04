@@ -333,12 +333,12 @@ module.exports = function(grunt)
         config.all.options.urls = urls;
 
         // Turn qunit.files into urls for conrib-qunit
-        var urls = grunt.util._.map(grunt.file.expand(config.dialogSmallScreen.options.urls), function(file) 
+        var smallScreenUrls = grunt.util._.map(grunt.file.expand(config.dialogSmallScreen.options.urls), function(file) 
         {
             return "http://localhost:9001/" + file + "?smallscreen=true";
         });
 
-        config.dialogSmallScreen.options.urls = urls;
+        config.dialogSmallScreen.options.urls = smallScreenUrls;
 
         grunt.config.set("contrib-qunit", config);
 
