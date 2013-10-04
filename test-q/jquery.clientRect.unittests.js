@@ -1,15 +1,21 @@
-describe("jquery.clientRect", function()
+$(document).ready(function()
 {
-    var _cleanEls = [];
-
-    afterEach(function()
+    var cleanup = function()
     {
         while (_cleanEls.length > 0)
         {
             _cleanEls[0].remove();
             _cleanEls.splice(0, 1);
         }
-    });
+    };
+
+    module(
+        "jquery.clientRect",
+        {
+            teardown: cleanup
+        });
+
+    var _cleanEls = [];
 
     var tempEl = function(html)
     {
@@ -29,23 +35,22 @@ describe("jquery.clientRect", function()
     {
         var bottom = top + height;
         var right = left + width;
-        
-        expect(Math.round(rect.top)).to.be(top);
-        expect(Math.round(rect.left)).to.be(left);
-        expect(Math.round(rect.width)).to.be(width);
-        expect(Math.round(rect.height)).to.be(height);
-        expect(Math.round(rect.bottom)).to.be(bottom);
-        expect(Math.round(rect.right)).to.be(right);
+        equal(Math.round(rect.top), top, "top should be " + top);
+        equal(Math.round(rect.left), left, "left should be " + left);
+        equal(Math.round(rect.width), width, "width should be " + width);
+        equal(Math.round(rect.height), height, "height should be " + height);
+        equal(Math.round(rect.bottom), bottom, "bottom should be " + bottom);
+        equal(Math.round(rect.right), right, "right should be " + right);
     };
 
     var testClientRect = function(name, fn)
     {
-        it(name, function() { 
+        test(name, function() { 
             $.support.getBoundingClientRect = true;
             fn(); 
         });
 
-        it(name +  " no getBoundingClientRect", function() { 
+        test(name +  " no getBoundingClientRect", function() { 
             $.support.getBoundingClientRect = false;
             fn(); 
         });

@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="../../dist/css/jquery.modalDialogContent.css" />
+
+  <script type="text/javascript" src="../../dependencies/jquery.js"></script>
+  <script type="text/javascript" src="../../js/jquery.delimitedString.js" /></script>
+  <script type="text/javascript" src="../../js/jquery.queryString.js" /></script>
+  <script type="text/javascript" src="../../js/jquery.postMessage.js" /></script>
+  <script type="text/javascript" src="../../js/jquery.customEvent.js" /></script>
+  <script type="text/javascript" src="../../js/jquery.clientRect.js" /></script>
+  <script type="text/javascript" src="../../js/jquery.contentSize.js" /></script>
+  <script type="text/javascript" src="../../js/jquery.disableEvent.js" /></script>
+
+  <script type="text/javascript" src="../../js/jquery.modalDialogContent.header.js"></script>
+  <script type="text/javascript" src="../../js/jquery.modalDialog.userAgent.js"></script>
+  <script type="text/javascript" src="../../js/jquery.modalDialog.getSettings.js"></script>
+  <script type="text/javascript" src="../../js/jquery.modalDialogContent.js"></script>
+  <script type="text/javascript" src="../../js/jquery.modalDialog.deviceFixes.js"></script> 
+  <script type="text/javascript" src="../../js/jquery.modalDialog.unobtrusive.js"></script>
+
+  <title>ModalDialog iframe content</title>
+  <meta name="description" content="Skinny JS">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+<section>
+  <h2>Example: second level iframe dialog, unobtrusive</h2>
+
+  <div>
+    <a href="content.html" data-rel="modalDialog">Open</a>
+  </div>
+
+</section>
+
+<br>
+<a href="#" id="postMessageTestLink">test post message to parent</a>
+
+<br><br>
+<a href="#" onclick="$.modalDialog.getCurrent().close();return false;">Close the window</a>
+
+<script type="text/javascript">
+  $("#postMessageTestLink").on("click", function()
+  {
+      $.modalDialog.getCurrent().postMessageToParent("testmsg:hi there", "*");
+  });
+
+  //$.modalDialog.parentHostName = "http://alternatehostname";
+</script>
+</body>
+</html>

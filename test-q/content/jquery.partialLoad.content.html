@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>jquery.partialLoad test content</title>
+  
+</head>
+<body>
+<div id="interestingContent1">interesting content 1</div>
+
+<div id="withContentScript1">
+    <span class="interesting-inner">with content script 1</span>
+    <script type="text/javascript" src="content/jquery.partialLoad.contentScript1.js"></script>
+</div>
+
+<div id="withInlineScript">
+    <span class="interesting-inner">with inline script</span>
+    <script type="text/javascript">var INLINE_GLOBAL1 = "inline";</script>
+</div>
+
+<div id="withDuplicateScript">
+    <span class="interesting-inner">with duplicate script</span>
+    <script type="text/javascript" src="content/jquery.partialLoad.contentScriptLoadOnce.js"></script>
+</div>
+
+<div id="bodyContent">
+    <span class="interesting-inner">body content</span>
+</div>
+
+</body>
+</html>

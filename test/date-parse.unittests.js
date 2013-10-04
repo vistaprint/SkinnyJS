@@ -1,41 +1,38 @@
-$(document).ready(function()
+describe("parse-date", function()
 {
-    module("parse-date");
-
-    test("Ensure parse Microsoft json date format via Date.parse", function()
+    it("should parse Microsoft json date format via Date.parse", function()
     {
-        equal(Date.parse("\/Date(1239018869048)\/"), 1239018869048);
+        expect(Date.parse("\/Date(1239018869048)\/")).to.be(1239018869048);
     });
 
-    test("Ensure parse Microsoft json date format via Date.parseMsDate", function()
+    it("should parse Microsoft json date format via Date.parseMsDate", function()
     {
-        equal(Date.parseMsDate("\/Date(1239018869048)\/"), 1239018869048);
+        expect(Date.parseMsDate("\/Date(1239018869048)\/")).to.be(1239018869048);
     });
 
-    test("Ensure ISO 8601 date format via Date.parse", function()
+    it("should ISO 8601 date format via Date.parse", function()
     {
-        equal(Date.parse("2009-04-06T11:54:29.048Z"), 1239018869048);
+        expect(Date.parse("2009-04-06T11:54:29.048Z")).to.be(1239018869048);
     });
 
-    test("Ensure ISO 8601 date format via Date.parseISO", function()
+    it("should ISO 8601 date format via Date.parseISO", function()
     {
-        equal(Date.parse("2009-04-06T11:54:29.048Z"), 1239018869048);
+        expect(Date.parse("2009-04-06T11:54:29.048Z")).to.be(1239018869048);
     });
 
-    test("Ensure ISO 8601 date format via Date.parse", function()
+    it("should ISO 8601 date format via Date.parse", function()
     {
-        equal(Date.parseISO("2009-04-06T11:54:29.048Z"), 1239018869048);
+        expect(Date.parseISO("2009-04-06T11:54:29.048Z")).to.be(1239018869048);
     });
 
-    test("Ensure UTC date format via Date.parse", function()
+    it("should UTC date format via Date.parse", function()
     {
         // Removed milliseconds: UTC format doesn't support it
-        equal(Date.parse("Mon, 06 Apr 2009 11:54:29 GMT"), 1239018869000);
+        expect(Date.parse("Mon, 06 Apr 2009 11:54:29 GMT")).to.be(1239018869000);
     });
 
-    test("Ensure YYYY-MM-DD date format is supported via Date.parseISO", function()
+    it("should YYYY-MM-DD date format is supported via Date.parseISO", function()
     {
-        equal(Date.parseISO("2014-01-30"), 1391040000000);
+        expect(Date.parseISO("2014-01-30")).to.be(1391040000000);
     });
-
 });
