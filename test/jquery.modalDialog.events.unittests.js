@@ -89,7 +89,7 @@ $(document).ready(function()
 
     var ensureLifecycleEvents = function(dialogType, dialogSettings)
     {
-        asyncTest("Ensure " + dialogType + " dialog fires lifecycle events", 16, function()
+        asyncTest("Ensure " + dialogType + " dialog fires lifecycle events", 18, function()
         {
             var dialog = $.modalDialog.create(dialogSettings);
             var phase = 0;
@@ -162,10 +162,13 @@ $(document).ready(function()
                 .open()
                 .then(function()
                 {
+                    equal(this, dialog, "Ensure context of promise is the dialog");
                     return dialog.close();
                 })
                 .then(function()
                 {
+                    equal(this, dialog, "Ensure context of promise is the dialog");
+
                     $.modalDialog.onbeforeopen.remove(beforeOpenHandler);
                     $.modalDialog.onopen.remove(openHandler);
                     $.modalDialog.onbeforeclose.remove(beforeCloseHandler);
@@ -296,6 +299,29 @@ $(document).ready(function()
                     start();
                 });
     });
+
+    var ensureDialogCancellable = function(delay)
+    {
+        asyncTest("Ensure dialog can be canceled after " + delay + " ms", 0, function()
+        {
+            var dialog = $.modalDialog.create({ content: "#simpleDialog" });
+
+            dialog.onclose.add(function()
+            {
+                start();
+            });
+
+            dialog.open();
+
+            // Queue this to run as soon as open is finished
+            setTimeout(function() { dialog.cancel(); }, delay);
+        });
+    };
+
+    ensureDialogCancellable(0);
+    ensureDialogCancellable(10);
+    ensureDialogCancellable(50);
+    ensureDialogCancellable(300); // After close event finished
 
 });
 

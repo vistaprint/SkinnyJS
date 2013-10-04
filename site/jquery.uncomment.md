@@ -1,4 +1,4 @@
-﻿---
+---
 layout: main
 title: jquery.uncomment
 ---

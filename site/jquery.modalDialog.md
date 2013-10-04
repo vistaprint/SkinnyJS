@@ -236,8 +236,7 @@ Some examples:
 -->
 <a href="/nutrition-information/fruits-and-nuts.html" 
     data-rel="modalDialog" 
-    data-dialog-ajax="true" 
-    data-dialog-title="Fruits and Nuts">Fruits and Nuts</a>
+    data-dialog-ajax="true">Fruits and Nuts</a>
 {% endhighlight %}
 
 {% highlight javascript %}
@@ -251,7 +250,25 @@ dialog.close();
 
 #### AJAX dialog content
 
-AJAX dialogs' content should have no HTML/head/body tag frame; just render the HTML that goes in the dialog. 
+AJAX dialogs' content can be specified one of two ways:
+* **Full HTML documents**. The body of the document is extracted and added to the dialog. If there is a TITLE tag in the document, and a title wasn't explicitly set in the dialog settings, the TITLE tag text will be used for the dialog title bar.
+
+{% highlight html %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- value of the TITLE tag will display in the dialog's title bar -->
+  <title>Fruits and nuts</title>
+</head>
+<body>
+    Here's some information about fruits and nuts
+</body>
+</html>
+{% endhighlight %}
+
+
+* **Partial HTML** (i.e. just the HTML that should go in the dialog content).
 
 {% highlight html %}
 <!-- 
@@ -262,6 +279,9 @@ AJAX dialogs' content should have no HTML/head/body tag frame; just render the H
 {% endhighlight %}
 
 ##### JavaScripts in AJAX dialog content
+
+No modal dialog specific scripts need to be included in the AJAX dialog content.
+
 Any scripts included in the content will get loaded/executed dynamically, after the DOM elements have been loaded. Script tags that refer to scripts which are are already loaded in the window will be ignored (not loaded/executed a second time), but inline script snippets will be executed.
 
 **Note:** This is a feature of the skinny.js [jquery.partialLoad plugin](js/jquery.partialLoad.html), and can be used independently of modal dialogs.
