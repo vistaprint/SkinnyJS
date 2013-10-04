@@ -26,10 +26,22 @@
         return {};
     })();
 
+    var _isSmallScreenOverride;
+
+    $.modalDialog.setSmallScreen = function(isSmallScreen)
+    {
+        _isSmallScreenOverride = isSmallScreen;
+    };
+
     // Returns true if we're on a small screen device like a smartphone.
     // Dialogs behave slightly different on small screens, by convention.
     $.modalDialog.isSmallScreen = function()
     {
+        if (typeof(_isSmallScreenOverride) != "undefined")
+        {
+            return _isSmallScreenOverride;
+        }
+
         // Detect Internet Explorer 7/8, force them to desktop mode
         if (_ua.ie7 || _ua.ie8) 
         {

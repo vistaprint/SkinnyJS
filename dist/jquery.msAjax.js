@@ -163,7 +163,7 @@
         // Validate settings
         if (!settings.url) 
         {
-            throw new Error("$.ajaxAsmx: url not specified");
+            throw new Error("$.msAjax: url not specified");
         }
 
         // Format the data as JSON before post

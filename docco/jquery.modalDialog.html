@@ -44,7 +44,7 @@
 
     <span class="kd">var</span> <span class="nx">_ua</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">_ua</span><span class="p">;</span>
 
-    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">iframeLoadTimeout</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">;</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">iframeLoadTimeout</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">animationDuration</span> <span class="o">=</span> <span class="mi">600</span><span class="p">;</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Class which creates a jQuery mobile dialog</p>             </td>             <td class="code">               <div class="highlight"><pre>
@@ -813,39 +813,42 @@ This is null if the dialog was opened by the main window.</p>             </td> 
             <span class="s1">&#39;&quot; seamless allowtransparency=&quot;true&quot; width=&quot;100%&quot; style=&quot;height:&#39;</span> <span class="o">+</span> 
             <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">initialHeight</span> <span class="o">+</span> <span class="s1">&#39;px;&quot; class=&quot;dialog-frame&quot; scrolling=&quot;no&quot; frameborder=&quot;0&quot; framespacing=&quot;0&quot;&gt;&lt;/iframe&gt;&#39;</span><span class="p">);</span>
 
+        <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">iframeLoadTimeout</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-59">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-59">&#182;</a>               </div>               <p>When the iframe loads, even if its a failed status (i.e. 404), the load event will fire.
 We expect that the dialog will call notifyReady(). If it doesn't, this timeout will
 eventually fire, causing the open() promise to be rejected, and the dialog state to be cleaned up.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">this</span><span class="p">.</span><span class="nx">$frame</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span>
-            <span class="s2">&quot;load&quot;</span><span class="p">,</span> 
-            <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> 
-            <span class="p">{</span> 
+            <span class="k">this</span><span class="p">.</span><span class="nx">$frame</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span>
+                <span class="s2">&quot;load&quot;</span><span class="p">,</span> 
+                <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> 
+                <span class="p">{</span> 
 </pre></div>             </td>           </tr>                               <tr id="section-60">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-60">&#182;</a>               </div>               <p>The "open" promise has already been resolved: don't continue setting a timeout.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_isDeferredComplete</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">))</span>
-                <span class="p">{</span>
-                    <span class="k">return</span><span class="p">;</span>
-                <span class="p">}</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_isDeferredComplete</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">))</span>
+                    <span class="p">{</span>
+                        <span class="k">return</span><span class="p">;</span>
+                    <span class="p">}</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-61">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-61">&#182;</a>               </div>               <p>The iframe has $.modalDialog.iframeLoadTimeout milliseconds to call notifyReady() after the load event is called.
 Otherwise, the "open" promise will be rejected.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="k">this</span><span class="p">.</span><span class="nx">_iframeLoadTimer</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="p">(</span>
-                    <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> 
-                    <span class="p">{</span> 
-                        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_isDeferredComplete</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">))</span>
-                        <span class="p">{</span>
-                            <span class="k">return</span><span class="p">;</span>
-                        <span class="p">}</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">_iframeLoadTimer</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="p">(</span>
+                        <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> 
+                        <span class="p">{</span> 
+                            <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_isDeferredComplete</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">))</span>
+                            <span class="p">{</span>
+                                <span class="k">return</span><span class="p">;</span>
+                            <span class="p">}</span>
 
-                        <span class="k">this</span><span class="p">.</span><span class="nx">$frame</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
-                        <span class="k">this</span><span class="p">.</span><span class="nx">_resetFailed</span><span class="p">();</span>
+                            <span class="k">this</span><span class="p">.</span><span class="nx">$frame</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
+                            <span class="k">this</span><span class="p">.</span><span class="nx">_resetFailed</span><span class="p">();</span>
 
-                        <span class="k">this</span><span class="p">.</span><span class="nx">_rejectDeferred</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">,</span> <span class="p">[{</span> <span class="nx">message</span><span class="o">:</span> <span class="s2">&quot;iframe load timeout for url: &quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">url</span> <span class="p">}]);</span>
+                            <span class="k">this</span><span class="p">.</span><span class="nx">_rejectDeferred</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">,</span> <span class="p">[{</span> <span class="nx">message</span><span class="o">:</span> <span class="s2">&quot;iframe load timeout for url: &quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">url</span> <span class="p">}]);</span>
 
-                    <span class="p">},</span> <span class="k">this</span><span class="p">),</span>
-                    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">iframeLoadTimeout</span>
-                    <span class="p">);</span>
-            <span class="p">},</span> 
-            <span class="k">this</span><span class="p">));</span>
+                        <span class="p">},</span> <span class="k">this</span><span class="p">),</span>
+                        <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">iframeLoadTimeout</span>
+                        <span class="p">);</span>
+                <span class="p">},</span> 
+                <span class="k">this</span><span class="p">));</span>
+        <span class="p">}</span>
 
         <span class="k">this</span><span class="p">.</span><span class="nx">$content</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$frame</span><span class="p">;</span>
     <span class="p">};</span>
