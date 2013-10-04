@@ -1,7 +1,4 @@
-/**
-* Defines namespaces
-* @param {String} namespace
-*/
+// Defines namespaces
 jQuery.ns = function(namespace)
 {
     var parts = namespace.split(".");
