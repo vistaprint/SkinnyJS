@@ -7,11 +7,6 @@ title: jquery.scrollAnchor
 
 Provides smooth scrolling to same-page reference links using hashes (<a href="#something">).
 
-### Dependencies
-jQuery.scrollAnchor has two dependencies:
-
-* jQuery.observeChildren.js (also part of skinny.js).
-
 ### Example Usage:
 
 {% highlight html %}
