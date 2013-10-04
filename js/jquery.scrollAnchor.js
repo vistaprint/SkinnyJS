@@ -1,5 +1,3 @@
-/// <reference path="jquery.observeChildren.js" />
-
 /**
  * Simple smooth scrolling for anchors with internal page hash references.
  *
@@ -10,7 +8,6 @@
  */
 (function($, doc)
 {
-    var DATA_KEY_OPTIN = 'scrollAnchor'; // data-attribute key for opt-in to animation
     var loc = doc.location;
 
     function isInternalHash(uri, anchor)
@@ -58,50 +55,17 @@
         }
     }
 
-    // if you pass "false" to data-scroll-anchor it will not
-    // enable the smooth scrolling. However, an empty value
-    // will work or passing "true"
-    function isTrue(v)
-    {
-        return (v === undefined || v === false || v === 'false') ? false : v === '' || !!v;
-    }
-
-    function bind(anchor)
-    {
-        anchor = jQuery(anchor);
-        if (isTrue(anchor.data(DATA_KEY_OPTIN)))
-        {
-            anchor.on('click', onClick);
-        }
-    }
-
-    $(function()
-    {
-        // if the child mutation observer library is available,
-        // use it, otherwise, just look for existing anchors.
-        if ($.fn.observeChildren)
-        {
-            $('body').observeChildren(bind, 'a');
-        }
-        else
-        {
-            $('a').each(function (i, el)
-            {
-                bind(el);
-            });
-        }
-    });
+    $(document).on('click', '[data-scroll-anchor]', onClick);
 
     // public jQuery extension to add programmatically
     $.fn.scrollAnchor = function()
     {
-        $(this).on('click', onClick);
+        return $(this).on('click', onClick);
     };
 
     // private utility methods exposed for unit tests
     $.fn.scrollAnchor._ = {
-        isInternalHash: isInternalHash,
-        isTrue: isTrue
+        isInternalHash: isInternalHash
     };
 
 })(jQuery, document);

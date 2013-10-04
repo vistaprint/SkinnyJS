@@ -2,15 +2,7 @@ $(document).ready(function()
 {
     module('jquery.scrollAnchor');
 
-    var isInternalHash = $.fn.scrollAnchor._.isInternalHash,
-        isTrue = $.fn.scrollAnchor._.isTrue;
-
-    QUnit.test('isTrue (private) passes expectations', 3, function()
-    {
-        equal(isTrue('false'), false, 'string "false" is false');
-        equal(isTrue(''), true, 'empty string is true');
-        equal(isTrue('true'), true, 'any other string is true');
-    });
+    var isInternalHash = $.fn.scrollAnchor._.isInternalHash;
 
     QUnit.test('Test internal links', 6, function()
     {
