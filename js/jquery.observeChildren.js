@@ -2,6 +2,16 @@
  * Simple wrapper to observe the creation of children with a given tag.
  * Calls the passed function passing the element found,
  * each elements will be called once upon it's creation or on dom ready.
+ *
+ * Read more about mutation observers at:
+ *  - https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
+ *
+ * Supported browsers:
+ *  Chrome 18+
+ *  Firefox 14+
+ *  IE11+
+ *  Opera 15+
+ *  Safari 6+
  */
 
 (function ($, doc)
@@ -9,9 +19,10 @@
     var DATA_KEY = 'childMutationObserver';
     var mutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
+    // create a mutation observer specific to new child eleemnts
     $.fn.observeChildren = function observeChildren (bind, tag)
     {
-        // bind listeners to existing <select> elements
+        // bind listeners to existing elements based on given tag selector
         if (tag)
         {
             $(tag, this).each(function (i, node)
@@ -20,7 +31,7 @@
             });
         }
 
-        function DOMNodeInserted(ev)
+        function DOMNodeInserted (ev)
         {
             if (!tag)
             {
@@ -76,6 +87,7 @@
         return this;
     };
 
+    // disconnect the mutation observer
     $.fn.disconnectChildObservers = function disconnectChildObservers()
     {
         $.each(this, function (i, el)
