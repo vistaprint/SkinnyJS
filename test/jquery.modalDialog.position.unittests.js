@@ -1,10 +1,9 @@
 ﻿/*jshint quotmark:false */
 
 QUnit.config.testTimeout = 1000000;
-$.modalDialog.setSmallScreen(false);
 
 // Scrollbars are messing up measurements of the window size
-$(document.body).css("overflow-x", "hidden");
+$(document.body).css("overflow", "hidden");
 
 $(document).ready(function()
 {
@@ -19,7 +18,7 @@ $(document).ready(function()
             actual < expected - tolerance)
         {
             var messagePrefix = "Actual: " + actual + " Expected: " + expected; 
-            ok(false, messagePrefix + "\n" + message);
+            ok(false, messagePrefix + "\n" + (message || ""));
         }
         else
         {
@@ -43,12 +42,18 @@ $(document).ready(function()
                     };
 
                     var expectedTop = Math.max((windowRect.height / 2) - (rect.height / 2), 10);
+
+                    if ($.modalDialog.isSmallScreen())
+                    {
+                        expectedTop = 10;
+                    }
+
                     isWithinTolerance(rect.top, expectedTop, 1);
 
                     var expectedLeft = (windowRect.width / 2) - (rect.width / 2);
                     isWithinTolerance(rect.left, expectedLeft, 1);
 
-                    return dialog.close();
+                    //return dialog.close();
                 })
             .then(
                 function()

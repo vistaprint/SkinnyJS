@@ -50,6 +50,13 @@ module.exports = function(grunt)
                 {
                     urls: ["test/*.unittests.html"]
                 }
+            },
+            dialogSmallScreen:
+            {
+                options:
+                {
+                    urls: ["test/jquery.modalDialog.*.unittests.html"]
+                }
             }
         },
         docco:
@@ -313,20 +320,25 @@ module.exports = function(grunt)
     // Wrap the qunit task
     grunt.renameTask("qunit", "contrib-qunit");
 
-    grunt.registerTask("qunit", function(host, protocol) 
+    grunt.registerTask("qunit", function() 
     {
-        host = host || "localhost:9001";
-        protocol = protocol || "http";
-
         var config = grunt.config.get("qunit");
 
         // Turn qunit.files into urls for conrib-qunit
         var urls = grunt.util._.map(grunt.file.expand(config.all.options.urls), function(file) 
         {
-            return protocol + "://" + host + "/" + file;
+            return "http://localhost:9001/" + file;
         });
 
         config.all.options.urls = urls;
+
+        // Turn qunit.files into urls for conrib-qunit
+        var urls = grunt.util._.map(grunt.file.expand(config.dialogSmallScreen.options.urls), function(file) 
+        {
+            return "http://localhost:9001/" + file + "?smallscreen=true";
+        });
+
+        config.dialogSmallScreen.options.urls = urls;
 
         grunt.config.set("contrib-qunit", config);
 
