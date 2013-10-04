@@ -22,10 +22,12 @@ Skinny libraries
 * [jQuery.isVisibleKeyCode](http://vistaprint.github.io/SkinnyJS/docco/jquery.isVisibleKeyCode.html): Extension to jQuery.Event which indicates if a keypress is a visible character (i.e. not a function or modifier key)
 * [jQuery.msAjax](http://vistaprint.github.io/SkinnyJS/docco/jquery.msAjax.html): Microsoft friendly AJAX. Handles the quirks of ASMX, WCF, DataJsonContractSerializer, Microsoft's JSON date format, and provides an interface identical to jQuery.ajax().
 * [jQuery.ns](http://vistaprint.github.io/SkinnyJS/docco/jquery.ns.html): Declare namespaces without boilerplate
+* [jQuery.observeChildren](http://vistaprint.github.io/SkinnyJS/docco/jquery.observeChildren.html): Mutation observer that fallsback to mutation events for newly created child elements.
 * [jQuery.partialLoad](http://vistaprint.github.io/SkinnyJS/docco/jquery.partialLoad.html): Works like jQuery.load, but is more intelligent about executing downloaded scripts (i.e. don't re-run scripts that are already loaded)
 * [jQuery.postMessage](http://vistaprint.github.io/SkinnyJS/docco/jquery.postMessage.html): Provides cross-document messaging support, works on all browsers to IE6 (without URL fragments and polling).
 * [jQuery.proxyAll](http://vistaprint.github.io/SkinnyJS/docco/jquery.proxyAll.html): Binds functions to their host object (like jQuery.proxy(), but for all functions declared as properties of an object at once)
 * [jQuery.queryString](http://vistaprint.github.io/SkinnyJS/docco/jquery.queryString.html): Parses querystrings (the opposite of jQuery.param())
+* [jQuery.scrollAnchor](http://vistaprint.github.io/SkinnyJS/docco/jquery.scrollAnchor.html): Smooth scrolling support for anchor elements with internal references.
 * [jQuery.uncomment](http://vistaprint.github.io/SkinnyJS/docco/jquery.uncomment.html): Allows lazy evaluation of HTML blobs by removing them from comment blocks
 * [jQuery.url](http://vistaprint.github.io/SkinnyJS/docco/jquery.url.html): Parses and serializes URLs.
 <!-- * [jQuery.cookie](http://vistaprint.github.io/SkinnyJS/docco/jquery.cookie.html): TODO -->
