@@ -3,13 +3,13 @@
 $.modalDialog.iframeLoadTimeout = 1000;
 $.modalDialog.animationDuration = 100;
 
-describe("jquery.modalDialog.history.init", function()
+describe("jQuery.moddalDialog.enableHistory()", function()
 {
     var assert = chai.assert;
     
     var DIALOG_PARAM_NAME = "testdialogparam";
 
-    it("Ensure that a dialog specified in the current URL is enabled when $.modalDialog.enableHistory() is called", function(done)
+    it("should open a dialog specified in the current URL", function(done)
     {
         var qs = "?" + DIALOG_PARAM_NAME + "=" + encodeURIComponent("node,#simpleDialog");
 
