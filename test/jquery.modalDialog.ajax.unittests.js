@@ -57,8 +57,3 @@ describe("jquery.modalDialog.ajax", function()
             .then(done);
     });
 });
-
-// window.onerror = function(msg)
-// {
-//     window.console.log("Uncaught error: " + msg);
-// };

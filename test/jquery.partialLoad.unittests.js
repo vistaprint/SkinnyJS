@@ -1,8 +1,10 @@
-﻿
+﻿/* globals CONTENT_SCRIPT_GLOBAL1, INLINE_GLOBAL1 */
+mocha.setup({globals: ["CONTENT_SCRIPT_GLOBAL1", "INLINE_GLOBAL1"]});
+
 describe("jquery.partialLoad", function()
 {
     var assert = chai.assert;
-    
+
     function cleanup()
     {
         $("#contentContainer").empty();
@@ -21,7 +23,7 @@ describe("jquery.partialLoad", function()
                 var content = $("#contentContainer").html();
 
                 assert.equal(content, "<div id=\"interestingContent1\">interesting content 1</div>");
-                assert.isUndefined(CONTENT_SCRIPT_GLOBAL1, "Ensure a script from an element other than the target is NOT executed");
+                assert.isUndefined(window.CONTENT_SCRIPT_GLOBAL1, "Ensure a script from an element other than the target is NOT executed");
 
                 done();
             });
@@ -37,7 +39,7 @@ describe("jquery.partialLoad", function()
                 var content = $("#contentContainer .interesting-inner").html();
 
                 assert.equal(content, "with content script 1");
-                assert.isNotUndefined(CONTENT_SCRIPT_GLOBAL1, "Ensure a script from the current element is executed");
+                assert.isDefined(CONTENT_SCRIPT_GLOBAL1, "Ensure a script from the current element is executed");
 
                 done();
             });
@@ -53,7 +55,7 @@ describe("jquery.partialLoad", function()
                 var content = $("#contentContainer .interesting-inner").html();
 
                 assert.equal(content, "with inline script");
-                assert.isNotUndefined(INLINE_GLOBAL1, "Ensure an inline from the current element is executed");
+                assert.isDefined(INLINE_GLOBAL1, "Ensure an inline from the current element is executed");
 
                 done();
             });
