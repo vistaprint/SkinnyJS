@@ -1,4 +1,4 @@
-describe("jquery.msAjax", function()
+describe("jquery.msAjax()", function()
 {
     var assert = chai.assert;
 
@@ -14,7 +14,7 @@ describe("jquery.msAjax", function()
 
     $.mockjaxSettings.logging = false;
 
-    it("Ensure Microsoft json date format is deserialized", function(done)
+    it("should parse a date string in Microsoft json date format", function(done)
     {
         /* jshint quotmark:false */
 
@@ -39,7 +39,7 @@ describe("jquery.msAjax", function()
         
     });
 
-    it("Ensure ISO 8601 date format is deserialized", function(done)
+    it("should parse a date string in ISO 8601 date format", function(done)
     {
         /* jshint quotmark:false */
 
@@ -64,7 +64,7 @@ describe("jquery.msAjax", function()
         
     });
 
-    it("Ensure UTC date format is deserialized", function(done)
+    it("should parse a date string in UTC date format", function(done)
     {
         /* jshint quotmark:false */
 
@@ -89,7 +89,7 @@ describe("jquery.msAjax", function()
         
     });
 
-    it("Ensure __type is removed", function(done)
+    it("should remove the __type property from Microsoft json", function(done)
     {
         /* jshint quotmark:false */
 
@@ -114,7 +114,7 @@ describe("jquery.msAjax", function()
         
     });
 
-    it("Ensure posted date is in Microsoft JSON date format", function(done)
+    it("should post dates in Microsoft JSON date formatted strings", function(done)
     {
         /* jshint quotmark:false */
 

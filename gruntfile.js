@@ -57,6 +57,10 @@ module.exports = function(grunt)
                 {
                     urls: ["test/jquery.modalDialog.*.unittests.html"]
                 }
+            },
+            options:
+            {
+                reporter: "List"
             }
         },
         docco:

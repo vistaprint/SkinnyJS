@@ -1,7 +1,7 @@
 ﻿/* globals CONTENT_SCRIPT_GLOBAL1, INLINE_GLOBAL1 */
 mocha.setup({globals: ["CONTENT_SCRIPT_GLOBAL1", "INLINE_GLOBAL1"]});
 
-describe("jquery.partialLoad", function()
+describe("jquery.partialLoad()", function()
 {
     var assert = chai.assert;
 
@@ -13,7 +13,7 @@ describe("jquery.partialLoad", function()
     beforeEach(cleanup);
     afterEach(cleanup);
 
-    it("Ensure content is loaded with no scripts", function(done)
+    it("should load content from a page containing scripts, but not load the scripts if they're not in the target element", function(done)
     {
         $("#contentContainer").partialLoad(
             "content/jquery.partialLoad.content.html", 
@@ -29,7 +29,7 @@ describe("jquery.partialLoad", function()
             });
     });
 
-    it("Ensure script in content is executed", function(done)
+    it("should load content from a page and execute scripts from the target element", function(done)
     {
         $("#contentContainer").partialLoad(
             "content/jquery.partialLoad.content.html", 
@@ -45,7 +45,7 @@ describe("jquery.partialLoad", function()
             });
     });
 
-    it("Ensure inline script in content is executed", function(done)
+    it("should load content and execute inline scripts in the target element", function(done)
     {
         $("#contentContainer").partialLoad(
             "content/jquery.partialLoad.content.html", 
@@ -61,7 +61,7 @@ describe("jquery.partialLoad", function()
             });
     });
 
-    it("Ensure script in content is not executed if already loaded", function(done)
+    it("should load content and not execute scripts in the target element if they are already loaded", function(done)
     {
         $("#contentContainer").partialLoad(
             "content/jquery.partialLoad.content.html", 
@@ -77,7 +77,7 @@ describe("jquery.partialLoad", function()
             });
     });
 
-    it("Ensure script in content is not executed if already loaded, with no target selector", function(done)
+    it("should load content and not execute scripts if they are already loaded, with no target selector specified", function(done)
     {
         $("#contentContainer").partialLoad(
             "content/jquery.partialLoad.content.html", 

@@ -1,38 +1,44 @@
-describe("parse-date", function()
+describe("Date", function()
 {
-    it("should parse Microsoft json date format via Date.parse", function()
+    var assert = chai.assert;
+    
+    describe("#.parse()", function()
     {
-        expect(Date.parse("\/Date(1239018869048)\/")).to.be(1239018869048);
+        it("should parse Microsoft json date format via Date.parse", function()
+        {
+            assert.equal(Date.parse("\/Date(1239018869048)\/"), 1239018869048);
+        });
+
+        it("should ISO 8601 date format via Date.parseISO", function()
+        {
+            assert.equal(Date.parse("2009-04-06T11:54:29.048Z"), 1239018869048);
+        });
+
+        it("should UTC date format via Date.parse", function()
+        {
+            // Removed milliseconds: UTC format doesn't support it
+            assert.equal(Date.parse("Mon, 06 Apr 2009 11:54:29 GMT"), 1239018869000);
+        });
     });
 
-    it("should parse Microsoft json date format via Date.parseMsDate", function()
+    describe("#.parseISO()", function()
     {
-        expect(Date.parseMsDate("\/Date(1239018869048)\/")).to.be(1239018869048);
+        it("should parse ISO 8601 date format", function()
+        {
+            assert.equal(Date.parseISO("2009-04-06T11:54:29.048Z"), 1239018869048);
+        });
+
+        it("should support YYYY-MM-DD date format", function()
+        {
+            assert.equal(Date.parseISO("2014-01-30"), 1391040000000);
+        });
     });
 
-    it("should ISO 8601 date format via Date.parse", function()
+    describe("#.parseMsDate()", function()
     {
-        expect(Date.parse("2009-04-06T11:54:29.048Z")).to.be(1239018869048);
-    });
-
-    it("should ISO 8601 date format via Date.parseISO", function()
-    {
-        expect(Date.parse("2009-04-06T11:54:29.048Z")).to.be(1239018869048);
-    });
-
-    it("should ISO 8601 date format via Date.parse", function()
-    {
-        expect(Date.parseISO("2009-04-06T11:54:29.048Z")).to.be(1239018869048);
-    });
-
-    it("should UTC date format via Date.parse", function()
-    {
-        // Removed milliseconds: UTC format doesn't support it
-        expect(Date.parse("Mon, 06 Apr 2009 11:54:29 GMT")).to.be(1239018869000);
-    });
-
-    it("should YYYY-MM-DD date format is supported via Date.parseISO", function()
-    {
-        expect(Date.parseISO("2014-01-30")).to.be(1391040000000);
+        it("should parse Microsoft json date format", function()
+        {
+            assert.equal(Date.parseMsDate("\/Date(1239018869048)\/"), 1239018869048);
+        });
     });
 });
