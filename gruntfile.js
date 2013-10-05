@@ -44,24 +44,20 @@ module.exports = function(grunt)
         },
         mocha: 
         {
-            all: ["test/*.unittests.html"]
-            // {
-            //     src: ,
-            //     options:
-            //     {
-            //         log: true,
-            //         reporter: "Nyan",
-            //         run: true
-            //     }
-            // }
-            // ,
-            // dialogSmallScreen:
-            // {
-            //     options:
-            //     {
-            //         urls: ["test/jquery.modalDialog.*.unittests.html"]
-            //     }
-            // }
+            all: 
+            {
+                options:
+                {
+                    urls: ["test/*.unittests.html"]
+                }
+            },
+            dialogSmallScreen:
+            {
+                options:
+                {
+                    urls: ["test/jquery.modalDialog.*.unittests.html"]
+                }
+            }
         },
         docco:
         {
@@ -328,32 +324,32 @@ module.exports = function(grunt)
     grunt.loadNpmTasks("grunt-mkdir");
 
     // Wrap the mocha task
-    // grunt.renameTask("mocha", "orig-mocha");
+    grunt.renameTask("mocha", "orig-mocha");
 
-    // grunt.registerTask("mocha", function() 
-    // {
-    //     var config = grunt.config.get("mocha");
+    grunt.registerTask("mocha", function() 
+    {
+        var config = grunt.config.get("mocha");
 
-    //     // Turn mocha.files into urls for conrib-mocha
-    //     var urls = grunt.util._.map(grunt.file.expand(config.all.src), function(file) 
-    //     {
-    //         return "http://localhost:9001/" + file;
-    //     });
+        // Turn mocha.files into urls for conrib-mocha
+        var urls = grunt.util._.map(grunt.file.expand(config.all.options.urls), function(file) 
+        {
+            return "http://localhost:9001/" + file;
+        });
 
-    //     config.all.src = urls;
+        config.all.options.urls = urls;
 
-    //     // // Turn mocha.files into urls for conrib-mocha
-    //     // var smallScreenUrls = grunt.util._.map(grunt.file.expand(config.dialogSmallScreen.options.urls), function(file) 
-    //     // {
-    //     //     return "http://localhost:9001/" + file + "?smallscreen=true";
-    //     // });
+        // Turn mocha.files into urls for conrib-mocha
+        var smallScreenUrls = grunt.util._.map(grunt.file.expand(config.dialogSmallScreen.options.urls), function(file) 
+        {
+            return "http://localhost:9001/" + file + "?smallscreen=true";
+        });
 
-    //     // config.dialogSmallScreen.options.urls = smallScreenUrls;
+        config.dialogSmallScreen.options.urls = smallScreenUrls;
 
-    //     grunt.config.set("orig-mocha", config);
+        grunt.config.set("orig-mocha", config);
 
-    //     grunt.task.run("orig-mocha");
-    // });
+        grunt.task.run("orig-mocha");
+    });
 
     // Custom tasks
     grunt.loadTasks("./site/_tasks");
