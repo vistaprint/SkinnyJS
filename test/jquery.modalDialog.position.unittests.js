@@ -1,32 +1,16 @@
 ﻿/*jshint quotmark:false */
 
-QUnit.config.testTimeout = 1000000;
-
 // Scrollbars are messing up measurements of the window size
 $(document.body).css("overflow", "hidden");
 
-$(document).ready(function()
+$.modalDialog.iframeLoadTimeout = 1000;
+$.modalDialog.animationDuration = 100;
+
+describe("jquery.modalDialog.position", function()
 {
-    $.modalDialog.iframeLoadTimeout = 1000;
-    $.modalDialog.animationDuration = 100;
+    var assert = chai.assert;
 
-    module("jquery.modalDialog.position");
-
-    function isWithinTolerance(actual, expected, tolerance, message)
-    {
-        if (actual > expected + tolerance ||
-            actual < expected - tolerance)
-        {
-            var messagePrefix = "Actual: " + actual + " Expected: " + expected; 
-            ok(false, messagePrefix + "\n" + (message || ""));
-        }
-        else
-        {
-            ok(true, message);
-        }
-    }
-
-    asyncTest("Ensure dialog is centered", 2, function()
+    it("is centered when opened", function(done)
     {
         var dialog = $.modalDialog.create({ content: "#vegDialog" });
 
@@ -48,22 +32,17 @@ $(document).ready(function()
                         expectedTop = 10;
                     }
 
-                    isWithinTolerance(rect.top, expectedTop, 1);
+                    assert.closeTo(rect.top, expectedTop, 1);
 
                     var expectedLeft = (windowRect.width / 2) - (rect.width / 2);
-                    isWithinTolerance(rect.left, expectedLeft, 1);
+                    assert.closeTo(rect.left, expectedLeft, 1);
 
-                    //return dialog.close();
+                    return dialog.close();
                 })
             .then(
                 function()
                 {
-                    start();
+                    done();
                 });
     });
 });
-
-window.onerror = function(msg)
-{
-    window.console.log("Uncaught error: " + msg);
-};

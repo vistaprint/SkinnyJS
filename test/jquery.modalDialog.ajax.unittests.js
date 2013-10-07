@@ -1,14 +1,11 @@
-﻿
-QUnit.config.testTimeout = 1000000;
+﻿$.modalDialog.iframeLoadTimeout = 1000;
+$.modalDialog.animationDuration = 100;
 
-$(document).ready(function()
+describe("AjaxDialog", function()
 {
-    $.modalDialog.iframeLoadTimeout = 1000;
-    $.modalDialog.animationDuration = 100;
+    var assert = chai.assert;
 
-    module("jquery.modalDialog.ajax");
-
-    asyncTest("Ensure ajax dialog content can be retrieved from a full HTML document", 2, function()
+    it("should load content from a full HTML document", function(done)
     {
         var dialog = $.modalDialog.create({ url: "content/jquery.modalDialog.ajaxContent.fullHtml.html", ajax: true });
 
@@ -17,16 +14,16 @@ $(document).ready(function()
             .then(
                 function()
                 {
-                    equal(dialog.getTitle(), "ModalDialog ajax content, full HTML", "Ensure title is extracted from the content's TITLE tag");
+                    assert.equal(dialog.getTitle(), "ModalDialog ajax content, full HTML", "Ensure title is extracted from the content's TITLE tag");
 
-                    equal($.trim(dialog.$container.find(".dialog-content").text()), "Here's some ajax content");
+                    assert.equal($.trim(dialog.$container.find(".dialog-content").text()), "Here's some ajax content");
 
                     return dialog.close();
                 })
-            .then(start);
+            .then(done);
     });
 
-    asyncTest("Ensure ajax dialog content can be retrieved from a partial HTML document", 1, function()
+    it("should load content from a partial HTML document", function(done)
     {
         var dialog = $.modalDialog.create({ url: "content/jquery.modalDialog.ajaxContent.html", ajax: true });
 
@@ -35,14 +32,14 @@ $(document).ready(function()
             .then(
                 function()
                 {
-                    equal($.trim(dialog.$container.find(".dialog-content").text()), "Here's some ajax content");
+                    assert.equal($.trim(dialog.$container.find(".dialog-content").text()), "Here's some ajax content");
 
                     return dialog.close();
                 })
-            .then(start);
+            .then(done);
     });
 
-    asyncTest("Ensure ajax dialog title is derived from settings if specified", 1, function()
+    it("should set the dialog title from settings if specified", function(done)
     {
         var dialog = $.modalDialog.create({ 
             url: "content/jquery.modalDialog.ajaxContent.fullHtml.html", 
@@ -55,15 +52,10 @@ $(document).ready(function()
             .then(
                 function()
                 {
-                    equal(dialog.getTitle(), "Title from settings");
+                    assert.equal(dialog.getTitle(), "Title from settings");
 
                     return dialog.close();
                 })
-            .then(start);
+            .then(done);
     });
 });
-
-window.onerror = function(msg)
-{
-    window.console.log("Uncaught error: " + msg);
-};

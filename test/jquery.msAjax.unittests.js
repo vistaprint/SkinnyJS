@@ -1,20 +1,20 @@
-$(document).ready(function()
+describe("jquery.msAjax()", function()
 {
-    function cleanup()
+    var assert = chai.assert;
+
+    beforeEach(function()
     {
         $.mockjaxClear();
-    }
+    });
 
-    module(
-        "jquery.msAjax",
-        {
-            setup: cleanup,
-            teardown: cleanup
-        });
+    afterEach(function()
+    {
+        $.mockjaxClear();
+    });
 
     $.mockjaxSettings.logging = false;
 
-    asyncTest("Ensure Microsoft json date format is deserialized", 2, function()
+    it("should parse a date string in Microsoft json date format", function(done)
     {
         /* jshint quotmark:false */
 
@@ -32,14 +32,14 @@ $(document).ready(function()
         .done(function(data, status)
         {
             // Mon, 06 Apr 2009 11:54:29 GMT
-            equal(data.date.valueOf(), 1239018869048);
-            equal(status, "success");
-            start();
+            assert.equal(data.date.valueOf(), 1239018869048);
+            assert.equal(status, "success");
+            done();
         });
         
     });
 
-    asyncTest("Ensure ISO 8601 date format is deserialized", 2, function()
+    it("should parse a date string in ISO 8601 date format", function(done)
     {
         /* jshint quotmark:false */
 
@@ -57,14 +57,14 @@ $(document).ready(function()
         .done(function(data, status)
         {
             // Mon, 06 Apr 2009 11:54:29 GMT
-            equal(data.date.valueOf(), 1239018869048);
-            equal(status, "success");
-            start();
+            assert.equal(data.date.valueOf(), 1239018869048);
+            assert.equal(status, "success");
+            done();
         });
         
     });
 
-    asyncTest("Ensure UTC date format is deserialized", 2, function()
+    it("should parse a date string in UTC date format", function(done)
     {
         /* jshint quotmark:false */
 
@@ -82,14 +82,14 @@ $(document).ready(function()
         .done(function(data, status)
         {
             // Mon, 06 Apr 2009 11:54:29 GMT
-            equal(data.date.valueOf(), 1239018869000);
-            equal(status, "success");
-            start();
+            assert.equal(data.date.valueOf(), 1239018869000);
+            assert.equal(status, "success");
+            done();
         });
         
     });
 
-    asyncTest("Ensure __type is removed", 2, function()
+    it("should remove the __type property from Microsoft json", function(done)
     {
         /* jshint quotmark:false */
 
@@ -107,14 +107,14 @@ $(document).ready(function()
         .done(function(data, status)
         {
             // Mon, 06 Apr 2009 11:54:29 GMT
-            equal(typeof data.__type, "undefined");
-            equal(status, "success");
-            start();
+            assert.typeOf(data.__type, "undefined");
+            assert.equal(status, "success");
+            done();
         });
         
     });
 
-    asyncTest("Ensure posted date is in Microsoft JSON date format", 2, function()
+    it("should post dates in Microsoft JSON date formatted strings", function(done)
     {
         /* jshint quotmark:false */
 
@@ -125,7 +125,7 @@ $(document).ready(function()
             response: function(settings)
             {
                 this.responseText = '{ "d": {} }';
-                equal(settings.data, '{"date":"\/Date(1239018869000-0000)\/"}');
+                assert.equal(settings.data, '{"date":"\/Date(1239018869000-0000)\/"}');
             }
         });
 
@@ -138,8 +138,8 @@ $(document).ready(function()
         .done(function(data, status)
         {
             // Mon, 06 Apr 2009 11:54:29 GMT
-            equal(status, "success");
-            start();
+            assert.equal(status, "success");
+            done();
         });
         
     });

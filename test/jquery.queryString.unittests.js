@@ -1,40 +1,43 @@
-﻿$(document).ready(function()
+﻿describe("jquery", function()
 {
-    module("jquery.querystring");
+    var assert = chai.assert;
 
-    function decodeTest(name, value, expected)
+    describe("#.deparam()", function()
     {
-        test("decode: " + name, function()
+        function decodeTest(name, value, expected)
         {
-            var qs = {
-                keyString: value
-            };
+            it("should decode " + name + " from an encoded querystring into a string value", function()
+            {
+                var qs = {
+                    keyString: value
+                };
 
-            var encoded = $.param(qs);
-            var decoded = $.deparam(encoded);
+                var encoded = $.param(qs);
+                var decoded = $.deparam(encoded);
 
-            equal(decoded.keyString, expected);
-        });
-    }
+                assert.equal(decoded.keyString, expected);
+            });
+        }
 
-    var BASIC_STRING = "string 1 2 3";
-    decodeTest("string", BASIC_STRING, BASIC_STRING);
+        var BASIC_STRING = "string 1 2 3";
+        decodeTest("a string", BASIC_STRING, BASIC_STRING);
 
-    var STRING_WITH_NEWLINE = "string 1 2 3\nstring 1 2 3";
-    decodeTest("string with newline", STRING_WITH_NEWLINE, STRING_WITH_NEWLINE);
+        var STRING_WITH_NEWLINE = "string 1 2 3\nstring 1 2 3";
+        decodeTest("a string with newline", STRING_WITH_NEWLINE, STRING_WITH_NEWLINE);
 
-    decodeTest("int", 123, "123");
+        decodeTest("an int", 123, "123");
 
-    decodeTest("float", 1.23, "1.23");
+        decodeTest("a float", 1.23, "1.23");
 
-    decodeTest("zero", 0, "0");
+        decodeTest("zero", 0, "0");
 
-    decodeTest("empty string", "", "");
+        decodeTest("an empty string", "", "");
 
-    decodeTest("null", null, "");
+        decodeTest("null", null, "");
 
-    var UNDEFINED;
-    decodeTest("undefined", UNDEFINED, "");
+        var UNDEFINED;
+        decodeTest("undefined", UNDEFINED, "");
 
-    decodeTest("NaN", NaN, "NaN");
+        decodeTest("NaN", NaN, "NaN");
+    });
 });

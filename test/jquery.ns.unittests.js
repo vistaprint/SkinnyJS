@@ -1,17 +1,17 @@
 ﻿/* global ns1 */
 
-$(document).ready(function()
+describe("jQuery.ns()", function()
 {
-    module("jquery.ns");
+    var assert = chai.assert;
 
-    test("Ensure single namespace declared", function()
+    it("should be able to declare a single namespace", function()
     {
         $.ns("ns1");
 
-        ok(typeof(ns1) == "object", "Ensure ns1 is an object");
+        assert.typeOf(ns1, "object", "Ensure ns1 is an object");
     });
 
-    test("Ensure existing namespace preserved", function()
+    it("should preserve an existing global namespace", function()
     {
         window.ns1 = {
             property1: "value1"
@@ -19,11 +19,11 @@ $(document).ready(function()
 
         $.ns("ns1");
 
-        ok(typeof(ns1) == "object", "Ensure ns1 is an object");
-        equal(ns1.property1, "value1", "Ensure ns1.property1's value is correct");
+        assert.typeOf(ns1, "object", "Ensure ns1 is an object");
+        assert.equal(ns1.property1, "value1", "Ensure ns1.property1's value is correct");
     });
 
-    test("Ensure existing secondary namespace preserved", function()
+    it("should preserve an existing secondary namespace", function()
     {
         window.ns1 = {
             property1: "value1",
@@ -34,14 +34,14 @@ $(document).ready(function()
 
         $.ns("ns1.ns2");
 
-        ok(typeof(ns1) == "object", "Ensure ns1 is an object");
-        equal(ns1.property1, "value1", "Ensure ns1.property1's value is correct");
+        assert.typeOf(ns1, "object", "Ensure ns1 is an object");
+        assert.equal(ns1.property1, "value1", "Ensure ns1.property1's value is correct");
 
-        ok(typeof(ns1.ns2) == "object", "Ensure ns2 is an object");
-        equal(ns1.ns2.property2, "value2", "Ensure ns1.ns2.property2's value is correct");
+        assert.typeOf(ns1.ns2, "object", "Ensure ns2 is an object");
+        assert.equal(ns1.ns2.property2, "value2", "Ensure ns1.ns2.property2's value is correct");
     });
 
-    test("Ensure declaring teriary namespace, previous namespaces preserved", function()
+    it("should preserve previous namespaces when declaring a tertiary namespace", function()
     {
         window.ns1 = {
             property1: "value1",
@@ -52,12 +52,12 @@ $(document).ready(function()
 
         $.ns("ns1.ns2.ns3");
 
-        ok(typeof(ns1) == "object", "Ensure ns1 is an object");
-        equal(ns1.property1, "value1", "Ensure ns1.property1's value is correct");
+        assert.typeOf(ns1, "object", "Ensure ns1 is an object");
+        assert.equal(ns1.property1, "value1", "Ensure ns1.property1's value is correct");
 
-        ok(typeof(ns1.ns2) == "object", "Ensure ns2 is an object");
-        equal(ns1.ns2.property2, "value2", "Ensure ns1.ns2.property2's value is correct");
+        assert.typeOf(ns1.ns2, "object", "Ensure ns2 is an object");
+        assert.equal(ns1.ns2.property2, "value2", "Ensure ns1.ns2.property2's value is correct");
 
-        ok(typeof(ns1.ns2.ns3) == "object", "Ensure ns1.ns2.ns3 is an object");
+        assert.typeOf(ns1.ns2.ns3, "object", "Ensure ns1.ns2.ns3 is an object");
     });
 });

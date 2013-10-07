@@ -1,19 +1,17 @@
-﻿
-QUnit.config.testTimeout = 1000000;
+﻿$.modalDialog.iframeLoadTimeout = 1000;
+$.modalDialog.animationDuration = 100;
 
-$(document).ready(function()
+describe("jquery.modalDialog.history", function()
 {
+    var assert = chai.assert;
+    
     var DIALOG_PARAM_NAME = "testdialogparam";
 
-    $.modalDialog.iframeLoadTimeout = 1000;
-    $.modalDialog.animationDuration = 100;
     $.modalDialog.enableHistory(DIALOG_PARAM_NAME);
-
-    module("jquery.modalDialog.history");
 
     function testDialogHistoryManagement(dialogType, dialogOptions)
     {
-        asyncTest("Ensure opening and closing a dialog modifies the URL and history", 8, function()
+        it("Ensure opening and closing a dialog modifies the URL and history", function(done)
         {
             var dialog = $.modalDialog.create(dialogOptions);
 
@@ -21,12 +19,12 @@ $(document).ready(function()
                 .open()
                 .then(function()
                 {
-                    equal(dialog.isOpen(), true, "Ensure dialog is closed");
+                    assert.isTrue(dialog.isOpen(), "Ensure dialog is closed");
 
                     // The dialog was opened. There should be dialog parameters in the URL.
 
                     var qs = $.currentQueryString();
-                    equal(typeof qs[DIALOG_PARAM_NAME], "string", "The dialog is open: there should be dialog parameters in the URL");
+                    assert.isString(qs[DIALOG_PARAM_NAME], "The dialog is open: there should be dialog parameters in the URL");
 
                     var deferred = $.Deferred();
                     var closeHandler = function()
@@ -46,9 +44,9 @@ $(document).ready(function()
                     // We navigated back. There should not be any dialog parameters in the URL.
 
                     var qs = $.currentQueryString();
-                    equal(typeof qs[DIALOG_PARAM_NAME], "undefined", "The dialog is closed: there should not be dialog parameters in the URL");
+                    assert.isUndefined(qs[DIALOG_PARAM_NAME], "The dialog is closed: there should not be dialog parameters in the URL");
 
-                    equal(dialog.isOpen(), false, "Ensure dialog is closed");
+                    assert.isFalse(dialog.isOpen(), "Ensure dialog is closed");
 
                     var deferred = $.Deferred();
                     var openHandler = function()
@@ -68,9 +66,9 @@ $(document).ready(function()
                     // We navigated forward. The dialog parameters should be back in the URL.
 
                     var qs = $.currentQueryString();
-                    equal(typeof qs[DIALOG_PARAM_NAME], "string", "The dialog is open: there should be dialog parameters in the URL");
+                    assert.isString(qs[DIALOG_PARAM_NAME], "The dialog is open: there should be dialog parameters in the URL");
 
-                    equal(dialog.isOpen(), true, "Ensure dialog is open");
+                    assert.isTrue(dialog.isOpen(), "Ensure dialog is open");
 
                     return dialog.close();
                 })
@@ -86,14 +84,14 @@ $(document).ready(function()
                 })
                 .then(function()
                 {
-                    equal(dialog.isOpen(), false, "Ensure dialog is closed");
+                    assert.isFalse(dialog.isOpen(), "Ensure dialog is closed");
 
                     // We manually closed the dialog. The parameters should no longer be in the URL.
 
                     var qs = $.currentQueryString();
-                    equal(typeof qs[DIALOG_PARAM_NAME], "undefined", "The dialog is closed: there should not be dialog parameters in the URL");
+                    assert.isUndefined(qs[DIALOG_PARAM_NAME], "The dialog is closed: there should not be dialog parameters in the URL");
 
-                    start();
+                    done();
                 });
         });
     }
@@ -104,8 +102,3 @@ $(document).ready(function()
 
     testDialogHistoryManagement("ajax", { url: "content/jquery.modalDialog.ajaxContent.html", ajax: true });
 });
-
-window.onerror = function(msg)
-{
-    window.console.log("Uncaught error: " + msg);
-};

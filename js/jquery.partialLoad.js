@@ -1,5 +1,7 @@
 (function(window, $)
 {
+    var _currentScripts;
+
     $.fn.partialLoad = function (url, target, data, callback) 
     {
         // Default to a GET request
@@ -93,27 +95,27 @@
 
         // Build a 'set' of already loaded scripts so we can ensure
         // that they don't get loaded more than once.
-        if (!window.__currentScripts)
+        if (!_currentScripts)
         {
-            window.__currentScripts = {};
+            _currentScripts = {};
 
             var currentScripts = document.getElementsByTagName("SCRIPT");
             for (var i=0; i<currentScripts.length; i++)
             {
                 if (currentScripts[i].src)
                 {
-                    window.__currentScripts[currentScripts[i].src.toLowerCase()] = true;
+                    _currentScripts[currentScripts[i].src.toLowerCase()] = true;
                 }
             }
         }
 
         // This script is already loaded. Don't load it again.
-        if (window.__currentScripts[srcLower])
+        if (_currentScripts[srcLower])
         {
             return;
         }
 
-        window.__currentScripts[srcLower] = true;
+        _currentScripts[srcLower] = true;
 
         $.ajax({
             type: "GET",

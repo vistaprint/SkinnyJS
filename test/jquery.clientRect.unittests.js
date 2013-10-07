@@ -1,21 +1,17 @@
-$(document).ready(function()
+describe("jquery.clientRect()", function()
 {
-    var cleanup = function()
+    var assert = chai.assert;
+    
+    var _cleanEls = [];
+
+    afterEach(function()
     {
         while (_cleanEls.length > 0)
         {
             _cleanEls[0].remove();
             _cleanEls.splice(0, 1);
         }
-    };
-
-    module(
-        "jquery.clientRect",
-        {
-            teardown: cleanup
-        });
-
-    var _cleanEls = [];
+    });
 
     var tempEl = function(html)
     {
@@ -35,28 +31,29 @@ $(document).ready(function()
     {
         var bottom = top + height;
         var right = left + width;
-        equal(Math.round(rect.top), top, "top should be " + top);
-        equal(Math.round(rect.left), left, "left should be " + left);
-        equal(Math.round(rect.width), width, "width should be " + width);
-        equal(Math.round(rect.height), height, "height should be " + height);
-        equal(Math.round(rect.bottom), bottom, "bottom should be " + bottom);
-        equal(Math.round(rect.right), right, "right should be " + right);
+        
+        assert.equal(Math.round(rect.top), top);
+        assert.equal(Math.round(rect.left), left);
+        assert.equal(Math.round(rect.width), width);
+        assert.equal(Math.round(rect.height), height);
+        assert.equal(Math.round(rect.bottom), bottom);
+        assert.equal(Math.round(rect.right), right);
     };
 
-    var testClientRect = function(name, fn)
+    var clientRectShould = function(description, fn)
     {
-        test(name, function() { 
+        it("should " + description, function() { 
             $.support.getBoundingClientRect = true;
             fn(); 
         });
 
-        test(name +  " no getBoundingClientRect", function() { 
+        it("should " + description +  " without using getBoundingClientRect", function() { 
             $.support.getBoundingClientRect = false;
             fn(); 
         });
     };
 
-    testClientRect("basic", function() 
+    clientRectShould("read a basic 100px square rectangle", function() 
     {
         var $el = basicEl();
 
@@ -65,7 +62,7 @@ $(document).ready(function()
         rectEquals(rect, 100, 100, 100, 100);
     });
 
-    testClientRect("detached element returns 0 rect", function() 
+    clientRectShould("return a 0 rect for a detached element", function() 
     {
         var $el = basicEl().remove();
 
@@ -75,7 +72,7 @@ $(document).ready(function()
 
     });
 
-    testClientRect("hidden element returns 0 rect", function() 
+    clientRectShould("return a 0 rect for a hidden element", function() 
     {
         var $el = basicEl().hide();
 
@@ -85,7 +82,7 @@ $(document).ready(function()
 
     });
 
-    testClientRect("basic with margin", function() 
+    clientRectShould("include margin in resulting rect", function() 
     {
         var $el = basicEl().css("margin", 10);
 
@@ -95,7 +92,7 @@ $(document).ready(function()
 
     });
 
-    testClientRect("basic with padding", function() 
+    clientRectShould("include padding in resulting rect", function() 
     {
         var $el = basicEl().css("padding", 10);
 
@@ -105,7 +102,7 @@ $(document).ready(function()
 
     });
 
-    testClientRect("basic with border", function() 
+    clientRectShould("not include border in resulting rect", function() 
     {
         var $el = basicEl().css("border", 10);
 
@@ -115,7 +112,7 @@ $(document).ready(function()
 
     });
 
-    testClientRect("document element with margin", function() 
+    clientRectShould("return a 100px rect if the document element has a margin", function() 
     {
         var $el = basicEl();
 
@@ -129,7 +126,7 @@ $(document).ready(function()
     });
 
 
-    testClientRect("window scrolled", function() 
+    clientRectShould("return a 100px rect when the window is scrolled", function() 
     {
         var $el = basicEl();
 
@@ -145,7 +142,7 @@ $(document).ready(function()
         window.scrollTo(0, 0);
     });
 
-    testClientRect("in element with overflow scroll", function() 
+    clientRectShould("factor in scroll position when within an element with overflow scroll", function() 
     {
         var $outerEl = basicEl().css({ overflow: "scroll" });
 

@@ -1,78 +1,90 @@
-﻿$(document).ready(function()
+﻿describe("jquery.css", function()
 {
-    module("jquery.css methods");
+    var assert = chai.assert;
 
-    test("$.camelToDashCase", function()
+    describe("#camelToDashCase()", function()
     {
-        //basic conversion
-        var actual = $.camelToDashCase("fontFamily");
-        equal(actual, "font-family");
+        it("should convert a camel-case property to a dash-case property", function()
+        {
+            //basic conversion
+            var actual = $.camelToDashCase("fontFamily");
+            assert.equal(actual, "font-family");
 
-        //Verify we don't break an already converted string
-        actual = $.camelToDashCase("font-family");
-        equal(actual, "font-family");
+            //Verify we don't break an already converted string
+            actual = $.camelToDashCase("font-family");
+            assert.equal(actual, "font-family");
+        });
+    });
+    
+    describe("#dashToCamelCase()", function()
+    {
+        it("should convert a dash-case property to a camel-case property", function()
+        {
+            //basic conversion
+            var actual = $.dashToCamelCase("font-family");
+            assert.equal(actual, "fontFamily");
+
+            //Verify we don't break an already converted string
+            actual = $.dashToCamelCase("fontFamily");
+            assert.equal(actual, "fontFamily");
+        });
     });
 
-    test("$.dashToCamelCase", function()
+    describe("#encodeCssString()", function()
     {
-        //basic conversion
-        var actual = $.dashToCamelCase("font-family");
-        equal(actual, "fontFamily");
+        it("should return a properly formatted css string", function()
+        {
+            var css = {
+                fontFamily: "Arial, Helvetica",
+                color: "#232323",
+                borderLeftColor: "#fff",
+                borderWidth: "1px"
+            };
 
-        //Verify we don't break an already converted string
-        actual = $.dashToCamelCase("fontFamily");
-        equal(actual, "fontFamily");
+            var actual = $.encodeCssString(css);
+
+            assert.equal(actual, "font-family:Arial, Helvetica;color:#232323;border-left-color:#fff;border-width:1px");
+        });
+
+        it("should return a properly formatted css string with values trimmed", function()
+        {
+            var css = {
+                fontFamily: "  Arial, Helvetica  ",
+                color: " #232323  ",
+                borderLeftColor: " #fff ",
+                borderWidth: " 1px "
+            };
+
+            var actual = $.encodeCssString(css);
+
+            assert.equal(actual, "font-family:Arial, Helvetica;color:#232323;border-left-color:#fff;border-width:1px");
+        });
     });
 
-    test("$.encodeCssString", function()
+    describe("#parseCssString()", function()
     {
-        var css = {
-            fontFamily: "Arial, Helvetica",
-            color: "#232323",
-            borderLeftColor: "#fff",
-            borderWidth: "1px"
-        };
+        it("should return a parsed javascript object", function()
+        {
+            var css = "font-family:Arial, Helvetica;color:#232323;border-left-color:#fff;border-width:1px";
 
-        var actual = $.encodeCssString(css);
+            var actual = $.parseCssString(css);
 
-        equal(actual, "font-family:Arial, Helvetica;color:#232323;border-left-color:#fff;border-width:1px");
-    });
+            assert.equal(actual.fontFamily, "Arial, Helvetica");
+            assert.equal(actual.color, "#232323");
+            assert.equal(actual.borderLeftColor, "#fff");
+            assert.equal(actual.borderWidth, "1px");
+        });
 
-    test("$.encodeCssString with trim", function()
-    {
-        var css = {
-            fontFamily: "  Arial, Helvetica  ",
-            color: " #232323  ",
-            borderLeftColor: " #fff ",
-            borderWidth: " 1px "
-        };
+        it("should return a parsed javascript object with values trimmed", function()
+        {
+            var css = "font-family:Arial, Helvetica;color:#232323   ;border-left-color:#fff  ;border-width:1px ";
 
-        var actual = $.encodeCssString(css);
+            var actual = $.parseCssString(css);
 
-        equal(actual, "font-family:Arial, Helvetica;color:#232323;border-left-color:#fff;border-width:1px");
-    });
-
-    test("$.parseCssString", function()
-    {
-        var css = "font-family:Arial, Helvetica;color:#232323;border-left-color:#fff;border-width:1px";
-
-        var actual = $.parseCssString(css);
-
-        equal(actual.fontFamily, "Arial, Helvetica");
-        equal(actual.color, "#232323");
-        equal(actual.borderLeftColor, "#fff");
-        equal(actual.borderWidth, "1px");
-    });
-
-    test("$.parseCssString with trim", function()
-    {
-        var css = "font-family:Arial, Helvetica;color:#232323   ;border-left-color:#fff  ;border-width:1px ";
-
-        var actual = $.parseCssString(css);
-
-        equal(actual.fontFamily, "Arial, Helvetica");
-        equal(actual.color, "#232323");
-        equal(actual.borderLeftColor, "#fff");
-        equal(actual.borderWidth, "1px");
+            assert.equal(actual.fontFamily, "Arial, Helvetica");
+            assert.equal(actual.color, "#232323");
+            assert.equal(actual.borderLeftColor, "#fff");
+            assert.equal(actual.borderWidth, "1px");
+        });
     });
 });

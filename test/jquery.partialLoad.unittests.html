@@ -3,16 +3,18 @@
 <head>
   <meta charset="utf-8">
   <title>jquery.partialLoad unit tests</title>
-  <link rel="stylesheet" href="../dependencies/qunit.css">
+  <link rel="stylesheet" href="../dependencies/mocha.css">
 </head>
 <body>
-  <div id="qunit"></div>
-  <div id="qunit-fixture"></div>
+  <div id="mocha"></div>
 
   <div id="contentContainer"></div>
 
-  <script src="../dependencies/qunit.js"></script>
   <script src="../dependencies/jquery.js"></script>
+  <script src="../dependencies/mocha.js"></script>
+  <script src="../dependencies/chai.js"></script>
+  <script src="unittests.shared.js"></script>
+
   <script src="../js/jquery.partialLoad.js"></script>
   <script src="content/jquery.partialLoad.contentScriptLoadOnce.js"></script>
   <script src="jquery.partialLoad.unittests.js"></script>

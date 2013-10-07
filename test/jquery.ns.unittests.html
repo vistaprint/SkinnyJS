@@ -2,14 +2,17 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>jquery.css unit tests</title>
-  <link rel="stylesheet" href="../dependencies/qunit.css">
+  <title>jquery.ns unit tests</title>
+  <link rel="stylesheet" href="../dependencies/mocha.css">
 </head>
 <body>
-  <div id="qunit"></div>
-  <div id="qunit-fixture"></div>
-  <script src="../dependencies/qunit.js"></script>
+  <div id="mocha"></div>
+  
   <script src="../dependencies/jquery.js"></script>
+  <script src="../dependencies/mocha.js"></script>
+  <script src="../dependencies/chai.js"></script>
+  <script src="unittests.shared.js"></script>
+
   <script src="../js/jquery.ns.js"></script>
   <script src="jquery.ns.unittests.js"></script>
 </body>

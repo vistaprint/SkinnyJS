@@ -1,14 +1,11 @@
 ﻿/*jshint quotmark:false */
 
-QUnit.config.testTimeout = 1000000;
-
-$(document).ready(function()
+describe("jquery.modalDialog.unobtrusive", function()
 {
+    var assert = chai.assert;
 
     $.modalDialog.iframeLoadTimeout = 1000;
     $.modalDialog.animationDuration = 100;
-
-    module("jquery.modalDialog.unobtrusive");
 
     var clickDialogLink = function($link)
     {
@@ -28,7 +25,7 @@ $(document).ready(function()
 
     var ensureLinkOpensDialog = function(dialogType, linkAttributes)
     {
-        asyncTest("Ensure unobtrusive link opens " + dialogType + " dialog", 5, function()
+        it("Ensure unobtrusive link opens " + dialogType + " dialog", function(done)
         {
             var $link = $('<a ' + linkAttributes + ' data-rel="modalDialog">link</a>');
             $link.appendTo("body");
@@ -41,8 +38,8 @@ $(document).ready(function()
                     // capture the instance of the dialog so we can compare it later
                     dialog = this;
 
-                    ok(this.isOpen(), "Dialog is open");
-                    equal(dialog, $.modalDialog.getCurrent(), "Ensure 'this' is the current dialog");
+                    assert.isTrue(this.isOpen(), "Dialog is open");
+                    assert.equal(dialog, $.modalDialog.getCurrent(), "Ensure 'this' is the current dialog");
 
                     return this.close();
                 })
@@ -52,9 +49,9 @@ $(document).ready(function()
                 })
                 .then(function()
                 {
-                    ok(this.isOpen(), "Dialog is open");
-                    equal(dialog, this, "Ensure 'this' is the current dialog");
-                    equal(dialog, $.modalDialog.getCurrent(), "Ensure the same dialog was opened the second time the link was clicked");
+                    assert.isTrue(this.isOpen(), "Dialog is open");
+                    assert.equal(dialog, this, "Ensure 'this' is the current dialog");
+                    assert.equal(dialog, $.modalDialog.getCurrent(), "Ensure the same dialog was opened the second time the link was clicked");
                     
                     return this.close();
                 })
@@ -63,7 +60,7 @@ $(document).ready(function()
                     // Clean up
                     $link.remove();
 
-                    start();
+                    done();
                 });
         });
     };
@@ -75,7 +72,7 @@ $(document).ready(function()
     ensureLinkOpensDialog("ajax", 'href="content/jquery.modalDialog.ajaxContent.html" data-dialog-ajax="true"');
 
     //TODO this should be in its own unit test suite
-    asyncTest("Ensure iframe dialog can be opened twice", 5, function()
+    it("Ensure iframe dialog can be opened twice", function(done)
     {
         var dialog = $.modalDialog.create({ url: "content/jquery.modalDialog.iframeContent.html" });
 
@@ -86,8 +83,8 @@ $(document).ready(function()
                     // capture the instance of the dialog so we can compare it later
                     dialog = this;
 
-                    ok(this.isOpen(), "Dialog is open");
-                    equal(dialog, $.modalDialog.getCurrent(), "Ensure 'this' is the current dialog");
+                    assert.isTrue(this.isOpen(), "Dialog is open");
+                    assert.equal(dialog, $.modalDialog.getCurrent(), "Ensure 'this' is the current dialog");
 
                     return this.close();
                 })
@@ -99,27 +96,22 @@ $(document).ready(function()
             .then(
                 function()
                 {
-                    ok(this.isOpen(), "Dialog is open");
-                    equal(dialog, this, "Ensure 'this' is the current dialog");
-                    equal(dialog, $.modalDialog.getCurrent(), "Ensure the same dialog was opened the second time the link was clicked");
+                    assert.isTrue(this.isOpen(), "Dialog is open");
+                    assert.equal(dialog, this, "Ensure 'this' is the current dialog");
+                    assert.equal(dialog, $.modalDialog.getCurrent(), "Ensure the same dialog was opened the second time the link was clicked");
                     
                     return this.close();
                 },
                 function(err)
                 {
-                    ok(false, "Error: " + err.message);
+                    assert.fail("Error: " + err.message);
                     
-                    start();
+                    done();
                 })
             .then(
                 function()
                 {
-                    start();
+                    done();
                 });
     });
 });
-
-window.onerror = function(msg)
-{
-    window.console.log("Uncaught error: " + msg);
-};

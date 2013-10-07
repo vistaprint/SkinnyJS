@@ -42,9 +42,9 @@ module.exports = function(grunt)
                 }
             }
         },
-        qunit: 
+        mocha: 
         {
-            all:
+            all: 
             {
                 options:
                 {
@@ -57,6 +57,10 @@ module.exports = function(grunt)
                 {
                     urls: ["test/jquery.modalDialog.*.unittests.html"]
                 }
+            },
+            options:
+            {
+                reporter: "List"
             }
         },
         docco:
@@ -116,6 +120,12 @@ module.exports = function(grunt)
                         cwd: "./js/",
                         src: ["./postmessage.htm"],
                         dest: "dist/"
+                    },
+                    {
+                        expand: true,
+                        cwd: "./dependencies/",
+                        src: ["./*.js"],
+                        dest: "dist/dependencies/"
                     }
                 ]
             },
@@ -305,7 +315,7 @@ module.exports = function(grunt)
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-contrib-less");
-    grunt.loadNpmTasks("grunt-contrib-qunit");
+    grunt.loadNpmTasks("grunt-mocha");
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-concat");
     grunt.loadNpmTasks("grunt-contrib-connect");
@@ -317,14 +327,14 @@ module.exports = function(grunt)
     grunt.loadNpmTasks("grunt-jekyll");
     grunt.loadNpmTasks("grunt-mkdir");
 
-    // Wrap the qunit task
-    grunt.renameTask("qunit", "contrib-qunit");
+    // Wrap the mocha task
+    grunt.renameTask("mocha", "orig-mocha");
 
-    grunt.registerTask("qunit", function() 
+    grunt.registerTask("mocha", function() 
     {
-        var config = grunt.config.get("qunit");
+        var config = grunt.config.get("mocha");
 
-        // Turn qunit.files into urls for conrib-qunit
+        // Turn mocha.files into urls for conrib-mocha
         var urls = grunt.util._.map(grunt.file.expand(config.all.options.urls), function(file) 
         {
             return "http://localhost:9001/" + file;
@@ -332,7 +342,7 @@ module.exports = function(grunt)
 
         config.all.options.urls = urls;
 
-        // Turn qunit.files into urls for conrib-qunit
+        // Turn mocha.files into urls for conrib-mocha
         var smallScreenUrls = grunt.util._.map(grunt.file.expand(config.dialogSmallScreen.options.urls), function(file) 
         {
             return "http://localhost:9001/" + file + "?smallscreen=true";
@@ -340,9 +350,9 @@ module.exports = function(grunt)
 
         config.dialogSmallScreen.options.urls = smallScreenUrls;
 
-        grunt.config.set("contrib-qunit", config);
+        grunt.config.set("orig-mocha", config);
 
-        grunt.task.run("contrib-qunit");
+        grunt.task.run("orig-mocha");
     });
 
     // Custom tasks
@@ -352,9 +362,9 @@ module.exports = function(grunt)
 
     grunt.registerTask("default", ["verify", "build"]);
 
-    grunt.registerTask("test", ["connect", "qunit"]);
+    grunt.registerTask("test", ["less", "connect", "mocha"]);
 
-    grunt.registerTask("verify", ["less", "jshint", "test"]);
+    grunt.registerTask("verify", ["jshint", "test"]);
 
     grunt.registerTask("copyDist", ["copy:distJs", "copy:distCss", "copy:distOther"]);
 
