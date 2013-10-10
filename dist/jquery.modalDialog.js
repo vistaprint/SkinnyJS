@@ -132,7 +132,8 @@ if (!Object.keys)
         "ajax": parseBool,  
         "onajaxerror": parseFunction,
         "destroyOnClose": parseBool,     
-        "skin": parseNone   
+        "skin": parseNone,
+        "enableHistory": parseBool   
     };
 
     $.modalDialog = $.modalDialog || {};
@@ -191,8 +192,10 @@ if (!Object.keys)
         preventEventBubbling: true, // If true, click and touch events are prevented from bubbling up to the document
         onopen: null,
         onclose: null,
+        onbeforeopen: null,
         onbeforeclose: null,
-        onajaxerror: null
+        onajaxerror: null,
+        enableHistory: true // If the history module is enabled, this can be used to disable history if set false
     };
 
     // If the jquery.transit library is loaded, use CSS3 transitions instead of jQuery.animate()
@@ -1936,6 +1939,11 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
             return;
         }
 
+        if (this.settings.enableHistory === false)
+        {
+            return;
+        }
+
         // Build a querystring to encode the open state of the dialog
 
         var dialogType = "node";
@@ -1971,6 +1979,11 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     var closeHandler = function()
     {
         if (_disableHandlers)
+        {
+            return;
+        }
+
+        if (this.settings.enableHistory === false)
         {
             return;
         }

@@ -128,7 +128,8 @@ if (!Object.keys)
         "ajax": parseBool,  
         "onajaxerror": parseFunction,
         "destroyOnClose": parseBool,     
-        "skin": parseNone   
+        "skin": parseNone,
+        "enableHistory": parseBool   
     };
 
     $.modalDialog = $.modalDialog || {};

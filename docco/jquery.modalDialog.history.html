@@ -76,6 +76,11 @@ when the dialog was opened by the history plugin itself</p>             </td>   
             <span class="k">return</span><span class="p">;</span>
         <span class="p">}</span>
 
+        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">enableHistory</span> <span class="o">===</span> <span class="kc">false</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
 </pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Build a querystring to encode the open state of the dialog</p>             </td>             <td class="code">               <div class="highlight"><pre>
 
         <span class="kd">var</span> <span class="nx">dialogType</span> <span class="o">=</span> <span class="s2">&quot;node&quot;</span><span class="p">;</span>
@@ -111,6 +116,11 @@ it should add a history entry when closing dialogs</p>             </td>        
     <span class="kd">var</span> <span class="nx">closeHandler</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">_disableHandlers</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">enableHistory</span> <span class="o">===</span> <span class="kc">false</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="k">return</span><span class="p">;</span>
         <span class="p">}</span>
