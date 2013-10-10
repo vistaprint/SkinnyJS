@@ -72,6 +72,11 @@
             return;
         }
 
+        if (this.settings.enableHistory === false)
+        {
+            return;
+        }
+
         // Build a querystring to encode the open state of the dialog
 
         var dialogType = "node";
@@ -107,6 +112,11 @@
     var closeHandler = function()
     {
         if (_disableHandlers)
+        {
+            return;
+        }
+
+        if (this.settings.enableHistory === false)
         {
             return;
         }

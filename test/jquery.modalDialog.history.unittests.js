@@ -94,6 +94,34 @@ describe("jquery.modalDialog.history", function()
                     done();
                 });
         });
+
+        it("Ensure opening and closing a dialog with settings.enableHistory === false doesn't cause URL changes", function(done)
+        {
+            var options = $.extend({ enableHistory: false }, dialogOptions);
+
+            var dialog = $.modalDialog.create(options);
+
+            dialog
+                .open()
+                .then(function()
+                {
+                    assert.isTrue(dialog.isOpen(), "Ensure dialog is closed");
+
+                    var qs = $.currentQueryString();
+                    assert.isUndefined(qs[DIALOG_PARAM_NAME], "The dialog is open: there should be dialog parameters in the URL");
+
+                    return dialog.close();
+                })
+                .then(function()
+                {
+                    assert.isFalse(dialog.isOpen(), "Ensure dialog is closed");
+
+                    var qs = $.currentQueryString();
+                    assert.isUndefined(qs[DIALOG_PARAM_NAME], "The dialog is closed: there should not be dialog parameters in the URL");
+
+                    done();
+                });
+        });
     }
 
     testDialogHistoryManagement("node", { content: "#simpleDialog" });
