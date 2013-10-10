@@ -10,12 +10,10 @@ skinny.js is a collection of jQuery plugins that are useful for building web app
 Skinny libraries
 ------------------
 
-* [jQuery.partialLoad](http://vistaprint.github.io/SkinnyJS/docco/jquery.partialLoad.html): Works like jQuery.load, but is more intelligent about executing downloaded scripts (i.e. don't re-run scripts that are already loaded)
 * [jQuery.clientRect](http://vistaprint.github.io/SkinnyJS/docco/jquery.clientRect.html): Gets element coordinates several orders of magnitude more efficiently than jQuery.top()/left()
-* [jQuery.delimitedString](http://vistaprint.github.io/SkinnyJS/docco/jquery.delimitedString.html): Base class for parsing delimited strings, such as querystrings or CSS styles
-* [jQuery.queryString](http://vistaprint.github.io/SkinnyJS/docco/jquery.queryString.html): Parses querystrings (the opposite of jQuery.param())
 * [jQuery.css](http://vistaprint.github.io/SkinnyJS/docco/jquery.css.html): Parses and serializes CSS style strings
-* [jQuery.url](http://vistaprint.github.io/SkinnyJS/docco/jquery.url.html): Parses and serializes URLs.
+* [jQuery.customEvent](http://vistaprint.github.io/SkinnyJS/docco/jquery.customEvent.html): A class that implements an observable event, useful for cases where there's no DOM element involved.
+* [jQuery.delimitedString](http://vistaprint.github.io/SkinnyJS/docco/jquery.delimitedString.html): Base class for parsing delimited strings, such as querystrings or CSS styles
 * [jQuery.disableEvent](http://vistaprint.github.io/SkinnyJS/docco/jquery.disableEvent.html): Temporarily disables/enables all event handlers for a DOM element
 * [jQuery.hostIframe](http://vistaprint.github.io/SkinnyJS/docco/jquery.hostIframe.html): Manages references between iframe content and their host window
 * [jQuery.hoverDelay](http://vistaprint.github.io/SkinnyJS/docco/jquery.hoverDelay.html): Simplified, more practical version of jQuery.hoverIntent plugin. TODO reference
@@ -24,10 +22,13 @@ Skinny libraries
 * [jQuery.isVisibleKeyCode](http://vistaprint.github.io/SkinnyJS/docco/jquery.isVisibleKeyCode.html): Extension to jQuery.Event which indicates if a keypress is a visible character (i.e. not a function or modifier key)
 * [jQuery.msAjax](http://vistaprint.github.io/SkinnyJS/docco/jquery.msAjax.html): Microsoft friendly AJAX. Handles the quirks of ASMX, WCF, DataJsonContractSerializer, Microsoft's JSON date format, and provides an interface identical to jQuery.ajax().
 * [jQuery.ns](http://vistaprint.github.io/SkinnyJS/docco/jquery.ns.html): Declare namespaces without boilerplate
+* [jQuery.partialLoad](http://vistaprint.github.io/SkinnyJS/docco/jquery.partialLoad.html): Works like jQuery.load, but is more intelligent about executing downloaded scripts (i.e. don't re-run scripts that are already loaded)
 * [jQuery.postMessage](http://vistaprint.github.io/SkinnyJS/docco/jquery.postMessage.html): Provides cross-document messaging support, works on all browsers to IE6 (without URL fragments and polling).
 * [jQuery.proxyAll](http://vistaprint.github.io/SkinnyJS/docco/jquery.proxyAll.html): Binds functions to their host object (like jQuery.proxy(), but for all functions declared as properties of an object at once)
+* [jQuery.queryString](http://vistaprint.github.io/SkinnyJS/docco/jquery.queryString.html): Parses querystrings (the opposite of jQuery.param())
+* [jQuery.scrollAnchor](http://vistaprint.github.io/SkinnyJS/docco/jquery.scrollAnchor.html): Smooth scrolling support for anchor elements with internal references.
 * [jQuery.uncomment](http://vistaprint.github.io/SkinnyJS/docco/jquery.uncomment.html): Allows lazy evaluation of HTML blobs by removing them from comment blocks
-* [jQuery.customEvent](http://vistaprint.github.io/SkinnyJS/docco/jquery.customEvent.html): A class that implements an observable event, useful for cases where there's no DOM element involved.
+* [jQuery.url](http://vistaprint.github.io/SkinnyJS/docco/jquery.url.html): Parses and serializes URLs.
 <!-- * [jQuery.cookie](http://vistaprint.github.io/SkinnyJS/docco/jquery.cookie.html): TODO -->
 
 Skinny UI components
