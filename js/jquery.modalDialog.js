@@ -32,8 +32,10 @@
         preventEventBubbling: true, // If true, click and touch events are prevented from bubbling up to the document
         onopen: null,
         onclose: null,
+        onbeforeopen: null,
         onbeforeclose: null,
-        onajaxerror: null
+        onajaxerror: null,
+        enableHistory: true // If the history module is enabled, this can be used to disable history if set false
     };
 
     // If the jquery.transit library is loaded, use CSS3 transitions instead of jQuery.animate()
