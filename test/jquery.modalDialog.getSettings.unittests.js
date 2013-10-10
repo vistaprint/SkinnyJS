@@ -7,9 +7,14 @@ describe("$.modalDialog.getSettings()", function()
 {
     var assert = chai.assert;
 
+    function createDiv(attrs)
+    {
+        return $('<div ' + attrs +'>content</div>').appendTo(document.body);
+    }
+
     it("should parse the title attribute properly", function()
     {
-        var $div = $('<div data-dialog-title="foo">content</div>').appendTo(document.body);
+        var $div = createDiv('data-dialog-title="foo"');
         var settings = $.modalDialog.getSettings($div);
 
         assert.equal(settings.title, "foo");
@@ -19,7 +24,7 @@ describe("$.modalDialog.getSettings()", function()
 
     it("should not create a title property when no attribute is present", function()
     {
-        var $div = $('<div>content</div>').appendTo(document.body);
+        var $div = createDiv('');
         var settings = $.modalDialog.getSettings($div);
 
         assert.isUndefined(settings.title);
@@ -27,38 +32,99 @@ describe("$.modalDialog.getSettings()", function()
         $div.remove();
     });
 
-    it("should parse the enableHistory attribute properly as false", function()
+    function describeIntAttrs(name)
     {
-        var $div = $('<div data-dialog-enablehistory="false">content</div>').appendTo(document.body);
-        var settings = $.modalDialog.getSettings($div);
+        it("should parse the " + name + " attribute properly as an int", function()
+        {
+            var $div = createDiv('data-dialog-' + name.toLowerCase() + '="42"');
+            var settings = $.modalDialog.getSettings($div);
 
-        assert.isFalse(settings.enableHistory);
+            assert.equal(settings[name], 42);
 
-        $div.remove();
-    });
+            $div.remove();
+        });
 
-    it("should parse the enableHistory attribute properly as true", function()
+        it("should parse the " + name + " attribute properly as 0", function()
+        {
+            var $div = createDiv('data-dialog-' + name.toLowerCase() + '="0"');
+            var settings = $.modalDialog.getSettings($div);
+
+            assert.equal(settings[name], 0);
+
+            $div.remove();
+        });
+
+        it("should parse the " + name + " attribute properly as undefined when not present", function()
+        {
+            var $div = createDiv('');
+            var settings = $.modalDialog.getSettings($div);
+
+            assert.isUndefined(settings[name]);
+
+            $div.remove();
+        });
+    }
+
+    describeIntAttrs("initialHeight");
+    describeIntAttrs("maxWidth");
+
+    function describeBoolAttrs(name)
     {
-        var $div = $('<div data-dialog-enablehistory="true">content</div>').appendTo(document.body);
-        var settings = $.modalDialog.getSettings($div);
+        it("should parse the " + name + " attribute properly as true", function()
+        {
+            var $div = createDiv('data-dialog-' + name.toLowerCase() + '="true"');
+            var settings = $.modalDialog.getSettings($div);
 
-        assert.isTrue(settings.enableHistory);
+            assert.isTrue(settings[name]);
 
-        $div.remove();
-    });
+            $div.remove();
+        });
 
-    it("should parse the onopen attribute properly to a function", function()
+        it("should parse the " + name + " attribute properly as false", function()
+        {
+            var $div = createDiv('data-dialog-' + name.toLowerCase() + '="false"');
+            var settings = $.modalDialog.getSettings($div);
+
+            assert.isFalse(settings[name]);
+
+            $div.remove();
+        });
+
+        it("should parse the " + name + " attribute properly as undefined when not present", function()
+        {
+            var $div = createDiv('');
+            var settings = $.modalDialog.getSettings($div);
+
+            assert.isUndefined(settings[name]);
+
+            $div.remove();
+        });
+    }
+
+    describeBoolAttrs("enableHistory");
+    describeBoolAttrs("ajax");
+    describeBoolAttrs("destroyOnClose");
+
+    function describeEventAttrs(eventName)
     {
-        var $div = $('<div data-dialog-onopen="event.value = \'foo\';">content</div>').appendTo(document.body);
-        var settings = $.modalDialog.getSettings($div);
+        it("should parse the on" + eventName + " attribute properly to a function", function()
+        {
+            var $div = createDiv('data-dialog-on' + eventName + '="event.value = \'foo\';"');
+            var settings = $.modalDialog.getSettings($div);
 
-        assert.isFunction(settings.onopen);
-        
-        var e = {};
-        settings.onopen(e);
-        assert.equal(e.value, "foo");
+            assert.isFunction(settings["on" + eventName]);
+            
+            var e = {};
+            settings["on" + eventName](e);
+            assert.equal(e.value, "foo");
 
-        $div.remove();
-    });
+            $div.remove();
+        });
+    }
 
+    describeEventAttrs("open");
+    describeEventAttrs("close");
+    describeEventAttrs("beforeopen");
+    describeEventAttrs("beforeclose");
+    describeEventAttrs("ajaxerror");
 });
