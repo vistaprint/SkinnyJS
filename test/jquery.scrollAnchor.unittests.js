@@ -1,31 +1,42 @@
-$(document).ready(function()
+describe('jquery.scrollAnchor', function ()
 {
-    module('jquery.scrollAnchor');
-
-    var isInternalHash = $.fn.scrollAnchor._.isInternalHash;
-
-    QUnit.test('Test internal links', 6, function()
+    describe('_.isInternalHash', function()
     {
+        var isInternalHash = $.fn.scrollAnchor._.isInternalHash;
+
         function removeHash(uri)
         {
             return uri.indexOf('#') > -1 ? uri.substr(uri.indexOf('#')+1) : uri;
         }
 
-        document.location.hash = '';
-        var a = $('<a>').attr('href', removeHash(document.location.href));
-        a = a[0];
+        var a = document.createElement('a');
+        a.href = removeHash(document.location.href);
 
-        equal(isInternalHash('/some/link'), false, 'A local uri that is not an internal hash');
-        equal(isInternalHash(''), false, 'empty uri');
-        equal(isInternalHash('#hash'), true, 'simple uri with only a hash');
-        equal(isInternalHash(a.href, a), false, 'local document should be false with no hash: ' + a.href);
+        it('should recongize local URIs without hashes as false', function()
+        {
+            chai.assert.equal(isInternalHash('/some/link'), false);
+        });
+
+        it('should recongize empty hrefs as false', function()
+        {
+            chai.assert.equal(isInternalHash(''), false);
+        });
+
+        it('should recongize hash-only hrefs as true', function()
+        {
+            chai.assert.equal(isInternalHash('#hash'), true);
+        });
+
+        it('should recongize same-page links without hashes as false', function()
+        {
+            chai.assert.equal(isInternalHash(a.href, a), false);
+        });
 
         // add a hash to the test anchor link
-        a.hash = '#myhash';
-        equal(isInternalHash(a.href, a), true, 'internal absolute uri with hash');
-
-        // turn the href to a local link
-        a.href = document.location.pathname + '#myhash';
-        equal(isInternalHash(a.href, a), true, 'internal relative uri with hash');
+        it('should recongize same-page (internal) links with hashes as true', function()
+        {
+            a.hash = '#myhash';
+            chai.assert.equal(isInternalHash(a.href, a), true);
+        });
     });
 });
