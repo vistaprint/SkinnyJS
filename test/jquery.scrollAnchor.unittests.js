@@ -1,5 +1,7 @@
 describe('jquery.scrollAnchor', function ()
 {
+    var assert = chai.assert;
+    
     describe('_.isInternalHash', function()
     {
         var isInternalHash = $.fn.scrollAnchor._.isInternalHash;
@@ -14,29 +16,29 @@ describe('jquery.scrollAnchor', function ()
 
         it('should recongize local URIs without hashes as false', function()
         {
-            chai.assert.equal(isInternalHash('/some/link'), false);
+            assert.equal(isInternalHash('/some/link'), false);
         });
 
         it('should recongize empty hrefs as false', function()
         {
-            chai.assert.equal(isInternalHash(''), false);
+            assert.equal(isInternalHash(''), false);
         });
 
         it('should recongize hash-only hrefs as true', function()
         {
-            chai.assert.equal(isInternalHash('#hash'), true);
+            assert.equal(isInternalHash('#hash'), true);
         });
 
         it('should recongize same-page links without hashes as false', function()
         {
-            chai.assert.equal(isInternalHash(a.href, a), false);
+            assert.equal(isInternalHash(a.href, a), false);
         });
 
         // add a hash to the test anchor link
         it('should recongize same-page (internal) links with hashes as true', function()
         {
             a.hash = '#myhash';
-            chai.assert.equal(isInternalHash(a.href, a), true);
+            assert.equal(isInternalHash(a.href, a), true);
         });
     });
 });

@@ -1,11 +1,9 @@
-/**
- * Simple smooth scrolling for anchors with internal page hash references.
- *
- * To opt-in to have anchors animate their scrolling, add attr data-scroll-anchor:
- *
- *   <a href="#element" data-scroll-anchor>go to section!</a>
- *
- */
+// Simple smooth scrolling for anchors with internal page hash references.
+
+// To opt-in to have anchors animate their scrolling, add attr data-scroll-anchor:
+//
+//   <a href="#element" data-scroll-anchor>go to section!</a>
+
 (function($, doc)
 {
     var loc = doc.location;
