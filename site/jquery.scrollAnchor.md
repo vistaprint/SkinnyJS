@@ -3,7 +3,7 @@ layout: main
 title: jquery.scrollAnchor
 ---
 
-## jQuery.scrollAnchor plugin
+## jQuery.scrollAnchor
 
 Provides smooth scrolling to same-page reference links using anchor links.
 
