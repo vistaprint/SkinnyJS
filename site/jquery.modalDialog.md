@@ -123,6 +123,7 @@ exactly to the [Settings](#settings) you can pass to the modalDialog programmati
 * **data-dialog-maxWidth**: Sets the maximum width of the dialog. Note that on small mobile devices, the actual width may be smaller, so you should design the dialog content accordingly. Defaults to 600.
 * **data-dialog-destroyOnClose**: If true, the dialog DOM will be destroyed and all events removed when the dialog closes. Defaults to ''false''.   
 * **data-dialog-skin**: The name of the skin to use for the dialog. Defaults to "primary".   
+* **data-dialog-enablehistory**: If set to false, [history management](#managing_history_browser_backforward_buttons) will be disabled for this dialog, even if enabled globally. Defaults to ''true''. 
 
 {% highlight html %}
 <a href="#fruitsAndNuts" data-rel="modalDialog">Fruits and Nuts</a>
@@ -156,7 +157,7 @@ exactly to the [Settings](#settings) you can pass to the modalDialog programmati
 * **onclose**: A handler for the ''close'' event. See [Events](#events)] for more information.
 * **onbeforeclose**: A handler for the ''beforeclose'' event. See [Events](#events) for more information.
 * **onajaxerror**:  A handler for the ''ajaxerror'' event. See [Events](#events) for more information.
-
+* **enableHistory**: If set to false, [history management](#managing_history_browser_backforward_buttons) will be disabled for this dialog, even if enabled globally. Defaults to ''true''. 
 
 Here's an example. Note that you can (and usually should) do this all with *data-dialog* attributes:
 {% highlight javascript %}
@@ -514,6 +515,20 @@ $.modalDialog.enableHistory("someAlternateParameterName");
 {% endhighlight %}
 
 The history management module is disabled by default to accommodate more advanced applications that wish to manage history themselves (i.e. using a router in Backbone.js).
+
+You can also disable/enable history management per dialog:
+
+{% highlight javascript %}
+var dialog = $.modalDialog.create({ enableHistory: false });
+{% endhighlight %}
+
+Or declaratively:
+
+{% highlight html %}
+<div data-dialog-enablehistory="false" class="dialog-content">
+    content
+</div>
+{% endhighlight %}
 
 ### Skinning
 

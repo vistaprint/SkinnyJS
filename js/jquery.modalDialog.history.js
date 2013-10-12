@@ -13,6 +13,14 @@
     // or if there is no dialog specified, immediately
     $.modalDialog.enableHistory = function(dialogParamName)
     {
+        // Ensure enableHistory isn't called twice
+        if (_historyEnabled)
+        {
+            return;
+        }
+
+        _historyEnabled = true;
+
         _dialogParamName = dialogParamName || DEFAULT_DIALOG_PARAM_NAME;
 
         var deferred = new $.Deferred();
@@ -36,6 +44,7 @@
     var _pageIsAtInitialState = true;
     var _stateAlreadyProcessed = false;
     var _disableHandlers = false;
+    var _historyEnabled = false;
 
     var parseDialogParams = function(data)
     {
@@ -68,6 +77,11 @@
         // Hook to ensure the history handler doesn't run infinitely
         // when the dialog was opened by the history plugin itself
         if (_disableHandlers)
+        {
+            return;
+        }
+
+        if (this.settings.enableHistory === false)
         {
             return;
         }
@@ -107,6 +121,11 @@
     var closeHandler = function()
     {
         if (_disableHandlers)
+        {
+            return;
+        }
+
+        if (this.settings.enableHistory === false)
         {
             return;
         }

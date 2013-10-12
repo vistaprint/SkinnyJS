@@ -60,7 +60,7 @@ module.exports = function(grunt)
             },
             options:
             {
-                reporter: "List"
+                reporter: "Spec"
             }
         },
         docco:
