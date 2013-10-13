@@ -2,23 +2,20 @@
 {
     // jQuery 1.8+ stores event data in the private $._data() method,
     // whereas earlier versions stored using in the public fn.data() method.
-    var getData = $._data ?
-        function($el, name) { return $._data($el[0], name); } :
-        function($el, name) { return $el.data(name); };
-
-    var setData = $._data ?
-        function($el, name, value) { return $._data($el[0], name, value); } :
-        function($el, name, value) { return $el.data(name, value); };
+    var _data = function($el, key, value) 
+    { 
+        return $[$._data ? "_data" : "data"]($el[0], key, value);
+    };
 
     // Ensures that a data object is associated with a jQuery object
     // If an object already exists, return it. If not, store and return the default object.
     function ensureData($el, key, defaultObject)
     {
-        var data = getData($el, key);
+        var data = _data($el, key);
         if (typeof data == "undefined")
         {
             data = defaultObject || {};
-            setData($el, key, data);
+            _data($el, key, data);
         }
 
         return data;
@@ -33,7 +30,7 @@
     // Returns true if the specified event has been disabled
     $.fn.isEventDisabled = function(eventType)
     {
-        return eventType in (getData(this, "eventsDisabled") || {});
+        return eventType in (_data(this, "eventsDisabled") || {});
     };
 
     var _initialized = false;
@@ -57,7 +54,7 @@
     // Monkey patched version of $.event.add
     var addEvent = function(elem, types, handler, data, selector)
     {
-        var eventsDisabled = getData($(elem), "eventsDisabled");
+        var eventsDisabled = _data($(elem), "eventsDisabled");
         if (eventsDisabled)
         {
             var eventTypes = parseEventTypes(types);
@@ -111,7 +108,7 @@
             var $el = $(el);
 
             // jQuery stores event handlers in an object associated with the element
-            var events = getData($el, "events");
+            var events = _data($el, "events");
             if (events)
             {
                 $.each(eventTypes, function(i, eventType)
@@ -162,7 +159,7 @@
         this.each(function(i, el) 
         {
             var $el = $(el);
-            var eventsDisabled = getData($el, "eventsDisabled");
+            var eventsDisabled = _data($el, "eventsDisabled");
             if (eventsDisabled)
             {
                 var eventTypes = parseEventTypes(eventType);
