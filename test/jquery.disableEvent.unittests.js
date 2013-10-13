@@ -100,6 +100,18 @@ describe("jquery.disableEvent plugin", function()
             assert.isUndefined(window._buttonGlobalClick);
             assert.isUndefined(window._buttonButtonKeydown);
         });
+
+        it("should prevent native events", function()
+        {
+            var $el = $("<div />")
+                .attr("onclick", "window._buttonGlobalClick = true;")
+                .appendTo(document.body);
+
+            $el.disableEvent("click");
+            $el.trigger("click");
+            
+            assert.isUndefined(window._buttonGlobalClick);
+        });
     });
 
     describe("jquery.enableEvent()", function()
@@ -159,6 +171,23 @@ describe("jquery.disableEvent plugin", function()
             $el.enableEvent("mousedown");
             $el.trigger("mousedown");
             assert.isTrue(window._linkGlobalMousedown);
+        });
+
+        it("should re-enable native events", function()
+        {
+            var $el = $("<div />")
+                .attr("onclick", "window._buttonGlobalClick = true;")
+                .appendTo(document.body);
+
+            $el.disableEvent("click");
+            $el.trigger("click");
+            
+            assert.isUndefined(window._buttonGlobalClick);
+
+            $el.enableEvent("click");
+            $el.trigger("click");
+            
+            assert.isTrue(window._buttonGlobalClick);
         });
     });
 

@@ -107,6 +107,22 @@
         {
             var $el = $(el);
 
+            // if the element has HTML attribute-based events, 
+            // delete and re-add them with jQuery so the same mechanism can work on them.
+            $.each(eventTypes, function(i, eventType)
+            {
+                var attr = $el.attr("on" + eventType.toLowerCase());
+                if (attr)
+                {
+                    // Remove the native event
+                    el["on" + eventType] = null;
+
+                    // re-add with jQuery
+                    /*jshint evil:true*/
+                    $el.on(eventType, new Function("event", attr));
+                }
+            });
+
             // jQuery stores event handlers in an object associated with the element
             var events = _data($el, "events");
             if (events)
@@ -121,9 +137,6 @@
                         handlers = handlers.slice(0);
 
                         var eventsDisabled = ensureData($el, "eventsDisabled");
-
-                        //console.log("disable: " + eventType);
-                        //console.log($el[0]);
 
                         // There are already some handlers disabled. Add them to the existing list.
                         var disabledHandlers = eventsDisabled[eventType];
