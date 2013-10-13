@@ -2,6 +2,8 @@
 
 describe("jQuery.ns()", function()
 {
+    mocha.globals([ "ns1" ]);
+
     var assert = chai.assert;
 
     it("should be able to declare a single namespace", function()
