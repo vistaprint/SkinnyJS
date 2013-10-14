@@ -3,6 +3,7 @@ var dependencyTree =
 	"date-parse": { deps: [] },
 	"jquery.clientRect": { deps: [] },
 	"jquery.contentSize": { deps: ["jquery.clientRect"] },
+	"jquery.cookies": { deps: [] },
 	"jquery.css": { deps: ["jquery.delimitedString"] },
 	"jquery.customEvent": { deps: [] },
 	"jquery.delimitedString": { deps: [] },
@@ -66,6 +67,7 @@ var dependencyTree =
 	},
 	"jquery.proxyAll": { deps: [] },
 	"jquery.queryString": { deps: ["jquery.delimitedString"] },
+	"jquery.scrollAnchor": { deps: [] },
 	"jquery.uncomment": { deps: [] },
 	"jquery.url": { deps: ["jquery.queryString"] }
 };

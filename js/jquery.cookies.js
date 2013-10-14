@@ -95,7 +95,7 @@ $.cookies.enabled = function()
 // @return {string} or {object} (if the cookie contains subvalues)
 $.cookies.get = function(name, /* optional */ subCookie)
 {
-    var cookies = new $.cookies.Cookies();
+    var cookies = new Cookies();
     var cookie = cookies[name];
     if (cookie)
     {
@@ -103,7 +103,7 @@ $.cookies.get = function(name, /* optional */ subCookie)
         {
             if (cookie.subCookies)
             {
-                return cookie.subCookies[subCookie] || "";
+                return cookie.subCookies[subCookie] || null;
             }
 
             return null;
@@ -152,10 +152,10 @@ $.cookies.set = function(nameOrData, value, domain, permanent, clearExistingSubC
     }
 
     // Check for an existing cookie. If not, create it.
-    var cookie = (new $.cookies.Cookies())[name];
+    var cookie = (new Cookies())[name];
     if (!cookie)
     {
-        cookie = new $.cookies.Cookie();
+        cookie = new Cookie();
         cookie.name = name;
     }
 
@@ -205,7 +205,7 @@ $.cookies.remove = function(name, domain, path)
 
 // @class Represents a collection of cookies stored in the browser.
 // Exposes the cookies as a dictionary of cookie names and cookie objects.
-$.cookies.Cookies = function()
+var Cookies = function()
 {
     var me = this;
     var cookie = document.cookie.toString();
@@ -214,7 +214,7 @@ $.cookies.Cookies = function()
     var iLen = cookieArray.length;
     for (var i=0; i<iLen; i++)
     {
-        var oCookie = new $.cookies.Cookie();
+        var oCookie = new Cookie();
         oCookie.parse(cookieArray[i]);
         if (oCookie.name)
         {
@@ -225,7 +225,7 @@ $.cookies.Cookies = function()
 
 // @class Represents a cookie. Contains a value or a subvalues collection.
 // @constructor
-$.cookies.Cookie = function()
+var Cookie = function()
 {
     var me = this;
     
@@ -258,7 +258,7 @@ $.cookies.Cookie = function()
     {
         if (!me.name) 
         {
-            throw new Error("$.cookies.Cookie: Cookie name is null.");
+            throw new Error("Cookie: Cookie name is null.");
         }
     };
     

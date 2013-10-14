@@ -121,6 +121,40 @@ describe("jquery.cookies", function()
             assert.equal(value.sub2, "value2");
         });
 
+        it("should return a string when a sub-value is specified", function()
+        {
+            document.cookie = "cookie6=sub1=value1&sub2=value2; path=/;";
+
+            var value = $.cookies.get("cookie6", "sub1");
+
+            assert.equal(value, "value1");
+        });
+
+        it("should return null when a sub-value is specified that does not exist", function()
+        {
+            document.cookie = "cookie6=sub1=value1&sub2=value2; path=/;";
+
+            var value = $.cookies.get("cookie6", "sub3");
+
+            assert.isNull(value, "");
+        });
+
+        it("should return an empty string when a sub-value is specified that is empty", function()
+        {
+            document.cookie = "cookie6=sub1=&sub2=value2; path=/;";
+
+            var value = $.cookies.get("cookie6", "sub1");
+
+            assert.isNull(value, "");
+        });
+
+        it("should return null when a top-level cookie is specified that does not exist", function()
+        {
+            var value = $.cookies.get("idontexist", "sub");
+
+            assert.isNull(value);
+        });
+
         it("should read an encoded existing cookie with sub values as an object", function()
         {
             document.cookie = "cookie6=sub1=this%3Dthat&sub2=1%3B2; path=/;";
