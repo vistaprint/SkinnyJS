@@ -3,13 +3,11 @@
 
 $.cookies = {};
 
-/**
- * Encodes a cookie text value, making sure to replace %20 with +
- * and + with %2b. This is done because %20 gets lost going to the
- * server.
- * @param {string} sText The text to encode.
- * @return {string} The encoded text.
- */
+// Encodes a cookie text value, making sure to replace %20 with +
+// and + with %2b. This is done because %20 gets lost going to the
+// server.
+// @param {string} sText The text to encode.
+// @return {string} The encoded text.
 var _cookieEncode = function(sText) 
 {
     if (!sText)
@@ -21,22 +19,20 @@ var _cookieEncode = function(sText)
         sText = sText.toString();
     }
     
-    //first urlencode
+    // first urlencode
     sText = encodeURIComponent(sText);
     
-    //then replace + and space
+    // then replace + and space
     sText = sText.replace(/\+/gi, "%2B").replace(/\%20/gi, "+");
     
-    //return the text
+    // return the text
     return sText;    
 };
 
-/**
- * Decodes a cookie text value, making sure to replace + with %20
- * and %2b with +. This undoes _cookieEncode().
- * @param {string} sText The text to decode.
- * @return {string} The decoded text.
- */
+// Decodes a cookie text value, making sure to replace + with %20
+// and %2b with +. This undoes _cookieEncode().
+// @param {string} sText The text to decode.
+// @return {string} The decoded text.
 var _cookieDecode = function(sText) 
 {
     if (!sText)
@@ -48,10 +44,10 @@ var _cookieDecode = function(sText)
         sText = sText.toString();
     }
 
-    //first replace + and space
+    // first replace + and space
     sText = sText.replace(/\+/gi, "%20").replace(/\%2B/gi, "+");
 
-    //now urldecode
+    // now urldecode
     return decodeURIComponent(sText);
 };
 
@@ -77,10 +73,8 @@ $.cookies.setDefaults = function(domain, path, permanentDate)
     }
 };
 
-/**
- * Runs a test to determine if cookies are enabled on the browser.
- * @return {boolean} True if cookies are enabled, false if not.
- */
+// Runs a test to determine if cookies are enabled on the browser.
+// @return {boolean} True if cookies are enabled, false if not.
 $.cookies.enabled = function() 
 {   
     $.cookies.set("cookietest", "value");
@@ -95,12 +89,10 @@ $.cookies.enabled = function()
     }
 };
 
-/**
-* Gets a cookie or sub-cookie value.
-* @param {string} name The name of the cookie
-* @param {string} subCookie Optional. The sub-cookie value to get
-* @return {string} or {object} (if the cookie contains subvalues)
-*/
+// Gets a cookie or sub-cookie value.
+// @param {string} name The name of the cookie
+// @param {string} subCookie Optional. The sub-cookie value to get
+// @return {string} or {object} (if the cookie contains subvalues)
 $.cookies.get = function(name, /* optional */ subCookie)
 {
     var cookies = new $.cookies.Cookies();
@@ -130,15 +122,12 @@ $.cookies.get = function(name, /* optional */ subCookie)
     return null;
 };
 
-/**
-* Sets a cookie value.
-* @param {string} or {object} nameOrData The name of the cookie or an object containing the arguments.
-* @param {string} or {object} value The value to set. Either a single value or an object of key value pairs.
-* @param {string} domain (Optional) The domain in which to store the cookie. Uses the default domain if not specified.
-* @param {Boolean} permanent (Optional) Indicates the cookie should be permanent. False by default.
-* @param {Boolean} clearExistingSubCookies (Optional) If true, all sub-cookoies will be erased before writing new ones. 
-                                                    False by default.
-*/
+// Sets a cookie value.
+// @param {string} or {object} nameOrData The name of the cookie or an object containing the arguments.
+// @param {string} or {object} value The value to set. Either a single value or an object of key value pairs.
+// @param {string} domain (Optional) The domain in which to store the cookie. Uses the default domain if not specified.
+// @param {Boolean} permanent (Optional) Indicates the cookie should be permanent. False by default.
+// @param {Boolean} clearExistingSubCookies (Optional) If true, all sub-cookoies will be erased before writing new ones. False by default.
 $.cookies.set = function(nameOrData, value, domain, permanent, clearExistingSubCookies)
 {
     var name = nameOrData;
@@ -197,10 +186,8 @@ $.cookies.set = function(nameOrData, value, domain, permanent, clearExistingSubC
     cookie.save();
 };
 
-/**
- * Deletes the cookie with the specified name.
- * @param {string} sName The name of the cookie to delete.
- */
+// Deletes the cookie with the specified name.
+// @param {string} sName The name of the cookie to delete.
 $.cookies.remove = function(name, domain, path) 
 {
     var cookie = _cookieEncode(name) + "=a; path=" + (path || _cookiePath || "/") + "; expires=Wed, 17 Jan 1979 07:01:00 GMT";
@@ -216,10 +203,8 @@ $.cookies.remove = function(name, domain, path)
     document.cookie = cookie;
 };
 
-/**
-* @class Represents a collection of cookies stored in the browser.
-* Exposes the cookies as a dictionary of cookie names and cookie objects.
-*/
+// @class Represents a collection of cookies stored in the browser.
+// Exposes the cookies as a dictionary of cookie names and cookie objects.
 $.cookies.Cookies = function()
 {
     var me = this;
@@ -238,42 +223,35 @@ $.cookies.Cookies = function()
     }
 };
 
-/**
-* @class Represents a cookie. Contains a value or a subvalues collection.
-* @constructor
-*/
+// @class Represents a cookie. Contains a value or a subvalues collection.
+// @constructor
 $.cookies.Cookie = function()
 {
     var me = this;
     
-    /**
-    * The name of the cookie
-    * @type string
-    */
+
+    // The name of the cookie
+    // @type string
     this.name = null;
     
-    /**
-    * A collection of sub-values for the cookie. Null if there is a single value
-    * @type collection
-    */
+
+    // A collection of sub-values for the cookie. Null if there is a single value
+    // @type collection
     this.subCookies = null;
     
-    /**
-    * The value of the cookie. Null if there is a collection of sub-values
-    * @type string
-    */
+
+    // The value of the cookie. Null if there is a collection of sub-values
+    // @type string
     this.value = null;
     
-    /**
-    * The domain of the cookie. If null, the default domain is used.
-    * @type string
-    */
+
+    // The domain of the cookie. If null, the default domain is used.
+    // @type string
     this.domain = null;
     
-    /**
-    * Indicates the cookie persists on users machines
-    * @type boolean
-    */
+
+    // Indicates the cookie persists on users machines
+    // @type boolean
     this.isPermanent = false;
     
     var validateName = function()
@@ -284,10 +262,9 @@ $.cookies.Cookie = function()
         }
     };
     
-    /**
-    * Gets the cookie as a serialized string
-    * @return {String}
-    */
+
+    // Gets the cookie as a serialized string
+    // @return {String}
     this.serialize = function()
     {
         validateName();
@@ -316,9 +293,8 @@ $.cookies.Cookie = function()
         return cookie;
     };
     
-    /**
-    * Saves the value of the cookie- commits it to the browser's cookies.
-    */
+
+    // Saves the value of the cookie- commits it to the browser's cookies.
     this.save = function()
     {
         validateName();
@@ -329,10 +305,9 @@ $.cookies.Cookie = function()
         document.cookie = cookie;
     };
     
-    /**
-    * Takes the encoded value of the cookie as it is stored on disk, and populates the object with it.
-    * @param {string} sUnparsedValue The encoded cookie data
-    */
+
+    // Takes the encoded value of the cookie as it is stored on disk, and populates the object with it.
+    // @param {string} sUnparsedValue The encoded cookie data
     this.parse = function(sUnparsedValue)
     {
         if (!sUnparsedValue)
@@ -378,9 +353,8 @@ $.cookies.Cookie = function()
         }
     };
     
-    /**
-    * Gets the encoded value of the cookie (handles subcookies too).
-    */
+
+    // Gets the encoded value of the cookie (handles subcookies too).
     var getEncodedValue = function()
     {
         if (me.subCookies)

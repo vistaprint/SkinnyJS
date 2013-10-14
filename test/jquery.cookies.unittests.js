@@ -52,6 +52,13 @@ describe("jquery.cookies", function()
             assert.equal(document.cookie, "cookie4=sub1=value1&sub2=value2");
         });
 
+        it("should set a session cookie with sub values", function()
+        {
+            $.cookies.set("cookie4", { "sub1": "value1", "sub2": "value2" });
+
+            assert.equal(document.cookie, "cookie4=sub1=value1&sub2=value2");
+        });
+
         it("should merge subvalues into existing cookies by default", function()
         {
             $.cookies.set({ name: "cookie5", value: { "sub1": "value1", "sub2": "value2" } });
