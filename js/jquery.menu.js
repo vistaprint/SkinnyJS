@@ -85,29 +85,29 @@
         return merged;
     };
 
-    var _defaults = 
+    var _defaults =
     {
         // When true, the top level menu opens on mouseover (instead of on click, which is the default).
-        showOnHover: true, 
+        showOnHover: true,
 
         // When true, and showOnHover is enabled, clicking an A tag within a menu item that contains a submenu will be allowed to navigate
         // NOTE: This option is ignored when showOnHover is false.
         linksWithSubmenusEnabled: false,
 
         // Event which fires when a menu item is selected.
-        selected: $.noop, 
+        selected: $.noop,
 
         // Event which fires before a menu panel is show. Can be used to prevent the panel from showing.
-        beforeShowPanel: $.noop, 
+        beforeShowPanel: $.noop,
 
         // Event which fires before a menu panel is hidden. Can be used to prevent the panel from hiding.
-        beforeHidePanel: $.noop, 
+        beforeHidePanel: $.noop,
 
         // Event which fires after a panel is shown.
-        showPanelComplete: $.noop, 
+        showPanelComplete: $.noop,
 
         // Event which fires after a panel is hidden.
-        hidePanelComplete: $.noop, 
+        hidePanelComplete: $.noop,
 
         // Event which allows overriding the positioning of a panel when it is shown. 
         // This is defined by the skin by default, but can be overridden for any instance of the menu.
@@ -145,7 +145,7 @@
 
         // Mimics the delay time in Windows/MacOS
         var FADE_MS = 150;
-        
+
         // Creates a menu "group" from a jQuery collection of top-level
         // menu items. This will be called once for each element in the
         // top level jQuery object's collection.
@@ -162,15 +162,15 @@
                 parent: null,
                 children: []
             };
-            
+
             // When a top menu button is clicked, the menu
             // begins to react to hover events (mimics Windows/MacOS menus).
             var _clickHoverActivated = false;
-            
+
             // Used to signal the document click handler that 
             // the click came from the menu, so it should be ignored.
             var _ignoreDocumentClick = false;
-            
+
             var Panel = function($panel, $item)
             {
                 var me = this;
@@ -203,15 +203,15 @@
                     me.$item.addClass("menu-item-with-submenu");
 
                     me.$item.on("click touchstart", toggleClick);
-                    
+
                     // Set up event handlers to control submenus appearing on hover
-                    me.$item.hoverDelay({ 
-                        over: mouseOver, 
-                        out: mouseOut, 
-                        delayOver: me.isTopLevel && !_options.showOnHover ? 0 : 200, 
-                        delayOut:500 
+                    me.$item.hoverDelay({
+                        over: mouseOver,
+                        out: mouseOut,
+                        delayOver: me.isTopLevel && !_options.showOnHover ? 0 : 200,
+                        delayOut: 500
                     });
-                    
+
                     // Top menu items have different rules for rollovers (mimics Windows/MacOS menus)
                     if (me.isTopLevel)
                     {
@@ -221,7 +221,7 @@
                             {
                                 // Prevent mouseouts when rolling over tags within the same menu item.
                                 if (e.relatedTarget)
-                                {   
+                                {
                                     if ($(this).has(e.relatedTarget).length > 0 && !$(this).is(e.relatedTarget))
                                     {
                                         return;
@@ -238,8 +238,8 @@
                     {
                         // Event handler for clicking on panels. 
                         // Handles firing the "selected" event.
-                        me.$panel.click(function(e) 
-                        { 
+                        me.$panel.click(function(e)
+                        {
                             // Find the parent menu item of the clicked element.
                             var $clickedMenuItem = $(e.target).closest(".menu-item", me.$panel);
                         
@@ -448,16 +448,16 @@
                     if (me.$panel)
                     {
                         ev = getEvent(e);
-                    
+
                         _options.beforeShowPanel.call(me, ev);
-                    
+
                         // Give the handler a chance to cancel the event
                         if (ev.cancel)
-                        {    
+                        {
                             return;
                         }
                     }
-                    
+
                     // Ensure that all siblings are hidden
                     $.each(me.getSiblings(), function()
                     {
@@ -494,7 +494,7 @@
                         $panel.fadeIn(FADE_MS, showComplete);
                     }
                 };
-                
+
                 var showComplete = function(e)
                 {
                     me.isOpen = true;
@@ -502,7 +502,7 @@
                     
                     _options.showPanelComplete.call(me, getEvent(e));
                 };
-        
+
                 this.hide = function(e)
                 {
                     if (!me.isOpen || me.transitioning)
@@ -513,12 +513,12 @@
                     if (me.$panel)
                     {
                         var ev = getEvent(e);
-                    
+
                         _options.beforeHidePanel.call(me, ev);
-                    
+
                         // Give the handler a chance to cancel the event
                         if (ev.cancel)
-                        {    
+                        {
                             return;
                         }
                     }
@@ -529,7 +529,7 @@
                     {
                         return;
                     }
-                    
+
                     me.transitioning = true;
 
                     $.each(me.children, function()
@@ -551,7 +551,7 @@
                         $panel.fadeOut(FADE_MS, hideComplete);
                     }
                 };
-                
+
                 var hideComplete = function(e)
                 {
                     me.isOpen = false;
@@ -559,7 +559,7 @@
 
                     _options.hidePanelComplete.call(me, getEvent(e));
                 };
-                
+
                 var toggleClick = function(e)
                 {
                     var isBubbledClick = false;
@@ -593,12 +593,12 @@
                     {
                         return;
                     }
-                    
+
                     me[me.isOpen ? "hideClick" : "showClick"](e);
-                    
+
                     if (!me.isTopLevel)
                     {
-                        e.stopPropagation();            
+                        e.stopPropagation();
                     }
                     else
                     {
