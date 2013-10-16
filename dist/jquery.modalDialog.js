@@ -6,6 +6,7 @@
 /// <reference path="jquery.hostIframe.js" />
 /// <reference path="jquery.proxyAll.js" />
 /// <reference path="jquery.disableEvent.js" />
+/// <reference path="jquery.partialLoad.js" />
 
 (function($)
 {
