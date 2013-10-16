@@ -65,7 +65,7 @@ $.fn.clientRect = function()
             return rect;
         }
 
-        // Handles some quirks in the oldIE box model, including some bizarre behavior around the starting coordinates.;
+        // Handles some quirks in the oldIE box model, including some bizarre behavior around the starting coordinates.
         var win = getWindow(doc);
 
         rect.top  = box.top  + (win.pageYOffset || docElem.scrollTop) - (docElem.clientTop  || 0);
@@ -76,7 +76,7 @@ $.fn.clientRect = function()
     }
     else
     {   
-        // Support ancient browsers by falling back to jQuery.innerWidth/Height()
+        // Support ancient browsers by falling back to jQuery.outerWidth/Height()
         if (this.css("display") == "none")
         {
             return rect;
