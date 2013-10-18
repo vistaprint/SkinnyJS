@@ -174,27 +174,27 @@
             var Panel = function($panel, $item)
             {
                 var me = this;
-                
+
                 this.$panel = $panel;
                 this.$item = $item || $panel.closest(".menu-item");
                 this.$parentPanel = this.$item.closest(".menu-panel");
                 this.isTopLevel = this.$parentPanel.length === 0;
-                
+
                 this.parent = null;
                 this.children = [];
-                
+
                 // Indicates the Panel is open (expanded)
                 this.isOpen = false;
-                
+
                 // Indicates that the panel is in the middle of showing/hiding
                 this.transitioning = false;
-                
+
                 // Store a reference to this instance from the DOM element
                 if (this.$panel)
                 {
                     this.$panel.data("PanelInstance", this);
                 }
-                
+
                 // Bind event handlers to DOM elements
                 var init = function()
                 {
@@ -242,7 +242,7 @@
                         {
                             // Find the parent menu item of the clicked element.
                             var $clickedMenuItem = $(e.target).closest(".menu-item", me.$panel);
-                        
+
                             if ($clickedMenuItem)
                             {
                                 // If the menu item has a submenu, then it shouldn't
@@ -252,9 +252,9 @@
                                     var ev = getEvent(e);
                                     ev.$selectedItem = $clickedMenuItem;
                                     ev.selectedItem = $clickedMenuItem[0];
-                                
+
                                     _options.selected.call(this, ev);
-                                
+
                                     // Give the event handler a chance to cancel the event.
                                     if (ev.cancel)
                                     {
@@ -267,12 +267,12 @@
                                     {
                                         return;
                                     }
-                                
+
                                     // The clicked element was a menu item with no sub-menu: hide.
                                     hideAllClick(e);
                                 }
                             }
-                        
+
                             e.stopPropagation();
                         });
 
@@ -318,9 +318,9 @@
                     me.parent = me.$parentPanel.data("PanelInstance") || _rootMenu;
                     me.parent.children.push(me);
                 };
-                
+
                 var _level = null;
-                
+
                 // Gets the level of the Panel in the heirarchy. 0 is the root menu item.
                 this.getLevel = function()
                 {
@@ -334,12 +334,12 @@
                             _level++;
                         }
                     }
-                    
+
                     return _level;
                 };
-                
+
                 var _siblings;
-                
+
                 // Gets an array of the siblings of this Panel (Panels with the same parent)
                 this.getSiblings = function()
                 {
@@ -360,7 +360,7 @@
 
                     return _siblings;
                 };
-                
+
                 // TODO use a jQuery event
                 // Creates a new "fake" event for passing to event handlers
                 var getEvent = function(e)
@@ -380,7 +380,7 @@
                         }
                     };
                 };
-                
+
                 // Adds/removes the "hover" class. Allows callers to 
                 // define their own rollover states.
                 // Note: We cant use CSS hover pseudo-classes because the rules
@@ -389,7 +389,7 @@
                 {
                     highlightMenuItem(me.$item, enabled);
                 };
-                
+
                 // Determines if the current menu should show on hover (in addition to click)
                 var shouldShowSubmenuOnHover = function()
                 {
@@ -411,7 +411,7 @@
                     {
                         highlight(true);
                     }
-                    
+
                     if (!shouldShowSubmenuOnHover())
                     {
                         return;
@@ -419,14 +419,14 @@
 
                     me.show(e);
                 };
-                
+
                 var mouseOut = function(e)
                 {
                     if (me.isTopLevel && !_options.showOnHover)
                     {
                         return;
                     }
-                
+
                     if (!shouldShowSubmenuOnHover())
                     {
                         return;
@@ -434,7 +434,7 @@
 
                     me.hide(e);
                 };
-                
+
                 // Shows the panel
                 this.show = function(e)
                 {
@@ -450,14 +450,14 @@
                         ev = getEvent(e);
 
                         _options.beforeShowPanel.call(me, ev);
-
+                    
                         // Give the handler a chance to cancel the event
                         if (ev.cancel)
                         {
                             return;
                         }
                     }
-
+                    
                     // Ensure that all siblings are hidden
                     $.each(me.getSiblings(), function()
                     {
@@ -479,7 +479,7 @@
                     // Hook for positioning strategies
                     ev = getEvent(e);
                     _options.position(ev);
-                    
+
                     if (_options.animationShow)
                     {
                         _options.animationShow.call(me, ev, showComplete);
@@ -499,7 +499,7 @@
                 {
                     me.isOpen = true;
                     me.transitioning = false;
-                    
+
                     _options.showPanelComplete.call(me, getEvent(e));
                 };
 
@@ -536,7 +536,7 @@
                     {
                         this.hide(e);
                     });
-                    
+
                     if (_options.animationHide)
                     {
                         _options.animationHide.call(me, getEvent(e), hideComplete);
@@ -581,6 +581,7 @@
                         e.stopPropagation();
                         return;
                     }
+
                     // For touch events that aren't from leaf menu items,
                     // cancel the default event so touching the menu doesn't cause navigation.
                     else if (e.type == "touchstart")
@@ -605,15 +606,14 @@
                         _ignoreDocumentClick = true;
                     }
                 };
-                
+
                 this.showClick = function(e)
                 {
-                    
                     if (me.isTopLevel)
                     {
                         _clickHoverActivated = true;
                     }
-                    
+
                     me.show(e);
                 };
                 
@@ -623,7 +623,7 @@
                     {
                         _clickHoverActivated = false;
                     }
-                    
+
                     me.hide(e);
                 };
 
@@ -632,10 +632,10 @@
                     _clickHoverActivated = false;
                     me.hide(e);
                 };
-                
+
                 init.apply(this);
             };
-            
+
             // Hides all menus and submenus
             var hideAllClick = function(e)
             {
@@ -646,7 +646,7 @@
                     this.hideForce(e);
                 });
             };
-            
+
             // Handler for a document click to close all menus
             var documentClickHandler = function(e)
             {
@@ -674,15 +674,15 @@
             };
 
             // Create a Panel instance for each menu panel, store in an array
-            $topLevelItems.find(".menu-panel").each(function() 
-            { 
-                _panels.push(new Panel($(this))); 
+            $topLevelItems.find(".menu-panel").each(function()
+            {
+                _panels.push(new Panel($(this)));
             });
-            
+
             // Top level items without a submenu need a Panel instance as well, to interact with other top level items.
-            $topLevelItems.not(".menu-item-with-submenu").each(function() 
-            { 
-                _panels.push(new Panel(null, $(this))); 
+            $topLevelItems.not(".menu-item-with-submenu").each(function()
+            {
+                _panels.push(new Panel(null, $(this)));
             });
 
             // Build a tree representing the parent/child relationships in the menu
@@ -693,20 +693,20 @@
             // rules for rollovers. jQuery.find() only includes decendants, no the current set,
             // which is the top level menu items.
             $topLevelItems.find(".menu-item").hover(
-                function() { highlightMenuItem($(this), true); }, 
+                function() { highlightMenuItem($(this), true); },
                 function() { highlightMenuItem($(this), false); })
                 .each(function() { highlightMenuItem($(this), false); });
-            
+
             // Bind a handler to close the menu if it is clicked off.
             $(document).on("click", documentClickHandler);
         };
-        
+
         // Loop through each menu container and create a menu "group".
-        this.each(function() 
+        this.each(function()
         {
             // Find all the top-level menu items within the container.
-            var $topLevelItems = findUntil($(this), function(elem, results) 
-            { 
+            var $topLevelItems = findUntil($(this), function(elem, results)
+            {
                 if ($(elem).hasClass("menu-item"))
                 {
                     results.push(elem);
@@ -720,11 +720,11 @@
             // containing all the top level menu items.
             createMenuFromTopMenuItems($topLevelItems);
         });
-        
+
         // Allow the jQuery chain to remain unbroken.
         return this;
     };
 
     var _allCloseHandlers = [];
-    
+
 })(jQuery);
