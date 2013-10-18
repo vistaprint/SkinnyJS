@@ -5,7 +5,7 @@
 $.support.getBoundingClientRect = "getBoundingClientRect" in document.documentElement;
 
 // Gets the window containing the specified element.
-function getWindow(elem) 
+function getWindow(elem)
 {
     return $.isWindow(elem) ?
         elem :
@@ -20,7 +20,7 @@ $.fn.clientRect = function()
     var rect = {
         top: 0,
         left: 0,
-        width: 0, 
+        width: 0,
         height: 0,
         bottom: 0,
         right: 0
@@ -41,18 +41,18 @@ $.fn.clientRect = function()
     if ($.support.getBoundingClientRect)
     {
         // This is derived from the internals of jQuery.fn.offset
-        try 
+        try
         {
             box = elem.getBoundingClientRect();
-        } 
-        catch(e) 
+        }
+        catch(e)
         {
             // OldIE throws an exception when trying to get a client rect for an element
             // that hasn't been rendered, or isn't in the DOM.
             // For consistency, return a 0 rect.
         }
         
-        if (!box) 
+        if (!box)
         {
             return rect;
         }
@@ -75,7 +75,7 @@ $.fn.clientRect = function()
         rect.height = box.bottom - box.top;
     }
     else
-    {   
+    {
         // Support ancient browsers by falling back to jQuery.outerWidth/Height()
         if (this.css("display") == "none")
         {
