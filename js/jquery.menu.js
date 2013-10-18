@@ -1,3 +1,5 @@
+/// <reference path="jquery.hoverDelay.js" />
+/// <reference path="jquery.pointerEvents.js" />
 // TODO: Support modifying state in the future by storing an object using $.data(), implement $(selector).dropDownMenu("option", value);
 // TODO: Accessibility: Keyboard navigation (tab navigation already works)- close submenus on pressing enter (maybe)
 
@@ -202,12 +204,10 @@
                     // from those without one.
                     me.$item.addClass("menu-item-with-submenu");
 
-                    me.$item.on("click touchstart", toggleClick);
+                    me.$item.on("pointerdown", toggleClick);
 
                     // Set up event handlers to control submenus appearing on hover
-                    me.$item.hoverDelay({
-                        over: mouseOver,
-                        out: mouseOut,
+                    me.$item.hoverDelay(mouseOver, mouseOut, {
                         delayOver: me.isTopLevel && !_options.showOnHover ? 0 : 200,
                         delayOut: 500
                     });
@@ -584,11 +584,8 @@
 
                     // For touch events that aren't from leaf menu items,
                     // cancel the default event so touching the menu doesn't cause navigation.
-                    else if (e.type == "touchstart")
-                    {
-                        e.preventDefault();
-                        e.stopPropagation();
-                    }
+                    e.preventDefault();
+                    e.stopPropagation();
 
                     if (me.transitioning)
                     {
