@@ -22,7 +22,7 @@ function triggerCustomEvent (obj, eventType, event)
 // utility to just proxy through an event to a new event name
 function proxyEventType (oldEventType, newEventType)
 {
-	return function (data, namespace)
+	return function ()
 	{
 		var thisObject = this;
 		$(this).on(oldEventType, function (event)
@@ -69,7 +69,7 @@ function standardizePointerEvent (event)
 			{
 				evObj.pointerType = evObj.POINTER_TYPE_TOUCH;
 			}
-			else if (/^mouse/i.test(event.type) || event.type == 'click')
+			else if (/^mouse/i.test(event.type) || event.type == "click")
 			{
 				evObj.pointerType = evObj.POINTER_TYPE_MOUSE;
 			}
@@ -81,8 +81,6 @@ function standardizePointerEvent (event)
 		evObj.pointerType = evObj.POINTER_TYPE_UNAVAILABLE;
 	}
 
-	console.log(event.type, evObj.pointerType);
-
 	return event;
 }
 
@@ -92,7 +90,7 @@ if (!support.pointer)
 {
 	$.event.special.pointerdown =
 	{
-		setup: function (data, namespace)
+		setup: function ()
 		{
 			var thisObject = this,
 				$this = $( thisObject );
@@ -100,39 +98,34 @@ if (!support.pointer)
 			// add support for touch events
 			if (support.touch)
 			{
-				$this.on('touchstart', function (event)
+				$this.on("touchstart", function (event)
 				{
 					// prevent the click event from firing as well
 					event.preventDefault();
 
-					triggerCustomEvent(thisObject, 'pointerdown', event);
+					triggerCustomEvent(thisObject, "pointerdown", event);
 				});
 			}
 
 			// now add support for mouse events
-			$this.on('click', function (event)
+			$this.on("click", function (event)
 			{
-				// me.trigger('pointerdown', event);
-				triggerCustomEvent(thisObject, 'pointerdown', event);
+				// me.trigger("pointerdown', event);
+				triggerCustomEvent(thisObject, "pointerdown", event);
 			});
-		},
-
-		teardown: function (data, namespace)
-		{
-			console.log('teardown', this);
 		}
 	};
 
 	// pointer over replaces mouseover, there is no equivalent for touch events
 	$.event.special.pointerover =
 	{
-		setup: proxyEventType('mouseover', 'pointerover')
+		setup: proxyEventType("mouseover", "pointerover")
 	};
 
 	// pointerout replaces mouseout, there is no equivalent for touch events
 	$.event.special.pointerout =
 	{
-		setup: proxyEventType('mouseout', 'pointerout')
+		setup: proxyEventType("mouseout", "pointerout")
 	};
 }
 
@@ -142,30 +135,30 @@ else if (navigator.msPointerEnabled && !navigator.pointerEnabled)
 {
 	$.event.special.pointerdown =
 	{
-		setup: function (data, namespace)
+		setup: function ()
 		{
 			var thisObject = this;
-			$(this).on('MSPointerDown', function (event)
+			$(this).on("MSPointerDown", function (event)
 			{
-				triggerCustomEvent(thisObject, 'pointerdown', event);
+				triggerCustomEvent(thisObject, "pointerdown", event);
 			});
 
 			// prevent click event from happening.. since you cannot
 			// cancel the click event from the pointerdown event
-			$(this).on('click', preventDefault);
+			$(this).on("click", preventDefault);
 		}
 	};
 
 	// called before pointerdown for devices without hover support (see spec http://www.w3.org/Submission/pointer-events/ 3.2.6)
 	$.event.special.pointerover =
 	{
-		setup: proxyEventType('MSPointerOver', 'pointerover')
+		setup: proxyEventType("MSPointerOver", "pointerover")
 	};
 
 	// called after pointerup for devices without hover support (see spec 3.2.7)
 	$.event.special.pointerout =
 	{
-		setup: proxyEventType('MSPointerOut', 'pointerout')
+		setup: proxyEventType("MSPointerOut", "pointerout")
 	};
 }
 
