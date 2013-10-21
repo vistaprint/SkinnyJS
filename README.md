@@ -28,9 +28,9 @@ Skinny libraries
 * [jQuery.proxyAll](http://vistaprint.github.io/SkinnyJS/jquery.proxyAll.html): Binds functions to their host object (like jQuery.proxy(), but for all functions declared as properties of an object at once)
 * [jQuery.queryString](http://vistaprint.github.io/SkinnyJS/jquery.queryString.html): Parses querystrings (the opposite of jQuery.param())
 * [jQuery.scrollAnchor](http://vistaprint.github.io/SkinnyJS/jquery.scrollAnchor.html): Smooth scrolling support for anchor elements with internal references.
-* [jQuery.uncomment](http://vistaprint.github.io/SkinnyJS/jquery.uncomment.html): Allows lazy evaluation of HTML blobs by removing them from comment blocks
+* [jQuery.uncomment](http://vistaprint.github.io/SkinnyJS/jquery.uncomment.html): Allows lazy evaluation of HTML blobs by removing them from comment blocks.
 * [jQuery.url](http://vistaprint.github.io/SkinnyJS/jquery.url.html): Parses and serializes URLs.
-<!-- * [jQuery.cookie](http://vistaprint.github.io/SkinnyJS/jquery.cookie.html): TODO -->
+* [jQuery.cookie](http://vistaprint.github.io/SkinnyJS/jquery.cookie.html): Practically oriented cookie management.
 
 Skinny UI components
 ------------------
