@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="hand-1.1.2.js"></script>
+	<script type="text/javascript" src="javascripts/jquery.js"></script>
+	<script type="text/javascript" src="dist/jquery.pointerEvents.js"></script>
+	<script type="text/javascript">
+		function log(e)
+		{
+			$('<li>').text((+new Date) + ': ' + e.type + '-' + e.originalEvent.pointerType).appendTo($('ul'));
+		}
+
+		$(function()
+		{
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext("2d");
+			ctx.fillStyle = "black";
+			ctx.beginPath();
+
+			var x;
+			var y;
+
+			$('canvas').on({
+				pointerdown: function (e)
+				{
+					log(e);
+					x = e.originalEvent.clientX;
+					y = e.originalEvent.clientY;
+					ctx.moveTo(x, y);
+
+					e.preventDefault();
+					e.stopPropagation();
+				},
+
+				pointerup: function (e)
+				{
+					log(e);
+					x = null;
+					y = null;
+				},
+
+				pointermove: function(e)
+				{
+					if (x == null || y == null)
+					{
+						return;
+					}
+					log(e);
+					x = e.originalEvent.clientX;
+					y = e.originalEvent.clientY;
+					x -= canvas.offsetLeft;
+					y -= canvas.offsetTop;
+					ctx.lineTo(x, y);
+					ctx.stroke();
+					ctx.moveTo(x, y);
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+	<canvas id="canvas" width="300" height="300" style="border: 1px solid black;"></canvas>
+	<h1>log</h1>
+	<ul></ul>
+</body>
+</html>

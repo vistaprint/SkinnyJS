@@ -7,6 +7,7 @@
 /// <reference path="jquery.proxyAll.js" />
 /// <reference path="jquery.disableEvent.js" />
 /// <reference path="jquery.partialLoad.js" />
+/// <reference path="jquery.pointerEvents.js" />
 
 (function($)
 {
@@ -616,13 +617,6 @@ if (!Object.keys)
                 }
             }
 
-            /*          
-            if (this.settings.preventEventBubbling)
-            {
-                this.$el.on("click mousemove mousedown mouseup touchstart touchmove touchend", function(e) { e.stopPropagation(); });
-            }
-            */
-
             this.$contentContainer = this.$el.find(".dialog-content-container");
             this.$header = this.$el.find(".dialog-header");
             this.$closeButton = this.$el.find(".dialog-close-button").on("click", this._close);
@@ -721,7 +715,7 @@ if (!Object.keys)
             return;
         }
 
-        this.$header.addClass("draggable").on("mousedown touchstart", this._startDrag);
+        this.$header.addClass("draggable").on("pointerdown", this._startDrag);
     };
 
     ModalDialog.prototype._startDrag = function(e)
@@ -740,22 +734,22 @@ if (!Object.keys)
         this._initialMousePos = getMousePos(e);
         this._initialDialogPos = this.$container.offset();
 
-        this.$container.on("mousemove touchmove", this._drag);
-        this.$bg.on("mousemove touchmove", this._drag);
+        this.$bg.on("pointermove", this._drag);
+        this.$container.on("pointermove", this._drag);
 
         // make sure the mouseup also works on the background
-        this.$bg.on("mouseup touchend", this._stopDrag);
+        this.$bg.on("pointerup", this._stopDrag);
 
         //chrome node is the last element that can handle events- it has cancel bubble set
-        this.$container.on("mouseup touchend", this._stopDrag);
+        this.$container.on("pointerup", this._stopDrag);
 
         if (this.$frame)
         {
             try
             {
                 this.$frame.iframeDocument().find("body")
-                    .on("mousemove touchmove", this._drag)
-                    .on("mouseup touchend", this._stopDrag);
+                    .on("pointermove", this._drag)
+                    .on("pointerup", this._stopDrag);
             }
             catch (ex)
             {
@@ -795,17 +789,19 @@ if (!Object.keys)
         e.preventDefault();
 
         // Remove the drag events
-        this.$el.off("mousemove touchmove", this._drag);
-        this.$el.off("mouseup touchend", this._stopDrag);
-        this.$container.off("mouseup touchend", this._stopDrag);
+        this.$bg.off("pointermove", this._drag);
+        this.$container.off("pointermove", this._drag);
+
+        this.$bg.off("pointerup", this._stopDrag);
+        this.$container.off("pointerup", this._stopDrag);
 
         if (this.$frame)
         {
             try
             {
                 this.$frame.iframeDocument().find("body")
-                    .off("mousemove touchmove", this._drag)
-                    .off("mouseup touchend", this._stopDrag);
+                    .off("pointermove", this._drag)
+                    .off("pointerup", this._stopDrag);
             }
             catch (ex) { }
         }
@@ -817,13 +813,6 @@ if (!Object.keys)
     // returns an object with top and left
     var getMousePos = function(e)
     {
-        var touches = e.originalEvent ? e.originalEvent.touches : null;
-
-        if (touches && touches.length >= 0)
-        {
-            e = touches.item(0); 
-        }
-
         var mousePos = {
             left: e.clientX,
             top: e.clientY

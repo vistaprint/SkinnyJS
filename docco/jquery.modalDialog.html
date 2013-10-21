@@ -457,13 +457,6 @@ TODO: Move this to a jQuery mobile fixes specific module</p>             </td>  
                 <span class="p">}</span>
             <span class="p">}</span>
 
-            <span class="cm">/*          </span>
-<span class="cm">            if (this.settings.preventEventBubbling)</span>
-<span class="cm">            {</span>
-<span class="cm">                this.$el.on(&quot;click mousemove mousedown mouseup touchstart touchmove touchend&quot;, function(e) { e.stopPropagation(); });</span>
-<span class="cm">            }</span>
-<span class="cm">            */</span>
-
             <span class="k">this</span><span class="p">.</span><span class="nx">$contentContainer</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s2">&quot;.dialog-content-container&quot;</span><span class="p">);</span>
             <span class="k">this</span><span class="p">.</span><span class="nx">$header</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s2">&quot;.dialog-header&quot;</span><span class="p">);</span>
             <span class="k">this</span><span class="p">.</span><span class="nx">$closeButton</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s2">&quot;.dialog-close-button&quot;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_close</span><span class="p">);</span>
@@ -562,7 +555,7 @@ Where you gonna drag to?</p>             </td>             <td class="code">    
             <span class="k">return</span><span class="p">;</span>
         <span class="p">}</span>
 
-        <span class="k">this</span><span class="p">.</span><span class="nx">$header</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&quot;draggable&quot;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;mousedown touchstart&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_startDrag</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">$header</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&quot;draggable&quot;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;pointerdown&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_startDrag</span><span class="p">);</span>
     <span class="p">};</span>
 
     <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_startDrag</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
@@ -581,22 +574,22 @@ Where you gonna drag to?</p>             </td>             <td class="code">    
         <span class="k">this</span><span class="p">.</span><span class="nx">_initialMousePos</span> <span class="o">=</span> <span class="nx">getMousePos</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">_initialDialogPos</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$container</span><span class="p">.</span><span class="nx">offset</span><span class="p">();</span>
 
-        <span class="k">this</span><span class="p">.</span><span class="nx">$container</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;mousemove touchmove&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_drag</span><span class="p">);</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">$bg</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;mousemove touchmove&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_drag</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">$bg</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;pointermove&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_drag</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">$container</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;pointermove&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_drag</span><span class="p">);</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-40">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-40">&#182;</a>               </div>               <p>make sure the mouseup also works on the background</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">this</span><span class="p">.</span><span class="nx">$bg</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;mouseup touchend&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_stopDrag</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">$bg</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;pointerup&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_stopDrag</span><span class="p">);</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-41">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-41">&#182;</a>               </div>               <p>chrome node is the last element that can handle events- it has cancel bubble set</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">this</span><span class="p">.</span><span class="nx">$container</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;mouseup touchend&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_stopDrag</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">$container</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;pointerup&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_stopDrag</span><span class="p">);</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$frame</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="k">try</span>
             <span class="p">{</span>
                 <span class="k">this</span><span class="p">.</span><span class="nx">$frame</span><span class="p">.</span><span class="nx">iframeDocument</span><span class="p">().</span><span class="nx">find</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;mousemove touchmove&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_drag</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;mouseup touchend&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_stopDrag</span><span class="p">);</span>
+                    <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;pointermove&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_drag</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;pointerup&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_stopDrag</span><span class="p">);</span>
             <span class="p">}</span>
             <span class="k">catch</span> <span class="p">(</span><span class="nx">ex</span><span class="p">)</span>
             <span class="p">{</span>
@@ -636,17 +629,19 @@ Where you gonna drag to?</p>             </td>             <td class="code">    
         <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-43">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-43">&#182;</a>               </div>               <p>Remove the drag events</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;mousemove touchmove&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_drag</span><span class="p">);</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;mouseup touchend&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_stopDrag</span><span class="p">);</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">$container</span><span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;mouseup touchend&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_stopDrag</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">$bg</span><span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;pointermove&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_drag</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">$container</span><span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;pointermove&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_drag</span><span class="p">);</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">$bg</span><span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;pointerup&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_stopDrag</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">$container</span><span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;pointerup&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_stopDrag</span><span class="p">);</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$frame</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="k">try</span>
             <span class="p">{</span>
                 <span class="k">this</span><span class="p">.</span><span class="nx">$frame</span><span class="p">.</span><span class="nx">iframeDocument</span><span class="p">().</span><span class="nx">find</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;mousemove touchmove&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_drag</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;mouseup touchend&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_stopDrag</span><span class="p">);</span>
+                    <span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;pointermove&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_drag</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;pointerup&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_stopDrag</span><span class="p">);</span>
             <span class="p">}</span>
             <span class="k">catch</span> <span class="p">(</span><span class="nx">ex</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
         <span class="p">}</span>
@@ -658,13 +653,6 @@ Where you gonna drag to?</p>             </td>             <td class="code">    
 returns an object with top and left</p>             </td>             <td class="code">               <div class="highlight"><pre>
     <span class="kd">var</span> <span class="nx">getMousePos</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">touches</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span> <span class="o">?</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">.</span><span class="nx">touches</span> <span class="o">:</span> <span class="kc">null</span><span class="p">;</span>
-
-        <span class="k">if</span> <span class="p">(</span><span class="nx">touches</span> <span class="o">&amp;&amp;</span> <span class="nx">touches</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="nx">e</span> <span class="o">=</span> <span class="nx">touches</span><span class="p">.</span><span class="nx">item</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> 
-        <span class="p">}</span>
-
         <span class="kd">var</span> <span class="nx">mousePos</span> <span class="o">=</span> <span class="p">{</span>
             <span class="nx">left</span><span class="o">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientX</span><span class="p">,</span>
             <span class="nx">top</span><span class="o">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientY</span>
