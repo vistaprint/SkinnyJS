@@ -580,6 +580,7 @@
         this._initialDialogPos = this.$container.offset();
 
         this.$container.on("mousemove touchmove", this._drag);
+        this.$bg.on("mousemove touchmove", this._drag);
 
         // make sure the mouseup also works on the background
         this.$bg.on("mouseup touchend", this._stopDrag);
@@ -655,7 +656,7 @@
     // returns an object with top and left
     var getMousePos = function(e)
     {
-        var touches = e.originalEvent.touches;
+        var touches = e.originalEvent ? e.originalEvent.touches : null;
 
         if (touches && touches.length >= 0)
         {
