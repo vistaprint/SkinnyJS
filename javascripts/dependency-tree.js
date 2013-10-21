@@ -13,7 +13,7 @@ var dependencyTree =
 	"jquery.htmlEncode": { deps: [] },
 	"jquery.imageSize": { deps: [] },
 	"jquery.isVisibleKeyCode": { deps: [] },
-	"jquery.menu": { deps: [] },
+	"jquery.menu": { deps: ["jquery.pointerEvents"] },
 	"jquery.modalDialog": 
 	{ 
 		deps: ["jquery.queryString","jquery.postMessage","jquery.customEvent","jquery.clientRect","jquery.hostIframe","jquery.proxyAll", "jquery.partialLoad"], 
