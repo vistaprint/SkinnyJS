@@ -47,6 +47,9 @@ function standardizePointerEvent (event)
 {
 	var evObj = event.originalEvent;
 
+	//
+	// standardize pointerType
+	//
 	evObj.POINTER_TYPE_UNAVAILABLE = POINTER_TYPE_UNAVAILABLE;
 	evObj.POINTER_TYPE_TOUCH = POINTER_TYPE_TOUCH;
 	evObj.POINTER_TYPE_PEN = POINTER_TYPE_PEN;
@@ -81,6 +84,16 @@ function standardizePointerEvent (event)
 		evObj.pointerType = evObj.POINTER_TYPE_UNAVAILABLE;
 	}
 
+	//
+	// standardize x/y coords
+	//
+	if (evObj.touches && evObj.touches.length > 0)
+	{
+		// touch events send an array of touches, which 99.9% has one item anyway...
+		evObj.clientX = evObj.touches[0].clientX;
+		evObj.clientY = evObj.touches[0].clientY;
+	}
+
 	return event;
 }
 
@@ -108,10 +121,68 @@ if (!support.pointer)
 			}
 
 			// now add support for mouse events
-			$this.on("click", function (event)
+			$this.on("mousedown", function (event)
 			{
-				// me.trigger("pointerdown', event);
 				triggerCustomEvent(thisObject, "pointerdown", event);
+			});
+
+			// disable click since we listen to mousedown here
+			$this.on("click", preventDefault);
+		}
+	};
+
+	// pointerup defines when physical contact with a digitizer (screen) is broken,
+	// or a mouse transitions from depressed to non-depressed (replaces touchend and mouseup)
+	$.event.special.pointerup =
+	{
+		setup: function ()
+		{
+			var thisObject = this,
+				$this = $( thisObject );
+
+			// add support for touch events
+			if (support.touch)
+			{
+				$this.on("touchend", function (event)
+				{
+					// prevent the mouseup event from firing as well
+					event.preventDefault();
+
+					triggerCustomEvent(thisObject, "pointerup", event);
+				});
+			}
+
+			// now add support for mouse events
+			$this.on("mouseup", function (event)
+			{
+				triggerCustomEvent(thisObject, "pointerup", event);
+			});
+		}
+	};
+
+	$.event.special.pointermove =
+	{
+		setup: function ()
+		{
+			var thisObject = this,
+				$this = $( thisObject );
+
+			// add support for touch events
+			if (support.touch)
+			{
+				$this.on("touchmove", function (event)
+				{
+					// prevent the mousemove event from firing as well
+					event.preventDefault();
+
+					triggerCustomEvent(thisObject, "pointermove", event);
+				});
+			}
+
+			// now add support for mouse events
+			$this.on("mousemove", function (event)
+			{
+				triggerCustomEvent(thisObject, "pointermove", event);
 			});
 		}
 	};
@@ -120,12 +191,14 @@ if (!support.pointer)
 	$.event.special.pointerover =
 	{
 		setup: proxyEventType("mouseover", "pointerover")
+		// we cannot just use bindType because we need to standardize the event object
 	};
 
 	// pointerout replaces mouseout, there is no equivalent for touch events
 	$.event.special.pointerout =
 	{
 		setup: proxyEventType("mouseout", "pointerout")
+		// we cannot just use bindType because we need to standardize the event object
 	};
 }
 
@@ -135,30 +208,32 @@ else if (navigator.msPointerEnabled && !navigator.pointerEnabled)
 {
 	$.event.special.pointerdown =
 	{
-		setup: function ()
-		{
-			var thisObject = this;
-			$(this).on("MSPointerDown", function (event)
-			{
-				triggerCustomEvent(thisObject, "pointerdown", event);
-			});
-
-			// prevent click event from happening.. since you cannot
-			// cancel the click event from the pointerdown event
-			$(this).on("click", preventDefault);
-		}
+		delegateType: "MSPointerDown",
+		bindType: "MSPointerDown"
 	};
 
-	// called before pointerdown for devices without hover support (see spec http://www.w3.org/Submission/pointer-events/ 3.2.6)
+	$.event.special.pointerup =
+	{
+		delegateType: "MSPointerUp",
+		bindType: "MSPointerUp"
+	};
+
+	$.event.special.pointermove =
+	{
+		delegateType: "MSPointerMove",
+		bindType: "MSPointerMove"
+	};
+
 	$.event.special.pointerover =
 	{
-		setup: proxyEventType("MSPointerOver", "pointerover")
+		delegateType: "MSPointerOver",
+		bindType: "MSPointerOver"
 	};
 
-	// called after pointerup for devices without hover support (see spec 3.2.7)
 	$.event.special.pointerout =
 	{
-		setup: proxyEventType("MSPointerOut", "pointerout")
+		delegateType: "MSPointerOut",
+		bindType: "MSPointerOut"
 	};
 }
 
