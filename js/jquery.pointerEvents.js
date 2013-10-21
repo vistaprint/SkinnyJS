@@ -103,6 +103,8 @@ if (!support.pointer)
 {
 	$.event.special.pointerdown =
 	{
+		preventClickEvents: false,
+
 		setup: function ()
 		{
 			var thisObject = this,
@@ -126,8 +128,10 @@ if (!support.pointer)
 				triggerCustomEvent(thisObject, "pointerdown", event);
 			});
 
-			// disable click since we listen to mousedown here
-			$this.on("click", preventDefault);
+			if ($.event.special.pointerdown.preventClickEvents)
+			{
+				$this.on("click", preventDefault);
+			}
 		}
 	};
 
