@@ -1,4 +1,4 @@
-// Pointer Events pollyfill for jQuery
+// Pointer Events polyfill for jQuery
 
 (function ($, window, document, undefined)
 {
