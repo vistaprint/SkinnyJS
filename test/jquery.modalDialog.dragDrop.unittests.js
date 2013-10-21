@@ -37,6 +37,7 @@ describe("jquery.modalDialog", function()
 
                         var newPos = dialog.$header.offset();
 
+                        // Drag/drop is explicitly disabled on small screens
                         if ($.modalDialog.isSmallScreen())
                         {
                             assert.equal(newPos.top, pos.top);
@@ -97,6 +98,7 @@ describe("jquery.modalDialog", function()
 
                     var newPos = dialog.$header.offset();
 
+                    // Drag/drop is explicitly disabled on small screens
                     if ($.modalDialog.isSmallScreen())
                     {
                         assert.equal(newPos.top, pos.top);
