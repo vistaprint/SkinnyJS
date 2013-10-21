@@ -59,11 +59,8 @@ describe("jquery.modalDialog", function()
         var eventMappings = 
         {
             "mouse": [ "mousedown", "mousemove", "mouseup" ],
-            "touch": [ "touchstart", "touchmove", "touchend" ] 
-            
-            // TODO add pointer event support
-            //,
-            // "pointer": [ "pointerdown", "pointermove", "pointerup" ]
+            "touch": [ "touchstart", "touchmove", "touchend" ],
+            "pointer": [ "pointerdown", "pointermove", "pointerup" ]
         };
 
         for (var eventType in eventMappings)
@@ -72,5 +69,50 @@ describe("jquery.modalDialog", function()
 
             verifyDragDrop(eventType, eventMapping);
         }
+
+        var createFakeTouchEvent = function(clientX, clientY)
+        {
+            return {
+                originalEvent: 
+                {
+                    touches: [{ clientX: clientX, clientY: clientY }]
+                }
+            };
+        };
+
+        it("should use the first touch object available in the touch event" + eventType + " events", function(done)
+        {
+            var dialog = $.modalDialog.create({ content: "#simpleDialog"});
+
+            var DISTANCE = 200;
+
+            dialog.open()
+                .then(function()
+                {
+                    var pos = dialog.$header.offset();
+
+                    trigger(dialog.$header, "touchstart", createFakeTouchEvent(pos.top, pos.left));
+                    trigger(dialog.$header, "touchmove",  createFakeTouchEvent(pos.top + DISTANCE, pos.left + DISTANCE));
+                    trigger(dialog.$header, "touchend");
+
+                    var newPos = dialog.$header.offset();
+
+                    if ($.modalDialog.isSmallScreen())
+                    {
+                        assert.equal(newPos.top, pos.top);
+                        assert.equal(newPos.left, pos.left);
+                    }
+                    else
+                    {
+                        assert.equal(newPos.top, pos.top + DISTANCE);
+                        assert.equal(newPos.left, pos.left + DISTANCE);
+                    }
+                    return dialog.close();
+                })
+                .then(function()
+                {
+                    done();
+                });
+        });
     });
 });
