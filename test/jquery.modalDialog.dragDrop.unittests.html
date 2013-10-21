@@ -13,6 +13,11 @@
 
   <div id="simpleDialog" class="dialog-content">content</div>
 
+  <script>
+  // Tell jquery.pointerEvents that touch events are supported
+  if (!document.ontouchend) { document.ontouchend = {}; }
+  </script>
+
  <!-- global dependencies -->
   <script src="../dependencies/jquery.js"></script>
   <script src="../dependencies/mocha.js"></script>
@@ -30,6 +35,8 @@
   <script type="text/javascript" src="../js/jquery.proxyAll.js" /></script>
   <script type="text/javascript" src="../js/jquery.partialLoad.js" /></script>
   <script type="text/javascript" src="../js/jquery.disableEvent.js" /></script>
+  <script type="text/javascript" src="../js/jquery.pointerEvents.js" /></script>
+
 
   <!-- raw modal dialog source files, directly from js -->
   <script type="text/javascript" src="../js/jquery.modalDialog.userAgent.js"></script>

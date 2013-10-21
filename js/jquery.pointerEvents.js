@@ -2,7 +2,7 @@
 
 (function ($, window, document, undefined)
 {
-
+debugger;
 var support = {
 	touch: "ontouchend" in document,
 	pointer: !!(navigator.pointerEnabled || navigator.msPointerEnabled)
@@ -47,6 +47,11 @@ function standardizePointerEvent (event)
 {
 	var evObj = event.originalEvent;
 
+	if (!evObj)
+	{
+		evObj = event.originalEvent = {};
+	}
+
 	//
 	// standardize pointerType
 	//
@@ -90,8 +95,8 @@ function standardizePointerEvent (event)
 	if (evObj.touches && evObj.touches.length > 0)
 	{
 		// touch events send an array of touches, which 99.9% has one item anyway...
-		evObj.clientX = evObj.touches[0].clientX;
-		evObj.clientY = evObj.touches[0].clientY;
+		event.clientX = evObj.clientX = evObj.touches[0].clientX;
+		event.clientY = evObj.clientY = evObj.touches[0].clientY;
 	}
 
 	return event;
