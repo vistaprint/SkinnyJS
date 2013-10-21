@@ -374,6 +374,8 @@ module.exports = function(grunt)
 
     grunt.registerTask("site", ["default", "compress", "sitePages", "docs", "copy:deploy"]);
 
+    grunt.registerTask("siteNoVerify", ["build", "compress", "sitePages", "docs", "copy:deploy"]);
+
     grunt.registerTask("sitePages", ["jekyll", "string-replace:site", "copy:distSite"]);
 };
 
