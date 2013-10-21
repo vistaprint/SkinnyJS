@@ -2,7 +2,7 @@
 
 (function ($, window, document, undefined)
 {
-debugger;
+
 var support = {
 	touch: "ontouchend" in document,
 	pointer: !!(navigator.pointerEnabled || navigator.msPointerEnabled)
