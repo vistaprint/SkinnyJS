@@ -131,13 +131,15 @@ $.cookies.get = function(name, /* optional */ subCookie)
 $.cookies.set = function(nameOrData, value, domain, permanent, clearExistingSubCookies)
 {
     var name = nameOrData;
-
+    var path;
+    
     if (typeof(nameOrData) == "object")
     {
         name = nameOrData.name;
         value = nameOrData.value;
         domain = nameOrData.domain;
         permanent = nameOrData.permanent;
+        path = nameOrData.path;
         clearExistingSubCookies = nameOrData.clearExistingSubCookies || nameOrData.clearExisting;
     }
 
@@ -181,6 +183,7 @@ $.cookies.set = function(nameOrData, value, domain, permanent, clearExistingSubC
     }
 
     cookie.domain = domain;
+    cookie.path = path;
     cookie.isPermanent = !!permanent;
 
     cookie.save();
@@ -229,29 +232,24 @@ var Cookie = function()
 {
     var me = this;
     
-
     // The name of the cookie
-    // @type string
     this.name = null;
     
-
     // A collection of sub-values for the cookie. Null if there is a single value
-    // @type collection
     this.subCookies = null;
     
 
     // The value of the cookie. Null if there is a collection of sub-values
-    // @type string
     this.value = null;
     
 
     // The domain of the cookie. If null, the default domain is used.
-    // @type string
     this.domain = null;
-    
 
+    // The path of the cookie. If null, the default path / is used.
+    this.path = null;
+    
     // Indicates the cookie persists on users machines
-    // @type boolean
     this.isPermanent = false;
     
     var validateName = function()
@@ -271,7 +269,7 @@ var Cookie = function()
 
         var cookie = _cookieEncode(me.name) + "=" + getEncodedValue();
 
-        cookie += "; path=/";
+        cookie += "; path=" + (this.path || _cookiePath || "/");
         
         var domain = me.domain || _cookieDomain;
         if (domain) 
