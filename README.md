@@ -12,6 +12,7 @@ Skinny libraries
 
 * [date-parse](http://vistaprint.github.io/SkinnyJS/date-parse.html): Polyfill for Date.parse to ensure support for ISO 8601 dates. Also provides support for Microsoft JSON format dates.
 * [jQuery.clientRect](http://vistaprint.github.io/SkinnyJS/jquery.clientRect.html): Gets element coordinates several orders of magnitude more efficiently than jQuery.top()/left()
+* [jQuery.cookies](http://vistaprint.github.io/SkinnyJS/jquery.cookies.html): Practically oriented cookie management.
 * [jQuery.css](http://vistaprint.github.io/SkinnyJS/jquery.css.html): Parses and serializes CSS style strings
 * [jQuery.customEvent](http://vistaprint.github.io/SkinnyJS/jquery.customEvent.html): A class that implements an observable event, useful for cases where there's no DOM element involved.
 * [jQuery.delimitedString](http://vistaprint.github.io/SkinnyJS/jquery.delimitedString.html): Base class for parsing delimited strings, such as querystrings or CSS styles
@@ -30,7 +31,6 @@ Skinny libraries
 * [jQuery.scrollAnchor](http://vistaprint.github.io/SkinnyJS/jquery.scrollAnchor.html): Smooth scrolling support for anchor elements with internal references.
 * [jQuery.uncomment](http://vistaprint.github.io/SkinnyJS/jquery.uncomment.html): Allows lazy evaluation of HTML blobs by removing them from comment blocks.
 * [jQuery.url](http://vistaprint.github.io/SkinnyJS/jquery.url.html): Parses and serializes URLs.
-* [jQuery.cookie](http://vistaprint.github.io/SkinnyJS/jquery.cookie.html): Practically oriented cookie management.
 
 Skinny UI components
 ------------------
