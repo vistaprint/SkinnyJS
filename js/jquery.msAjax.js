@@ -24,6 +24,8 @@
         return value;
     };
     
+
+
     // Converts date strings in ISO8601 or Microsoft format to JavaScript dates
     var msJsonDateOnlySanitizer = function(key, value)
     {
@@ -32,26 +34,13 @@
             // Perform strict parsing so that strings that are not full dates are not parsed as dates
             // Example of a partial date:       "2013"
             // Example of a full ISO8601 date:  "2013-08-07T21:40:05.121+06:00"
-            
-            // Depends on ms date parsing in date-parse.js. True indicates to perform strict parsing.
-            var date = Date.parseISO(value, true); 
-            if (!isNaN(date))
+            if (!$.parseMsJSON.isNumericString(value))
             {
-                return new Date(date);
-            }
-
-            // Depends on ms date parsing in date-parse.js. This function is already strict.
-            date = Date.parseMsDate(value); 
-            if (!isNaN(date))
-            {
-                return new Date(date);
-            }
-
-            // Fall back on default date parsing
-            date = Date.parse(value); 
-            if (!isNaN(date))
-            {
-                return new Date(date);
+                var date = Date.parse(value);
+                if (!isNaN(date))
+                {
+                    return new Date(date);
+                }
             }
         }
 
@@ -76,6 +65,10 @@
         // ASMX puts all JSON in a "d" property.
 
         return typeof json.d != "undefined" ? json.d : json;
+    };
+
+    $.parseMsJSON.isNumericString = function(value) {
+        return new RegExp(/^-?[0-9]+\.?[0-9]*$/).test(value);
     };
 
     // Recurses through a JSON object and applies the specified reviver
