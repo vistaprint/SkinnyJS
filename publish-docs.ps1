@@ -1,4 +1,4 @@
-grunt site
+grunt siteNoVerify
 
 if ($LASTEXITCODE -ne  0)
 {
