@@ -133,9 +133,12 @@ if (!support.pointer)
 			// now add support for mouse events
 			$this.on("mousedown", function (event)
 			{
-				if (!ignoreNextMousedownEvent) {
+				if (!ignoreNextMousedownEvent) 
+				{
 					triggerCustomEvent(thisObject, "pointerdown", event);
-				} else {
+				} 
+				else 
+				{
 					ignoreNextMousedownEvent = false;
 				}
 			});

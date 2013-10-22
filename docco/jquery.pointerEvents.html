@@ -131,9 +131,12 @@ create special custom events to mimic them</p>             </td>             <td
 </pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>now add support for mouse events</p>             </td>             <td class="code">               <div class="highlight"><pre>
       <span class="nx">$this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;mousedown&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span>
       <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">ignoreNextMousedownEvent</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">ignoreNextMousedownEvent</span><span class="p">)</span> 
+        <span class="p">{</span>
           <span class="nx">triggerCustomEvent</span><span class="p">(</span><span class="nx">thisObject</span><span class="p">,</span> <span class="s2">&quot;pointerdown&quot;</span><span class="p">,</span> <span class="nx">event</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="p">}</span> 
+        <span class="k">else</span> 
+        <span class="p">{</span>
           <span class="nx">ignoreNextMousedownEvent</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
         <span class="p">}</span>
       <span class="p">});</span>
