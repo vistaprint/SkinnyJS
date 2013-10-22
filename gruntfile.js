@@ -60,7 +60,8 @@ module.exports = function(grunt)
             },
             options:
             {
-                reporter: "Spec"
+                reporter: "Spec",
+                timeout: 20000
             }
         },
         docco:
