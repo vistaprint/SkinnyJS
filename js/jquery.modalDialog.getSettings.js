@@ -74,7 +74,8 @@ if (!Object.keys)
         "onajaxerror": parseFunction,
         "destroyOnClose": parseBool,     
         "skin": parseNone,
-        "enableHistory": parseBool   
+        "enableHistory": parseBool,
+        "zIndex": parseInt
     };
 
     $.modalDialog = $.modalDialog || {};

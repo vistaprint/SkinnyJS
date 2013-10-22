@@ -67,6 +67,7 @@ describe("$.modalDialog.getSettings()", function()
 
     describeIntAttrs("initialHeight");
     describeIntAttrs("maxWidth");
+    describeIntAttrs("zIndex");
 
     function describeBoolAttrs(name)
     {

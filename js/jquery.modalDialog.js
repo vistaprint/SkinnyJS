@@ -16,10 +16,9 @@
     // A map of dialogs by full ID
     var _fullIdMap = {};
 
-    var zIndex = 10000;
-
     // Default values
-    var _defaults = {
+    $.modalDialog.defaults = {
+        zIndex: 10000, // Allow callers to participate in zIndex arms races
         title: "", // The title to display in the title bar of the dialog
         maxWidth: 600, // Sets the maximum width of the dialog. Note that on small mobile devices, the actual width may be smaller, so you should design the dialog content accordingly
         initialHeight: 100, // Only IFrameDialog uses this. Consider this internal for now.
@@ -30,12 +29,12 @@
         destroyOnClose: false, // If true, the dialog DOM will be destroyed and all events removed when the dialog closes
         containerElement: "body", // A CSS selector or jQuery object for the element that should be the parent for the dialog DOM (useful for working with jQuery mobile)
         preventEventBubbling: true, // If true, click and touch events are prevented from bubbling up to the document
+        enableHistory: true, // If the history module is enabled, this can be used to disable history if set false
         onopen: null,
         onclose: null,
         onbeforeopen: null,
         onbeforeclose: null,
-        onajaxerror: null,
-        enableHistory: true // If the history module is enabled, this can be used to disable history if set false
+        onajaxerror: null
     };
 
     // If the jquery.transit library is loaded, use CSS3 transitions instead of jQuery.animate()
@@ -162,6 +161,11 @@
         // Keep track of the dialog stacking order
         _dialogStack.push(this);
 
+        if (this.level > 0)
+        {
+            this.settings.parentId = _dialogStack[this.level-1].settings._fullId;
+        }
+
         this._open = true;
 
         this._build();
@@ -286,8 +290,8 @@
         if (!this.$loadingIndicator)
         {
             this.$loadingIndicator = $("<div class='dialog-loading-indicator'><span></span></div>")
-                .appendTo(this.$bg)
-                .css("z-index", parseInt(this.$bg.css("z-index"), 10) + 1);
+                .appendTo(this.$bg);
+                //.css("z-index", parseInt(this.$bg.css("z-index"), 10) + 1);
         }
     };
 
@@ -413,6 +417,20 @@
         this.$el.remove();
     };
 
+    ModalDialog.prototype._updateZIndexes = function()
+    {
+        var zIndex = this.settings.zIndex;
+        var parent = this.getParent();
+        if (parent)
+        {
+            zIndex = Math.max(parent.settings.zIndex + 10, zIndex);
+        }
+
+        this.$bg.css("z-index", zIndex);
+        zIndex += 2;
+        this.$container.css("z-index", zIndex);
+    };
+
     // Builds the DOM for the dialog chrome
     ModalDialog.prototype._build = function()
     {
@@ -425,10 +443,7 @@
 
         if (!this.$el)
         {
-            this.$bg = $('<div class="dialog-background"></div>').css('z-index', ++zIndex);
-
-            // increase the z-index again to consider the loading indicator
-            zIndex++;
+            this.$bg = $('<div class="dialog-background"></div>');
 
             this.$container = $(
                 '<div class="dialog-container" id="' + this.settings._fullId + 'Container">' +
@@ -439,13 +454,10 @@
                 '  <div class="dialog-content-container">' +
                 '  </div>' +
                 '</div>'
-            ).css(
-                {
-                    'z-index': ++zIndex,
-                    'max-width': this._getDefaultWidthData().width
-                });
+            )
+                .css({ "max-width": this._getDefaultWidthData().width });
 
-            this.$el = $([this.$bg[0], this.$container[0]]).addClass('dialog-skin-' + this.settings.skin);
+            this.$el = $([this.$bg[0], this.$container[0]]).addClass("dialog-skin-" + this.settings.skin);
 
             // HACK: Support jQuery mobile. In jQuery mobile, the root element needs to be specific.
             // TODO: Move this to a jQuery mobile fixes specific module
@@ -465,7 +477,7 @@
 
             this._buildContent();
 
-            this.$content.find('*[data-action="close"]').on('click', this._close);
+            this.$content.find('*[data-action="close"]').on("click", this._close);
 
             this.$contentContainer.append(this.$content);
 
@@ -479,6 +491,8 @@
         {
             this._alreadyBuilt();
         }
+
+        this._updateZIndexes();
     };
 
     // Subclasses should override to do something when a cached DOM is used
@@ -1084,7 +1098,7 @@
     // 3. settings passed
     var ensureSettings = function(explicitSettings)
     {
-        var settings = $.extend({}, _defaults);
+        var settings = $.extend({}, $.modalDialog.defaults);
 
         // An iframe dialog may have sent a reference to dialog content,
         // but it didn't know if it was a URL or a selector for a DOM node.
@@ -1432,8 +1446,8 @@
         }
 
         // Alternate defaults when jQuery mobile is loaded. Work around JQM's quirks.
-        _defaults =  $.extend(
-            _defaults,
+        $.modalDialog.defaults =  $.extend(
+            $.modalDialog.defaults,
             {
                 // JQM widgets must be in the active data-role="page" element to work
                 // containerElement: ".ui-page.ui-page-active",
