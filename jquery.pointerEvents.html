@@ -112,17 +112,41 @@
 
      
     <div class="source-links">
-        <a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.pointerEvents.js" class="github-source-link" target="_blank">View on github</a> |
-        <a href="docco/jquery.pointerEvents.html" class="docco-link">Annotated source</a>
+        <a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jQuery.pointerEvents.js" class="github-source-link" target="_blank">View on github</a> |
+        <a href="docco/jQuery.pointerEvents.html" class="docco-link">Annotated source</a>
     </div>
     
 
     <h2 id='jquerypointerevents'>jQuery.pointerEvents</h2>
 
-<p>TODO</p>
+<p>jQuery.pointerEvents adds a polyfill for the new <a href='http://www.w3.org/Submission/pointer-events/'>pointer events api</a>. It falls back to touch and mouse events and delegates the information in a standardize format following the pointer event spec to the native pointer methods.</p>
+
+<h3 id='supports_events'>Supports events</h3>
+
+<ul>
+<li>pointerdown</li>
+
+<li>pointermove</li>
+
+<li>pointerup</li>
+
+<li>pointerover</li>
+
+<li>pointerout</li>
+</ul>
 
 <h3 id='usage'>Usage</h3>
-<div class='highlight'><pre><code class='javascript'>    <span class='c1'>// placeholder</span>
+<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#el&#39;</span><span class='p'>).</span><span class='nx'>on</span><span class='p'>(</span><span class='s1'>&#39;pointerdown&#39;</span><span class='p'>,</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>event</span><span class='p'>)</span> <span class='p'>{</span>
+    	<span class='k'>if</span> <span class='p'>(</span><span class='nx'>event</span><span class='p'>.</span><span class='nx'>originalType</span><span class='p'>.</span><span class='nx'>pointerType</span> <span class='o'>==</span> <span class='s1'>&#39;mouse&#39;</span><span class='p'>)</span> <span class='p'>{</span>
+    		<span class='nx'>console</span><span class='p'>.</span><span class='nx'>log</span><span class='p'>(</span><span class='s1'>&#39;you clicked on me with a mouse&#39;</span><span class='p'>);</span>
+    	<span class='p'>}</span> <span class='k'>else</span> <span class='k'>if</span> <span class='p'>(</span><span class='nx'>event</span><span class='p'>.</span><span class='nx'>originalType</span><span class='p'>.</span><span class='nx'>pointerType</span> <span class='o'>==</span> <span class='s1'>&#39;touch&#39;</span><span class='p'>)</span> <span class='p'>{</span>
+    		<span class='nx'>console</span><span class='p'>.</span><span class='nx'>log</span><span class='p'>(</span><span class='s1'>&#39;you clicked one me with a touch device&#39;</span><span class='p'>)</span>
+    	<span class='p'>}</span> <span class='k'>else</span> <span class='k'>if</span> <span class='p'>(</span><span class='nx'>event</span><span class='p'>.</span><span class='nx'>originalType</span><span class='p'>.</span><span class='nx'>pointerType</span> <span class='o'>==</span> <span class='s1'>&#39;pen&#39;</span><span class='p'>)</span> <span class='p'>{</span>
+    		<span class='nx'>console</span><span class='p'>.</span><span class='nx'>log</span><span class='p'>(</span><span class='s1'>&#39;you clicked on me with a pen&#39;</span><span class='p'>);</span>
+    	<span class='p'>}</span> <span class='k'>else</span> <span class='p'>{</span>
+    		<span class='nx'>console</span><span class='p'>.</span><span class='nx'>log</span><span class='p'>(</span><span class='s1'>&#39;I do not want to know what you just clicked on me with&#39;</span><span class='p'>)</span>
+    	<span class='p'>}</span>
+    <span class='p'>});</span>
 </code></pre></div>
   </div>
 </div>
