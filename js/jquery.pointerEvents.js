@@ -110,10 +110,14 @@ if (!support.pointer)
 	{
 		preventClickEvents: false,
 
+		// timeout allowed between a touchstart and the ignoring of a mousedown (in milliseconds)
+		ignoreMousedownTimeout: 30,
+
 		setup: function ()
 		{
 			var thisObject = this,
-				$this = $( thisObject );
+				$this = $( thisObject ),
+				ignoreNextMousedownEvent = false;
 
 			// add support for touch events
 			if (support.touch)
@@ -121,8 +125,7 @@ if (!support.pointer)
 				$this.on("touchstart", function (event)
 				{
 					// prevent the click event from firing as well
-					event.preventDefault();
-
+					ignoreNextMousedownEvent = true;
 					triggerCustomEvent(thisObject, "pointerdown", event);
 				});
 			}
@@ -130,7 +133,11 @@ if (!support.pointer)
 			// now add support for mouse events
 			$this.on("mousedown", function (event)
 			{
-				triggerCustomEvent(thisObject, "pointerdown", event);
+				if (!ignoreNextMousedownEvent) {
+					triggerCustomEvent(thisObject, "pointerdown", event);
+				} else {
+					ignoreNextMousedownEvent = false;
+				}
 			});
 
 			if ($.event.special.pointerdown.preventClickEvents)
