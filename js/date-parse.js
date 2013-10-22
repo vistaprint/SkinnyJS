@@ -72,7 +72,7 @@
     // do this on all browsers, so it needs to be overwritten to force this behavior and ensure consistency.
     Date.parse = function (date)
     {
-        return Date.parseISO(date) || Date.parseMsDate(date) || origParse(date) || NaN;
+        return Date.parseMsDate(date) || origParse(date) || Date.parseISO(date) || NaN;
     };
 
 } (Date));
