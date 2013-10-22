@@ -51,26 +51,27 @@ var _cookieDecode = function(sText)
     return decodeURIComponent(sText);
 };
 
-var _cookieDomain;
-var _cookiePath;
-var _cookiePermanentDate;
-var _watcher = $.noop;
-
-$.cookies.setDefaults = function(domain, path, permanentDate)
+var _defaults = 
 {
-    if (typeof(domain) == "object")
+    domain: null,
+    path: "/",
+    permanentDate: null,
+    watcher: $.noop
+};
+
+$.cookies.setDefaults = function(settings)
+{
+    $.extend(_defaults, settings);
+};
+
+var getDefault = function(key, overrideValue)
+{
+    if (overrideValue)
     {
-        _cookieDomain = domain.domain;
-        _cookiePath = domain.path;
-        _cookiePermanentDate = domain.permanentDate;
-        _watcher = domain.watcher || _watcher;
+        return overrideValue;
     }
-    else
-    {
-        _cookieDomain = domain;
-        _cookiePath = path;
-        _cookiePermanentDate = permanentDate;
-    }
+
+    return _defaults[key];
 };
 
 // Runs a test to determine if cookies are enabled on the browser.
@@ -131,6 +132,7 @@ $.cookies.get = function(name, /* optional */ subCookie)
 $.cookies.set = function(nameOrData, value, domain, permanent, clearExistingSubCookies)
 {
     var name = nameOrData;
+    var path;
 
     if (typeof(nameOrData) == "object")
     {
@@ -138,10 +140,9 @@ $.cookies.set = function(nameOrData, value, domain, permanent, clearExistingSubC
         value = nameOrData.value;
         domain = nameOrData.domain;
         permanent = nameOrData.permanent;
+        path = nameOrData.path;
         clearExistingSubCookies = nameOrData.clearExistingSubCookies || nameOrData.clearExisting;
     }
-
-    domain = domain || _cookieDomain;
 
     // value may be a map of subvalues.
     var subCookies;
@@ -180,7 +181,8 @@ $.cookies.set = function(nameOrData, value, domain, permanent, clearExistingSubC
         }
     }
 
-    cookie.domain = domain;
+    cookie.domain = getDefault("domain", domain);
+    cookie.path = getDefault("path", path);
     cookie.isPermanent = !!permanent;
 
     cookie.save();
@@ -190,15 +192,15 @@ $.cookies.set = function(nameOrData, value, domain, permanent, clearExistingSubC
 // @param {string} sName The name of the cookie to delete.
 $.cookies.remove = function(name, domain, path) 
 {
-    var cookie = _cookieEncode(name) + "=a; path=" + (path || _cookiePath || "/") + "; expires=Wed, 17 Jan 1979 07:01:00 GMT";
+    var cookie = _cookieEncode(name) + "=a; path=" + getDefault("path", path) + "; expires=Wed, 17 Jan 1979 07:01:00 GMT";
     
-    domain = domain || _cookieDomain;
+    domain = getDefault("domain", domain);
     if (domain) 
     {
         cookie += "; domain=" + domain;
     }
 
-    _watcher(cookie);
+    _defaults.watcher(cookie);
 
     document.cookie = cookie;
 };
@@ -229,29 +231,24 @@ var Cookie = function()
 {
     var me = this;
     
-
     // The name of the cookie
-    // @type string
     this.name = null;
     
-
     // A collection of sub-values for the cookie. Null if there is a single value
-    // @type collection
     this.subCookies = null;
     
 
     // The value of the cookie. Null if there is a collection of sub-values
-    // @type string
     this.value = null;
     
 
     // The domain of the cookie. If null, the default domain is used.
-    // @type string
     this.domain = null;
-    
 
+    // The path of the cookie. If null, the default path / is used.
+    this.path = null;
+    
     // Indicates the cookie persists on users machines
-    // @type boolean
     this.isPermanent = false;
     
     var validateName = function()
@@ -271,9 +268,9 @@ var Cookie = function()
 
         var cookie = _cookieEncode(me.name) + "=" + getEncodedValue();
 
-        cookie += "; path=/";
+        cookie += "; path=" + getDefault("path", this.path);
         
-        var domain = me.domain || _cookieDomain;
+        var domain = getDefault("domain", me.domain);
         if (domain) 
         {
             cookie += "; domain=" + domain;
@@ -282,7 +279,7 @@ var Cookie = function()
         if (me.isPermanent)
         {
 
-            var date = _cookiePermanentDate;
+            var date = _defaults.permanentDate;
             if (!date)
             {
                 date = (new Date()).setFullYear(date.getFullYear() + 1).toUTCString();
@@ -300,7 +297,7 @@ var Cookie = function()
         validateName();
         
         var cookie = me.serialize();
-        _watcher(cookie);
+        _defaults.watcher(cookie);
 
         document.cookie = cookie;
     };
