@@ -46,29 +46,67 @@
     var _disableHandlers = false;
     var _historyEnabled = false;
 
+    var getDialogParams = function(dialog)
+    {
+        var dialogParams = 
+        {
+            dialogType: "node",
+
+            // Get the ID of the selected element (for node dialogs)
+            dialogId: dialog.settings.content ? "#" + $(dialog.settings.content).prop("id") : null
+        };
+
+        // If its not a node dialog, use the URL as the ID
+        if (!dialogParams.dialogId && dialog.settings.url)
+        {
+            dialogParams.dialogType = dialog.settings.ajax ? "ajax" : "iframe";
+            dialogParams.dialogId = dialog.settings.url;
+        }
+
+        return dialogParams;
+    };
+
+    // var doParamsMatchDialog = function(dialog, dialogParams)
+    // {
+    //     var d1 = getDialogParams(dialog);
+
+    //     return d1.dialogType == dialogParams.dialogType &&
+    //         d1.dialogId == dialogParams.dialogId;
+    // };
+
     var parseDialogParams = function(data)
     {
         if (!data)
         {
-            return null;
+            return [];
         }
 
-        var delimPos = data.indexOf(",");
+        var items = data.split(" ");
 
-        if (delimPos < 0)
+        return $.map(items, function(item)
         {
-            return null;
-        }
+            var delimPos = item.indexOf(",");
 
-        return {
-            dialogType: data.substr(0, delimPos),
-            dialogId: data.substr(delimPos + 1)
-        };
+            if (delimPos < 0)
+            {
+                // TODO throw?
+                return null;
+            }
+
+            return {
+                dialogType: item.substr(0, delimPos),
+                dialogId: item.substr(delimPos + 1)
+            };
+        });
     };
 
-    var encodeDialogParams = function(dialogType, dialogId)
+    var encodeDialogParams = function(dialogParamsList)
     {
-        return dialogType + "," + dialogId;
+        return $.map(dialogParamsList, function(item)
+            {
+                return item.dialogType + "," + item.dialogId;
+            })
+            .join(" ");
     };
 
     // Handler for dialogs opening
@@ -88,20 +126,17 @@
 
         // Build a querystring to encode the open state of the dialog
 
-        var dialogType = "node";
+        var dialogParams = getDialogParams(this);
 
-        // Get the ID of the selected element (for node dialogs)
-        var dialogId = this.settings.content ? "#" + $(this.settings.content).prop("id") : null;
-
-        // If its not a node dialog, use the URL as the ID
-        if (!dialogId && this.settings.url)
-        {
-            dialogType = this.settings.ajax ? "ajax" : "iframe";
-            dialogId = this.settings.url;
-        }
-
+        // If there's an existing open dialog, encode the parameters for this dialog after it
         var qs = $.currentQueryString();
-        qs[_dialogParamName] = encodeDialogParams(dialogType, dialogId);
+        var dialogParamsList = parseDialogParams(qs[_dialogParamName]);
+
+        // TODO: verify that the level of the dialog matches the number of items in the dialogParamsList
+        // clean up if not
+
+        dialogParamsList.push(dialogParams);
+        qs[_dialogParamName] = encodeDialogParams(dialogParamsList);
 
         var url = $.appendQueryString(document.location.pathname, qs);
 
@@ -135,7 +170,20 @@
         if (_pageIsAtInitialState)
         {
             var qs = $.currentQueryString();
-            delete qs[_dialogParamName];
+            var dialogParamsList = parseDialogParams(qs[_dialogParamName]);
+            dialogParamsList.pop();
+
+            // TODO: verify that the dialog params popped off match the current dialog
+            // clean up if not
+
+            if (dialogParamsList.length === 0)
+            {
+                delete qs[_dialogParamName];
+            }
+            else
+            {
+                qs[_dialogParamName] = encodeDialogParams(dialogParamsList);
+            }
 
             var url = $.appendQueryString(document.location.pathname, qs);
 
@@ -145,6 +193,7 @@
         {
             // If the page isn't in its initial state, then closing a dialog should go back
             // one entry in history.
+            _stateAlreadyProcessed = true;
             History.back();
         }
 
@@ -170,87 +219,124 @@
         var deferred = new $.Deferred();
         var settings;
         var qs = $.currentQueryString();
-        var dialogParams = parseDialogParams(qs[_dialogParamName]);
+        var dialogParamsList = parseDialogParams(qs[_dialogParamName]);
+        var topmostDialog = $.modalDialog.getCurrent();
+        var topmostDialogLevel = topmostDialog ? topmostDialog.level + 1 : 0;
 
-        // If the URL is for a dialog, prepare to open the dialog
-        // Build a dialog settings object
-        if (dialogParams)
+        if (dialogParamsList.length === topmostDialogLevel)
         {
-            if (dialogParams.dialogType == "iframe")
+            deferred.resolve();
+        }
+
+        // If there are more dialogParams in the URL than dialogs displayed,
+        // open them in order
+        var openDialogsUntilUrlMatches = function()
+        {
+            if (dialogParamsList.length > topmostDialogLevel)
             {
-                settings = { url: dialogParams.dialogId };
-            }
-            else if (dialogParams.dialogType == "ajax")
-            {
-                settings = 
-                { 
-                    ajax: true,
-                    url: dialogParams.dialogId
-                };
+                var dialogParams = dialogParamsList[topmostDialogLevel-1];
+
+                if (dialogParams.dialogType == "iframe")
+                {
+                    settings = { url: dialogParams.dialogId };
+                }
+                else if (dialogParams.dialogType == "ajax")
+                {
+                    settings = 
+                    { 
+                        ajax: true,
+                        url: dialogParams.dialogId
+                    };
+                }
+                else
+                {
+                    var $content;
+                    try
+                    {
+                        $content = $(dialogParams.dialogId);
+                    }
+                    catch(ex)
+                    {}
+
+                    if ($content.length > 0)
+                    {
+                        settings = $.modalDialog.getSettings($content);
+                        settings.content = $content;
+                    }
+                }
+
+                // TODO validate settings are correct
+                // Try/catch?
+
+                // Try to reuse an existing, matching dialog if possible
+                var dialog = $.modalDialog.getExisting(settings);
+
+                // If it doesn't exist, create a new one
+                if (!dialog)
+                {
+                    dialog = $.modalDialog.create(settings);
+                }
+
+                _disableHandlers = true;
+
+                dialog.open()
+                    .then(function()
+                    {
+                        topmostDialogLevel++;
+                        openDialogsUntilUrlMatches();
+                    });
             }
             else
             {
-                var $content;
-                try
-                {
-                    $content = $(dialogParams.dialogId);
-                }
-                catch(ex)
-                {}
-
-                if ($content.length > 0)
-                {
-                    settings = $.modalDialog.getSettings($content);
-                    settings.content = $content;
-                }
-            }
-        }
-
-        if (settings)
-        {
-            // Try to reuse an existing, matching dialog if possible
-            var dialog = $.modalDialog.getExisting(settings);
-
-            // If it doesn't exist, create a new one
-            if (!dialog)
-            {
-                dialog = $.modalDialog.create(settings);
-            }
-
-            _disableHandlers = true;
-
-            dialog.open()
-                .then(function()
-                {
-                    setTimeout(function()
+                setTimeout(function()
                     {
                         deferred.resolve();
                         _disableHandlers = false;
                     },
                     0);
-                });
-        }
-        else
+            }
+        };
+
+        if (dialogParamsList.length > topmostDialogLevel)
         {
-            var currentDialog = $.modalDialog.getCurrent();
-            if (currentDialog)
+            openDialogsUntilUrlMatches();
+        }
+
+        // If there are fewer dialogParams in the URL than in dialogs displayed,
+        // close them until they match
+        var closeDialogsUntilUrlMatches = function()
+        {
+            if (dialogParamsList.length < topmostDialogLevel)
             {
-                _disableHandlers = true;
-                currentDialog.close()
-                    .then(function()
-                    {
-                        setTimeout(function() 
+                var currentDialog = $.modalDialog.getCurrent();
+                if (currentDialog)
+                {
+                    _disableHandlers = true;
+                    currentDialog.close()
+                        .then(function()
                         {
-                            deferred.resolve();
-                            _disableHandlers = false;
-                        }, 
-                        0); 
-                    });
+                            topmostDialogLevel--;
+                            closeDialogsUntilUrlMatches();
+                        });
+                }
+                else
+                {
+                    deferred.resolve();
+                }
             }
             else
             {
-                deferred.resolve();
+                setTimeout(function()
+                {
+                    deferred.resolve();
+                    _disableHandlers = false;
+                });
             }
+        };
+
+        if (dialogParamsList.length < topmostDialogLevel)
+        {
+            closeDialogsUntilUrlMatches();
         }
 
         return deferred;

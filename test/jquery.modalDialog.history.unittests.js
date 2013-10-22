@@ -11,7 +11,7 @@ describe("jquery.modalDialog.history", function()
 
     function testDialogHistoryManagement(dialogType, dialogOptions)
     {
-        it("Ensure opening and closing a dialog modifies the URL and history", function(done)
+        it("modifies the URL and history when opening and closing a " + dialogType + " dialog", function(done)
         {
             var dialog = $.modalDialog.create(dialogOptions);
 
@@ -95,7 +95,7 @@ describe("jquery.modalDialog.history", function()
                 });
         });
 
-        it("Ensure opening and closing a dialog with settings.enableHistory === false doesn't cause URL changes", function(done)
+        it("doesnt modify the URL when opening and closing a " + dialogType + " dialog with settings.enableHistory === false", function(done)
         {
             var options = $.extend({ enableHistory: false }, dialogOptions);
 
@@ -129,4 +129,36 @@ describe("jquery.modalDialog.history", function()
     testDialogHistoryManagement("iframe", { url: "content/jquery.modalDialog.iframeContent.html" });
 
     testDialogHistoryManagement("ajax", { url: "content/jquery.modalDialog.ajaxContent.html", ajax: true });
+
+    it("modifies the URL and history when opening and closing a dialog 2nd level dialog", function(done)
+    {
+        /* jshint quotmark:false */
+
+        var dialog1 = $.modalDialog.create({ content: "#simpleDialog" });
+
+        var $content2 = $('<div class="dialog-content">content</div>').appendTo(document.body);
+        var dialog2;
+
+        dialog1
+            .open()
+            .then(function()
+            {
+                dialog2 = $.modalDialog.create({ content: $content2 });
+
+                return dialog2.open();
+            })
+            .then(function()
+            {
+                return dialog2.close();
+            })
+            .then(function()
+            {
+                return dialog1.close();
+            })
+            .then(function()
+            {
+                $content2.remove();
+                done();
+            });
+    });
 });
