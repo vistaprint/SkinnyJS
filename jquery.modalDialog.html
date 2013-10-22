@@ -240,13 +240,15 @@
 
 <li><strong>data-dialog-onbeforeclose</strong>: An inline event handler that fires before the dialog is closed. See <a href='#events'>Events</a> for more information.</li>
 
-<li><strong>data-dialog-maxWidth</strong>: Sets the maximum width of the dialog. Note that on small mobile devices, the actual width may be smaller, so you should design the dialog content accordingly. Defaults to 600.</li>
+<li><strong>data-dialog-maxwidth</strong>: Sets the maximum width of the dialog. Note that on small mobile devices, the actual width may be smaller, so you should design the dialog content accordingly. Defaults to 600.</li>
 
 <li><strong>data-dialog-destroyOnClose</strong>: If true, the dialog DOM will be destroyed and all events removed when the dialog closes. Defaults to &#8221;false&#8221;.</li>
 
 <li><strong>data-dialog-skin</strong>: The name of the skin to use for the dialog. Defaults to &#8220;primary&#8221;.</li>
 
 <li><strong>data-dialog-enablehistory</strong>: If set to false, <a href='#managing_history_browser_backforward_buttons'>history management</a> will be disabled for this dialog, even if enabled globally. Defaults to &#8221;true&#8221;.</li>
+
+<li><strong>data-dialog-zindex</strong>: Can be used to set the z-index for the dialog. Don&#8217;t use this unless you need to participate in a pre-existing z-index arms race. Defaults to 10000.</li>
 </ul>
 <div class='highlight'><pre><code class='html'><span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;#fruitsAndNuts&quot;</span> <span class='na'>data-rel=</span><span class='s'>&quot;modalDialog&quot;</span><span class='nt'>&gt;</span>Fruits and Nuts<span class='nt'>&lt;/a&gt;</span>
 
@@ -295,6 +297,8 @@
 <li><strong>onajaxerror</strong>: A handler for the &#8221;ajaxerror&#8221; event. See <a href='#events'>Events</a> for more information.</li>
 
 <li><strong>enableHistory</strong>: If set to false, <a href='#managing_history_browser_backforward_buttons'>history management</a> will be disabled for this dialog, even if enabled globally. Defaults to &#8221;true&#8221;.</li>
+
+<li><strong>zIndex</strong>: Can be used to set the z-index for the dialog. Don&#8217;t use this unless you need to participate in a pre-existing z-index arms race. Defaults to 10000.</li>
 </ul>
 
 <p>Here&#8217;s an example. Note that you can (and usually should) do this all with <em>data-dialog</em> attributes:</p>

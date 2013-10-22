@@ -18,10 +18,9 @@
 </pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>A map of dialogs by full ID</p>             </td>             <td class="code">               <div class="highlight"><pre>
     <span class="kd">var</span> <span class="nx">_fullIdMap</span> <span class="o">=</span> <span class="p">{};</span>
 
-    <span class="kd">var</span> <span class="nx">zIndex</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">;</span>
-
 </pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Default values</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">_defaults</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">defaults</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nx">zIndex</span><span class="o">:</span> <span class="mi">10000</span><span class="p">,</span> <span class="c1">// Allow callers to participate in zIndex arms races</span>
         <span class="nx">title</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="c1">// The title to display in the title bar of the dialog</span>
         <span class="nx">maxWidth</span><span class="o">:</span> <span class="mi">600</span><span class="p">,</span> <span class="c1">// Sets the maximum width of the dialog. Note that on small mobile devices, the actual width may be smaller, so you should design the dialog content accordingly</span>
         <span class="nx">initialHeight</span><span class="o">:</span> <span class="mi">100</span><span class="p">,</span> <span class="c1">// Only IFrameDialog uses this. Consider this internal for now.</span>
@@ -32,12 +31,12 @@
         <span class="nx">destroyOnClose</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="c1">// If true, the dialog DOM will be destroyed and all events removed when the dialog closes</span>
         <span class="nx">containerElement</span><span class="o">:</span> <span class="s2">&quot;body&quot;</span><span class="p">,</span> <span class="c1">// A CSS selector or jQuery object for the element that should be the parent for the dialog DOM (useful for working with jQuery mobile)</span>
         <span class="nx">preventEventBubbling</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// If true, click and touch events are prevented from bubbling up to the document</span>
+        <span class="nx">enableHistory</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// If the history module is enabled, this can be used to disable history if set false</span>
         <span class="nx">onopen</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
         <span class="nx">onclose</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
         <span class="nx">onbeforeopen</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
         <span class="nx">onbeforeclose</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
-        <span class="nx">onajaxerror</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
-        <span class="nx">enableHistory</span><span class="o">:</span> <span class="kc">true</span> <span class="c1">// If the history module is enabled, this can be used to disable history if set false</span>
+        <span class="nx">onajaxerror</span><span class="o">:</span> <span class="kc">null</span>
     <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>If the jquery.transit library is loaded, use CSS3 transitions instead of jQuery.animate()</p>             </td>             <td class="code">               <div class="highlight"><pre>
@@ -164,6 +163,11 @@ Otherwise, you could end up pushing it on to the stack more than once.</p>      
 </pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <p>Keep track of the dialog stacking order</p>             </td>             <td class="code">               <div class="highlight"><pre>
         <span class="nx">_dialogStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
 
+        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">level</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">parentId</span> <span class="o">=</span> <span class="nx">_dialogStack</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">level</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="nx">settings</span><span class="p">.</span><span class="nx">_fullId</span><span class="p">;</span>
+        <span class="p">}</span>
+
         <span class="k">this</span><span class="p">.</span><span class="nx">_open</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
 
         <span class="k">this</span><span class="p">.</span><span class="nx">_build</span><span class="p">();</span>
@@ -288,8 +292,8 @@ stop it right where it is.</p>             </td>             <td class="code">  
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">$loadingIndicator</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="k">this</span><span class="p">.</span><span class="nx">$loadingIndicator</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;&lt;div class=&#39;dialog-loading-indicator&#39;&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;&quot;</span><span class="p">)</span>
-                <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$bg</span><span class="p">)</span>
-                <span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;z-index&quot;</span><span class="p">,</span> <span class="nb">parseInt</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$bg</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;z-index&quot;</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+                <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$bg</span><span class="p">);</span>
+</pre></div>             </td>           </tr>                               <tr id="section-24">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-24">&#182;</a>               </div>               <p>.css("z-index", parseInt(this.$bg.css("z-index"), 10) + 1);</p>             </td>             <td class="code">               <div class="highlight"><pre>
         <span class="p">}</span>
     <span class="p">};</span>
 
@@ -307,7 +311,7 @@ stop it right where it is.</p>             </td>             <td class="code">  
         <span class="p">}</span>
     <span class="p">};</span>
 
-</pre></div>             </td>           </tr>                               <tr id="section-24">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-24">&#182;</a>               </div>               <p>Closes the dialog. 
+</pre></div>             </td>           </tr>                               <tr id="section-25">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-25">&#182;</a>               </div>               <p>Closes the dialog. 
 isDialogCloseButton Indicates the cancel button in the dialog's header was clicked.</p>             </td>             <td class="code">               <div class="highlight"><pre>
     <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">close</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">isDialogCloseButton</span><span class="p">)</span>
     <span class="p">{</span>
@@ -320,13 +324,13 @@ isDialogCloseButton Indicates the cancel button in the dialog's header was click
 
         <span class="kd">var</span> <span class="nx">eventSettings</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">isDialogCloseButton</span><span class="o">:</span> <span class="o">!!</span><span class="nx">isDialogCloseButton</span> <span class="p">};</span>
 
-</pre></div>             </td>           </tr>                               <tr id="section-25">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-25">&#182;</a>               </div>               <p>Expose an event allowing consumers to cancel the close event</p>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-26">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-26">&#182;</a>               </div>               <p>Expose an event allowing consumers to cancel the close event</p>             </td>             <td class="code">               <div class="highlight"><pre>
         <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">onbeforeclose</span><span class="p">.</span><span class="nx">fire</span><span class="p">(</span><span class="nx">eventSettings</span><span class="p">).</span><span class="nx">isDefaultPrevented</span><span class="p">())</span>
         <span class="p">{</span>
             <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_rejectDeferred</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">);</span>
         <span class="p">}</span>
 
-</pre></div>             </td>           </tr>                               <tr id="section-26">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-26">&#182;</a>               </div>               <p>Expose a global event</p>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-27">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-27">&#182;</a>               </div>               <p>Expose a global event</p>             </td>             <td class="code">               <div class="highlight"><pre>
         <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">onbeforeclose</span><span class="p">.</span><span class="nx">fire</span><span class="p">(</span><span class="nx">eventSettings</span><span class="p">,</span> <span class="k">this</span><span class="p">).</span><span class="nx">isDefaultPrevented</span><span class="p">())</span>
         <span class="p">{</span>
             <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_rejectDeferred</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">);</span>
@@ -344,7 +348,7 @@ isDialogCloseButton Indicates the cancel button in the dialog's header was click
             <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_finishClose</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="nx">eventSettings</span><span class="p">)</span>
         <span class="p">);</span>
 
-</pre></div>             </td>           </tr>                               <tr id="section-27">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-27">&#182;</a>               </div>               <p>unbind global event listeners</p>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-28">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-28">&#182;</a>               </div>               <p>unbind global event listeners</p>             </td>             <td class="code">               <div class="highlight"><pre>
         <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_orientationchange</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;orientationchange resize&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_orientationchange</span><span class="p">);</span>
@@ -391,7 +395,7 @@ isDialogCloseButton Indicates the cancel button in the dialog's header was click
             <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;resize&quot;</span><span class="p">);</span>
         <span class="p">}</span>
 
-</pre></div>             </td>           </tr>                               <tr id="section-28">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-28">&#182;</a>               </div>               <p>Fire events on a timeout so that the event loop
+</pre></div>             </td>           </tr>                               <tr id="section-29">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-29">&#182;</a>               </div>               <p>Fire events on a timeout so that the event loop
 has a chance to process DOM changes. 
 Without this, close handlers can't re-open the same iframe dialog:
 the iframe isn't recognized as a new element.</p>             </td>             <td class="code">               <div class="highlight"><pre>
@@ -409,13 +413,27 @@ the iframe isn't recognized as a new element.</p>             </td>             
 
     <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_destroy</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-29">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-29">&#182;</a>               </div>               <p>Put the content node back on the body.
+</pre></div>             </td>           </tr>                               <tr id="section-30">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-30">&#182;</a>               </div>               <p>Put the content node back on the body.
 It could be used again.</p>             </td>             <td class="code">               <div class="highlight"><pre>
         <span class="k">this</span><span class="p">.</span><span class="nx">$content</span><span class="p">.</span><span class="nx">detach</span><span class="p">().</span><span class="nx">appendTo</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">);</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
     <span class="p">};</span>
 
-</pre></div>             </td>           </tr>                               <tr id="section-30">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-30">&#182;</a>               </div>               <p>Builds the DOM for the dialog chrome</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_updateZIndexes</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">zIndex</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">zIndex</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">parent</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getParent</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">parent</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">zIndex</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">parent</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">zIndex</span> <span class="o">+</span> <span class="mi">10</span><span class="p">,</span> <span class="nx">zIndex</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">$bg</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;z-index&quot;</span><span class="p">,</span> <span class="nx">zIndex</span><span class="p">);</span>
+        <span class="nx">zIndex</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">$container</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;z-index&quot;</span><span class="p">,</span> <span class="nx">zIndex</span><span class="p">);</span>
+    <span class="p">};</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-31">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-31">&#182;</a>               </div>               <p>Builds the DOM for the dialog chrome</p>             </td>             <td class="code">               <div class="highlight"><pre>
     <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_build</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="cm">/*jshint quotmark:false*/</span>
@@ -427,10 +445,7 @@ It could be used again.</p>             </td>             <td class="code">     
 
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">$bg</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;div class=&quot;dialog-background&quot;&gt;&lt;/div&gt;&#39;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;z-index&#39;</span><span class="p">,</span> <span class="o">++</span><span class="nx">zIndex</span><span class="p">);</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-31">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-31">&#182;</a>               </div>               <p>increase the z-index again to consider the loading indicator</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="nx">zIndex</span><span class="o">++</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">$bg</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;div class=&quot;dialog-background&quot;&gt;&lt;/div&gt;&#39;</span><span class="p">);</span>
 
             <span class="k">this</span><span class="p">.</span><span class="nx">$container</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span>
                 <span class="s1">&#39;&lt;div class=&quot;dialog-container&quot; id=&quot;&#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">_fullId</span> <span class="o">+</span> <span class="s1">&#39;Container&quot;&gt;&#39;</span> <span class="o">+</span>
@@ -441,13 +456,10 @@ It could be used again.</p>             </td>             <td class="code">     
                 <span class="s1">&#39;  &lt;div class=&quot;dialog-content-container&quot;&gt;&#39;</span> <span class="o">+</span>
                 <span class="s1">&#39;  &lt;/div&gt;&#39;</span> <span class="o">+</span>
                 <span class="s1">&#39;&lt;/div&gt;&#39;</span>
-            <span class="p">).</span><span class="nx">css</span><span class="p">(</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;z-index&#39;</span><span class="o">:</span> <span class="o">++</span><span class="nx">zIndex</span><span class="p">,</span>
-                    <span class="s1">&#39;max-width&#39;</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getDefaultWidthData</span><span class="p">().</span><span class="nx">width</span>
-                <span class="p">});</span>
+            <span class="p">)</span>
+                <span class="p">.</span><span class="nx">css</span><span class="p">({</span> <span class="s2">&quot;max-width&quot;</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getDefaultWidthData</span><span class="p">().</span><span class="nx">width</span> <span class="p">});</span>
 
-            <span class="k">this</span><span class="p">.</span><span class="nx">$el</span> <span class="o">=</span> <span class="nx">$</span><span class="p">([</span><span class="k">this</span><span class="p">.</span><span class="nx">$bg</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="k">this</span><span class="p">.</span><span class="nx">$container</span><span class="p">[</span><span class="mi">0</span><span class="p">]]).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;dialog-skin-&#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">skin</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">$el</span> <span class="o">=</span> <span class="nx">$</span><span class="p">([</span><span class="k">this</span><span class="p">.</span><span class="nx">$bg</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="k">this</span><span class="p">.</span><span class="nx">$container</span><span class="p">[</span><span class="mi">0</span><span class="p">]]).</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&quot;dialog-skin-&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">skin</span><span class="p">);</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-32">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-32">&#182;</a>               </div>               <p>HACK: Support jQuery mobile. In jQuery mobile, the root element needs to be specific.
 TODO: Move this to a jQuery mobile fixes specific module</p>             </td>             <td class="code">               <div class="highlight"><pre>
@@ -467,7 +479,7 @@ TODO: Move this to a jQuery mobile fixes specific module</p>             </td>  
 
             <span class="k">this</span><span class="p">.</span><span class="nx">_buildContent</span><span class="p">();</span>
 
-            <span class="k">this</span><span class="p">.</span><span class="nx">$content</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;*[data-action=&quot;close&quot;]&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_close</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">$content</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;*[data-action=&quot;close&quot;]&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_close</span><span class="p">);</span>
 
             <span class="k">this</span><span class="p">.</span><span class="nx">$contentContainer</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$content</span><span class="p">);</span>
 
@@ -481,6 +493,8 @@ and we are not in Internet Explorer 7, because it handles positioning oddly.</p>
         <span class="p">{</span>
             <span class="k">this</span><span class="p">.</span><span class="nx">_alreadyBuilt</span><span class="p">();</span>
         <span class="p">}</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">_updateZIndexes</span><span class="p">();</span>
     <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-34">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-34">&#182;</a>               </div>               <p>Subclasses should override to do something when a cached DOM is used</p>             </td>             <td class="code">               <div class="highlight"><pre>
@@ -1088,7 +1102,7 @@ Settings go in order:</p>             </td>             <td class="code">       
 </ol>             </td>             <td class="code">               <div class="highlight"><pre>
     <span class="kd">var</span> <span class="nx">ensureSettings</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">explicitSettings</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">settings</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">_defaults</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">settings</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">defaults</span><span class="p">);</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-83">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-83">&#182;</a>               </div>               <p>An iframe dialog may have sent a reference to dialog content,
 but it didn't know if it was a URL or a selector for a DOM node.
@@ -1438,8 +1452,8 @@ and it may not be desirable to load it at all.</p>             </td>            
         <span class="p">}</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-113">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-113">&#182;</a>               </div>               <p>Alternate defaults when jQuery mobile is loaded. Work around JQM's quirks.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="nx">_defaults</span> <span class="o">=</span>  <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span>
-            <span class="nx">_defaults</span><span class="p">,</span>
+        <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">defaults</span> <span class="o">=</span>  <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span>
+            <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">defaults</span><span class="p">,</span>
             <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-114">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-114">&#182;</a>               </div>               <p>JQM widgets must be in the active data-role="page" element to work
 containerElement: ".ui-page.ui-page-active",</p>             </td>             <td class="code">               <div class="highlight"><pre>
