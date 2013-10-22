@@ -439,7 +439,11 @@
                 '  <div class="dialog-content-container">' +
                 '  </div>' +
                 '</div>'
-            ).css('z-index', ++zIndex);
+            ).css(
+                {
+                    'z-index': ++zIndex,
+                    'max-width': this._getDefaultWidthData().width
+                });
 
             this.$el = $([this.$bg[0], this.$container[0]]).addClass('dialog-skin-' + this.settings.skin);
 
@@ -507,11 +511,12 @@
     ModalDialog.prototype._getDefaultPosition = function(contentHeight)
     {
         var widthData = this._getDefaultWidthData();
-
+        var scrollTop = $(document).scrollTop();
+        
         var pos = 
         {
             width: widthData.width,
-            top: $(document).scrollTop() + MARGIN
+            top: scrollTop + MARGIN
         };
 
         pos.left = (widthData.windowWidth - pos.width) / 2;
@@ -535,7 +540,7 @@
             var containerHeight = this._getChromeHeight() + contentHeight;
 
             var parentHeight = this.parent.is("body") ? $(window).height() : this.parent.height();
-            var idealTop = (parentHeight / 2) - (containerHeight / 2);
+            var idealTop = ((parentHeight / 2) - (containerHeight / 2)) + scrollTop;
 
             pos.top = Math.max(idealTop, pos.top);
         }
