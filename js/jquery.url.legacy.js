@@ -9,133 +9,29 @@ $.Url = function(url)
     var me = this;
 
     // The anchor link- text after the # character
-    var _hash = "";
-
-    this.hash = function(value)
-    {
-        if (typeof value != "undefined")
-        {
-            _hash = value;
-        }
-        else
-        {
-            return _hash;
-        }
-    };
+    this.hash = "";
 
     // http: or https:
-    var _protocol = "";
-
-    this.protocol = function(value)
-    {
-        if (typeof value != "undefined")
-        {
-            _protocol = value;
-        }
-        else
-        {
-            return _protocol;
-        }
-    };
+    this.protocol = "";
 
     // The server name- example: www.vistaprint.com
-    var _hostname = "";
-
-    this.hostname = function(value)
-    {
-        if (typeof value != "undefined")
-        {
-            _hostname = value;
-        }
-        else
-        {
-            return _hostname;
-        }
-    };
+    this.hostname = "";
 
     // The server name- example: www.vistaprint.com
     // Includes port string if specified- example www.vistaprint.com:80
-    this.host = function(value)
-    {
-        if (typeof value != "undefined")
-        {
-            // Separate hostname & port from host
-            if (value)
-            {
-                var colonPos = value.indexOf(":");
-                if (colonPos != -1)
-                {
-                    _hostname = value.substr(0, colonPos);
-                    _port = value.substr(colonPos + 1, value.length);
-                }
-                else
-                {
-                    _hostname = value;
-                }
-            }
-        }
-        else
-        {
-            var out = _hostname;
-            if (_port)
-            {
-                out += ":" + _port;
-            }
-            return out;
-        }
-    };
-
-    var _port = "";
+    this.host = "";
 
     // The TCP port (if specified)
-    this.port = function(value)
-    {
-        if (typeof value != "undefined")
-        {
-            _port = value;
-        }
-        else
-        {
-            return _port;
-        }
-    };
+    this.port = "";
 
     // The querystring- example: val1=foo&val2=bar
-    this.queryString = {};
+    this.queryString = "";
 
     // The querystring with the initial ? if specified- example: ?val1=foo&val2=bar
-    this.search = function(value)
-    {
-        if (typeof value != "undefined")
-        {
-            if (!value)
-            {
-                return;
-            }
-
-            this.queryString = $.deparam(value);
-        }
-        else
-        {
-            var qs = $.param(this.queryString);
-            return qs ? "?" + qs : qs;
-        }
-    };
-
-    var _pathname = "";
+    this.search = "";
 
     // The root relative path to the file- example: /vp/myfile.htm
-    this.pathname = function(value)
-    {
-        if (typeof value != "undefined")
-        {
-            _pathname = value;
-        }
-        else
-        {
-            return _pathname;
-        }
-    };
+    this.pathname = "";
 
     var load = function(url)
     {
@@ -145,12 +41,12 @@ $.Url = function(url)
         // protocol: "http:" or "https:"
         if (temp.search(/https\:\/\/+/i) === 0) //The ending + is to prevent comment removers from messing up this line
         {
-            _protocol = "https:";
+            me.protocol = "https:";
             temp = url.substr(8);
         }
         else if (temp.search(/http\:\/\/+/i) === 0) //The ending + is to prevent comment removers from messing up this line
         {
-            _protocol = "http:";
+            me.protocol = "http:";
             temp = url.substr(7);
         }
 
@@ -159,19 +55,34 @@ $.Url = function(url)
             return;
         }
 
-        // host: contains hostname and port if specified (i.e. www.vistaprint.com:80)
-        if (_protocol !== "")
+        //host: contains hostname and port if specified (i.e. www.vistaprint.com:80)
+        if (me.protocol !== "")
         {
             //match a slash, hash, colon, or question mark
             nextPartPos = temp.search(/[\/\?\#]/i);
             if (nextPartPos == -1)
             {
-                this.host(temp);
+                me.host = temp;
                 return;
             }
 
-            this.host(temp.substring(0, nextPartPos));
+            me.host = temp.substring(0, nextPartPos);
             temp = temp.substr(nextPartPos);
+        }
+
+        // Separate hostname & port from host
+        if (me.host && me.host !== "")
+        {
+            var colorPos = me.host.indexOf(":");
+            if (colorPos != -1)
+            {
+                me.hostname = me.host.substr(0, colorPos);
+                me.port = me.host.substr(colorPos + 1, me.host.length);
+            }
+            else
+            {
+                me.hostname = me.host;
+            }
         }
 
         if (temp.length === 0)
@@ -186,11 +97,11 @@ $.Url = function(url)
         {
             if (nextPartPos == -1)
             {
-                _pathname = temp;
+                me.pathname = temp;
                 return;
             }
 
-            _pathname = temp.substr(0, nextPartPos);
+            me.pathname = temp.substr(0, nextPartPos);
             temp = temp.substr(nextPartPos);
         }
 
@@ -207,14 +118,16 @@ $.Url = function(url)
 
             if (nextPartPos == -1)
             {
-                me.queryString = $.deparam(temp.substr(1)); //cut off the initial ?
+                me.queryString = temp.substr(1); //cut off the initial ?
                 temp = "";
             }
             else
             {
-                me.queryString = $.deparam(temp.substring(1, nextPartPos));
+                me.queryString = temp.substring(1, nextPartPos);
                 temp = temp.substr(nextPartPos);
             }
+
+            updateSearch();
         }
 
         if (temp.length === 0)
@@ -225,20 +138,42 @@ $.Url = function(url)
         //hash (i.e. anchor link- #myanchor)
         if (temp.indexOf("#") === 0)
         {
-            _hash = temp;
+            me.hash = temp;
+        }
+    };
+
+    var updateSearch = function()
+    {
+        me.search = "";
+        if (me.queryString && me.queryString !== "")
+        {
+            me.search = "?" + me.queryString;
         }
     };
 
     // Gets the URL as a string
     this.toString = function()
     {
-        return (_protocol || "http:") + "//" + me.host() + me.pathname() + me.search() + me.hash();
+        var sPort = me.port;
+        var sProtocol = me.protocol;
+
+        if (sPort && sPort !== "")
+        {
+            sPort = ":" + sPort;
+        }
+        if (sProtocol && sProtocol !== "")
+        {
+            sProtocol = sProtocol + "//";
+        }
+        return sProtocol + me.hostname + sPort + me.pathname + me.search + me.hash;
     };
 
     // Gets a specific querystring value from its key name
     this.getItem = function(key, defaultValue)
     {
-        var value = me.queryString[key];
+        var qs = $.deparam(me.queryString);
+
+        var value = qs[key];
         if (typeof value == "undefined")
         {
             return defaultValue;
@@ -252,6 +187,8 @@ $.Url = function(url)
     // Sets a specific querystring value by its key name
     this.setItem = function(key, value)
     {
+        var qs = $.deparam(me.queryString);
+
         if (value === null || typeof value == "undefined")
         {
             value = "";
@@ -261,13 +198,24 @@ $.Url = function(url)
             value = value.toString();
         }
 
-        me.queryString[key] = value;
+        qs[key] = value;
+        me.queryString = $.param(qs);
+
+        updateSearch();
     };
 
     // Removes a specific querystring value by its key name
     this.removeItem = function(key)
     {
-        delete me.queryString[key];
+        var qs = $.deparam(me.queryString);
+        delete qs[key];
+        me.queryString = $.param(qs);
+
+        me.search = "";
+        if (me.queryString !== "")
+        {
+            me.search = "?" + me.queryString;
+        }
     };
 
     load(url.toString());
