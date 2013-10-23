@@ -15,7 +15,7 @@ $.Url = function(url)
     {
         if (typeof value != "undefined")
         {
-            _hash = value;
+            _hash = value || "";
         }
         else
         {
@@ -30,7 +30,7 @@ $.Url = function(url)
     {
         if (typeof value != "undefined")
         {
-            _protocol = value;
+            _protocol = value || "";
         }
         else
         {
@@ -45,7 +45,7 @@ $.Url = function(url)
     {
         if (typeof value != "undefined")
         {
-            _hostname = value;
+            _hostname = value || "";
         }
         else
         {
@@ -70,7 +70,7 @@ $.Url = function(url)
                 }
                 else
                 {
-                    _hostname = value;
+                    _hostname = value || "";
                 }
             }
         }
@@ -92,7 +92,7 @@ $.Url = function(url)
     {
         if (typeof value != "undefined")
         {
-            _port = value;
+            _port = value || "";
         }
         else
         {
@@ -110,14 +110,15 @@ $.Url = function(url)
         {
             if (!value)
             {
+                me.queryString = {};
                 return;
             }
 
-            this.queryString = $.deparam(value);
+            me.queryString = $.deparam(value);
         }
         else
         {
-            var qs = $.param(this.queryString);
+            var qs = $.param(me.queryString);
             return qs ? "?" + qs : qs;
         }
     };
@@ -166,11 +167,11 @@ $.Url = function(url)
             nextPartPos = temp.search(/[\/\?\#]/i);
             if (nextPartPos == -1)
             {
-                this.host(temp);
+                me.host(temp);
                 return;
             }
 
-            this.host(temp.substring(0, nextPartPos));
+            me.host(temp.substring(0, nextPartPos));
             temp = temp.substr(nextPartPos);
         }
 
@@ -232,7 +233,13 @@ $.Url = function(url)
     // Gets the URL as a string
     this.toString = function()
     {
-        return (_protocol || "http:") + "//" + me.host() + me.pathname() + me.search() + me.hash();
+        var url = "";
+        var host = me.host();
+        if (host)
+        {
+            url = (_protocol || "http:") + "//" + me.host();
+        }
+        return url + me.pathname() + me.search() + me.hash();
     };
 
     // Gets a specific querystring value from its key name
@@ -270,7 +277,7 @@ $.Url = function(url)
         delete me.queryString[key];
     };
 
-    load(url.toString());
+    load(url ? url.toString() : "");
 };
 
 })(jQuery);

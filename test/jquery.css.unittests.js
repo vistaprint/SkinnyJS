@@ -86,5 +86,15 @@
             assert.equal(actual.borderLeftColor, "#fff");
             assert.equal(actual.borderWidth, "1px");
         });
+
+        it("should handle a key with no value", function()
+        {
+            var css = "font-family:";
+
+            var actual = $.parseCssString(css);
+
+            assert.property(actual, "fontFamily");
+            assert.strictEqual(actual.fontFamily, "");
+        });
     });
 });

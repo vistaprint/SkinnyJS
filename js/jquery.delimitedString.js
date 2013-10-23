@@ -46,14 +46,19 @@ $.parseDelimitedString = function(delimitedString, itemDelimiter, pairDelimiter,
             if (pair.length > 0)
             {
                 var delimIndex = pair.indexOf(pairDelimiter);
+                var key, value;
 
                 if (delimIndex > 0 && delimIndex <= pair.length - 1) 
                 {
-                    var key = pair.substring(0, delimIndex);
-                    var value = pair.substring(delimIndex + 1);
-
-                    ret[keyDecoder(key)] = valueDecoder(value);
+                    key = pair.substring(0, delimIndex);
+                    value = pair.substring(delimIndex + 1);
                 }
+                else
+                {
+                    key = pair;
+                }
+
+                ret[keyDecoder(key)] = valueDecoder(value);
             }
         }
     }
