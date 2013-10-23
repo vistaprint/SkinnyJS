@@ -58,6 +58,13 @@ module.exports = function(grunt)
                     urls: ["test/jquery.modalDialog.*.unittests.html"]
                 }
             },
+            specific:
+            {
+                options:
+                {
+                    urls: ["http://localhost:9001/test/jquery.modalDialog.history.unittests.html"]
+                }
+            },
             options:
             {
                 reporter: "Spec",
@@ -331,7 +338,7 @@ module.exports = function(grunt)
     // Wrap the mocha task
     grunt.renameTask("mocha", "orig-mocha");
 
-    grunt.registerTask("mocha", function() 
+    grunt.registerTask("mocha", function(target) 
     {
         var config = grunt.config.get("mocha");
 
@@ -353,7 +360,13 @@ module.exports = function(grunt)
 
         grunt.config.set("orig-mocha", config);
 
-        grunt.task.run("orig-mocha");
+        var taskName = "orig-mocha";
+        if (target)
+        {
+            taskName += ":" + target;
+        }
+
+        grunt.task.run(taskName);
     });
 
     // Custom tasks
@@ -364,6 +377,8 @@ module.exports = function(grunt)
     grunt.registerTask("default", ["verify", "build"]);
 
     grunt.registerTask("test", ["less", "connect", "mocha"]);
+
+    grunt.registerTask("testSpecific", ["less", "connect", "mocha:specific"]);
 
     grunt.registerTask("verify", ["jshint", "test"]);
 

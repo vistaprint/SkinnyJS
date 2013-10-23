@@ -83,10 +83,20 @@
         var dialogParams = 
         {
             dialogType: "node",
-
-            // Get the ID of the selected element (for node dialogs)
-            dialogId: dialog.settings.content ? "#" + $(dialog.settings.content).prop("id") : null
+            dialogId: null
         };
+
+        // Get the ID of the selected element (for node dialogs)
+        if (dialog.settings.content)
+        {
+            var id = $(dialog.settings.content).prop("id");
+            if (!id)
+            {
+                throw new Error("The specified content node has no ID, and cannot be serialized to a URL parameter.");
+            }
+
+            dialogParams.dialogId = "#" + id;
+        }
 
         // If its not a node dialog, use the URL as the ID
         if (!dialogParams.dialogId && dialog.settings.url)
