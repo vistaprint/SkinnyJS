@@ -55,18 +55,19 @@ If "strict" is true Whether or not to perform a strict parse, which requires all
         <span class="k">return</span> <span class="kc">NaN</span><span class="p">;</span>
     <span class="p">};</span>
 
+    <span class="kd">var</span> <span class="nx">msDateRegEx</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="sr">/^\/Date\((d|-|.*)\)[\/|\\]$/</span><span class="p">);</span>
+
 </pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>Parses the date in Microsoft format</p>             </td>             <td class="code">               <div class="highlight"><pre>
     <span class="nb">Date</span><span class="p">.</span><span class="nx">parseMsDate</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">date</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">struct</span><span class="p">;</span>
-
-        <span class="k">if</span> <span class="p">((</span><span class="nx">struct</span> <span class="o">=</span> <span class="sr">/^\/Date\((d|-|.*)\)[\/|\\]$/</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">date</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">msDateRegEx</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">date</span><span class="p">))</span>
         <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">v</span> <span class="o">=</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">split</span><span class="p">(</span><span class="sr">/[-+,.]/</span><span class="p">);</span>
-            <span class="k">return</span> <span class="nx">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">?</span> <span class="o">+</span><span class="nx">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">:</span> <span class="mi">0</span> <span class="o">-</span> <span class="o">+</span><span class="nx">v</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+            <span class="k">return</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="nb">RegExp</span><span class="p">.</span><span class="nx">$1</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
         <span class="p">}</span>
-
-        <span class="k">return</span> <span class="kc">NaN</span><span class="p">;</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">NaN</span><span class="p">;</span>
+        <span class="p">}</span>
     <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Enhances the native JavaScript Date.parse function to support ISO8601 and Microsoft format dates.
@@ -75,23 +76,7 @@ before falling back to any implementation-specific date parsing. The native Date
 do this on all browsers, so it needs to be overwritten to force this behavior and ensure consistency.</p>             </td>             <td class="code">               <div class="highlight"><pre>
     <span class="nb">Date</span><span class="p">.</span><span class="nx">parse</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">date</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">timestamp</span><span class="p">;</span>
-
-        <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parseISO</span><span class="p">(</span><span class="nx">date</span><span class="p">);</span>
-
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">timestamp</span><span class="p">))</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">timestamp</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parseMsDate</span><span class="p">(</span><span class="nx">date</span><span class="p">);</span>
-
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">timestamp</span><span class="p">))</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">timestamp</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">return</span> <span class="nx">origParse</span> <span class="o">?</span> <span class="nx">origParse</span><span class="p">(</span><span class="nx">date</span><span class="p">)</span> <span class="o">:</span> <span class="kc">NaN</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nx">origParse</span><span class="p">(</span><span class="nx">date</span><span class="p">)</span> <span class="o">||</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parseMsDate</span><span class="p">(</span><span class="nx">date</span><span class="p">)</span> <span class="o">||</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parseISO</span><span class="p">(</span><span class="nx">date</span><span class="p">)</span> <span class="o">||</span> <span class="kc">NaN</span><span class="p">;</span>
     <span class="p">};</span>
 
 <span class="p">}</span> <span class="p">(</span><span class="nb">Date</span><span class="p">));</span>
