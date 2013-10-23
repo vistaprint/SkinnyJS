@@ -200,32 +200,40 @@
 
                 var animationCallback = $.proxy(function()
                 {
-                    this.$el.addClass("dialog-visible");
-
-                    if ($.modalDialog.isSmallScreen())
+                    try
                     {
-                        // TODO: I question this change. Should it be decoupled from the dialog framework?
-                        // It could be put into mobile fixes.
-                        // Is this even mobile specific?
-                        // Original comment:
-                        // Force dialogs that are on small screens to trigger a window resize event when closed, just in case we have resized since the dialog opened.
+                        this.$el.addClass("dialog-visible");
 
-                        this.triggerWindowResize = false;
-                        this._orientationchange = $.proxy(function(event) 
-                            {
-                                this.triggerWindowResize = true;
-                                return this.pos(event);
-                            }, 
-                            this);
+                        if ($.modalDialog.isSmallScreen())
+                        {
+                            // TODO: I question this change. Should it be decoupled from the dialog framework?
+                            // It could be put into mobile fixes.
+                            // Is this even mobile specific?
+                            // Original comment:
+                            // Force dialogs that are on small screens to trigger a window resize event when closed, just in case we have resized since the dialog opened.
 
-                        $(window).on("orientationchange resize", this._orientationchange);
+                            this.triggerWindowResize = false;
+                            this._orientationchange = $.proxy(function(event) 
+                                {
+                                    this.triggerWindowResize = true;
+                                    return this.pos(event);
+                                }, 
+                                this);
+
+                            $(window).on("orientationchange resize", this._orientationchange);
+                        }
+
+                        this.onopen.fire();
+
+                        $.modalDialog.onopen.fire(null, this);
+
+                        this._resolveDeferred("open");
+                    }
+                    catch (ex)
+                    {
+                        this._rejectDeferred("open", ex);
                     }
 
-                    this.onopen.fire();
-
-                    $.modalDialog.onopen.fire(null, this);
-
-                    this._resolveDeferred("open");
                     this._clearDeferred("open");
 
                 }, this);
@@ -253,7 +261,16 @@
     {
         if (this._finishOpenAction)
         {
-            this._finishOpenAction();
+            try
+            {
+                this._finishOpenAction();
+            }
+            catch (ex)
+            {
+                this._rejectDeferred("open", ex);
+                this._clearDeferred("open");
+            }
+
             this._finishOpenAction = null;
         }
     };
@@ -340,11 +357,29 @@
 
         this.$el.removeClass("dialog-visible");
         this.$container[_animateMethod](
-            {top: STARTING_TOP},
-            $.modalDialog.animationDuration,
-            _easing,
-            $.proxy(this._finishClose, this, eventSettings)
-        );
+                {top: STARTING_TOP},
+                $.modalDialog.animationDuration,
+                _easing
+            )
+            .promise()
+            .then(
+                $.proxy(function()
+                {
+                    try
+                    {
+                        this._finishClose(eventSettings);
+                    }
+                    catch (ex)
+                    {
+                        this._rejectDeferred("close", ex);
+                        this._clearDeferred("close");
+                    }
+                }, this), 
+                $.proxy(function(ex)
+                {
+                    this._rejectDeferred("close", ex);
+                    this._clearDeferred("close");
+                }, this));
 
         // unbind global event listeners
         if (this._orientationchange)
