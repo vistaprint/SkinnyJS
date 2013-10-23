@@ -186,6 +186,7 @@ describe("jquery.modalDialog.history", function()
 
                 return deferred.promise();
             })
+            .then(wait)
             .then(function()
             {
                 assertDialogParams(1);
@@ -198,6 +199,7 @@ describe("jquery.modalDialog.history", function()
 
                 return deferred.promise();
             })
+            .then(wait)
             .then(function()
             {
                 assertDialogParams(2);
@@ -210,6 +212,7 @@ describe("jquery.modalDialog.history", function()
 
                 return deferred.promise();
             })
+            .then(wait)
             .then(function()
             {
                 assertDialogParams(1);
@@ -223,6 +226,7 @@ describe("jquery.modalDialog.history", function()
 
                 return deferred.promise();
             })
+            .then(wait)
             .then(function()
             {
                 assertDialogParams(0);
