@@ -40,6 +40,35 @@
         }
     };
 
+    // * {Function} callback: The event handler
+    $.CustomEvent.prototype.one = function(callback)
+    {
+        if (!callback)
+        {
+            return;
+        }
+
+        var me = this;
+
+        // TODO support removing this callback by calling this.remove().
+        // This currently wont work because the wrapper is in the callbacks list
+        
+        var wrapper = $.proxy(function()
+        {
+            try
+            {
+                callback.apply(this, arguments);
+            }
+            finally
+            {
+                me.remove(callback);
+            }
+
+        }, this);
+
+        this.add(wrapper);
+    };
+
     // Assigns an event handler
     // * {Function} callback: The event handler
     $.CustomEvent.prototype.remove = function(callback)

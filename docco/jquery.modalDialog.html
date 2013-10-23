@@ -202,32 +202,40 @@ on the layout for that width.</p>             </td>             <td class="code"
 
                 <span class="kd">var</span> <span class="nx">animationCallback</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span>
                 <span class="p">{</span>
-                    <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&quot;dialog-visible&quot;</span><span class="p">);</span>
-
-                    <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">isSmallScreen</span><span class="p">())</span>
+                    <span class="k">try</span>
                     <span class="p">{</span>
+                        <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&quot;dialog-visible&quot;</span><span class="p">);</span>
+
+                        <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">isSmallScreen</span><span class="p">())</span>
+                        <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-20">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>               <p>TODO: I question this change. Should it be decoupled from the dialog framework?
 It could be put into mobile fixes.
 Is this even mobile specific?
 Original comment:
 Force dialogs that are on small screens to trigger a window resize event when closed, just in case we have resized since the dialog opened.</p>             </td>             <td class="code">               <div class="highlight"><pre>
 
-                        <span class="k">this</span><span class="p">.</span><span class="nx">triggerWindowResize</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-                        <span class="k">this</span><span class="p">.</span><span class="nx">_orientationchange</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> 
-                            <span class="p">{</span>
-                                <span class="k">this</span><span class="p">.</span><span class="nx">triggerWindowResize</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-                                <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">pos</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
-                            <span class="p">},</span> 
-                            <span class="k">this</span><span class="p">);</span>
+                            <span class="k">this</span><span class="p">.</span><span class="nx">triggerWindowResize</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+                            <span class="k">this</span><span class="p">.</span><span class="nx">_orientationchange</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> 
+                                <span class="p">{</span>
+                                    <span class="k">this</span><span class="p">.</span><span class="nx">triggerWindowResize</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+                                    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">pos</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
+                                <span class="p">},</span> 
+                                <span class="k">this</span><span class="p">);</span>
 
-                        <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;orientationchange resize&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_orientationchange</span><span class="p">);</span>
+                            <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;orientationchange resize&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_orientationchange</span><span class="p">);</span>
+                        <span class="p">}</span>
+
+                        <span class="k">this</span><span class="p">.</span><span class="nx">onopen</span><span class="p">.</span><span class="nx">fire</span><span class="p">();</span>
+
+                        <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">onopen</span><span class="p">.</span><span class="nx">fire</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+
+                        <span class="k">this</span><span class="p">.</span><span class="nx">_resolveDeferred</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">);</span>
+                    <span class="p">}</span>
+                    <span class="k">catch</span> <span class="p">(</span><span class="nx">ex</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="k">this</span><span class="p">.</span><span class="nx">_rejectDeferred</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">,</span> <span class="nx">ex</span><span class="p">);</span>
                     <span class="p">}</span>
 
-                    <span class="k">this</span><span class="p">.</span><span class="nx">onopen</span><span class="p">.</span><span class="nx">fire</span><span class="p">();</span>
-
-                    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">onopen</span><span class="p">.</span><span class="nx">fire</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-
-                    <span class="k">this</span><span class="p">.</span><span class="nx">_resolveDeferred</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">);</span>
                     <span class="k">this</span><span class="p">.</span><span class="nx">_clearDeferred</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">);</span>
 
                 <span class="p">},</span> <span class="k">this</span><span class="p">);</span>
@@ -255,7 +263,16 @@ otherwise, fallback on a jquery animation</p>             </td>             <td 
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_finishOpenAction</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">_finishOpenAction</span><span class="p">();</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">_finishOpenAction</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="nx">ex</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">_rejectDeferred</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">,</span> <span class="nx">ex</span><span class="p">);</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">_clearDeferred</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">);</span>
+            <span class="p">}</span>
+
             <span class="k">this</span><span class="p">.</span><span class="nx">_finishOpenAction</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="p">};</span>
@@ -342,11 +359,29 @@ isDialogCloseButton Indicates the cancel button in the dialog's header was click
 
         <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="s2">&quot;dialog-visible&quot;</span><span class="p">);</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">$container</span><span class="p">[</span><span class="nx">_animateMethod</span><span class="p">](</span>
-            <span class="p">{</span><span class="nx">top</span><span class="o">:</span> <span class="nx">STARTING_TOP</span><span class="p">},</span>
-            <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">animationDuration</span><span class="p">,</span>
-            <span class="nx">_easing</span><span class="p">,</span>
-            <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_finishClose</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="nx">eventSettings</span><span class="p">)</span>
-        <span class="p">);</span>
+                <span class="p">{</span><span class="nx">top</span><span class="o">:</span> <span class="nx">STARTING_TOP</span><span class="p">},</span>
+                <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">animationDuration</span><span class="p">,</span>
+                <span class="nx">_easing</span>
+            <span class="p">)</span>
+            <span class="p">.</span><span class="nx">promise</span><span class="p">()</span>
+            <span class="p">.</span><span class="nx">then</span><span class="p">(</span>
+                <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span>
+                <span class="p">{</span>
+                    <span class="k">try</span>
+                    <span class="p">{</span>
+                        <span class="k">this</span><span class="p">.</span><span class="nx">_finishClose</span><span class="p">(</span><span class="nx">eventSettings</span><span class="p">);</span>
+                    <span class="p">}</span>
+                    <span class="k">catch</span> <span class="p">(</span><span class="nx">ex</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="k">this</span><span class="p">.</span><span class="nx">_rejectDeferred</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">,</span> <span class="nx">ex</span><span class="p">);</span>
+                        <span class="k">this</span><span class="p">.</span><span class="nx">_clearDeferred</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="p">},</span> <span class="k">this</span><span class="p">),</span> 
+                <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">ex</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">_rejectDeferred</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">,</span> <span class="nx">ex</span><span class="p">);</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">_clearDeferred</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">);</span>
+                <span class="p">},</span> <span class="k">this</span><span class="p">));</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-28">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-28">&#182;</a>               </div>               <p>unbind global event listeners</p>             </td>             <td class="code">               <div class="highlight"><pre>
         <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_orientationchange</span><span class="p">)</span>
