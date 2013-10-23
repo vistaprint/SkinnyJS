@@ -51,18 +51,19 @@
         return NaN;
     };
 
+    var msDateRegEx = new RegExp(/^\/Date\((d|-|.*)\)[\/|\\]$/);
+
     // Parses the date in Microsoft format
     Date.parseMsDate = function (date)
     {
-        var struct;
-
-        if ((struct = /^\/Date\((d|-|.*)\)[\/|\\]$/.exec(date)))
+        if (msDateRegEx.test(date))
         {
-            var v = struct[1].split(/[-+,.]/);
-            return v[0] ? +v[0] : 0 - +v[1];
+            return parseFloat(RegExp.$1, 10);
         }
-
-        return NaN;
+        else
+        {
+            return NaN;
+        }
     };
 
     // Enhances the native JavaScript Date.parse function to support ISO8601 and Microsoft format dates.
@@ -71,23 +72,7 @@
     // do this on all browsers, so it needs to be overwritten to force this behavior and ensure consistency.
     Date.parse = function (date)
     {
-        var timestamp;
-
-        timestamp = Date.parseISO(date);
-
-        if (!isNaN(timestamp))
-        {
-            return timestamp;
-        }
-
-        timestamp = Date.parseMsDate(date);
-
-        if (!isNaN(timestamp))
-        {
-            return timestamp;
-        }
-
-        return origParse ? origParse(date) : NaN;
+        return origParse(date) || Date.parseMsDate(date) || Date.parseISO(date) || NaN;
     };
 
 } (Date));
