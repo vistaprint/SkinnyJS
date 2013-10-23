@@ -378,7 +378,7 @@ module.exports = function(grunt)
 
     grunt.registerTask("test", ["less", "connect", "mocha"]);
 
-    grunt.registerTask("testSpecific", ["less", "connect", "mocha:specific"]);
+    //grunt.registerTask("testSpecific", ["less", "connect", "mocha:specific"]);
 
     grunt.registerTask("verify", ["jshint", "test"]);
 
