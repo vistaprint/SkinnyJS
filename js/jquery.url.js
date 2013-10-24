@@ -8,19 +8,14 @@ $.Url = function(url)
 {
     var me = this;
 
-    // The anchor link- text after the # character
-    var _hash = "";
-
-    this.hash = function(value)
+    var _normalize = function(input)
     {
-        if (typeof value != "undefined")
+        if (input == null || input === "")
         {
-            _hash = value || "";
+            return "";
         }
-        else
-        {
-            return _hash;
-        }
+
+        return input.toString();
     };
 
     // http: or https:
@@ -30,7 +25,15 @@ $.Url = function(url)
     {
         if (typeof value != "undefined")
         {
-            _protocol = value || "";
+            _protocol = _normalize(value);
+
+            if (_protocol)
+            {
+                if (_protocol.charAt(_protocol.length-1) != ":")
+                {
+                    _protocol += ":";
+                }
+            }
         }
         else
         {
@@ -45,11 +48,26 @@ $.Url = function(url)
     {
         if (typeof value != "undefined")
         {
-            _hostname = value || "";
+            _hostname = _normalize(value);
         }
         else
         {
             return _hostname;
+        }
+    };
+
+    var _port = "";
+
+    // The TCP port (if specified)
+    this.port = function(value)
+    {
+        if (typeof value != "undefined")
+        {
+            _port = _normalize(value);
+        }
+        else
+        {
+            return _port;
         }
     };
 
@@ -59,6 +77,8 @@ $.Url = function(url)
     {
         if (typeof value != "undefined")
         {
+            value = _normalize(value);
+
             // Separate hostname & port from host
             if (value)
             {
@@ -70,8 +90,14 @@ $.Url = function(url)
                 }
                 else
                 {
-                    _hostname = value || "";
+                    _hostname = _normalize(value);
+                    _port = "";
                 }
+            }
+            else
+            {
+                _hostname = "";
+                _port = "";
             }
         }
         else
@@ -85,18 +111,18 @@ $.Url = function(url)
         }
     };
 
-    var _port = "";
+    var _pathname = "";
 
-    // The TCP port (if specified)
-    this.port = function(value)
+    // The root relative path to the file- example: /vp/myfile.htm
+    this.pathname = function(value)
     {
         if (typeof value != "undefined")
         {
-            _port = value || "";
+            _pathname = _normalize(value);
         }
         else
         {
-            return _port;
+            return _pathname;
         }
     };
 
@@ -108,12 +134,7 @@ $.Url = function(url)
     {
         if (typeof value != "undefined")
         {
-            if (!value)
-            {
-                me.queryString = {};
-                return;
-            }
-
+            value = _normalize(value);
             me.queryString = $.deparam(value);
         }
         else
@@ -123,18 +144,28 @@ $.Url = function(url)
         }
     };
 
-    var _pathname = "";
+    // The anchor link- text after the # character
+    var _hash = "";
 
-    // The root relative path to the file- example: /vp/myfile.htm
-    this.pathname = function(value)
+    this.hash = function(value)
     {
         if (typeof value != "undefined")
         {
-            _pathname = value;
+            value = _normalize(value);
+
+            // Always ensure there is a # for any non-empty string
+            if (value.length > 0)
+            {
+                if (value.charAt(0) != "#")
+                {
+                    value = "#" + value;
+                }
+            }
+            _hash = value;
         }
         else
         {
-            return _pathname;
+            return _hash;
         }
     };
 
@@ -259,13 +290,9 @@ $.Url = function(url)
     // Sets a specific querystring value by its key name
     this.setItem = function(key, value)
     {
-        if (value === null || typeof value == "undefined")
+        if (key == null || key === "")
         {
-            value = "";
-        }
-        else if (typeof value != "string")
-        {
-            value = value.toString();
+            throw new Error("Invalid key: " + key);
         }
 
         me.queryString[key] = value;
