@@ -51,17 +51,26 @@ var _cookieDecode = function(sText)
     return decodeURIComponent(sText);
 };
 
+var _defaultPermanentDate = function()
+{
+    var d = new Date(); 
+    d.setFullYear(d.getFullYear() + 1); 
+    return d.toUTCString();
+};
+
 var _defaults = 
 {
     domain: null,
     path: "/",
-    permanentDate: null,
+    permanentDate: _defaultPermanentDate(),
     watcher: $.noop
 };
 
+var _settings = _defaults;
+
 $.cookies.setDefaults = function(settings)
 {
-    $.extend(_defaults, settings);
+    _settings = $.extend({}, _defaults, settings);
 };
 
 var getDefault = function(key, overrideValue)
@@ -71,7 +80,7 @@ var getDefault = function(key, overrideValue)
         return overrideValue;
     }
 
-    return _defaults[key];
+    return _settings[key];
 };
 
 // Runs a test to determine if cookies are enabled on the browser.
@@ -200,7 +209,7 @@ $.cookies.remove = function(name, domain, path)
         cookie += "; domain=" + domain;
     }
 
-    _defaults.watcher(cookie);
+    _settings.watcher(cookie);
 
     document.cookie = cookie;
 };
@@ -278,13 +287,7 @@ var Cookie = function()
         
         if (me.isPermanent)
         {
-
-            var date = _defaults.permanentDate;
-            if (!date)
-            {
-                date = (new Date()).setFullYear(date.getFullYear() + 1).toUTCString();
-            }
-            cookie += "; expires=" + date;
+            cookie += "; expires=" + getDefault("permanentDate");
         }
         
         return cookie;
@@ -297,7 +300,7 @@ var Cookie = function()
         validateName();
         
         var cookie = me.serialize();
-        _defaults.watcher(cookie);
+        _settings.watcher(cookie);
 
         document.cookie = cookie;
     };

@@ -55,17 +55,26 @@ and %2b with +. This undoes _cookieEncode().
     <span class="k">return</span> <span class="nb">decodeURIComponent</span><span class="p">(</span><span class="nx">sText</span><span class="p">);</span>
 <span class="p">};</span>
 
+<span class="kd">var</span> <span class="nx">_defaultPermanentDate</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span> 
+    <span class="nx">d</span><span class="p">.</span><span class="nx">setFullYear</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span> 
+    <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">toUTCString</span><span class="p">();</span>
+<span class="p">};</span>
+
 <span class="kd">var</span> <span class="nx">_defaults</span> <span class="o">=</span> 
 <span class="p">{</span>
     <span class="nx">domain</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
     <span class="nx">path</span><span class="o">:</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span>
-    <span class="nx">permanentDate</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="nx">permanentDate</span><span class="o">:</span> <span class="nx">_defaultPermanentDate</span><span class="p">(),</span>
     <span class="nx">watcher</span><span class="o">:</span> <span class="nx">$</span><span class="p">.</span><span class="nx">noop</span>
 <span class="p">};</span>
 
+<span class="kd">var</span> <span class="nx">_settings</span> <span class="o">=</span> <span class="nx">_defaults</span><span class="p">;</span>
+
 <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="nx">setDefaults</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">settings</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">_defaults</span><span class="p">,</span> <span class="nx">settings</span><span class="p">);</span>
+    <span class="nx">_settings</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">_defaults</span><span class="p">,</span> <span class="nx">settings</span><span class="p">);</span>
 <span class="p">};</span>
 
 <span class="kd">var</span> <span class="nx">getDefault</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">overrideValue</span><span class="p">)</span>
@@ -75,7 +84,7 @@ and %2b with +. This undoes _cookieEncode().
         <span class="k">return</span> <span class="nx">overrideValue</span><span class="p">;</span>
     <span class="p">}</span>
 
-    <span class="k">return</span> <span class="nx">_defaults</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+    <span class="k">return</span> <span class="nx">_settings</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
 <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Runs a test to determine if cookies are enabled on the browser.
@@ -204,7 +213,7 @@ and %2b with +. This undoes _cookieEncode().
         <span class="nx">cookie</span> <span class="o">+=</span> <span class="s2">&quot;; domain=&quot;</span> <span class="o">+</span> <span class="nx">domain</span><span class="p">;</span>
     <span class="p">}</span>
 
-    <span class="nx">_defaults</span><span class="p">.</span><span class="nx">watcher</span><span class="p">(</span><span class="nx">cookie</span><span class="p">);</span>
+    <span class="nx">_settings</span><span class="p">.</span><span class="nx">watcher</span><span class="p">(</span><span class="nx">cookie</span><span class="p">);</span>
 
     <span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span> <span class="o">=</span> <span class="nx">cookie</span><span class="p">;</span>
 <span class="p">};</span>
@@ -282,13 +291,7 @@ Exposes the cookies as a dictionary of cookie names and cookie objects.</p>     
         
         <span class="k">if</span> <span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">isPermanent</span><span class="p">)</span>
         <span class="p">{</span>
-
-            <span class="kd">var</span> <span class="nx">date</span> <span class="o">=</span> <span class="nx">_defaults</span><span class="p">.</span><span class="nx">permanentDate</span><span class="p">;</span>
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">date</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="nx">date</span> <span class="o">=</span> <span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">()).</span><span class="nx">setFullYear</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">).</span><span class="nx">toUTCString</span><span class="p">();</span>
-            <span class="p">}</span>
-            <span class="nx">cookie</span> <span class="o">+=</span> <span class="s2">&quot;; expires=&quot;</span> <span class="o">+</span> <span class="nx">date</span><span class="p">;</span>
+            <span class="nx">cookie</span> <span class="o">+=</span> <span class="s2">&quot;; expires=&quot;</span> <span class="o">+</span> <span class="nx">getDefault</span><span class="p">(</span><span class="s2">&quot;permanentDate&quot;</span><span class="p">);</span>
         <span class="p">}</span>
         
         <span class="k">return</span> <span class="nx">cookie</span><span class="p">;</span>
@@ -301,7 +304,7 @@ Exposes the cookies as a dictionary of cookie names and cookie objects.</p>     
         <span class="nx">validateName</span><span class="p">();</span>
         
         <span class="kd">var</span> <span class="nx">cookie</span> <span class="o">=</span> <span class="nx">me</span><span class="p">.</span><span class="nx">serialize</span><span class="p">();</span>
-        <span class="nx">_defaults</span><span class="p">.</span><span class="nx">watcher</span><span class="p">(</span><span class="nx">cookie</span><span class="p">);</span>
+        <span class="nx">_settings</span><span class="p">.</span><span class="nx">watcher</span><span class="p">(</span><span class="nx">cookie</span><span class="p">);</span>
 
         <span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span> <span class="o">=</span> <span class="nx">cookie</span><span class="p">;</span>
     <span class="p">};</span>
