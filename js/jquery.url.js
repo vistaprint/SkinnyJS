@@ -274,21 +274,18 @@ $.Url = function(url)
     };
 
     // Gets a specific querystring value from its key name
-    this.getItem = function(key, defaultValue)
+    this.get = function(key, defaultValue)
     {
-        var value = me.queryString[key];
-        if (typeof value == "undefined")
+        if (!me.queryString.hasOwnProperty(key))
         {
             return defaultValue;
         }
 
-        return value;
+        return _normalize(me.queryString[key]);
     };
 
-    this.getItemOrDefault = this.getItem;
-
     // Sets a specific querystring value by its key name
-    this.setItem = function(key, value)
+    this.set = function(key, value)
     {
         if (key == null || key === "")
         {
@@ -299,10 +296,17 @@ $.Url = function(url)
     };
 
     // Removes a specific querystring value by its key name
-    this.removeItem = function(key)
+    this.remove = function(key)
     {
         delete me.queryString[key];
     };
+
+
+    this.getItemOrDefault = this.get;
+    this.getOrDefault = this.get;
+    this.getItem = this.get;
+    this.setItem = this.set;
+    this.removeItem = this.remove;
 
     load(url ? url.toString() : "");
 };

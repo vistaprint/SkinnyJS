@@ -438,14 +438,14 @@
         });
     });
 
-    describe("#setItem()", function()
+    describe("#set()", function()
     {
         it("should set a null item and convert to empty string when deserialized", function()
         {
             var URL = "http://www.vistaprint.com";
 
             var url = new $.Url(URL);
-            url.setItem("foo", null);
+            url.set("foo", null);
 
             assert.strictEqual(url.search(), "?foo=");
             assert.deepEqual(url.queryString, { foo: null });
@@ -456,7 +456,7 @@
         {
             var URL = "http://www.vistaprint.com";
             var url = new $.Url(URL);
-            url.setItem("foo", UNDEFINED);
+            url.set("foo", UNDEFINED);
 
             assert.strictEqual(url.search(), "?foo=");
             assert.deepEqual(url.queryString, { foo: UNDEFINED });
@@ -469,7 +469,7 @@
 
             assert.throws(function()
             {
-                url.setItem(null, null);
+                url.set(null, null);
             });
         });
 
@@ -479,7 +479,7 @@
 
             assert.throws(function()
             {
-                url.setItem(UNDEFINED, null);
+                url.set(UNDEFINED, null);
             });
         });
 
@@ -489,7 +489,7 @@
 
             assert.throws(function()
             {
-                url.setItem("", null);
+                url.set("", null);
             });
         });
 
@@ -497,7 +497,7 @@
         {
             var URL = "http://www.vistaprint.com";
             var url = new $.Url(URL);
-            url.setItem(0, UNDEFINED);
+            url.set(0, UNDEFINED);
 
             assert.strictEqual(url.search(), "?0=");
             assert.deepEqual(url.queryString, { "0": UNDEFINED });
@@ -508,11 +508,61 @@
         {
             var URL = "http://www.vistaprint.com";
             var url = new $.Url(URL);
-            url.setItem(NaN, UNDEFINED);
+            url.set(NaN, UNDEFINED);
 
             assert.strictEqual(url.search(), "?NaN=");
             assert.deepEqual(url.queryString, { "NaN": UNDEFINED });
             assert.strictEqual(url.toString(), "http://www.vistaprint.com?NaN=");
+        });
+    });
+
+    describe("#get()", function()
+    {
+        it("an item set null should be returned as an empty string", function()
+        {
+            var url = new $.Url("/thing");
+            url.set("foo", null);
+
+            assert.strictEqual(url.get("foo"), "");
+        });
+
+        it("an item set undefined should be returned as an empty string", function()
+        {
+            var url = new $.Url("/thing");
+            url.set("foo", UNDEFINED);
+
+            assert.strictEqual(url.get("foo"), "");
+        });
+
+        it("an item set 0, with a default value passed should return 0", function()
+        {
+            var url = new $.Url("/thing");
+            url.set("foo", 0);
+
+            assert.strictEqual(url.get("foo", "default"), "0");
+        });
+
+        it("an item set undefined, with a default value passed should return empty string", function()
+        {
+            var url = new $.Url("/thing");
+            url.set("foo", UNDEFINED);
+
+            assert.strictEqual(url.get("foo", "default"), "");
+        });
+
+        it("an non-existent item, with a default value passed should return empty string", function()
+        {
+            var url = new $.Url("/thing");
+
+            assert.strictEqual(url.get("foo", "default"), "default");
+        });
+
+        it("a number should be converted to a string", function()
+        {
+            var url = new $.Url("/thing");
+            url.set("foo", 1);
+
+            assert.strictEqual(url.get("foo"), "1");
         });
     });
 
