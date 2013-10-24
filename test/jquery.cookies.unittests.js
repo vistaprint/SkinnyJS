@@ -2,8 +2,10 @@ describe("jquery.cookies", function()
 {
     var assert = chai.assert;
     var _lastCookie;
-
-    $.cookies.setDefaults({ path: "/", permanentDate: "Sun, 13 Oct 2100 19:53:24 GMT", watcher: function(data) { _lastCookie = data; } });
+    var _watcher = function(data) 
+    { 
+        _lastCookie = data; 
+    };
 
     function deleteAllCookies() 
     {
@@ -18,11 +20,52 @@ describe("jquery.cookies", function()
         }
     }
 
+    function almostAYearFromNow()
+    {
+        var ONE_MINUTE = 60000;
+        var aYearFromNow = new Date();
+        aYearFromNow.setFullYear(aYearFromNow.getFullYear());
+        return new Date(aYearFromNow.valueOf() - ONE_MINUTE);
+    }
+
     beforeEach(deleteAllCookies);
     afterEach(deleteAllCookies);
 
-    describe("jquery.cookies.set", function()
+    describe("#.setDefaults()", function()
     {
+        beforeEach(function()
+        {
+            // Clear defaults
+            $.cookies.setDefaults({ watcher: _watcher });
+        });
+
+        it("should write a permanent date of 1 year in the future with no defaults specified", function()
+        {
+            $.cookies.set({ name: "cookie1", value: "foo1", permanent: true });
+
+            var TOKEN = "expires=";
+            var pos = _lastCookie.indexOf(TOKEN);
+            var dateInCookie = _lastCookie.substr(pos + TOKEN.length);
+
+            assert.equal(_lastCookie.substr(0, pos + TOKEN.length), "cookie1=foo1; path=/; expires=");
+            assert.ok(Date.parse(dateInCookie) > almostAYearFromNow().valueOf());
+        });
+
+        it("should write a path of / with no defaults specified", function()
+        {
+            $.cookies.set({ name: "cookie1", value: "foo1" });
+
+            assert.equal(_lastCookie, "cookie1=foo1; path=/");
+        });
+    });
+
+    describe("#.set", function()
+    {
+        beforeEach(function()
+        {
+            $.cookies.setDefaults({ path: "/", permanentDate: "Sun, 13 Oct 2100 19:53:24 GMT", watcher: _watcher });
+        });
+
         it("should set a session cookie with no other arguments", function()
         {
             $.cookies.set("cookie1", "foo1");
@@ -88,9 +131,16 @@ describe("jquery.cookies", function()
 
             assert.equal(document.cookie, "cookie8=this%3Dthat");
         });
+
+        it("should write a domain if specified", function()
+        {
+            $.cookies.set({ name: "cookie1", value: "foo1", domain: ".localhost.foo" });
+
+            assert.equal(_lastCookie, "cookie1=foo1; path=/; domain=.localhost.foo");
+        });
     });
 
-    describe("jquery.cookies.get", function()
+    describe("#.get", function()
     {
         it("should read an existing top-level cookie as a string", function()
         {
