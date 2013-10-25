@@ -240,6 +240,10 @@ $.Url = function(url)
             if (nextPartPos == -1)
             {
                 var cutOff = temp.substr(1); //cut off the initial ?
+                if (typeof cutOff == "undefined")
+                {
+                    throw new Error("cuttOff is undefined");
+                }
                 me.queryString = $.deparam(cutOff); 
                 temp = "";
             }
