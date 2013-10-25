@@ -239,7 +239,8 @@ $.Url = function(url)
 
             if (nextPartPos == -1)
             {
-                me.queryString = $.deparam(temp.substr(1)); //cut off the initial ?
+                var cutOff = temp.substr(1); //cut off the initial ?
+                me.queryString = $.deparam(cutOff); 
                 temp = "";
             }
             else
