@@ -119,7 +119,7 @@
 
     <h2 id='jqueryurl'>jQuery.Url</h2>
 
-<p>This class parses/encodes URLs, and provides an interface that is almost identical to that of the browser&#8217;s Location object.</p>
+<p>This class parses/encodes URLs, and provides an interface that parallels the browser&#8217;s Location object, except using jQuery style getter/setter methods instead of simple properties.</p>
 
 <p>Note: This class doesn&#8217;t support some of the more esoteric features of URLs. If you need this kind of support, you should use a more robust (and heavyweight) implementation such as <a href='https://github.com/joyent/node/blob/master/lib/url.js'>node.js&#8217;s Url module</a>.</p>
 
@@ -127,30 +127,34 @@
 
 <h4 id='parse_a_url'>Parse a URL:</h4>
 <div class='highlight'><pre><code class='javascript'>    <span class='kd'>var</span> <span class='nx'>url</span> <span class='o'>=</span> <span class='k'>new</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>Url</span><span class='p'>(</span><span class='s2'>&quot;http://www.foo.com:8080/pages/page1.html?key1=value1&amp;key2=value2#someAnchor&quot;</span><span class='p'>)</span>
-    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>hash</span> <span class='o'>===</span> <span class='s2'>&quot;#someAnchor&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
-    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>protocol</span> <span class='o'>===</span> <span class='s2'>&quot;http&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
-    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>hostname</span> <span class='o'>===</span> <span class='s2'>&quot;www.foo.com&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
-    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>host</span> <span class='o'>===</span> <span class='s2'>&quot;www.foo.com:8080&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
-    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>port</span> <span class='o'>===</span> <span class='s2'>&quot;8080&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
-    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>queryString</span> <span class='o'>===</span> <span class='s2'>&quot;key1=value1&amp;key2=value2&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
-    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>search</span> <span class='o'>===</span> <span class='s2'>&quot;?key1=value1&amp;key2=value2&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
-    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>pathname</span> <span class='o'>===</span> <span class='s2'>&quot;/pages/page1.html&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
+    
+    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>protocol</span><span class='p'>()</span> <span class='o'>===</span> <span class='s2'>&quot;http&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
+    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>hostname</span><span class='p'>()</span> <span class='o'>===</span> <span class='s2'>&quot;www.foo.com&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
+    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>host</span><span class='p'>()</span> <span class='o'>===</span> <span class='s2'>&quot;www.foo.com:8080&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
+    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>port</span><span class='p'>()</span> <span class='o'>===</span> <span class='s2'>&quot;8080&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
+    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>pathname</span><span class='p'>()</span> <span class='o'>===</span> <span class='s2'>&quot;/pages/page1.html&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
+    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>search</span><span class='p'>()</span> <span class='o'>===</span> <span class='s2'>&quot;?key1=value1&amp;key2=value2&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
+    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>hash</span><span class='p'>()</span> <span class='o'>===</span> <span class='s2'>&quot;#someAnchor&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
+
+    <span class='c1'>// The queryString property is a simple parsed object which contains key value pairs.</span>
+    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>queryString</span><span class='p'>.</span><span class='nx'>key1</span> <span class='o'>===</span> <span class='s2'>&quot;value1&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
+    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>queryString</span><span class='p'>.</span><span class='nx'>key2</span> <span class='o'>===</span> <span class='s2'>&quot;value2&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
 </code></pre></div>
 <h4 id='manipulating_the_querystring'>Manipulating the querystring</h4>
 
 <p>Once the URL is parsed, you can manipulate the querystring:</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='c1'>// Adds a parameter, or overwrites one if it already exists</span>
-    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>setItem</span><span class='p'>(</span><span class='s2'>&quot;key3&quot;</span><span class='p'>,</span> <span class='s2'>&quot;value3&quot;</span><span class='p'>)</span>
+    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>set</span><span class='p'>(</span><span class='s2'>&quot;key3&quot;</span><span class='p'>,</span> <span class='s2'>&quot;value3&quot;</span><span class='p'>)</span>
     
     <span class='c1'>// Gets the value of an existing parameter</span>
-    <span class='kd'>var</span> <span class='nx'>key1Value</span> <span class='o'>=</span> <span class='nx'>url</span><span class='p'>.</span><span class='nx'>getItem</span><span class='p'>(</span><span class='s2'>&quot;key1&quot;</span><span class='p'>)</span>
+    <span class='kd'>var</span> <span class='nx'>key1Value</span> <span class='o'>=</span> <span class='nx'>url</span><span class='p'>.</span><span class='nx'>get</span><span class='p'>(</span><span class='s2'>&quot;key1&quot;</span><span class='p'>)</span>
     
     <span class='c1'>// Gets the value of an existing parameter, </span>
     <span class='c1'>// specifying a default in case the value doesn&#39;t exist</span>
-    <span class='kd'>var</span> <span class='nx'>key1Value</span> <span class='o'>=</span> <span class='nx'>url</span><span class='p'>.</span><span class='nx'>getItem</span><span class='p'>(</span><span class='s2'>&quot;key1&quot;</span><span class='p'>,</span> <span class='s2'>&quot;some default value&quot;</span><span class='p'>)</span>
+    <span class='kd'>var</span> <span class='nx'>key1Value</span> <span class='o'>=</span> <span class='nx'>url</span><span class='p'>.</span><span class='nx'>get</span><span class='p'>(</span><span class='s2'>&quot;key1&quot;</span><span class='p'>,</span> <span class='s2'>&quot;some default value&quot;</span><span class='p'>)</span>
     
     <span class='c1'>// Removes a parameter</span>
-    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>removeItem</span><span class='p'>(</span><span class='s2'>&quot;key3&quot;</span><span class='p'>)</span>
+    <span class='nx'>url</span><span class='p'>.</span><span class='nx'>remove</span><span class='p'>(</span><span class='s2'>&quot;key3&quot;</span><span class='p'>)</span>
 </code></pre></div>
 <h4 id='serializing_back_to_a_url_string'>Serializing back to a URL string</h4>
 
