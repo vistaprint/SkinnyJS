@@ -159,6 +159,9 @@
         return this;
     };
 
-    $(document).ready(function() { $(document).breakpointsFromAttrs(); })
+    $(document).ready(function() 
+    { 
+        $(document).breakpointsFromAttrs(); 
+    });
 
 })(jQuery);
