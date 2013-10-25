@@ -6,6 +6,12 @@
 
     var urlDecode = function(s)
     {
+        // Specifically treat null/undefined as empty string
+        if (s == null)
+        {
+            return "";
+        }
+
         // Replace plus with space- jQuery.param() explicitly encodes them,
         // and decodeURIComponent explicitly does not.
         return decodeURIComponent(s.replace(PLUS_RE, " "));
