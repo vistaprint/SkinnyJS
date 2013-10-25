@@ -39,5 +39,11 @@
         decodeTest("undefined", UNDEFINED, "");
 
         decodeTest("NaN", NaN, "NaN");
+
+        it("should decode a key with no value", function()
+        {
+            var value = $.deparam("foo");
+            assert.deepEqual(value, { "foo": "" });
+        });
     });
 });
