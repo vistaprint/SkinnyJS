@@ -287,6 +287,14 @@ module.exports = function(grunt)
                 }
             }
         },
+        "strip_code":
+        {
+            options: {},
+            all:
+            {
+                src: "./dist/**.js"
+            }
+        },
         watch: 
         {
             modalDialog: 
@@ -334,6 +342,7 @@ module.exports = function(grunt)
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-jekyll");
     grunt.loadNpmTasks("grunt-mkdir");
+    grunt.loadNpmTasks("grunt-strip-code");
 
     // Wrap the mocha task
     grunt.renameTask("mocha", "orig-mocha");
@@ -384,7 +393,7 @@ module.exports = function(grunt)
 
     grunt.registerTask("copyDist", ["copy:distJs", "copy:distCss", "copy:distOther"]);
 
-    grunt.registerTask("build", ["clean", "less", "copyDist", "concat:modalDialog", "concat:modalDialogContent", "uglify"]);
+    grunt.registerTask("build", ["clean", "less", "copyDist", "concat:modalDialog", "concat:modalDialogContent", "strip_code", "uglify"]);
     
     grunt.registerTask("docs", ["mkdir:docco", "docco", "docco-add-links", "copy:doccoFix"]);
 

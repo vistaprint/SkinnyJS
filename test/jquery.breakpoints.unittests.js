@@ -115,4 +115,53 @@ describe("jquery.breakpoints", function()
             assert.equal($el.attr("class"), "breakpoint-medium");
         });
     });
+
+    describe("#normalizeBreakpoints", function()
+    {
+        it("should return maxWidths and convert integer values to objects with max properties", function()
+        {
+            var breakpoints = { "small": 200, "medium" : 400 };
+
+            var maxWidths = $.breakpointsPrivate.normalizeBreakpoints(breakpoints);
+
+            assert.lengthOf(maxWidths, 2);
+            assert.equal(maxWidths[0], 200);
+            assert.equal(maxWidths[1], 400);
+
+            assert.deepEqual(breakpoints, {
+                "small": { max: 200 },
+                "medium": { max: 400 }
+            });
+        });
+    });
+
+    describe("#setMinWidths", function()
+    {
+        it("should assign min widths based on the lowest previous maxWidth", function()
+        {
+            var breakpoints = { "small": { max: 200 }, "medium": { max: 400 } };
+            var maxWidths = [200, 400];
+
+            $.breakpointsPrivate.setMinWidths(breakpoints, maxWidths);
+
+            assert.deepEqual(breakpoints, {
+                "small": { min: 0, max: 200 },
+                "medium": { min: 201, max: 400 }
+            });
+        });
+
+        it("should not overwrite an explicit min width", function()
+        {
+            var breakpoints = { "small": { min: 100, max: 200 }, "medium": { max: 400 } };
+            var maxWidths = [200, 400];
+
+            $.breakpointsPrivate.setMinWidths(breakpoints, maxWidths);
+
+            assert.deepEqual(breakpoints, {
+                "small": { min: 100, max: 200 },
+                "medium": { min: 201, max: 400 }
+            });
+        });
+    });
 });
+

@@ -118,16 +118,6 @@
         }
     };
 
-    /* test-code */
-
-    $.breakpointsPrivate = 
-    {
-        processBreakpoints: processBreakpoints,
-        normalizeBreakpoints: normalizeBreakpoints,
-        setMinWidths: setMinWidths
-    };
-
-    /* end-test-code */
 
     $.fn.breakpoints = function(breakpoints)
     {
@@ -136,15 +126,15 @@
 
         this.each(function(i, el)
         {
-            var wrapper = function()
+            var processBreakpoints = function()
             {
                 processBreakpoints($(el), breakpoints);
             };
 
             $(document)
-                .ready(wrapper)
-                .on("resize", wrapper)
-                .on("orientationchange", wrapper);
+                .ready(processBreakpoints)
+                .on("resize", processBreakpoints)
+                .on("orientationchange", processBreakpoints);
         });
 
         return this;
