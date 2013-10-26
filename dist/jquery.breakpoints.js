@@ -2,7 +2,7 @@
 
 (function($)
 {
-    var _processBreakpoints = function($el, breakpoints)
+    var processBreakpoints = function($el, breakpoints)
     {
         var width = $el.innerWidth();
 
@@ -118,6 +118,8 @@
         }
     };
 
+
+
     $.fn.breakpoints = function(breakpoints)
     {
         var maxWidths = normalizeBreakpoints(breakpoints);
@@ -125,15 +127,15 @@
 
         this.each(function(i, el)
         {
-            var processBreakpoints = function()
+            var wrapper = function()
             {
-                _processBreakpoints($(el), breakpoints);
+                processBreakpoints($(el), breakpoints);
             };
 
             $(document)
-                .ready(processBreakpoints)
-                .on("resize", processBreakpoints)
-                .on("orientationchange", processBreakpoints);
+                .ready(wrapper)
+                .on("resize", wrapper)
+                .on("orientationchange", wrapper);
         });
 
         return this;
