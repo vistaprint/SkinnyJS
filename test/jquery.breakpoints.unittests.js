@@ -133,6 +133,17 @@ describe("jquery.breakpoints", function()
                 "medium": { max: 400 }
             });
         });
+
+        it("should return an empty array when no breakpoints are specified", function()
+        {
+            var breakpoints = {};
+
+            var maxWidths = $.breakpointsPrivate.normalizeBreakpoints(breakpoints);
+
+            assert.lengthOf(maxWidths, 0);
+
+            assert.deepEqual(breakpoints, {});
+        });
     });
 
     describe("#setMinWidths", function()
