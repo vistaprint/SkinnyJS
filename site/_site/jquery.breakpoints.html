@@ -114,31 +114,68 @@
 
      
     <div class="source-links">
-        <a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.scrollAnchor.js" class="github-source-link" target="_blank">View on github</a> |
-        <a href="docco/jquery.scrollAnchor.html" class="docco-link">Annotated source</a>
+        <a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.breakpoints.js" class="github-source-link" target="_blank">View on github</a> |
+        <a href="docco/jquery.breakpoints.html" class="docco-link">Annotated source</a>
     </div>
     
 
-    <h2 id='jqueryscrollanchor'>jQuery.scrollAnchor</h2>
+    <h2 id='jquerybreakpoints'>jQuery.breakpoints</h2>
 
-<p>Provides smooth scrolling to same-page reference links using anchor links.</p>
+<p>Applies CSS classes automatically to an element according on its pixel width. This is designed to be similar in concept to media queries, but using the size of an element instead of the size of the browser window. This is useful for designing components to be responsive, without assuming that they will be 100% of the window size.</p>
 
-<h3 id='example_usage'>Example Usage:</h3>
-<div class='highlight'><pre><code class='html'>    <span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;#example&quot;</span> <span class='na'>data-scroll-anchor</span><span class='nt'>&gt;</span>click me<span class='nt'>&lt;/a&gt;</span>
+<h3 id='usage'>Usage</h3>
 
-    ...
-    
-    <span class='nt'>&lt;div</span> <span class='na'>id=</span><span class='s'>&quot;example&quot;</span><span class='nt'>&gt;&lt;/div&gt;</span>
+<p>The easiest way to create breakpoints for an element is to specify them in terms of max widths, and let the plugin calculate the corresponding min widths:</p>
+
+<p>Unobtrusive syntax:</p>
+<div class='highlight'><pre><code class='html'><span class='nt'>&lt;div</span> <span class='na'>class=</span><span class='s'>&quot;foo&quot;</span> <span class='na'>data-breakpoints=</span><span class='s'>&quot;mobile:480; medium:760;&quot;</span><span class='nt'>&gt;&lt;/div&gt;</span>
 </code></pre></div>
-<h3 id='options'>Options</h3>
+<p>Or, you can use the equivalent JavaScript call:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.foo&quot;</span><span class='p'>).</span><span class='nx'>breakpoints</span><span class='p'>({</span> <span class='s2'>&quot;mobile&quot;</span><span class='o'>:</span> <span class='mi'>480</span><span class='p'>,</span> <span class='s2'>&quot;medium&quot;</span><span class='o'>:</span> <span class='mi'>760</span> <span class='p'>});</span>
+</code></pre></div>
+<p>Then, you can target these breakpoints with css classes based on the names you assigned:</p>
+<div class='highlight'><pre><code class='css'><span class='nc'>.foo</span>
+<span class='p'>{</span>
+    <span class='k'>background-image</span><span class='o'>:</span> <span class='sx'>url(large-size.jpg)</span><span class='p'>;</span>
+<span class='p'>}</span>
 
-<ul>
-<li><strong>data-scroll-offset</strong> Offset for the final scroll position, default is 20.</li>
+<span class='nc'>.foo.breakpoint-medium</span>
+<span class='p'>{</span>
+    <span class='k'>background-image</span><span class='o'>:</span> <span class='sx'>url(medium-size.jpg)</span><span class='p'>;</span>
+<span class='p'>}</span>
 
-<li><strong>data-scroll-selector</strong> Rather than using the hypertext hash reference (#ref) using this query selector to find the element to scroll to.</li>
+<span class='nc'>.foo.breakpoint-mobile</span>
+<span class='p'>{</span>
+    <span class='k'>background-image</span><span class='o'>:</span> <span class='sx'>url(small-size.jpg)</span><span class='p'>;</span>
+<span class='p'>}</span>
+</code></pre></div>
+<h4 id='overlapping_breakpoints'>Overlapping breakpoints</h4>
 
-<li><strong>data-scroll-speed</strong> Time in milliseconds for scroll animation, default is 800.</li>
-</ul>
+<p>You can create overlapping breakpoints. Note in this example, that the &#8220;mobile&#8221; and &#8220;mobileOrTablet&#8221; breakpoints overlap:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.foo&quot;</span><span class='p'>).</span><span class='nx'>breakpoints</span><span class='p'>({</span> <span class='s2'>&quot;mobile&quot;</span><span class='o'>:</span> <span class='p'>{</span> <span class='nx'>min</span><span class='o'>:</span> <span class='mi'>0</span><span class='p'>,</span> <span class='nx'>max</span><span class='o'>:</span> <span class='mi'>480</span> <span class='p'>},</span> <span class='s2'>&quot;mobileOrTablet&quot;</span><span class='o'>:</span> <span class='p'>{</span> <span class='nx'>min</span><span class='o'>:</span> <span class='mi'>0</span><span class='p'>,</span> <span class='nx'>max</span><span class='o'>:</span> <span class='mi'>760</span> <span class='p'>}});</span>
+</code></pre></div>
+<h4 id='breakpoint_events'>Breakpoint events</h4>
+
+<p>You can assign event handlers to breakpoints. In this example, we AJAX in different content depending on the breakpoint.</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.foo&quot;</span><span class='p'>).</span><span class='nx'>breakpoints</span><span class='p'>({</span> 
+    <span class='s2'>&quot;mobile&quot;</span><span class='o'>:</span> 
+    <span class='p'>{</span> 
+        <span class='nx'>max</span><span class='o'>:</span> <span class='mi'>480</span><span class='p'>,</span> 
+        <span class='nx'>enter</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>()</span> 
+        <span class='p'>{</span>
+            <span class='nx'>$</span><span class='p'>(</span><span class='k'>this</span><span class='p'>).</span><span class='nx'>load</span><span class='p'>(</span><span class='s2'>&quot;/mobile-content&quot;</span><span class='p'>);</span> 
+        <span class='p'>}</span> 
+    <span class='p'>},</span> 
+    <span class='s2'>&quot;tablet&quot;</span><span class='o'>:</span> 
+    <span class='p'>{</span> 
+        <span class='nx'>max</span><span class='o'>:</span> <span class='mi'>760</span><span class='p'>,</span>
+        <span class='nx'>enter</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>()</span> 
+        <span class='p'>{</span>
+            <span class='nx'>$</span><span class='p'>(</span><span class='k'>this</span><span class='p'>).</span><span class='nx'>load</span><span class='p'>(</span><span class='s2'>&quot;/tablet-content&quot;</span><span class='p'>);</span> 
+        <span class='p'>}</span> 
+    <span class='p'>}</span>
+<span class='p'>});</span>
+</code></pre></div>
   </div>
 </div>
  
