@@ -73,7 +73,7 @@ $.cookies.setDefaults = function(settings)
     _settings = $.extend({}, _defaults, settings);
 };
 
-var getDefault = function(key, overrideValue)
+var _getDefault = function(key, overrideValue)
 {
     if (overrideValue)
     {
@@ -190,8 +190,8 @@ $.cookies.set = function(nameOrData, value, domain, permanent, clearExistingSubC
         }
     }
 
-    cookie.domain = getDefault("domain", domain);
-    cookie.path = getDefault("path", path);
+    cookie.domain = _getDefault("domain", domain);
+    cookie.path = _getDefault("path", path);
     cookie.isPermanent = !!permanent;
 
     cookie.save();
@@ -201,9 +201,9 @@ $.cookies.set = function(nameOrData, value, domain, permanent, clearExistingSubC
 // @param {string} sName The name of the cookie to delete.
 $.cookies.remove = function(name, domain, path) 
 {
-    var cookie = _cookieEncode(name) + "=a; path=" + getDefault("path", path) + "; expires=Wed, 17 Jan 1979 07:01:00 GMT";
+    var cookie = _cookieEncode(name) + "=a; path=" + _getDefault("path", path) + "; expires=Wed, 17 Jan 1979 07:01:00 GMT";
     
-    domain = getDefault("domain", domain);
+    domain = _getDefault("domain", domain);
     if (domain) 
     {
         cookie += "; domain=" + domain;
@@ -260,7 +260,7 @@ var Cookie = function()
     // Indicates the cookie persists on users machines
     this.isPermanent = false;
     
-    var validateName = function()
+    var _validateName = function()
     {
         if (!me.name) 
         {
@@ -273,13 +273,13 @@ var Cookie = function()
     // @return {String}
     this.serialize = function()
     {
-        validateName();
+        _validateName();
 
-        var cookie = _cookieEncode(me.name) + "=" + getEncodedValue();
+        var cookie = _cookieEncode(me.name) + "=" + _getEncodedValue();
 
-        cookie += "; path=" + getDefault("path", this.path);
+        cookie += "; path=" + _getDefault("path", this.path);
         
-        var domain = getDefault("domain", me.domain);
+        var domain = _getDefault("domain", me.domain);
         if (domain) 
         {
             cookie += "; domain=" + domain;
@@ -287,7 +287,7 @@ var Cookie = function()
         
         if (me.isPermanent)
         {
-            cookie += "; expires=" + getDefault("permanentDate");
+            cookie += "; expires=" + _getDefault("permanentDate");
         }
         
         return cookie;
@@ -297,7 +297,7 @@ var Cookie = function()
     // Saves the value of the cookie- commits it to the browser's cookies.
     this.save = function()
     {
-        validateName();
+        _validateName();
         
         var cookie = me.serialize();
         _settings.watcher(cookie);
@@ -355,7 +355,7 @@ var Cookie = function()
     
 
     // Gets the encoded value of the cookie (handles subcookies too).
-    var getEncodedValue = function()
+    var _getEncodedValue = function()
     {
         if (me.subCookies)
         {
@@ -371,6 +371,22 @@ var Cookie = function()
             return _cookieEncode(me.value);
         }
     };
+
+    /* test-code */
+
+    $.cookies.private = 
+    {
+        _getEncodedValue: _getEncodedValue,
+        _cookieEncode: _cookieEncode,
+        _cookieDecode: _cookieDecode, 
+        _validateName: _validateName,
+        _defaultPermanentDate: _defaultPermanentDate,
+        _getDefault: _getDefault,
+        Cookies: Cookies,
+        Cookie: Cookie
+    };
+
+    /* end-test-code */
 };
 
 })(jQuery);
