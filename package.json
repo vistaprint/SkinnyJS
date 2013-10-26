@@ -1,6 +1,6 @@
 {
   "name": "skinnyjs",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "skinny.js is a collection of granular jQuery plugins.",
   "directories": {
     "test": "test"

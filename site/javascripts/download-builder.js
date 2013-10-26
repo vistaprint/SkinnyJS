@@ -102,7 +102,7 @@ var escapeModuleName = function(unescaped)
 
 var getLicense = function(modules, requiredModules)
 {
-	return "/*! skinny.js v0.0.1 | Copyright 2013 Vistaprint | vistaprint.github.io/SkinnyJS/LICENSE \n" +
+	return "/*! skinny.js v0.1.0 | Copyright 2013 Vistaprint | vistaprint.github.io/SkinnyJS/LICENSE \n" +
 		"http://vistaprint.github.io/SkinnyJS/download-builder.html?modules=" + modules.join(",") + 
 		"*/\n\n";
 };
