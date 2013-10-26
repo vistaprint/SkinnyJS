@@ -1,6 +1,7 @@
 var dependencyTree = 
 {
 	"date-parse": { deps: [] },
+	"jquery.breakpoints": { deps: ["jquery.delimitedString"] },
 	"jquery.clientRect": { deps: [] },
 	"jquery.contentSize": { deps: ["jquery.clientRect"] },
 	"jquery.cookies": { deps: [] },
