@@ -100,9 +100,9 @@ describe("jquery.imageSize plugin", function()
                 $div.appendTo("body");
 
                 assert.equal($div.offset().top, 0);
-                assert.equal($div.offset().left, 25.5);
-                assert.equal($div.width(), 49); assert.equal($div.height(),
-                50);
+                assert.closeTo($div.offset().left, 25, 0.5); // Some browsers support fractional pixel values, others don't
+                assert.equal($div.width(), 49); 
+                assert.equal($div.height(), 50);
 
                 $div.remove();
 
