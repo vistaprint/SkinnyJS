@@ -77,10 +77,10 @@
 
     // Scales and resizes an image DOM element so that it fits and is centered in a box with the specified width
     // and height. 
-    // @param {String} src The URL of the image to load
-    // @param {Object} boundingBox A rectangle with the maximum width and height
-    // @param {Function} callback Optional callback once image has been resized
-    $.fn.fitToBoundingBox = function(src, boundingBox, callback)
+    // src: The URL of the image to load
+    // boundingBox: A rectangle with the maximum width and height
+    // callback: Optional callback once image has been resized
+    $.fn.fitToBoundingBox = function(src, boundingBox, callback, error)
     {
         this.each(function()
         {
@@ -97,7 +97,7 @@
                 }
             };
 
-            $.naturalSize(src, callbackWrapper);
+            $.naturalSize(src, callbackWrapper, error);
         });
 
         this.attr("src", src);
@@ -113,9 +113,9 @@
 
     // Preloads the specified image and calls back the specified function 
     // with a size (width/height) representing the intrinsic size of the image.
-    // @param {String} src The URL of the image to load
-    // @param {Function} success A function that takes a size object as its only argument
-    // @param {Function} error A function will be called if there is an error loading the image.
+    // src: The URL of the image to load
+    // success: A function that takes a size object as its only argument
+    // error: A function will be called if there is an error loading the image.
     $.naturalSize = function(src, success, error)
     {
         var deferred = new $.Deferred();
@@ -160,7 +160,8 @@
         return deferred;
     };
 
-    // TODO comment
+    // Finds the maximum rectangle size that can fit in the specified container rectangle
+    // using the specified aspect ratio.
     $.rectWithAspectRatio = function(containerRect, aspectRatio)
     {
         var rect = {
