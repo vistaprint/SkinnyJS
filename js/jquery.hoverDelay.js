@@ -25,7 +25,7 @@
             options.out = out;
         }
         var _options = $.extend({}, _defaults, options);
-
+        console.log(_options.delayOver);
         var clearTimers = function (el)
         {
             var overTimer = el.data(OVER_TIMER);
