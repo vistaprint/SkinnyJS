@@ -489,8 +489,7 @@
                 '  <div class="dialog-content-container">' +
                 '  </div>' +
                 '</div>'
-            )
-                .css({ "max-width": this._getDefaultWidthData().width });
+            );
 
             this.$el = $([this.$bg[0], this.$container[0]]).addClass("dialog-skin-" + this.settings.skin);
 
