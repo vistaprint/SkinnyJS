@@ -397,6 +397,13 @@ close them until they match</p>             </td>             <td class="code"> 
                 <span class="kd">var</span> <span class="nx">currentDialog</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">getCurrent</span><span class="p">();</span>
                 <span class="k">if</span> <span class="p">(</span><span class="nx">currentDialog</span><span class="p">)</span>
                 <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">currentDialog</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">enableHistory</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="nx">deferred</span><span class="p">.</span><span class="nx">resolve</span><span class="p">();</span>
+                        <span class="nx">_disableHandlers</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+                        <span class="k">return</span><span class="p">;</span>
+                    <span class="p">}</span>
+
 </pre></div>             </td>           </tr>                               <tr id="section-33">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-33">&#182;</a>               </div>               <p>Disable dialog open/close handlers set by this history plugin,
 because we're currently reading the URL and updating the dialogs.
 If the handlers were enabled, we'd get infinite looping.</p>             </td>             <td class="code">               <div class="highlight"><pre>
