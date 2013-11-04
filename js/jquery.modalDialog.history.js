@@ -393,6 +393,13 @@
                 var currentDialog = $.modalDialog.getCurrent();
                 if (currentDialog)
                 {
+                    if (!currentDialog.settings.enableHistory)
+                    {
+                        deferred.resolve();
+                        _disableHandlers = false;
+                        return;
+                    }
+
                     // Disable dialog open/close handlers set by this history plugin,
                     // because we're currently reading the URL and updating the dialogs.
                     // If the handlers were enabled, we'd get infinite looping.

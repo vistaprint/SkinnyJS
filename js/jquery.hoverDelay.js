@@ -24,6 +24,7 @@
             options.over = over;
             options.out = out;
         }
+        
         var _options = $.extend({}, _defaults, options);
 
         var clearTimers = function (el)
