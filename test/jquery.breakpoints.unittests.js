@@ -20,7 +20,7 @@ describe("jquery.breakpoints", function()
 
             $el.css({ width: "500px "});
 
-            $(document).trigger("resize");
+            $(window).trigger("resize");
 
             assert.equal($el.attr("class"), "breakpoint-large");
         });
@@ -33,7 +33,7 @@ describe("jquery.breakpoints", function()
 
             $el.css({ width: "500px "});
 
-            $(document).trigger("orientationchange");
+            $(window).trigger("orientationchange");
 
             assert.equal($el.attr("class"), "breakpoint-large");
         });
@@ -106,13 +106,22 @@ describe("jquery.breakpoints", function()
 
     describe("jquery.breakpointsFromAttrs", function()
     {
-        it("should read data-breakpoints attributes", function()
+        it("should read data-breakpoints attributes, multiple", function()
         {
             var $el = $("<div data-breakpoints='small:200; medium: 400; large: 600;'></div>").appendTo("body").css({ width: "300px" });
 
             $(document).breakpointsFromAttrs();
             
             assert.equal($el.attr("class"), "breakpoint-medium");
+        });
+
+        it("should read data-breakpoints attributes, single", function()
+        {
+            var $el = $("<div data-breakpoints='small:200'></div>").appendTo("body").css({ width: "300px" });
+
+            $(document).breakpointsFromAttrs();
+            
+            assert.isUndefined($el.attr("class"));
         });
     });
 

@@ -141,10 +141,8 @@
                 processBreakpoints($(el), breakpoints);
             };
 
-            $(document)
-                .ready(wrapper)
-                .on("resize", wrapper)
-                .on("orientationchange", wrapper);
+            $(document).ready(wrapper);
+            $(window).on("resize orientationchange", wrapper);
         });
 
         return this;
