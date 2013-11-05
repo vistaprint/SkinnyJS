@@ -135,13 +135,21 @@ into this breakpoint, call the callback.</p>             </td>             <td c
         <span class="p">}</span>
     <span class="p">};</span>
 
+    <span class="kd">var</span> <span class="nx">addMaxBreakpoint</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">breakpoints</span><span class="p">,</span> <span class="nx">maxWidths</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">largestBreakpoint</span> <span class="o">=</span> <span class="nx">maxWidths</span><span class="p">[</span><span class="nx">maxWidths</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+
+        <span class="nx">breakpoints</span><span class="p">.</span><span class="nx">max</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">min</span><span class="o">:</span> <span class="nx">largestBreakpoint</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nx">max</span><span class="o">:</span> <span class="kc">Infinity</span> <span class="p">};</span>
+    <span class="p">};</span>
+
     <span class="cm">/* test-code */</span>
 
     <span class="nx">$</span><span class="p">.</span><span class="nx">breakpointsPrivate</span> <span class="o">=</span> 
     <span class="p">{</span>
         <span class="nx">processBreakpoints</span><span class="o">:</span> <span class="nx">processBreakpoints</span><span class="p">,</span>
         <span class="nx">normalizeBreakpoints</span><span class="o">:</span> <span class="nx">normalizeBreakpoints</span><span class="p">,</span>
-        <span class="nx">setMinWidths</span><span class="o">:</span> <span class="nx">setMinWidths</span>
+        <span class="nx">setMinWidths</span><span class="o">:</span> <span class="nx">setMinWidths</span><span class="p">,</span>
+        <span class="nx">addMaxBreakpoint</span><span class="o">:</span> <span class="nx">addMaxBreakpoint</span>
     <span class="p">};</span>
 
     <span class="cm">/* end-test-code */</span>
@@ -150,6 +158,7 @@ into this breakpoint, call the callback.</p>             </td>             <td c
     <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">maxWidths</span> <span class="o">=</span> <span class="nx">normalizeBreakpoints</span><span class="p">(</span><span class="nx">breakpoints</span><span class="p">);</span>
         <span class="nx">setMinWidths</span><span class="p">(</span><span class="nx">breakpoints</span><span class="p">,</span> <span class="nx">maxWidths</span><span class="p">);</span>
+        <span class="nx">addMaxBreakpoint</span><span class="p">(</span><span class="nx">breakpoints</span><span class="p">,</span> <span class="nx">maxWidths</span><span class="p">);</span>
 
         <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">el</span><span class="p">)</span>
         <span class="p">{</span>

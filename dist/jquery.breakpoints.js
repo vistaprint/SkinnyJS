@@ -133,12 +133,20 @@
         }
     };
 
+    var addMaxBreakpoint = function(breakpoints, maxWidths)
+    {
+        var largestBreakpoint = maxWidths[maxWidths.length - 1];
+
+        breakpoints.max = { min: largestBreakpoint+1, max: Infinity };
+    };
+
 
 
     $.fn.breakpoints = function(breakpoints)
     {
         var maxWidths = normalizeBreakpoints(breakpoints);
         setMinWidths(breakpoints, maxWidths);
+        addMaxBreakpoint(breakpoints, maxWidths);
 
         this.each(function(i, el)
         {
