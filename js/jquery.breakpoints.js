@@ -135,6 +135,11 @@
 
     var addMaxBreakpoint = function(breakpoints, maxWidths)
     {
+        if (!maxWidths || maxWidths.length === 0)
+        {
+            return;
+        }
+        
         var largestBreakpoint = maxWidths[maxWidths.length - 1];
 
         breakpoints.max = { min: largestBreakpoint+1, max: Infinity };

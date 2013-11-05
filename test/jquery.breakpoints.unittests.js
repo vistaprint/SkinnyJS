@@ -217,6 +217,16 @@ describe("jquery.breakpoints", function()
                 "max": { min: 401, max: Infinity }
             });
         });
+
+        it("should do nothing if empty objects are passed", function()
+        {
+            var breakpoints = {};
+            var maxWidths = [];
+
+            $.breakpointsPrivate.addMaxBreakpoint(breakpoints, maxWidths);
+
+            assert.deepEqual(breakpoints, {});
+        });
     });
 });
 
