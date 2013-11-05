@@ -153,6 +153,26 @@ describe("jquery.breakpoints", function()
 
             assert.deepEqual(breakpoints, {});
         });
+
+        it("should sort maxWidth values as integers, not strings", function()
+        {
+            var breakpoints = { "small": 600, "medium" : 900, "large": 1100 };
+
+            var maxWidths = $.breakpointsPrivate.normalizeBreakpoints(breakpoints);
+
+            assert.lengthOf(maxWidths, 3);
+            assert.strictEqual(maxWidths[0], 600);
+            assert.strictEqual(maxWidths[1], 900);
+            assert.strictEqual(maxWidths[2], 1100);
+
+            assert.deepEqual(breakpoints, {
+                "small": { max: 600 },
+                "medium": { max: 900 },
+                "large": { max: 1100 }
+            });
+        });
+
+        small:600;medium:900;large:1100
     });
 
     describe("#setMinWidths", function()

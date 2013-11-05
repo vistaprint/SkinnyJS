@@ -54,6 +54,21 @@
         }
     };
 
+    var compareInts = function compare(a, b) 
+    {
+        if (a < b)
+        {
+            return -1;
+        }
+         
+        if (a > b)
+        {
+            return 1;
+        }
+        
+        return 0;
+    }
+
     var normalizeBreakpoints = function(breakpoints)
     {
         var maxWidths = [];
@@ -84,7 +99,7 @@
             maxWidths.push(breakpoint.max);
         }
 
-        maxWidths.sort();
+        maxWidths.sort(compareInts);
 
         return maxWidths;
     };
