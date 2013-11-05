@@ -133,13 +133,21 @@
         }
     };
 
+    var addMaxBreakpoint = function(breakpoints, maxWidths)
+    {
+        var largestBreakpoint = maxWidths[maxWidths.length - 1];
+
+        breakpoints.max = { min: largestBreakpoint+1, max: Infinity };
+    };
+
     /* test-code */
 
     $.breakpointsPrivate = 
     {
         processBreakpoints: processBreakpoints,
         normalizeBreakpoints: normalizeBreakpoints,
-        setMinWidths: setMinWidths
+        setMinWidths: setMinWidths,
+        addMaxBreakpoint: addMaxBreakpoint
     };
 
     /* end-test-code */
@@ -148,6 +156,7 @@
     {
         var maxWidths = normalizeBreakpoints(breakpoints);
         setMinWidths(breakpoints, maxWidths);
+        addMaxBreakpoint(breakpoints, maxWidths);
 
         this.each(function(i, el)
         {

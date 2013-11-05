@@ -71,7 +71,7 @@ describe("jquery.breakpoints", function()
 
             $el.breakpoints({ small: 200, medium: 400, large: 600 });
 
-            assert.equal($el.attr("class") || "", "");
+            assert.equal($el.attr("class"), "breakpoint-max");
         });
 
         it("should throw an error if no max is specified for a breakpoint", function()
@@ -121,7 +121,7 @@ describe("jquery.breakpoints", function()
 
             $(document).breakpointsFromAttrs();
             
-            assert.isUndefined($el.attr("class"));
+            assert.equal($el.attr("class"), "breakpoint-max");
         });
     });
 
@@ -198,6 +198,23 @@ describe("jquery.breakpoints", function()
             assert.deepEqual(breakpoints, {
                 "small": { min: 100, max: 200 },
                 "medium": { min: 201, max: 400 }
+            });
+        });
+    });
+
+    describe("#addMaxBreakpoint", function()
+    {
+        it("should create max breakpoint larger than the largest maxWidth", function()
+        {
+            var breakpoints = { "small": { min: 0, max: 200 }, "medium": { min: 201, max: 400 } };
+            var maxWidths = [200, 400];
+
+            $.breakpointsPrivate.addMaxBreakpoint(breakpoints, maxWidths);
+
+            assert.deepEqual(breakpoints, {
+                "small": { min: 0, max: 200 },
+                "medium": { min: 201, max: 400 },
+                "max": { min: 401, max: Infinity }
             });
         });
     });
