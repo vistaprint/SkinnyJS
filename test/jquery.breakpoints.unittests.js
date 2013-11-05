@@ -171,8 +171,6 @@ describe("jquery.breakpoints", function()
                 "large": { max: 1100 }
             });
         });
-
-        small:600;medium:900;large:1100
     });
 
     describe("#setMinWidths", function()
