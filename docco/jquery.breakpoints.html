@@ -56,6 +56,21 @@ into this breakpoint, call the callback.</p>             </td>             <td c
         <span class="p">}</span>
     <span class="p">};</span>
 
+    <span class="kd">var</span> <span class="nx">compareInts</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">compare</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> 
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">a</span> <span class="o">&lt;</span> <span class="nx">b</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+         
+        <span class="k">if</span> <span class="p">(</span><span class="nx">a</span> <span class="o">&gt;</span> <span class="nx">b</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">};</span>
+
     <span class="kd">var</span> <span class="nx">normalizeBreakpoints</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">breakpoints</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">maxWidths</span> <span class="o">=</span> <span class="p">[];</span>
@@ -86,7 +101,7 @@ into this breakpoint, call the callback.</p>             </td>             <td c
             <span class="nx">maxWidths</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">breakpoint</span><span class="p">.</span><span class="nx">max</span><span class="p">);</span>
         <span class="p">}</span>
 
-        <span class="nx">maxWidths</span><span class="p">.</span><span class="nx">sort</span><span class="p">();</span>
+        <span class="nx">maxWidths</span><span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="nx">compareInts</span><span class="p">);</span>
 
         <span class="k">return</span> <span class="nx">maxWidths</span><span class="p">;</span>
     <span class="p">};</span>
