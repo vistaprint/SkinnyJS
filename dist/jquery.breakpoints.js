@@ -160,8 +160,18 @@
                 processBreakpoints($(el), breakpoints);
             };
 
+            // Try to get the breakpoint classes added to the DOM as early as possible
+            // to avoid reflows at DOM ready.
+            try
+            {
+                wrapper();
+            }
+            catch (ex)
+            {
+            }
+
             $(document).ready(wrapper);
-            $(window).on("resize orientationchange", wrapper);
+            $(window).on("resize orientationchange breakpoints:refresh", wrapper);
         });
 
         return this;
