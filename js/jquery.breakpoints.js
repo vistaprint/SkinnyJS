@@ -6,51 +6,62 @@
     {
         var width = $el.innerWidth();
 
+        var entered = [];
+        var left = [];
+
         for (var name in breakpoints)
         {
             var breakpoint = breakpoints[name];
             var cssClass = "breakpoint-" + name;
             
+            // Detect which breakpoints have been entered and which ones have been left.
             if (width <= breakpoint.max && width >= breakpoint.min)
             {
-                // If there is an "enter" callback defined, and we are transitioning
-                // into this breakpoint, call the callback.
-                var callEnter = false;
-                if (breakpoint.enter)
+                if (!$el.hasClass(cssClass))
                 {
-                    if (!$el.hasClass(cssClass))
-                    {
-                        callEnter = true;
-                    }
-                }
-
-                $el.addClass(cssClass);
-
-                if (callEnter)
-                {
-                    breakpoint.enter.apply($el[0]);
+                    entered.push({ breakpoint: breakpoint, cssClass: cssClass });
                 }
             }
             else
             {
-                // If there is an "leave" callback defined, and we are transitioning
-                // into this breakpoint, call the callback.
-                var callLeave = false;
-                if (breakpoint.leave)
+                if ($el.hasClass(cssClass))
                 {
-                    if (!$el.hasClass(cssClass))
-                    {
-                        callLeave = true;
-                    }
-                }
-
-                $el.removeClass(cssClass);
-
-                if (callLeave)
-                {
-                    breakpoint.enter.apply($el[0]);
+                    left.push({ breakpoint: breakpoint, cssClass: cssClass });
                 }
             }
+        }
+
+        // Batch call all DOM writes to prevent unnecessary forced re-flows
+        modifyClassesBatch($el, entered, "addClass");
+        modifyClassesBatch($el, left, "removeClass");
+
+        // Batch call event handlers after all DOM manipulation is done
+        fireEventsBatch($el, entered, "enter");
+        fireEventsBatch($el, left, "leave");
+    };
+
+    var modifyClassesBatch = function($el, breakpoints, modifyClassMethod)
+    {
+        if (breakpoints.length > 0)
+        {
+            var classes = $.map(breakpoints, function(bp) { return bp.cssClass; }).join(" ");
+            $el[modifyClassMethod](classes);
+        }
+    };
+
+    var fireEventsBatch = function($el, breakpoints, eventName)
+    {
+        for (var i=0; i<breakpoints.length; i++)
+        {
+            var breakpoint = breakpoints[i].breakpoint;
+            if (breakpoint[eventName])
+            {
+                breakpoint[eventName].call($el[0], breakpoint);
+            }
+
+            var ev = new $.Event("breakpoint:" + eventName);
+            ev.breakpoint = breakpoint;
+            $el.trigger(ev);
         }
     };
 
@@ -95,6 +106,8 @@
             {
                 throw new Error("No max specified for breakpoint: " + name);
             }
+
+            breakpoint.name = name;
 
             maxWidths.push(breakpoint.max);
         }

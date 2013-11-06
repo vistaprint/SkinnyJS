@@ -115,6 +115,98 @@ describe("jquery.breakpoints", function()
             
             assert.equal($el.attr("class"), "breakpoint-small breakpoint-medium");
         });
+
+        it("should fire enter event handler", function()
+        {
+            var $el = $("<div />").appendTo("body").css({ width: "100px" });
+
+            var wasCalled = false;
+
+            var enterHandler = function(breakpoint)
+            {
+                wasCalled = true;
+
+                assert.equal(breakpoint.name, "medium");
+            };
+
+            $el.breakpoints({ small: { max: 200 }, medium: { max: 400, enter: enterHandler } });
+
+            $el.css({ width: "300px "});
+
+            $(window).trigger("breakpoints:refresh");
+
+            assert.ok(wasCalled);
+        });
+
+        it("should fire leave event handler", function()
+        {
+            var $el = $("<div />").appendTo("body").css({ width: "100px" });
+
+            var wasCalled = false;
+
+            var leaveHandler = function(breakpoint)
+            {
+                wasCalled = true;
+
+                assert.equal(breakpoint.name, "small");
+            };
+
+            $el.breakpoints({ small: { max: 200, leave: leaveHandler }, medium: { max: 400 } });
+
+            $el.css({ width: "300px "});
+
+            $(window).trigger("breakpoints:refresh");
+
+            assert.ok(wasCalled);
+        });
+
+        it("should fire breakpoint:enter event handler", function()
+        {
+            var $el = $("<div />").appendTo("body").css({ width: "100px" });
+
+            var wasCalled = false;
+
+            var enterHandler = function(e)
+            {
+                wasCalled = true;
+
+                assert.equal(e.breakpoint.name, "medium");
+            };
+
+            $el
+                .breakpoints({ small: { max: 200 }, medium: { max: 400 } })
+                .on("breakpoint:enter", enterHandler);
+
+            $el.css({ width: "300px "});
+
+            $(window).trigger("breakpoints:refresh");
+
+            assert.ok(wasCalled);
+        });
+
+        it("should fire breakpoint:leave event handler", function()
+        {
+            var $el = $("<div />").appendTo("body").css({ width: "100px" });
+
+            var wasCalled = false;
+
+            var leaveHandler = function(e)
+            {
+                wasCalled = true;
+
+                assert.equal(e.breakpoint.name, "small");
+            };
+
+            $el
+                .breakpoints({ small: { max: 200 }, medium: { max: 400 } })
+                .on("breakpoint:leave", leaveHandler);
+
+            $el.css({ width: "300px "});
+
+            $(window).trigger("breakpoints:refresh");
+
+            assert.ok(wasCalled);
+        });
     });
 
     describe("jquery.breakpointsFromAttrs", function()
@@ -151,8 +243,8 @@ describe("jquery.breakpoints", function()
             assert.equal(maxWidths[1], 400);
 
             assert.deepEqual(breakpoints, {
-                "small": { max: 200 },
-                "medium": { max: 400 }
+                "small": { name: "small", max: 200 },
+                "medium": { name: "medium", max: 400 }
             });
         });
 
@@ -179,9 +271,9 @@ describe("jquery.breakpoints", function()
             assert.strictEqual(maxWidths[2], 1100);
 
             assert.deepEqual(breakpoints, {
-                "small": { max: 600 },
-                "medium": { max: 900 },
-                "large": { max: 1100 }
+                "small": { name: "small", max: 600 },
+                "medium": { name: "medium", max: 900 },
+                "large": { name: "large", max: 1100 }
             });
         });
     });
