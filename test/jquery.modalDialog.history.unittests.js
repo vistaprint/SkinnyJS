@@ -1,4 +1,6 @@
-﻿$.modalDialog.iframeLoadTimeout = 1000;
+﻿/* globals History */
+
+$.modalDialog.iframeLoadTimeout = 1000;
 $.modalDialog.animationDuration = 100;
 
 describe("jquery.modalDialog.history", function()
