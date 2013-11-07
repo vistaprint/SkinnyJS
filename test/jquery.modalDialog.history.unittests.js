@@ -27,7 +27,7 @@ describe("jquery.modalDialog.history", function()
 
     var assertDialogParams = function(expectedLength)
     {
-        var qs = $.currentQueryString();
+        var qs = currentQueryStringOrHash();
 
         if (expectedLength === 0)
         {
@@ -38,6 +38,24 @@ describe("jquery.modalDialog.history", function()
             assert.isString(qs[DIALOG_PARAM_NAME], "There should be dialog parameters in the URL");
             assert.equal(qs[DIALOG_PARAM_NAME].split(" ").length, expectedLength, "There should be " + expectedLength + " dialog parameters entry in the URL");
         }
+    };
+
+    var currentQueryStringOrHash = function()
+    {
+        if (window.location.search)
+        {
+            return $.currentQueryString();
+        }
+        else if (History.emulated.pushState && window.location.hash)
+        {
+            var qPos = window.location.hash.indexOf("?");
+            if (qPos >= 0)
+            {
+                return $.deparam(window.location.hash.substr(qPos));
+            }
+        }
+
+        return {};
     };
 
     function testDialogHistoryManagement(dialogType, dialogOptions)
@@ -100,7 +118,7 @@ describe("jquery.modalDialog.history", function()
                 });
         });
 
-        it("doesnt modify the URL when opening and closing a " + dialogType + " dialog with settings.enableHistory === false", function(done)
+        it("doesn't modify the URL when opening and closing a " + dialogType + " dialog with settings.enableHistory === false", function(done)
         {
             var options = $.extend({ enableHistory: false }, dialogOptions);
 
@@ -112,7 +130,7 @@ describe("jquery.modalDialog.history", function()
                 {
                     assert.isTrue(dialog.isOpen(), "Ensure dialog is closed");
 
-                    var qs = $.currentQueryString();
+                    var qs = currentQueryStringOrHash();
                     assert.isUndefined(qs[DIALOG_PARAM_NAME], "The dialog is open: there should be dialog parameters in the URL");
 
                     return dialog.close();
@@ -122,7 +140,7 @@ describe("jquery.modalDialog.history", function()
                 {
                     assert.isFalse(dialog.isOpen(), "Ensure dialog is closed");
 
-                    var qs = $.currentQueryString();
+                    var qs = currentQueryStringOrHash();
                     assert.isUndefined(qs[DIALOG_PARAM_NAME], "The dialog is closed: there should not be dialog parameters in the URL");
 
                     return $.timeout(100);

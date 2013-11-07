@@ -53,6 +53,25 @@
         return deferred;
     };
 
+    // Handle history.js in hash mode for browser that don't support pushState
+    var currentQueryStringOrHash = function()
+    {
+        if (window.location.search)
+        {
+            return $.currentQueryString();
+        }
+        else if (History.emulated.pushState && window.location.hash)
+        {
+            var qPos = window.location.hash.indexOf("?");
+            if (qPos >= 0)
+            {
+                return $.deparam(window.location.hash.substr(qPos));
+            }
+        }
+
+        return {};
+    };
+
     // If history is disabled for any dialog in the stack, it should be disabled
     // for 
     var isHistoryEnabled = function(dialog)
@@ -152,6 +171,16 @@
             d1.dialogId == dialogParams.dialogId;
     };
 
+    var encodeDialogId = function(s)
+    {
+        return s.replace("#", "-hash-");
+    };
+
+    var decodeDialogId = function(s)
+    {
+        return s.replace("-hash-", "#");
+    };
+
     var parseDialogParams = function(data)
     {
         if (!data)
@@ -172,7 +201,7 @@
 
             return {
                 dialogType: item.substr(0, delimPos),
-                dialogId: item.substr(delimPos + 1)
+                dialogId: decodeDialogId(item.substr(delimPos + 1))
             };
         });
     };
@@ -181,7 +210,7 @@
     {
         return $.map(dialogParamsList, function(item)
             {
-                return item.dialogType + "," + item.dialogId;
+                return item.dialogType + "," + encodeDialogId(item.dialogId);
             })
             .join(" ");
     };
@@ -206,7 +235,7 @@
         var dialogParams = getDialogParams(this);
 
         // If there's an existing open dialog, encode the parameters for this dialog after it
-        var qs = $.currentQueryString();
+        var qs = currentQueryStringOrHash();
         var dialogParamsList = parseDialogParams(qs[_dialogParamName]);
 
         // Verify that the level of the dialog matches the number of items in the dialogParamsList
@@ -249,7 +278,7 @@
         // create a new history entry so the back button will open the dialog again.
         if (_pageIsAtInitialState)
         {
-            var qs = $.currentQueryString();
+            var qs = currentQueryStringOrHash();
             var dialogParamsList = parseDialogParams(qs[_dialogParamName]);
             var poppedParams = dialogParamsList.pop();
 
@@ -309,7 +338,7 @@
         var deferred = new $.Deferred();
 
         // An array of parsed dialog parameters from the URL
-        var dialogParamsList = parseDialogParams($.currentQueryString()[_dialogParamName]);
+        var dialogParamsList = parseDialogParams(currentQueryStringOrHash()[_dialogParamName]);
 
         // Figure out the topmost dialog so it can be checked against the number of dialogs specified in the URL
         var topmostDialog = $.modalDialog.getCurrent();
