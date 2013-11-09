@@ -1,13 +1,10 @@
-﻿describe("jquery", function()
-{
+﻿
+describe("jquery", function() {
     var assert = chai.assert;
 
-    describe("#.deparam()", function()
-    {
-        function decodeTest(name, value, expected)
-        {
-            it("should decode " + name + " from an encoded querystring into a string value", function()
-            {
+    describe("#.deparam()", function() {
+        function decodeTest(name, value, expected) {
+            it("should decode " + name + " from an encoded querystring into a string value", function() {
                 var qs = {
                     keyString: value
                 };
@@ -40,10 +37,11 @@
 
         decodeTest("NaN", NaN, "NaN");
 
-        it("should decode a key with no value", function()
-        {
+        it("should decode a key with no value", function() {
             var value = $.deparam("foo");
-            assert.deepEqual(value, { "foo": "" });
+            assert.deepEqual(value, {
+                "foo": ""
+            });
         });
     });
 });

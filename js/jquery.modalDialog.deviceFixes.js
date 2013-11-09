@@ -25,34 +25,28 @@
 // Otherwise, you can hide specific problematic elements by adding this attribute:
 // data-dialog-hide-onopen="true"
 
-(function ($)
-{
+(function($) {
     var SELECTOR_MAIN_PANEL = "[data-dialog-main-panel='true']";
     var SELECTOR_BAD_ELEMENT = "[data-dialog-hide-onopen='true']";
 
-    var preventWindowTouchEvents = function(dialog, fix)
-    {
+    var preventWindowTouchEvents = function(dialog, fix) {
         // The bug only affects iFrame dialogs
-        if (dialog.dialogType != "iframe")
-        {
+        if (dialog.dialogType != "iframe") {
             return;
         }
 
         $([window, document]).enableEvent("touchmove touchstart touchend", !fix);
     };
 
-    var getWindowHeight = function()
-    {
+    var getWindowHeight = function() {
         return window.innerHeight || $(window).height();
     };
 
-    var initializeShimming = function()
-    {
+    var initializeShimming = function() {
         // First, see if the main panel is specified.
         // If so, it's the best choice of elements to hide.
         var $badEls = $(SELECTOR_MAIN_PANEL);
-        if ($badEls.length === 0)
-        {
+        if ($badEls.length === 0) {
             // Otherwise, look for individually marked bad elements to hide.
             $badEls = $(SELECTOR_BAD_ELEMENT);
         }
@@ -61,10 +55,8 @@
         var _scrollTop = 0;
         var _height = 0;
 
-        $.modalDialog.onbeforeopen.add(function()
-        {
-            if (this.level === 0)
-            {
+        $.modalDialog.onbeforeopen.add(function() {
+            if (this.level === 0) {
                 // Cache scroll height and body height so we can restore them when the dialog is closed
                 _scrollTop = $(document).scrollTop();
                 _height = document.body.style.height;
@@ -72,11 +64,10 @@
                 // Cache the parent for each element we need to remove from the DOM.
                 // This is important to fix the various WebKit text overlay bugs (described above in the header).
                 // Hiding them wont do it.
-                $badEls.each(function(i, el)
-                {
+                $badEls.each(function(i, el) {
                     $(el).data("dialog-parent", el.parentNode);
                 })
-                .detach();
+                    .detach();
 
                 // HACK: setting the body to be larger than the screen height prevents the address bar from showing up in iOS
                 document.body.style.height = (getWindowHeight() + 50) + "px";
@@ -85,31 +76,28 @@
             }
         });
 
-        $.modalDialog.onopen.add(function()
-        {
-            if (this.level === 0)
-            {
+        $.modalDialog.onopen.add(function() {
+            if (this.level === 0) {
                 // Ensure the body/background is bigger than the dialog,
                 // otherwise we see the background "end" above the bottom
                 // of the dialog.
                 var height = Math.max(this.$container.height(), getWindowHeight()) + 20;
 
-                document.body.style.height = height+ "px";
-                $(".dialog-background").css({ height: height });
+                document.body.style.height = height + "px";
+                $(".dialog-background").css({
+                    height: height
+                });
 
                 window.scrollTo(0, 1);
             }
         });
 
-        $.modalDialog.onclose.add(function()
-        {
-            if (this.level === 0)
-            {
+        $.modalDialog.onclose.add(function() {
+            if (this.level === 0) {
                 // Restore body height, elements, and scroll position
                 document.body.style.height = _height;
 
-                $badEls.each(function(i, el)
-                {
+                $badEls.each(function(i, el) {
                     $($(el).data("dialog-parent")).append(el);
                 });
 
@@ -118,10 +106,8 @@
         });
     };
 
-    $(function()
-    {
-        if (!$.modalDialog.isSmallScreen())
-        {
+    $(function() {
+        if (!$.modalDialog.isSmallScreen()) {
             return;
         }
 
@@ -129,19 +115,21 @@
         $.modalDialog.veilClass = "dialog-veil-opaque";
 
         // This will run in a content window. They need the events disabled immediately.
-        if ($.modalDialog && $.modalDialog._isContent)
-        {
+        if ($.modalDialog && $.modalDialog._isContent) {
             var dialog = $.modalDialog.getCurrent();
-            if (dialog)
-            {
-                $(window).on("load", function() { preventWindowTouchEvents(dialog, true); });
+            if (dialog) {
+                $(window).on("load", function() {
+                    preventWindowTouchEvents(dialog, true);
+                });
             }
-        }
-        else
-        {
+        } else {
             // This is for the host window.
-            $.modalDialog.onopen.add(function() { preventWindowTouchEvents(this, true); });
-            $.modalDialog.onbeforeclose.add(function() { preventWindowTouchEvents(this, false); });
+            $.modalDialog.onopen.add(function() {
+                preventWindowTouchEvents(this, true);
+            });
+            $.modalDialog.onbeforeclose.add(function() {
+                preventWindowTouchEvents(this, false);
+            });
 
             initializeShimming();
         }

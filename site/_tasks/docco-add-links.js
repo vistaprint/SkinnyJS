@@ -2,10 +2,8 @@ var fs = require("fs");
 
 var TARGET_HTML = "<th class=\"docs\">";
 
-var processError = function(err)
-{
-    if (err)
-    {
+var processError = function(err) {
+    if (err) {
         console.log(err);
         process.exit();
     }
@@ -14,17 +12,14 @@ var processError = function(err)
 var DOCS_ROOT = "./site/_site/docco";
 var template = fs.readFileSync("./site/_includes/docfile-header-partial.html", "utf-8");
 
-var processPages = function(directory)
-{
+var processPages = function(directory) {
     var files = fs.readdirSync(directory);
 
-    for (var i=0; i<files.length; i++)
-    {
+    for (var i = 0; i < files.length; i++) {
         var file = files[i];
         var filePath = directory + "/" + file;
-        
-        if (fs.lstatSync(filePath).isDirectory())
-        {
+
+        if (fs.lstatSync(filePath).isDirectory()) {
             processPages(filePath);
             continue;
         }
@@ -34,8 +29,7 @@ var processPages = function(directory)
         var content = fs.readFileSync(filePath, "utf-8");
 
         var wrapperPos = content.indexOf(TARGET_HTML);
-        if (wrapperPos < 0)
-        {
+        if (wrapperPos < 0) {
             continue;
         }
 
@@ -51,8 +45,7 @@ var processPages = function(directory)
     }
 };
 
-module.exports = function(grunt)
-{
+module.exports = function(grunt) {
     grunt.registerTask("docco-add-links", "Adds shared header links to docco generated files", function() {
         processPages(DOCS_ROOT);
     });

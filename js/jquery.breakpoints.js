@@ -1,32 +1,30 @@
 /// <reference path="jquery.delimitedString.js" />
 
-(function($)
-{
-    var processBreakpoints = function($el, breakpoints)
-    {
+(function($) {
+    var processBreakpoints = function($el, breakpoints) {
         var width = $el.innerWidth();
 
         var entered = [];
         var left = [];
 
-        for (var name in breakpoints)
-        {
+        for (var name in breakpoints) {
             var breakpoint = breakpoints[name];
             var cssClass = "breakpoint-" + name;
-            
+
             // Detect which breakpoints have been entered and which ones have been left.
-            if (width <= breakpoint.max && width >= breakpoint.min)
-            {
-                if (!$el.hasClass(cssClass))
-                {
-                    entered.push({ breakpoint: breakpoint, cssClass: cssClass });
+            if (width <= breakpoint.max && width >= breakpoint.min) {
+                if (!$el.hasClass(cssClass)) {
+                    entered.push({
+                        breakpoint: breakpoint,
+                        cssClass: cssClass
+                    });
                 }
-            }
-            else
-            {
-                if ($el.hasClass(cssClass))
-                {
-                    left.push({ breakpoint: breakpoint, cssClass: cssClass });
+            } else {
+                if ($el.hasClass(cssClass)) {
+                    left.push({
+                        breakpoint: breakpoint,
+                        cssClass: cssClass
+                    });
                 }
             }
         }
@@ -40,22 +38,19 @@
         fireEventsBatch($el, left, "leave");
     };
 
-    var modifyClassesBatch = function($el, breakpoints, modifyClassMethod)
-    {
-        if (breakpoints.length > 0)
-        {
-            var classes = $.map(breakpoints, function(bp) { return bp.cssClass; }).join(" ");
+    var modifyClassesBatch = function($el, breakpoints, modifyClassMethod) {
+        if (breakpoints.length > 0) {
+            var classes = $.map(breakpoints, function(bp) {
+                return bp.cssClass;
+            }).join(" ");
             $el[modifyClassMethod](classes);
         }
     };
 
-    var fireEventsBatch = function($el, breakpoints, eventName)
-    {
-        for (var i=0; i<breakpoints.length; i++)
-        {
+    var fireEventsBatch = function($el, breakpoints, eventName) {
+        for (var i = 0; i < breakpoints.length; i++) {
             var breakpoint = breakpoints[i].breakpoint;
-            if (breakpoint[eventName])
-            {
+            if (breakpoint[eventName]) {
                 breakpoint[eventName].call($el[0], breakpoint);
             }
 
@@ -65,45 +60,34 @@
         }
     };
 
-    var compareInts = function compare(a, b) 
-    {
-        if (a < b)
-        {
+    var compareInts = function compare(a, b) {
+        if (a < b) {
             return -1;
         }
-         
-        if (a > b)
-        {
+
+        if (a > b) {
             return 1;
         }
-        
+
         return 0;
     };
 
-    var normalizeBreakpoints = function(breakpoints)
-    {
+    var normalizeBreakpoints = function(breakpoints) {
         var maxWidths = [];
 
-        for (var name in breakpoints)
-        {
+        for (var name in breakpoints) {
             var breakpoint = breakpoints[name];
 
-            if ($.isNumeric(breakpoint))
-            {
+            if ($.isNumeric(breakpoint)) {
                 var max = parseInt(breakpoint, 10);
-                breakpoint = 
-                {
+                breakpoint = {
                     max: max
                 };
 
                 breakpoints[name] = breakpoint;
-            }
-            else if (breakpoint.hasOwnProperty("max"))
-            {
+            } else if (breakpoint.hasOwnProperty("max")) {
                 breakpoints.max = parseInt(breakpoints.max, 10);
-            }
-            else
-            {
+            } else {
                 throw new Error("No max specified for breakpoint: " + name);
             }
 
@@ -117,28 +101,20 @@
         return maxWidths;
     };
 
-    var setMinWidths = function(breakpoints, maxWidths)
-    {
-        for (var name in breakpoints)
-        {
+    var setMinWidths = function(breakpoints, maxWidths) {
+        for (var name in breakpoints) {
             var breakpoint = breakpoints[name];
 
-            if (breakpoint.hasOwnProperty("min"))
-            {
+            if (breakpoint.hasOwnProperty("min")) {
                 continue;
             }
 
-            for (var i=0; i<maxWidths.length; i++)
-            {
-                if (breakpoint.max == maxWidths[i])
-                {
-                    if (i === 0)
-                    {
+            for (var i = 0; i < maxWidths.length; i++) {
+                if (breakpoint.max == maxWidths[i]) {
+                    if (i === 0) {
                         breakpoint.min = 0;
-                    }
-                    else
-                    {
-                        breakpoint.min = maxWidths[i-1] + 1;
+                    } else {
+                        breakpoint.min = maxWidths[i - 1] + 1;
                     }
                     break;
                 }
@@ -146,22 +122,22 @@
         }
     };
 
-    var addMaxBreakpoint = function(breakpoints, maxWidths)
-    {
-        if (!maxWidths || maxWidths.length === 0)
-        {
+    var addMaxBreakpoint = function(breakpoints, maxWidths) {
+        if (!maxWidths || maxWidths.length === 0) {
             return;
         }
-        
+
         var largestBreakpoint = maxWidths[maxWidths.length - 1];
 
-        breakpoints.max = { min: largestBreakpoint+1, max: Infinity };
+        breakpoints.max = {
+            min: largestBreakpoint + 1,
+            max: Infinity
+        };
     };
 
     /* test-code */
 
-    $.breakpointsPrivate = 
-    {
+    $.breakpointsPrivate = {
         processBreakpoints: processBreakpoints,
         normalizeBreakpoints: normalizeBreakpoints,
         setMinWidths: setMinWidths,
@@ -170,28 +146,21 @@
 
     /* end-test-code */
 
-    $.fn.breakpoints = function(breakpoints)
-    {
+    $.fn.breakpoints = function(breakpoints) {
         var maxWidths = normalizeBreakpoints(breakpoints);
         setMinWidths(breakpoints, maxWidths);
         addMaxBreakpoint(breakpoints, maxWidths);
 
-        this.each(function(i, el)
-        {
-            var wrapper = function()
-            {
+        this.each(function(i, el) {
+            var wrapper = function() {
                 processBreakpoints($(el), breakpoints);
             };
 
             // Try to get the breakpoint classes added to the DOM as early as possible
             // to avoid reflows at DOM ready.
-            try
-            {
+            try {
                 wrapper();
-            }
-            catch (ex)
-            {
-            }
+            } catch (ex) {}
 
             $(document).ready(wrapper);
             $(window).on("resize orientationchange breakpoints:refresh", wrapper);
@@ -201,15 +170,12 @@
     };
 
     // Unobtrusive style
-    $.fn.breakpointsFromAttrs = function()
-    {
-        this.find("[data-breakpoints]").each(function(i, el)
-        {
+    $.fn.breakpointsFromAttrs = function() {
+        this.find("[data-breakpoints]").each(function(i, el) {
             var $el = $(el);
 
             var bpStr = $el.attr("data-breakpoints");
-            if (!bpStr)
-            {
+            if (!bpStr) {
                 return;
             }
 
@@ -220,9 +186,8 @@
         return this;
     };
 
-    $(document).ready(function() 
-    { 
-        $(document).breakpointsFromAttrs(); 
+    $(document).ready(function() {
+        $(document).breakpointsFromAttrs();
     });
 
 })(jQuery);
