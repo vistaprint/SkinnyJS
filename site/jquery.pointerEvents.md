@@ -26,7 +26,7 @@ jQuery.pointerEvents adds a polyfill for the new [pointer events api](http://www
 
         // Detecting the underlying event type
         // Can be "mouse", "touch", or "pen"
-    	var underlyingEvent = e.originalType.pointerType;
+        var underlyingEvent = e.originalType.pointerType;
 
     });
 {% endhighlight %}
