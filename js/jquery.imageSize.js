@@ -139,7 +139,7 @@
 
         img.src = src;
 
-        return deferred;
+        return deferred.promise();
     };
 
     // Finds the maximum rectangle size that can fit in the specified container rectangle
