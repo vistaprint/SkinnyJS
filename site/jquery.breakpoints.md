@@ -68,3 +68,21 @@ $(".foo").breakpoints({
 });
 {% endhighlight %}
 
+Breakpoints also trigger jQuery DOM events:
+
+{% highlight javascript %}
+$(".foo").breakpoints({ "mobile": 480, "tablet": 760 });
+
+$(".foo").on("breakpoint:enter", function(e) {
+    if (e.breakpoint.name == "mobile") {
+        // do something for the mobile specific UI
+    } 
+});
+
+$(".foo").on("breakpoint:leave", function(e) {
+    if (e.breakpoint.name == "mobile") {
+        // cleanup the mobile specific UI
+    } 
+});
+{% endhighlight %}
+
