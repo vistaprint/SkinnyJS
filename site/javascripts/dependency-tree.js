@@ -91,6 +91,12 @@ var dependencyTree = {
             notes: "postMessage polyfill HTML file for browsers that don't support postMessage. Make this accessible on your web server, and <a href='#jquery.postMessage.js' target='_blank'>configure jquery.postMessage to point to it</a>."
         }]
     },
+    "jquery.pointerEvents": {
+        deps: []
+    },
+    "jquery.pointerGestures": {
+        deps: ["jquery.pointerEvents"]
+    },
     "jquery.proxyAll": {
         deps: []
     },
