@@ -12,8 +12,7 @@ pressed in a keyboard event is a visible character. Useful to filter out keys su
 
 {% highlight javascript %}
     $(".text-field").on("keypress", function(e) {
-       if (e.isVisibleKeyCode())
-       {
+       if (e.isVisibleKeyCode()) {
            doSomething(e.keyCode);
        });
 {% endhighlight %}

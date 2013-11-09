@@ -206,15 +206,13 @@ open() and close() return promises. This allows chaining of actions:
 {% highlight javascript %}
 var dialog = $.modalDialog.create({ content: ".color-dialog" });
 dialog.open()
-    .then(function()
-    {
+    .then(function() {
         // The dialog is completely open
 
         // Close the dialog (also returns a promise)
         return this.close();
     })
-    .then(function()
-    {
+    .then(function() {
         // The dialog is completely closed
     });
  
@@ -412,11 +410,9 @@ For example, imagine you'd like to send a message to the host (parent) window fr
 
 Then, you can receive the message in the parent window:
 {% highlight javascript %}
-    $(window).on("message", function(e) 
-    {
+    $(window).on("message", function(e) {
         // Cross domain security
-        if (e.origin != "http://mydomain.com")
-        {
+        if (e.origin != "http://mydomain.com") {
             return;
         }
 
@@ -457,10 +453,8 @@ Here is an example of using the beforeopen event:
 {% highlight javascript %}
 $.modalDialog.create({ 
     url: "/foo.aspx", 
-    onbeforeopen: function(e) 
-    { 
-        if (!confirm("Are you sure you want to open this dialog?")) 
-        {
+    onbeforeopen: function(e) { 
+        if (!confirm("Are you sure you want to open this dialog?")) {
             e.preventDefault(); 
         }
     });
@@ -470,10 +464,8 @@ This example is completely equivalent:
 
 {% highlight javascript %}
 var dialog = $.modalDialog.create({ url: "/foo.aspx" });
-dialog.onbeforeopen.add(function(e) 
-{ 
-    if (!confirm("Are you sure you want to open this dialog?")) 
-    { 
+dialog.onbeforeopen.add(function(e) { 
+    if (!confirm("Are you sure you want to open this dialog?")) { 
         e.preventDefault(); 
     }
 });

@@ -74,8 +74,7 @@ In general, its a good idea to filter out requests from unknown domains. This ex
 
 {% highlight javascript %}
     $(window).on("message", function(e) {
-            if (e.origin !== "http://www.foo.com")
-            {
+            if (e.origin !== "http://www.foo.com") {
                 return;
             }
             alert(e.data); // Alerts "this is a message"
@@ -86,8 +85,7 @@ This example alerts every message it receives, from any subdomain of foo.com:
 
 {% highlight javascript %}
     $(window).on("message", function(e) {
-        if (origin.search(/http:\/\/[^\.]*\.foo\.com$/gi) < 0)
-        {
+        if (origin.search(/http:\/\/[^\.]*\.foo\.com$/gi) < 0) {
             return;
         }
         alert(e.data); // Alerts "this is a message"
@@ -98,13 +96,11 @@ Its also a common practice to "namespace" messages so your handlers don't respon
 
 {% highlight javascript %}
     $(window).on("message", function(e) {
-        if (e.origin !== "http://www.foo.com")
-        {
+        if (e.origin !== "http://www.foo.com") {
             return;
         }
         
-        if (e.data.indexOf("fruit:") !== 0)
-        {
+        if (e.data.indexOf("fruit:") !== 0) {
             return;
         }
          

@@ -53,19 +53,15 @@ You can assign event handlers to breakpoints. In this example, we AJAX in differ
 
 {% highlight javascript %}
 $(".foo").breakpoints({ 
-    "mobile": 
-    { 
+    "mobile": { 
         max: 480, 
-        enter: function() 
-        {
+        enter: function() {
             $(this).load("/mobile-content"); 
         } 
     }, 
-    "tablet": 
-    { 
+    "tablet": { 
         max: 760,
-        enter: function() 
-        {
+        enter: function() {
             $(this).load("/tablet-content"); 
         } 
     }
