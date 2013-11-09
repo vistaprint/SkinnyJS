@@ -124,9 +124,9 @@
 <p>The <strong>jquery.modalDialog</strong> plugin is an extremely powerful and extensible UI widget. It supports responsive design, and is touch friendly.</p>
 
 <p>Example dialog (desktop):</p>
-<img alt='Modal dialog: desktop' class='screenshot' src='images/dialog-desktop.jpg' />
+<img class='screenshot' alt='Modal dialog: desktop' src='images/dialog-desktop.jpg' />
 <p>Example dialog (mobile):</p>
-<img alt='Modal dialog: mobile' class='screenshot' src='images/dialog-mobile.jpg' />
+<img class='screenshot' alt='Modal dialog: mobile' src='images/dialog-mobile.jpg' />
 <h2 id='features'>Features</h2>
 
 <h3 id='content_sources'>Content sources</h3>
@@ -347,15 +347,13 @@
 <p>open() and close() return promises. This allows chaining of actions:</p>
 <div class='highlight'><pre><code class='javascript'><span class='kd'>var</span> <span class='nx'>dialog</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>({</span> <span class='nx'>content</span><span class='o'>:</span> <span class='s2'>&quot;.color-dialog&quot;</span> <span class='p'>});</span>
 <span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>open</span><span class='p'>()</span>
-    <span class='p'>.</span><span class='nx'>then</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span>
-    <span class='p'>{</span>
+    <span class='p'>.</span><span class='nx'>then</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
         <span class='c1'>// The dialog is completely open</span>
 
         <span class='c1'>// Close the dialog (also returns a promise)</span>
         <span class='k'>return</span> <span class='k'>this</span><span class='p'>.</span><span class='nx'>close</span><span class='p'>();</span>
     <span class='p'>})</span>
-    <span class='p'>.</span><span class='nx'>then</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span>
-    <span class='p'>{</span>
+    <span class='p'>.</span><span class='nx'>then</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
         <span class='c1'>// The dialog is completely closed</span>
     <span class='p'>});</span>
  
@@ -521,11 +519,9 @@
     <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>getCurrent</span><span class='p'>().</span><span class='nx'>postMessageToParent</span><span class='p'>(</span><span class='s2'>&quot;hi parent, here&#39;s some data from your child&quot;</span><span class='p'>);</span>
 </code></pre></div>
 <p>Then, you can receive the message in the parent window:</p>
-<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>(</span><span class='nb'>window</span><span class='p'>).</span><span class='nx'>on</span><span class='p'>(</span><span class='s2'>&quot;message&quot;</span><span class='p'>,</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> 
-    <span class='p'>{</span>
+<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>(</span><span class='nb'>window</span><span class='p'>).</span><span class='nx'>on</span><span class='p'>(</span><span class='s2'>&quot;message&quot;</span><span class='p'>,</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> <span class='p'>{</span>
         <span class='c1'>// Cross domain security</span>
-        <span class='k'>if</span> <span class='p'>(</span><span class='nx'>e</span><span class='p'>.</span><span class='nx'>origin</span> <span class='o'>!=</span> <span class='s2'>&quot;http://mydomain.com&quot;</span><span class='p'>)</span>
-        <span class='p'>{</span>
+        <span class='k'>if</span> <span class='p'>(</span><span class='nx'>e</span><span class='p'>.</span><span class='nx'>origin</span> <span class='o'>!=</span> <span class='s2'>&quot;http://mydomain.com&quot;</span><span class='p'>)</span> <span class='p'>{</span>
             <span class='k'>return</span><span class='p'>;</span>
         <span class='p'>}</span>
 
@@ -566,20 +562,16 @@
 <p>Here is an example of using the beforeopen event:</p>
 <div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>({</span> 
     <span class='nx'>url</span><span class='o'>:</span> <span class='s2'>&quot;/foo.aspx&quot;</span><span class='p'>,</span> 
-    <span class='nx'>onbeforeopen</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> 
-    <span class='p'>{</span> 
-        <span class='k'>if</span> <span class='p'>(</span><span class='o'>!</span><span class='nx'>confirm</span><span class='p'>(</span><span class='s2'>&quot;Are you sure you want to open this dialog?&quot;</span><span class='p'>))</span> 
-        <span class='p'>{</span>
+    <span class='nx'>onbeforeopen</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> <span class='p'>{</span> 
+        <span class='k'>if</span> <span class='p'>(</span><span class='o'>!</span><span class='nx'>confirm</span><span class='p'>(</span><span class='s2'>&quot;Are you sure you want to open this dialog?&quot;</span><span class='p'>))</span> <span class='p'>{</span>
             <span class='nx'>e</span><span class='p'>.</span><span class='nx'>preventDefault</span><span class='p'>();</span> 
         <span class='p'>}</span>
     <span class='p'>});</span>
 </code></pre></div>
 <p>This example is completely equivalent:</p>
 <div class='highlight'><pre><code class='javascript'><span class='kd'>var</span> <span class='nx'>dialog</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>({</span> <span class='nx'>url</span><span class='o'>:</span> <span class='s2'>&quot;/foo.aspx&quot;</span> <span class='p'>});</span>
-<span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>onbeforeopen</span><span class='p'>.</span><span class='nx'>add</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> 
-<span class='p'>{</span> 
-    <span class='k'>if</span> <span class='p'>(</span><span class='o'>!</span><span class='nx'>confirm</span><span class='p'>(</span><span class='s2'>&quot;Are you sure you want to open this dialog?&quot;</span><span class='p'>))</span> 
-    <span class='p'>{</span> 
+<span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>onbeforeopen</span><span class='p'>.</span><span class='nx'>add</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> <span class='p'>{</span> 
+    <span class='k'>if</span> <span class='p'>(</span><span class='o'>!</span><span class='nx'>confirm</span><span class='p'>(</span><span class='s2'>&quot;Are you sure you want to open this dialog?&quot;</span><span class='p'>))</span> <span class='p'>{</span> 
         <span class='nx'>e</span><span class='p'>.</span><span class='nx'>preventDefault</span><span class='p'>();</span> 
     <span class='p'>}</span>
 <span class='p'>});</span>

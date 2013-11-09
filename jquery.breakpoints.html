@@ -158,22 +158,33 @@
 
 <p>You can assign event handlers to breakpoints. In this example, we AJAX in different content depending on the breakpoint.</p>
 <div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.foo&quot;</span><span class='p'>).</span><span class='nx'>breakpoints</span><span class='p'>({</span> 
-    <span class='s2'>&quot;mobile&quot;</span><span class='o'>:</span> 
-    <span class='p'>{</span> 
+    <span class='s2'>&quot;mobile&quot;</span><span class='o'>:</span> <span class='p'>{</span> 
         <span class='nx'>max</span><span class='o'>:</span> <span class='mi'>480</span><span class='p'>,</span> 
-        <span class='nx'>enter</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>()</span> 
-        <span class='p'>{</span>
+        <span class='nx'>enter</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
             <span class='nx'>$</span><span class='p'>(</span><span class='k'>this</span><span class='p'>).</span><span class='nx'>load</span><span class='p'>(</span><span class='s2'>&quot;/mobile-content&quot;</span><span class='p'>);</span> 
         <span class='p'>}</span> 
     <span class='p'>},</span> 
-    <span class='s2'>&quot;tablet&quot;</span><span class='o'>:</span> 
-    <span class='p'>{</span> 
+    <span class='s2'>&quot;tablet&quot;</span><span class='o'>:</span> <span class='p'>{</span> 
         <span class='nx'>max</span><span class='o'>:</span> <span class='mi'>760</span><span class='p'>,</span>
-        <span class='nx'>enter</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>()</span> 
-        <span class='p'>{</span>
+        <span class='nx'>enter</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
             <span class='nx'>$</span><span class='p'>(</span><span class='k'>this</span><span class='p'>).</span><span class='nx'>load</span><span class='p'>(</span><span class='s2'>&quot;/tablet-content&quot;</span><span class='p'>);</span> 
         <span class='p'>}</span> 
     <span class='p'>}</span>
+<span class='p'>});</span>
+</code></pre></div>
+<p>Breakpoints also trigger jQuery DOM events:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.foo&quot;</span><span class='p'>).</span><span class='nx'>breakpoints</span><span class='p'>({</span> <span class='s2'>&quot;mobile&quot;</span><span class='o'>:</span> <span class='mi'>480</span><span class='p'>,</span> <span class='s2'>&quot;tablet&quot;</span><span class='o'>:</span> <span class='mi'>760</span> <span class='p'>});</span>
+
+<span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.foo&quot;</span><span class='p'>).</span><span class='nx'>on</span><span class='p'>(</span><span class='s2'>&quot;breakpoint:enter&quot;</span><span class='p'>,</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='k'>if</span> <span class='p'>(</span><span class='nx'>e</span><span class='p'>.</span><span class='nx'>breakpoint</span><span class='p'>.</span><span class='nx'>name</span> <span class='o'>==</span> <span class='s2'>&quot;mobile&quot;</span><span class='p'>)</span> <span class='p'>{</span>
+        <span class='c1'>// do something for the mobile specific UI</span>
+    <span class='p'>}</span> 
+<span class='p'>});</span>
+
+<span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.foo&quot;</span><span class='p'>).</span><span class='nx'>on</span><span class='p'>(</span><span class='s2'>&quot;breakpoint:leave&quot;</span><span class='p'>,</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='k'>if</span> <span class='p'>(</span><span class='nx'>e</span><span class='p'>.</span><span class='nx'>breakpoint</span><span class='p'>.</span><span class='nx'>name</span> <span class='o'>==</span> <span class='s2'>&quot;mobile&quot;</span><span class='p'>)</span> <span class='p'>{</span>
+        <span class='c1'>// cleanup the mobile specific UI</span>
+    <span class='p'>}</span> 
 <span class='p'>});</span>
 </code></pre></div>
   </div>

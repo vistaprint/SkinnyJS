@@ -130,12 +130,10 @@
 <h3 id='usage'>Usage</h3>
 
 <p>Here&#8217;s a simple class <em>Car</em> that exposes the event <em>ondrive</em>:</p>
-<div class='highlight'><pre><code class='javascript'>    <span class='kd'>var</span> <span class='nx'>Car</span> <span class='o'>=</span> <span class='kd'>function</span><span class='p'>()</span>
-    <span class='p'>{</span>
+<div class='highlight'><pre><code class='javascript'>    <span class='kd'>var</span> <span class='nx'>Car</span> <span class='o'>=</span> <span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
         <span class='nx'>$</span><span class='p'>.</span><span class='nx'>CustomEvent</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>(</span><span class='k'>this</span><span class='p'>,</span> <span class='s2'>&quot;ondrive&quot;</span><span class='p'>);</span>
     
-        <span class='k'>this</span><span class='p'>.</span><span class='nx'>drive</span> <span class='o'>=</span> <span class='kd'>function</span><span class='p'>()</span>
-        <span class='p'>{</span>
+        <span class='k'>this</span><span class='p'>.</span><span class='nx'>drive</span> <span class='o'>=</span> <span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
             <span class='c1'>// TODO some driving implementation</span>
             <span class='k'>this</span><span class='p'>.</span><span class='nx'>ondrive</span><span class='p'>.</span><span class='nx'>fire</span><span class='p'>();</span>
         <span class='p'>}</span>
@@ -146,12 +144,10 @@
     <span class='nx'>car</span><span class='p'>.</span><span class='nx'>ondrive</span><span class='p'>.</span><span class='nx'>add</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span> <span class='nx'>alert</span><span class='p'>(</span><span class='s2'>&quot;my car is driving!&quot;</span><span class='p'>);</span> <span class='p'>});</span>
 </code></pre></div>
 <p>We can also customize the event object that is passed to observers:</p>
-<div class='highlight'><pre><code class='javascript'>    <span class='kd'>var</span> <span class='nx'>Car</span> <span class='o'>=</span> <span class='kd'>function</span><span class='p'>()</span>
-    <span class='p'>{</span>
+<div class='highlight'><pre><code class='javascript'>    <span class='kd'>var</span> <span class='nx'>Car</span> <span class='o'>=</span> <span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
         <span class='nx'>$</span><span class='p'>.</span><span class='nx'>CustomEvent</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>(</span><span class='k'>this</span><span class='p'>,</span> <span class='s2'>&quot;ondrive&quot;</span><span class='p'>);</span>
     
-        <span class='k'>this</span><span class='p'>.</span><span class='nx'>drive</span> <span class='o'>=</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>speed</span><span class='p'>)</span>
-        <span class='p'>{</span>
+        <span class='k'>this</span><span class='p'>.</span><span class='nx'>drive</span> <span class='o'>=</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>speed</span><span class='p'>)</span> <span class='p'>{</span>
             <span class='c1'>// Data will be passed to handlers via the event object</span>
             <span class='k'>this</span><span class='p'>.</span><span class='nx'>ondrive</span><span class='p'>.</span><span class='nx'>fire</span><span class='p'>({</span> <span class='nx'>speed</span><span class='o'>:</span> <span class='nx'>speed</span> <span class='p'>});</span> 
         <span class='p'>}</span>
@@ -161,15 +157,12 @@
     <span class='nx'>car</span><span class='p'>.</span><span class='nx'>ondrive</span><span class='p'>.</span><span class='nx'>add</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> <span class='p'>{</span> <span class='nx'>alert</span><span class='p'>(</span><span class='s2'>&quot;my car is driving at &quot;</span> <span class='o'>+</span> <span class='nx'>e</span><span class='p'>.</span><span class='nx'>speed</span> <span class='o'>+</span> <span class='s2'>&quot;mph!&quot;</span><span class='p'>);</span> <span class='p'>});</span>
 </code></pre></div>
 <p>The event object passed to handlers of jQuery.CustomEvent is a jQuery.Event, and is also returned from jQuery.CustomEvent.fire(). This is useful if you want to use jQuery.Event&#8217;s methods, such as <em>preventDefault()</em> and <em>isDefaultPrevented()</em> to allow observers to influence the behavior of the object.</p>
-<div class='highlight'><pre><code class='javascript'>    <span class='kd'>var</span> <span class='nx'>Car</span> <span class='o'>=</span> <span class='kd'>function</span><span class='p'>()</span>
-    <span class='p'>{</span>
+<div class='highlight'><pre><code class='javascript'>    <span class='kd'>var</span> <span class='nx'>Car</span> <span class='o'>=</span> <span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
         <span class='nx'>$</span><span class='p'>.</span><span class='nx'>CustomEvent</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>(</span><span class='k'>this</span><span class='p'>,</span> <span class='s2'>&quot;ondrive&quot;</span><span class='p'>);</span>
     
-        <span class='k'>this</span><span class='p'>.</span><span class='nx'>drive</span> <span class='o'>=</span> <span class='kd'>function</span><span class='p'>()</span>
-        <span class='p'>{</span>
+        <span class='k'>this</span><span class='p'>.</span><span class='nx'>drive</span> <span class='o'>=</span> <span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
             <span class='kd'>var</span> <span class='nx'>evt</span> <span class='o'>=</span> <span class='k'>this</span><span class='p'>.</span><span class='nx'>ondrive</span><span class='p'>.</span><span class='nx'>fire</span><span class='p'>();</span> 
-            <span class='k'>if</span> <span class='p'>(</span><span class='nx'>evt</span><span class='p'>.</span><span class='nx'>isDefaultPrevented</span><span class='p'>())</span>
-            <span class='p'>{</span>
+            <span class='k'>if</span> <span class='p'>(</span><span class='nx'>evt</span><span class='p'>.</span><span class='nx'>isDefaultPrevented</span><span class='p'>())</span> <span class='p'>{</span>
                 <span class='c1'>// Stop driving!!!</span>
             <span class='p'>}</span>
         <span class='p'>}</span>

@@ -9,24 +9,30 @@
 /// <reference path="jquery.partialLoad.js" />
 /// <reference path="jquery.pointerEvents.js" />
 
-(function($)
-{
+(function($) {
     $.modalDialog = $.modalDialog || {};
 
-    var _ua = $.modalDialog._ua = (function() 
-    {
+    var _ua = $.modalDialog._ua = (function() {
         var ua = navigator.userAgent;
-        
+
         // Internet Explorer 7 specific checks
-        if (ua.indexOf("MSIE 7.0") > 0) 
-        {
-            return {ie: true, ie7: true, version: 7, compat: ua.indexOf("compatible") > 0};
+        if (ua.indexOf("MSIE 7.0") > 0) {
+            return {
+                ie: true,
+                ie7: true,
+                version: 7,
+                compat: ua.indexOf("compatible") > 0
+            };
         }
 
         // Internet Explorer 8 specific checks
-        if (ua.indexOf("MSIE 8.0") > 0) 
-        {
-            return {ie: true, ie8: true, version: 8, compat: ua.indexOf("compatible") > 0};
+        if (ua.indexOf("MSIE 8.0") > 0) {
+            return {
+                ie: true,
+                ie8: true,
+                version: 8,
+                compat: ua.indexOf("compatible") > 0
+            };
         }
 
         return {};
@@ -34,23 +40,19 @@
 
     var _isSmallScreenOverride;
 
-    $.modalDialog.setSmallScreen = function(isSmallScreen)
-    {
+    $.modalDialog.setSmallScreen = function(isSmallScreen) {
         _isSmallScreenOverride = isSmallScreen;
     };
 
     // Returns true if we're on a small screen device like a smartphone.
     // Dialogs behave slightly different on small screens, by convention.
-    $.modalDialog.isSmallScreen = function()
-    {
-        if (typeof(_isSmallScreenOverride) != "undefined")
-        {
+    $.modalDialog.isSmallScreen = function() {
+        if (typeof(_isSmallScreenOverride) != "undefined") {
             return _isSmallScreenOverride;
         }
 
         // Detect Internet Explorer 7/8, force them to desktop mode
-        if (_ua.ie7 || _ua.ie8) 
-        {
+        if (_ua.ie7 || _ua.ie8) {
             return false;
         }
 
@@ -59,19 +61,16 @@
     };
 
 })(jQuery);
+
 // Support reading settings from a node dialog's element
 
 // Minimal polyfill for Object.keys
 // <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys>
-if (!Object.keys) 
-{
-    Object.keys = function(obj) 
-    {
+if (!Object.keys) {
+    Object.keys = function(obj) {
         var keys = [];
-        for (var key in obj) 
-        {
-            if (obj.hasOwnProperty(key)) 
-            {
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key)) {
                 keys[keys.length] = key;
             }
         }
@@ -79,22 +78,17 @@ if (!Object.keys)
     };
 }
 
-(function($)
-{
+(function($) {
     var ATTR_PREFIX = "data-dialog-";
 
-    var parseNone = function(s)
-    {
+    var parseNone = function(s) {
         return s || null;
     };
 
-    var parseBool = function(s)
-    {
-        if (s)
-        {
+    var parseBool = function(s) {
+        if (s) {
             s = s.toString().toLowerCase();
-            switch (s)
-            {
+            switch (s) {
                 case "true":
                 case "yes":
                 case "1":
@@ -107,33 +101,30 @@ if (!Object.keys)
         return false;
     };
 
-    var parseFunction = function(body)
-    {
+    var parseFunction = function(body) {
         // Evil is necessary to turn inline HTML handlers into functions
         /* jshint evil: true */
 
-        if (!body) 
-        {
+        if (!body) {
             return null;
         }
 
         return new Function("event", body);
     };
-    
+
     // The properties to copy from HTML data-dialog-* attributes
     // to the dialog settings object
-    var _props = 
-    {
-        "title": parseNone,         
+    var _props = {
+        "title": parseNone,
         "onopen": parseFunction,
-        "onbeforeopen": parseFunction,         
-        "onclose": parseFunction,        
-        "onbeforeclose": parseFunction,        
-        "maxWidth": parseInt,   
-        "initialHeight": parseInt,    
-        "ajax": parseBool,  
+        "onbeforeopen": parseFunction,
+        "onclose": parseFunction,
+        "onbeforeclose": parseFunction,
+        "maxWidth": parseInt,
+        "initialHeight": parseInt,
+        "ajax": parseBool,
         "onajaxerror": parseFunction,
-        "destroyOnClose": parseBool,     
+        "destroyOnClose": parseBool,
         "skin": parseNone,
         "enableHistory": parseBool,
         "zIndex": parseInt
@@ -142,16 +133,13 @@ if (!Object.keys)
     $.modalDialog = $.modalDialog || {};
 
     // Copies the HTML data-dialog-* attributes to the settings object
-    $.modalDialog.getSettings = function($el)
-    {
+    $.modalDialog.getSettings = function($el) {
         var settings = {};
 
-        $.each(Object.keys(_props), function(i, key) 
-        {
+        $.each(Object.keys(_props), function(i, key) {
             // $.fn.attr is case insensitive
             var value = $el.attr(ATTR_PREFIX + key);
-            if (typeof value != "undefined")
-            {
+            if (typeof value != "undefined") {
                 var parser = _props[key];
                 settings[key] = parser(value);
             }
@@ -161,12 +149,11 @@ if (!Object.keys)
     };
 
 })(jQuery);
+
 // TODO what to do with preventEventBubbling?
 
-(function ($)
-{
-    if ($.modalDialog && $.modalDialog._isContent)
-    {
+(function($) {
+    if ($.modalDialog && $.modalDialog._isContent) {
         throw new Error("Attempt to load jquery.modalDialogContent.js in the same window as jquery.modalDialog.js.");
     }
 
@@ -210,8 +197,7 @@ if (!Object.keys)
     $.modalDialog.animationDuration = 600;
 
     // Class which creates a jQuery mobile dialog
-    var ModalDialog = function(settings)
-    {
+    var ModalDialog = function(settings) {
         this.settings = settings;
         this.parent = $(this.settings.containerElement || "body");
 
@@ -225,33 +211,28 @@ if (!Object.keys)
     ModalDialog.prototype.dialogType = "node";
 
     // Creates a custom event on this object with the specified event name
-    ModalDialog.prototype._setupCustomEvent = function(i, eventName)
-    {
+    ModalDialog.prototype._setupCustomEvent = function(i, eventName) {
         var onEvent = "on" + eventName;
         var evt = $.CustomEvent.create(this, eventName);
 
         var handler = this.settings[onEvent];
-        if (handler)
-        {
+        if (handler) {
             evt.add(handler);
         }
 
         return evt;
     };
 
-    ModalDialog.prototype._initDeferred = function(action, deferred)
-    {
+    ModalDialog.prototype._initDeferred = function(action, deferred) {
         this._deferreds = this._deferreds || {};
         deferred = deferred || new $.Deferred();
         this._deferreds[action] = deferred;
         return deferred;
     };
 
-    ModalDialog.prototype._completeDeferred = function(action, resolution, args)
-    {
+    ModalDialog.prototype._completeDeferred = function(action, resolution, args) {
         var deferred = this._deferreds[action];
-        if (deferred)
-        {
+        if (deferred) {
             deferred[resolution + "With"](this, args);
             //this._deferreds[action] = null;
 
@@ -261,46 +242,38 @@ if (!Object.keys)
         throw new Error("No deferred initialized for action '" + action + "'");
     };
 
-    ModalDialog.prototype._resolveDeferred = function(action, args)
-    {
+    ModalDialog.prototype._resolveDeferred = function(action, args) {
         return this._completeDeferred(action, "resolve", args);
     };
 
-    ModalDialog.prototype._rejectDeferred = function(action, args)
-    {
+    ModalDialog.prototype._rejectDeferred = function(action, args) {
         return this._completeDeferred(action, "reject", args);
     };
 
-    ModalDialog.prototype._clearDeferred = function(action)
-    {
+    ModalDialog.prototype._clearDeferred = function(action) {
         this._deferreds[action] = null;
     };
 
-    ModalDialog.prototype._getDeferred = function(action)
-    {
+    ModalDialog.prototype._getDeferred = function(action) {
         return this._deferreds[action];
     };
 
-    ModalDialog.prototype._isDeferredComplete = function(action)
-    {
+    ModalDialog.prototype._isDeferredComplete = function(action) {
         var deferred = this._getDeferred(action);
         return !deferred || deferred.state() != "pending";
     };
 
-    ModalDialog.prototype.isOpen = function()
-    {
+    ModalDialog.prototype.isOpen = function() {
         return !!this._open;
     };
 
     // Opens the dialog
-    ModalDialog.prototype.open = function()
-    {
+    ModalDialog.prototype.open = function() {
         var deferred = this._initDeferred("open", deferred);
 
         // Ensure the dialog doesn't open once its already opened.. 
         // Otherwise, you could end up pushing it on to the stack more than once.
-        if (this._open)
-        {
+        if (this._open) {
             return this._rejectDeferred("open");
         }
 
@@ -309,24 +282,21 @@ if (!Object.keys)
 
         // Fire onbeforeopen on this instance
         var evt = this.onbeforeopen.fire();
-        if (evt.isDefaultPrevented())
-        {
+        if (evt.isDefaultPrevented()) {
             return this._rejectDeferred("open");
         }
 
         // Fire onbeforeopen globally
         evt = $.modalDialog.onbeforeopen.fire(null, this);
-        if (evt.isDefaultPrevented())
-        {
+        if (evt.isDefaultPrevented()) {
             return this._rejectDeferred("open");
         }
 
         // Keep track of the dialog stacking order
         _dialogStack.push(this);
 
-        if (this.level > 0)
-        {
-            this.settings.parentId = _dialogStack[this.level-1].settings._fullId;
+        if (this.level > 0) {
+            this.settings.parentId = _dialogStack[this.level - 1].settings._fullId;
         }
 
         this._open = true;
@@ -334,7 +304,7 @@ if (!Object.keys)
         this._build();
 
         // add or remove the 'smallscreen' class (which can also be checked using CSS media queries)
-        this.$container[$.modalDialog.isSmallScreen() ? "addClass" : "removeClass" ]("smallscreen");
+        this.$container[$.modalDialog.isSmallScreen() ? "addClass" : "removeClass"]("smallscreen");
 
         // Stop any animations on the container
         this.$container.stop(true, true);
@@ -345,30 +315,27 @@ if (!Object.keys)
 
         $(document).on("keydown", this._keydownHandler);
 
-        this._finishOpenAction = function()
-        {
-            if (deferred.state() != "rejected")
-            {
+        this._finishOpenAction = function() {
+            if (deferred.state() != "rejected") {
                 this.$bg.addClass($.modalDialog.veilClass);
 
                 // Set the width first so that heights can be calculated based
                 // on the layout for that width.
                 var widthData = this._getDefaultWidthData();
-                this.$container.css({ width: widthData.width });
+                this.$container.css({
+                    width: widthData.width
+                });
 
                 var initialPos = this._getDefaultPosition();
                 var initialTop = initialPos.top;
                 initialPos.top = STARTING_TOP; // we're going to animate this to slide down
                 this.$container.css(initialPos);
 
-                var animationCallback = $.proxy(function()
-                {
-                    try
-                    {
+                var animationCallback = $.proxy(function() {
+                    try {
                         this.$el.addClass("dialog-visible");
 
-                        if ($.modalDialog.isSmallScreen())
-                        {
+                        if ($.modalDialog.isSmallScreen()) {
                             // TODO: I question this change. Should it be decoupled from the dialog framework?
                             // It could be put into mobile fixes.
                             // Is this even mobile specific?
@@ -376,11 +343,10 @@ if (!Object.keys)
                             // Force dialogs that are on small screens to trigger a window resize event when closed, just in case we have resized since the dialog opened.
 
                             this.triggerWindowResize = false;
-                            this._orientationchange = $.proxy(function(event) 
-                                {
+                            this._orientationchange = $.proxy(function(event) {
                                     this.triggerWindowResize = true;
                                     return this.pos(event);
-                                }, 
+                                },
                                 this);
 
                             $(window).on("orientationchange resize", this._orientationchange);
@@ -391,9 +357,7 @@ if (!Object.keys)
                         $.modalDialog.onopen.fire(null, this);
 
                         this._resolveDeferred("open");
-                    }
-                    catch (ex)
-                    {
+                    } catch (ex) {
                         this._rejectDeferred("open", ex);
                     }
 
@@ -403,12 +367,12 @@ if (!Object.keys)
 
                 // Animate with a CSS transition if possible,
                 // otherwise, fallback on a jquery animation
-                this.$container[_animateMethod]({ top: initialTop }, $.modalDialog.animationDuration, _easing)
+                this.$container[_animateMethod]({
+                    top: initialTop
+                }, $.modalDialog.animationDuration, _easing)
                     .promise()
                     .then(animationCallback, animationCallback);
-            }
-            else
-            {
+            } else {
                 this._clearDeferred("open");
             }
 
@@ -420,16 +384,11 @@ if (!Object.keys)
         return deferred.promise();
     };
 
-    ModalDialog.prototype._finishOpen = function()
-    {
-        if (this._finishOpenAction)
-        {
-            try
-            {
+    ModalDialog.prototype._finishOpen = function() {
+        if (this._finishOpenAction) {
+            try {
                 this._finishOpenAction();
-            }
-            catch (ex)
-            {
+            } catch (ex) {
                 this._rejectDeferred("open", ex);
                 this._clearDeferred("open");
             }
@@ -439,78 +398,65 @@ if (!Object.keys)
     };
 
     // If a user hits the ESC key, close the dialog or cancel it's opening.
-    ModalDialog.prototype._keydownHandler = function(e)
-    {
-        if (e.keyCode == 27)
-        {
-            if ($.modalDialog.getCurrent() === this)
-            {
+    ModalDialog.prototype._keydownHandler = function(e) {
+        if (e.keyCode == 27) {
+            if ($.modalDialog.getCurrent() === this) {
                 this.cancel();
             }
         }
     };
 
-    ModalDialog.prototype.cancel = function()
-    {
+    ModalDialog.prototype.cancel = function() {
         // Don't move to the end state of the animation:
         // stop it right where it is.
-        if (this.$container)
-        {
+        if (this.$container) {
             this.$container.stop(true, false);
         }
-        
-        if (this.isOpen())
-        {
+
+        if (this.isOpen()) {
             this.close();
         }
     };
 
-    ModalDialog.prototype._showLoadingIndicator = function()
-    {
-        if (!this.$loadingIndicator)
-        {
+    ModalDialog.prototype._showLoadingIndicator = function() {
+        if (!this.$loadingIndicator) {
             this.$loadingIndicator = $("<div class='dialog-loading-indicator'><span></span></div>")
                 .appendTo(this.$bg);
-                //.css("z-index", parseInt(this.$bg.css("z-index"), 10) + 1);
+            //.css("z-index", parseInt(this.$bg.css("z-index"), 10) + 1);
         }
     };
 
-    ModalDialog.prototype._hideLoadingIndicator = function()
-    {
+    ModalDialog.prototype._hideLoadingIndicator = function() {
         this.$loadingIndicator.remove();
         this.$loadingIndicator = null;
     };
 
-    ModalDialog.prototype._popDialogStack = function()
-    {
-        if ($.modalDialog.getCurrent() === this)
-        {
+    ModalDialog.prototype._popDialogStack = function() {
+        if ($.modalDialog.getCurrent() === this) {
             _dialogStack.pop();
         }
     };
 
     // Closes the dialog. 
     // isDialogCloseButton Indicates the cancel button in the dialog's header was clicked.
-    ModalDialog.prototype.close = function(isDialogCloseButton)
-    {
+    ModalDialog.prototype.close = function(isDialogCloseButton) {
         var deferred = this._initDeferred("close", deferred);
 
-        if ($.modalDialog.getCurrent() !== this)
-        {
+        if ($.modalDialog.getCurrent() !== this) {
             throw new Error("Can't close a dialog that isn't currently displayed on top.");
         }
 
-        var eventSettings = { isDialogCloseButton: !!isDialogCloseButton };
+        var eventSettings = {
+            isDialogCloseButton: !! isDialogCloseButton
+        };
 
         // Expose an event allowing consumers to cancel the close event
-        if (this.onbeforeclose.fire(eventSettings).isDefaultPrevented())
-        {
+        if (this.onbeforeclose.fire(eventSettings).isDefaultPrevented()) {
             return this._rejectDeferred("close");
         }
 
         // Expose a global event
-        if ($.modalDialog.onbeforeclose.fire(eventSettings, this).isDefaultPrevented())
-        {
+        if ($.modalDialog.onbeforeclose.fire(eventSettings, this).isDefaultPrevented()) {
             return this._rejectDeferred("close");
         }
 
@@ -519,75 +465,66 @@ if (!Object.keys)
         $(document).off("keydown", this._keydownHandler);
 
         this.$el.removeClass("dialog-visible");
-        this.$container[_animateMethod](
-                {top: STARTING_TOP},
-                $.modalDialog.animationDuration,
-                _easing
-            )
+        this.$container[_animateMethod]({
+                top: STARTING_TOP
+            },
+            $.modalDialog.animationDuration,
+            _easing
+        )
             .promise()
             .then(
-                $.proxy(function()
-                {
-                    try
-                    {
+                $.proxy(function() {
+                    try {
                         this._finishClose(eventSettings);
-                    }
-                    catch (ex)
-                    {
+                    } catch (ex) {
                         this._rejectDeferred("close", ex);
                         this._clearDeferred("close");
                     }
-                }, this), 
-                $.proxy(function(ex)
-                {
+                }, this),
+                $.proxy(function(ex) {
                     this._rejectDeferred("close", ex);
                     this._clearDeferred("close");
                 }, this));
 
         // unbind global event listeners
-        if (this._orientationchange)
-        {
+        if (this._orientationchange) {
             $(window).off("orientationchange resize", this._orientationchange);
         }
 
         return deferred.promise();
     };
 
-    ModalDialog.prototype._close = function(e)
-    {
+    ModalDialog.prototype._close = function(e) {
         e.preventDefault();
         this.close(true);
     };
 
-    ModalDialog.prototype._reset = function()
-    {
+    ModalDialog.prototype._reset = function() {
         this._open = false;
 
         this.$container.stop(true, true);
-        this.$container.css({ top: STARTING_TOP });
+        this.$container.css({
+            top: STARTING_TOP
+        });
         this.$bg.removeClass($.modalDialog.veilClass);
         this.$el.hide();
     };
 
-    ModalDialog.prototype._resetFailed = function()
-    {
+    ModalDialog.prototype._resetFailed = function() {
         this._reset();
         this._popDialogStack();
     };
 
-    ModalDialog.prototype._finishClose = function(e)
-    {
+    ModalDialog.prototype._finishClose = function(e) {
         this._reset();
 
-        if (this.settings.destroyOnClose)
-        {
+        if (this.settings.destroyOnClose) {
             this._destroy();
             this._destroyed = true;
             delete _fullIdMap[this.settings._fullId];
         }
 
-        if ($.modalDialog.isSmallScreen() && this.triggerWindowResize)
-        {
+        if ($.modalDialog.isSmallScreen() && this.triggerWindowResize) {
             $(window).trigger("resize");
         }
 
@@ -596,31 +533,27 @@ if (!Object.keys)
         // Without this, close handlers can't re-open the same iframe dialog:
         // the iframe isn't recognized as a new element.
         setTimeout(
-            $.proxy(function()
-            {
+            $.proxy(function() {
                 this.onclose.fire(e);
 
                 $.modalDialog.onclose.fire(e, this);
 
                 this._resolveDeferred("close");
-            }, this), 
+            }, this),
             0);
     };
 
-    ModalDialog.prototype._destroy = function()
-    {
+    ModalDialog.prototype._destroy = function() {
         // Put the content node back on the body.
         // It could be used again.
         this.$content.detach().appendTo("body");
         this.$el.remove();
     };
 
-    ModalDialog.prototype._updateZIndexes = function()
-    {
+    ModalDialog.prototype._updateZIndexes = function() {
         var zIndex = this.settings.zIndex;
         var parent = this.getParent();
-        if (parent)
-        {
+        if (parent) {
             zIndex = Math.max(parent.settings.zIndex + 10, zIndex);
         }
 
@@ -630,17 +563,14 @@ if (!Object.keys)
     };
 
     // Builds the DOM for the dialog chrome
-    ModalDialog.prototype._build = function()
-    {
+    ModalDialog.prototype._build = function() {
         /*jshint quotmark:false*/
 
-        if (this._destroyed)
-        {
+        if (this._destroyed) {
             throw new Error("This dialog has been destroyed");
         }
 
-        if (!this.$el)
-        {
+        if (!this.$el) {
             this.$bg = $('<div class="dialog-background"></div>');
 
             this.$container = $(
@@ -648,7 +578,7 @@ if (!Object.keys)
                 '  <div class="dialog-header">' +
                 '    <a href="#" class="dialog-close-button"><span class="dialog-close-button-icon"></span></a>' +
                 '    <h1>' + this.settings.title + '</h1>' +
-                '  </div>'+
+                '  </div>' +
                 '  <div class="dialog-content-container">' +
                 '  </div>' +
                 '</div>'
@@ -683,9 +613,7 @@ if (!Object.keys)
             if ((this.parent.is("body") || this.parent.hasClass("ui-page-active")) && !_ua.ie7) {
                 this._makeDraggable();
             }
-        }
-        else
-        {
+        } else {
             this._alreadyBuilt();
         }
 
@@ -693,23 +621,19 @@ if (!Object.keys)
     };
 
     // Subclasses should override to do something when a cached DOM is used
-    ModalDialog.prototype._alreadyBuilt = function()
-    {
+    ModalDialog.prototype._alreadyBuilt = function() {
         // noop
     };
 
-    ModalDialog.prototype._getChromeHeight = function()
-    {
-        if (!this._chromeHeight)
-        {
+    ModalDialog.prototype._getChromeHeight = function() {
+        if (!this._chromeHeight) {
             this._chromeHeight = this.$container.height() - this.$content.height();
         }
 
         return this._chromeHeight;
     };
 
-    ModalDialog.prototype._getDefaultWidthData = function()
-    {
+    ModalDialog.prototype._getDefaultWidthData = function() {
         var $win = $(window);
         var windowWidth = this.parent.is("body") ? (window.innerWidth || $win.width()) : this.parent.width();
 
@@ -719,13 +643,11 @@ if (!Object.keys)
         };
     };
 
-    ModalDialog.prototype._getDefaultPosition = function(contentHeight)
-    {
+    ModalDialog.prototype._getDefaultPosition = function(contentHeight) {
         var widthData = this._getDefaultWidthData();
         var scrollTop = $(document).scrollTop();
-        
-        var pos = 
-        {
+
+        var pos = {
             width: widthData.width,
             top: scrollTop + MARGIN
         };
@@ -743,8 +665,7 @@ if (!Object.keys)
         // No need to consider contentHeight.
         // For larger devices, center vertically.
 
-        if (!isSmallScreen) 
-        {
+        if (!isSmallScreen) {
             contentHeight = contentHeight || this.$content.height();
 
             // Get the new container height with the proposed content height
@@ -759,26 +680,22 @@ if (!Object.keys)
         return pos;
     };
 
-    ModalDialog.prototype._makeDraggable = function()
-    {
+    ModalDialog.prototype._makeDraggable = function() {
         // Small devices shouldn't have the dialog be draggable.
         // Where you gonna drag to?
 
-        if ($.modalDialog.isSmallScreen())
-        {
+        if ($.modalDialog.isSmallScreen()) {
             return;
         }
 
         this.$header.addClass("draggable").on("pointerdown", this._startDrag);
     };
 
-    ModalDialog.prototype._startDrag = function(e)
-    {
+    ModalDialog.prototype._startDrag = function(e) {
         var $target = $(e.target);
 
         //Don't drag if the close button is being clicked
-        if ($target.is(this.$closeButton) || $target.is(this.$closeButton.children()))
-        {
+        if ($target.is(this.$closeButton) || $target.is(this.$closeButton.children())) {
             return;
         }
 
@@ -797,16 +714,12 @@ if (!Object.keys)
         //chrome node is the last element that can handle events- it has cancel bubble set
         this.$container.on("pointerup", this._stopDrag);
 
-        if (this.$frame)
-        {
-            try
-            {
+        if (this.$frame) {
+            try {
                 this.$frame.iframeDocument().find("body")
                     .on("pointermove", this._drag)
                     .on("pointerup", this._stopDrag);
-            }
-            catch (ex)
-            {
+            } catch (ex) {
                 // This can fail if the frame is in another domain
             }
         }
@@ -816,8 +729,7 @@ if (!Object.keys)
         this._isDragging = true;
     };
 
-    ModalDialog.prototype._drag = function(e)
-    {
+    ModalDialog.prototype._drag = function(e) {
         e.preventDefault();
         e.stopPropagation();
 
@@ -834,8 +746,7 @@ if (!Object.keys)
         this.$container.css(newPos);
     };
 
-    ModalDialog.prototype._stopDrag = function(e)
-    {
+    ModalDialog.prototype._stopDrag = function(e) {
         this._initialMousePos = null;
         this._initialDialogPos = null;
 
@@ -849,15 +760,12 @@ if (!Object.keys)
         this.$bg.off("pointerup", this._stopDrag);
         this.$container.off("pointerup", this._stopDrag);
 
-        if (this.$frame)
-        {
-            try
-            {
+        if (this.$frame) {
+            try {
                 this.$frame.iframeDocument().find("body")
                     .off("pointermove", this._drag)
                     .off("pointerup", this._stopDrag);
-            }
-            catch (ex) { }
+            } catch (ex) {}
         }
 
         this._isDragging = false;
@@ -865,19 +773,16 @@ if (!Object.keys)
 
     // Gets the current mouse position from the event object.
     // returns an object with top and left
-    var getMousePos = function(e)
-    {
+    var getMousePos = function(e) {
         var mousePos = {
             left: e.clientX,
             top: e.clientY
         };
 
         // Translate event positions from a nested iframe
-        if (e.target.ownerDocument != window.document)
-        {
+        if (e.target.ownerDocument != window.document) {
             var $iframe = $(e.target.ownerDocument).hostIframe();
-            if ($iframe.length > 0)
-            {
+            if ($iframe.length > 0) {
                 var rect = $iframe.clientRect();
                 mousePos.top += rect.top;
                 mousePos.left += rect.left;
@@ -889,25 +794,21 @@ if (!Object.keys)
 
     // Builds the DOM for the content node.
     // Should be overridden by subclasses.
-    ModalDialog.prototype._buildContent = function()
-    {
+    ModalDialog.prototype._buildContent = function() {
         this.$content = $(this.settings.content);
         this.$content.detach();
     };
 
     // Gets a reference to the current window.
     // This will be overriden by an iframe dialog.
-    ModalDialog.prototype.getWindow = function()
-    {
+    ModalDialog.prototype.getWindow = function() {
         return window;
     };
 
     // Gets a reference to the dialog that opened this dialog.
     // This is null if the dialog was opened by the main window.
-    ModalDialog.prototype.getParent = function()
-    {
-        if (this.settings.parentId)
-        {
+    ModalDialog.prototype.getParent = function() {
+        if (this.settings.parentId) {
             return getDialog(this.settings.parentId);
         }
 
@@ -915,51 +816,46 @@ if (!Object.keys)
     };
 
     // Sets the height of the content in pixels.
-    ModalDialog.prototype.center = function()
-    {
+    ModalDialog.prototype.center = function() {
         var pos = this._getDefaultPosition();
-        this.$container[_animateMethod]({ top: pos.top }, 400);
+        this.$container[_animateMethod]({
+            top: pos.top
+        }, 400);
     };
 
     // Reposition the dialog to the correct position.
-    ModalDialog.prototype.pos = function(animate)
-    {
+    ModalDialog.prototype.pos = function(animate) {
         // stop any currently running animations
         this.$container.stop(true, true);
 
         var pos = this._getDefaultPosition();
 
-        if (animate === true)
-        {
+        if (animate === true) {
             var top = pos.top;
             delete pos.top;
-            this.$container.css(pos)[_animateMethod]({ top: top }, 400);
-        }
-        else
-        {
+            this.$container.css(pos)[_animateMethod]({
+                top: top
+            }, 400);
+        } else {
             this.$container.css(pos);
         }
     };
 
     // Sets the title of the dialog in the header.
-    ModalDialog.prototype.setTitle = function(title)
-    {
+    ModalDialog.prototype.setTitle = function(title) {
         this.$container.find(".dialog-header h1").text(title);
     };
 
     // Gets the title of the dialog in the header.
-    ModalDialog.prototype.getTitle = function()
-    {
+    ModalDialog.prototype.getTitle = function() {
         return this.$container.find(".dialog-header h1").text();
     };
 
     // Extends ModalDialog such that the content is an iframe.
-    var IFrameDialog = function()
-    {
+    var IFrameDialog = function() {
         ModalDialog.apply(this, arguments);
 
-        if (this.settings.parentId)
-        {
+        if (this.settings.parentId) {
             this._parentWindow = window.frames[this.settings.parentId];
         }
     };
@@ -968,106 +864,95 @@ if (!Object.keys)
 
     IFrameDialog.prototype.dialogType = "iframe";
 
-    IFrameDialog.prototype._setupCustomEvent = function()
-    {
+    IFrameDialog.prototype._setupCustomEvent = function() {
         var evt = ModalDialog.prototype._setupCustomEvent.apply(this, arguments);
         evt.add(_crossWindowEventHandler);
     };
 
     // Broadcasts events to all active dialogs so any window that has a proxy for the dialog can be notified.
-    var _crossWindowEventHandler = function(e)
-    {
+    var _crossWindowEventHandler = function(e) {
         // "this" is the dialog
 
-        for (var i=0; i<_dialogStack.length; i++)
-        {
-            if (_dialogStack[i]._postCommand)
-            {
-                _dialogStack[i]._postCommand("event" + e.type, $.extend({ _eventDialogId: this.settings._fullId}, e.data));
+        for (var i = 0; i < _dialogStack.length; i++) {
+            if (_dialogStack[i]._postCommand) {
+                _dialogStack[i]._postCommand("event" + e.type, $.extend({
+                    _eventDialogId: this.settings._fullId
+                }, e.data));
             }
         }
     };
 
     // Override the _buildContent method to construct an iframe
-    IFrameDialog.prototype._finishClose = function(e)
-    {
+    IFrameDialog.prototype._finishClose = function(e) {
         ModalDialog.prototype._finishClose.call(this, e);
 
         this.$frame.remove();
     };
 
-    IFrameDialog.prototype._destroy = function()
-    {
+    IFrameDialog.prototype._destroy = function() {
         this.$el.remove();
     };
 
     // Override the _buildContent method to construct an iframe
-    IFrameDialog.prototype._buildContent = function()
-    {
+    IFrameDialog.prototype._buildContent = function() {
         /* jshint quotmark:false */
 
         this._iframeLoadTimer = null;
 
-        if (this.$frame && this.$frame.length > 0)
-        {
+        if (this.$frame && this.$frame.length > 0) {
             this.$frame.remove();
         }
 
-        this.$frame = $('<iframe src="' + this.settings.url + 
-            '" name="' + this.settings._fullId + 
-            '" seamless allowtransparency="true" width="100%" style="height:' + 
+        this.$frame = $('<iframe src="' + this.settings.url +
+            '" name="' + this.settings._fullId +
+            '" seamless allowtransparency="true" width="100%" style="height:' +
             this.settings.initialHeight + 'px;" class="dialog-frame" scrolling="no" frameborder="0" framespacing="0"></iframe>');
 
-        if ($.modalDialog.iframeLoadTimeout > 0)
-        {
+        if ($.modalDialog.iframeLoadTimeout > 0) {
             // When the iframe loads, even if its a failed status (i.e. 404), the load event will fire.
             // We expect that the dialog will call notifyReady(). If it doesn't, this timeout will
             // eventually fire, causing the open() promise to be rejected, and the dialog state to be cleaned up.
             this.$frame.on(
-                "load", 
-                $.proxy(function() 
-                { 
-                    // The "open" promise has already been resolved: don't continue setting a timeout.
-                    if (this._isDeferredComplete("open"))
-                    {
-                        return;
-                    }
+                "load",
+                $.proxy(function() {
+                        // The "open" promise has already been resolved: don't continue setting a timeout.
+                        if (this._isDeferredComplete("open")) {
+                            return;
+                        }
 
-                    // The iframe has $.modalDialog.iframeLoadTimeout milliseconds to call notifyReady() after the load event is called.
-                    // Otherwise, the "open" promise will be rejected.
-                    this._iframeLoadTimer = setTimeout(
-                        $.proxy(function() 
-                        { 
-                            if (this._isDeferredComplete("open"))
-                            {
-                                return;
-                            }
+                        // The iframe has $.modalDialog.iframeLoadTimeout milliseconds to call notifyReady() after the load event is called.
+                        // Otherwise, the "open" promise will be rejected.
+                        this._iframeLoadTimer = setTimeout(
+                            $.proxy(function() {
+                                if (this._isDeferredComplete("open")) {
+                                    return;
+                                }
 
-                            this.$frame.remove();
-                            this._resetFailed();
+                                this.$frame.remove();
+                                this._resetFailed();
 
-                            this._rejectDeferred("open", [{ message: "iframe load timeout for url: " + this.settings.url }]);
+                                this._rejectDeferred("open", [{
+                                    message: "iframe load timeout for url: " + this.settings.url
+                                }]);
 
-                        }, this),
-                        $.modalDialog.iframeLoadTimeout
+                            }, this),
+                            $.modalDialog.iframeLoadTimeout
                         );
-                }, 
-                this));
+                    },
+                    this));
         }
 
         this.$content = this.$frame;
     };
 
-    IFrameDialog.prototype._alreadyBuilt = function()
-    {
+    IFrameDialog.prototype._alreadyBuilt = function() {
         this._buildContent();
 
         // TODO Need to somehow notify the dialog content that it should fire notifyReady
         this.$contentContainer.append(this.$content);
     };
 
-    IFrameDialog.prototype.getWindow = function()
-    {
+    IFrameDialog.prototype.getWindow = function() {
         return this.$frame.iframeWindow()[0];
     };
 
@@ -1075,11 +960,11 @@ if (!Object.keys)
     // Used for orchestrating cross-window communication with dialog proxies.
     // * {string} command: The name of the command to send to the content window
     // * {object} data: A simple data object to serialize (as a querystring) and send with the command
-    IFrameDialog.prototype._postCommand = function(command, data)
-    {
-        var messageData = { dialogCmd: command };
-        if (data)
-        {
+    IFrameDialog.prototype._postCommand = function(command, data) {
+        var messageData = {
+            dialogCmd: command
+        };
+        if (data) {
             $.extend(messageData, data);
         }
 
@@ -1092,61 +977,63 @@ if (!Object.keys)
     // Used for orchestrating cross-window communication with dialog proxies.
     // * {string} command: The name of the command to send to the content window
     // * {object} data: A simple data object to serialize (as a querystring) and send with the command
-    IFrameDialog.prototype.postMessage = function(message)
-    {
+    IFrameDialog.prototype.postMessage = function(message) {
         var win = this.getWindow();
 
         var hostname = this.settings.frameHostname;
-        if (!hostname)
-        {
+        if (!hostname) {
             // Get the domain of the target window. If the URL is relative, its the same as the current page.
             hostname = this.settings.url.indexOf("http") === 0 ? this.settings.url : document.location.href;
         }
 
-        if ($.postMessage)
-        {
+        if ($.postMessage) {
             $.postMessage(message, hostname, win);
-        }
-        else
-        {
+        } else {
             win.postMessage(message, "*");
         }
     };
 
-    IFrameDialog.prototype.setHeight = function(contentHeight, center, skipAnimation)
-    {
-        var applyChange = skipAnimation ? 
-            function($content, css) { $content.css(css); } :
-            function($content, css) { $content.animate(css, { duration: 400 }); };
+    IFrameDialog.prototype.setHeight = function(contentHeight, center, skipAnimation) {
+        var applyChange = skipAnimation ?
+                function($content, css) {
+                    $content.css(css);
+            } :
+                function($content, css) {
+                    $content.animate(css, {
+                        duration: 400
+                    });
+            };
 
-        applyChange(this.$content, { height: contentHeight });
+        applyChange(this.$content, {
+            height: contentHeight
+        });
 
-        if (center)
-        {
+        if (center) {
             var pos = this._getDefaultPosition(contentHeight);
-            applyChange(this.$content, { top: pos.top });
+            applyChange(this.$content, {
+                top: pos.top
+            });
         }
 
         this.settings.initialHeight = contentHeight;
     };
 
     // Sets the height of the iframe to the detected height of the iframe content document.
-    IFrameDialog.prototype.setHeightFromContent = function(center, skipAnimation)
-    {
-        this._postCommand("setHeightFromContent", { center: !!center, skipAnimation: !!skipAnimation});
+    IFrameDialog.prototype.setHeightFromContent = function(center, skipAnimation) {
+        this._postCommand("setHeightFromContent", {
+            center: !! center,
+            skipAnimation: !! skipAnimation
+        });
     };
 
     // Sets the title of the dialog in the header from the HTML title tag of the iframe content document.
-    IFrameDialog.prototype.setTitleFromContent = function()
-    {
+    IFrameDialog.prototype.setTitleFromContent = function() {
         this._postCommand("setTitleFromContent");
     };
 
-    IFrameDialog.prototype.notifyReady = function(hostname)
-    {
+    IFrameDialog.prototype.notifyReady = function(hostname) {
         // There may be a timer waiting for the iframe to load- cancel it.
-        if (this._iframeLoadTimer)
-        {
+        if (this._iframeLoadTimer) {
             clearTimeout(this._iframeLoadTimer);
             this._iframeLoadTimer = null;
         }
@@ -1156,14 +1043,11 @@ if (!Object.keys)
         ModalDialog.prototype._finishOpen.apply(this);
     };
 
-    IFrameDialog.prototype._finishOpen = function()
-    {
-    };
+    IFrameDialog.prototype._finishOpen = function() {};
 
     // AjaxDialog: Extends ModalDialog 
     // Loads content via ajax
-    var AjaxDialog = function()
-    {
+    var AjaxDialog = function() {
         ModalDialog.apply(this, arguments);
     };
 
@@ -1171,30 +1055,26 @@ if (!Object.keys)
 
     AjaxDialog.prototype.dialogType = "ajax";
 
-    AjaxDialog.prototype.open = function()
-    {
+    AjaxDialog.prototype.open = function() {
         var deferred = ModalDialog.prototype.open.apply(this, arguments);
 
-        if (!this._ajaxComplete)
-        {
+        if (!this._ajaxComplete) {
             // $.fn.partialLoad will ajax in content intelligently,
             // adding scripts, but not if they're already loaded.
             this.$content.partialLoad(
                 this.settings.url,
                 null,
                 $.proxy(
-                    function(responseText, status, xhr)
-                    {
+                    function(responseText, status, xhr) {
                         this._ajaxComplete = true;
 
                         xhr.fail(
-                            $.proxy(function()
-                            {
+                            $.proxy(function() {
                                 this._resetFailed();
 
-                                var errEvent = { 
-                                    xhr: xhr, 
-                                    status: status, 
+                                var errEvent = {
+                                    xhr: xhr,
+                                    status: status,
                                     responseText: responseText
                                 };
 
@@ -1206,22 +1086,18 @@ if (!Object.keys)
 
                         // Extract title from content if not explicitly specified
                         var $title = this.$content.find("title");
-                        if (!this.settings.title)
-                        {
-                            if ($title.length >= 0)
-                            {
+                        if (!this.settings.title) {
+                            if ($title.length >= 0) {
                                 this.setTitle($title.text());
                             }
                         }
                         $title.remove();
 
                         ModalDialog.prototype._finishOpen.call(this);
-                    }, 
+                    },
                     this)
-                );
-        }
-        else
-        {
+            );
+        } else {
             // The content is already loaded
             ModalDialog.prototype._finishOpen.call(this);
         }
@@ -1229,20 +1105,17 @@ if (!Object.keys)
         return deferred.promise();
     };
 
-    AjaxDialog.prototype._finishOpen = function()
-    {
+    AjaxDialog.prototype._finishOpen = function() {
         // no-op. Needds to wait for content to be ajaxed in asynchronously.
         // Base implementation will be called manually.
     };
 
-    AjaxDialog.prototype._buildContent = function()
-    {
+    AjaxDialog.prototype._buildContent = function() {
         // Create a container and ajax content into it.
         this.$content = $("<div class='dialog-content'></div>");
     };
 
-    AjaxDialog.prototype._destroy = function()
-    {
+    AjaxDialog.prototype._destroy = function() {
         this.$el.remove();
     };
 
@@ -1250,28 +1123,23 @@ if (!Object.keys)
     var DIALOG_NAME_PREFIX = "dialog";
 
     // Determines if the specified string is a CSS selector or a URL.
-    var isSelector = function(s)
-    {
+    var isSelector = function(s) {
         var firstChar = s.charAt(0);
-        if (firstChar == "#")
-        {
+        if (firstChar == "#") {
             // This is a #anchor
             // Its a selector
             return true;
         }
 
-        if (s.indexOf("/") >= 0)
-        {
+        if (s.indexOf("/") >= 0) {
             // Selectors never contain /
             // This is a URL
             return false;
         }
 
-        if (firstChar == ".")
-        {
+        if (firstChar == ".") {
             var secondChar = s.charAt(1);
-            if (secondChar == "." || secondChar == "/")
-            {
+            if (secondChar == "." || secondChar == "/") {
                 // Starts with .. or ./
                 // This is a URL, not a selector
                 return false;
@@ -1293,21 +1161,16 @@ if (!Object.keys)
     // 1. default value
     // 2. setting provided on content element
     // 3. settings passed
-    var ensureSettings = function(explicitSettings)
-    {
+    var ensureSettings = function(explicitSettings) {
         var settings = $.extend({}, $.modalDialog.defaults);
 
         // An iframe dialog may have sent a reference to dialog content,
         // but it didn't know if it was a URL or a selector for a DOM node.
         // Determine which it is.
-        if (explicitSettings.contentOrUrl)
-        {
-            if (isSelector(explicitSettings.contentOrUrl))
-            {
+        if (explicitSettings.contentOrUrl) {
+            if (isSelector(explicitSettings.contentOrUrl)) {
                 explicitSettings.content = $(explicitSettings.contentOrUrl);
-            }
-            else
-            {
+            } else {
                 explicitSettings.url = explicitSettings.contentOrUrl;
             }
 
@@ -1315,8 +1178,7 @@ if (!Object.keys)
         }
 
         // Read settings specified on the target node's custom HTML attributes
-        if (explicitSettings.content)
-        {
+        if (explicitSettings.content) {
             var $target = $(explicitSettings.content);
             var targetSettings = $.modalDialog.getSettings($target);
             $.extend(settings, targetSettings);
@@ -1329,17 +1191,13 @@ if (!Object.keys)
 
         // A fullId was specified, passed from an existing dialog's content window via a message. 
         // Calculate the parentId from the fullId.
-        if (settings._fullId)
-        {
+        if (settings._fullId) {
             var idParts = settings._fullId.split("_");
             id = idParts.pop();
-            if (idParts.length > 0)
-            {
+            if (idParts.length > 0) {
                 settings.parentId = idParts.join("_");
             }
-        }
-        else
-        {
+        } else {
             // Ensure a unique ID for the dialog
             id = DIALOG_NAME_PREFIX + (settings.id || ++_dialogIdCounter);
 
@@ -1356,8 +1214,7 @@ if (!Object.keys)
     // Gets the dialog by the fullId.
 
     // * {string} fullId The full ID of the dialog (including all parent ids)
-    var getDialog = function(fullId)
-    {
+    var getDialog = function(fullId) {
         return _fullIdMap[fullId];
     };
 
@@ -1373,59 +1230,43 @@ if (!Object.keys)
     $.modalDialog.veilClass = "dialog-veil";
 
     // Creates a new dialog from the specified settings.
-    $.modalDialog.create = function(settings)
-    {
+    $.modalDialog.create = function(settings) {
         settings = ensureSettings(settings);
 
         var dialog = getDialog(settings._fullId);
 
         // Validate that there isn't an existing dialog open using the same content
-        if (!dialog && settings.content)
-        {
+        if (!dialog && settings.content) {
             var existingDialog = $(settings.content).modalDialogInstance();
 
-            if (existingDialog && 
-                settings._fullId && 
-                existingDialog.settings._fullId !== settings._fullId && 
-                existingDialog.isOpen())
-            {
+            if (existingDialog &&
+                settings._fullId &&
+                existingDialog.settings._fullId !== settings._fullId &&
+                existingDialog.isOpen()) {
                 throw new Error("An attempt was made to create a dialog with a content node which is already assigned to another open dialog.");
             }
         }
 
-        if (!dialog)
-        {
-            if (settings.url)
-            {
-                if (settings.content)
-                {
+        if (!dialog) {
+            if (settings.url) {
+                if (settings.content) {
                     throw new Error("Both url and content cannot be specified.");
-                }
-                else if (settings.ajax)
-                {
+                } else if (settings.ajax) {
                     dialog = new AjaxDialog(settings);
-                }
-                else
-                {
+                } else {
                     dialog = new IFrameDialog(settings);
                 }
-            }
-            else if (settings.content)
-            {
-                if ($(settings.content).length === 0)
-                {
+            } else if (settings.content) {
+                if ($(settings.content).length === 0) {
                     throw new Error("ModalDialog content not found");
                 }
 
                 dialog = new ModalDialog(settings);
 
-                if (!settings.destroyOnClose)
-                {
+                if (!settings.destroyOnClose) {
                     $(settings.content).modalDialogInstance(dialog);
                 }
-            }
-            else
-            {
+            } else {
                 throw new Error("No url or content node specified");
             }
 
@@ -1436,14 +1277,12 @@ if (!Object.keys)
     };
 
     // Gets the currently active dialog (topmost visually).
-    $.modalDialog.getCurrent = function()
-    {
-        return _dialogStack.length > 0 ? _dialogStack[_dialogStack.length-1] : null;
+    $.modalDialog.getCurrent = function() {
+        return _dialogStack.length > 0 ? _dialogStack[_dialogStack.length - 1] : null;
     };
 
     // Gets an existing dialog if it's settings match the specified setting's content node or URL
-    $.modalDialog.getExisting = function(settings)
-    {
+    $.modalDialog.getExisting = function(settings) {
         // Supresses warnings about using !! to coerce a falsy value to boolean
         /* jshint -W018 */
 
@@ -1451,32 +1290,24 @@ if (!Object.keys)
         var isMatch;
 
         // Match a node dialog
-        if ($content && $content.length)
-        {
-            isMatch = function(existingSettings)
-            {
-                return existingSettings.content && 
+        if ($content && $content.length) {
+            isMatch = function(existingSettings) {
+                return existingSettings.content &&
                     $(existingSettings.content)[0] === $content[0];
             };
         }
         // match an iframe or ajax dialog
-        else if (settings.url)
-        {
-            isMatch = function(existingSettings)
-            {
-                return existingSettings.url && 
-                    existingSettings.url === settings.url && 
-                    !!existingSettings.ajax === !!settings.ajax;
+        else if (settings.url) {
+            isMatch = function(existingSettings) {
+                return existingSettings.url &&
+                    existingSettings.url === settings.url && !! existingSettings.ajax === !! settings.ajax;
             };
         }
 
-        if (isMatch)
-        {
-            for (var key in _fullIdMap)
-            {
+        if (isMatch) {
+            for (var key in _fullIdMap) {
                 var dialog = _fullIdMap[key];
-                if (isMatch(dialog.settings))
-                {
+                if (isMatch(dialog.settings)) {
                     return dialog;
                 }
             }
@@ -1493,30 +1324,25 @@ if (!Object.keys)
 
     var JQUERY_DATA_KEY = "modalDialog";
 
-    $.fn.modalDialogInstance = function(dialog)
-    {
+    $.fn.modalDialogInstance = function(dialog) {
         return !dialog ? this.data(JQUERY_DATA_KEY) : this.data(JQUERY_DATA_KEY, dialog);
     };
 
     // Idiomatic jQuery interface for node dialogs.
-    $.fn.modalDialog = function(settings)
-    {
+    $.fn.modalDialog = function(settings) {
         var dialog;
 
         // If the first argument is a string, it is a method name to call on the dialog
         // associated with the DOM element.
-        if (typeof settings == "string")
-        {
+        if (typeof settings == "string") {
             var action = settings;
             dialog = this.modalDialogInstance();
-            if (dialog && dialog[action])
-            {
+            if (dialog && dialog[action]) {
                 dialog[action].apply(dialog, Array.prototype.slice(arguments, 1));
             }
         }
         // Otherwise, create a new dialog.
-        else
-        {
+        else {
             settings = settings || {};
             settings.content = this[0];
 
@@ -1529,73 +1355,56 @@ if (!Object.keys)
     };
 
     // A map of actions that can be passed as the "dialogCmd" argument in posted messages from IFrameDialog dialog proxies.
-    var messageActions = 
-    {
-        setHeight: function(dialog, qs)
-        {
+    var messageActions = {
+        setHeight: function(dialog, qs) {
             dialog.setHeight(parseInt(qs.height, 10), qs.center === "true", qs.skipAnimation === "true");
         },
 
-        setTitle: function(dialog, qs)
-        {
+        setTitle: function(dialog, qs) {
             dialog.setTitle(qs.title);
         },
 
-        open: function(dialog)
-        {
+        open: function(dialog) {
             dialog.open();
         },
 
-        close: function(dialog)
-        {
+        close: function(dialog) {
             dialog.close();
         },
 
-        create: function()
-        {
+        create: function() {
             // do nothing- the dialog was created already
         },
 
-        center: function(dialog)
-        {
+        center: function(dialog) {
             dialog.center();
         },
 
-        notifyReady: function(dialog, qs)
-        {
+        notifyReady: function(dialog, qs) {
             dialog.notifyReady(qs.hostname);
         }
     };
 
-    var messageHandler = function(e)
-    {
+    var messageHandler = function(e) {
         var qs;
 
-        try
-        {
+        try {
             qs = $.deparam(e.originalEvent ? e.originalEvent.data : e.data);
-        }
-        catch (ex)
-        {
+        } catch (ex) {
             // ignore- it wasn't a message for the dialog framework
         }
 
         // messages in the dialog framework contain "dialogCmd"
-        if (qs && qs.dialogCmd)
-        {
+        if (qs && qs.dialogCmd) {
             var action = messageActions[qs.dialogCmd];
-            if (action)
-            {
+            if (action) {
                 var dialog;
 
-                if (qs._fullId)
-                {
+                if (qs._fullId) {
                     // If a fullId is passed, it can be either for a new dialog or an existing dialog.
                     // $.modalDialog.create() handles both cases.
                     dialog = $.modalDialog.create(qs);
-                }
-                else
-                {
+                } else {
                     dialog = $.modalDialog.getCurrent();
                 }
 
@@ -1613,20 +1422,18 @@ if (!Object.keys)
     // The reason is that for most browsers (besides old IE) the plugin is unnecessary, 
     // and it may not be desirable to load it at all.
 
-    if ($.receiveMessage)
-    {
+    if ($.receiveMessage) {
         $.receiveMessage(messageHandler, "*");
-    }
-    else
-    {
+    } else {
         $(window).on("message", messageHandler);
     }
 
     // Global hook to simplify non-cross domain communication
-    window._dialogReceiveMessageManual = function(message, origin)
-    {
-        if (!messageHandler({ data: message, origin: origin}))
-        {
+    window._dialogReceiveMessageManual = function(message, origin) {
+        if (!messageHandler({
+            data: message,
+            origin: origin
+        })) {
             var evt = new $.Event("message");
             evt.data = message;
             evt.origin = origin;
@@ -1635,17 +1442,14 @@ if (!Object.keys)
     };
 
     // jQuery mobile support
-    $(document).ready(function()
-    {
-        if (!$.mobile)
-        {
+    $(document).ready(function() {
+        if (!$.mobile) {
             return;
         }
 
         // Alternate defaults when jQuery mobile is loaded. Work around JQM's quirks.
-        $.modalDialog.defaults =  $.extend(
-            $.modalDialog.defaults,
-            {
+        $.modalDialog.defaults = $.extend(
+            $.modalDialog.defaults, {
                 // JQM widgets must be in the active data-role="page" element to work
                 // containerElement: ".ui-page.ui-page-active",
 
@@ -1683,34 +1487,28 @@ if (!Object.keys)
 // Otherwise, you can hide specific problematic elements by adding this attribute:
 // data-dialog-hide-onopen="true"
 
-(function ($)
-{
+(function($) {
     var SELECTOR_MAIN_PANEL = "[data-dialog-main-panel='true']";
     var SELECTOR_BAD_ELEMENT = "[data-dialog-hide-onopen='true']";
 
-    var preventWindowTouchEvents = function(dialog, fix)
-    {
+    var preventWindowTouchEvents = function(dialog, fix) {
         // The bug only affects iFrame dialogs
-        if (dialog.dialogType != "iframe")
-        {
+        if (dialog.dialogType != "iframe") {
             return;
         }
 
         $([window, document]).enableEvent("touchmove touchstart touchend", !fix);
     };
 
-    var getWindowHeight = function()
-    {
+    var getWindowHeight = function() {
         return window.innerHeight || $(window).height();
     };
 
-    var initializeShimming = function()
-    {
+    var initializeShimming = function() {
         // First, see if the main panel is specified.
         // If so, it's the best choice of elements to hide.
         var $badEls = $(SELECTOR_MAIN_PANEL);
-        if ($badEls.length === 0)
-        {
+        if ($badEls.length === 0) {
             // Otherwise, look for individually marked bad elements to hide.
             $badEls = $(SELECTOR_BAD_ELEMENT);
         }
@@ -1719,10 +1517,8 @@ if (!Object.keys)
         var _scrollTop = 0;
         var _height = 0;
 
-        $.modalDialog.onbeforeopen.add(function()
-        {
-            if (this.level === 0)
-            {
+        $.modalDialog.onbeforeopen.add(function() {
+            if (this.level === 0) {
                 // Cache scroll height and body height so we can restore them when the dialog is closed
                 _scrollTop = $(document).scrollTop();
                 _height = document.body.style.height;
@@ -1730,11 +1526,10 @@ if (!Object.keys)
                 // Cache the parent for each element we need to remove from the DOM.
                 // This is important to fix the various WebKit text overlay bugs (described above in the header).
                 // Hiding them wont do it.
-                $badEls.each(function(i, el)
-                {
+                $badEls.each(function(i, el) {
                     $(el).data("dialog-parent", el.parentNode);
                 })
-                .detach();
+                    .detach();
 
                 // HACK: setting the body to be larger than the screen height prevents the address bar from showing up in iOS
                 document.body.style.height = (getWindowHeight() + 50) + "px";
@@ -1743,31 +1538,28 @@ if (!Object.keys)
             }
         });
 
-        $.modalDialog.onopen.add(function()
-        {
-            if (this.level === 0)
-            {
+        $.modalDialog.onopen.add(function() {
+            if (this.level === 0) {
                 // Ensure the body/background is bigger than the dialog,
                 // otherwise we see the background "end" above the bottom
                 // of the dialog.
                 var height = Math.max(this.$container.height(), getWindowHeight()) + 20;
 
-                document.body.style.height = height+ "px";
-                $(".dialog-background").css({ height: height });
+                document.body.style.height = height + "px";
+                $(".dialog-background").css({
+                    height: height
+                });
 
                 window.scrollTo(0, 1);
             }
         });
 
-        $.modalDialog.onclose.add(function()
-        {
-            if (this.level === 0)
-            {
+        $.modalDialog.onclose.add(function() {
+            if (this.level === 0) {
                 // Restore body height, elements, and scroll position
                 document.body.style.height = _height;
 
-                $badEls.each(function(i, el)
-                {
+                $badEls.each(function(i, el) {
                     $($(el).data("dialog-parent")).append(el);
                 });
 
@@ -1776,10 +1568,8 @@ if (!Object.keys)
         });
     };
 
-    $(function()
-    {
-        if (!$.modalDialog.isSmallScreen())
-        {
+    $(function() {
+        if (!$.modalDialog.isSmallScreen()) {
             return;
         }
 
@@ -1787,19 +1577,21 @@ if (!Object.keys)
         $.modalDialog.veilClass = "dialog-veil-opaque";
 
         // This will run in a content window. They need the events disabled immediately.
-        if ($.modalDialog && $.modalDialog._isContent)
-        {
+        if ($.modalDialog && $.modalDialog._isContent) {
             var dialog = $.modalDialog.getCurrent();
-            if (dialog)
-            {
-                $(window).on("load", function() { preventWindowTouchEvents(dialog, true); });
+            if (dialog) {
+                $(window).on("load", function() {
+                    preventWindowTouchEvents(dialog, true);
+                });
             }
-        }
-        else
-        {
+        } else {
             // This is for the host window.
-            $.modalDialog.onopen.add(function() { preventWindowTouchEvents(this, true); });
-            $.modalDialog.onbeforeclose.add(function() { preventWindowTouchEvents(this, false); });
+            $.modalDialog.onopen.add(function() {
+                preventWindowTouchEvents(this, true);
+            });
+            $.modalDialog.onbeforeclose.add(function() {
+                preventWindowTouchEvents(this, false);
+            });
 
             initializeShimming();
         }
@@ -1833,31 +1625,26 @@ the trigger tag unobtrusive
 TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 */
 
-(function($) 
-{
+(function($) {
     var DIALOG_DATA_KEY = "modalDialogUnobtrusive";
 
     // Click handler for all links which open dialogs
-    var dialogLinkHandler = function(e)
-    {
+    var dialogLinkHandler = function(e) {
         e.preventDefault();
-        
+
         var $link = $(e.currentTarget);
 
         var dialog = $link.data(DIALOG_DATA_KEY);
 
-        if (!dialog)
-        {
+        if (!dialog) {
             var href = $link.attr("href");
 
-            if (!href)
-            {
+            if (!href) {
                 throw new Error("no href specified with data-rel='modalDialog'");
             }
 
             // Create a dialog settings object
-            var settings = 
-            {
+            var settings = {
                 contentOrUrl: href
             };
 
@@ -1871,13 +1658,12 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
             $link.trigger(evt);
 
-            if (evt.isDefaultPrevented())
-            {
+            if (evt.isDefaultPrevented()) {
                 return;
             }
 
             dialog = $.modalDialog.create(settings);
-            
+
             // Give unobtrusive scripts a chance to modify the dialog
             evt = new $.Event("dialogcreate");
             evt.dialogSettings = settings;
@@ -1885,8 +1671,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
             $link.trigger(evt);
 
-            if (evt.isDefaultPrevented())
-            {
+            if (evt.isDefaultPrevented()) {
                 return;
             }
 
@@ -1901,34 +1686,28 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     $(document).on("click", "[data-rel='modalDialog']", dialogLinkHandler);
 
     // Helpful utility: A class that will make a button close dialogs by default
-    $(document).on("click", ".close-dialog", function(e)
-    {
+    $(document).on("click", ".close-dialog", function(e) {
         e.preventDefault();
         $.modalDialog.getCurrent().close();
     });
 
 })(jQuery);
 
-
-
 /* globals History */
 // TODO: Need to support stacking dialogs:
 // i.e. ?dialogs=#foo,ajax:/foo.html,iframe:/foo.html
 // TODO require history.js
 
-(function($) 
-{
+(function($) {
     var DEFAULT_DIALOG_PARAM_NAME = "sdialogid";
     var _dialogParamName;
 
     // Enables the history plugin, and returns a promise which
     // resolves when either the dialog specified in the URL is opened,
     // or if there is no dialog specified, immediately
-    $.modalDialog.enableHistory = function(dialogParamName)
-    {
+    $.modalDialog.enableHistory = function(dialogParamName) {
         // Ensure enableHistory isn't called twice
-        if (_historyEnabled)
-        {
+        if (_historyEnabled) {
             return;
         }
 
@@ -1940,10 +1719,8 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
         updateFromUrl()
             .then(
-                function()
-                {
-                    try
-                    {
+                function() {
+                    try {
                         $.modalDialog.onopen.add(openHandler);
                         $.modalDialog.onclose.add(closeHandler);
 
@@ -1952,14 +1729,11 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
                         History.Adapter.bind(window, "statechange", popstateHandler);
 
                         deferred.resolve();
-                    }
-                    catch (ex)
-                    {
+                    } catch (ex) {
                         deferred.reject(ex);
                     }
                 },
-                function(ex)
-                {
+                function(ex) {
                     deferred.reject(ex);
                 });
 
@@ -1967,17 +1741,12 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     };
 
     // Handle history.js in hash mode for browser that don't support pushState
-    var currentQueryStringOrHash = function()
-    {
-        if (window.location.search)
-        {
+    var currentQueryStringOrHash = function() {
+        if (window.location.search) {
             return $.currentQueryString();
-        }
-        else if (History.emulated.pushState && window.location.hash)
-        {
+        } else if (History.emulated.pushState && window.location.hash) {
             var qPos = window.location.hash.indexOf("?");
-            if (qPos >= 0)
-            {
+            if (qPos >= 0) {
                 return $.deparam(window.location.hash.substr(qPos));
             }
         }
@@ -1987,14 +1756,11 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
     // If history is disabled for any dialog in the stack, it should be disabled
     // for 
-    var isHistoryEnabled = function(dialog)
-    {
+    var isHistoryEnabled = function(dialog) {
         var parent = dialog;
 
-        do
-        {
-            if (parent && !parent.settings.enableHistory)
-            {
+        do {
+            if (parent && !parent.settings.enableHistory) {
                 return false;
             }
 
@@ -2010,20 +1776,16 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     var _disableHandlers = false;
     var _historyEnabled = false;
 
-    var getDialogParams = function(dialog)
-    {
-        var dialogParams = 
-        {
+    var getDialogParams = function(dialog) {
+        var dialogParams = {
             dialogType: "node",
             dialogId: null
         };
 
         // Get the ID of the selected element (for node dialogs)
-        if (dialog.settings.content)
-        {
+        if (dialog.settings.content) {
             var id = $(dialog.settings.content).prop("id");
-            if (!id)
-            {
+            if (!id) {
                 throw new Error("The specified content node has no ID, and cannot be serialized to a URL parameter.");
             }
 
@@ -2031,8 +1793,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
         }
 
         // If its not a node dialog, use the URL as the ID
-        if (!dialogParams.dialogId && dialog.settings.url)
-        {
+        if (!dialogParams.dialogId && dialog.settings.url) {
             dialogParams.dialogType = dialog.settings.ajax ? "ajax" : "iframe";
             dialogParams.dialogId = dialog.settings.url;
         }
@@ -2040,34 +1801,25 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
         return dialogParams;
     };
 
-    var getDialogSettingsFromParams = function(dialogParams)
-    {
+    var getDialogSettingsFromParams = function(dialogParams) {
         var settings = null;
 
-        if (dialogParams.dialogType == "iframe")
-        {
-            settings = { url: dialogParams.dialogId };
-        }
-        else if (dialogParams.dialogType == "ajax")
-        {
-            settings = 
-            { 
+        if (dialogParams.dialogType == "iframe") {
+            settings = {
+                url: dialogParams.dialogId
+            };
+        } else if (dialogParams.dialogType == "ajax") {
+            settings = {
                 ajax: true,
                 url: dialogParams.dialogId
             };
-        }
-        else
-        {
+        } else {
             var $content;
-            try
-            {
+            try {
                 $content = $(dialogParams.dialogId);
-            }
-            catch(ex)
-            {}
+            } catch (ex) {}
 
-            if ($content && $content.length > 0)
-            {
+            if ($content && $content.length > 0) {
                 settings = $.modalDialog.getSettings($content);
                 settings.content = $content;
             }
@@ -2076,39 +1828,32 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
         return settings;
     };
 
-    var doParamsMatchDialog = function(dialogParams, dialog)
-    {
+    var doParamsMatchDialog = function(dialogParams, dialog) {
         var d1 = getDialogParams(dialog);
 
         return d1.dialogType == dialogParams.dialogType &&
             d1.dialogId == dialogParams.dialogId;
     };
 
-    var encodeDialogId = function(s)
-    {
+    var encodeDialogId = function(s) {
         return s.replace("#", "-hash-");
     };
 
-    var decodeDialogId = function(s)
-    {
+    var decodeDialogId = function(s) {
         return s.replace("-hash-", "#");
     };
 
-    var parseDialogParams = function(data)
-    {
-        if (!data)
-        {
+    var parseDialogParams = function(data) {
+        if (!data) {
             return [];
         }
 
         var items = data.split(" ");
 
-        return $.map(items, function(item)
-        {
+        return $.map(items, function(item) {
             var delimPos = item.indexOf(",");
 
-            if (delimPos < 0)
-            {
+            if (delimPos < 0) {
                 throw new Error("Invalid dialog parameters: " + item);
             }
 
@@ -2119,27 +1864,22 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
         });
     };
 
-    var encodeDialogParams = function(dialogParamsList)
-    {
-        return $.map(dialogParamsList, function(item)
-            {
-                return item.dialogType + "," + encodeDialogId(item.dialogId);
-            })
+    var encodeDialogParams = function(dialogParamsList) {
+        return $.map(dialogParamsList, function(item) {
+            return item.dialogType + "," + encodeDialogId(item.dialogId);
+        })
             .join(" ");
     };
 
     // Handler for dialogs opening
-    var openHandler = function()
-    {
+    var openHandler = function() {
         // Hook to ensure the history handler doesn't run infinitely
         // when the dialog was opened by the history plugin itself
-        if (_disableHandlers)
-        {
+        if (_disableHandlers) {
             return;
         }
 
-        if (!isHistoryEnabled(this))
-        {
+        if (!isHistoryEnabled(this)) {
             return;
         }
 
@@ -2152,8 +1892,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
         var dialogParamsList = parseDialogParams(qs[_dialogParamName]);
 
         // Verify that the level of the dialog matches the number of items in the dialogParamsList
-        if ((this.level+1) <= dialogParamsList.length)
-        {
+        if ((this.level + 1) <= dialogParamsList.length) {
             throw new Error("The number of dialogParams in the URL doesn't match the number of open dialogs. Not updating history.");
         }
 
@@ -2175,49 +1914,39 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     };
 
     // Handler which fires when dialogs are closed
-    var closeHandler = function()
-    {
-        if (_disableHandlers)
-        {
+    var closeHandler = function() {
+        if (_disableHandlers) {
             return;
         }
 
-        if (this.settings.enableHistory === false)
-        {
+        if (this.settings.enableHistory === false) {
             return;
         }
 
         // If the page is in its initial state (just loaded), then closing a dialog should
         // create a new history entry so the back button will open the dialog again.
-        if (_pageIsAtInitialState)
-        {
+        if (_pageIsAtInitialState) {
             var qs = currentQueryStringOrHash();
             var dialogParamsList = parseDialogParams(qs[_dialogParamName]);
             var poppedParams = dialogParamsList.pop();
 
-            if (!doParamsMatchDialog(poppedParams, this))
-            {
+            if (!doParamsMatchDialog(poppedParams, this)) {
                 throw new Error("Closed dialog does not match URL parameters: " + poppedParams.dialogType + "," + poppedParams.dialogId + ". History not updated.");
             }
 
             // TODO: verify that the dialog params popped off match the current dialog
             // clean up if not
 
-            if (dialogParamsList.length === 0)
-            {
+            if (dialogParamsList.length === 0) {
                 delete qs[_dialogParamName];
-            }
-            else
-            {
+            } else {
                 qs[_dialogParamName] = encodeDialogParams(dialogParamsList);
             }
 
             var url = $.appendQueryString(document.location.pathname, qs);
 
             History.pushState(null, null, url);
-        }
-        else
-        {
+        } else {
             // If the page isn't in its initial state, then closing a dialog should go back
             // one entry in history.
 
@@ -2232,12 +1961,10 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     };
 
     // Looks for changes in the URL and opens or closes dialogs accordingly
-    var popstateHandler = function()
-    {
+    var popstateHandler = function() {
         // If the history plugin triggered the URL change itself,
         // then the UI has been updated already, and we shouldn't update anything.
-        if (_stateAlreadyProcessed)
-        {
+        if (_stateAlreadyProcessed) {
             _stateAlreadyProcessed = false;
             return;
         }
@@ -2246,8 +1973,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     };
 
     // Listen to URL changes and open/close dialogs accordingly
-    var updateFromUrl = function()
-    {
+    var updateFromUrl = function() {
         var deferred = new $.Deferred();
 
         // An array of parsed dialog parameters from the URL
@@ -2257,24 +1983,20 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
         var topmostDialog = $.modalDialog.getCurrent();
         var topmostStackPos = topmostDialog ? topmostDialog.level + 1 : 0;
 
-        if (dialogParamsList.length === topmostStackPos)
-        {
+        if (dialogParamsList.length === topmostStackPos) {
             deferred.resolve();
         }
 
         // If there are more dialogParams in the URL than dialogs displayed,
         // open them in order
-        var openDialogsUntilUrlMatches = function()
-        {
-            if (dialogParamsList.length > topmostStackPos)
-            {
+        var openDialogsUntilUrlMatches = function() {
+            if (dialogParamsList.length > topmostStackPos) {
                 var dialogParams = dialogParamsList[topmostStackPos];
 
                 var settings = getDialogSettingsFromParams(dialogParams);
 
                 // validate settings are correct
-                if (!settings)
-                {
+                if (!settings) {
                     _disableHandlers = false;
 
                     deferred.reject("Unable to create dialog settings from dialogId in URL: " + dialogParams.dialogType + "," + dialogParams.dialogId);
@@ -2285,8 +2007,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
                 var dialog = $.modalDialog.getExisting(settings);
 
                 // If it doesn't exist, create a new one
-                if (!dialog)
-                {
+                if (!dialog) {
                     dialog = $.modalDialog.create(settings);
                 }
 
@@ -2296,24 +2017,17 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
                 _disableHandlers = true;
 
                 dialog.open()
-                    .then(function()
-                    {
+                    .then(function() {
                         // Recurse until all dialogs embedded in the URL are open
                         topmostStackPos++;
-                        try
-                        {
+                        try {
                             openDialogsUntilUrlMatches();
-                        }
-                        catch (ex)
-                        {
+                        } catch (ex) {
                             deferred.reject(ex);
                         }
                     });
-            }
-            else
-            {
-                setTimeout(function()
-                    {
+            } else {
+                setTimeout(function() {
                         deferred.resolve();
                         _disableHandlers = false;
                     },
@@ -2321,22 +2035,17 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
             }
         };
 
-        if (dialogParamsList.length > topmostStackPos)
-        {
+        if (dialogParamsList.length > topmostStackPos) {
             openDialogsUntilUrlMatches();
         }
 
         // If there are fewer dialogParams in the URL than in dialogs displayed,
         // close them until they match
-        var closeDialogsUntilUrlMatches = function()
-        {
-            if (dialogParamsList.length < topmostStackPos)
-            {
+        var closeDialogsUntilUrlMatches = function() {
+            if (dialogParamsList.length < topmostStackPos) {
                 var currentDialog = $.modalDialog.getCurrent();
-                if (currentDialog)
-                {
-                    if (!currentDialog.settings.enableHistory)
-                    {
+                if (currentDialog) {
+                    if (!currentDialog.settings.enableHistory) {
                         deferred.resolve();
                         _disableHandlers = false;
                         return;
@@ -2348,39 +2057,29 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
                     _disableHandlers = true;
 
                     currentDialog.close()
-                        .then(function()
-                        {
+                        .then(function() {
                             topmostStackPos--;
 
-                            try
-                            {
+                            try {
                                 // Recurse until all dialogs not in the URL are closed 
                                 closeDialogsUntilUrlMatches();
-                            }
-                            catch (ex)
-                            {
+                            } catch (ex) {
                                 deferred.reject(ex);
                             }
                         });
-                }
-                else
-                {
+                } else {
                     _disableHandlers = false;
                     deferred.reject("There was a mismatch between the URL and the current open dialog stack");
                 }
-            }
-            else
-            {
-                setTimeout(function()
-                {
+            } else {
+                setTimeout(function() {
                     deferred.resolve();
                     _disableHandlers = false;
                 });
             }
         };
 
-        if (dialogParamsList.length < topmostStackPos)
-        {
+        if (dialogParamsList.length < topmostStackPos) {
             closeDialogsUntilUrlMatches();
         }
 
