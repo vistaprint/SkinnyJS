@@ -75,6 +75,8 @@
 
                     <li class="page_item"><a href='jquery.pointerEvents.html'>jQuery.pointerEvents</a></li>
 
+                    <li class="page_item"><a href='jquery.pointerGestures.html'>jQuery.pointerGestures</a></li>
+
                     <li class="page_item"><a href='jquery.postMessage.html'>jQuery.postMessage</a></li>
 
                     <li class="page_item"><a href='jquery.proxyAll.html'>jQuery.proxyAll</a></li>
@@ -121,20 +123,20 @@
 
     <h2 id='jquerypointerevents'>jQuery.pointerEvents</h2>
 
-<p>jQuery.pointerEvents adds a polyfill for the new <a href='http://www.w3.org/Submission/pointer-events/'>pointer events api</a>. It falls back to touch and mouse events and delegates the information in a standardize format following the pointer event spec to the native pointer methods.</p>
+<p>jQuery.pointerEvents is a polyfill for the new <a href='http://www.w3.org/Submission/pointer-events/'>pointer events api</a>. It is an abstraction on top of touch and mouse events which mimics native pointer events. This is particularly useful because it will work across all devices which support either the Apple-style touch events (i.e. iOS, Android, Chrome OS) and those that support pointer events (i.e. Windows 8 and Windows Phone 7).</p>
 
 <h3 id='event_types'>Event types</h3>
 
 <ul>
-<li>pointerdown</li>
+<li>pointerdown: abstraction on top of mousedown and touchstart</li>
 
-<li>pointermove</li>
+<li>pointermove: abstraction on top of mousemove and touchmove</li>
 
-<li>pointerup</li>
+<li>pointerup: abstraction on top of mouseup and touchend</li>
 
-<li>pointerover</li>
+<li>pointerover: abstraction on top of mouseover (no touch equivalent)</li>
 
-<li>pointerout</li>
+<li>pointerout: abstraction on top of mouseout (no touch equivalent)</li>
 </ul>
 
 <h3 id='usage'>Usage</h3>
@@ -146,7 +148,7 @@
 
         <span class='c1'>// Detecting the underlying event type</span>
         <span class='c1'>// Can be &quot;mouse&quot;, &quot;touch&quot;, or &quot;pen&quot;</span>
-    	<span class='kd'>var</span> <span class='nx'>underlyingEvent</span> <span class='o'>=</span> <span class='nx'>e</span><span class='p'>.</span><span class='nx'>originalType</span><span class='p'>.</span><span class='nx'>pointerType</span><span class='p'>;</span>
+        <span class='kd'>var</span> <span class='nx'>underlyingEvent</span> <span class='o'>=</span> <span class='nx'>e</span><span class='p'>.</span><span class='nx'>originalType</span><span class='p'>.</span><span class='nx'>pointerType</span><span class='p'>;</span>
 
     <span class='p'>});</span>
 </code></pre></div>

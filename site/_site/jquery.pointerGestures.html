@@ -116,57 +116,14 @@
 
      
     <div class="source-links">
-        <a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.msAjax.js" class="github-source-link" target="_blank">View on github</a> |
-        <a href="docco/jquery.msAjax.html" class="docco-link">Annotated source</a>
+        <a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jQuery.pointerGestures.js" class="github-source-link" target="_blank">View on github</a> |
+        <a href="docco/jQuery.pointerGestures.html" class="docco-link">Annotated source</a>
     </div>
     
 
-    <h2 id='jquerymsajax_plugin'>jQuery.msAjax plugin</h2>
+    <h2 id='jquerypointergestures'>jQuery.pointerGestures</h2>
 
-<p>Eases the pain of dealing with legacy Microsoft web services technologies (ASMX, WCF, JsonDataContractSerializer).</p>
-
-<ul>
-<li>Correctly serializes/deserializes <a href='http://msdn.microsoft.com/en-us/library/bb299886.aspx#intro_to_json_sidebarb'>Microsoft&#8217;s date format</a> and revives dates into a JavaScript Date object. ** Supports ISO8601 dates as well.</li>
-
-<li>Remove Microsoft specific JSON wrappers, including the &#8220;d&#8221; property, the embedded &#8220;__type&#8221; property</li>
-
-<li>Wont do any of this if the JSON object isn&#8217;t Microsoft-styled</li>
-</ul>
-
-<p><strong>Note</strong>: This is not necessary when using ASP.NET MVC 4+ with Web API (which uses <a href='http://james.newtonking.com/projects/json-net.aspx'>JSON.NET</a>) by default). WebAPI uses ISO8601 dates and doesn&#8217;t add any Microsoft specific properties to JSON objects.</p>
-
-<h3 id='dependencies'>Dependencies</h3>
-
-<p>jQuery.msAjax has two dependencies:</p>
-
-<ul>
-<li>
-<p>date-parse.js (also part of skinny.js).</p>
-</li>
-
-<li>
-<p>For less-than-awesome browsers that don&#8217;t support JSON.parse() or JSON.stringify(), you should include a polyfill, such as <a href='https://github.com/douglascrockford/JSON-js/blob/master/json2.js'>Doug Crockford&#8217;s json2.js</a>.</p>
-</li>
-</ul>
-
-<h3 id='example_usage'>Example Usage:</h3>
-
-<h4 id='asmx'>ASMX</h4>
-<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>msAjax</span><span class='p'>({</span>
-        <span class='nx'>url</span><span class='o'>:</span> <span class='s1'>&#39;PersonWebService.asmx&#39;</span><span class='p'>,</span> 
-        <span class='nx'>methodName</span><span class='o'>:</span> <span class='s1'>&#39;GetPerson&#39;</span><span class='p'>,</span> 
-        <span class='nx'>data</span><span class='o'>:</span> <span class='p'>{</span><span class='s1'>&#39;personId&#39;</span><span class='o'>:</span> <span class='mi'>1</span><span class='p'>},</span> 
-        <span class='nx'>success</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>oPerson</span><span class='p'>)</span> <span class='p'>{</span> <span class='nx'>alert</span><span class='p'>(</span><span class='nx'>oPerson</span><span class='p'>.</span><span class='nx'>Name</span><span class='p'>);</span> <span class='p'>},</span>
-        <span class='nx'>error</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span> <span class='nx'>logSomething</span><span class='p'>(</span><span class='nx'>arguments</span><span class='p'>);</span> <span class='p'>}</span>
-    <span class='p'>});</span>
-</code></pre></div>
-<h4 id='wcf_rest_style'>WCF (REST style)</h4>
-<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>msAjax</span><span class='p'>({</span>
-        <span class='nx'>url</span><span class='o'>:</span> <span class='s1'>&#39;PersonWebService.svc/People/1&#39;</span><span class='p'>,</span> 
-        <span class='nx'>success</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>oPerson</span><span class='p'>)</span> <span class='p'>{</span> <span class='nx'>alert</span><span class='p'>(</span><span class='nx'>oPerson</span><span class='p'>.</span><span class='nx'>Name</span><span class='p'>);</span> <span class='p'>},</span>
-        <span class='nx'>error</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span> <span class='nx'>logSomething</span><span class='p'>(</span><span class='nx'>arguments</span><span class='p'>);</span> <span class='p'>}</span>
-    <span class='p'>});</span>
-</code></pre></div>
+<p>TODO</p>
   </div>
 </div>
  
