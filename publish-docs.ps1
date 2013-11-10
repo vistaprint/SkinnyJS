@@ -17,7 +17,7 @@ git reset --hard origin/gh-pages
 
 copy -Force -Recurse .git\docs-temp\* .
 
-git add .
+git add -A
 git commit -m "Updating documentation"
 
 if ($LASTEXITCODE -ne  0)
