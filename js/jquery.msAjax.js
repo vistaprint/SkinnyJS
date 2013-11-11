@@ -18,8 +18,6 @@
         return value;
     };
 
-
-
     // Converts date strings in ISO8601 or Microsoft format to JavaScript dates
     var msJsonDateOnlySanitizer = function(key, value) {
         if (typeof(value) == "string") {
@@ -27,7 +25,9 @@
             // Example of a partial date:       "2013"
             // Example of a full ISO8601 date:  "2013-08-07T21:40:05.121+06:00"
             if (!$.parseMsJSON.isNumericString(value)) {
-                var date = Date.parse(value);
+                var date = Date.parseISO(value) || 
+                    Date.parseMsDate(value) || 
+                    (value.indexOf("GMT") >= 0 ? Date.parse(value) : NaN);
                 if (!isNaN(date)) {
                     return new Date(date);
                 }
@@ -157,5 +157,11 @@
 
     $.ajaxAsmx = $.msAjax;
     $.ajaxWcf = $.msAjax;
+
+    /* test-code */
+    $.msAjax_private = {
+        msJsonDateOnlySanitizer: msJsonDateOnlySanitizer
+    };
+    /* end test-code */
 
 })(window, jQuery);
