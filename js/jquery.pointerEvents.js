@@ -189,29 +189,25 @@
     // for IE10 specific, we proxy though events so we do not need to deal
     // with the various names or renaming of events.
     else if (navigator.msPointerEnabled && !navigator.pointerEnabled) {
+        // we cannot just use bindType because we need to standardize the event object
         $.event.special.pointerdown = {
-            delegateType: "MSPointerDown",
-            bindType: "MSPointerDown"
+            setup: proxyEventType("MSPointerDown", "pointerdown")
         };
 
         $.event.special.pointerup = {
-            delegateType: "MSPointerUp",
-            bindType: "MSPointerUp"
+            setup: proxyEventType("MSPointerUp", "pointerup")
         };
 
         $.event.special.pointermove = {
-            delegateType: "MSPointerMove",
-            bindType: "MSPointerMove"
+            setup: proxyEventType("MSPointerMove", "pointermove")
         };
 
         $.event.special.pointerover = {
-            delegateType: "MSPointerOver",
-            bindType: "MSPointerOver"
+            setup: proxyEventType("MSPointerOver", "pointerover")
         };
 
         $.event.special.pointerout = {
-            delegateType: "MSPointerOut",
-            bindType: "MSPointerOut"
+            setup: proxyEventType("MSPointerOut", "pointerout")
         };
     }
 

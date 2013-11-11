@@ -38,7 +38,7 @@
         };
 
         function mouseOver(event) {
-            if (!$.support.pointer || !_options.mouseOnly || event.originalEvent.pointerType == event.originalEvent.POINTER_TYPE_MOUSE) {
+            if (!$.support.pointer || !_options.mouseOnly || event.originalEvent.pointerType == 'mouse') {
                 var me = $(this);
                 clearTimers(me);
 
@@ -55,7 +55,7 @@
         }
 
         function mouseOut(event) {
-            if (!$.support.pointer || !_options.mouseOnly || event.originalEvent.pointerType == event.originalEvent.POINTER_TYPE_MOUSE) {
+            if (!$.support.pointer || !_options.mouseOnly || event.originalEvent.pointerType == 'mouse') {
                 var me = $(this);
                 clearTimers(me);
 
