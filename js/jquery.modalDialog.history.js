@@ -47,13 +47,15 @@
 
     // Handle history.js in hash mode for browser that don't support pushState
     var currentQueryStringOrHash = function() {
-        if (window.location.search) {
-            return $.currentQueryString();
-        } else if (History.emulated.pushState && window.location.hash) {
+        if (History.emulated.pushState && window.location.hash) {
             var qPos = window.location.hash.indexOf("?");
             if (qPos >= 0) {
                 return $.deparam(window.location.hash.substr(qPos));
             }
+        }
+
+        if (window.location.search) {
+            return $.currentQueryString();
         }
 
         return {};

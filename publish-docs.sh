@@ -12,7 +12,10 @@ then
     exit $?
 fi
 
-cp -R .git\docs-temp\* .
+git fetch origin
+git reset --hard origin/gh-pages
+
+cp -R .git/docs-temp/* .
 
 # git add -A
 # git commit -m "Updating documentation"
