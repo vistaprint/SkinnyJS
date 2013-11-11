@@ -775,8 +775,8 @@ if (!Object.keys) {
     // returns an object with top and left
     var getMousePos = function(e) {
         var mousePos = {
-            left: e.clientX,
-            top: e.clientY
+            left: e.originalEvent.clientX,
+            top: e.originalEvent.clientY
         };
 
         // Translate event positions from a nested iframe
