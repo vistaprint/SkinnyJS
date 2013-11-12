@@ -33,7 +33,7 @@ or if there is no dialog specified, immediately</p>             </td>           
                         <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">onopen</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">openHandler</span><span class="p">);</span>
                         <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">onclose</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">closeHandler</span><span class="p">);</span>
 
-                        <span class="nx">History</span><span class="p">.</span><span class="nx">pushState</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="p">);</span>
+                        <span class="nx">History</span><span class="p">.</span><span class="nx">pushState</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="p">);</span>
 
                         <span class="nx">History</span><span class="p">.</span><span class="nx">Adapter</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="s2">&quot;statechange&quot;</span><span class="p">,</span> <span class="nx">popstateHandler</span><span class="p">);</span>
 
@@ -217,7 +217,7 @@ and the dialog is already open, so it shouldn't do any more work.</p>           
         <span class="nx">_stateAlreadyProcessed</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p>Update the URL</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="nx">History</span><span class="p">.</span><span class="nx">pushState</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">url</span><span class="p">);</span>
+        <span class="nx">History</span><span class="p">.</span><span class="nx">pushState</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span> <span class="nx">url</span><span class="p">);</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <p>Mark the page as not in its initial state so the close handler will know if
 it should add a history entry when closing dialogs</p>             </td>             <td class="code">               <div class="highlight"><pre>
@@ -256,7 +256,7 @@ clean up if not</p>             </td>             <td class="code">             
 
             <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">appendQueryString</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span><span class="p">,</span> <span class="nx">qs</span><span class="p">);</span>
 
-            <span class="nx">History</span><span class="p">.</span><span class="nx">pushState</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">url</span><span class="p">);</span>
+            <span class="nx">History</span><span class="p">.</span><span class="nx">pushState</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span> <span class="nx">url</span><span class="p">);</span>
         <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-20">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>               <p>If the page isn't in its initial state, then closing a dialog should go back
 one entry in history.</p>             </td>             <td class="code">               <div class="highlight"><pre>

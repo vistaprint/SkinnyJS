@@ -1724,7 +1724,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
                         $.modalDialog.onopen.add(openHandler);
                         $.modalDialog.onclose.add(closeHandler);
 
-                        History.pushState(null, null, document.location.href);
+                        History.pushState(null, document.title, document.location.href);
 
                         History.Adapter.bind(window, "statechange", popstateHandler);
 
@@ -1908,7 +1908,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
         _stateAlreadyProcessed = true;
 
         // Update the URL
-        History.pushState(null, null, url);
+        History.pushState(null, document.title, url);
 
         // Mark the page as not in its initial state so the close handler will know if
         // it should add a history entry when closing dialogs
@@ -1947,7 +1947,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
             var url = $.appendQueryString(document.location.pathname, qs);
 
-            History.pushState(null, null, url);
+            History.pushState(null, document.title, url);
         } else {
             // If the page isn't in its initial state, then closing a dialog should go back
             // one entry in history.
