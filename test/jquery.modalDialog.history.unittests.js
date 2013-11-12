@@ -54,6 +54,9 @@ describe("jquery.modalDialog.history", function() {
 
     function testDialogHistoryManagement(dialogType, dialogOptions) {
         it("modifies the URL and history when opening and closing a " + dialogType + " dialog", function(done) {
+
+            var originalTitle = document.title;
+
             var dialog = $.modalDialog.create(dialogOptions);
 
             dialog
@@ -76,6 +79,7 @@ describe("jquery.modalDialog.history", function() {
                     // We navigated back. There should not be any dialog parameters in the URL.
                     assertDialogParams(0);
                     assert.isFalse(dialog.isOpen(), "Ensure dialog is closed");
+                    assert.equal(document.title, originalTitle);
 
                     var deferred = $.Deferred();
 
@@ -89,6 +93,7 @@ describe("jquery.modalDialog.history", function() {
                     // We navigated forward. The dialog parameters should be back in the URL.
                     assertDialogParams(1);
                     assert.isTrue(dialog.isOpen(), "Ensure dialog is open");
+                    assert.equal(document.title, originalTitle);
 
                     return dialog.close();
                 })
@@ -97,6 +102,7 @@ describe("jquery.modalDialog.history", function() {
                     // We manually closed the dialog. The parameters should no longer be in the URL.
                     assertDialogParams(0);
                     assert.isFalse(dialog.isOpen(), "Ensure dialog is closed");
+                    assert.equal(document.title, originalTitle);
 
                     return $.timeout(100);
                 })
