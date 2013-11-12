@@ -200,6 +200,35 @@ dialog.open();
 dialog.close();
 {% endhighlight %}
 
+You can call any dialog methods using the jQuery idiomatic syntax as well:
+
+{% highlight javascript %}
+// Creates and opens the dialog
+$(".color-dialog").modalDialog();
+
+// Closes the dialog
+$(".color-dialog").modalDialog("close");
+
+// Centers the dialog
+$(".color-dialog").modalDialog("center");
+
+// Sets the title of the dialog
+$(".color-dialog").modalDialog("setTitle", "Select a Color");
+{% endhighlight %}
+
+Or, you can get the modal dialog object from the jQuery idiomatic syntax:
+
+{% highlight javascript %}
+// Creates and opens the dialog
+$(".color-dialog").modalDialog();
+
+// Closes the dialog
+var dialog = $(".color-dialog").modalDialogInstance();
+
+// Now you have a reference to the dialog
+dialog.close();
+{% endhighlight %}
+
 #### open(), close(), and promises
 open() and close() return promises. This allows chaining of actions:
 
