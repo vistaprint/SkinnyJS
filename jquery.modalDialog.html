@@ -344,6 +344,29 @@
 <span class='c1'>//close dialog</span>
 <span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>close</span><span class='p'>();</span>
 </code></pre></div>
+<p>You can call any dialog methods using the jQuery idiomatic syntax as well:</p>
+<div class='highlight'><pre><code class='javascript'><span class='c1'>// Creates and opens the dialog</span>
+<span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.color-dialog&quot;</span><span class='p'>).</span><span class='nx'>modalDialog</span><span class='p'>();</span>
+
+<span class='c1'>// Closes the dialog</span>
+<span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.color-dialog&quot;</span><span class='p'>).</span><span class='nx'>modalDialog</span><span class='p'>(</span><span class='s2'>&quot;close&quot;</span><span class='p'>);</span>
+
+<span class='c1'>// Centers the dialog</span>
+<span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.color-dialog&quot;</span><span class='p'>).</span><span class='nx'>modalDialog</span><span class='p'>(</span><span class='s2'>&quot;center&quot;</span><span class='p'>);</span>
+
+<span class='c1'>// Sets the title of the dialog</span>
+<span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.color-dialog&quot;</span><span class='p'>).</span><span class='nx'>modalDialog</span><span class='p'>(</span><span class='s2'>&quot;setTitle&quot;</span><span class='p'>,</span> <span class='s2'>&quot;Select a Color&quot;</span><span class='p'>);</span>
+</code></pre></div>
+<p>Or, you can get the modal dialog object from the jQuery idiomatic syntax:</p>
+<div class='highlight'><pre><code class='javascript'><span class='c1'>// Creates and opens the dialog</span>
+<span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.color-dialog&quot;</span><span class='p'>).</span><span class='nx'>modalDialog</span><span class='p'>();</span>
+
+<span class='c1'>// Closes the dialog</span>
+<span class='kd'>var</span> <span class='nx'>dialog</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.color-dialog&quot;</span><span class='p'>).</span><span class='nx'>modalDialogInstance</span><span class='p'>();</span>
+
+<span class='c1'>// Now you have a reference to the dialog</span>
+<span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>close</span><span class='p'>();</span>
+</code></pre></div>
 <h4 id='open_close_and_promises'>open(), close(), and promises</h4>
 
 <p>open() and close() return promises. This allows chaining of actions:</p>
