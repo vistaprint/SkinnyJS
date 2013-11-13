@@ -561,9 +561,6 @@
     };
 
     ModalDialog.prototype._drag = function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-
         if (!this._isDragging) {
             $(document).off("pointermove", this._drag);
             return;
@@ -585,9 +582,6 @@
     ModalDialog.prototype._stopDrag = function(e) {
         delete this._initialMousePos;
         delete this._initialDialogPos;
-
-        // e.stopPropagation();
-        // e.preventDefault();
 
         $(document).off("pointermove", this._drag);
 

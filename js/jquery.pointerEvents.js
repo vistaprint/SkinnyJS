@@ -10,6 +10,9 @@
     $.extend($.support, support);
 
     function triggerCustomEvent(elem, eventType, originalEvent) {
+        // support for IE7-IE8
+        originalEvent = originalEvent || window.event;
+
         // store the original event type so we can use it in the fixHook
         originalEvent.originalType = originalEvent.type;
 
@@ -52,9 +55,7 @@
         if (elem.addEventListener) {
             elem.addEventListener(type, func, false);
         } else if (elem.attachEvent) {
-            elem.attachEvent("on" + type, function (event) {
-                func(event || window.event);
-            });
+            elem.attachEvent("on" + type, func);
         }
     }
 
