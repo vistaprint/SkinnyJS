@@ -20,6 +20,13 @@
 
         _dialogParamName = dialogParamName || DEFAULT_DIALOG_PARAM_NAME;
 
+        // Disable history for any dialogs that are currently open.
+        // This is to ensure that we don't initialize with the URL and
+        // dialogs in an incompatible state. This probably would happen
+        // if someone opened a dialog when the DOM loaded, in which
+        // case it was meant to be part of the initial page state.
+        disableHistoryForOpenDialogs();
+
         var deferred = new $.Deferred();
 
         updateFromUrl()
@@ -45,6 +52,10 @@
         return deferred;
     };
 
+    $.modalDialog.isHistoryEnabled = function() {
+        return _historyEnabled;
+    };
+
     // Handle history.js in hash mode for browser that don't support pushState
     var currentQueryStringOrHash = function() {
         if (History.emulated.pushState && window.location.hash) {
@@ -61,8 +72,20 @@
         return {};
     };
 
+    var disableHistoryForOpenDialogs = function() {
+        var parent = $.modalDialog.getCurrent();
+
+        while (parent) {
+            if (parent) {
+                parent.settings.enableHistory = false;
+            }
+
+            parent = parent.getParent();
+        }
+    };
+
     // If history is disabled for any dialog in the stack, it should be disabled
-    // for 
+    // for all of them.
     var isHistoryEnabled = function(dialog) {
         var parent = dialog;
 
@@ -386,11 +409,18 @@
             }
         };
 
+        // Close open dialogs that don't match the URL
         if (dialogParamsList.length < topmostStackPos) {
             closeDialogsUntilUrlMatches();
         }
 
         return deferred;
     };
+
+    /* test-code */
+    $.modalDialog._historyPrivate = {
+        disableHistoryForOpenDialogs: disableHistoryForOpenDialogs
+    };
+    /* end-test-code */
 
 })(jQuery);

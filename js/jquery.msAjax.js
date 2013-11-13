@@ -162,6 +162,6 @@
     $.msAjax_private = {
         msJsonDateOnlySanitizer: msJsonDateOnlySanitizer
     };
-    /* end test-code */
+    /* end-test-code */
 
 })(window, jQuery);
