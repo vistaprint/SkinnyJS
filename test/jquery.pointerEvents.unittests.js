@@ -18,13 +18,13 @@ describe('jquery.pointerEvents', function() {
         el.on(pointerEvent, workIt);
 
         // run all the native events that map to this pointer event
-        $.each(nativeEvents, function(i, nativeEvent) {
+        $.each(nativeEvents, function (i, nativeEvent) {
             it('should call a ' + pointerEvent + ' when a ' + nativeEvent + ' is triggered', function() {
                 // reset groovy here for this next test
                 groovy = false;
 
                 // trigger native event, should trigger the pointer event and call workIt
-                el.trigger(nativeEvent);
+                el[0].dispatchEvent(new CustomEvent(nativeEvent));
 
                 // confirm workIt was called
                 chai.assert.equal(groovy, true);
@@ -34,7 +34,7 @@ describe('jquery.pointerEvents', function() {
             if (pointerEvent == 'pointerdown' && nativeEvent == 'touchstart') {
                 it('calling touchstart should prevent the next mousedown event', function() {
                     groovy = false;
-                    el.trigger('mousedown');
+                    el[0].dispatchEvent(new CustomEvent('mousedown'));
                     chai.assert.equal(groovy, false);
                 });
             }
@@ -45,7 +45,7 @@ describe('jquery.pointerEvents', function() {
             el.off(pointerEvent, workIt);
 
             $.each(nativeEvents, function(i, nativeEvent) {
-                el.trigger(nativeEvent);
+                el[0].dispatchEvent(new CustomEvent(nativeEvent));
             });
 
             chai.assert.equal(teardown, true);

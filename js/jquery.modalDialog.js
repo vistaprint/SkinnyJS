@@ -623,8 +623,8 @@
     // returns an object with top and left
     var getMousePos = function(e) {
         var mousePos = {
-            left: e.originalEvent.clientX,
-            top: e.originalEvent.clientY
+            left: e.clientX,
+            top: e.clientY
         };
 
         // Translate event positions from a nested iframe
