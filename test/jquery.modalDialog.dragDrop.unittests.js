@@ -6,13 +6,9 @@ describe("jquery.modalDialog", function() {
     var assert = chai.assert;
 
     function trigger($el, eventName, props) {
-        var e = new $.Event(eventName);
-        e.originalEvent = {};
-        if (props) {
-            $.extend(e.originalEvent, props);
-        }
-
-        $el.trigger(e);
+        var event = new CustomEvent(eventName, { bubbles: true });
+        $.extend(event, props || {});
+        $el[0].dispatchEvent(event);
     }
 
     describe("#_makeDraggable()", function() {
@@ -50,9 +46,7 @@ describe("jquery.modalDialog", function() {
                         }
                         return dialog.close();
                     })
-                    .then(function() {
-                        done();
-                    });
+                    .then(done);
             });
         };
 

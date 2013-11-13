@@ -553,26 +553,9 @@
         this._initialMousePos = getMousePos(e);
         this._initialDialogPos = this.$container.offset();
 
-        this.$bg.on("pointermove", this._drag);
-        this.$container.on("pointermove", this._drag);
-
-        // make sure the mouseup also works on the background
-        this.$bg.on("pointerup", this._stopDrag);
-
-        //chrome node is the last element that can handle events- it has cancel bubble set
-        this.$container.on("pointerup", this._stopDrag);
-
-        if (this.$frame) {
-            try {
-                this.$frame.iframeDocument().find("body")
-                    .on("pointermove", this._drag)
-                    .on("pointerup", this._stopDrag);
-            } catch (ex) {
-                // This can fail if the frame is in another domain
-            }
-        }
-
-        this._parentRect = this.$el.clientRect();
+        $(document)
+            .on("pointermove", this._drag)
+            .one("pointerup", this._stopDrag);
 
         this._isDragging = true;
     };
@@ -580,6 +563,11 @@
     ModalDialog.prototype._drag = function(e) {
         e.preventDefault();
         e.stopPropagation();
+
+        if (!this._isDragging) {
+            $(document).off("pointermove", this._drag);
+            return;
+        }
 
         var mousePos = getMousePos(e);
 
@@ -595,26 +583,13 @@
     };
 
     ModalDialog.prototype._stopDrag = function(e) {
-        this._initialMousePos = null;
-        this._initialDialogPos = null;
+        delete this._initialMousePos;
+        delete this._initialDialogPos;
 
-        e.stopPropagation();
-        e.preventDefault();
+        // e.stopPropagation();
+        // e.preventDefault();
 
-        // Remove the drag events
-        this.$bg.off("pointermove", this._drag);
-        this.$container.off("pointermove", this._drag);
-
-        this.$bg.off("pointerup", this._stopDrag);
-        this.$container.off("pointerup", this._stopDrag);
-
-        if (this.$frame) {
-            try {
-                this.$frame.iframeDocument().find("body")
-                    .off("pointermove", this._drag)
-                    .off("pointerup", this._stopDrag);
-            } catch (ex) {}
-        }
+        $(document).off("pointermove", this._drag);
 
         this._isDragging = false;
     };
