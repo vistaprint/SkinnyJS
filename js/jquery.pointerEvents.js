@@ -128,7 +128,8 @@
         pointerup: $.event.pointerHooks,
         pointermove: $.event.pointerHooks,
         pointerover: $.event.pointerHooks,
-        pointerout: $.event.pointerHooks
+        pointerout: $.event.pointerHooks,
+        pointercancel: $.event.pointerHooks
     });
 
     // if browser does not natively handle pointer events,
@@ -163,17 +164,23 @@
             }
         };
 
-        // pointerup defines when physical contact with a digitizer (screen) is broken,
-        // or a mouse transitions from depressed to non-depressed (replaces touchend and mouseup)
         jQuery.each({
             pointerup: {
                 touch: "touchend",
                 mouse: "mouseup"
             },
-
             pointermove: {
                 touch: "touchmove",
                 mouse: "mousemove"
+            },
+            pointerover: {
+                mouse: "mouseover"
+            },
+            pointerout: {
+                mouse: "mouseout"
+            },
+            pointercancel: {
+                touch: "touchcancel"
             }
         }, function (pointerEventType, natives) {
             function onTouch (event) {
@@ -187,35 +194,20 @@
 
             $.event.special[pointerEventType] = {
                 setup: function() {
-                    if (support.touch) {
+                    if (support.touch && natives.touch) {
                         addEvent(this, natives.touch, onTouch);
                     }
-                    addEvent(this, natives.mouse, onMouse);
+                    if (natives.mouse) {
+                        addEvent(this, natives.mouse, onMouse);
+                    }
                 },
                 teardown: function() {
-                    if (support.touch) {
+                    if (support.touch && natives.touch) {
                         jQuery.removeEvent(this, natives.touch, onTouch);
                     }
-                    jQuery.removeEvent(this, natives.mouse, onMouse);
-                }
-            };
-        });
-
-        // there is no equivilent for
-        jQuery.each({
-            mouseover: "pointerover",
-            mouseout: "pointerout"
-        }, function (orig, fix) {
-            function handler(event) {
-                triggerCustomEvent(this, fix, event);
-            }
-
-            jQuery.event.special[fix] = {
-                setup: function() {
-                    addEvent(this, orig, handler);
-                },
-                teardown: function() {
-                    jQuery.removeEvent(this, orig, handler);
+                    if (natives.mouse) {
+                        jQuery.removeEvent(this, natives.mouse, onMouse);
+                    }
                 }
             };
         });
@@ -244,6 +236,10 @@
             pointerout: {
                 delegateType: "MSPointerOut",
                 bindType: "MSPointerOut"
+            },
+            pointercancel: {
+                delegateType: "MSPointerCancel",
+                bindType: "MSPointerCancel"
             }
         });
 
@@ -252,7 +248,8 @@
             MSPointerUp: $.event.pointerHooks,
             MSPointerMove: $.event.pointerHooks,
             MSPointerOver: $.event.pointerHooks,
-            MSPointerOut: $.event.pointerHooks
+            MSPointerOut: $.event.pointerHooks,
+            MSPointerCancel: $.event.pointerHooks
         });
     }
 
