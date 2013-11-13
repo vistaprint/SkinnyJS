@@ -579,7 +579,7 @@
         this.$container.css(newPos);
     };
 
-    ModalDialog.prototype._stopDrag = function(e) {
+    ModalDialog.prototype._stopDrag = function() {
         delete this._initialMousePos;
         delete this._initialDialogPos;
 
