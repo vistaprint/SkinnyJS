@@ -158,10 +158,6 @@
     $.ajaxAsmx = $.msAjax;
     $.ajaxWcf = $.msAjax;
 
-    /* test-code */
-    $.msAjax_private = {
-        msJsonDateOnlySanitizer: msJsonDateOnlySanitizer
-    };
-    /* end test-code */
+
 
 })(window, jQuery);
