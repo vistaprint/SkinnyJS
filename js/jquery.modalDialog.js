@@ -557,6 +557,19 @@
             .on("pointermove", this._drag)
             .one("pointerup", this._stopDrag);
 
+        // when there is an iframe and your cursor goes over
+        // the iframe content it stops firing on the parent window
+        if (this.$frame) {
+            try {
+                this.$frame.iframeDocument().find("body")
+                    .on("pointermove", this._drag)
+                    .one("pointerup", this._stopDrag);
+            } catch (ex) {
+                // This can fail if the frame is in another domain
+            }
+        }
+
+
         this._isDragging = true;
     };
 
@@ -584,6 +597,12 @@
         delete this._initialDialogPos;
 
         $(document).off("pointermove", this._drag);
+
+        if (this.$frame) {
+            try {
+                this.$frame.iframeDocument().find("body").off("pointermove", this._drag);
+            } catch (ex) {}
+        }
 
         this._isDragging = false;
     };
