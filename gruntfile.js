@@ -254,6 +254,22 @@ module.exports = function(grunt) {
             options: {
                 spawn: false
             }
+        },
+        jsbeautifier : {
+            files: ["js/**/*.js", "test/**/*.js", "site/javascript/**/*.js"]
+        },
+        lineending : {
+            all: {
+                files: [{
+                    expand: true,
+                    cwd: "./js/",
+                    src: ["./**.js"],
+                    dest: "./js/"
+                  }],
+                options: {
+                    eol: "crlf"
+                }
+            }
         }
     };
 
@@ -276,6 +292,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-jekyll");
     grunt.loadNpmTasks("grunt-mkdir");
     grunt.loadNpmTasks("grunt-strip-code");
+    grunt.loadNpmTasks("grunt-jsbeautifier");
+    grunt.loadNpmTasks("grunt-lineending");
 
     // Wrap the mocha task
     grunt.renameTask("mocha", "orig-mocha");
