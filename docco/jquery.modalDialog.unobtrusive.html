@@ -91,7 +91,16 @@
 </pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Helpful utility: A class that will make a button close dialogs by default</p>             </td>             <td class="code">               <div class="highlight"><pre>
     <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="s2">&quot;.close-dialog&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
-        <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">getCurrent</span><span class="p">().</span><span class="nx">close</span><span class="p">();</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>Defer to the next tick of the event loop. It makes it more useful
+to apply this class without having to worry if the close handler will
+run before any other handlers.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> 
+            <span class="kd">var</span> <span class="nx">dialog</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">getCurrent</span><span class="p">();</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">dialog</span> <span class="o">&amp;&amp;</span> <span class="nx">dialog</span><span class="p">.</span><span class="nx">isOpen</span><span class="p">())</span> <span class="p">{</span>
+                <span class="nx">dialog</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+            <span class="p">}</span> 
+        <span class="p">});</span>
     <span class="p">});</span>
 
 <span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
