@@ -173,8 +173,9 @@
         }
         
         // Remove meta, link
-        // Preserve title and noscript: These don't hurt anything
-        var REMOVE_LIST = { META: true, LINK: true };
+        // Preserve title: These don't hurt anything, and the modal dialog framework uses them
+        // to get the title of the dialog.
+        var REMOVE_LIST = { META: true, LINK: true, NOSCRIPT: true };
 
         var nodes = $target.jquery ? $target : $target.childNodes;
         

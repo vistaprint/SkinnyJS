@@ -177,8 +177,9 @@ whereas previous versions expected a jQuery object, and would look up its ownerD
         <span class="p">}</span>
         
 </pre></div>             </td>           </tr>                               <tr id="section-21">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>               <p>Remove meta, link
-Preserve title and noscript: These don't hurt anything</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="kd">var</span> <span class="nx">REMOVE_LIST</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">META</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">LINK</span><span class="o">:</span> <span class="kc">true</span> <span class="p">};</span>
+Preserve title: These don't hurt anything, and the modal dialog framework uses them
+to get the title of the dialog.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="kd">var</span> <span class="nx">REMOVE_LIST</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">META</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">LINK</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">NOSCRIPT</span><span class="o">:</span> <span class="kc">true</span> <span class="p">};</span>
 
         <span class="kd">var</span> <span class="nx">nodes</span> <span class="o">=</span> <span class="nx">$target</span><span class="p">.</span><span class="nx">jquery</span> <span class="o">?</span> <span class="nx">$target</span> <span class="o">:</span> <span class="nx">$target</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">;</span>
         
