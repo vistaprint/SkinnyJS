@@ -29,13 +29,6 @@ module.exports = function(grunt) {
                     port: 9001,
                     keepalive: false
                 }
-            },
-
-            keepalive: {
-                options: {
-                    port: 9001,
-                    keepalive: true
-                }
             }
         },
         mocha: {
@@ -313,6 +306,13 @@ module.exports = function(grunt) {
         }
 
         grunt.task.run(taskName);
+    });
+
+    grunt.registerTask("connect-keepalive", function() {
+        var config = grunt.config.get("connect");
+        config.server.options.keepalive = true;
+        grunt.config.set("connect", config);
+        grunt.task.run("connect");
     });
 
     // Custom tasks
