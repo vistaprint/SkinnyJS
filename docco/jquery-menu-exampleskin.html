@@ -2,34 +2,29 @@
 <a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery-menu-exampleskin.js" target="_blank">View this file on Github</a>
 
 <hr style="height: 1px; border:0; background-color:#4A525A">
-             <h1>               jquery-menu-exampleskin.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span>
-<span class="p">{</span>
+             <h1>               jquery-menu-exampleskin.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">TRANSITION_TIME</span> <span class="o">=</span> <span class="mi">300</span><span class="p">;</span>
 
     <span class="nx">$</span><span class="p">.</span><span class="nx">registerDropDownMenuSkin</span><span class="p">(</span>
-        <span class="s2">&quot;exampleskin&quot;</span><span class="p">,</span>
-        <span class="p">{</span>
-            <span class="nx">position</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">level</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
-                <span class="p">{</span>
+        <span class="s2">&quot;exampleskin&quot;</span><span class="p">,</span> <span class="p">{</span>
+            <span class="nx">position</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">level</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
                     <span class="nx">e</span><span class="p">.</span><span class="nx">$panel</span><span class="p">.</span><span class="nx">css</span><span class="p">({</span>
-                            <span class="nx">top</span><span class="o">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">$item</span><span class="p">.</span><span class="nx">innerHeight</span><span class="p">(),</span>
-                            <span class="nx">left</span><span class="o">:</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nx">e</span><span class="p">.</span><span class="nx">$item</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;borderLeftWidth&quot;</span><span class="p">)</span>
-                        <span class="p">});</span>
+                        <span class="nx">top</span><span class="o">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">$item</span><span class="p">.</span><span class="nx">innerHeight</span><span class="p">(),</span>
+                        <span class="nx">left</span><span class="o">:</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nx">e</span><span class="p">.</span><span class="nx">$item</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;borderLeftWidth&quot;</span><span class="p">)</span>
+                    <span class="p">});</span>
                     <span class="k">return</span><span class="p">;</span>
                 <span class="p">}</span>
-            
+
                 <span class="kd">var</span> <span class="nx">pos</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">$item</span><span class="p">.</span><span class="nx">position</span><span class="p">();</span>
- 
+
                 <span class="nx">e</span><span class="p">.</span><span class="nx">$panel</span><span class="p">.</span><span class="nx">css</span><span class="p">({</span>
-                        <span class="nx">left</span><span class="o">:</span> <span class="nx">pos</span><span class="p">.</span><span class="nx">left</span> <span class="o">+</span> <span class="nx">e</span><span class="p">.</span><span class="nx">$item</span><span class="p">.</span><span class="nx">innerWidth</span><span class="p">(),</span> 
-                        <span class="nx">top</span><span class="o">:</span> <span class="mi">0</span>
-                    <span class="p">});</span>
+                    <span class="nx">left</span><span class="o">:</span> <span class="nx">pos</span><span class="p">.</span><span class="nx">left</span> <span class="o">+</span> <span class="nx">e</span><span class="p">.</span><span class="nx">$item</span><span class="p">.</span><span class="nx">innerWidth</span><span class="p">(),</span>
+                    <span class="nx">top</span><span class="o">:</span> <span class="mi">0</span>
+                <span class="p">});</span>
             <span class="p">},</span>
 
-            <span class="nx">animationShow</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span>
-            <span class="p">{</span>
+            <span class="nx">animationShow</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <pre><code>       if (e.level === 0)
        {
            e.$panel.slideDown(TRANSITION_TIME, callback);
@@ -40,8 +35,7 @@
                 <span class="nx">e</span><span class="p">.</span><span class="nx">$panel</span><span class="p">.</span><span class="nx">fadeIn</span><span class="p">(</span><span class="nx">TRANSITION_TIME</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
             <span class="p">},</span>
 
-            <span class="nx">animationHide</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span>
-            <span class="p">{</span>
+            <span class="nx">animationHide</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <pre><code>       if (e.level === 0)
        {
            e.$panel.slideUp(TRANSITION_TIME, callback);

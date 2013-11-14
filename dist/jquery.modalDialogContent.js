@@ -842,11 +842,11 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
         // Defer to the next tick of the event loop. It makes it more useful
         // to apply this class without having to worry if the close handler will
         // run before any other handlers.
-        setTimeout(function() { 
+        setTimeout(function() {
             var dialog = $.modalDialog.getCurrent();
             if (dialog && dialog.isOpen()) {
                 dialog.close();
-            } 
+            }
         }, 0);
     });
 
