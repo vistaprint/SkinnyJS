@@ -24,11 +24,11 @@ the trigger tag unobtrusive
 TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 */
 
-(function($) {
+(function ($) {
     var DIALOG_DATA_KEY = "modalDialogUnobtrusive";
 
     // Click handler for all links which open dialogs
-    var dialogLinkHandler = function(e) {
+    var dialogLinkHandler = function (e) {
         e.preventDefault();
 
         var $link = $(e.currentTarget);
@@ -85,13 +85,13 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     $(document).on("click", "[data-rel='modalDialog']", dialogLinkHandler);
 
     // Helpful utility: A class that will make a button close dialogs by default
-    $(document).on("click", ".close-dialog", function(e) {
+    $(document).on("click", ".close-dialog", function (e) {
         e.preventDefault();
 
         // Defer to the next tick of the event loop. It makes it more useful
         // to apply this class without having to worry if the close handler will
         // run before any other handlers.
-        setTimeout(function() {
+        setTimeout(function () {
             var dialog = $.modalDialog.getCurrent();
             if (dialog && dialog.isOpen()) {
                 dialog.close();

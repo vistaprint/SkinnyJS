@@ -1,14 +1,14 @@
  /*jshint quotmark:false */
 
- describe("jquery.modalDialog.unobtrusive", function() {
+ describe("jquery.modalDialog.unobtrusive", function () {
      var assert = chai.assert;
 
      $.modalDialog.iframeLoadTimeout = 1000;
      $.modalDialog.animationDuration = 100;
 
-     var clickDialogLink = function($link) {
+     var clickDialogLink = function ($link) {
          var deferred = new $.Deferred();
-         var openHandler = function() {
+         var openHandler = function () {
              $.modalDialog.onopen.remove(openHandler);
              deferred.resolveWith(this);
          };
@@ -20,15 +20,15 @@
          return deferred;
      };
 
-     var ensureLinkOpensDialog = function(dialogType, linkAttributes) {
-         it("Ensure unobtrusive link opens " + dialogType + " dialog", function(done) {
+     var ensureLinkOpensDialog = function (dialogType, linkAttributes) {
+         it("Ensure unobtrusive link opens " + dialogType + " dialog", function (done) {
              var $link = $('<a ' + linkAttributes + ' data-rel="modalDialog">link</a>');
              $link.appendTo("body");
 
              var dialog;
 
              clickDialogLink($link)
-                 .then(function() {
+                 .then(function () {
                      // capture the instance of the dialog so we can compare it later
                      dialog = this;
 
@@ -37,17 +37,17 @@
 
                      return this.close();
                  })
-                 .then(function() {
+                 .then(function () {
                      return clickDialogLink($link);
                  })
-                 .then(function() {
+                 .then(function () {
                      assert.isTrue(this.isOpen(), "Dialog is open");
                      assert.equal(dialog, this, "Ensure 'this' is the current dialog");
                      assert.equal(dialog, $.modalDialog.getCurrent(), "Ensure the same dialog was opened the second time the link was clicked");
 
                      return this.close();
                  })
-                 .then(function() {
+                 .then(function () {
                      // Clean up
                      $link.remove();
 
@@ -63,14 +63,14 @@
      ensureLinkOpensDialog("ajax", 'href="content/jquery.modalDialog.ajaxContent.html" data-dialog-ajax="true"');
 
      //TODO this should be in its own unit test suite
-     it("Ensure iframe dialog can be opened twice", function(done) {
+     it("Ensure iframe dialog can be opened twice", function (done) {
          var dialog = $.modalDialog.create({
              url: "content/jquery.modalDialog.iframeContent.html"
          });
 
          dialog.open()
              .then(
-                 function() {
+                 function () {
                      // capture the instance of the dialog so we can compare it later
                      dialog = this;
 
@@ -80,24 +80,24 @@
                      return this.close();
                  })
              .then(
-                 function() {
+                 function () {
                      return dialog.open();
                  })
              .then(
-                 function() {
+                 function () {
                      assert.isTrue(this.isOpen(), "Dialog is open");
                      assert.equal(dialog, this, "Ensure 'this' is the current dialog");
                      assert.equal(dialog, $.modalDialog.getCurrent(), "Ensure the same dialog was opened the second time the link was clicked");
 
                      return this.close();
                  },
-                 function(err) {
+                 function (err) {
                      assert.fail("Error: " + err.message);
 
                      done();
                  })
              .then(
-                 function() {
+                 function () {
                      done();
                  });
      });

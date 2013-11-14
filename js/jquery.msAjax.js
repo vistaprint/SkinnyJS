@@ -1,13 +1,13 @@
 /// <reference path="../dependencies/json2.js" />
 /// <reference path="date-parse.js" />
 
-(function(window, $) {
+(function (window, $) {
     // Remove ASMX specific metadata from JSON
-    var msJsonSanitizer = function(key, value) {
+    var msJsonSanitizer = function (key, value) {
         // Rehydrate date values
-        if (typeof(value) == "string") {
+        if (typeof (value) == "string") {
             return msJsonDateOnlySanitizer(key, value);
-        } else if (typeof(value) == "object") {
+        } else if (typeof (value) == "object") {
             // ASMX adds a "__type" property to aid in return-trip deserialization.
             // This isn't useful most of the time.
             if (value && value.__type) {
@@ -19,8 +19,8 @@
     };
 
     // Converts date strings in ISO8601 or Microsoft format to JavaScript dates
-    var msJsonDateOnlySanitizer = function(key, value) {
-        if (typeof(value) == "string") {
+    var msJsonDateOnlySanitizer = function (key, value) {
+        if (typeof (value) == "string") {
             // Perform strict parsing so that strings that are not full dates are not parsed as dates
             // Example of a partial date:       "2013"
             // Example of a full ISO8601 date:  "2013-08-07T21:40:05.121+06:00"
@@ -38,7 +38,7 @@
     };
 
     // Parses Microsoft JSON, removes the outer container, and revives it.
-    $.parseMsJSON = function(text, preserveType) {
+    $.parseMsJSON = function (text, preserveType) {
         if (!text) {
             return {};
         }
@@ -54,12 +54,12 @@
         return typeof json.d != "undefined" ? json.d : json;
     };
 
-    $.parseMsJSON.isNumericString = function(value) {
+    $.parseMsJSON.isNumericString = function (value) {
         return new RegExp(/^-?[0-9]+\.?[0-9]*$/).test(value);
     };
 
     // Recurses through a JSON object and applies the specified reviver
-    var recurseJSON = function(holder, key, reviver) {
+    var recurseJSON = function (holder, key, reviver) {
         var k, v, value = holder[key];
         if (value && typeof value == "object") {
             for (k in value) {
@@ -78,14 +78,14 @@
     };
 
     // Recurses over a json data structure and runs the specified reviver function
-    $.recurseJSON = function(json, reviver) {
+    $.recurseJSON = function (json, reviver) {
         return recurseJSON({
             "": json
         }, "", reviver);
     };
 
     // Recurses over a json data structure output by Microsoft JSON serialization, and revives it.
-    $.reviveMsJSON = function(json, datesOnly) {
+    $.reviveMsJSON = function (json, datesOnly) {
         return $.recurseJSON(json, datesOnly ? msJsonDateOnlySanitizer : msJsonSanitizer);
     };
 
@@ -101,7 +101,7 @@
     var reISO = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/;
 
     // A reviver/replacer for JSON.stringify() that converts dates into Microsoft format
-    $.stringifyMsDate = function(key, value) {
+    $.stringifyMsDate = function (key, value) {
         if (typeof value == "string") {
             var a = reISO.exec(value);
             if (a) {
@@ -117,7 +117,7 @@
 
     // Invoke $.ajax() with all the correct settings and wrappers for Microsoft script services such as ASMX and WCF.
     // Otherwise identical to $.ajax() (same settings, arguments, and return values).
-    $.msAjax = function(url, settings) {
+    $.msAjax = function (url, settings) {
         if (!settings) {
             settings = {};
         }

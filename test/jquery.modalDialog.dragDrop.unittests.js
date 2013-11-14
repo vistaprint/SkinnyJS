@@ -1,7 +1,7 @@
 $.modalDialog.iframeLoadTimeout = 1000;
 $.modalDialog.animationDuration = 100;
 
-describe("jquery.modalDialog", function() {
+describe("jquery.modalDialog", function () {
     var assert = chai.assert;
 
     function trigger($el, eventName, props) {
@@ -10,9 +10,9 @@ describe("jquery.modalDialog", function() {
         });
     }
 
-    describe("#_makeDraggable()", function() {
-        var verifyDragDrop = function(eventType, events) {
-            it("should make a dialog draggable using " + eventType + " events", function(done) {
+    describe("#_makeDraggable()", function () {
+        var verifyDragDrop = function (eventType, events) {
+            it("should make a dialog draggable using " + eventType + " events", function (done) {
                 var dialog = $.modalDialog.create({
                     content: "#simpleDialog"
                 });
@@ -20,7 +20,7 @@ describe("jquery.modalDialog", function() {
                 var DISTANCE = 200;
 
                 dialog.open()
-                    .then(function() {
+                    .then(function () {
                         var pos = dialog.$header.offset();
 
                         trigger(dialog.$header, events[0], {

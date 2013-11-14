@@ -1,4 +1,4 @@
-describe('jquery.pointerEvents', function() {
+describe('jquery.pointerEvents', function () {
     var el = $('#test');
 
     function test(pointerEvent, nativeEvents) {
@@ -18,8 +18,8 @@ describe('jquery.pointerEvents', function() {
         el.on(pointerEvent, workIt);
 
         // run all the native events that map to this pointer event
-        $.each(nativeEvents, function(i, nativeEvent) {
-            it('should call a ' + pointerEvent + ' when a ' + nativeEvent + ' is triggered', function() {
+        $.each(nativeEvents, function (i, nativeEvent) {
+            it('should call a ' + pointerEvent + ' when a ' + nativeEvent + ' is triggered', function () {
                 // reset groovy here for this next test
                 groovy = false;
 
@@ -32,7 +32,7 @@ describe('jquery.pointerEvents', function() {
 
             // we have a special case for the touchstart to prevent mousedown
             if (pointerEvent == 'pointerdown' && nativeEvent == 'touchstart') {
-                it('calling touchstart should prevent the next mousedown event', function() {
+                it('calling touchstart should prevent the next mousedown event', function () {
                     groovy = false;
                     el.triggerNative('mousedown');
                     chai.assert.equal(groovy, false);
@@ -41,10 +41,10 @@ describe('jquery.pointerEvents', function() {
         });
 
         // ensure that you can teardown (unbind) the pointer event
-        it('teardown ' + pointerEvent, function() {
+        it('teardown ' + pointerEvent, function () {
             el.off(pointerEvent, workIt);
 
-            $.each(nativeEvents, function(i, nativeEvent) {
+            $.each(nativeEvents, function (i, nativeEvent) {
                 el.triggerNative(nativeEvent);
             });
 
@@ -52,19 +52,19 @@ describe('jquery.pointerEvents', function() {
         });
     }
 
-    describe('pointerdown', function() {
+    describe('pointerdown', function () {
         test('pointerdown', ['touchstart', 'mousedown']);
     });
 
-    describe('pointerup', function() {
+    describe('pointerup', function () {
         test('pointerup', ['touchend', 'mouseup']);
     });
 
-    describe('pointermove', function() {
+    describe('pointermove', function () {
         test('pointermove', ['touchmove', 'mousemove']);
     });
 
-    describe('hover (pointerover, pointerout)', function() {
+    describe('hover (pointerover, pointerout)', function () {
         test('pointerover', ['mouseover']);
         test('pointerout', ['mouseout']);
     });

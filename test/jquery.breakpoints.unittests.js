@@ -1,7 +1,7 @@
-describe("jquery.breakpoints", function() {
+describe("jquery.breakpoints", function () {
     var assert = chai.assert;
-    describe("jquery.breakpoints", function() {
-        it("should initialize a class immediately", function() {
+    describe("jquery.breakpoints", function () {
+        it("should initialize a class immediately", function () {
             var $el = $("<div />").appendTo("body").css({
                 width: "300px"
             });
@@ -15,7 +15,7 @@ describe("jquery.breakpoints", function() {
             assert.equal($el.attr("class"), "breakpoint-medium");
         });
 
-        it("should update on resize", function() {
+        it("should update on resize", function () {
             var $el = $("<div />").appendTo("body").css({
                 width: "300px"
             });
@@ -35,7 +35,7 @@ describe("jquery.breakpoints", function() {
             assert.equal($el.attr("class"), "breakpoint-large");
         });
 
-        it("should update on orientationchange", function() {
+        it("should update on orientationchange", function () {
             var $el = $("<div />").appendTo("body").css({
                 width: "300px"
             });
@@ -55,7 +55,7 @@ describe("jquery.breakpoints", function() {
             assert.equal($el.attr("class"), "breakpoint-large");
         });
 
-        it("should update on breakpoints:refresh", function() {
+        it("should update on breakpoints:refresh", function () {
             var $el = $("<div />").appendTo("body").css({
                 width: "300px"
             });
@@ -75,7 +75,7 @@ describe("jquery.breakpoints", function() {
             assert.equal($el.attr("class"), "breakpoint-large");
         });
 
-        it("should set class to maximum size of breakpoint", function() {
+        it("should set class to maximum size of breakpoint", function () {
             var $el = $("<div />").appendTo("body").css({
                 width: "200px"
             });
@@ -89,7 +89,7 @@ describe("jquery.breakpoints", function() {
             assert.equal($el.attr("class"), "breakpoint-small");
         });
 
-        it("should set class to minimum size of breakpoint", function() {
+        it("should set class to minimum size of breakpoint", function () {
             var $el = $("<div />").appendTo("body").css({
                 width: "201px"
             });
@@ -103,7 +103,7 @@ describe("jquery.breakpoints", function() {
             assert.equal($el.attr("class"), "breakpoint-medium");
         });
 
-        it("should set class for largest breakpoint if size is max for largest breakpoint", function() {
+        it("should set class for largest breakpoint if size is max for largest breakpoint", function () {
             var $el = $("<div />").appendTo("body").css({
                 width: "600px"
             });
@@ -117,7 +117,7 @@ describe("jquery.breakpoints", function() {
             assert.equal($el.attr("class"), "breakpoint-large");
         });
 
-        it("should remove breakpoint classes if the width is larger than the largest breakpoint", function() {
+        it("should remove breakpoint classes if the width is larger than the largest breakpoint", function () {
             var $el = $("<div />").appendTo("body").css({
                 width: "601px"
             });
@@ -131,12 +131,12 @@ describe("jquery.breakpoints", function() {
             assert.equal($el.attr("class"), "breakpoint-max");
         });
 
-        it("should throw an error if no max is specified for a breakpoint", function() {
+        it("should throw an error if no max is specified for a breakpoint", function () {
             var $el = $("<div />").appendTo("body").css({
                 width: "601px"
             });
 
-            assert.throws(function() {
+            assert.throws(function () {
                     $el.breakpoints({
                         small: {
                             min: 0,
@@ -154,7 +154,7 @@ describe("jquery.breakpoints", function() {
                 "No max specified for breakpoint: large");
         });
 
-        it("should support explicit ranges with no overlap", function() {
+        it("should support explicit ranges with no overlap", function () {
             var $el = $("<div />").appendTo("body").css({
                 width: "500px"
             });
@@ -176,7 +176,7 @@ describe("jquery.breakpoints", function() {
             assert.equal($el.attr("class"), "breakpoint-large");
         });
 
-        it("should support explicit ranges with overlap", function() {
+        it("should support explicit ranges with overlap", function () {
             var $el = $("<div />").appendTo("body").css({
                 width: "150px"
             });
@@ -195,14 +195,14 @@ describe("jquery.breakpoints", function() {
             assert.equal($el.attr("class"), "breakpoint-small breakpoint-medium");
         });
 
-        it("should fire enter event handler", function() {
+        it("should fire enter event handler", function () {
             var $el = $("<div />").appendTo("body").css({
                 width: "100px"
             });
 
             var wasCalled = false;
 
-            var enterHandler = function(breakpoint) {
+            var enterHandler = function (breakpoint) {
                 wasCalled = true;
 
                 assert.equal(breakpoint.name, "medium");
@@ -227,14 +227,14 @@ describe("jquery.breakpoints", function() {
             assert.ok(wasCalled);
         });
 
-        it("should fire leave event handler", function() {
+        it("should fire leave event handler", function () {
             var $el = $("<div />").appendTo("body").css({
                 width: "100px"
             });
 
             var wasCalled = false;
 
-            var leaveHandler = function(breakpoint) {
+            var leaveHandler = function (breakpoint) {
                 wasCalled = true;
 
                 assert.equal(breakpoint.name, "small");
@@ -259,14 +259,14 @@ describe("jquery.breakpoints", function() {
             assert.ok(wasCalled);
         });
 
-        it("should fire breakpoint:enter event handler", function() {
+        it("should fire breakpoint:enter event handler", function () {
             var $el = $("<div />").appendTo("body").css({
                 width: "100px"
             });
 
             var wasCalled = false;
 
-            var enterHandler = function(e) {
+            var enterHandler = function (e) {
                 wasCalled = true;
 
                 assert.equal(e.breakpoint.name, "medium");
@@ -292,14 +292,14 @@ describe("jquery.breakpoints", function() {
             assert.ok(wasCalled);
         });
 
-        it("should fire breakpoint:leave event handler", function() {
+        it("should fire breakpoint:leave event handler", function () {
             var $el = $("<div />").appendTo("body").css({
                 width: "100px"
             });
 
             var wasCalled = false;
 
-            var leaveHandler = function(e) {
+            var leaveHandler = function (e) {
                 wasCalled = true;
 
                 assert.equal(e.breakpoint.name, "small");
@@ -326,8 +326,8 @@ describe("jquery.breakpoints", function() {
         });
     });
 
-    describe("jquery.breakpointsFromAttrs", function() {
-        it("should read data-breakpoints attributes, multiple", function() {
+    describe("jquery.breakpointsFromAttrs", function () {
+        it("should read data-breakpoints attributes, multiple", function () {
             var $el = $("<div data-breakpoints='small:200; medium: 400; large: 600;'></div>").appendTo("body").css({
                 width: "300px"
             });
@@ -337,7 +337,7 @@ describe("jquery.breakpoints", function() {
             assert.equal($el.attr("class"), "breakpoint-medium");
         });
 
-        it("should read data-breakpoints attributes, single", function() {
+        it("should read data-breakpoints attributes, single", function () {
             var $el = $("<div data-breakpoints='small:200'></div>").appendTo("body").css({
                 width: "300px"
             });
@@ -348,8 +348,8 @@ describe("jquery.breakpoints", function() {
         });
     });
 
-    describe("#normalizeBreakpoints", function() {
-        it("should return maxWidths and convert integer values to objects with max properties", function() {
+    describe("#normalizeBreakpoints", function () {
+        it("should return maxWidths and convert integer values to objects with max properties", function () {
             var breakpoints = {
                 "small": 200,
                 "medium": 400
@@ -373,7 +373,7 @@ describe("jquery.breakpoints", function() {
             });
         });
 
-        it("should return an empty array when no breakpoints are specified", function() {
+        it("should return an empty array when no breakpoints are specified", function () {
             var breakpoints = {};
 
             var maxWidths = $.breakpointsPrivate.normalizeBreakpoints(breakpoints);
@@ -383,7 +383,7 @@ describe("jquery.breakpoints", function() {
             assert.deepEqual(breakpoints, {});
         });
 
-        it("should sort maxWidth values as integers, not strings", function() {
+        it("should sort maxWidth values as integers, not strings", function () {
             var breakpoints = {
                 "small": 600,
                 "medium": 900,
@@ -414,8 +414,8 @@ describe("jquery.breakpoints", function() {
         });
     });
 
-    describe("#setMinWidths", function() {
-        it("should assign min widths based on the lowest previous maxWidth", function() {
+    describe("#setMinWidths", function () {
+        it("should assign min widths based on the lowest previous maxWidth", function () {
             var breakpoints = {
                 "small": {
                     max: 200
@@ -440,7 +440,7 @@ describe("jquery.breakpoints", function() {
             });
         });
 
-        it("should not overwrite an explicit min width", function() {
+        it("should not overwrite an explicit min width", function () {
             var breakpoints = {
                 "small": {
                     min: 100,
@@ -467,8 +467,8 @@ describe("jquery.breakpoints", function() {
         });
     });
 
-    describe("#addMaxBreakpoint", function() {
-        it("should create max breakpoint larger than the largest maxWidth", function() {
+    describe("#addMaxBreakpoint", function () {
+        it("should create max breakpoint larger than the largest maxWidth", function () {
             var breakpoints = {
                 "small": {
                     min: 0,
@@ -499,7 +499,7 @@ describe("jquery.breakpoints", function() {
             });
         });
 
-        it("should do nothing if empty objects are passed", function() {
+        it("should do nothing if empty objects are passed", function () {
             var breakpoints = {};
             var maxWidths = [];
 

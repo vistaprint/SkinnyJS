@@ -3,14 +3,14 @@
  $.modalDialog.iframeLoadTimeout = 1000;
  $.modalDialog.animationDuration = 100;
 
- describe("$.modalDialog.getSettings()", function() {
+ describe("$.modalDialog.getSettings()", function () {
      var assert = chai.assert;
 
      function createDiv(attrs) {
          return $('<div ' + attrs + '>content</div>').appendTo(document.body);
      }
 
-     it("should parse the title attribute properly", function() {
+     it("should parse the title attribute properly", function () {
          var $div = createDiv('data-dialog-title="foo"');
          var settings = $.modalDialog.getSettings($div);
 
@@ -19,7 +19,7 @@
          $div.remove();
      });
 
-     it("should not create a title property when no attribute is present", function() {
+     it("should not create a title property when no attribute is present", function () {
          var $div = createDiv('');
          var settings = $.modalDialog.getSettings($div);
 
@@ -29,7 +29,7 @@
      });
 
      function describeIntAttrs(name) {
-         it("should parse the " + name + " attribute properly as an int", function() {
+         it("should parse the " + name + " attribute properly as an int", function () {
              var $div = createDiv('data-dialog-' + name.toLowerCase() + '="42"');
              var settings = $.modalDialog.getSettings($div);
 
@@ -38,7 +38,7 @@
              $div.remove();
          });
 
-         it("should parse the " + name + " attribute properly as 0", function() {
+         it("should parse the " + name + " attribute properly as 0", function () {
              var $div = createDiv('data-dialog-' + name.toLowerCase() + '="0"');
              var settings = $.modalDialog.getSettings($div);
 
@@ -47,7 +47,7 @@
              $div.remove();
          });
 
-         it("should parse the " + name + " attribute properly as undefined when not present", function() {
+         it("should parse the " + name + " attribute properly as undefined when not present", function () {
              var $div = createDiv('');
              var settings = $.modalDialog.getSettings($div);
 
@@ -62,7 +62,7 @@
      describeIntAttrs("zIndex");
 
      function describeBoolAttrs(name) {
-         it("should parse the " + name + " attribute properly as true", function() {
+         it("should parse the " + name + " attribute properly as true", function () {
              var $div = createDiv('data-dialog-' + name.toLowerCase() + '="true"');
              var settings = $.modalDialog.getSettings($div);
 
@@ -71,7 +71,7 @@
              $div.remove();
          });
 
-         it("should parse the " + name + " attribute properly as false", function() {
+         it("should parse the " + name + " attribute properly as false", function () {
              var $div = createDiv('data-dialog-' + name.toLowerCase() + '="false"');
              var settings = $.modalDialog.getSettings($div);
 
@@ -80,7 +80,7 @@
              $div.remove();
          });
 
-         it("should parse the " + name + " attribute properly as undefined when not present", function() {
+         it("should parse the " + name + " attribute properly as undefined when not present", function () {
              var $div = createDiv('');
              var settings = $.modalDialog.getSettings($div);
 
@@ -95,7 +95,7 @@
      describeBoolAttrs("destroyOnClose");
 
      function describeEventAttrs(eventName) {
-         it("should parse the on" + eventName + " attribute properly to a function", function() {
+         it("should parse the on" + eventName + " attribute properly to a function", function () {
              var $div = createDiv('data-dialog-on' + eventName + '="event.value = \'foo\';"');
              var settings = $.modalDialog.getSettings($div);
 

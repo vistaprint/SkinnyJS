@@ -25,11 +25,11 @@
 // Otherwise, you can hide specific problematic elements by adding this attribute:
 // data-dialog-hide-onopen="true"
 
-(function($) {
+(function ($) {
     var SELECTOR_MAIN_PANEL = "[data-dialog-main-panel='true']";
     var SELECTOR_BAD_ELEMENT = "[data-dialog-hide-onopen='true']";
 
-    var preventWindowTouchEvents = function(dialog, fix) {
+    var preventWindowTouchEvents = function (dialog, fix) {
         // The bug only affects iFrame dialogs
         if (dialog.dialogType != "iframe") {
             return;
@@ -38,11 +38,11 @@
         $([window, document]).enableEvent("touchmove touchstart touchend", !fix);
     };
 
-    var getWindowHeight = function() {
+    var getWindowHeight = function () {
         return window.innerHeight || $(window).height();
     };
 
-    var initializeShimming = function() {
+    var initializeShimming = function () {
         // First, see if the main panel is specified.
         // If so, it's the best choice of elements to hide.
         var $badEls = $(SELECTOR_MAIN_PANEL);
@@ -55,7 +55,7 @@
         var _scrollTop = 0;
         var _height = 0;
 
-        $.modalDialog.onbeforeopen.add(function() {
+        $.modalDialog.onbeforeopen.add(function () {
             if (this.level === 0) {
                 // Cache scroll height and body height so we can restore them when the dialog is closed
                 _scrollTop = $(document).scrollTop();
@@ -64,7 +64,7 @@
                 // Cache the parent for each element we need to remove from the DOM.
                 // This is important to fix the various WebKit text overlay bugs (described above in the header).
                 // Hiding them wont do it.
-                $badEls.each(function(i, el) {
+                $badEls.each(function (i, el) {
                     $(el).data("dialog-parent", el.parentNode);
                 })
                     .detach();
@@ -76,7 +76,7 @@
             }
         });
 
-        $.modalDialog.onopen.add(function() {
+        $.modalDialog.onopen.add(function () {
             if (this.level === 0) {
                 // Ensure the body/background is bigger than the dialog,
                 // otherwise we see the background "end" above the bottom
@@ -92,12 +92,12 @@
             }
         });
 
-        $.modalDialog.onclose.add(function() {
+        $.modalDialog.onclose.add(function () {
             if (this.level === 0) {
                 // Restore body height, elements, and scroll position
                 document.body.style.height = _height;
 
-                $badEls.each(function(i, el) {
+                $badEls.each(function (i, el) {
                     $($(el).data("dialog-parent")).append(el);
                 });
 
@@ -106,7 +106,7 @@
         });
     };
 
-    $(function() {
+    $(function () {
         if (!$.modalDialog.isSmallScreen()) {
             return;
         }
@@ -118,16 +118,16 @@
         if ($.modalDialog && $.modalDialog._isContent) {
             var dialog = $.modalDialog.getCurrent();
             if (dialog) {
-                $(window).on("load", function() {
+                $(window).on("load", function () {
                     preventWindowTouchEvents(dialog, true);
                 });
             }
         } else {
             // This is for the host window.
-            $.modalDialog.onopen.add(function() {
+            $.modalDialog.onopen.add(function () {
                 preventWindowTouchEvents(this, true);
             });
-            $.modalDialog.onbeforeclose.add(function() {
+            $.modalDialog.onbeforeclose.add(function () {
                 preventWindowTouchEvents(this, false);
             });
 

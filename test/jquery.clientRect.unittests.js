@@ -1,22 +1,22 @@
-describe("jquery.clientRect()", function() {
+describe("jquery.clientRect()", function () {
     var assert = chai.assert;
 
     var _cleanEls = [];
 
-    afterEach(function() {
+    afterEach(function () {
         while (_cleanEls.length > 0) {
             _cleanEls[0].remove();
             _cleanEls.splice(0, 1);
         }
     });
 
-    var tempEl = function(html) {
+    var tempEl = function (html) {
         var $el = $(html);
         _cleanEls.push($el);
         return $el;
     };
 
-    var basicEl = function() {
+    var basicEl = function () {
         return tempEl("<div />")
             .css({
                 position: "absolute",
@@ -28,7 +28,7 @@ describe("jquery.clientRect()", function() {
             .appendTo("body");
     };
 
-    var rectEquals = function(rect, top, left, width, height) {
+    var rectEquals = function (rect, top, left, width, height) {
         var bottom = top + height;
         var right = left + width;
 
@@ -40,19 +40,19 @@ describe("jquery.clientRect()", function() {
         assert.equal(Math.round(rect.right), right);
     };
 
-    var clientRectShould = function(description, fn) {
-        it("should " + description, function() {
+    var clientRectShould = function (description, fn) {
+        it("should " + description, function () {
             $.support.getBoundingClientRect = true;
             fn();
         });
 
-        it("should " + description + " without using getBoundingClientRect", function() {
+        it("should " + description + " without using getBoundingClientRect", function () {
             $.support.getBoundingClientRect = false;
             fn();
         });
     };
 
-    clientRectShould("read a basic 100px square rectangle", function() {
+    clientRectShould("read a basic 100px square rectangle", function () {
         var $el = basicEl();
 
         var rect = $el.clientRect();
@@ -60,7 +60,7 @@ describe("jquery.clientRect()", function() {
         rectEquals(rect, 100, 100, 100, 100);
     });
 
-    clientRectShould("return a 0 rect for a detached element", function() {
+    clientRectShould("return a 0 rect for a detached element", function () {
         var $el = basicEl().remove();
 
         var rect = $el.clientRect();
@@ -69,7 +69,7 @@ describe("jquery.clientRect()", function() {
 
     });
 
-    clientRectShould("return a 0 rect for a hidden element", function() {
+    clientRectShould("return a 0 rect for a hidden element", function () {
         var $el = basicEl().hide();
 
         var rect = $el.clientRect();
@@ -78,7 +78,7 @@ describe("jquery.clientRect()", function() {
 
     });
 
-    clientRectShould("include margin in resulting rect", function() {
+    clientRectShould("include margin in resulting rect", function () {
         var $el = basicEl().css("margin", 10);
 
         var rect = $el.clientRect();
@@ -87,7 +87,7 @@ describe("jquery.clientRect()", function() {
 
     });
 
-    clientRectShould("include padding in resulting rect", function() {
+    clientRectShould("include padding in resulting rect", function () {
         var $el = basicEl().css("padding", 10);
 
         var rect = $el.clientRect();
@@ -96,7 +96,7 @@ describe("jquery.clientRect()", function() {
 
     });
 
-    clientRectShould("not include border in resulting rect", function() {
+    clientRectShould("not include border in resulting rect", function () {
         var $el = basicEl().css("border", 10);
 
         var rect = $el.clientRect();
@@ -105,7 +105,7 @@ describe("jquery.clientRect()", function() {
 
     });
 
-    clientRectShould("return a 100px rect if the document element has a margin", function() {
+    clientRectShould("return a 100px rect if the document element has a margin", function () {
         var $el = basicEl();
 
         $(document).css("margin", 10);
@@ -118,7 +118,7 @@ describe("jquery.clientRect()", function() {
     });
 
 
-    clientRectShould("return a 100px rect when the window is scrolled", function() {
+    clientRectShould("return a 100px rect when the window is scrolled", function () {
         var $el = basicEl();
 
         // Create a big element so we can scroll the window
@@ -137,7 +137,7 @@ describe("jquery.clientRect()", function() {
         window.scrollTo(0, 0);
     });
 
-    clientRectShould("factor in scroll position when within an element with overflow scroll", function() {
+    clientRectShould("factor in scroll position when within an element with overflow scroll", function () {
         var $outerEl = basicEl().css({
             overflow: "scroll"
         });

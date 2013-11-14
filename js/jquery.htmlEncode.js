@@ -1,4 +1,4 @@
-(function($) {
+(function ($) {
     var map = {
         "&": "&amp;",
         "'": "&#39;",
@@ -7,8 +7,8 @@
         ">": "&gt;"
     };
 
-    $.htmlEncode = function(s) {
-        return s.replace(/[&"'<>]/g, function(c) {
+    $.htmlEncode = function (s) {
+        return s.replace(/[&"'<>]/g, function (c) {
             return map[c];
         });
     };

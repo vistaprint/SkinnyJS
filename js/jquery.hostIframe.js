@@ -1,9 +1,9 @@
-(function($) {
+(function ($) {
     var DOCUMENT_NODE = 9;
 
     // Gets a jQuery object containing the iframe element containing the current content
-    $.fn.hostIframe = function() {
-        return this.map(function(index, doc) {
+    $.fn.hostIframe = function () {
+        return this.map(function (index, doc) {
             // TODO make this work for windows too
             if (doc.nodeType != DOCUMENT_NODE) {
                 throw new Error("Element is not a document");
@@ -24,8 +24,8 @@
     };
 
     // If the current jQuery object contains an iframe, this gets a jQuery object containing the iframe's document
-    $.fn.iframeDocument = function() {
-        return this.map(function(index, iframe) {
+    $.fn.iframeDocument = function () {
+        return this.map(function (index, iframe) {
             try {
                 return iframe.contentWindow.document;
             } catch (ex) {
@@ -35,8 +35,8 @@
     };
 
     // If the current jQuery object contains an iframe, this gets a jQuery object containing the iframe's content window
-    $.fn.iframeWindow = function() {
-        return this.map(function(index, iframe) {
+    $.fn.iframeWindow = function () {
+        return this.map(function (index, iframe) {
             return iframe.contentWindow;
         });
     };

@@ -1,4 +1,4 @@
-describe("jquery.disableEvent plugin", function() {
+describe("jquery.disableEvent plugin", function () {
     mocha.globals(["_linkGlobalClick", "_linkGlobalMousedown", "_buttonGlobalClick"]);
 
     var assert = chai.assert;
@@ -6,12 +6,12 @@ describe("jquery.disableEvent plugin", function() {
     var _$link, _$button;
 
     //make the basic link element
-    var basicLinkElement = function() {
+    var basicLinkElement = function () {
         _$link = $("<a href='#'>hi</a>")
-            .on("click", function() {
+            .on("click", function () {
                 window._linkGlobalClick = true;
             })
-            .on("mousedown", function() {
+            .on("mousedown", function () {
                 window._linkGlobalMousedown = true;
             })
             .appendTo(document.body);
@@ -19,12 +19,12 @@ describe("jquery.disableEvent plugin", function() {
         return _$link;
     };
 
-    var basicButtonElement = function() {
+    var basicButtonElement = function () {
         _$button = $("<button>button</button>")
-            .on("click", function() {
+            .on("click", function () {
                 window._buttonGlobalClick = true;
             })
-            .on("keydown", function() {
+            .on("keydown", function () {
                 window._buttonButtonKeydown = true;
             })
             .appendTo(document.body);
@@ -32,7 +32,7 @@ describe("jquery.disableEvent plugin", function() {
         return _$button;
     };
 
-    afterEach(function() {
+    afterEach(function () {
         if (_$link) {
             _$link.remove();
         }
@@ -47,8 +47,8 @@ describe("jquery.disableEvent plugin", function() {
         delete window._buttonButtonKeydown;
     });
 
-    describe("jquery.disableEvent()", function() {
-        it("should prevent a click handler on an element from firing", function() {
+    describe("jquery.disableEvent()", function () {
+        it("should prevent a click handler on an element from firing", function () {
             var $el = basicLinkElement();
 
             $el.disableEvent("click");
@@ -58,7 +58,7 @@ describe("jquery.disableEvent plugin", function() {
             assert.isUndefined(window._linkGlobalClick);
         });
 
-        it("should prevent a mousedown handler on an element from firing", function() {
+        it("should prevent a mousedown handler on an element from firing", function () {
             var $el = basicLinkElement();
 
             $el.disableEvent("mousedown");
@@ -68,7 +68,7 @@ describe("jquery.disableEvent plugin", function() {
             assert.isUndefined(window._linkGlobalMousedown);
         });
 
-        it("should prevent multiple events from firing on an element from firing", function() {
+        it("should prevent multiple events from firing on an element from firing", function () {
             var $el = basicLinkElement();
 
             $el.disableEvent("click mousedown");
@@ -79,7 +79,7 @@ describe("jquery.disableEvent plugin", function() {
             assert.isUndefined(window._linkGlobalMousedown);
         });
 
-        it("should prevent a click handler from firing on a button", function() {
+        it("should prevent a click handler from firing on a button", function () {
             var $el = basicButtonElement();
             $el.disableEvent("click");
             $el.trigger("click");
@@ -87,7 +87,7 @@ describe("jquery.disableEvent plugin", function() {
             assert.isUndefined(window._buttonGlobalClick);
         });
 
-        it("should prevent multiple events from firing on a button", function() {
+        it("should prevent multiple events from firing on a button", function () {
             var $el = basicButtonElement();
             $el.disableEvent("click keydown");
             $el.trigger("click");
@@ -97,7 +97,7 @@ describe("jquery.disableEvent plugin", function() {
             assert.isUndefined(window._buttonButtonKeydown);
         });
 
-        it("should prevent native events", function() {
+        it("should prevent native events", function () {
             var $el = $("<div />")
                 .attr("onclick", "window._buttonGlobalClick = true;")
                 .appendTo(document.body);
@@ -109,8 +109,8 @@ describe("jquery.disableEvent plugin", function() {
         });
     });
 
-    describe("jquery.enableEvent()", function() {
-        it("should re-enable a click event after they have been disabled", function() {
+    describe("jquery.enableEvent()", function () {
+        it("should re-enable a click event after they have been disabled", function () {
             var $el = basicLinkElement();
             $el.disableEvent("click");
             $el.trigger("click");
@@ -122,7 +122,7 @@ describe("jquery.disableEvent plugin", function() {
             assert.isTrue(window._linkGlobalClick);
         });
 
-        it("should re-enable multiple events after they have been disabled", function() {
+        it("should re-enable multiple events after they have been disabled", function () {
             var $el = basicLinkElement();
             $el.disableEvent("click mousedown");
 
@@ -141,7 +141,7 @@ describe("jquery.disableEvent plugin", function() {
             assert.isTrue(window._linkGlobalMousedown);
         });
 
-        it("should re-enable multiple events, separately, after they have been disabled", function() {
+        it("should re-enable multiple events, separately, after they have been disabled", function () {
             var $el = basicLinkElement();
             $el.disableEvent("click mousedown");
 
@@ -164,7 +164,7 @@ describe("jquery.disableEvent plugin", function() {
             assert.isTrue(window._linkGlobalMousedown);
         });
 
-        it("should re-enable native events", function() {
+        it("should re-enable native events", function () {
             var $el = $("<div />")
                 .attr("onclick", "window._buttonGlobalClick = true;")
                 .appendTo(document.body);

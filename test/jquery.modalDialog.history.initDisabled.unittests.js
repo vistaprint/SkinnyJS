@@ -1,12 +1,12 @@
 $.modalDialog.iframeLoadTimeout = 1000;
 $.modalDialog.animationDuration = 100;
 
-describe("jQuery.moddalDialog.enableHistory()", function() {
+describe("jQuery.moddalDialog.enableHistory()", function () {
     var assert = chai.assert;
 
     var DIALOG_PARAM_NAME = "testdialogparam";
 
-    var wait = function() {
+    var wait = function () {
         // Calling dialog.close() invokes history.back(), which is asynchronous (in most browsers).
         // We need a timeout to wait until the URL is really updated.
 
@@ -16,7 +16,7 @@ describe("jQuery.moddalDialog.enableHistory()", function() {
         return $.timeout(100);
     };
 
-    it("should not close a dialog that has history disabled", function(done) {
+    it("should not close a dialog that has history disabled", function (done) {
         var $content = $("<div id='simpleDialog' class='dialog-content'></div>")
             .appendTo("body");
 
@@ -27,18 +27,18 @@ describe("jQuery.moddalDialog.enableHistory()", function() {
         dialog
             .open()
             .then(
-                function() {
+                function () {
                     return $.modalDialog.enableHistory(DIALOG_PARAM_NAME);
                 })
             .then(wait)
             .then(
-                function() {
+                function () {
                     assert.ok(dialog.isOpen());
 
                     return dialog.close();
                 })
             .then(
-                function() {
+                function () {
                     done();
                 });
     });

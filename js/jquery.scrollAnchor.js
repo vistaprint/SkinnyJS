@@ -4,7 +4,7 @@
 //
 //   <a href="#element" data-scroll-anchor>go to section!</a>
 
-(function($, doc) {
+(function ($, doc) {
     var loc = doc.location;
 
     function isInternalHash(uri, anchor) {
@@ -48,7 +48,7 @@
     $(document).on('click', '[data-scroll-anchor]', onClick);
 
     // public jQuery extension to add programmatically
-    $.fn.scrollAnchor = function() {
+    $.fn.scrollAnchor = function () {
         return $(this).on('click', onClick);
     };
 

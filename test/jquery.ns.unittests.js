@@ -1,17 +1,17 @@
  /* global ns1 */
 
- describe("jQuery.ns()", function() {
+ describe("jQuery.ns()", function () {
      mocha.globals(["ns1"]);
 
      var assert = chai.assert;
 
-     it("should be able to declare a single namespace", function() {
+     it("should be able to declare a single namespace", function () {
          $.ns("ns1");
 
          assert.typeOf(ns1, "object", "Ensure ns1 is an object");
      });
 
-     it("should preserve an existing global namespace", function() {
+     it("should preserve an existing global namespace", function () {
          window.ns1 = {
              property1: "value1"
          };
@@ -22,7 +22,7 @@
          assert.equal(ns1.property1, "value1", "Ensure ns1.property1's value is correct");
      });
 
-     it("should preserve an existing secondary namespace", function() {
+     it("should preserve an existing secondary namespace", function () {
          window.ns1 = {
              property1: "value1",
              ns2: {
@@ -39,7 +39,7 @@
          assert.equal(ns1.ns2.property2, "value2", "Ensure ns1.ns2.property2's value is correct");
      });
 
-     it("should preserve previous namespaces when declaring a tertiary namespace", function() {
+     it("should preserve previous namespaces when declaring a tertiary namespace", function () {
          window.ns1 = {
              property1: "value1",
              ns2: {

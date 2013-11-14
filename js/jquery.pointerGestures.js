@@ -1,6 +1,6 @@
 /// <reference path="jquery.pointerEvents.js" />
 
-(function($) {
+(function ($) {
 
     // also handles sweepleft, sweepright
     $.event.special.sweep = {
@@ -16,7 +16,7 @@
         // Sweep vertical displacement must be less than this.
         verticalDistanceThreshold: 75,
 
-        start: function(event) {
+        start: function (event) {
             var data = event.originalEvent.touches ?
                 event.originalEvent.touches[0] : event;
             return {
@@ -26,7 +26,7 @@
             };
         },
 
-        stop: function(event) {
+        stop: function (event) {
             var data = event.originalEvent.touches ?
                 event.originalEvent.touches[0] : event;
             return {
@@ -35,7 +35,7 @@
             };
         },
 
-        handleSweep: function(start, stop) {
+        handleSweep: function (start, stop) {
             if (stop.time - start.time < $.event.special.sweep.durationThreshold &&
                 Math.abs(start.coords[0] - stop.coords[0]) > $.event.special.sweep.horizontalDistanceThreshold &&
                 Math.abs(start.coords[1] - stop.coords[1]) < $.event.special.sweep.verticalDistanceThreshold) {
@@ -47,7 +47,7 @@
             }
         },
 
-        add: function(params) {
+        add: function (params) {
             var thisObject = this,
                 $this = $(thisObject);
 
@@ -92,9 +92,9 @@
 
     // sweepleft and sweepright are just dummies, we have to
     // setup the handler for sweep so attach a dummy event
-    $.each(["sweepleft", "sweepright"], function(i, event) {
+    $.each(["sweepleft", "sweepright"], function (i, event) {
         $.event.special[event] = {
-            setup: function() {
+            setup: function () {
                 $(this).on("sweep", $.noop);
             }
         };

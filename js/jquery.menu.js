@@ -3,16 +3,16 @@
 // TODO: Support modifying state in the future by storing an object using $.data(), implement $(selector).dropDownMenu("option", value);
 // TODO: Accessibility: Keyboard navigation (tab navigation already works)- close submenus on pressing enter (maybe)
 
-(function($) {
+(function ($) {
     var _skins = {};
 
     // Register skins by name for rendering the menu.
-    $.registerDropDownMenuSkin = function(name, skin) {
+    $.registerDropDownMenuSkin = function (name, skin) {
         _skins[name] = skin;
     };
 
     // TODO: Promote to a plugin?
-    $.fn.swapClasses = function(class1, class2, enabled) {
+    $.fn.swapClasses = function (class1, class2, enabled) {
         var classToAdd = enabled ? class1 : class2;
         var classToRemove = enabled ? class2 : class1;
 
@@ -24,14 +24,14 @@
     };
 
     // Hover highlighting
-    var highlightMenuItem = function($item, enabled) {
+    var highlightMenuItem = function ($item, enabled) {
         $item.swapClasses("hover", "nohover", enabled);
     };
 
     // TODO: It would be nice to have a jQuery.findUntil(selector)
     // This is a simple substitute. Recurse until the an element is found
     // with the specified class, and then stop searching in that node.
-    var findUntilInternal = function(elem, fnIsMatch, results) {
+    var findUntilInternal = function (elem, fnIsMatch, results) {
         if (elem.nodeType !== 1) {
             return;
         }
@@ -46,10 +46,10 @@
     };
 
     //jQuery wrapper
-    var findUntil = function($elem, fnIsMatch) {
+    var findUntil = function ($elem, fnIsMatch) {
         var results = [];
 
-        $elem.each(function() {
+        $elem.each(function () {
             findUntilInternal(this, fnIsMatch, results);
         });
 
@@ -59,7 +59,7 @@
     // Merges default options into the options passed in.
     // Ensures that functions passed as null/undefined in options are replaced
     // with no-op functions.
-    var mergeOptions = function(defaults) {
+    var mergeOptions = function (defaults) {
         var merged = $.extend.apply({}, arguments);
 
         //Ensure options have functions, even if they were passed as null/undefined
@@ -107,7 +107,7 @@
     // Dropdown menu plugin. The jQuery element collection should include
     // top-level container elements which in turn contain items with class "menu-item".
     // Each item in the jQuery collection becomes a menu "group".
-    $.fn.dropDownMenu = function(options) {
+    $.fn.dropDownMenu = function (options) {
         if (this.length === 0) {
             return this;
         }
@@ -132,7 +132,7 @@
         // Creates a menu "group" from a jQuery collection of top-level
         // menu items. This will be called once for each element in the
         // top level jQuery object's collection.
-        var createMenuFromTopMenuItems = function($topLevelItems) {
+        var createMenuFromTopMenuItems = function ($topLevelItems) {
             // Assign a CSS class to help distinguish between top-level
             // and sub menus.
             $topLevelItems.addClass("menu-item-top");
@@ -153,7 +153,7 @@
             // the click came from the menu, so it should be ignored.
             var _ignoreDocumentClick = false;
 
-            var Panel = function($panel, $item) {
+            var Panel = function ($panel, $item) {
                 var me = this;
 
                 this.$panel = $panel;
@@ -176,7 +176,7 @@
                 }
 
                 // Bind event handlers to DOM elements
-                var init = function() {
+                var init = function () {
                     // Assign a special class to distinguish menu items with a submenu
                     // from those without one.
                     me.$item.addClass("menu-item-with-submenu");
@@ -191,7 +191,7 @@
 
                     // Top menu items have different rules for rollovers (mimics Windows/MacOS menus)
                     if (me.isTopLevel) {
-                        me.$item.on("mouseout", function(e) {
+                        me.$item.on("mouseout", function (e) {
                             if (!me.isOpen) {
                                 // Prevent mouseouts when rolling over tags within the same menu item.
                                 if (e.relatedTarget) {
@@ -209,7 +209,7 @@
                     if (me.$panel) {
                         // Event handler for clicking on panels. 
                         // Handles firing the "selected" event.
-                        me.$panel.click(function(e) {
+                        me.$panel.click(function (e) {
                             // Find the parent menu item of the clicked element.
                             var $clickedMenuItem = $(e.target).closest(".menu-item", me.$panel);
 
@@ -249,12 +249,12 @@
                     }
                 };
 
-                var preventDefault = function(e) {
+                var preventDefault = function (e) {
                     e.preventDefault();
                 };
 
-                var getLinksWithSubmenus = function() {
-                    return findUntil(me.$item, function(elem, results) {
+                var getLinksWithSubmenus = function () {
+                    return findUntil(me.$item, function (elem, results) {
                         // Stop searching once we get to the nested panel.
                         // We're only interested in A tags owned by this specific
                         // menu item.
@@ -273,7 +273,7 @@
 
                 // Resolves the .parent property and adds this Panel
                 // to the parent's children property.
-                this.resolveParent = function() {
+                this.resolveParent = function () {
                     me.parent = me.$parentPanel.data("PanelInstance") || _rootMenu;
                     me.parent.children.push(me);
                 };
@@ -281,7 +281,7 @@
                 var _level = null;
 
                 // Gets the level of the Panel in the heirarchy. 0 is the root menu item.
-                this.getLevel = function() {
+                this.getLevel = function () {
                     if (_level === null) {
                         _level = -1; // Account for _rootMenu: first level menu should be level 0
                         var current = me.parent;
@@ -297,11 +297,11 @@
                 var _siblings;
 
                 // Gets an array of the siblings of this Panel (Panels with the same parent)
-                this.getSiblings = function() {
+                this.getSiblings = function () {
                     if (!_siblings) {
                         _siblings = [];
                         if (me.parent) {
-                            $.each(me.parent.children, function() {
+                            $.each(me.parent.children, function () {
                                 if (this !== me) {
                                     _siblings.push(this);
                                 }
@@ -314,7 +314,7 @@
 
                 // TODO use a jQuery event
                 // Creates a new "fake" event for passing to event handlers
-                var getEvent = function(e) {
+                var getEvent = function (e) {
                     return {
                         $panel: me.$panel,
                         panel: me,
@@ -324,7 +324,7 @@
                         item: me.$item[0],
                         level: me.getLevel(),
                         innerEvent: e,
-                        preventDefault: function() {
+                        preventDefault: function () {
                             this.cancel = true;
                         }
                     };
@@ -334,12 +334,12 @@
                 // define their own rollover states.
                 // Note: We cant use CSS hover pseudo-classes because the rules
                 // for Windows/MacOS style menus don't follow the same rules.
-                var highlight = function(enabled) {
+                var highlight = function (enabled) {
                     highlightMenuItem(me.$item, enabled);
                 };
 
                 // Determines if the current menu should show on hover (in addition to click)
-                var shouldShowSubmenuOnHover = function() {
+                var shouldShowSubmenuOnHover = function () {
                     if (!me.isTopLevel) {
                         return true;
                     }
@@ -350,7 +350,7 @@
                     return _clickHoverActivated || _options.showOnHover;
                 };
 
-                var mouseOver = function(e) {
+                var mouseOver = function (e) {
                     // In Windows/MacOS, top level menus highlight instantly, with no delay
                     if (me.isTopLevel) {
                         highlight(true);
@@ -363,7 +363,7 @@
                     me.show(e);
                 };
 
-                var mouseOut = function(e) {
+                var mouseOut = function (e) {
                     if (me.isTopLevel && !_options.showOnHover) {
                         return;
                     }
@@ -376,7 +376,7 @@
                 };
 
                 // Shows the panel
-                this.show = function(e) {
+                this.show = function (e) {
                     if (me.transitioning || me.isOpen) {
                         return;
                     }
@@ -395,7 +395,7 @@
                     }
 
                     // Ensure that all siblings are hidden
-                    $.each(me.getSiblings(), function() {
+                    $.each(me.getSiblings(), function () {
                         this.hide(e);
                     });
 
@@ -424,14 +424,14 @@
                     }
                 };
 
-                var showComplete = function(e) {
+                var showComplete = function (e) {
                     me.isOpen = true;
                     me.transitioning = false;
 
                     _options.showPanelComplete.call(me, getEvent(e));
                 };
 
-                this.hide = function(e) {
+                this.hide = function (e) {
                     if (!me.isOpen || me.transitioning) {
                         return;
                     }
@@ -455,7 +455,7 @@
 
                     me.transitioning = true;
 
-                    $.each(me.children, function() {
+                    $.each(me.children, function () {
                         this.hide(e);
                     });
 
@@ -469,14 +469,14 @@
                     }
                 };
 
-                var hideComplete = function(e) {
+                var hideComplete = function (e) {
                     me.isOpen = false;
                     me.transitioning = false;
 
                     _options.hidePanelComplete.call(me, getEvent(e));
                 };
 
-                var toggleClick = function(e) {
+                var toggleClick = function (e) {
                     var isBubbledClick = false;
 
                     if (me.$panel.length > 0) {
@@ -512,7 +512,7 @@
                     }
                 };
 
-                this.showClick = function(e) {
+                this.showClick = function (e) {
                     if (me.isTopLevel) {
                         _clickHoverActivated = true;
                     }
@@ -520,7 +520,7 @@
                     me.show(e);
                 };
 
-                this.hideClick = function(e) {
+                this.hideClick = function (e) {
                     if (me.isTopLevel) {
                         _clickHoverActivated = false;
                     }
@@ -528,7 +528,7 @@
                     me.hide(e);
                 };
 
-                this.hideForce = function(e) {
+                this.hideForce = function (e) {
                     _clickHoverActivated = false;
                     me.hide(e);
                 };
@@ -537,16 +537,16 @@
             };
 
             // Hides all menus and submenus
-            var hideAllClick = function(e) {
+            var hideAllClick = function (e) {
                 _ignoreDocumentClick = true;
 
-                $.each(_rootMenu.children, function() {
+                $.each(_rootMenu.children, function () {
                     this.hideForce(e);
                 });
             };
 
             // Handler for a document click to close all menus
-            var documentClickHandler = function(e) {
+            var documentClickHandler = function (e) {
                 // Check a flag which indicates the click is from the menu itself
                 if (_ignoreDocumentClick) {
                     _ignoreDocumentClick = false;
@@ -558,7 +558,7 @@
 
             _allCloseHandlers.push(hideAllClick);
 
-            var hideOtherMenus = function(e) {
+            var hideOtherMenus = function (e) {
                 for (var i = 0; i < _allCloseHandlers.length; i++) {
                     if (_allCloseHandlers[i] !== hideAllClick) {
                         _allCloseHandlers[i](e);
@@ -567,17 +567,17 @@
             };
 
             // Create a Panel instance for each menu panel, store in an array
-            $topLevelItems.find(".menu-panel").each(function() {
+            $topLevelItems.find(".menu-panel").each(function () {
                 _panels.push(new Panel($(this)));
             });
 
             // Top level items without a submenu need a Panel instance as well, to interact with other top level items.
-            $topLevelItems.not(".menu-item-with-submenu").each(function() {
+            $topLevelItems.not(".menu-item-with-submenu").each(function () {
                 _panels.push(new Panel(null, $(this)));
             });
 
             // Build a tree representing the parent/child relationships in the menu
-            $.each(_panels, function() {
+            $.each(_panels, function () {
                 this.resolveParent();
             });
 
@@ -586,13 +586,13 @@
             // rules for rollovers. jQuery.find() only includes decendants, no the current set,
             // which is the top level menu items.
             $topLevelItems.find(".menu-item").hover(
-                function() {
+                function () {
                     highlightMenuItem($(this), true);
                 },
-                function() {
+                function () {
                     highlightMenuItem($(this), false);
                 })
-                .each(function() {
+                .each(function () {
                     highlightMenuItem($(this), false);
                 });
 
@@ -601,9 +601,9 @@
         };
 
         // Loop through each menu container and create a menu "group".
-        this.each(function() {
+        this.each(function () {
             // Find all the top-level menu items within the container.
-            var $topLevelItems = findUntil($(this), function(elem, results) {
+            var $topLevelItems = findUntil($(this), function (elem, results) {
                 if ($(elem).hasClass("menu-item")) {
                     results.push(elem);
                     return false;

@@ -6,17 +6,17 @@
  $.modalDialog.iframeLoadTimeout = 1000;
  $.modalDialog.animationDuration = 100;
 
- describe("jquery.modalDialog.position", function() {
+ describe("jquery.modalDialog.position", function () {
      var assert = chai.assert;
 
-     it("is centered when opened", function(done) {
+     it("is centered when opened", function (done) {
          var dialog = $.modalDialog.create({
              content: "#vegDialog"
          });
 
          dialog.open()
              .then(
-                 function() {
+                 function () {
                      var rect = dialog.$container.clientRect();
 
                      var windowRect = {
@@ -38,16 +38,16 @@
                      return dialog.close();
                  })
              .then(
-                 function() {
+                 function () {
                      done();
                  });
      });
  });
 
- describe("jquery.modalDialog._updateZIndexes", function() {
+ describe("jquery.modalDialog._updateZIndexes", function () {
      var assert = chai.assert;
 
-     it("will open a second dialog on top of its parent", function(done) {
+     it("will open a second dialog on top of its parent", function (done) {
          var $content1 = $('<div class="dialog-content">content1</div>').appendTo(document.body);
          var $content2 = $('<div class="dialog-content">content2</div>').appendTo(document.body);
 
@@ -58,7 +58,7 @@
 
          dialog1.open()
              .then(
-                 function() {
+                 function () {
                      assert.ok(parseInt(dialog1.$bg.css("z-index"), 10) < parseInt(dialog1.$container.css("z-index"), 10));
 
                      dialog2 = $.modalDialog.create({
@@ -67,25 +67,25 @@
                      return dialog2.open();
                  })
              .then(
-                 function() {
+                 function () {
                      assert.ok(parseInt(dialog2.$bg.css("z-index"), 10) > parseInt(dialog1.$container.css("z-index"), 10));
                      assert.ok(parseInt(dialog2.$bg.css("z-index"), 10) < parseInt(dialog2.$container.css("z-index"), 10));
 
                      return dialog2.close();
                  })
              .then(
-                 function() {
+                 function () {
                      return dialog1.close();
                  })
              .then(
-                 function() {
+                 function () {
                      $content1.remove();
                      $content2.remove();
                      done();
                  });
      });
 
-     it("will respect the zIndex settings option", function(done) {
+     it("will respect the zIndex settings option", function (done) {
          var $content = $('<div class="dialog-content">content1</div>').appendTo(document.body);
          var ZINDEX = 100;
 
@@ -96,19 +96,19 @@
 
          dialog.open()
              .then(
-                 function() {
+                 function () {
                      assert.equal(ZINDEX, parseInt(dialog.$bg.css("z-index"), 10));
 
                      return dialog.close();
                  })
              .then(
-                 function() {
+                 function () {
                      $content.remove();
                      done();
                  });
      });
 
-     it("will respect the zIndex default if not specified in settings", function(done) {
+     it("will respect the zIndex default if not specified in settings", function (done) {
          var $content = $('<div class="dialog-content">content1</div>').appendTo(document.body);
 
          var dialog = $.modalDialog.create({
@@ -117,13 +117,13 @@
 
          dialog.open()
              .then(
-                 function() {
+                 function () {
                      assert.equal($.modalDialog.defaults.zIndex, parseInt(dialog.$bg.css("z-index"), 10));
 
                      return dialog.close();
                  })
              .then(
-                 function() {
+                 function () {
                      $content.remove();
                      done();
                  });

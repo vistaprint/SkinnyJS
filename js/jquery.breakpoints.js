@@ -1,7 +1,7 @@
 /// <reference path="jquery.delimitedString.js" />
 
-(function($) {
-    var processBreakpoints = function($el, breakpoints) {
+(function ($) {
+    var processBreakpoints = function ($el, breakpoints) {
         var width = $el.innerWidth();
 
         var entered = [];
@@ -38,16 +38,16 @@
         fireEventsBatch($el, left, "leave");
     };
 
-    var modifyClassesBatch = function($el, breakpoints, modifyClassMethod) {
+    var modifyClassesBatch = function ($el, breakpoints, modifyClassMethod) {
         if (breakpoints.length > 0) {
-            var classes = $.map(breakpoints, function(bp) {
+            var classes = $.map(breakpoints, function (bp) {
                 return bp.cssClass;
             }).join(" ");
             $el[modifyClassMethod](classes);
         }
     };
 
-    var fireEventsBatch = function($el, breakpoints, eventName) {
+    var fireEventsBatch = function ($el, breakpoints, eventName) {
         for (var i = 0; i < breakpoints.length; i++) {
             var breakpoint = breakpoints[i].breakpoint;
             if (breakpoint[eventName]) {
@@ -72,7 +72,7 @@
         return 0;
     };
 
-    var normalizeBreakpoints = function(breakpoints) {
+    var normalizeBreakpoints = function (breakpoints) {
         var maxWidths = [];
 
         for (var name in breakpoints) {
@@ -101,7 +101,7 @@
         return maxWidths;
     };
 
-    var setMinWidths = function(breakpoints, maxWidths) {
+    var setMinWidths = function (breakpoints, maxWidths) {
         for (var name in breakpoints) {
             var breakpoint = breakpoints[name];
 
@@ -122,7 +122,7 @@
         }
     };
 
-    var addMaxBreakpoint = function(breakpoints, maxWidths) {
+    var addMaxBreakpoint = function (breakpoints, maxWidths) {
         if (!maxWidths || maxWidths.length === 0) {
             return;
         }
@@ -146,13 +146,13 @@
 
     /* end-test-code */
 
-    $.fn.breakpoints = function(breakpoints) {
+    $.fn.breakpoints = function (breakpoints) {
         var maxWidths = normalizeBreakpoints(breakpoints);
         setMinWidths(breakpoints, maxWidths);
         addMaxBreakpoint(breakpoints, maxWidths);
 
-        this.each(function(i, el) {
-            var wrapper = function() {
+        this.each(function (i, el) {
+            var wrapper = function () {
                 processBreakpoints($(el), breakpoints);
             };
 
@@ -170,8 +170,8 @@
     };
 
     // Unobtrusive style
-    $.fn.breakpointsFromAttrs = function() {
-        this.find("[data-breakpoints]").each(function(i, el) {
+    $.fn.breakpointsFromAttrs = function () {
+        this.find("[data-breakpoints]").each(function (i, el) {
             var $el = $(el);
 
             var bpStr = $el.attr("data-breakpoints");
@@ -186,7 +186,7 @@
         return this;
     };
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $(document).breakpointsFromAttrs();
     });
 

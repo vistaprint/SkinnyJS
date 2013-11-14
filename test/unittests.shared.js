@@ -1,12 +1,12 @@
 mocha.setup("bdd");
 
-$(window).on("load", function() {
+$(window).on("load", function () {
     mocha.checkLeaks();
     mocha.globals(["jQuery"]);
     mocha.run();
 });
 
-(function() {
+(function () {
     function CustomEvent(event, params) {
         params = params || {
             bubbles: false,
@@ -24,7 +24,7 @@ $(window).on("load", function() {
         window.CustomEvent = CustomEvent;
     }
 
-    $.fn.triggerNative = function(type, props, params) {
+    $.fn.triggerNative = function (type, props, params) {
         var event = new CustomEvent(type, params || {});
         $.extend(event, props || {});
         this[0].dispatchEvent(event);

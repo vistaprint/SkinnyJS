@@ -3,7 +3,7 @@
      globals: ["CONTENT_SCRIPT_GLOBAL1", "INLINE_GLOBAL1"]
  });
 
- describe("jquery.partialLoad()", function() {
+ describe("jquery.partialLoad()", function () {
      var assert = chai.assert;
 
      function cleanup() {
@@ -13,11 +13,11 @@
      beforeEach(cleanup);
      afterEach(cleanup);
 
-     it("should load content from a page containing scripts, but not load the scripts if they're not in the target element", function(done) {
+     it("should load content from a page containing scripts, but not load the scripts if they're not in the target element", function (done) {
          $("#contentContainer").partialLoad(
              "content/jquery.partialLoad.content.html",
              "#interestingContent1",
-             function() {
+             function () {
                  var content = $("#contentContainer").html();
 
                  assert.equal(content, "<div id=\"interestingContent1\">interesting content 1</div>");
@@ -27,11 +27,11 @@
              });
      });
 
-     it("should load content from a page and execute scripts from the target element", function(done) {
+     it("should load content from a page and execute scripts from the target element", function (done) {
          $("#contentContainer").partialLoad(
              "content/jquery.partialLoad.content.html",
              "#withContentScript1",
-             function() {
+             function () {
                  var content = $("#contentContainer .interesting-inner").html();
 
                  assert.equal(content, "with content script 1");
@@ -41,11 +41,11 @@
              });
      });
 
-     it("should load content and execute inline scripts in the target element", function(done) {
+     it("should load content and execute inline scripts in the target element", function (done) {
          $("#contentContainer").partialLoad(
              "content/jquery.partialLoad.content.html",
              "#withInlineScript",
-             function() {
+             function () {
                  var content = $("#contentContainer .interesting-inner").html();
 
                  assert.equal(content, "with inline script");
@@ -55,11 +55,11 @@
              });
      });
 
-     it("should load content and not execute scripts in the target element if they are already loaded", function(done) {
+     it("should load content and not execute scripts in the target element if they are already loaded", function (done) {
          $("#contentContainer").partialLoad(
              "content/jquery.partialLoad.content.html",
              "#withDuplicateScript",
-             function() {
+             function () {
                  var content = $("#contentContainer .interesting-inner").html();
 
                  assert.equal(content, "with duplicate script");
@@ -69,10 +69,10 @@
              });
      });
 
-     it("should load content and not execute scripts if they are already loaded, with no target selector specified", function(done) {
+     it("should load content and not execute scripts if they are already loaded, with no target selector specified", function (done) {
          $("#contentContainer").partialLoad(
              "content/jquery.partialLoad.content.html",
-             function() {
+             function () {
                  var content = $("#contentContainer #bodyContent .interesting-inner").html();
 
                  assert.equal(content, "body content", "Ensure all body content is loaded if no target selector is passed");
@@ -82,10 +82,10 @@
              });
      });
 
-     it("should load content and remove meta, noscript, and link tags", function(done) {
+     it("should load content and remove meta, noscript, and link tags", function (done) {
          $("#contentContainer").partialLoad(
              "content/jquery.partialLoad.contentWithMeta.html",
-             function() {
+             function () {
                  var $content = $("#contentContainer");
 
                  assert.equal($content.find("meta").length, 0, "Should remove all meta tags");

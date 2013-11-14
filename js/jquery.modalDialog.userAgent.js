@@ -1,7 +1,7 @@
-(function($) {
+(function ($) {
     $.modalDialog = $.modalDialog || {};
 
-    var _ua = $.modalDialog._ua = (function() {
+    var _ua = $.modalDialog._ua = (function () {
         var ua = navigator.userAgent;
 
         // Internet Explorer 7 specific checks
@@ -29,14 +29,14 @@
 
     var _isSmallScreenOverride;
 
-    $.modalDialog.setSmallScreen = function(isSmallScreen) {
+    $.modalDialog.setSmallScreen = function (isSmallScreen) {
         _isSmallScreenOverride = isSmallScreen;
     };
 
     // Returns true if we're on a small screen device like a smartphone.
     // Dialogs behave slightly different on small screens, by convention.
-    $.modalDialog.isSmallScreen = function() {
-        if (typeof(_isSmallScreenOverride) != "undefined") {
+    $.modalDialog.isSmallScreen = function () {
+        if (typeof (_isSmallScreenOverride) != "undefined") {
             return _isSmallScreenOverride;
         }
 

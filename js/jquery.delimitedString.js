@@ -1,13 +1,13 @@
-(function($) {
+(function ($) {
 
     // Takes a plain javascript object (key value pairs), and encodes it as a string 
     // using the specified delimiters and encoders
-    $.encodeDelimitedString = function(data, itemDelimiter, pairDelimiter, keyEncoder, valueEncoder) {
+    $.encodeDelimitedString = function (data, itemDelimiter, pairDelimiter, keyEncoder, valueEncoder) {
         if (!data) {
             return "";
         }
 
-        keyEncoder = keyEncoder || function(s) {
+        keyEncoder = keyEncoder || function (s) {
             return s;
         };
         valueEncoder = valueEncoder || keyEncoder;
@@ -25,8 +25,8 @@
 
     // Takes an encoded string, and parses it into a plain javascript object (key value pairs)
     // using the specified delimiters and decoders
-    $.parseDelimitedString = function(delimitedString, itemDelimiter, pairDelimiter, keyDecoder, valueDecoder) {
-        keyDecoder = keyDecoder || function(s) {
+    $.parseDelimitedString = function (delimitedString, itemDelimiter, pairDelimiter, keyDecoder, valueDecoder) {
+        keyDecoder = keyDecoder || function (s) {
             return s;
         };
         valueDecoder = valueDecoder || keyDecoder;

@@ -3,13 +3,13 @@
 $.modalDialog.iframeLoadTimeout = 1000;
 $.modalDialog.animationDuration = 100;
 
-describe("jquery.modalDialog.history", function() {
+describe("jquery.modalDialog.history", function () {
 
     /* jshint quotmark:false */
 
     var assert = chai.assert;
 
-    var wait = function() {
+    var wait = function () {
         // Calling dialog.close() invokes history.back(), which is asynchronous (in most browsers).
         // We need a timeout to wait until the URL is really updated.
 
@@ -19,9 +19,9 @@ describe("jquery.modalDialog.history", function() {
         return $.timeout(100);
     };
 
-    describe("jquery.modalDialog._historyPrivate.disableHistoryForOpenDialogs", function() {
+    describe("jquery.modalDialog._historyPrivate.disableHistoryForOpenDialogs", function () {
 
-        it("should mark all open dialogs with settings.enableHistory = false", function(done) {
+        it("should mark all open dialogs with settings.enableHistory = false", function (done) {
 
             var $node = $('<div id="dialog1" class="dialog-content">content</div>').appendTo("body");
             var dialog = $.modalDialog.create({
@@ -33,7 +33,7 @@ describe("jquery.modalDialog.history", function() {
             dialog
                 .open()
                 .then(wait)
-                .then(function() {
+                .then(function () {
                     var $node2 = $('<div id="dialog2" class="dialog-content">content2</div>').appendTo("body");
                     dialog2 = $.modalDialog.create({
                         enableHistory: true,
@@ -43,7 +43,7 @@ describe("jquery.modalDialog.history", function() {
                     return dialog2.open();
                 })
                 .then(wait)
-                .then(function() {
+                .then(function () {
                     $.modalDialog._historyPrivate.disableHistoryForOpenDialogs();
 
                     assert.isFalse(dialog.settings.enableHistory);
@@ -52,7 +52,7 @@ describe("jquery.modalDialog.history", function() {
                     return dialog2.close();
                 })
                 .then(wait)
-                .then(function() {
+                .then(function () {
                     return dialog.close();
                 })
                 .then(wait)
@@ -61,19 +61,19 @@ describe("jquery.modalDialog.history", function() {
 
     });
 
-    describe("jquery.modalDialog.history", function() {
+    describe("jquery.modalDialog.history", function () {
 
         var DIALOG_PARAM_NAME = "testdialogparam";
 
-        var delayedResolver = function(deferred) {
-            return function() {
-                setTimeout(function() {
+        var delayedResolver = function (deferred) {
+            return function () {
+                setTimeout(function () {
                     deferred.resolve();
                 }, 0);
             };
         };
 
-        var assertDialogParams = function(expectedLength) {
+        var assertDialogParams = function (expectedLength) {
             var qs = currentQueryStringOrHash();
 
             if (expectedLength === 0) {
@@ -84,7 +84,7 @@ describe("jquery.modalDialog.history", function() {
             }
         };
 
-        var currentQueryStringOrHash = function() {
+        var currentQueryStringOrHash = function () {
             if (window.location.search) {
                 return $.currentQueryString();
             } else if (History.emulated.pushState && window.location.hash) {
@@ -98,7 +98,7 @@ describe("jquery.modalDialog.history", function() {
         };
 
         function testDialogHistoryManagement(dialogType, dialogOptions) {
-            it("modifies the URL and history when opening and closing a " + dialogType + " dialog", function(done) {
+            it("modifies the URL and history when opening and closing a " + dialogType + " dialog", function (done) {
 
                 $.modalDialog.enableHistory(DIALOG_PARAM_NAME);
 
@@ -109,7 +109,7 @@ describe("jquery.modalDialog.history", function() {
                 dialog
                     .open()
                     .then(wait)
-                    .then(function() {
+                    .then(function () {
                         assertDialogParams(1);
                         assert.isTrue(dialog.isOpen(), "Ensure dialog is open");
 
@@ -122,7 +122,7 @@ describe("jquery.modalDialog.history", function() {
                         return deferred;
                     })
                     .then(wait)
-                    .then(function() {
+                    .then(function () {
                         // We navigated back. There should not be any dialog parameters in the URL.
                         assertDialogParams(0);
                         assert.isFalse(dialog.isOpen(), "Ensure dialog is closed");
@@ -136,7 +136,7 @@ describe("jquery.modalDialog.history", function() {
 
                         return deferred;
                     })
-                    .then(function() {
+                    .then(function () {
                         // We navigated forward. The dialog parameters should be back in the URL.
                         assertDialogParams(1);
                         assert.isTrue(dialog.isOpen(), "Ensure dialog is open");
@@ -145,7 +145,7 @@ describe("jquery.modalDialog.history", function() {
                         return dialog.close();
                     })
                     .then(wait)
-                    .then(function() {
+                    .then(function () {
                         // We manually closed the dialog. The parameters should no longer be in the URL.
                         assertDialogParams(0);
                         assert.isFalse(dialog.isOpen(), "Ensure dialog is closed");
@@ -153,12 +153,12 @@ describe("jquery.modalDialog.history", function() {
 
                         return $.timeout(100);
                     })
-                    .then(function() {
+                    .then(function () {
                         done();
                     });
             });
 
-            it("doesn't modify the URL when opening and closing a " + dialogType + " dialog with settings.enableHistory === false", function(done) {
+            it("doesn't modify the URL when opening and closing a " + dialogType + " dialog with settings.enableHistory === false", function (done) {
 
                 $.modalDialog.enableHistory(DIALOG_PARAM_NAME);
 
@@ -170,7 +170,7 @@ describe("jquery.modalDialog.history", function() {
 
                 dialog
                     .open()
-                    .then(function() {
+                    .then(function () {
                         assert.isTrue(dialog.isOpen(), "Ensure dialog is closed");
 
                         var qs = currentQueryStringOrHash();
@@ -179,7 +179,7 @@ describe("jquery.modalDialog.history", function() {
                         return dialog.close();
                     })
                     .then(wait)
-                    .then(function() {
+                    .then(function () {
                         assert.isFalse(dialog.isOpen(), "Ensure dialog is closed");
 
                         var qs = currentQueryStringOrHash();
@@ -187,7 +187,7 @@ describe("jquery.modalDialog.history", function() {
 
                         return $.timeout(100);
                     })
-                    .then(function() {
+                    .then(function () {
                         done();
                     });
             });
@@ -206,7 +206,7 @@ describe("jquery.modalDialog.history", function() {
             ajax: true
         });
 
-        it("modifies the URL and history when opening and closing a dialog 2nd level dialog", function(done) {
+        it("modifies the URL and history when opening and closing a dialog 2nd level dialog", function (done) {
 
             $.modalDialog.enableHistory(DIALOG_PARAM_NAME);
 
@@ -221,7 +221,7 @@ describe("jquery.modalDialog.history", function() {
             dialog1
                 .open()
                 .then(wait)
-                .then(function() {
+                .then(function () {
                     assertDialogParams(1);
 
                     dialog2 = $.modalDialog.create({
@@ -230,19 +230,19 @@ describe("jquery.modalDialog.history", function() {
                     return dialog2.open();
                 })
                 .then(wait)
-                .then(function() {
+                .then(function () {
                     assertDialogParams(2);
 
                     return dialog2.close();
                 })
                 .then(wait)
-                .then(function() {
+                .then(function () {
                     assertDialogParams(1);
 
                     return dialog1.close();
                 })
                 .then(wait)
-                .then(function() {
+                .then(function () {
                     assertDialogParams(0);
 
                     var deferred = $.Deferred();
@@ -253,7 +253,7 @@ describe("jquery.modalDialog.history", function() {
                     return deferred.promise();
                 })
                 .then(wait)
-                .then(function() {
+                .then(function () {
                     assertDialogParams(1);
                     assert.ok(dialog1.isOpen());
 
@@ -265,7 +265,7 @@ describe("jquery.modalDialog.history", function() {
                     return deferred.promise();
                 })
                 .then(wait)
-                .then(function() {
+                .then(function () {
                     assertDialogParams(2);
                     assert.ok(dialog2.isOpen());
 
@@ -277,7 +277,7 @@ describe("jquery.modalDialog.history", function() {
                     return deferred.promise();
                 })
                 .then(wait)
-                .then(function() {
+                .then(function () {
                     assertDialogParams(1);
                     assert.ok(dialog1.isOpen());
                     assert.notOk(dialog2.isOpen());
@@ -290,7 +290,7 @@ describe("jquery.modalDialog.history", function() {
                     return deferred.promise();
                 })
                 .then(wait)
-                .then(function() {
+                .then(function () {
                     assertDialogParams(0);
                     assert.notOk(dialog1.isOpen());
                     assert.notOk(dialog2.isOpen());

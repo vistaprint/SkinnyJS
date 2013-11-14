@@ -1,11 +1,11 @@
 /// <reference path="jquery.delimitedString.js" />
 
-(function($) {
+(function ($) {
     var _mapCamelToDash = {};
 
 
     // Takes a css property in object syntax (i.e. "textAlign") and converts it to CSS string syntax (i.e. "text-align")
-    $.camelToDashCase = function(prop) {
+    $.camelToDashCase = function (prop) {
         //Cache for performance- big win.
         var value = _mapCamelToDash[prop];
         if (!value) {
@@ -19,7 +19,7 @@
     var _mapDashToCamel = {};
 
     // Takes a css property in css syntax (i.e. "text-align") and converts it to object syntax (i.e. "textAlign")
-    $.dashToCamelCase = function(sProperty) {
+    $.dashToCamelCase = function (sProperty) {
         var value = _mapDashToCamel[sProperty];
 
         //Cache for performance: big win
@@ -49,19 +49,19 @@
         return value;
     };
 
-    var cssKeyEncoder = function(s) {
+    var cssKeyEncoder = function (s) {
         return $.trim($.camelToDashCase(s)); // trim
     };
 
-    var cssKeyDecoder = function(s) {
+    var cssKeyDecoder = function (s) {
         return $.trim($.dashToCamelCase(s)); // trim
     };
 
-    $.encodeCssString = function(data) {
+    $.encodeCssString = function (data) {
         return $.encodeDelimitedString(data, ";", ":", cssKeyEncoder, $.trim);
     };
 
-    $.parseCssString = function(cssString) {
+    $.parseCssString = function (cssString) {
         return $.parseDelimitedString(cssString, ";", ":", cssKeyDecoder, $.trim);
     };
 

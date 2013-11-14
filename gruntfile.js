@@ -257,7 +257,10 @@ module.exports = function(grunt) {
             }
         },
         jsbeautifier : {
-            files: ["js/**/*.js", "test/**/*.js", "site/javascript/**/*.js"]
+            all: {
+                src: ["js/**/*.js", "test/**/*.js", "site/javascript/**/*.js"],
+                options: { js: { jslintHappy: true } }
+            }
         },
         lineending : {
             all: {
