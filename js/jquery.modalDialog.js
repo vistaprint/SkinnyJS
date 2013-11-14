@@ -560,15 +560,8 @@
         // when there is an iframe and your cursor goes over
         // the iframe content it stops firing on the parent window
         if (this.$frame) {
-            try {
-                this.$frame.iframeDocument().find("body")
-                    .on("pointermove", this._drag)
-                    .one("pointerup", this._stopDrag);
-            } catch (ex) {
-                // This can fail if the frame is in another domain
-            }
+            this._overlay = $("<div class='dialog-content-overlay'>").appendTo(this.$contentContainer);
         }
-
 
         this._isDragging = true;
     };
@@ -598,10 +591,9 @@
 
         $(document).off("pointermove", this._drag);
 
-        if (this.$frame) {
-            try {
-                this.$frame.iframeDocument().find("body").off("pointermove", this._drag);
-            } catch (ex) {}
+        if (this._overlay) {
+            this._overlay.remove();
+            delete this._overlay;
         }
 
         this._isDragging = false;
