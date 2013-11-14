@@ -18,7 +18,7 @@ describe('jquery.pointerEvents', function() {
         el.on(pointerEvent, workIt);
 
         // run all the native events that map to this pointer event
-        $.each(nativeEvents, function (i, nativeEvent) {
+        $.each(nativeEvents, function(i, nativeEvent) {
             it('should call a ' + pointerEvent + ' when a ' + nativeEvent + ' is triggered', function() {
                 // reset groovy here for this next test
                 groovy = false;
@@ -44,7 +44,7 @@ describe('jquery.pointerEvents', function() {
         it('teardown ' + pointerEvent, function() {
             el.off(pointerEvent, workIt);
 
-            $.each(nativeEvents, function (i, nativeEvent) {
+            $.each(nativeEvents, function(i, nativeEvent) {
                 el.triggerNative(nativeEvent);
             });
 

@@ -42,7 +42,7 @@
 
         // Support: IE<9
         // For mouse/key events, metaKey==false if it's undefined (#3368, #11328)
-        event.metaKey = !!event.metaKey;
+        event.metaKey = !! event.metaKey;
 
         // run the filter now
         event = $.event.pointerHooks.filter(event, originalEvent);
@@ -77,8 +77,8 @@
                 var touch = original.touches[0];
                 event.clientX = touch.clientX;
                 event.clientY = touch.clientY;
-                event.pageX   = touch.pageX;
-                event.pageY   = touch.pageY;
+                event.pageX = touch.pageX;
+                event.pageY = touch.pageY;
                 event.screenX = touch.screenX;
                 event.screenY = touch.screenY;
             }
@@ -91,7 +91,7 @@
                 body = eventDoc.body;
 
                 event.pageX = original.clientX + (doc && doc.scrollLeft || body && body.scrollLeft || 0) - (doc && doc.clientLeft || body && body.clientLeft || 0);
-                event.pageY = original.clientY + (doc && doc.scrollTop  || body && body.scrollTop  || 0) - (doc && doc.clientTop  || body && body.clientTop  || 0);
+                event.pageY = original.clientY + (doc && doc.scrollTop || body && body.scrollTop || 0) - (doc && doc.clientTop || body && body.clientTop || 0);
             }
 
             // Add relatedTarget, if necessary
@@ -182,13 +182,13 @@
             pointercancel: {
                 touch: "touchcancel"
             }
-        }, function (pointerEventType, natives) {
-            function onTouch (event) {
+        }, function(pointerEventType, natives) {
+            function onTouch(event) {
                 event.preventDefault(); // prevent the mouse event from firing as well
                 triggerCustomEvent(this, pointerEventType, event);
             }
 
-            function onMouse (event) {
+            function onMouse(event) {
                 triggerCustomEvent(this, pointerEventType, event);
             }
 

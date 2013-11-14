@@ -5,7 +5,9 @@ describe("jquery.modalDialog", function() {
     var assert = chai.assert;
 
     function trigger($el, eventName, props) {
-        $el.triggerNative(eventName, props, { bubbles: true });
+        $el.triggerNative(eventName, props, {
+            bubbles: true
+        });
     }
 
     describe("#_makeDraggable()", function() {
