@@ -6,7 +6,8 @@
 	<script type="text/javascript">
 		function log(e)
 		{
-			$('<li>').text((+new Date) + ': ' + e.type + '-' + e.originalEvent.pointerType).appendTo($('ul'));
+			var text = (+new Date) + ': ' + e.type + '-' + e.pointerType;
+			$('<li>').text(text).appendTo($('ul'));
 		}
 
 		$(function()
@@ -23,8 +24,10 @@
 				pointerdown: function (e)
 				{
 					log(e);
-					x = e.originalEvent.clientX;
-					y = e.originalEvent.clientY;
+					x = e.pageX;
+					y = e.pageY;
+					x -= canvas.offsetLeft;
+					y -= canvas.offsetTop;
 					ctx.moveTo(x, y);
 
 					e.preventDefault();
@@ -38,6 +41,13 @@
 					y = null;
 				},
 
+				pointercancel: function (e)
+				{
+					log(e);
+					x = null;
+					y = null;
+				},
+
 				pointermove: function(e)
 				{
 					if (x == null || y == null)
@@ -45,8 +55,8 @@
 						return;
 					}
 					log(e);
-					x = e.originalEvent.clientX;
-					y = e.originalEvent.clientY;
+					x = e.pageX;
+					y = e.pageY;
 					x -= canvas.offsetLeft;
 					y -= canvas.offsetTop;
 					ctx.lineTo(x, y);

@@ -5,13 +5,7 @@ describe("jquery.modalDialog", function() {
     var assert = chai.assert;
 
     function trigger($el, eventName, props) {
-        var e = new $.Event(eventName);
-        e.originalEvent = {};
-        if (props) {
-            $.extend(e.originalEvent, props);
-        }
-
-        $el.trigger(e);
+        $el.triggerNative(eventName, props, { bubbles: true });
     }
 
     describe("#_makeDraggable()", function() {
@@ -49,16 +43,13 @@ describe("jquery.modalDialog", function() {
                         }
                         return dialog.close();
                     })
-                    .then(function() {
-                        done();
-                    });
+                    .then(done);
             });
         };
 
         var eventMappings = {
             "mouse": ["mousedown", "mousemove", "mouseup"],
-            "touch": ["touchstart", "touchmove", "touchend"],
-            "pointer": ["pointerdown", "pointermove", "pointerup"]
+            "touch": ["touchstart", "touchmove", "touchend"]
         };
 
         for (var eventType in eventMappings) {
