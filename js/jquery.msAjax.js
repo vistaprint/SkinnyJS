@@ -25,8 +25,8 @@
             // Example of a partial date:       "2013"
             // Example of a full ISO8601 date:  "2013-08-07T21:40:05.121+06:00"
             if (!$.parseMsJSON.isNumericString(value)) {
-                var date = Date.parseISO(value) || 
-                    Date.parseMsDate(value) || 
+                var date = Date.parseISO(value) ||
+                    Date.parseMsDate(value) ||
                     (value.indexOf("GMT") >= 0 ? Date.parse(value) : NaN);
                 if (!isNaN(date)) {
                     return new Date(date);

@@ -1,4 +1,3 @@
-﻿
 $.modalDialog.iframeLoadTimeout = 1000;
 $.modalDialog.animationDuration = 100;
 

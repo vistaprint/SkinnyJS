@@ -1,9 +1,9 @@
-﻿ /* globals History */
+/* globals History */
 
 $.modalDialog.iframeLoadTimeout = 1000;
 $.modalDialog.animationDuration = 100;
 
-describe("jquery.modalDialog.history", function(){
+describe("jquery.modalDialog.history", function() {
 
     /* jshint quotmark:false */
 
@@ -20,11 +20,14 @@ describe("jquery.modalDialog.history", function(){
     };
 
     describe("jquery.modalDialog._historyPrivate.disableHistoryForOpenDialogs", function() {
-        
+
         it("should mark all open dialogs with settings.enableHistory = false", function(done) {
 
             var $node = $('<div id="dialog1" class="dialog-content">content</div>').appendTo("body");
-            var dialog = $.modalDialog.create({ enableHistory: true, content: $node });
+            var dialog = $.modalDialog.create({
+                enableHistory: true,
+                content: $node
+            });
             var dialog2;
 
             dialog
@@ -32,7 +35,10 @@ describe("jquery.modalDialog.history", function(){
                 .then(wait)
                 .then(function() {
                     var $node2 = $('<div id="dialog2" class="dialog-content">content2</div>').appendTo("body");
-                    dialog2 = $.modalDialog.create({ enableHistory: true, content: $node2 });
+                    dialog2 = $.modalDialog.create({
+                        enableHistory: true,
+                        content: $node2
+                    });
 
                     return dialog2.open();
                 })

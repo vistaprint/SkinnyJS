@@ -171,16 +171,20 @@
                 }
             });
         }
-        
+
         // Remove meta, link
         // Preserve title: These don't hurt anything, and the modal dialog framework uses them
         // to get the title of the dialog.
-        var REMOVE_LIST = { META: true, LINK: true, NOSCRIPT: true };
+        var REMOVE_LIST = {
+            META: true,
+            LINK: true,
+            NOSCRIPT: true
+        };
 
         var nodes = $target.jquery ? $target : $target.childNodes;
-        
+
         if (nodes) {
-            for (var i=nodes.length-1; i>=0; i--) {
+            for (var i = nodes.length - 1; i >= 0; i--) {
                 var child = nodes[i];
 
                 if (REMOVE_LIST[child.tagName]) {
@@ -190,7 +194,7 @@
                         if (isStylesheetUnique(child.href)) {
                             continue;
                         }
-                    } 
+                    }
 
                     $target.removeChild(child);
                 }

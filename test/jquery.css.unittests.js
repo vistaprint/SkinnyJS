@@ -1,4 +1,3 @@
-﻿
 describe("jquery.css", function() {
     var assert = chai.assert;
 

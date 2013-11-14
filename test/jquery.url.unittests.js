@@ -1,4 +1,3 @@
-﻿
 describe("jquery.url", function() {
     var assert = chai.assert;
     var UNDEFINED;
