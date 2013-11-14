@@ -36,7 +36,7 @@
                         $.modalDialog.onopen.add(openHandler);
                         $.modalDialog.onclose.add(closeHandler);
 
-                        History.pushState(null, document.title, document.location.href);
+                        //History.pushState(null, document.title, document.location.href);
 
                         History.Adapter.bind(window, "statechange", popstateHandler);
 
@@ -181,7 +181,7 @@
         var items = data.split(" ");
 
         return $.map(items, function(item) {
-            var delimPos = item.indexOf(",");
+            var delimPos = item.indexOf("_");
 
             if (delimPos < 0) {
                 throw new Error("Invalid dialog parameters: " + item);
@@ -196,7 +196,7 @@
 
     var encodeDialogParams = function(dialogParamsList) {
         return $.map(dialogParamsList, function(item) {
-            return item.dialogType + "," + encodeDialogId(item.dialogId);
+            return item.dialogType + "_" + encodeDialogId(item.dialogId);
         })
             .join(" ");
     };

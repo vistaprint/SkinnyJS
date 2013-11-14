@@ -9,7 +9,7 @@ describe("jQuery.moddalDialog.enableHistory()", function() {
     var DIALOG_PARAM_NAME = "testdialogparam";
 
     it("should open a dialog specified in the current URL", function(done) {
-        var qs = "?" + DIALOG_PARAM_NAME + "=" + encodeURIComponent("node,#simpleDialog");
+        var qs = "?" + DIALOG_PARAM_NAME + "=" + encodeURIComponent("node_-hash-simpleDialog");
 
         if (document.location.search != qs) {
             History.pushState(null, null, document.location.pathname + qs);
