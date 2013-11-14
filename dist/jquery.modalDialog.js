@@ -705,33 +705,24 @@ if (!Object.keys) {
         this._initialMousePos = getMousePos(e);
         this._initialDialogPos = this.$container.offset();
 
-        this.$bg.on("pointermove", this._drag);
-        this.$container.on("pointermove", this._drag);
+        $(document)
+            .on("pointermove", this._drag)
+            .one("pointerup", this._stopDrag);
 
-        // make sure the mouseup also works on the background
-        this.$bg.on("pointerup", this._stopDrag);
-
-        //chrome node is the last element that can handle events- it has cancel bubble set
-        this.$container.on("pointerup", this._stopDrag);
-
+        // when there is an iframe and your cursor goes over
+        // the iframe content it stops firing on the parent window
         if (this.$frame) {
-            try {
-                this.$frame.iframeDocument().find("body")
-                    .on("pointermove", this._drag)
-                    .on("pointerup", this._stopDrag);
-            } catch (ex) {
-                // This can fail if the frame is in another domain
-            }
+            this._overlay = $("<div class='dialog-content-overlay'>").appendTo(this.$contentContainer);
         }
-
-        this._parentRect = this.$el.clientRect();
 
         this._isDragging = true;
     };
 
     ModalDialog.prototype._drag = function(e) {
-        e.preventDefault();
-        e.stopPropagation();
+        if (!this._isDragging) {
+            $(document).off("pointermove", this._drag);
+            return;
+        }
 
         var mousePos = getMousePos(e);
 
@@ -746,26 +737,15 @@ if (!Object.keys) {
         this.$container.css(newPos);
     };
 
-    ModalDialog.prototype._stopDrag = function(e) {
-        this._initialMousePos = null;
-        this._initialDialogPos = null;
+    ModalDialog.prototype._stopDrag = function() {
+        delete this._initialMousePos;
+        delete this._initialDialogPos;
 
-        e.stopPropagation();
-        e.preventDefault();
+        $(document).off("pointermove", this._drag);
 
-        // Remove the drag events
-        this.$bg.off("pointermove", this._drag);
-        this.$container.off("pointermove", this._drag);
-
-        this.$bg.off("pointerup", this._stopDrag);
-        this.$container.off("pointerup", this._stopDrag);
-
-        if (this.$frame) {
-            try {
-                this.$frame.iframeDocument().find("body")
-                    .off("pointermove", this._drag)
-                    .off("pointerup", this._stopDrag);
-            } catch (ex) {}
+        if (this._overlay) {
+            this._overlay.remove();
+            delete this._overlay;
         }
 
         this._isDragging = false;
@@ -775,8 +755,8 @@ if (!Object.keys) {
     // returns an object with top and left
     var getMousePos = function(e) {
         var mousePos = {
-            left: e.originalEvent.clientX,
-            top: e.originalEvent.clientY
+            left: e.pageX,
+            top: e.pageY
         };
 
         // Translate event positions from a nested iframe
