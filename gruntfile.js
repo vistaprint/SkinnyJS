@@ -261,11 +261,22 @@ module.exports = function(grunt) {
         lineending : {
             all: {
                 files: [{
-                    expand: true,
-                    cwd: "./js/",
-                    src: ["./**.js"],
-                    dest: "./js/"
-                  }],
+                        expand: true,
+                        cwd: "./js/",
+                        src: ["./**.js"],
+                        dest: "./js/"
+                    }, {
+                        expand: true,
+                        cwd: "./test/",
+                        src: ["./**.js"],
+                        dest: "./test/"
+                    }, {
+                        expand: true,
+                        cwd: "./site/javascript/",
+                        src: ["./**.js"],
+                        dest: "./site/javascript/"
+                    }
+                ],
                 options: {
                     eol: "crlf"
                 }
@@ -349,4 +360,6 @@ module.exports = function(grunt) {
     grunt.registerTask("siteNoVerify", ["build", "compress", "sitePages", "docs", "copy:deploy"]);
 
     grunt.registerTask("sitePages", ["jekyll", "string-replace:site", "copy:distSite"]);
+
+    grunt.registerTask("beautify", ["jsbeautifier", "lineending"]);
 };

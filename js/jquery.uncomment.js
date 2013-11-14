@@ -1,4 +1,4 @@
-﻿ // ## jQuery.uncomment
+// ## jQuery.uncomment
 
 (function($) {
     $.fn.uncomment = function() {
