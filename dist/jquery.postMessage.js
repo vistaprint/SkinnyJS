@@ -1,6 +1,6 @@
 /* globals Window */
 
-(function(window, $) {
+(function (window, $) {
     var cacheBuster = 1;
 
     var browserSupportsPostMessage = !! window.postMessage;
@@ -15,7 +15,7 @@
     // * {String or Function} originPatternOrFunction: A pattern or a function to match against sourceOrigin
     // * {String} sourceOrigin: The string to match using the originPatternOrFunction
     function isOriginMatch(originPatternOrFunction, sourceOrigin) {
-        if (typeof(originPatternOrFunction) == "string" &&
+        if (typeof (originPatternOrFunction) == "string" &&
             sourceOrigin !== originPatternOrFunction &&
             originPatternOrFunction !== "*") {
             return false;
@@ -121,7 +121,7 @@
     function serializeWindowReference(currentWindow, targetWindow) {
         // If the target window was opened with window.open(), its name is the only
         // way to get to it. This makes for a yucky API, unfortunately.
-        if (typeof(targetWindow) == "string") {
+        if (typeof (targetWindow) == "string") {
             return ":" + targetWindow;
         }
 
@@ -156,7 +156,7 @@
     // * {Window} targetWindow: A reference to the target window to which the message should be sent
     // * {string} targetWindowName: If the target window is a child window (not a frame), the window name
     //                               is required for browsers that don"t support postMessage() natively.
-    $.postMessage = function(message, targetHost, targetWindow, /* optional */ targetWindowName) {
+    $.postMessage = function (message, targetHost, targetWindow, /* optional */ targetWindowName) {
         if (!targetHost) {
             throw new Error("targetHost argument was not supplied to jQuery.postMessage");
         }
@@ -221,7 +221,7 @@
                 (+new Date()) + cacheBuster + "&" +
                 serializedWindowRef + "&" + thisDomain + "&" + encodeURIComponent(message)
             )
-            .load(function() {
+            .load(function () {
                 // remove this DOM iframe once it is no longer needed
                 $(iframe).remove();
             })
@@ -236,7 +236,7 @@
     // * {string|function(string)} allowedOriginOrFunction: Either a domain string (i.e. http://www.something.com),
     //                                                     a wildcard (i.e. "*"), or a function that takes domain
     //                                                     strings and returns true or false.
-    $.receiveMessage = function(callback, allowedOriginOrFunction) {
+    $.receiveMessage = function (callback, allowedOriginOrFunction) {
         if (!callback) {
             throw new Error("No callback function specified");
         }
@@ -245,7 +245,7 @@
             allowedOriginOrFunction = "*";
         }
 
-        $(window).on("message", function(event, data, origin) {
+        $(window).on("message", function (event, data, origin) {
             if (!data) {
                 data = event.originalEvent ? event.originalEvent.data : event.data;
             }
@@ -266,7 +266,7 @@
     // Windows in IE can only handle onmessage events from IFRAMEs within the same parent window only.
     // Messages sent between top level windows will fail. Unfortunately, we don't know if the calling window is
     // an IFrame or top-level window. To work around, listen for calls from the polyfill technique for IE in all cases.
-    window.__receiveMessageHook = function(message, origin) {
+    window.__receiveMessageHook = function (message, origin) {
         var $evt = new $.Event("message");
         $evt.data = message;
         $evt.origin = origin;
@@ -275,8 +275,8 @@
     };
 
     // Convenience wrapper for windows wrapped in jQuery objects
-    $.fn.postMessage = function(message, targetHost, /* optional */ targetWindowName) {
-        this.each(function(i, el) {
+    $.fn.postMessage = function (message, targetHost, /* optional */ targetWindowName) {
+        this.each(function (i, el) {
             if (!(el instanceof Window)) {
                 throw new Error("postMessage can only be sent to a window");
             }
@@ -288,10 +288,10 @@
     };
 
     $.event.special.message = {
-        add: function(handlerData) {
+        add: function (handlerData) {
             var origHandler = handlerData.handler;
 
-            handlerData.handler = function(e, message, origin) {
+            handlerData.handler = function (e, message, origin) {
                 e.data = e.originalEvent ? e.originalEvent.data : message;
                 e.origin = e.originalEvent ? e.originalEvent.origin : origin;
 
@@ -300,7 +300,7 @@
         }
     };
 
-    var getPolyfillPath = function() {
+    var getPolyfillPath = function () {
         if (!window._jqueryPostMessagePolyfillPath) {
             throw new Error("Must configure jquery.postMessage() with window._jqueryPostMessagePolyfillPath for IE7 support. Should be '/root-relative-path-on-my-server/postmessage.htm'");
         }

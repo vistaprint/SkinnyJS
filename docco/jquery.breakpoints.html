@@ -2,8 +2,8 @@
 <a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.breakpoints.js" target="_blank">View this file on Github</a>
 
 <hr style="height: 1px; border:0; background-color:#4A525A">
-             <h1>               jquery.breakpoints.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>/ <reference path="jquery.delimitedString.js" /></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">processBreakpoints</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$el</span><span class="p">,</span> <span class="nx">breakpoints</span><span class="p">)</span> <span class="p">{</span>
+             <h1>               jquery.breakpoints.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>/ <reference path="jquery.delimitedString.js" /></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">processBreakpoints</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$el</span><span class="p">,</span> <span class="nx">breakpoints</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">width</span> <span class="o">=</span> <span class="nx">$el</span><span class="p">.</span><span class="nx">innerWidth</span><span class="p">();</span>
 
         <span class="kd">var</span> <span class="nx">entered</span> <span class="o">=</span> <span class="p">[];</span>
@@ -40,16 +40,16 @@
         <span class="nx">fireEventsBatch</span><span class="p">(</span><span class="nx">$el</span><span class="p">,</span> <span class="nx">left</span><span class="p">,</span> <span class="s2">&quot;leave&quot;</span><span class="p">);</span>
     <span class="p">};</span>
 
-    <span class="kd">var</span> <span class="nx">modifyClassesBatch</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$el</span><span class="p">,</span> <span class="nx">breakpoints</span><span class="p">,</span> <span class="nx">modifyClassMethod</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">modifyClassesBatch</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$el</span><span class="p">,</span> <span class="nx">breakpoints</span><span class="p">,</span> <span class="nx">modifyClassMethod</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">breakpoints</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">classes</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">breakpoints</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">bp</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">classes</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">breakpoints</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">bp</span><span class="p">)</span> <span class="p">{</span>
                 <span class="k">return</span> <span class="nx">bp</span><span class="p">.</span><span class="nx">cssClass</span><span class="p">;</span>
             <span class="p">}).</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">);</span>
             <span class="nx">$el</span><span class="p">[</span><span class="nx">modifyClassMethod</span><span class="p">](</span><span class="nx">classes</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">};</span>
 
-    <span class="kd">var</span> <span class="nx">fireEventsBatch</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$el</span><span class="p">,</span> <span class="nx">breakpoints</span><span class="p">,</span> <span class="nx">eventName</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">fireEventsBatch</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$el</span><span class="p">,</span> <span class="nx">breakpoints</span><span class="p">,</span> <span class="nx">eventName</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">breakpoints</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
             <span class="kd">var</span> <span class="nx">breakpoint</span> <span class="o">=</span> <span class="nx">breakpoints</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">breakpoint</span><span class="p">;</span>
             <span class="k">if</span> <span class="p">(</span><span class="nx">breakpoint</span><span class="p">[</span><span class="nx">eventName</span><span class="p">])</span> <span class="p">{</span>
@@ -74,7 +74,7 @@
         <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
     <span class="p">};</span>
 
-    <span class="kd">var</span> <span class="nx">normalizeBreakpoints</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">breakpoints</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">normalizeBreakpoints</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">breakpoints</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">maxWidths</span> <span class="o">=</span> <span class="p">[];</span>
 
         <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">name</span> <span class="k">in</span> <span class="nx">breakpoints</span><span class="p">)</span> <span class="p">{</span>
@@ -103,7 +103,7 @@
         <span class="k">return</span> <span class="nx">maxWidths</span><span class="p">;</span>
     <span class="p">};</span>
 
-    <span class="kd">var</span> <span class="nx">setMinWidths</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">breakpoints</span><span class="p">,</span> <span class="nx">maxWidths</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">setMinWidths</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">breakpoints</span><span class="p">,</span> <span class="nx">maxWidths</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">name</span> <span class="k">in</span> <span class="nx">breakpoints</span><span class="p">)</span> <span class="p">{</span>
             <span class="kd">var</span> <span class="nx">breakpoint</span> <span class="o">=</span> <span class="nx">breakpoints</span><span class="p">[</span><span class="nx">name</span><span class="p">];</span>
 
@@ -124,7 +124,7 @@
         <span class="p">}</span>
     <span class="p">};</span>
 
-    <span class="kd">var</span> <span class="nx">addMaxBreakpoint</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">breakpoints</span><span class="p">,</span> <span class="nx">maxWidths</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">addMaxBreakpoint</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">breakpoints</span><span class="p">,</span> <span class="nx">maxWidths</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">maxWidths</span> <span class="o">||</span> <span class="nx">maxWidths</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span><span class="p">;</span>
         <span class="p">}</span>
@@ -148,13 +148,13 @@
 
     <span class="cm">/* end-test-code */</span>
 
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">breakpoints</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">breakpoints</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">breakpoints</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">breakpoints</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">maxWidths</span> <span class="o">=</span> <span class="nx">normalizeBreakpoints</span><span class="p">(</span><span class="nx">breakpoints</span><span class="p">);</span>
         <span class="nx">setMinWidths</span><span class="p">(</span><span class="nx">breakpoints</span><span class="p">,</span> <span class="nx">maxWidths</span><span class="p">);</span>
         <span class="nx">addMaxBreakpoint</span><span class="p">(</span><span class="nx">breakpoints</span><span class="p">,</span> <span class="nx">maxWidths</span><span class="p">);</span>
 
-        <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">wrapper</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">wrapper</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                 <span class="nx">processBreakpoints</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">el</span><span class="p">),</span> <span class="nx">breakpoints</span><span class="p">);</span>
             <span class="p">};</span>
 
@@ -172,8 +172,8 @@ to avoid reflows at DOM ready.</p>             </td>             <td class="code
     <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Unobtrusive style</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">breakpointsFromAttrs</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s2">&quot;[data-breakpoints]&quot;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">breakpointsFromAttrs</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s2">&quot;[data-breakpoints]&quot;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
             <span class="kd">var</span> <span class="nx">$el</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">el</span><span class="p">);</span>
 
             <span class="kd">var</span> <span class="nx">bpStr</span> <span class="o">=</span> <span class="nx">$el</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;data-breakpoints&quot;</span><span class="p">);</span>
@@ -188,7 +188,7 @@ to avoid reflows at DOM ready.</p>             </td>             <td class="code
         <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
     <span class="p">};</span>
 
-    <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
         <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">breakpointsFromAttrs</span><span class="p">();</span>
     <span class="p">});</span>
 

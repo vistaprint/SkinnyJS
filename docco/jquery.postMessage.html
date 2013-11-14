@@ -4,7 +4,7 @@
 <hr style="height: 1px; border:0; background-color:#4A525A">
              <h1>               jquery.postMessage.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="cm">/* globals Window */</span>
 
-<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+<span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">cacheBuster</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 
     <span class="kd">var</span> <span class="nx">browserSupportsPostMessage</span> <span class="o">=</span> <span class="o">!!</span> <span class="nb">window</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">;</span>
@@ -21,7 +21,7 @@
 <li>{String} sourceOrigin: The string to match using the originPatternOrFunction</li>
 </ul>             </td>             <td class="code">               <div class="highlight"><pre>
     <span class="kd">function</span> <span class="nx">isOriginMatch</span><span class="p">(</span><span class="nx">originPatternOrFunction</span><span class="p">,</span> <span class="nx">sourceOrigin</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="nx">originPatternOrFunction</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span> <span class="o">&amp;&amp;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="p">(</span><span class="nx">originPatternOrFunction</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span> <span class="o">&amp;&amp;</span>
             <span class="nx">sourceOrigin</span> <span class="o">!==</span> <span class="nx">originPatternOrFunction</span> <span class="o">&amp;&amp;</span>
             <span class="nx">originPatternOrFunction</span> <span class="o">!==</span> <span class="s2">&quot;*&quot;</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
@@ -133,7 +133,7 @@ Example: p.p translates to window.parent.parent</li>
     <span class="kd">function</span> <span class="nx">serializeWindowReference</span><span class="p">(</span><span class="nx">currentWindow</span><span class="p">,</span> <span class="nx">targetWindow</span><span class="p">)</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <p>If the target window was opened with window.open(), its name is the only
 way to get to it. This makes for a yucky API, unfortunately.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="nx">targetWindow</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="p">(</span><span class="nx">targetWindow</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="nx">targetWindow</span><span class="p">;</span>
         <span class="p">}</span>
 
@@ -168,7 +168,7 @@ way to get to it. This makes for a yucky API, unfortunately.</p>             </t
 * {Window} targetWindow: A reference to the target window to which the message should be sent
 * {string} targetWindowName: If the target window is a child window (not a frame), the window name
                               is required for browsers that don"t support postMessage() natively.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">postMessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">targetHost</span><span class="p">,</span> <span class="nx">targetWindow</span><span class="p">,</span> <span class="cm">/* optional */</span> <span class="nx">targetWindowName</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">postMessage</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">targetHost</span><span class="p">,</span> <span class="nx">targetWindow</span><span class="p">,</span> <span class="cm">/* optional */</span> <span class="nx">targetWindowName</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">targetHost</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;targetHost argument was not supplied to jQuery.postMessage&quot;</span><span class="p">);</span>
         <span class="p">}</span>
@@ -237,7 +237,7 @@ to the target window. Pass the proxy information in an encoded URL fragment,
                 <span class="p">(</span><span class="o">+</span><span class="k">new</span> <span class="nb">Date</span><span class="p">())</span> <span class="o">+</span> <span class="nx">cacheBuster</span> <span class="o">+</span> <span class="s2">&quot;&amp;&quot;</span> <span class="o">+</span>
                 <span class="nx">serializedWindowRef</span> <span class="o">+</span> <span class="s2">&quot;&amp;&quot;</span> <span class="o">+</span> <span class="nx">thisDomain</span> <span class="o">+</span> <span class="s2">&quot;&amp;&quot;</span> <span class="o">+</span> <span class="nb">encodeURIComponent</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
             <span class="p">)</span>
-            <span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-31">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-31">&#182;</a>               </div>               <p>remove this DOM iframe once it is no longer needed</p>             </td>             <td class="code">               <div class="highlight"><pre>
                 <span class="nx">$</span><span class="p">(</span><span class="nx">iframe</span><span class="p">).</span><span class="nx">remove</span><span class="p">();</span>
             <span class="p">})</span>
@@ -254,7 +254,7 @@ to the target window. Pass the proxy information in an encoded URL fragment,
                                                 a wildcard (i.e. "*"), or a function that takes domain
                                                 strings and returns true or false.</li>
 </ul>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">receiveMessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">,</span> <span class="nx">allowedOriginOrFunction</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">receiveMessage</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">callback</span><span class="p">,</span> <span class="nx">allowedOriginOrFunction</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;No callback function specified&quot;</span><span class="p">);</span>
         <span class="p">}</span>
@@ -263,7 +263,7 @@ to the target window. Pass the proxy information in an encoded URL fragment,
             <span class="nx">allowedOriginOrFunction</span> <span class="o">=</span> <span class="s2">&quot;*&quot;</span><span class="p">;</span>
         <span class="p">}</span>
 
-        <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">origin</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">origin</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
                 <span class="nx">data</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">originalEvent</span> <span class="o">?</span> <span class="nx">event</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">.</span><span class="nx">data</span> <span class="o">:</span> <span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
             <span class="p">}</span>
@@ -284,7 +284,7 @@ to the target window. Pass the proxy information in an encoded URL fragment,
 </pre></div>             </td>           </tr>                               <tr id="section-34">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-34">&#182;</a>               </div>               <p>Windows in IE can only handle onmessage events from IFRAMEs within the same parent window only.
 Messages sent between top level windows will fail. Unfortunately, we don't know if the calling window is
 an IFrame or top-level window. To work around, listen for calls from the polyfill technique for IE in all cases.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nb">window</span><span class="p">.</span><span class="nx">__receiveMessageHook</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">origin</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">__receiveMessageHook</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">origin</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">$evt</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Event</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">);</span>
         <span class="nx">$evt</span><span class="p">.</span><span class="nx">data</span> <span class="o">=</span> <span class="nx">message</span><span class="p">;</span>
         <span class="nx">$evt</span><span class="p">.</span><span class="nx">origin</span> <span class="o">=</span> <span class="nx">origin</span><span class="p">;</span>
@@ -293,8 +293,8 @@ an IFrame or top-level window. To work around, listen for calls from the polyfil
     <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-35">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-35">&#182;</a>               </div>               <p>Convenience wrapper for windows wrapped in jQuery objects</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">postMessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">targetHost</span><span class="p">,</span> <span class="cm">/* optional */</span> <span class="nx">targetWindowName</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">postMessage</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">targetHost</span><span class="p">,</span> <span class="cm">/* optional */</span> <span class="nx">targetWindowName</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nx">el</span> <span class="k">instanceof</span> <span class="nx">Window</span><span class="p">))</span> <span class="p">{</span>
                 <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;postMessage can only be sent to a window&quot;</span><span class="p">);</span>
             <span class="p">}</span>
@@ -306,10 +306,10 @@ an IFrame or top-level window. To work around, listen for calls from the polyfil
     <span class="p">};</span>
 
     <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">message</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="nx">add</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">handlerData</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">add</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">handlerData</span><span class="p">)</span> <span class="p">{</span>
             <span class="kd">var</span> <span class="nx">origHandler</span> <span class="o">=</span> <span class="nx">handlerData</span><span class="p">.</span><span class="nx">handler</span><span class="p">;</span>
 
-            <span class="nx">handlerData</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">origin</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">handlerData</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">origin</span><span class="p">)</span> <span class="p">{</span>
                 <span class="nx">e</span><span class="p">.</span><span class="nx">data</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span> <span class="o">?</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">.</span><span class="nx">data</span> <span class="o">:</span> <span class="nx">message</span><span class="p">;</span>
                 <span class="nx">e</span><span class="p">.</span><span class="nx">origin</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span> <span class="o">?</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">.</span><span class="nx">origin</span> <span class="o">:</span> <span class="nx">origin</span><span class="p">;</span>
 
@@ -318,7 +318,7 @@ an IFrame or top-level window. To work around, listen for calls from the polyfil
         <span class="p">}</span>
     <span class="p">};</span>
 
-    <span class="kd">var</span> <span class="nx">getPolyfillPath</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">getPolyfillPath</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">_jqueryPostMessagePolyfillPath</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;Must configure jquery.postMessage() with window._jqueryPostMessagePolyfillPath for IE7 support. Should be &#39;/root-relative-path-on-my-server/postmessage.htm&#39;&quot;</span><span class="p">);</span>
         <span class="p">}</span>

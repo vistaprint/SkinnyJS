@@ -2,7 +2,7 @@
 <a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.jsEncode.html" target="_blank">View this file on Github</a>
 
 <hr style="height: 1px; border:0; background-color:#4A525A">
-             <h1>               jquery.htmlEncode.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+             <h1>               jquery.htmlEncode.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;&amp;&quot;</span><span class="o">:</span> <span class="s2">&quot;&amp;amp;&quot;</span><span class="p">,</span>
         <span class="s2">&quot;&#39;&quot;</span><span class="o">:</span> <span class="s2">&quot;&amp;#39;&quot;</span><span class="p">,</span>
@@ -11,8 +11,8 @@
         <span class="s2">&quot;&gt;&quot;</span><span class="o">:</span> <span class="s2">&quot;&amp;gt;&quot;</span>
     <span class="p">};</span>
 
-    <span class="nx">$</span><span class="p">.</span><span class="nx">htmlEncode</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">s</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[&amp;&quot;&#39;&lt;&gt;]/g</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">htmlEncode</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">s</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[&amp;&quot;&#39;&lt;&gt;]/g</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">c</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span> <span class="nx">map</span><span class="p">[</span><span class="nx">c</span><span class="p">];</span>
         <span class="p">});</span>
     <span class="p">};</span>

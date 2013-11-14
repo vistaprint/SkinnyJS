@@ -1,9 +1,9 @@
-(function($) {
+(function ($) {
     var TRANSITION_TIME = 300;
 
     $.registerDropDownMenuSkin(
         "exampleskin", {
-            position: function(e) {
+            position: function (e) {
                 if (e.level === 0) {
                     e.$panel.css({
                         top: e.$item.innerHeight(),
@@ -20,7 +20,7 @@
                 });
             },
 
-            animationShow: function(e, callback) {
+            animationShow: function (e, callback) {
                 //            if (e.level === 0)
                 //            {
                 //                e.$panel.slideDown(TRANSITION_TIME, callback);
@@ -30,7 +30,7 @@
                 e.$panel.fadeIn(TRANSITION_TIME, callback);
             },
 
-            animationHide: function(e, callback) {
+            animationHide: function (e, callback) {
                 //            if (e.level === 0)
                 //            {
                 //                e.$panel.slideUp(TRANSITION_TIME, callback);

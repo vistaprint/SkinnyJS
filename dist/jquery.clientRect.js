@@ -1,4 +1,4 @@
-(function($) {
+(function ($) {
 
     // Expose support flag. Aids in unit testing.
     $.support.getBoundingClientRect = "getBoundingClientRect" in document.documentElement;
@@ -13,7 +13,7 @@
     }
 
     // Returns a rect for the first element in the jQuery object.
-    $.fn.clientRect = function() {
+    $.fn.clientRect = function () {
         var rect = {
             top: 0,
             left: 0,

@@ -1,6 +1,6 @@
-jQuery.Event.prototype.isVisibleKeyCode = function() {
+jQuery.Event.prototype.isVisibleKeyCode = function () {
 
-    if (typeof(this.keyCode) == "undefined") {
+    if (typeof (this.keyCode) == "undefined") {
         return false;
     }
 
@@ -20,13 +20,13 @@ jQuery.Event.prototype.isVisibleKeyCode = function() {
     }
 
     switch (this.keyCode) {
-        case 9: //Tab
-        case 45:
-        case 91:
-        case 145:
-            return false;
-        default:
-            return true;
+    case 9: //Tab
+    case 45:
+    case 91:
+    case 145:
+        return false;
+    default:
+        return true;
     }
 
     return true;

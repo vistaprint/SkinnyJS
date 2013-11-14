@@ -2,12 +2,12 @@
 <a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.css.js" target="_blank">View this file on Github</a>
 
 <hr style="height: 1px; border:0; background-color:#4A525A">
-             <h1>               jquery.css.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>/ <reference path="jquery.delimitedString.js" /></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+             <h1>               jquery.css.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>/ <reference path="jquery.delimitedString.js" /></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">_mapCamelToDash</span> <span class="o">=</span> <span class="p">{};</span>
 
 
 </pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Takes a css property in object syntax (i.e. "textAlign") and converts it to CSS string syntax (i.e. "text-align")</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">camelToDashCase</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">prop</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">camelToDashCase</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">prop</span><span class="p">)</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Cache for performance- big win.</p>             </td>             <td class="code">               <div class="highlight"><pre>
         <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">_mapCamelToDash</span><span class="p">[</span><span class="nx">prop</span><span class="p">];</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
@@ -21,7 +21,7 @@
     <span class="kd">var</span> <span class="nx">_mapDashToCamel</span> <span class="o">=</span> <span class="p">{};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Takes a css property in css syntax (i.e. "text-align") and converts it to object syntax (i.e. "textAlign")</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">dashToCamelCase</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">sProperty</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">dashToCamelCase</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">sProperty</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">_mapDashToCamel</span><span class="p">[</span><span class="nx">sProperty</span><span class="p">];</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Cache for performance: big win</p>             </td>             <td class="code">               <div class="highlight"><pre>
@@ -51,19 +51,19 @@
         <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
     <span class="p">};</span>
 
-    <span class="kd">var</span> <span class="nx">cssKeyEncoder</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">cssKeyEncoder</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">trim</span><span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">camelToDashCase</span><span class="p">(</span><span class="nx">s</span><span class="p">));</span> <span class="c1">// trim</span>
     <span class="p">};</span>
 
-    <span class="kd">var</span> <span class="nx">cssKeyDecoder</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">cssKeyDecoder</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">trim</span><span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">dashToCamelCase</span><span class="p">(</span><span class="nx">s</span><span class="p">));</span> <span class="c1">// trim</span>
     <span class="p">};</span>
 
-    <span class="nx">$</span><span class="p">.</span><span class="nx">encodeCssString</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">encodeCssString</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">encodeDelimitedString</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="s2">&quot;;&quot;</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="nx">cssKeyEncoder</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">trim</span><span class="p">);</span>
     <span class="p">};</span>
 
-    <span class="nx">$</span><span class="p">.</span><span class="nx">parseCssString</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">cssString</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">parseCssString</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">cssString</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">parseDelimitedString</span><span class="p">(</span><span class="nx">cssString</span><span class="p">,</span> <span class="s2">&quot;;&quot;</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="nx">cssKeyDecoder</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">trim</span><span class="p">);</span>
     <span class="p">};</span>
 

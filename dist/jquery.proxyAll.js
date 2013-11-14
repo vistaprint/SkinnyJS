@@ -1,6 +1,6 @@
-(function($) {
+(function ($) {
     // Given an object, will bind its methods' context to the object using $.proxy()
-    $.proxyAll = function(obj, methods) {
+    $.proxyAll = function (obj, methods) {
         // If no methods are specified, use all properties of obj that are functions
         if (!methods) {
             methods = [];
@@ -16,7 +16,7 @@
         }
 
         // Create a bound proxy function for specified methods on obj
-        $.each(methods, function(i, method) {
+        $.each(methods, function (i, method) {
             obj[method] = $.proxy(obj[method], obj);
         });
     };

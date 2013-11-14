@@ -1,8 +1,8 @@
 /// <reference path="jquery.clientRect.js" />
 
-(function($) {
+(function ($) {
 
-    var addMargin = function(node, styleProp, rectProp, rect) {
+    var addMargin = function (node, styleProp, rectProp, rect) {
         var margin = parseInt($(node).css(styleProp), 10);
         if (margin) {
             rect[rectProp] += margin;
@@ -10,7 +10,7 @@
     };
 
     // Size gets continuously populated as this recurses through the DOM, building the max size of the page.
-    var gatherSize = function(size, node, includeChildrenOnly, includeWidth, includeHeight) {
+    var gatherSize = function (size, node, includeChildrenOnly, includeWidth, includeHeight) {
         var rect;
 
         // Only look at elements
@@ -72,7 +72,7 @@
     };
 
     // Returns the height and width of the total page: the total scrolling size.
-    $.fn.contentSize = function(excludeScrollbars) {
+    $.fn.contentSize = function (excludeScrollbars) {
         var el = this[0];
 
         if (!el) {

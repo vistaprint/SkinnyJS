@@ -2,7 +2,7 @@
 <a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.hoverDelay.js" target="_blank">View this file on Github</a>
 
 <hr style="height: 1px; border:0; background-color:#4A525A">
-             <h1>               jquery.hoverDelay.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>/ <reference path="jquery.pointerEvents.js" /></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+             <h1>               jquery.hoverDelay.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>/ <reference path="jquery.pointerEvents.js" /></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">OVER_TIMER</span> <span class="o">=</span> <span class="s1">&#39;skinnyjs-hoverDelay-overTimer&#39;</span><span class="p">;</span>
     <span class="kd">var</span> <span class="nx">OUT_TIMER</span> <span class="o">=</span> <span class="s1">&#39;skinnyjs-hoverDelay-outTimer&#39;</span><span class="p">;</span>
 
@@ -14,7 +14,7 @@
         <span class="nx">mouseOnly</span><span class="o">:</span> <span class="kc">true</span>
     <span class="p">};</span>
 
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">hoverDelay</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">over</span><span class="p">,</span> <span class="nx">out</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">hoverDelay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">over</span><span class="p">,</span> <span class="nx">out</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">isPlainObject</span><span class="p">(</span><span class="nx">over</span><span class="p">))</span> <span class="p">{</span>
             <span class="nx">options</span> <span class="o">=</span> <span class="nx">over</span><span class="p">;</span>
         <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
@@ -24,7 +24,7 @@
 
         <span class="kd">var</span> <span class="nx">_options</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">_defaults</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
 
-        <span class="kd">var</span> <span class="nx">clearTimers</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">clearTimers</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
             <span class="kd">var</span> <span class="nx">overTimer</span> <span class="o">=</span> <span class="nx">el</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">OVER_TIMER</span><span class="p">);</span>
             <span class="kd">var</span> <span class="nx">outTimer</span> <span class="o">=</span> <span class="nx">el</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">OUT_TIMER</span><span class="p">);</span>
 

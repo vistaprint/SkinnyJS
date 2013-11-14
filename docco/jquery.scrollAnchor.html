@@ -6,7 +6,7 @@
 
 <p><a href="#element" data-scroll-anchor>go to section!</a></p>             </td>             <td class="code">               <div class="highlight"><pre>
 
-<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">,</span> <span class="nx">doc</span><span class="p">)</span> <span class="p">{</span>
+<span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">,</span> <span class="nx">doc</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">loc</span> <span class="o">=</span> <span class="nx">doc</span><span class="p">.</span><span class="nx">location</span><span class="p">;</span>
 
     <span class="kd">function</span> <span class="nx">isInternalHash</span><span class="p">(</span><span class="nx">uri</span><span class="p">,</span> <span class="nx">anchor</span><span class="p">)</span> <span class="p">{</span>
@@ -50,7 +50,7 @@
     <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="s1">&#39;[data-scroll-anchor]&#39;</span><span class="p">,</span> <span class="nx">onClick</span><span class="p">);</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>public jQuery extension to add programmatically</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">scrollAnchor</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">scrollAnchor</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="nx">onClick</span><span class="p">);</span>
     <span class="p">};</span>
 

@@ -1,5 +1,5 @@
 // Defines namespaces
-jQuery.ns = function(namespace) {
+jQuery.ns = function (namespace) {
     var parts = namespace.split(".");
 
     var last = window;

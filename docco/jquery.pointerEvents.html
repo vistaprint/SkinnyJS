@@ -2,7 +2,7 @@
 <a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.pointerEvents.js" target="_blank">View this file on Github</a>
 
 <hr style="height: 1px; border:0; background-color:#4A525A">
-             <h1>               jquery.pointerEvents.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>Pointer Events polyfill for jQuery</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">,</span> <span class="nb">window</span><span class="p">,</span> <span class="nb">document</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+             <h1>               jquery.pointerEvents.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>Pointer Events polyfill for jQuery</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">,</span> <span class="nb">window</span><span class="p">,</span> <span class="nb">document</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
 
     <span class="kd">var</span> <span class="nx">support</span> <span class="o">=</span> <span class="p">{</span>
         <span class="nx">touch</span><span class="o">:</span> <span class="s2">&quot;ontouchend&quot;</span> <span class="k">in</span> <span class="nb">document</span><span class="p">,</span>
@@ -69,7 +69,7 @@ For mouse/key events, metaKey==false if it's undefined (#3368, #11328)</p>      
 </pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>add our own pointer event hook/filter</p>             </td>             <td class="code">               <div class="highlight"><pre>
     <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">pointerHooks</span> <span class="o">=</span> <span class="p">{</span>
         <span class="nx">props</span><span class="o">:</span> <span class="s2">&quot;pointerType clientX clientY fromElement offsetX offsetY pageX pageY screenX screenY toElement&quot;</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">),</span>
-        <span class="nx">filter</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">original</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">filter</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">original</span><span class="p">)</span> <span class="p">{</span>
             <span class="kd">var</span> <span class="nx">body</span><span class="p">,</span> <span class="nx">eventDoc</span><span class="p">,</span> <span class="nx">doc</span><span class="p">,</span>
                 <span class="nx">fromElement</span> <span class="o">=</span> <span class="nx">original</span><span class="p">.</span><span class="nx">fromElement</span><span class="p">;</span>
 
@@ -140,25 +140,25 @@ create special custom events to mimic them</p>             </td>             <td
         <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">pointerdown</span> <span class="o">=</span> <span class="p">{</span>
             <span class="nx">ignoreNextMousedownEvent</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
 
-            <span class="nx">touch</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">touch</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <p>prevent the click event from firing as well</p>             </td>             <td class="code">               <div class="highlight"><pre>
                 <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">pointerdown</span><span class="p">.</span><span class="nx">ignoreNextMousedownEvent</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
                 <span class="nx">triggerCustomEvent</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&quot;pointerdown&quot;</span><span class="p">,</span> <span class="nx">event</span><span class="p">);</span>
             <span class="p">},</span>
-            <span class="nx">mouse</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">mouse</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
                 <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">pointerdown</span><span class="p">.</span><span class="nx">ignoreNextMousedownEvent</span><span class="p">)</span> <span class="p">{</span>
                     <span class="nx">triggerCustomEvent</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&quot;pointerdown&quot;</span><span class="p">,</span> <span class="nx">event</span><span class="p">);</span>
                 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
                     <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">pointerdown</span><span class="p">.</span><span class="nx">ignoreNextMousedownEvent</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
                 <span class="p">}</span>
             <span class="p">},</span>
-            <span class="nx">setup</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">setup</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                 <span class="k">if</span> <span class="p">(</span><span class="nx">support</span><span class="p">.</span><span class="nx">touch</span><span class="p">)</span> <span class="p">{</span>
                     <span class="nx">addEvent</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&quot;touchstart&quot;</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">pointerdown</span><span class="p">.</span><span class="nx">touch</span><span class="p">);</span>
                 <span class="p">}</span>
                 <span class="nx">addEvent</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&quot;mousedown&quot;</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">pointerdown</span><span class="p">.</span><span class="nx">mouse</span><span class="p">);</span>
             <span class="p">},</span>
-            <span class="nx">teardown</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">teardown</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                 <span class="k">if</span> <span class="p">(</span><span class="nx">support</span><span class="p">.</span><span class="nx">touch</span><span class="p">)</span> <span class="p">{</span>
                     <span class="nx">jQuery</span><span class="p">.</span><span class="nx">removeEvent</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&quot;touchstart&quot;</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">pointerdown</span><span class="p">.</span><span class="nx">touch</span><span class="p">);</span>
                 <span class="p">}</span>
@@ -184,7 +184,7 @@ create special custom events to mimic them</p>             </td>             <td
             <span class="nx">pointercancel</span><span class="o">:</span> <span class="p">{</span>
                 <span class="nx">touch</span><span class="o">:</span> <span class="s2">&quot;touchcancel&quot;</span>
             <span class="p">}</span>
-        <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">pointerEventType</span><span class="p">,</span> <span class="nx">natives</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">pointerEventType</span><span class="p">,</span> <span class="nx">natives</span><span class="p">)</span> <span class="p">{</span>
             <span class="kd">function</span> <span class="nx">onTouch</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
                 <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span> <span class="c1">// prevent the mouse event from firing as well</span>
                 <span class="nx">triggerCustomEvent</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">pointerEventType</span><span class="p">,</span> <span class="nx">event</span><span class="p">);</span>
@@ -195,7 +195,7 @@ create special custom events to mimic them</p>             </td>             <td
             <span class="p">}</span>
 
             <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">[</span><span class="nx">pointerEventType</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="nx">setup</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="nx">setup</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                     <span class="k">if</span> <span class="p">(</span><span class="nx">support</span><span class="p">.</span><span class="nx">touch</span> <span class="o">&amp;&amp;</span> <span class="nx">natives</span><span class="p">.</span><span class="nx">touch</span><span class="p">)</span> <span class="p">{</span>
                         <span class="nx">addEvent</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">natives</span><span class="p">.</span><span class="nx">touch</span><span class="p">,</span> <span class="nx">onTouch</span><span class="p">);</span>
                     <span class="p">}</span>
@@ -203,7 +203,7 @@ create special custom events to mimic them</p>             </td>             <td
                         <span class="nx">addEvent</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">natives</span><span class="p">.</span><span class="nx">mouse</span><span class="p">,</span> <span class="nx">onMouse</span><span class="p">);</span>
                     <span class="p">}</span>
                 <span class="p">},</span>
-                <span class="nx">teardown</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="nx">teardown</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                     <span class="k">if</span> <span class="p">(</span><span class="nx">support</span><span class="p">.</span><span class="nx">touch</span> <span class="o">&amp;&amp;</span> <span class="nx">natives</span><span class="p">.</span><span class="nx">touch</span><span class="p">)</span> <span class="p">{</span>
                         <span class="nx">jQuery</span><span class="p">.</span><span class="nx">removeEvent</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">natives</span><span class="p">.</span><span class="nx">touch</span><span class="p">,</span> <span class="nx">onTouch</span><span class="p">);</span>
                     <span class="p">}</span>

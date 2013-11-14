@@ -5,16 +5,16 @@
              <h1>               jquery.menu.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>/ <reference path="jquery.hoverDelay.js" />
 / <reference path="jquery.pointerEvents.js" />
 TODO: Support modifying state in the future by storing an object using $.data(), implement $(selector).dropDownMenu("option", value);
-TODO: Accessibility: Keyboard navigation (tab navigation already works)- close submenus on pressing enter (maybe)</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+TODO: Accessibility: Keyboard navigation (tab navigation already works)- close submenus on pressing enter (maybe)</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">_skins</span> <span class="o">=</span> <span class="p">{};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Register skins by name for rendering the menu.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">registerDropDownMenuSkin</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">skin</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">registerDropDownMenuSkin</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">skin</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">_skins</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">skin</span><span class="p">;</span>
     <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>TODO: Promote to a plugin?</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">swapClasses</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">class1</span><span class="p">,</span> <span class="nx">class2</span><span class="p">,</span> <span class="nx">enabled</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">swapClasses</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">class1</span><span class="p">,</span> <span class="nx">class2</span><span class="p">,</span> <span class="nx">enabled</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">classToAdd</span> <span class="o">=</span> <span class="nx">enabled</span> <span class="o">?</span> <span class="nx">class1</span> <span class="o">:</span> <span class="nx">class2</span><span class="p">;</span>
         <span class="kd">var</span> <span class="nx">classToRemove</span> <span class="o">=</span> <span class="nx">enabled</span> <span class="o">?</span> <span class="nx">class2</span> <span class="o">:</span> <span class="nx">class1</span><span class="p">;</span>
 
@@ -26,14 +26,14 @@ TODO: Accessibility: Keyboard navigation (tab navigation already works)- close s
     <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Hover highlighting</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">highlightMenuItem</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$item</span><span class="p">,</span> <span class="nx">enabled</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">highlightMenuItem</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$item</span><span class="p">,</span> <span class="nx">enabled</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">$item</span><span class="p">.</span><span class="nx">swapClasses</span><span class="p">(</span><span class="s2">&quot;hover&quot;</span><span class="p">,</span> <span class="s2">&quot;nohover&quot;</span><span class="p">,</span> <span class="nx">enabled</span><span class="p">);</span>
     <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>TODO: It would be nice to have a jQuery.findUntil(selector)
 This is a simple substitute. Recurse until the an element is found
 with the specified class, and then stop searching in that node.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">findUntilInternal</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">elem</span><span class="p">,</span> <span class="nx">fnIsMatch</span><span class="p">,</span> <span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">findUntilInternal</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">elem</span><span class="p">,</span> <span class="nx">fnIsMatch</span><span class="p">,</span> <span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">elem</span><span class="p">.</span><span class="nx">nodeType</span> <span class="o">!==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span><span class="p">;</span>
         <span class="p">}</span>
@@ -48,10 +48,10 @@ with the specified class, and then stop searching in that node.</p>             
     <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>jQuery wrapper</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">findUntil</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$elem</span><span class="p">,</span> <span class="nx">fnIsMatch</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">findUntil</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$elem</span><span class="p">,</span> <span class="nx">fnIsMatch</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">results</span> <span class="o">=</span> <span class="p">[];</span>
 
-        <span class="nx">$elem</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">$elem</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
             <span class="nx">findUntilInternal</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">fnIsMatch</span><span class="p">,</span> <span class="nx">results</span><span class="p">);</span>
         <span class="p">});</span>
 
@@ -61,7 +61,7 @@ with the specified class, and then stop searching in that node.</p>             
 </pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Merges default options into the options passed in.
 Ensures that functions passed as null/undefined in options are replaced
 with no-op functions.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">mergeOptions</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">defaults</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">mergeOptions</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">defaults</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">merged</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">.</span><span class="nx">apply</span><span class="p">({},</span> <span class="nx">arguments</span><span class="p">);</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>Ensure options have functions, even if they were passed as null/undefined</p>             </td>             <td class="code">               <div class="highlight"><pre>
@@ -109,7 +109,7 @@ This is defined by the skin by default, but can be overridden for any instance o
 </pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <p>Dropdown menu plugin. The jQuery element collection should include
 top-level container elements which in turn contain items with class "menu-item".
 Each item in the jQuery collection becomes a menu "group".</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">dropDownMenu</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">dropDownMenu</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
         <span class="p">}</span>
@@ -134,7 +134,7 @@ Each item in the jQuery collection becomes a menu "group".</p>             </td>
 </pre></div>             </td>           </tr>                               <tr id="section-23">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-23">&#182;</a>               </div>               <p>Creates a menu "group" from a jQuery collection of top-level
 menu items. This will be called once for each element in the
 top level jQuery object's collection.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="kd">var</span> <span class="nx">createMenuFromTopMenuItems</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$topLevelItems</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">createMenuFromTopMenuItems</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$topLevelItems</span><span class="p">)</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-24">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-24">&#182;</a>               </div>               <p>Assign a CSS class to help distinguish between top-level
 and sub menus.</p>             </td>             <td class="code">               <div class="highlight"><pre>
             <span class="nx">$topLevelItems</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&quot;menu-item-top&quot;</span><span class="p">);</span>
@@ -155,7 +155,7 @@ begins to react to hover events (mimics Windows/MacOS menus).</p>             </
 the click came from the menu, so it should be ignored.</p>             </td>             <td class="code">               <div class="highlight"><pre>
             <span class="kd">var</span> <span class="nx">_ignoreDocumentClick</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
 
-            <span class="kd">var</span> <span class="nx">Panel</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$panel</span><span class="p">,</span> <span class="nx">$item</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">Panel</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$panel</span><span class="p">,</span> <span class="nx">$item</span><span class="p">)</span> <span class="p">{</span>
                 <span class="kd">var</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
 
                 <span class="k">this</span><span class="p">.</span><span class="nx">$panel</span> <span class="o">=</span> <span class="nx">$panel</span><span class="p">;</span>
@@ -178,7 +178,7 @@ the click came from the menu, so it should be ignored.</p>             </td>    
                 <span class="p">}</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-31">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-31">&#182;</a>               </div>               <p>Bind event handlers to DOM elements</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="kd">var</span> <span class="nx">init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">init</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-32">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-32">&#182;</a>               </div>               <p>Assign a special class to distinguish menu items with a submenu
 from those without one.</p>             </td>             <td class="code">               <div class="highlight"><pre>
                     <span class="nx">me</span><span class="p">.</span><span class="nx">$item</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&quot;menu-item-with-submenu&quot;</span><span class="p">);</span>
@@ -193,7 +193,7 @@ from those without one.</p>             </td>             <td class="code">     
 
 </pre></div>             </td>           </tr>                               <tr id="section-34">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-34">&#182;</a>               </div>               <p>Top menu items have different rules for rollovers (mimics Windows/MacOS menus)</p>             </td>             <td class="code">               <div class="highlight"><pre>
                     <span class="k">if</span> <span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">isTopLevel</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="nx">me</span><span class="p">.</span><span class="nx">$item</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;mouseout&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">me</span><span class="p">.</span><span class="nx">$item</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;mouseout&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
                             <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">me</span><span class="p">.</span><span class="nx">isOpen</span><span class="p">)</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-35">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-35">&#182;</a>               </div>               <p>Prevent mouseouts when rolling over tags within the same menu item.</p>             </td>             <td class="code">               <div class="highlight"><pre>
                                 <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">relatedTarget</span><span class="p">)</span> <span class="p">{</span>
@@ -211,7 +211,7 @@ from those without one.</p>             </td>             <td class="code">     
                     <span class="k">if</span> <span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">$panel</span><span class="p">)</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-37">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-37">&#182;</a>               </div>               <p>Event handler for clicking on panels. 
 Handles firing the "selected" event.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                        <span class="nx">me</span><span class="p">.</span><span class="nx">$panel</span><span class="p">.</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">me</span><span class="p">.</span><span class="nx">$panel</span><span class="p">.</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-38">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-38">&#182;</a>               </div>               <p>Find the parent menu item of the clicked element.</p>             </td>             <td class="code">               <div class="highlight"><pre>
                             <span class="kd">var</span> <span class="nx">$clickedMenuItem</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">).</span><span class="nx">closest</span><span class="p">(</span><span class="s2">&quot;.menu-item&quot;</span><span class="p">,</span> <span class="nx">me</span><span class="p">.</span><span class="nx">$panel</span><span class="p">);</span>
 
@@ -251,12 +251,12 @@ fire selected- it just opens the submenu.</p>             </td>             <td 
                     <span class="p">}</span>
                 <span class="p">};</span>
 
-                <span class="kd">var</span> <span class="nx">preventDefault</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">preventDefault</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
                     <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
                 <span class="p">};</span>
 
-                <span class="kd">var</span> <span class="nx">getLinksWithSubmenus</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-                    <span class="k">return</span> <span class="nx">findUntil</span><span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">$item</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">elem</span><span class="p">,</span> <span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">getLinksWithSubmenus</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                    <span class="k">return</span> <span class="nx">findUntil</span><span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">$item</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">elem</span><span class="p">,</span> <span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-44">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-44">&#182;</a>               </div>               <p>Stop searching once we get to the nested panel.
 We're only interested in A tags owned by this specific
 menu item.</p>             </td>             <td class="code">               <div class="highlight"><pre>
@@ -275,7 +275,7 @@ menu item.</p>             </td>             <td class="code">               <di
 
 </pre></div>             </td>           </tr>                               <tr id="section-46">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-46">&#182;</a>               </div>               <p>Resolves the .parent property and adds this Panel
 to the parent's children property.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="k">this</span><span class="p">.</span><span class="nx">resolveParent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">resolveParent</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                     <span class="nx">me</span><span class="p">.</span><span class="nx">parent</span> <span class="o">=</span> <span class="nx">me</span><span class="p">.</span><span class="nx">$parentPanel</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="s2">&quot;PanelInstance&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="nx">_rootMenu</span><span class="p">;</span>
                     <span class="nx">me</span><span class="p">.</span><span class="nx">parent</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">me</span><span class="p">);</span>
                 <span class="p">};</span>
@@ -283,7 +283,7 @@ to the parent's children property.</p>             </td>             <td class="
                 <span class="kd">var</span> <span class="nx">_level</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-47">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-47">&#182;</a>               </div>               <p>Gets the level of the Panel in the heirarchy. 0 is the root menu item.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="k">this</span><span class="p">.</span><span class="nx">getLevel</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">getLevel</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                     <span class="k">if</span> <span class="p">(</span><span class="nx">_level</span> <span class="o">===</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
                         <span class="nx">_level</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="c1">// Account for _rootMenu: first level menu should be level 0</span>
                         <span class="kd">var</span> <span class="nx">current</span> <span class="o">=</span> <span class="nx">me</span><span class="p">.</span><span class="nx">parent</span><span class="p">;</span>
@@ -299,11 +299,11 @@ to the parent's children property.</p>             </td>             <td class="
                 <span class="kd">var</span> <span class="nx">_siblings</span><span class="p">;</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-48">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-48">&#182;</a>               </div>               <p>Gets an array of the siblings of this Panel (Panels with the same parent)</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="k">this</span><span class="p">.</span><span class="nx">getSiblings</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">getSiblings</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">_siblings</span><span class="p">)</span> <span class="p">{</span>
                         <span class="nx">_siblings</span> <span class="o">=</span> <span class="p">[];</span>
                         <span class="k">if</span> <span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">parent</span><span class="p">)</span> <span class="p">{</span>
-                            <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">parent</span><span class="p">.</span><span class="nx">children</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                            <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">parent</span><span class="p">.</span><span class="nx">children</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                                 <span class="k">if</span> <span class="p">(</span><span class="k">this</span> <span class="o">!==</span> <span class="nx">me</span><span class="p">)</span> <span class="p">{</span>
                                     <span class="nx">_siblings</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
                                 <span class="p">}</span>
@@ -316,7 +316,7 @@ to the parent's children property.</p>             </td>             <td class="
 
 </pre></div>             </td>           </tr>                               <tr id="section-49">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-49">&#182;</a>               </div>               <p>TODO use a jQuery event
 Creates a new "fake" event for passing to event handlers</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="kd">var</span> <span class="nx">getEvent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">getEvent</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
                     <span class="k">return</span> <span class="p">{</span>
                         <span class="nx">$panel</span><span class="o">:</span> <span class="nx">me</span><span class="p">.</span><span class="nx">$panel</span><span class="p">,</span>
                         <span class="nx">panel</span><span class="o">:</span> <span class="nx">me</span><span class="p">,</span>
@@ -326,7 +326,7 @@ Creates a new "fake" event for passing to event handlers</p>             </td>  
                         <span class="nx">item</span><span class="o">:</span> <span class="nx">me</span><span class="p">.</span><span class="nx">$item</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                         <span class="nx">level</span><span class="o">:</span> <span class="nx">me</span><span class="p">.</span><span class="nx">getLevel</span><span class="p">(),</span>
                         <span class="nx">innerEvent</span><span class="o">:</span> <span class="nx">e</span><span class="p">,</span>
-                        <span class="nx">preventDefault</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                        <span class="nx">preventDefault</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                             <span class="k">this</span><span class="p">.</span><span class="nx">cancel</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
                         <span class="p">}</span>
                     <span class="p">};</span>
@@ -336,12 +336,12 @@ Creates a new "fake" event for passing to event handlers</p>             </td>  
 define their own rollover states.
 Note: We cant use CSS hover pseudo-classes because the rules
 for Windows/MacOS style menus don't follow the same rules.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="kd">var</span> <span class="nx">highlight</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">enabled</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">highlight</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">enabled</span><span class="p">)</span> <span class="p">{</span>
                     <span class="nx">highlightMenuItem</span><span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">$item</span><span class="p">,</span> <span class="nx">enabled</span><span class="p">);</span>
                 <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-51">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-51">&#182;</a>               </div>               <p>Determines if the current menu should show on hover (in addition to click)</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="kd">var</span> <span class="nx">shouldShowSubmenuOnHover</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">shouldShowSubmenuOnHover</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">me</span><span class="p">.</span><span class="nx">isTopLevel</span><span class="p">)</span> <span class="p">{</span>
                         <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
                     <span class="p">}</span>
@@ -352,7 +352,7 @@ or if we're in the "always on" hover mode.</p>             </td>             <td
                     <span class="k">return</span> <span class="nx">_clickHoverActivated</span> <span class="o">||</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">showOnHover</span><span class="p">;</span>
                 <span class="p">};</span>
 
-                <span class="kd">var</span> <span class="nx">mouseOver</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">mouseOver</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-53">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-53">&#182;</a>               </div>               <p>In Windows/MacOS, top level menus highlight instantly, with no delay</p>             </td>             <td class="code">               <div class="highlight"><pre>
                     <span class="k">if</span> <span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">isTopLevel</span><span class="p">)</span> <span class="p">{</span>
                         <span class="nx">highlight</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
@@ -365,7 +365,7 @@ or if we're in the "always on" hover mode.</p>             </td>             <td
                     <span class="nx">me</span><span class="p">.</span><span class="nx">show</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
                 <span class="p">};</span>
 
-                <span class="kd">var</span> <span class="nx">mouseOut</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">mouseOut</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
                     <span class="k">if</span> <span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">isTopLevel</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">_options</span><span class="p">.</span><span class="nx">showOnHover</span><span class="p">)</span> <span class="p">{</span>
                         <span class="k">return</span><span class="p">;</span>
                     <span class="p">}</span>
@@ -378,7 +378,7 @@ or if we're in the "always on" hover mode.</p>             </td>             <td
                 <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-54">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-54">&#182;</a>               </div>               <p>Shows the panel</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="k">this</span><span class="p">.</span><span class="nx">show</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">show</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
                     <span class="k">if</span> <span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">transitioning</span> <span class="o">||</span> <span class="nx">me</span><span class="p">.</span><span class="nx">isOpen</span><span class="p">)</span> <span class="p">{</span>
                         <span class="k">return</span><span class="p">;</span>
                     <span class="p">}</span>
@@ -397,7 +397,7 @@ or if we're in the "always on" hover mode.</p>             </td>             <td
                     <span class="p">}</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-56">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-56">&#182;</a>               </div>               <p>Ensure that all siblings are hidden</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                    <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">getSiblings</span><span class="p">(),</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                    <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">getSiblings</span><span class="p">(),</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                         <span class="k">this</span><span class="p">.</span><span class="nx">hide</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
                     <span class="p">});</span>
 
@@ -426,14 +426,14 @@ or if we're in the "always on" hover mode.</p>             </td>             <td
                     <span class="p">}</span>
                 <span class="p">};</span>
 
-                <span class="kd">var</span> <span class="nx">showComplete</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">showComplete</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
                     <span class="nx">me</span><span class="p">.</span><span class="nx">isOpen</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
                     <span class="nx">me</span><span class="p">.</span><span class="nx">transitioning</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
 
                     <span class="nx">_options</span><span class="p">.</span><span class="nx">showPanelComplete</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">me</span><span class="p">,</span> <span class="nx">getEvent</span><span class="p">(</span><span class="nx">e</span><span class="p">));</span>
                 <span class="p">};</span>
 
-                <span class="k">this</span><span class="p">.</span><span class="nx">hide</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">hide</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
                     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">me</span><span class="p">.</span><span class="nx">isOpen</span> <span class="o">||</span> <span class="nx">me</span><span class="p">.</span><span class="nx">transitioning</span><span class="p">)</span> <span class="p">{</span>
                         <span class="k">return</span><span class="p">;</span>
                     <span class="p">}</span>
@@ -457,7 +457,7 @@ or if we're in the "always on" hover mode.</p>             </td>             <td
 
                     <span class="nx">me</span><span class="p">.</span><span class="nx">transitioning</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
 
-                    <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">children</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                    <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">children</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                         <span class="k">this</span><span class="p">.</span><span class="nx">hide</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
                     <span class="p">});</span>
 
@@ -471,14 +471,14 @@ or if we're in the "always on" hover mode.</p>             </td>             <td
                     <span class="p">}</span>
                 <span class="p">};</span>
 
-                <span class="kd">var</span> <span class="nx">hideComplete</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">hideComplete</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
                     <span class="nx">me</span><span class="p">.</span><span class="nx">isOpen</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
                     <span class="nx">me</span><span class="p">.</span><span class="nx">transitioning</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
 
                     <span class="nx">_options</span><span class="p">.</span><span class="nx">hidePanelComplete</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">me</span><span class="p">,</span> <span class="nx">getEvent</span><span class="p">(</span><span class="nx">e</span><span class="p">));</span>
                 <span class="p">};</span>
 
-                <span class="kd">var</span> <span class="nx">toggleClick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">toggleClick</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
                     <span class="kd">var</span> <span class="nx">isBubbledClick</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
 
                     <span class="k">if</span> <span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">$panel</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
@@ -514,7 +514,7 @@ cancel the default event so touching the menu doesn't cause navigation.</p>     
                     <span class="p">}</span>
                 <span class="p">};</span>
 
-                <span class="k">this</span><span class="p">.</span><span class="nx">showClick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">showClick</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
                     <span class="k">if</span> <span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">isTopLevel</span><span class="p">)</span> <span class="p">{</span>
                         <span class="nx">_clickHoverActivated</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
                     <span class="p">}</span>
@@ -522,7 +522,7 @@ cancel the default event so touching the menu doesn't cause navigation.</p>     
                     <span class="nx">me</span><span class="p">.</span><span class="nx">show</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
                 <span class="p">};</span>
 
-                <span class="k">this</span><span class="p">.</span><span class="nx">hideClick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">hideClick</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
                     <span class="k">if</span> <span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">isTopLevel</span><span class="p">)</span> <span class="p">{</span>
                         <span class="nx">_clickHoverActivated</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
                     <span class="p">}</span>
@@ -530,7 +530,7 @@ cancel the default event so touching the menu doesn't cause navigation.</p>     
                     <span class="nx">me</span><span class="p">.</span><span class="nx">hide</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
                 <span class="p">};</span>
 
-                <span class="k">this</span><span class="p">.</span><span class="nx">hideForce</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">hideForce</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
                     <span class="nx">_clickHoverActivated</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
                     <span class="nx">me</span><span class="p">.</span><span class="nx">hide</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
                 <span class="p">};</span>
@@ -539,16 +539,16 @@ cancel the default event so touching the menu doesn't cause navigation.</p>     
             <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-63">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-63">&#182;</a>               </div>               <p>Hides all menus and submenus</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="kd">var</span> <span class="nx">hideAllClick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">hideAllClick</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
                 <span class="nx">_ignoreDocumentClick</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
 
-                <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">_rootMenu</span><span class="p">.</span><span class="nx">children</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">_rootMenu</span><span class="p">.</span><span class="nx">children</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                     <span class="k">this</span><span class="p">.</span><span class="nx">hideForce</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
                 <span class="p">});</span>
             <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-64">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-64">&#182;</a>               </div>               <p>Handler for a document click to close all menus</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="kd">var</span> <span class="nx">documentClickHandler</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">documentClickHandler</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-65">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-65">&#182;</a>               </div>               <p>Check a flag which indicates the click is from the menu itself</p>             </td>             <td class="code">               <div class="highlight"><pre>
                 <span class="k">if</span> <span class="p">(</span><span class="nx">_ignoreDocumentClick</span><span class="p">)</span> <span class="p">{</span>
                     <span class="nx">_ignoreDocumentClick</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
@@ -560,7 +560,7 @@ cancel the default event so touching the menu doesn't cause navigation.</p>     
 
             <span class="nx">_allCloseHandlers</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">hideAllClick</span><span class="p">);</span>
 
-            <span class="kd">var</span> <span class="nx">hideOtherMenus</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">hideOtherMenus</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
                 <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">_allCloseHandlers</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
                     <span class="k">if</span> <span class="p">(</span><span class="nx">_allCloseHandlers</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">!==</span> <span class="nx">hideAllClick</span><span class="p">)</span> <span class="p">{</span>
                         <span class="nx">_allCloseHandlers</span><span class="p">[</span><span class="nx">i</span><span class="p">](</span><span class="nx">e</span><span class="p">);</span>
@@ -569,17 +569,17 @@ cancel the default event so touching the menu doesn't cause navigation.</p>     
             <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-66">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-66">&#182;</a>               </div>               <p>Create a Panel instance for each menu panel, store in an array</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="nx">$topLevelItems</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s2">&quot;.menu-panel&quot;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">$topLevelItems</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s2">&quot;.menu-panel&quot;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                 <span class="nx">_panels</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="k">new</span> <span class="nx">Panel</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">)));</span>
             <span class="p">});</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-67">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-67">&#182;</a>               </div>               <p>Top level items without a submenu need a Panel instance as well, to interact with other top level items.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="nx">$topLevelItems</span><span class="p">.</span><span class="nx">not</span><span class="p">(</span><span class="s2">&quot;.menu-item-with-submenu&quot;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">$topLevelItems</span><span class="p">.</span><span class="nx">not</span><span class="p">(</span><span class="s2">&quot;.menu-item-with-submenu&quot;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                 <span class="nx">_panels</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="k">new</span> <span class="nx">Panel</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">)));</span>
             <span class="p">});</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-68">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-68">&#182;</a>               </div>               <p>Build a tree representing the parent/child relationships in the menu</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">_panels</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">_panels</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                 <span class="k">this</span><span class="p">.</span><span class="nx">resolveParent</span><span class="p">();</span>
             <span class="p">});</span>
 
@@ -588,13 +588,13 @@ Note: This does not include the top level items with submenus, which have differ
 rules for rollovers. jQuery.find() only includes decendants, no the current set,
 which is the top level menu items.</p>             </td>             <td class="code">               <div class="highlight"><pre>
             <span class="nx">$topLevelItems</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s2">&quot;.menu-item&quot;</span><span class="p">).</span><span class="nx">hover</span><span class="p">(</span>
-                <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                     <span class="nx">highlightMenuItem</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="kc">true</span><span class="p">);</span>
                 <span class="p">},</span>
-                <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                     <span class="nx">highlightMenuItem</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="kc">false</span><span class="p">);</span>
                 <span class="p">})</span>
-                <span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                     <span class="nx">highlightMenuItem</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="kc">false</span><span class="p">);</span>
                 <span class="p">});</span>
 
@@ -603,9 +603,9 @@ which is the top level menu items.</p>             </td>             <td class="
         <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-71">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-71">&#182;</a>               </div>               <p>Loop through each menu container and create a menu "group".</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-72">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-72">&#182;</a>               </div>               <p>Find all the top-level menu items within the container.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="kd">var</span> <span class="nx">$topLevelItems</span> <span class="o">=</span> <span class="nx">findUntil</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="kd">function</span><span class="p">(</span><span class="nx">elem</span><span class="p">,</span> <span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">$topLevelItems</span> <span class="o">=</span> <span class="nx">findUntil</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">elem</span><span class="p">,</span> <span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
                 <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">elem</span><span class="p">).</span><span class="nx">hasClass</span><span class="p">(</span><span class="s2">&quot;menu-item&quot;</span><span class="p">))</span> <span class="p">{</span>
                     <span class="nx">results</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">elem</span><span class="p">);</span>
                     <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>

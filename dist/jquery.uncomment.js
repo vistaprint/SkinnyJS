@@ -1,7 +1,7 @@
 // ## jQuery.uncomment
 
-(function($) {
-    $.fn.uncomment = function() {
+(function ($) {
+    $.fn.uncomment = function () {
         for (var i = 0, l = this.length; i < l; i++) {
             for (var j = 0, len = this[i].childNodes.length; j < len; j++) {
                 if (this[i].childNodes[j].nodeType === 8) {

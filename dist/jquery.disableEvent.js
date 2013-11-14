@@ -1,7 +1,7 @@
-(function($) {
+(function ($) {
     // jQuery 1.8+ stores event data in the private $._data() method,
     // whereas earlier versions stored using in the public fn.data() method.
-    var _data = function($el, key, value) {
+    var _data = function ($el, key, value) {
         return $[$._data ? "_data" : "data"]($el[0], key, value);
     };
 
@@ -23,7 +23,7 @@
     }
 
     // Returns true if the specified event has been disabled
-    $.fn.isEventDisabled = function(eventType) {
+    $.fn.isEventDisabled = function (eventType) {
         return eventType in (_data(this, "eventsDisabled") || {});
     };
 
@@ -44,7 +44,7 @@
     }
 
     // Monkey patched version of $.event.add
-    var addEvent = function(elem, types, handler, data, selector) {
+    var addEvent = function (elem, types, handler, data, selector) {
         var eventsDisabled = _data($(elem), "eventsDisabled");
         if (eventsDisabled) {
             var eventTypes = parseEventTypes(types);
@@ -85,19 +85,19 @@
 
     // Disables all handlers for the specified event type(s) on the element
     // Handlers added after this is called will be cached, but not actually added
-    $.fn.disableEvent = function(eventType) {
+    $.fn.disableEvent = function (eventType) {
         initialize();
 
         // event types can be a space-delimited string (i.e. "click mouseup")
         var eventTypes = parseEventTypes(eventType);
 
         // Handle all jQuery elements
-        this.each(function(i, el) {
+        this.each(function (i, el) {
             var $el = $(el);
 
             // if the element has HTML attribute-based events, 
             // delete and re-add them with jQuery so the same mechanism can work on them.
-            $.each(eventTypes, function(i, eventType) {
+            $.each(eventTypes, function (i, eventType) {
                 var attr = $el.attr("on" + eventType.toLowerCase());
                 if (attr) {
                     // Remove the native event
@@ -112,7 +112,7 @@
             // jQuery stores event handlers in an object associated with the element
             var events = _data($el, "events");
             if (events) {
-                $.each(eventTypes, function(i, eventType) {
+                $.each(eventTypes, function (i, eventType) {
                     // See if there are handlers for this particular event type
                     var handlers = events[eventType];
                     if (handlers) {
@@ -139,7 +139,7 @@
     };
 
     // Re-enables events disabled via $.fn.disableEvent
-    $.fn.enableEvent = function(eventType, enable) {
+    $.fn.enableEvent = function (eventType, enable) {
         if (typeof enable != "undefined") {
             if (!enable) {
                 this.disableEvent(eventType);
@@ -147,15 +147,15 @@
             }
         }
 
-        this.each(function(i, el) {
+        this.each(function (i, el) {
             var $el = $(el);
             var eventsDisabled = _data($el, "eventsDisabled");
             if (eventsDisabled) {
                 var eventTypes = parseEventTypes(eventType);
-                $.each(eventTypes, function(i, eventType) {
+                $.each(eventTypes, function (i, eventType) {
                     var handlers = eventsDisabled[eventType];
                     if (handlers) {
-                        $.each(handlers, function(j, handler) {
+                        $.each(handlers, function (j, handler) {
                             _originalAddEvent($el[0], eventType, handler);
                         });
 

@@ -1,4 +1,4 @@
-(function($) {
+(function ($) {
 
     $.cookies = {};
 
@@ -7,7 +7,7 @@
     // server.
     // @param {string} sText The text to encode.
     // @return {string} The encoded text.
-    var _cookieEncode = function(sText) {
+    var _cookieEncode = function (sText) {
         if (!sText) {
             return "";
         } else {
@@ -28,7 +28,7 @@
     // and %2b with +. This undoes _cookieEncode().
     // @param {string} sText The text to decode.
     // @return {string} The decoded text.
-    var _cookieDecode = function(sText) {
+    var _cookieDecode = function (sText) {
         if (!sText) {
             return "";
         } else {
@@ -42,7 +42,7 @@
         return decodeURIComponent(sText);
     };
 
-    var _defaultPermanentDate = function() {
+    var _defaultPermanentDate = function () {
         var d = new Date();
         d.setFullYear(d.getFullYear() + 1);
         return d.toUTCString();
@@ -57,11 +57,11 @@
 
     var _settings = _defaults;
 
-    $.cookies.setDefaults = function(settings) {
+    $.cookies.setDefaults = function (settings) {
         _settings = $.extend({}, _defaults, settings);
     };
 
-    var _getDefault = function(key, overrideValue) {
+    var _getDefault = function (key, overrideValue) {
         if (overrideValue) {
             return overrideValue;
         }
@@ -71,7 +71,7 @@
 
     // Runs a test to determine if cookies are enabled on the browser.
     // @return {boolean} True if cookies are enabled, false if not.
-    $.cookies.enabled = function() {
+    $.cookies.enabled = function () {
         $.cookies.set("cookietest", "value");
         if ($.cookies.get("cookietest") == "value") {
             $.cookies.remove("cookietest");
@@ -85,7 +85,7 @@
     // @param {string} name The name of the cookie
     // @param {string} subCookie Optional. The sub-cookie value to get
     // @return {string} or {object} (if the cookie contains subvalues)
-    $.cookies.get = function(name, /* optional */ subCookie) {
+    $.cookies.get = function (name, /* optional */ subCookie) {
         var cookies = new Cookies();
         var cookie = cookies[name];
         if (cookie) {
@@ -113,11 +113,11 @@
     // @param {string} domain (Optional) The domain in which to store the cookie. Uses the default domain if not specified.
     // @param {Boolean} permanent (Optional) Indicates the cookie should be permanent. False by default.
     // @param {Boolean} clearExistingSubCookies (Optional) If true, all sub-cookoies will be erased before writing new ones. False by default.
-    $.cookies.set = function(nameOrData, value, domain, permanent, clearExistingSubCookies) {
+    $.cookies.set = function (nameOrData, value, domain, permanent, clearExistingSubCookies) {
         var name = nameOrData;
         var path;
 
-        if (typeof(nameOrData) == "object") {
+        if (typeof (nameOrData) == "object") {
             name = nameOrData.name;
             value = nameOrData.value;
             domain = nameOrData.domain;
@@ -128,7 +128,7 @@
 
         // value may be a map of subvalues.
         var subCookies;
-        if (typeof(value) == "object" && value !== null) {
+        if (typeof (value) == "object" && value !== null) {
             subCookies = value;
             value = null;
         }
@@ -164,7 +164,7 @@
 
     // Deletes the cookie with the specified name.
     // @param {string} sName The name of the cookie to delete.
-    $.cookies.remove = function(name, domain, path) {
+    $.cookies.remove = function (name, domain, path) {
         var cookie = _cookieEncode(name) + "=a; path=" + _getDefault("path", path) + "; expires=Wed, 17 Jan 1979 07:01:00 GMT";
 
         domain = _getDefault("domain", domain);
@@ -179,7 +179,7 @@
 
     // @class Represents a collection of cookies stored in the browser.
     // Exposes the cookies as a dictionary of cookie names and cookie objects.
-    var Cookies = function() {
+    var Cookies = function () {
         var me = this;
         var cookie = document.cookie.toString();
         var cookieArray = cookie.split(";");
@@ -196,7 +196,7 @@
 
     // @class Represents a cookie. Contains a value or a subvalues collection.
     // @constructor
-    var Cookie = function() {
+    var Cookie = function () {
         var me = this;
 
         // The name of the cookie
@@ -219,7 +219,7 @@
         // Indicates the cookie persists on users machines
         this.isPermanent = false;
 
-        var _validateName = function() {
+        var _validateName = function () {
             if (!me.name) {
                 throw new Error("Cookie: Cookie name is null.");
             }
@@ -228,7 +228,7 @@
 
         // Gets the cookie as a serialized string
         // @return {String}
-        this.serialize = function() {
+        this.serialize = function () {
             _validateName();
 
             var cookie = _cookieEncode(me.name) + "=" + _getEncodedValue();
@@ -249,7 +249,7 @@
 
 
         // Saves the value of the cookie- commits it to the browser's cookies.
-        this.save = function() {
+        this.save = function () {
             _validateName();
 
             var cookie = me.serialize();
@@ -261,7 +261,7 @@
 
         // Takes the encoded value of the cookie as it is stored on disk, and populates the object with it.
         // @param {string} sUnparsedValue The encoded cookie data
-        this.parse = function(sUnparsedValue) {
+        this.parse = function (sUnparsedValue) {
             if (!sUnparsedValue) {
                 return;
             }
@@ -300,7 +300,7 @@
 
 
         // Gets the encoded value of the cookie (handles subcookies too).
-        var _getEncodedValue = function() {
+        var _getEncodedValue = function () {
             if (me.subCookies) {
                 var aOut = [];
                 for (var sSub in me.subCookies) {

@@ -1,6 +1,6 @@
 // Pointer Events polyfill for jQuery
 
-(function($, window, document, undefined) {
+(function ($, window, document, undefined) {
 
     var support = {
         touch: "ontouchend" in document,
@@ -67,7 +67,7 @@
     // add our own pointer event hook/filter
     $.event.pointerHooks = {
         props: "pointerType clientX clientY fromElement offsetX offsetY pageX pageY screenX screenY toElement".split(" "),
-        filter: function(event, original) {
+        filter: function (event, original) {
             var body, eventDoc, doc,
                 fromElement = original.fromElement;
 
@@ -138,25 +138,25 @@
         $.event.special.pointerdown = {
             ignoreNextMousedownEvent: false,
 
-            touch: function(event) {
+            touch: function (event) {
                 // prevent the click event from firing as well
                 $.event.special.pointerdown.ignoreNextMousedownEvent = true;
                 triggerCustomEvent(this, "pointerdown", event);
             },
-            mouse: function(event) {
+            mouse: function (event) {
                 if (!$.event.special.pointerdown.ignoreNextMousedownEvent) {
                     triggerCustomEvent(this, "pointerdown", event);
                 } else {
                     $.event.special.pointerdown.ignoreNextMousedownEvent = false;
                 }
             },
-            setup: function() {
+            setup: function () {
                 if (support.touch) {
                     addEvent(this, "touchstart", $.event.special.pointerdown.touch);
                 }
                 addEvent(this, "mousedown", $.event.special.pointerdown.mouse);
             },
-            teardown: function() {
+            teardown: function () {
                 if (support.touch) {
                     jQuery.removeEvent(this, "touchstart", $.event.special.pointerdown.touch);
                 }
@@ -182,7 +182,7 @@
             pointercancel: {
                 touch: "touchcancel"
             }
-        }, function(pointerEventType, natives) {
+        }, function (pointerEventType, natives) {
             function onTouch(event) {
                 event.preventDefault(); // prevent the mouse event from firing as well
                 triggerCustomEvent(this, pointerEventType, event);
@@ -193,7 +193,7 @@
             }
 
             $.event.special[pointerEventType] = {
-                setup: function() {
+                setup: function () {
                     if (support.touch && natives.touch) {
                         addEvent(this, natives.touch, onTouch);
                     }
@@ -201,7 +201,7 @@
                         addEvent(this, natives.mouse, onMouse);
                     }
                 },
-                teardown: function() {
+                teardown: function () {
                     if (support.touch && natives.touch) {
                         jQuery.removeEvent(this, natives.touch, onTouch);
                     }

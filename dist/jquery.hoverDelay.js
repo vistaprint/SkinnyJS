@@ -1,6 +1,6 @@
 /// <reference path="jquery.pointerEvents.js" />
 
-(function($) {
+(function ($) {
     var OVER_TIMER = 'skinnyjs-hoverDelay-overTimer';
     var OUT_TIMER = 'skinnyjs-hoverDelay-outTimer';
 
@@ -12,7 +12,7 @@
         mouseOnly: true
     };
 
-    $.fn.hoverDelay = function(over, out, options) {
+    $.fn.hoverDelay = function (over, out, options) {
         if ($.isPlainObject(over)) {
             options = over;
         } else {
@@ -22,7 +22,7 @@
 
         var _options = $.extend({}, _defaults, options);
 
-        var clearTimers = function(el) {
+        var clearTimers = function (el) {
             var overTimer = el.data(OVER_TIMER);
             var outTimer = el.data(OUT_TIMER);
 

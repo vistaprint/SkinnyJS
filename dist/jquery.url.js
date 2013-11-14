@@ -1,12 +1,12 @@
 /// <reference path="jquery.querystring.js" />
 
-(function($) {
+(function ($) {
 
     // Parses and manipulates a URL. 
-    $.Url = function(url) {
+    $.Url = function (url) {
         var me = this;
 
-        var _normalize = function(input) {
+        var _normalize = function (input) {
             if (input == null || input === "") {
                 return "";
             }
@@ -17,7 +17,7 @@
         // http: or https:
         var _protocol = "";
 
-        this.protocol = function(value) {
+        this.protocol = function (value) {
             if (typeof value != "undefined") {
                 _protocol = _normalize(value);
 
@@ -34,7 +34,7 @@
         // The server name- example: www.vistaprint.com
         var _hostname = "";
 
-        this.hostname = function(value) {
+        this.hostname = function (value) {
             if (typeof value != "undefined") {
                 _hostname = _normalize(value);
             } else {
@@ -45,7 +45,7 @@
         var _port = "";
 
         // The TCP port (if specified)
-        this.port = function(value) {
+        this.port = function (value) {
             if (typeof value != "undefined") {
                 _port = _normalize(value);
             } else {
@@ -55,7 +55,7 @@
 
         // The server name- example: www.vistaprint.com
         // Includes port string if specified- example www.vistaprint.com:80
-        this.host = function(value) {
+        this.host = function (value) {
             if (typeof value != "undefined") {
                 value = _normalize(value);
 
@@ -85,7 +85,7 @@
         var _pathname = "";
 
         // The root relative path to the file- example: /vp/myfile.htm
-        this.pathname = function(value) {
+        this.pathname = function (value) {
             if (typeof value != "undefined") {
                 _pathname = _normalize(value);
             } else {
@@ -97,7 +97,7 @@
         this.queryString = {};
 
         // The querystring with the initial ? if specified- example: ?val1=foo&val2=bar
-        this.search = function(value) {
+        this.search = function (value) {
             if (typeof value != "undefined") {
                 value = _normalize(value);
                 me.queryString = $.deparam(value);
@@ -110,7 +110,7 @@
         // The anchor link- text after the # character
         var _hash = "";
 
-        this.hash = function(value) {
+        this.hash = function (value) {
             if (typeof value != "undefined") {
                 value = _normalize(value);
 
@@ -126,7 +126,7 @@
             }
         };
 
-        var load = function(url) {
+        var load = function (url) {
             var nextPartPos;
             var temp = url;
 
@@ -204,7 +204,7 @@
         };
 
         // Gets the URL as a string
-        this.toString = function() {
+        this.toString = function () {
             var url = "";
             var host = me.host();
             if (host) {
@@ -214,7 +214,7 @@
         };
 
         // Gets a specific querystring value from its key name
-        this.get = function(key, defaultValue) {
+        this.get = function (key, defaultValue) {
             if (!me.queryString.hasOwnProperty(key)) {
                 return defaultValue;
             }
@@ -223,7 +223,7 @@
         };
 
         // Sets a specific querystring value by its key name
-        this.set = function(key, value) {
+        this.set = function (key, value) {
             if (key == null || key === "") {
                 throw new Error("Invalid key: " + key);
             }
@@ -232,7 +232,7 @@
         };
 
         // Removes a specific querystring value by its key name
-        this.remove = function(key) {
+        this.remove = function (key) {
             delete me.queryString[key];
         };
 

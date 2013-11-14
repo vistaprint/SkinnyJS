@@ -2,9 +2,9 @@
 <a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.isVisibleKeyCode.js" target="_blank">View this file on Github</a>
 
 <hr style="height: 1px; border:0; background-color:#4A525A">
-             <h1>               jquery.isVisibleKeyCode.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="nx">jQuery</span><span class="p">.</span><span class="nx">Event</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">isVisibleKeyCode</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+             <h1>               jquery.isVisibleKeyCode.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="nx">jQuery</span><span class="p">.</span><span class="nx">Event</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">isVisibleKeyCode</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">keyCode</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">keyCode</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
     <span class="p">}</span>
 
@@ -24,13 +24,13 @@
     <span class="p">}</span>
 
     <span class="k">switch</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">keyCode</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="mi">9</span><span class="o">:</span> <span class="c1">//Tab</span>
-        <span class="k">case</span> <span class="mi">45</span><span class="o">:</span>
-        <span class="k">case</span> <span class="mi">91</span><span class="o">:</span>
-        <span class="k">case</span> <span class="mi">145</span><span class="o">:</span>
-            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
-        <span class="k">default</span><span class="o">:</span>
-            <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="k">case</span> <span class="mi">9</span><span class="o">:</span> <span class="c1">//Tab</span>
+    <span class="k">case</span> <span class="mi">45</span><span class="o">:</span>
+    <span class="k">case</span> <span class="mi">91</span><span class="o">:</span>
+    <span class="k">case</span> <span class="mi">145</span><span class="o">:</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="k">default</span><span class="o">:</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
     <span class="p">}</span>
 
     <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>

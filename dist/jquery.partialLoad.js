@@ -1,7 +1,7 @@
-(function(window, $) {
+(function (window, $) {
     var _currentScripts;
 
-    $.fn.partialLoad = function(url, target, data, callback) {
+    $.fn.partialLoad = function (url, target, data, callback) {
         // Default to a GET request
         var type = "GET";
         var response;
@@ -34,11 +34,11 @@
             type: type,
             dataType: "html",
             data: data
-        }).done(function(responseText) {
+        }).done(function (responseText) {
             // Save response for use in complete callback
             response = arguments;
 
-            self.each(function(i, el) {
+            self.each(function (i, el) {
                 var $el = $(el);
                 var scripts = [];
                 var fragment = getFragmentAndScripts(responseText, target, $el, scripts);
@@ -49,7 +49,7 @@
                     $el.html(fragment);
 
                     if (scripts.length) {
-                        $.each(scripts, function(i, elem) {
+                        $.each(scripts, function (i, elem) {
                             if (elem.src) {
                                 // Load scripts that haven't yet been loaded
                                 execScriptUnique(elem.src);
@@ -64,14 +64,14 @@
                 }
             });
 
-        }).complete(callback && function(jqXHR, status) {
+        }).complete(callback && function (jqXHR, status) {
             self.each(callback, response || [jqXHR.responseText, status, jqXHR]);
         });
 
         return this;
     };
 
-    var execScriptUnique = function(src) {
+    var execScriptUnique = function (src) {
         var srcLower = src.toLowerCase();
 
         // Build a 'set' of already loaded scripts so we can ensure
@@ -105,7 +105,7 @@
 
     var _currentStylesheets;
 
-    var isStylesheetUnique = function(href) {
+    var isStylesheetUnique = function (href) {
         var hrefLower = href.toLowerCase();
 
         // Build a 'set' of already loaded scripts so we can ensure
@@ -133,7 +133,7 @@
 
     var rcleanScript = /^\s*<!(?:\[CDATA\[|\-\-)/;
 
-    var getFragmentAndScripts = function(responseText, selector, context, scripts) {
+    var getFragmentAndScripts = function (responseText, selector, context, scripts) {
         var $target;
 
         if (selector) {
@@ -146,7 +146,7 @@
 
             $target = $temp.find(selector);
 
-            $target.find("script").map(function(i, elem) {
+            $target.find("script").map(function (i, elem) {
                 scripts.push(elem);
             });
 
@@ -165,7 +165,7 @@
         }
 
         if (scripts.length) {
-            $.each(scripts, function(i, elem) {
+            $.each(scripts, function (i, elem) {
                 if (elem.parentNode) {
                     elem.parentNode.removeChild(elem);
                 }
@@ -207,7 +207,7 @@
     function jqueryVersion() {
         return $.map(
             $.fn.jquery.split("."),
-            function(value) {
+            function (value) {
                 return parseInt(value, 10);
             });
     }

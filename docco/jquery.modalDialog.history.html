@@ -7,14 +7,14 @@
 i.e. ?dialogs=#foo,ajax:/foo.html,iframe:/foo.html
 TODO require history.js</p>             </td>             <td class="code">               <div class="highlight"><pre>
 
-<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+<span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">DEFAULT_DIALOG_PARAM_NAME</span> <span class="o">=</span> <span class="s2">&quot;sdialogid&quot;</span><span class="p">;</span>
     <span class="kd">var</span> <span class="nx">_dialogParamName</span><span class="p">;</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Enables the history plugin, and returns a promise which
 resolves when either the dialog specified in the URL is opened,
 or if there is no dialog specified, immediately</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">enableHistory</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">dialogParamName</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">enableHistory</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">dialogParamName</span><span class="p">)</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Ensure enableHistory isn't called twice</p>             </td>             <td class="code">               <div class="highlight"><pre>
         <span class="k">if</span> <span class="p">(</span><span class="nx">_historyEnabled</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span><span class="p">;</span>
@@ -35,7 +35,7 @@ case it was meant to be part of the initial page state.</p>             </td>   
 
         <span class="nx">updateFromUrl</span><span class="p">()</span>
             <span class="p">.</span><span class="nx">then</span><span class="p">(</span>
-                <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                     <span class="k">try</span> <span class="p">{</span>
                         <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">onopen</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">openHandler</span><span class="p">);</span>
                         <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">onclose</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">closeHandler</span><span class="p">);</span>
@@ -49,19 +49,19 @@ case it was meant to be part of the initial page state.</p>             </td>   
                         <span class="nx">deferred</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="nx">ex</span><span class="p">);</span>
                     <span class="p">}</span>
                 <span class="p">},</span>
-                <span class="kd">function</span><span class="p">(</span><span class="nx">ex</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">function</span> <span class="p">(</span><span class="nx">ex</span><span class="p">)</span> <span class="p">{</span>
                     <span class="nx">deferred</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="nx">ex</span><span class="p">);</span>
                 <span class="p">});</span>
 
         <span class="k">return</span> <span class="nx">deferred</span><span class="p">;</span>
     <span class="p">};</span>
 
-    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">isHistoryEnabled</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">isHistoryEnabled</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nx">_historyEnabled</span><span class="p">;</span>
     <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Handle history.js in hash mode for browser that don't support pushState</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">currentQueryStringOrHash</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">currentQueryStringOrHash</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">History</span><span class="p">.</span><span class="nx">emulated</span><span class="p">.</span><span class="nx">pushState</span> <span class="o">&amp;&amp;</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">hash</span><span class="p">)</span> <span class="p">{</span>
             <span class="kd">var</span> <span class="nx">qPos</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">hash</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;?&quot;</span><span class="p">);</span>
             <span class="k">if</span> <span class="p">(</span><span class="nx">qPos</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
@@ -76,7 +76,7 @@ case it was meant to be part of the initial page state.</p>             </td>   
         <span class="k">return</span> <span class="p">{};</span>
     <span class="p">};</span>
 
-    <span class="kd">var</span> <span class="nx">disableHistoryForOpenDialogs</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">disableHistoryForOpenDialogs</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">parent</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">getCurrent</span><span class="p">();</span>
 
         <span class="k">while</span> <span class="p">(</span><span class="nx">parent</span><span class="p">)</span> <span class="p">{</span>
@@ -90,7 +90,7 @@ case it was meant to be part of the initial page state.</p>             </td>   
 
 </pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>If history is disabled for any dialog in the stack, it should be disabled
 for all of them.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">isHistoryEnabled</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">dialog</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">isHistoryEnabled</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">dialog</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">parent</span> <span class="o">=</span> <span class="nx">dialog</span><span class="p">;</span>
 
         <span class="k">do</span> <span class="p">{</span>
@@ -110,7 +110,7 @@ for all of them.</p>             </td>             <td class="code">            
     <span class="kd">var</span> <span class="nx">_disableHandlers</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
     <span class="kd">var</span> <span class="nx">_historyEnabled</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
 
-    <span class="kd">var</span> <span class="nx">getDialogParams</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">dialog</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">getDialogParams</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">dialog</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">dialogParams</span> <span class="o">=</span> <span class="p">{</span>
             <span class="nx">dialogType</span><span class="o">:</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span>
             <span class="nx">dialogId</span><span class="o">:</span> <span class="kc">null</span>
@@ -135,7 +135,7 @@ for all of them.</p>             </td>             <td class="code">            
         <span class="k">return</span> <span class="nx">dialogParams</span><span class="p">;</span>
     <span class="p">};</span>
 
-    <span class="kd">var</span> <span class="nx">getDialogSettingsFromParams</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">dialogParams</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">getDialogSettingsFromParams</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">dialogParams</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">settings</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="nx">dialogParams</span><span class="p">.</span><span class="nx">dialogType</span> <span class="o">==</span> <span class="s2">&quot;iframe&quot;</span><span class="p">)</span> <span class="p">{</span>
@@ -162,29 +162,29 @@ for all of them.</p>             </td>             <td class="code">            
         <span class="k">return</span> <span class="nx">settings</span><span class="p">;</span>
     <span class="p">};</span>
 
-    <span class="kd">var</span> <span class="nx">doParamsMatchDialog</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">dialogParams</span><span class="p">,</span> <span class="nx">dialog</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">doParamsMatchDialog</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">dialogParams</span><span class="p">,</span> <span class="nx">dialog</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">d1</span> <span class="o">=</span> <span class="nx">getDialogParams</span><span class="p">(</span><span class="nx">dialog</span><span class="p">);</span>
 
         <span class="k">return</span> <span class="nx">d1</span><span class="p">.</span><span class="nx">dialogType</span> <span class="o">==</span> <span class="nx">dialogParams</span><span class="p">.</span><span class="nx">dialogType</span> <span class="o">&amp;&amp;</span>
             <span class="nx">d1</span><span class="p">.</span><span class="nx">dialogId</span> <span class="o">==</span> <span class="nx">dialogParams</span><span class="p">.</span><span class="nx">dialogId</span><span class="p">;</span>
     <span class="p">};</span>
 
-    <span class="kd">var</span> <span class="nx">encodeDialogId</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">encodeDialogId</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nx">s</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">,</span> <span class="s2">&quot;-hash-&quot;</span><span class="p">);</span>
     <span class="p">};</span>
 
-    <span class="kd">var</span> <span class="nx">decodeDialogId</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">decodeDialogId</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nx">s</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="s2">&quot;-hash-&quot;</span><span class="p">,</span> <span class="s2">&quot;#&quot;</span><span class="p">);</span>
     <span class="p">};</span>
 
-    <span class="kd">var</span> <span class="nx">parseDialogParams</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">parseDialogParams</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span> <span class="p">[];</span>
         <span class="p">}</span>
 
         <span class="kd">var</span> <span class="nx">items</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">);</span>
 
-        <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">items</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">items</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
             <span class="kd">var</span> <span class="nx">delimPos</span> <span class="o">=</span> <span class="nx">item</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">);</span>
 
             <span class="k">if</span> <span class="p">(</span><span class="nx">delimPos</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
@@ -198,15 +198,15 @@ for all of them.</p>             </td>             <td class="code">            
         <span class="p">});</span>
     <span class="p">};</span>
 
-    <span class="kd">var</span> <span class="nx">encodeDialogParams</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">dialogParamsList</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">dialogParamsList</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">encodeDialogParams</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">dialogParamsList</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">dialogParamsList</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span> <span class="nx">item</span><span class="p">.</span><span class="nx">dialogType</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nx">encodeDialogId</span><span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">dialogId</span><span class="p">);</span>
         <span class="p">})</span>
             <span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">);</span>
     <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>Handler for dialogs opening</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">openHandler</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">openHandler</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>Hook to ensure the history handler doesn't run infinitely
 when the dialog was opened by the history plugin itself</p>             </td>             <td class="code">               <div class="highlight"><pre>
         <span class="k">if</span> <span class="p">(</span><span class="nx">_disableHandlers</span><span class="p">)</span> <span class="p">{</span>
@@ -248,7 +248,7 @@ it should add a history entry when closing dialogs</p>             </td>        
     <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <p>Handler which fires when dialogs are closed</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">closeHandler</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">closeHandler</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">_disableHandlers</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span><span class="p">;</span>
         <span class="p">}</span>
@@ -295,7 +295,7 @@ when the popstate event fires. This prevents an infinite loop.</p>             <
     <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-24">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-24">&#182;</a>               </div>               <p>Looks for changes in the URL and opens or closes dialogs accordingly</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">popstateHandler</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">popstateHandler</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-25">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-25">&#182;</a>               </div>               <p>If the history plugin triggered the URL change itself,
 then the UI has been updated already, and we shouldn't update anything.</p>             </td>             <td class="code">               <div class="highlight"><pre>
         <span class="k">if</span> <span class="p">(</span><span class="nx">_stateAlreadyProcessed</span><span class="p">)</span> <span class="p">{</span>
@@ -307,7 +307,7 @@ then the UI has been updated already, and we shouldn't update anything.</p>     
     <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-26">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-26">&#182;</a>               </div>               <p>Listen to URL changes and open/close dialogs accordingly</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">updateFromUrl</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">updateFromUrl</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">deferred</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-27">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-27">&#182;</a>               </div>               <p>An array of parsed dialog parameters from the URL</p>             </td>             <td class="code">               <div class="highlight"><pre>
@@ -323,7 +323,7 @@ then the UI has been updated already, and we shouldn't update anything.</p>     
 
 </pre></div>             </td>           </tr>                               <tr id="section-29">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-29">&#182;</a>               </div>               <p>If there are more dialogParams in the URL than dialogs displayed,
 open them in order</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="kd">var</span> <span class="nx">openDialogsUntilUrlMatches</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">openDialogsUntilUrlMatches</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="nx">dialogParamsList</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="nx">topmostStackPos</span><span class="p">)</span> <span class="p">{</span>
                 <span class="kd">var</span> <span class="nx">dialogParams</span> <span class="o">=</span> <span class="nx">dialogParamsList</span><span class="p">[</span><span class="nx">topmostStackPos</span><span class="p">];</span>
 
@@ -351,7 +351,7 @@ If the handlers were enabled, we'd get infinite looping.</p>             </td>  
                 <span class="nx">_disableHandlers</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
 
                 <span class="nx">dialog</span><span class="p">.</span><span class="nx">open</span><span class="p">()</span>
-                    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-34">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-34">&#182;</a>               </div>               <p>Recurse until all dialogs embedded in the URL are open</p>             </td>             <td class="code">               <div class="highlight"><pre>
                         <span class="nx">topmostStackPos</span><span class="o">++</span><span class="p">;</span>
                         <span class="k">try</span> <span class="p">{</span>
@@ -361,7 +361,7 @@ If the handlers were enabled, we'd get infinite looping.</p>             </td>  
                         <span class="p">}</span>
                     <span class="p">});</span>
             <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                         <span class="nx">deferred</span><span class="p">.</span><span class="nx">resolve</span><span class="p">();</span>
                         <span class="nx">_disableHandlers</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
                     <span class="p">},</span>
@@ -375,7 +375,7 @@ If the handlers were enabled, we'd get infinite looping.</p>             </td>  
 
 </pre></div>             </td>           </tr>                               <tr id="section-35">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-35">&#182;</a>               </div>               <p>If there are fewer dialogParams in the URL than in dialogs displayed,
 close them until they match</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="kd">var</span> <span class="nx">closeDialogsUntilUrlMatches</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">closeDialogsUntilUrlMatches</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="nx">dialogParamsList</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="nx">topmostStackPos</span><span class="p">)</span> <span class="p">{</span>
                 <span class="kd">var</span> <span class="nx">currentDialog</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">getCurrent</span><span class="p">();</span>
                 <span class="k">if</span> <span class="p">(</span><span class="nx">currentDialog</span><span class="p">)</span> <span class="p">{</span>
@@ -391,7 +391,7 @@ If the handlers were enabled, we'd get infinite looping.</p>             </td>  
                     <span class="nx">_disableHandlers</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
 
                     <span class="nx">currentDialog</span><span class="p">.</span><span class="nx">close</span><span class="p">()</span>
-                        <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                        <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                             <span class="nx">topmostStackPos</span><span class="o">--</span><span class="p">;</span>
 
                             <span class="k">try</span> <span class="p">{</span>
@@ -406,7 +406,7 @@ If the handlers were enabled, we'd get infinite looping.</p>             </td>  
                     <span class="nx">deferred</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="s2">&quot;There was a mismatch between the URL and the current open dialog stack&quot;</span><span class="p">);</span>
                 <span class="p">}</span>
             <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                     <span class="nx">deferred</span><span class="p">.</span><span class="nx">resolve</span><span class="p">();</span>
                     <span class="nx">_disableHandlers</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
                 <span class="p">});</span>
