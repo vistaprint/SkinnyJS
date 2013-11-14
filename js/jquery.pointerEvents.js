@@ -9,27 +9,54 @@
 
     $.extend($.support, support);
 
-    function triggerCustomEvent(obj, eventType, event) {
-        var originalType = event.type;
-        event = standardizePointerEvent(event);
+    function triggerCustomEvent(elem, eventType, originalEvent) {
+        // support for IE7-IE8
+        originalEvent = originalEvent || window.event;
+
+        // store the original event type so we can use it in the fixHook
+        originalEvent.originalType = originalEvent.type;
+
+        // Create a writable copy of the event object and normalize some properties
+        var event = new jQuery.Event(originalEvent);
         event.type = eventType;
-        $.event.dispatch.call(obj, event);
-        event.type = originalType;
+
+        // Copy over properties for ease of access
+        var i, copy = $.event.props.concat($.event.pointerHooks.props);
+        i = copy.length;
+        while (i--) {
+            var prop = copy[i];
+            event[prop] = originalEvent[prop];
+        }
+
+        // Support: IE<9
+        // Fix target property (#1925)
+        if (!event.target) {
+            event.target = originalEvent.srcElement || document;
+        }
+
+        // Support: Chrome 23+, Safari?
+        // Target should not be a text node (#504, #13143)
+        if (event.target.nodeType === 3) {
+            event.target = event.target.parentNode;
+        }
+
+        // Support: IE<9
+        // For mouse/key events, metaKey==false if it's undefined (#3368, #11328)
+        event.metaKey = !!event.metaKey;
+
+        // run the filter now
+        event = $.event.pointerHooks.filter(event, originalEvent);
+
+        // trigger the true event
+        $.event.dispatch.call(elem, event);
     }
 
-    // utility to just proxy through an event to a new event name
-    function proxyEventType(oldEventType, newEventType) {
-        return function() {
-            var thisObject = this;
-            $(this).on(oldEventType, function(event) {
-                triggerCustomEvent(thisObject, newEventType, event);
-            });
-        };
-    }
-
-    // utility to just prevent the default event behavior
-    function preventDefault(event) {
-        event.preventDefault();
+    function addEvent(elem, type, func) {
+        if (elem.addEventListener) {
+            elem.addEventListener(type, func, false);
+        } else if (elem.attachEvent) {
+            elem.attachEvent("on" + type, func);
+        }
     }
 
     var POINTER_TYPE_UNAVAILABLE = "unavailable";
@@ -37,178 +64,193 @@
     var POINTER_TYPE_PEN = "pen";
     var POINTER_TYPE_MOUSE = "mouse";
 
-    function standardizePointerEvent(event) {
-        var evObj = event.originalEvent;
+    // add our own pointer event hook/filter
+    $.event.pointerHooks = {
+        props: "pointerType clientX clientY fromElement offsetX offsetY pageX pageY screenX screenY toElement".split(" "),
+        filter: function(event, original) {
+            var body, eventDoc, doc,
+                fromElement = original.fromElement;
 
-        if (!evObj) {
-            evObj = event.originalEvent = {};
-        }
-
-        //
-        // standardize pointerType
-        //
-        evObj.POINTER_TYPE_UNAVAILABLE = POINTER_TYPE_UNAVAILABLE;
-        evObj.POINTER_TYPE_TOUCH = POINTER_TYPE_TOUCH;
-        evObj.POINTER_TYPE_PEN = POINTER_TYPE_PEN;
-        evObj.POINTER_TYPE_MOUSE = POINTER_TYPE_MOUSE;
-
-        // The old spec used numbers for the pointer type,
-        // standardize to the new spec.
-        switch (evObj.pointerType) {
-            case 2:
-                evObj.pointerType = evObj.POINTER_TYPE_TOUCH;
-                break;
-            case 3:
-                evObj.pointerType = evObj.POINTER_TYPE_PEN;
-                break;
-            case 4:
-                evObj.pointerType = evObj.POINTER_TYPE_MOUSE;
-                break;
-            default:
-                if (/^touch/i.test(event.type)) {
-                    evObj.pointerType = evObj.POINTER_TYPE_TOUCH;
-                } else if (/^mouse/i.test(event.type) || event.type == "click") {
-                    evObj.pointerType = evObj.POINTER_TYPE_MOUSE;
-                }
-                break;
-        }
-
-        if (!evObj.pointerType) {
-            evObj.pointerType = evObj.POINTER_TYPE_UNAVAILABLE;
-        }
-
-        //
-        // standardize x/y coords
-        //
-        if (evObj.touches && evObj.touches.length > 0) {
             // touch events send an array of touches, which 99.9% has one item anyway...
-            event.clientX = evObj.clientX = evObj.touches[0].clientX;
-            event.clientY = evObj.clientY = evObj.touches[0].clientY;
-        }
+            // reassign that touch to as the clientX/clientY
+            if (original.touches && original.touches.length > 0) {
+                var touch = original.touches[0];
+                event.clientX = touch.clientX;
+                event.clientY = touch.clientY;
+                event.pageX   = touch.pageX;
+                event.pageY   = touch.pageY;
+                event.screenX = touch.screenX;
+                event.screenY = touch.screenY;
+            }
 
-        return event;
-    }
+            // Calculate pageX/Y if missing and clientX/Y available
+            // this is just copied from jQuery's standard pageX/pageY fix
+            if (event.pageX == null && original.clientX != null) {
+                eventDoc = event.target.ownerDocument || document;
+                doc = eventDoc.documentElement;
+                body = eventDoc.body;
+
+                event.pageX = original.clientX + (doc && doc.scrollLeft || body && body.scrollLeft || 0) - (doc && doc.clientLeft || body && body.clientLeft || 0);
+                event.pageY = original.clientY + (doc && doc.scrollTop  || body && body.scrollTop  || 0) - (doc && doc.clientTop  || body && body.clientTop  || 0);
+            }
+
+            // Add relatedTarget, if necessary
+            // also copied from jQuery's standard event fix
+            if (!event.relatedTarget && fromElement) {
+                event.relatedTarget = fromElement === event.target ? original.toElement : fromElement;
+            }
+
+            // Add which for click: 1 === left; 2 === middle; 3 === right
+            // Note: button is not normalized, so don't use it
+            if (!event.pointerType || typeof event.pointerType == "number") {
+                if (event.pointerType == 2) {
+                    event.pointerType = POINTER_TYPE_TOUCH;
+                } else if (event.pointerType == 3) {
+                    event.pointerType = POINTER_TYPE_PEN;
+                } else if (event.pointerType == 4) {
+                    event.pointerType = POINTER_TYPE_MOUSE;
+                } else if (/^touch/i.test(original.originalType)) {
+                    event.pointerType = POINTER_TYPE_TOUCH;
+                } else if (/^mouse/i.test(original.originalType) || original.originalType == "click") {
+                    event.pointerType = POINTER_TYPE_MOUSE;
+                } else {
+                    event.pointerType = POINTER_TYPE_UNAVAILABLE;
+                }
+            }
+
+            return event;
+        }
+    };
+
+    // allow jQuery's native $.event.fix to find our pointer hooks
+    $.extend($.event.fixHooks, {
+        pointerdown: $.event.pointerHooks,
+        pointerup: $.event.pointerHooks,
+        pointermove: $.event.pointerHooks,
+        pointerover: $.event.pointerHooks,
+        pointerout: $.event.pointerHooks,
+        pointercancel: $.event.pointerHooks
+    });
 
     // if browser does not natively handle pointer events,
     // create special custom events to mimic them
     if (!support.pointer) {
         $.event.special.pointerdown = {
-            preventClickEvents: false,
+            ignoreNextMousedownEvent: false,
 
-            // timeout allowed between a touchstart and the ignoring of a mousedown (in milliseconds)
-            ignoreMousedownTimeout: 30,
-
-            setup: function() {
-                var thisObject = this,
-                    $this = $(thisObject),
-                    ignoreNextMousedownEvent = false;
-
-                // add support for touch events
-                if (support.touch) {
-                    $this.on("touchstart", function(event) {
-                        // prevent the click event from firing as well
-                        ignoreNextMousedownEvent = true;
-                        triggerCustomEvent(thisObject, "pointerdown", event);
-                    });
+            touch: function(event) {
+                // prevent the click event from firing as well
+                $.event.special.pointerdown.ignoreNextMousedownEvent = true;
+                triggerCustomEvent(this, "pointerdown", event);
+            },
+            mouse: function(event) {
+                if (!$.event.special.pointerdown.ignoreNextMousedownEvent) {
+                    triggerCustomEvent(this, "pointerdown", event);
+                } else {
+                    $.event.special.pointerdown.ignoreNextMousedownEvent = false;
                 }
+            },
+            setup: function() {
+                if (support.touch) {
+                    addEvent(this, "touchstart", $.event.special.pointerdown.touch);
+                }
+                addEvent(this, "mousedown", $.event.special.pointerdown.mouse);
+            },
+            teardown: function() {
+                if (support.touch) {
+                    jQuery.removeEvent(this, "touchstart", $.event.special.pointerdown.touch);
+                }
+                jQuery.removeEvent(this, "mousedown", $.event.special.pointerdown.mouse);
+            }
+        };
 
-                // now add support for mouse events
-                $this.on("mousedown", function(event) {
-                    if (!ignoreNextMousedownEvent) {
-                        triggerCustomEvent(thisObject, "pointerdown", event);
-                    } else {
-                        ignoreNextMousedownEvent = false;
+        jQuery.each({
+            pointerup: {
+                touch: "touchend",
+                mouse: "mouseup"
+            },
+            pointermove: {
+                touch: "touchmove",
+                mouse: "mousemove"
+            },
+            pointerover: {
+                mouse: "mouseover"
+            },
+            pointerout: {
+                mouse: "mouseout"
+            },
+            pointercancel: {
+                touch: "touchcancel"
+            }
+        }, function (pointerEventType, natives) {
+            function onTouch (event) {
+                event.preventDefault(); // prevent the mouse event from firing as well
+                triggerCustomEvent(this, pointerEventType, event);
+            }
+
+            function onMouse (event) {
+                triggerCustomEvent(this, pointerEventType, event);
+            }
+
+            $.event.special[pointerEventType] = {
+                setup: function() {
+                    if (support.touch && natives.touch) {
+                        addEvent(this, natives.touch, onTouch);
                     }
-                });
-
-                if ($.event.special.pointerdown.preventClickEvents) {
-                    $this.on("click", preventDefault);
+                    if (natives.mouse) {
+                        addEvent(this, natives.mouse, onMouse);
+                    }
+                },
+                teardown: function() {
+                    if (support.touch && natives.touch) {
+                        jQuery.removeEvent(this, natives.touch, onTouch);
+                    }
+                    if (natives.mouse) {
+                        jQuery.removeEvent(this, natives.mouse, onMouse);
+                    }
                 }
-            }
-        };
-
-        // pointerup defines when physical contact with a digitizer (screen) is broken,
-        // or a mouse transitions from depressed to non-depressed (replaces touchend and mouseup)
-        $.event.special.pointerup = {
-            setup: function() {
-                var thisObject = this,
-                    $this = $(thisObject);
-
-                // add support for touch events
-                if (support.touch) {
-                    $this.on("touchend", function(event) {
-                        // prevent the mouseup event from firing as well
-                        event.preventDefault();
-
-                        triggerCustomEvent(thisObject, "pointerup", event);
-                    });
-                }
-
-                // now add support for mouse events
-                $this.on("mouseup", function(event) {
-                    triggerCustomEvent(thisObject, "pointerup", event);
-                });
-            }
-        };
-
-        $.event.special.pointermove = {
-            setup: function() {
-                var thisObject = this,
-                    $this = $(thisObject);
-
-                // add support for touch events
-                if (support.touch) {
-                    $this.on("touchmove", function(event) {
-                        // prevent the mousemove event from firing as well
-                        event.preventDefault();
-
-                        triggerCustomEvent(thisObject, "pointermove", event);
-                    });
-                }
-
-                // now add support for mouse events
-                $this.on("mousemove", function(event) {
-                    triggerCustomEvent(thisObject, "pointermove", event);
-                });
-            }
-        };
-
-        // pointer over replaces mouseover, there is no equivalent for touch events
-        $.event.special.pointerover = {
-            setup: proxyEventType("mouseover", "pointerover")
-            // we cannot just use bindType because we need to standardize the event object
-        };
-
-        // pointerout replaces mouseout, there is no equivalent for touch events
-        $.event.special.pointerout = {
-            setup: proxyEventType("mouseout", "pointerout")
-            // we cannot just use bindType because we need to standardize the event object
-        };
+            };
+        });
     }
 
     // for IE10 specific, we proxy though events so we do not need to deal
     // with the various names or renaming of events.
     else if (navigator.msPointerEnabled && !navigator.pointerEnabled) {
-        // we cannot just use bindType because we need to standardize the event object
-        $.event.special.pointerdown = {
-            setup: proxyEventType("MSPointerDown", "pointerdown")
-        };
+        $.extend($.event.special, {
+            pointerdown: {
+                delegateType: "MSPointerDown",
+                bindType: "MSPointerDown"
+            },
+            pointerup: {
+                delegateType: "MSPointerUp",
+                bindType: "MSPointerUp"
+            },
+            pointermove: {
+                delegateType: "MSPointerMove",
+                bindType: "MSPointerMove"
+            },
+            pointerover: {
+                delegateType: "MSPointerOver",
+                bindType: "MSPointerOver"
+            },
+            pointerout: {
+                delegateType: "MSPointerOut",
+                bindType: "MSPointerOut"
+            },
+            pointercancel: {
+                delegateType: "MSPointerCancel",
+                bindType: "MSPointerCancel"
+            }
+        });
 
-        $.event.special.pointerup = {
-            setup: proxyEventType("MSPointerUp", "pointerup")
-        };
-
-        $.event.special.pointermove = {
-            setup: proxyEventType("MSPointerMove", "pointermove")
-        };
-
-        $.event.special.pointerover = {
-            setup: proxyEventType("MSPointerOver", "pointerover")
-        };
-
-        $.event.special.pointerout = {
-            setup: proxyEventType("MSPointerOut", "pointerout")
-        };
+        $.extend($.event.fixHooks, {
+            MSPointerDown: $.event.pointerHooks,
+            MSPointerUp: $.event.pointerHooks,
+            MSPointerMove: $.event.pointerHooks,
+            MSPointerOver: $.event.pointerHooks,
+            MSPointerOut: $.event.pointerHooks,
+            MSPointerCancel: $.event.pointerHooks
+        });
     }
 
 })(jQuery, window, document);

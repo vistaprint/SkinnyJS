@@ -26,7 +26,8 @@ module.exports = function(grunt) {
         connect: {
             server: {
                 options: {
-                    port: 9001
+                    port: 9001,
+                    keepalive: false
                 }
             }
         },
@@ -334,6 +335,13 @@ module.exports = function(grunt) {
         }
 
         grunt.task.run(taskName);
+    });
+
+    grunt.registerTask("connect-keepalive", function() {
+        var config = grunt.config.get("connect");
+        config.server.options.keepalive = true;
+        grunt.config.set("connect", config);
+        grunt.task.run("connect");
     });
 
     // Custom tasks
