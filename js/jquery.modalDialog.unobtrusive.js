@@ -87,7 +87,16 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     // Helpful utility: A class that will make a button close dialogs by default
     $(document).on("click", ".close-dialog", function(e) {
         e.preventDefault();
-        $.modalDialog.getCurrent().close();
+
+        // Defer to the next tick of the event loop. It makes it more useful
+        // to apply this class without having to worry if the close handler will
+        // run before any other handlers.
+        setTimeout(function() { 
+            var dialog = $.modalDialog.getCurrent();
+            if (dialog && dialog.isOpen()) {
+                dialog.close();
+            } 
+        });
     });
 
 })(jQuery);
