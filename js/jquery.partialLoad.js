@@ -103,12 +103,41 @@
         });
     };
 
+    var _currentStylesheets;
+
+    var isStylesheetUnique = function(href) {
+        var hrefLower = href.toLowerCase();
+
+        // Build a 'set' of already loaded scripts so we can ensure
+        // that they don't get loaded more than once.
+        if (!_currentStylesheets) {
+            _currentStylesheets = {};
+
+            var currentStylesheets = document.getElementsByTagName("LINK");
+            for (var i = 0; i < currentStylesheets.length; i++) {
+                if (currentStylesheets[i].href) {
+                    _currentStylesheets[currentStylesheets[i].href.toLowerCase()] = true;
+                }
+            }
+        }
+
+        // This stylesheet is already loaded. Don't load it again.
+        if (_currentStylesheets[hrefLower]) {
+            return false;
+        }
+
+        _currentStylesheets[hrefLower] = true;
+
+        return true;
+    };
+
     var rcleanScript = /^\s*<!(?:\[CDATA\[|\-\-)/;
 
     var getFragmentAndScripts = function(responseText, selector, context, scripts) {
         var $target;
 
         if (selector) {
+
             var $temp = $("<div>");
 
             // A selector was specified. Load only the fragment.
@@ -120,7 +149,9 @@
             $target.find("script").map(function(i, elem) {
                 scripts.push(elem);
             });
+
         } else {
+
             // HACK: jQuery 1.9 changed the signature of $.buildFragment() to expect a raw DOM document object,
             // whereas previous versions expected a jQuery object, and would look up its ownerDocument.
             if (compareVersion(jqueryVersion(), [1, 9, 0]) >= 0) {
@@ -139,6 +170,30 @@
                     elem.parentNode.removeChild(elem);
                 }
             });
+        }
+        
+        // Remove meta, link
+        // Preserve title and noscript: These don't hurt anything
+        var REMOVE_LIST = { META: true, LINK: true };
+
+        var nodes = $target.jquery ? $target : $target.childNodes;
+        
+        if (nodes) {
+            for (var i=nodes.length-1; i>=0; i--) {
+                var child = nodes[i];
+
+                if (REMOVE_LIST[child.tagName]) {
+
+                    // Only remove stylesheets that have already been added
+                    if (child.tagName == "LINK" && child.rel.toLowerCase() == "stylesheet" && child.href) {
+                        if (isStylesheetUnique(child.href)) {
+                            continue;
+                        }
+                    } 
+
+                    $target.removeChild(child);
+                }
+            }
         }
 
         return $target;

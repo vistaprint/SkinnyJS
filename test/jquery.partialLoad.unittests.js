@@ -81,4 +81,19 @@ describe("jquery.partialLoad()", function() {
                 done();
             });
     });
+
+    it("should load content and remove meta, noscript, and link tags", function(done) {
+        $("#contentContainer").partialLoad(
+            "content/jquery.partialLoad.contentWithMeta.html",
+            function() {
+                var $content = $("#contentContainer");
+
+                assert.equal($content.find("meta").length, 0, "Should remove all meta tags");
+                assert.equal($content.find("link").length, 1, "Should remove all stylesheets that are not unique");
+                assert.equal($content.find("link").attr("href"), "content/somecss.css", "Should leave unique stylesheet");
+                assert.equal($content.find("title").length, 1, "Should preserve title from content");
+                assert.equal($content.find("title").text(), "jquery.partialLoad test content");
+                done();
+            });
+    });
 });
