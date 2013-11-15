@@ -1,12 +1,12 @@
 /* globals module */
 
 function renameFn(extOld, extNew) {
-    return function(dest, path) {
+    return function (dest, path) {
         return dest + "/" + path.replace(extOld, extNew);
     };
 }
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     var config = {
         pkg: grunt.file.readJSON("package.json"),
         jshint: {
@@ -203,13 +203,13 @@ module.exports = function(grunt) {
                     archive: "./site/skinnyjs.zip"
                 },
                 files: [{
-                        expand: true,
-                        src: ["**"],
-                        cwd: "./dist",
-                        dest: "",
-                        filter: "isFile"
-                    } // includes files in path
-                ]
+                    // includes files in path
+                    expand: true,
+                    src: ["**"],
+                    cwd: "./dist",
+                    dest: "",
+                    filter: "isFile"
+                }]
             }
         },
         "string-replace": {
@@ -264,7 +264,8 @@ module.exports = function(grunt) {
         },
         lineending : {
             all: {
-                files: [{
+                files: [
+                    {
                         expand: true,
                         cwd: "./js/",
                         src: ["./**/*.js"],
@@ -313,18 +314,18 @@ module.exports = function(grunt) {
     // Wrap the mocha task
     grunt.renameTask("mocha", "orig-mocha");
 
-    grunt.registerTask("mocha", function(target) {
+    grunt.registerTask("mocha", function (target) {
         var config = grunt.config.get("mocha");
 
         // Turn mocha.files into urls for conrib-mocha
-        var urls = grunt.util._.map(grunt.file.expand(config.all.options.urls), function(file) {
+        var urls = grunt.util._.map(grunt.file.expand(config.all.options.urls), function (file) {
             return "http://localhost:9001/" + file;
         });
 
         config.all.options.urls = urls;
 
         // Turn mocha.files into urls for conrib-mocha
-        var smallScreenUrls = grunt.util._.map(grunt.file.expand(config.dialogSmallScreen.options.urls), function(file) {
+        var smallScreenUrls = grunt.util._.map(grunt.file.expand(config.dialogSmallScreen.options.urls), function (file) {
             return "http://localhost:9001/" + file + "?smallscreen=true";
         });
 
@@ -340,7 +341,7 @@ module.exports = function(grunt) {
         grunt.task.run(taskName);
     });
 
-    grunt.registerTask("connect-keepalive", function() {
+    grunt.registerTask("connect-keepalive", function () {
         var config = grunt.config.get("connect");
         config.server.options.keepalive = true;
         grunt.config.set("connect", config);
