@@ -136,7 +136,6 @@
     };
 
 
-
     $.fn.breakpoints = function (breakpoints) {
         var maxWidths = normalizeBreakpoints(breakpoints);
         setMinWidths(breakpoints, maxWidths);

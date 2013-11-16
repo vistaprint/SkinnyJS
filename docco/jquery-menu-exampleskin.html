@@ -24,26 +24,20 @@
                 <span class="p">});</span>
             <span class="p">},</span>
 
-            <span class="nx">animationShow</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <pre><code>       if (e.level === 0)
+            <span class="nx">animationShow</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <pre><code>       if (e.level === 0)
        {
            e.$panel.slideDown(TRANSITION_TIME, callback);
            return;
        }
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
-
-                <span class="nx">e</span><span class="p">.</span><span class="nx">$panel</span><span class="p">.</span><span class="nx">fadeIn</span><span class="p">(</span><span class="nx">TRANSITION_TIME</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>                <span class="nx">e</span><span class="p">.</span><span class="nx">$panel</span><span class="p">.</span><span class="nx">fadeIn</span><span class="p">(</span><span class="nx">TRANSITION_TIME</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
             <span class="p">},</span>
 
-            <span class="nx">animationHide</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <pre><code>       if (e.level === 0)
+            <span class="nx">animationHide</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <pre><code>       if (e.level === 0)
        {
            e.$panel.slideUp(TRANSITION_TIME, callback);
            return;
        }
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
-
-                <span class="nx">e</span><span class="p">.</span><span class="nx">$panel</span><span class="p">.</span><span class="nx">fadeOut</span><span class="p">(</span><span class="nx">TRANSITION_TIME</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>                <span class="nx">e</span><span class="p">.</span><span class="nx">$panel</span><span class="p">.</span><span class="nx">fadeOut</span><span class="p">(</span><span class="nx">TRANSITION_TIME</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
             <span class="p">}</span>
         <span class="p">});</span>
 

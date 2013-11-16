@@ -977,12 +977,12 @@ if (!Object.keys) {
         var applyChange = skipAnimation ?
                 function ($content, css) {
                     $content.css(css);
-            } :
+                } :
                 function ($content, css) {
                     $content.animate(css, {
                         duration: 400
                     });
-            };
+                };
 
         applyChange(this.$content, {
             height: contentHeight
@@ -2100,7 +2100,6 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
         return deferred;
     };
-
 
 
 })(jQuery);
