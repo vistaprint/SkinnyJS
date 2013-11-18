@@ -825,12 +825,12 @@
         var applyChange = skipAnimation ?
                 function ($content, css) {
                     $content.css(css);
-            } :
+                } :
                 function ($content, css) {
                     $content.animate(css, {
                         duration: 400
                     });
-            };
+                };
 
         applyChange(this.$content, {
             height: contentHeight

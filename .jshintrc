@@ -5,23 +5,20 @@
     "devel": false,
     "eqeqeq": false,
     "eqnull": true,
-    "expr": true,
     "evil": false,
+    "expr": true,
     "immed": true,
+    "jquery": true,
     "latedef": true,
     "laxcomma": false,
     "newcap": false,
     "noarg": true,
-    "smarttabs": false,
-    "sub": true,
-    "trailing": false,
-    "undef": true,
-    "strict": false,
     "quotmark": true,
+    "smarttabs": false,
+    "strict": false,
+    "sub": true,
+    "trailing": true,
     "undef": true,
     "unused": true,
-    "globals":
-    {
-        "jQuery": true
-    }
+    "white": true
 }
