@@ -1674,7 +1674,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
         // run before any other handlers.
         setTimeout(function () {
             var dialog = $.modalDialog.getCurrent();
-            if (dialog && dialog.isOpen()) {
+            if (dialog) {
                 dialog.close();
             }
         }, 0);
@@ -2100,6 +2100,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
         return deferred;
     };
+
 
 
 })(jQuery);
