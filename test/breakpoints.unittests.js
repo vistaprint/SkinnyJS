@@ -10,7 +10,7 @@ describe("breakpoints", function () {
 
             var classes = "foo bar baz";
 
-            var parsed = skinny.breakpoints.parseClassMap(classes);
+            var parsed = skinny.breakpoints._private.parseClassMap(classes);
 
             assert.isTrue(parsed.foo, true);
             assert.isTrue(parsed.bar, true);
@@ -22,7 +22,7 @@ describe("breakpoints", function () {
 
             var classes = "";
 
-            var parsed = skinny.breakpoints.parseClassMap(classes);
+            var parsed = skinny.breakpoints._private.parseClassMap(classes);
 
             assert.deepEqual(parsed, {});
 
@@ -35,7 +35,7 @@ describe("breakpoints", function () {
 
             var parsed = { foo: true, bar: true, baz: true };
 
-            var classes = skinny.breakpoints.serializeClassMap(parsed);
+            var classes = skinny.breakpoints._private.serializeClassMap(parsed);
 
             assert.equal(classes, "foo bar baz");
         });

@@ -25,6 +25,8 @@
         return !isNaN(parseFloat(obj)) && isFinite(obj);
     };
 
+    // Given a breakpoints object, will convert simple "max" values to a rich breakpoint object
+    // which can contain min, max, and name
     var setMaxWidths = function (breakpoints) {
         var maxWidths = [];
 
@@ -54,6 +56,8 @@
         return maxWidths;
     };
 
+    // Given a breakpoints object, will assign "min" values based on the
+    // existing breakpoints "max" values.
     var setMinWidths = function (breakpoints, maxWidths) {
         for (var name in breakpoints) {
             var breakpoint = breakpoints[name];
@@ -75,6 +79,8 @@
         }
     };
 
+    // Given a breakpoints object, will create a "max" breakpoint
+    // going from the largest breakpoint's max value to infinity
     var addMaxBreakpoint = function (breakpoints, maxWidths) {
         if (!maxWidths || maxWidths.length === 0) {
             return;
@@ -88,6 +94,17 @@
         };
     };
 
+    // Given a raw breakpoints object (with simple ints for max values), 
+    // converts to a fully normalized breakpoints object with breakpoint objects for values.
+    var normalize = function (breakpoints) {
+        // Normalize the breakpoints object
+        var maxWidths = setMaxWidths(breakpoints);
+        setMinWidths(breakpoints, maxWidths);
+        addMaxBreakpoint(breakpoints, maxWidths);
+    };
+
+    // Given a string in a breakpoint format, parses it into a breakpoints object
+    // e.g. small:300;medium:400;large:500;
     var parseBreakpointAttr = function (attr) {
         if (!attr) {
             return {};
@@ -125,21 +142,48 @@
         return parseBreakpointAttr(attr.value.trim());
     };
 
+    // Gets an element from an ID, or if el is an element already, just returns it.
+    var getEl = function (el) {
+        if (typeof el == "string") {
+            return document.getElementById(el);
+        }
+
+        return el;
+    };
+
+    // parses a list of space-delimited css classes into an object "Set"
+    var parseClassMap = function (className) {
+        var classesArr = className ? className.split(" ") : [];
+        var classes = {};
+        for (var i = 0; i < classesArr.length; i++) {
+            classes[classesArr[i]] = true;
+        }
+        return classes;
+    };
+
+    // serializes an object "Set" into a space-delimited list of css class names
+    var serializeClassMap = function (classMap) {
+        var classes = [];
+        for (var prop in classMap) {
+            if (classMap.hasOwnProperty(prop)) {
+                classes.push(prop);
+            }
+        }
+
+        return classes.join(" ");
+    };
+
     window.skinny = window.skinny || {};
 
     // Public API
     window.skinny.breakpoints = {
 
-        normalize: function (breakpoints) {
-            // Normalize the breakpoints object
-            var maxWidths = setMaxWidths(breakpoints);
-            setMinWidths(breakpoints, maxWidths);
-            addMaxBreakpoint(breakpoints, maxWidths);
-        },
-
         // Given DOM element and a breakpoints object (or a DOM element with the data-breakpoints attribute),
         // this will modify the CSS classes on the element to reflect its current width.
         setup: function (el, breakpoints) {
+
+            // Support taking an ID or an element
+            el = getEl(el);
 
             // If breakpoints aren't passed explicitly, see if there's a data-breakpoints attribute on the element.
             if (!breakpoints) {
@@ -147,7 +191,7 @@
             }
 
             // Normalize the breakpoints object
-            this.normalize(breakpoints);
+            normalize(breakpoints);
 
             var width = this.update(el, breakpoints);
 
@@ -156,9 +200,13 @@
         },
 
         update: function (el, breakpoints) {
+
+            // Support taking an ID or an element
+            el = getEl(el);
+
             var width = el.offsetWidth;
 
-            var classMap = this.parseClassMap(el.className);
+            var classMap = parseClassMap(el.className);
 
             for (var name in breakpoints) {
                 var breakpoint = breakpoints[name];
@@ -172,31 +220,7 @@
                 }
             }
 
-            el.className = this.serializeClassMap(classMap);
-
-            return width;
-        },
-
-        // parses a list of space-delimited css classes into an object "Set"
-        parseClassMap: function (className) {
-            var classesArr = className ? className.split(" ") : [];
-            var classes = {};
-            for (var i = 0; i < classesArr.length; i++) {
-                classes[classesArr[i]] = true;
-            }
-            return classes;
-        },
-
-        // serializes an object "Set" into a space-delimited list of css class names
-        serializeClassMap: function (classMap) {
-            var classes = [];
-            for (var prop in classMap) {
-                if (classMap.hasOwnProperty(prop)) {
-                    classes.push(prop);
-                }
-            }
-
-            return classes.join(" ");
+            el.className = serializeClassMap(classMap);
         },
 
         all: []
@@ -205,6 +229,8 @@
     /* test-code */
 
     window.skinny.breakpoints._private = {
+        parseClassMap: parseClassMap,
+        serializeClassMap: serializeClassMap,
         getBreakpointsFromAttr: getBreakpointsFromAttr,
         parseBreakpointAttr: parseBreakpointAttr,
         setMaxWidths: setMaxWidths,
