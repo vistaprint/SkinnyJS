@@ -1,31 +1,13 @@
 (function () {
 
+    // Polyfill for String.trim()
     if (!String.prototype.trim) {
         String.prototype.trim = function () {
             return this.replace(/^\s+|\s+$/g, "");
         };
     }
 
-    var parseClassMap = function (className) {
-        var classesArr = className ? className.split(" ") : [];
-        var classes = {};
-        for (var i = 0; i < classesArr.length; i++) {
-            classes[classesArr[i]] = true;
-        }
-        return classes;
-    };
-
-    var serializeClassMap = function (classMap) {
-        var classes = [];
-        for (var prop in classMap) {
-            if (classMap.hasOwnProperty(prop)) {
-                classes.push(prop);
-            }
-        }
-
-        return classes.join(" ");
-    };
-
+    // int comparer for sorts
     var compareInts = function compare(a, b) {
         if (a < b) {
             return -1;
@@ -38,11 +20,12 @@
         return 0;
     };
 
+    // Indicates if an object is numeric
     var isNumeric = function (obj) {
         return !isNaN(parseFloat(obj)) && isFinite(obj);
     };
 
-    var normalizeBreakpoints = function (breakpoints) {
+    var setMaxWidths = function (breakpoints) {
         var maxWidths = [];
 
         for (var name in breakpoints) {
@@ -133,6 +116,7 @@
         return ret;
     };
 
+    // Gets a parsed breakpoints object from the data-breakpoints attribute of an DOM element
     var getBreakpointsFromAttr = function (el) {
         var attr = el.attributes["data-breakpoints"];
         if (!attr || !attr.value) {
@@ -141,7 +125,20 @@
         return parseBreakpointAttr(attr.value.trim());
     };
 
-    window.breakpoints = {
+    window.skinny = window.skinny || {};
+
+    // Public API
+    window.skinny.breakpoints = {
+
+        normalize: function (breakpoints) {
+            // Normalize the breakpoints object
+            var maxWidths = setMaxWidths(breakpoints);
+            setMinWidths(breakpoints, maxWidths);
+            addMaxBreakpoint(breakpoints, maxWidths);
+        },
+
+        // Given DOM element and a breakpoints object (or a DOM element with the data-breakpoints attribute),
+        // this will modify the CSS classes on the element to reflect its current width.
         setup: function (el, breakpoints) {
 
             // If breakpoints aren't passed explicitly, see if there's a data-breakpoints attribute on the element.
@@ -149,12 +146,19 @@
                 breakpoints = getBreakpointsFromAttr(el);
             }
 
-            var maxWidths = normalizeBreakpoints(breakpoints);
-            setMinWidths(breakpoints, maxWidths);
-            addMaxBreakpoint(breakpoints, maxWidths);
+            // Normalize the breakpoints object
+            this.normalize(breakpoints);
 
+            var width = this.update(el, breakpoints);
+
+            // Store the elements for jQuery to hook on later
+            this.all.push({ el: el, breakpoints: breakpoints, startWidth: width });
+        },
+
+        update: function (el, breakpoints) {
             var width = el.offsetWidth;
-            var classMap = parseClassMap(el.className);
+
+            var classMap = this.parseClassMap(el.className);
 
             for (var name in breakpoints) {
                 var breakpoint = breakpoints[name];
@@ -168,18 +172,42 @@
                 }
             }
 
-            el.className = serializeClassMap(classMap);
-        }
+            el.className = this.serializeClassMap(classMap);
+
+            return width;
+        },
+
+        // parses a list of space-delimited css classes into an object "Set"
+        parseClassMap: function (className) {
+            var classesArr = className ? className.split(" ") : [];
+            var classes = {};
+            for (var i = 0; i < classesArr.length; i++) {
+                classes[classesArr[i]] = true;
+            }
+            return classes;
+        },
+
+        // serializes an object "Set" into a space-delimited list of css class names
+        serializeClassMap: function (classMap) {
+            var classes = [];
+            for (var prop in classMap) {
+                if (classMap.hasOwnProperty(prop)) {
+                    classes.push(prop);
+                }
+            }
+
+            return classes.join(" ");
+        },
+
+        all: []
     };
 
     /* test-code */
 
-    window.breakpoints._private = {
-        parseClassMap: parseClassMap,
-        serializeClassMap: serializeClassMap,
+    window.skinny.breakpoints._private = {
         getBreakpointsFromAttr: getBreakpointsFromAttr,
         parseBreakpointAttr: parseBreakpointAttr,
-        normalizeBreakpoints: normalizeBreakpoints,
+        setMaxWidths: setMaxWidths,
         setMinWidths: setMinWidths,
         addMaxBreakpoint: addMaxBreakpoint
     };

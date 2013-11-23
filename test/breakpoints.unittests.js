@@ -1,4 +1,4 @@
-/* globals breakpoints */
+/* globals skinny */
 
 describe("breakpoints", function () {
 
@@ -10,7 +10,7 @@ describe("breakpoints", function () {
 
             var classes = "foo bar baz";
 
-            var parsed = breakpoints._private.parseClassMap(classes);
+            var parsed = skinny.breakpoints.parseClassMap(classes);
 
             assert.isTrue(parsed.foo, true);
             assert.isTrue(parsed.bar, true);
@@ -22,7 +22,7 @@ describe("breakpoints", function () {
 
             var classes = "";
 
-            var parsed = breakpoints._private.parseClassMap(classes);
+            var parsed = skinny.breakpoints.parseClassMap(classes);
 
             assert.deepEqual(parsed, {});
 
@@ -35,7 +35,7 @@ describe("breakpoints", function () {
 
             var parsed = { foo: true, bar: true, baz: true };
 
-            var classes = breakpoints._private.serializeClassMap(parsed);
+            var classes = skinny.breakpoints.serializeClassMap(parsed);
 
             assert.equal(classes, "foo bar baz");
         });
@@ -48,7 +48,7 @@ describe("breakpoints", function () {
                 width: "300px"
             });
 
-            breakpoints.setup($el[0], 
+            skinny.breakpoints.setup($el[0], 
                 {
                     small: 200,
                     medium: 400,
@@ -63,7 +63,7 @@ describe("breakpoints", function () {
                 width: "200px"
             });
 
-            breakpoints.setup($el[0], {
+            skinny.breakpoints.setup($el[0], {
                 small: 200,
                 medium: 400,
                 large: 600
@@ -77,7 +77,7 @@ describe("breakpoints", function () {
                 width: "201px"
             });
 
-            breakpoints.setup($el[0], {
+            skinny.breakpoints.setup($el[0], {
                 small: 200,
                 medium: 400,
                 large: 600
@@ -91,7 +91,7 @@ describe("breakpoints", function () {
                 width: "600px"
             });
 
-            breakpoints.setup($el[0], {
+            skinny.breakpoints.setup($el[0], {
                 small: 200,
                 medium: 400,
                 large: 600
@@ -105,7 +105,7 @@ describe("breakpoints", function () {
                 width: "601px"
             });
 
-            breakpoints.setup($el[0], {
+            skinny.breakpoints.setup($el[0], {
                 small: 200,
                 medium: 400,
                 large: 600
@@ -120,7 +120,7 @@ describe("breakpoints", function () {
             });
 
             assert.throws(function () {
-                    breakpoints.setup($el[0], {
+                    skinny.breakpoints.setup($el[0], {
                         small: {
                             min: 0,
                             max: 200
@@ -142,7 +142,7 @@ describe("breakpoints", function () {
                 width: "500px"
             });
 
-            breakpoints.setup($el[0], {
+            skinny.breakpoints.setup($el[0], {
                 small: {
                     min: 0,
                     max: 200
@@ -164,7 +164,7 @@ describe("breakpoints", function () {
                 width: "150px"
             });
 
-            breakpoints.setup($el[0], {
+            skinny.breakpoints.setup($el[0], {
                 small: {
                     min: 0,
                     max: 200
@@ -179,14 +179,14 @@ describe("breakpoints", function () {
         });
     });
 
-    describe("#normalizeBreakpoints", function () {
+    describe("#setMaxWidths", function () {
         it("should return maxWidths and convert integer values to objects with max properties", function () {
             var bp = {
                 "small": 200,
                 "medium": 400
             };
 
-            var maxWidths = breakpoints._private.normalizeBreakpoints(bp);
+            var maxWidths = skinny.breakpoints._private.setMaxWidths(bp);
 
             assert.lengthOf(maxWidths, 2);
             assert.equal(maxWidths[0], 200);
@@ -207,7 +207,7 @@ describe("breakpoints", function () {
         it("should return an empty array when no breakpoints are specified", function () {
             var bp = {};
 
-            var maxWidths = breakpoints._private.normalizeBreakpoints(bp);
+            var maxWidths = skinny.breakpoints._private.setMaxWidths(bp);
 
             assert.lengthOf(maxWidths, 0);
 
@@ -221,7 +221,7 @@ describe("breakpoints", function () {
                 "large": 1100
             };
 
-            var maxWidths = breakpoints._private.normalizeBreakpoints(bp);
+            var maxWidths = skinny.breakpoints._private.setMaxWidths(bp);
 
             assert.lengthOf(maxWidths, 3);
             assert.strictEqual(maxWidths[0], 600);
@@ -257,7 +257,7 @@ describe("breakpoints", function () {
             };
             var maxWidths = [200, 400];
 
-            breakpoints._private.setMinWidths(bp, maxWidths);
+            skinny.breakpoints._private.setMinWidths(bp, maxWidths);
 
             assert.deepEqual(bp, {
                 "small": {
@@ -283,7 +283,7 @@ describe("breakpoints", function () {
             };
             var maxWidths = [200, 400];
 
-            breakpoints._private.setMinWidths(bp, maxWidths);
+            skinny.breakpoints._private.setMinWidths(bp, maxWidths);
 
             assert.deepEqual(bp, {
                 "small": {
@@ -312,7 +312,7 @@ describe("breakpoints", function () {
             };
             var maxWidths = [200, 400];
 
-            breakpoints._private.addMaxBreakpoint(bp, maxWidths);
+            skinny.breakpoints._private.addMaxBreakpoint(bp, maxWidths);
 
             assert.deepEqual(bp, {
                 "small": {
@@ -334,7 +334,7 @@ describe("breakpoints", function () {
             var bp = {};
             var maxWidths = [];
 
-            breakpoints._private.addMaxBreakpoint(bp, maxWidths);
+            skinny.breakpoints._private.addMaxBreakpoint(bp, maxWidths);
 
             assert.deepEqual(bp, {});
         });
