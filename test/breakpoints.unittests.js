@@ -41,6 +41,18 @@ describe("breakpoints", function () {
         });
     });
 
+    describe("#parseBreakpointsAttr", function () {
+
+        it("should parse a breakpoint string into a breakpoints object", function() {
+
+            var data = "small:300;medium:500;large:600;";
+
+            var breakpoints = skinny.breakpoints._private.parseBreakpointsAttr(data);
+
+            assert.deepEqual(breakpoints, { small: "300", medium: "500", large: "600" });
+        });
+    });
+
     describe("#setup", function () {
 
         it("should initialize a class immediately", function () {

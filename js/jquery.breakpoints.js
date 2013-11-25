@@ -12,7 +12,7 @@
         $(window).on("resize orientationchange breakpoints:refresh", update);
     };
 
-    $.each(skinny.breakpoints.all, function (item) {
+    $.each(skinny.breakpoints.all, function (i, item) {
         setupEvents(item.el, item.breakpoints);
     });
 

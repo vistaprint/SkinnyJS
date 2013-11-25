@@ -105,12 +105,12 @@
 
     // Given a string in a breakpoint format, parses it into a breakpoints object
     // e.g. small:300;medium:400;large:500;
-    var parseBreakpointAttr = function (attr) {
+    var parseBreakpointsAttr = function (attr) {
         if (!attr) {
             return {};
         }
 
-        var ret;
+        var ret = {};
         var pairs = attr.split(";");
         for (var i = 0; i < pairs.length; i++) {
             var pair = pairs[i];
@@ -139,7 +139,7 @@
         if (!attr || !attr.value) {
             return;
         }
-        return parseBreakpointAttr(attr.value.trim());
+        return parseBreakpointsAttr(attr.value.trim());
     };
 
     // Gets an element from an ID, or if el is an element already, just returns it.
@@ -232,7 +232,7 @@
         parseClassMap: parseClassMap,
         serializeClassMap: serializeClassMap,
         getBreakpointsFromAttr: getBreakpointsFromAttr,
-        parseBreakpointAttr: parseBreakpointAttr,
+        parseBreakpointsAttr: parseBreakpointsAttr,
         setMaxWidths: setMaxWidths,
         setMinWidths: setMinWidths,
         addMaxBreakpoint: addMaxBreakpoint
