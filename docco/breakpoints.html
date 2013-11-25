@@ -201,6 +201,8 @@ this will modify the CSS classes on the element to reflect its current width.</p
 
 </pre></div>             </td>           </tr>                               <tr id="section-20">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>               <p>Store the elements for jQuery to hook on later</p>             </td>             <td class="code">               <div class="highlight"><pre>
             <span class="k">this</span><span class="p">.</span><span class="nx">all</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span> <span class="nx">el</span><span class="o">:</span> <span class="nx">el</span><span class="p">,</span> <span class="nx">breakpoints</span><span class="o">:</span> <span class="nx">breakpoints</span><span class="p">,</span> <span class="nx">startWidth</span><span class="o">:</span> <span class="nx">width</span> <span class="p">});</span>
+
+            <span class="k">return</span> <span class="nx">breakpoints</span><span class="p">;</span>
         <span class="p">},</span>
 
         <span class="nx">update</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">el</span><span class="p">,</span> <span class="nx">breakpoints</span><span class="p">)</span> <span class="p">{</span>

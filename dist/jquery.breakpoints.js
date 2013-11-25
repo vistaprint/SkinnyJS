@@ -26,8 +26,8 @@
     // Public API for initializing breakpoints for elements after the page loads
     $.fn.breakpoints = function (breakpoints) {
         this.each(function (i, el) {
-            skinny.breakpoints.setup(el, breakpoints);
-            setupEvents(el, breakpoints);
+            var bp = skinny.breakpoints.setup(el, breakpoints);
+            setupEvents(el, bp);
         });
 
         return this;

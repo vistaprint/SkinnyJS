@@ -197,6 +197,8 @@
 
             // Store the elements for jQuery to hook on later
             this.all.push({ el: el, breakpoints: breakpoints, startWidth: width });
+
+            return breakpoints;
         },
 
         update: function (el, breakpoints) {
