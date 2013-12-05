@@ -1091,14 +1091,18 @@ When removing the host window content from the DOM, make the veil opaque to hide
                     <span class="nx">dialog</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">IFrameDialog</span><span class="p">(</span><span class="nx">settings</span><span class="p">);</span>
                 <span class="p">}</span>
             <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">content</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">content</span><span class="p">).</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+
+                <span class="kd">var</span> <span class="nx">$content</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">content</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">$content</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
                     <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;ModalDialog content not found&quot;</span><span class="p">);</span>
                 <span class="p">}</span>
+
+                <span class="nx">settings</span><span class="p">.</span><span class="nx">content</span> <span class="o">=</span> <span class="nx">$content</span><span class="p">;</span>
 
                 <span class="nx">dialog</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ModalDialog</span><span class="p">(</span><span class="nx">settings</span><span class="p">);</span>
 
                 <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">settings</span><span class="p">.</span><span class="nx">destroyOnClose</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">$</span><span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">content</span><span class="p">).</span><span class="nx">modalDialogInstance</span><span class="p">(</span><span class="nx">dialog</span><span class="p">);</span>
+                    <span class="nx">$content</span><span class="p">.</span><span class="nx">modalDialogInstance</span><span class="p">(</span><span class="nx">dialog</span><span class="p">);</span>
                 <span class="p">}</span>
             <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
                 <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;No url or content node specified&quot;</span><span class="p">);</span>

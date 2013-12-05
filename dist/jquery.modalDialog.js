@@ -1237,14 +1237,18 @@ if (!Object.keys) {
                     dialog = new IFrameDialog(settings);
                 }
             } else if (settings.content) {
-                if ($(settings.content).length === 0) {
+
+                var $content = $(settings.content);
+                if ($content.length === 0) {
                     throw new Error("ModalDialog content not found");
                 }
+
+                settings.content = $content;
 
                 dialog = new ModalDialog(settings);
 
                 if (!settings.destroyOnClose) {
-                    $(settings.content).modalDialogInstance(dialog);
+                    $content.modalDialogInstance(dialog);
                 }
             } else {
                 throw new Error("No url or content node specified");
