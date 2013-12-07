@@ -5,6 +5,8 @@ title: jQuery.modalDialog
 
 # Modal dialogs
 
+<div class="toc">toc</div>
+
 The **jquery.modalDialog** plugin is an extremely powerful and extensible UI widget. It supports responsive design, and is touch friendly.
 
 Example dialog (desktop):
@@ -57,7 +59,7 @@ Dialogs publish [events](#events) that can be used to extend their functionality
 
 ## Usage
 
-### Adding jQuery.modalDialog to your site:
+### Adding jQuery.modalDialog to your site
 
 Using the (skinny.js Download Builder)[http://vistaprint.github.io/SkinnyJS/download-builder.html], create a custom build which includes jquery.modalDialog, along with any other skinny.js libraries you want. Include the following CSS and JavaScript files:
 
