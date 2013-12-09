@@ -181,7 +181,10 @@
                     // from those without one.
                     me.$item.addClass("menu-item-with-submenu");
 
-                    me.$item.on("pointerdown", toggleClick);
+                    me.$item.on({
+                        "pointerdown": toggleClick,
+                        "click": preventDefault
+                    });
 
                     // Set up event handlers to control submenus appearing on hover
                     me.$item.hoverDelay(mouseOver, mouseOut, {
@@ -491,6 +494,9 @@
                     if (isBubbledClick) {
                         // Don't let the document handler catch this event, or the menu would close.
                         e.stopPropagation();
+
+                        // Navitgate now
+                        location.href = $(e.target).closest("a").attr("href");
                         return;
                     }
 
