@@ -181,7 +181,10 @@
                     // from those without one.
                     me.$item.addClass("menu-item-with-submenu");
 
-                    me.$item.on("pointerdown", toggleClick);
+                    me.$item.on({
+                        "pointerdown": toggleClick,
+                        "click": preventDefault
+                    });
 
                     // Set up event handlers to control submenus appearing on hover
                     me.$item.hoverDelay(mouseOver, mouseOut, {
@@ -479,6 +482,13 @@
                 var toggleClick = function (e) {
                     var isBubbledClick = false;
 
+                    // If an item doesn't have a Panel object of its own, so it should act like a regular link.
+                    // This occurs only when the top-level item doesn't have a panel object, otherwise the panel.lenght will be 0
+                    if (!me.$panel) {
+                        location.href = $(e.target).closest('a').attr('href');
+                        return;
+                    }
+
                     if (me.$panel.length > 0) {
                         var $closestPanel = $(e.target).closest(".menu-panel");
                         if ($closestPanel.length > 0 && $closestPanel[0] === me.$panel[0]) {
@@ -488,9 +498,12 @@
 
                     // This event bubbled from a child panel's link (a leaf menu item).
                     // It doesn't have a Panel object of its own, so it should act like a regular link.
-                    if (isBubbledClick) {
+                    if (isBubbledClick || e.pointerType === 'mouse') {
                         // Don't let the document handler catch this event, or the menu would close.
                         e.stopPropagation();
+
+                        // Navitgate because the click event is canceled
+                        location.href = $(e.target).closest('a').attr('href');
                         return;
                     }
 
