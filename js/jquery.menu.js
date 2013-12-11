@@ -485,7 +485,7 @@
                     // If an item doesn't have a Panel object of its own, so it should act like a regular link.
                     // This occurs only when the top-level item doesn't have a panel object, otherwise the panel.lenght will be 0
                     if (!me.$panel) {
-                        location.href = $(e.target).closest('a').attr('href');
+                        location.href = $(e.target).closest("a").attr("href");
                         return;
                     }
 
@@ -498,12 +498,12 @@
 
                     // This event bubbled from a child panel's link (a leaf menu item).
                     // It doesn't have a Panel object of its own, so it should act like a regular link.
-                    if (isBubbledClick || e.pointerType === 'mouse') {
+                    if (isBubbledClick || e.pointerType === "mouse") {
                         // Don't let the document handler catch this event, or the menu would close.
                         e.stopPropagation();
 
                         // Navitgate because the click event is canceled
-                        location.href = $(e.target).closest('a').attr('href');
+                        location.href = $(e.target).closest("a").attr("href");
                         return;
                     }
 
