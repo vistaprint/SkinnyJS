@@ -55,8 +55,24 @@
         if (elem.addEventListener) {
             elem.addEventListener(type, func, false);
         } else if (elem.attachEvent) {
-            elem.attachEvent("on" + type, func);
+
+            // bind the function to correct "this" for IE8-
+            func._pointerEventWrapper = function (e) {
+                return func.call(elem, e);
+            };
+
+            elem.attachEvent("on" + type, func._pointerEventWrapper);
         }
+    }
+
+    function removeEvent(elem, type, func) {
+
+        // Make sure for IE8- we unbind the wrapper
+        if (func._pointerEventWrapper) {
+            func = func._pointerEventWrapper;
+        }
+
+        $.removeEvent(elem, type, func);
     }
 
     var POINTER_TYPE_UNAVAILABLE = "unavailable";
@@ -158,9 +174,9 @@
             },
             teardown: function () {
                 if (support.touch) {
-                    jQuery.removeEvent(this, "touchstart", $.event.special.pointerdown.touch);
+                    removeEvent(this, "touchstart", $.event.special.pointerdown.touch);
                 }
-                jQuery.removeEvent(this, "mousedown", $.event.special.pointerdown.mouse);
+                removeEvent(this, "mousedown", $.event.special.pointerdown.mouse);
             }
         };
 
@@ -203,10 +219,10 @@
                 },
                 teardown: function () {
                     if (support.touch && natives.touch) {
-                        jQuery.removeEvent(this, natives.touch, onTouch);
+                        removeEvent(this, natives.touch, onTouch);
                     }
                     if (natives.mouse) {
-                        jQuery.removeEvent(this, natives.mouse, onMouse);
+                        removeEvent(this, natives.mouse, onMouse);
                     }
                 }
             };
