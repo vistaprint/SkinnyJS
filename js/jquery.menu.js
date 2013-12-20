@@ -183,7 +183,10 @@
 
                     me.$item.on({
                         "pointerdown": toggleClick,
-                        "click": preventDefault
+                        "click": function (event) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
                     });
 
                     // Set up event handlers to control submenus appearing on hover
@@ -502,8 +505,17 @@
                         // Don't let the document handler catch this event, or the menu would close.
                         e.stopPropagation();
 
-                        // Navitgate because the click event is canceled
-                        location.href = $(e.target).closest("a").attr("href");
+                        // Navitgate because the click event is canceled, if we can,
+                        // otherwise trigger the native click event link normal
+                        var anchor = $(e.target).closest("a");
+                        var href = anchor.attr("href");
+
+                        if (href && href.length > 0) {
+                            location.href = href;
+                        } else {
+                            anchor.trigger("jquery.menu.touch").trigger("click");
+                        }
+
                         return;
                     }
 
