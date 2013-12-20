@@ -185,7 +185,10 @@ from those without one.</p>             </td>             <td class="code">     
 
                     <span class="nx">me</span><span class="p">.</span><span class="nx">$item</span><span class="p">.</span><span class="nx">on</span><span class="p">({</span>
                         <span class="s2">&quot;pointerdown&quot;</span><span class="o">:</span> <span class="nx">toggleClick</span><span class="p">,</span>
-                        <span class="s2">&quot;click&quot;</span><span class="o">:</span> <span class="nx">preventDefault</span>
+                        <span class="s2">&quot;click&quot;</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+                            <span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
+                        <span class="p">}</span>
                     <span class="p">});</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-33">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-33">&#182;</a>               </div>               <p>Set up event handlers to control submenus appearing on hover</p>             </td>             <td class="code">               <div class="highlight"><pre>
@@ -504,8 +507,17 @@ It doesn't have a Panel object of its own, so it should act like a regular link.
 </pre></div>             </td>           </tr>                               <tr id="section-62">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-62">&#182;</a>               </div>               <p>Don't let the document handler catch this event, or the menu would close.</p>             </td>             <td class="code">               <div class="highlight"><pre>
                         <span class="nx">e</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
 
-</pre></div>             </td>           </tr>                               <tr id="section-63">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-63">&#182;</a>               </div>               <p>Navitgate because the click event is canceled</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                        <span class="nx">location</span><span class="p">.</span><span class="nx">href</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">).</span><span class="nx">closest</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;href&quot;</span><span class="p">);</span>
+</pre></div>             </td>           </tr>                               <tr id="section-63">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-63">&#182;</a>               </div>               <p>Navitgate because the click event is canceled, if we can,
+otherwise trigger the native click event link normal</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                        <span class="kd">var</span> <span class="nx">anchor</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">).</span><span class="nx">closest</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">);</span>
+                        <span class="kd">var</span> <span class="nx">href</span> <span class="o">=</span> <span class="nx">anchor</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;href&quot;</span><span class="p">);</span>
+
+                        <span class="k">if</span> <span class="p">(</span><span class="nx">href</span> <span class="o">&amp;&amp;</span> <span class="nx">href</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="nx">location</span><span class="p">.</span><span class="nx">href</span> <span class="o">=</span> <span class="nx">href</span><span class="p">;</span>
+                        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                            <span class="nx">anchor</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;jquery.menu.touch&quot;</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">);</span>
+                        <span class="p">}</span>
+
                         <span class="k">return</span><span class="p">;</span>
                     <span class="p">}</span>
 
