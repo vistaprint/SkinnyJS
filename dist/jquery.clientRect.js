@@ -23,6 +23,10 @@
             right: 0
         };
 
+        if (this.length === 0) {
+            return rect;
+        }
+
         var elem = this[0];
         var doc = elem.ownerDocument;
         var docElem = doc.documentElement;
