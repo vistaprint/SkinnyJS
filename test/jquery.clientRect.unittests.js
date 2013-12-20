@@ -160,4 +160,12 @@ describe("jquery.clientRect()", function () {
 
     });
 
+    clientRectShould("return 0 rect for empty jquery object", function () {
+
+        var rect = $(".no-things").clientRect();
+
+        rectEquals(rect, 0, 0, 0, 0);
+
+    });
+
 });
