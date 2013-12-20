@@ -8,7 +8,7 @@
         scrollSupressionThreshold: 30,
 
         // More time than this, and it isn't a sweep (swipe) it's a "hold" gesture.
-        durationThreshold: 1000,
+        durationThreshold: 750,
 
         // Sweep horizontal displacement must be more than this.
         horizontalDistanceThreshold: 30,
@@ -17,41 +17,41 @@
         verticalDistanceThreshold: 75,
 
         start: function (event) {
-            var data = event.originalEvent.touches ?
-                event.originalEvent.touches[0] : event;
             return {
                 time: +new Date(),
-                coords: [data.pageX, data.pageY],
+                coords: [event.pageX, event.pageY],
                 origin: $(event.target)
             };
         },
 
         stop: function (event) {
-            var data = event.originalEvent.touches ?
-                event.originalEvent.touches[0] : event;
             return {
                 time: +new Date(),
-                coords: [data.pageX, data.pageY]
+                coords: [event.pageX, event.pageY]
             };
         },
 
-        handleSweep: function (start, stop) {
-            if (stop.time - start.time < $.event.special.sweep.durationThreshold &&
+        isSweep: function (start, stop, checkTime) {
+            return (checkTime ? stop.time - start.time < $.event.special.sweep.durationThreshold : true) &&
                 Math.abs(start.coords[0] - stop.coords[0]) > $.event.special.sweep.horizontalDistanceThreshold &&
-                Math.abs(start.coords[1] - stop.coords[1]) < $.event.special.sweep.verticalDistanceThreshold) {
+                Math.abs(start.coords[1] - stop.coords[1]) < $.event.special.sweep.verticalDistanceThreshold;
+        },
 
+        handleSweep: function (start, stop) {
+            if ($.event.special.sweep.isSweep(start, stop, true)) {
                 var dir = start.coords[0] > stop.coords[0] ? "left" : "right";
 
-                start.origin.trigger("sweep", dir)
+                start.origin
+                    .trigger("sweep", dir)
                     .trigger("sweep" + dir);
             }
         },
 
-        add: function (params) {
+        setup: function () {
             var thisObject = this,
                 $this = $(thisObject);
 
-            function pointerdown(event) {
+            $this.on("pointerdown", function (event) {
                 var start = $.event.special.sweep.start(event),
                     stop;
 
@@ -80,13 +80,7 @@
                 $this
                     .on("pointermove", move)
                     .one("pointerup", up);
-            }
-
-            if (params.selector) {
-                $this.on("pointerdown", params.selector, pointerdown);
-            } else {
-                $this.on("pointerdown", pointerdown);
-            }
+            });
         }
     };
 
@@ -99,5 +93,74 @@
             }
         };
     });
+
+    // also handles presshold
+    $.event.special.press = {
+        pressholdThreshold: 750,
+        setup: function () {
+            var thisObject = this,
+                $this = $(thisObject);
+
+            $this.on("pointerdown", function (event) {
+                var start = $.event.special.sweep.start(event),
+                    stop,
+                    timer,
+                    origTarget = event.target,
+                    isPresshold = false;
+
+                // check that on pointermove we haven't swiped beyond the threshold for sweep
+                function move(e) {
+                    stop = $.event.special.sweep.stop(e);
+                }
+
+                // upon pointerup, if we didn't trigger "presshold" then trigger a "press".
+                function up(event) {
+                    clearTimeout(timer);
+                    // $document.off("pointercancel", clearPressHandlers);
+
+                    // check to see the action should be considered a a "sweep" event
+                    if (stop && $.event.special.sweep.isSweep(start, stop)) {
+                        return;
+                    }
+
+                    // ONLY trigger a 'press' event if the start target is
+                    // the same as the stop target.
+                    if (!isPresshold && origTarget === event.target) {
+                        event.type = "press";
+                        $.event.dispatch.call(thisObject, event);
+                    }
+
+                    // if this was a presshold, prevent this pointerup event from causing more events
+                    else if (isPresshold) {
+                        event.stopPropagation();
+                    }
+                }
+
+                $this
+                    .on("pointermove", move)
+                    .one("pointerup", up);
+
+                // TODO: if the pointer is canceled for some reason, we need to cleanup
+                // $document.on("pointercancel", clearPressHandlers);
+
+                timer = setTimeout(function () {
+                    isPresshold = true;
+
+                    // check to see the action should be considered a a "sweep" event
+                    if (!stop || !$.event.special.sweep.isSweep(start, stop)) {
+                        event.type = "presshold";
+                        $.event.dispatch.call(thisObject, event);
+                    }
+                }, $.event.special.press.pressholdThreshold);
+            });
+        }
+    };
+
+    // presshold is just a dummy, it's handled by "press".
+    $.event.special.presshold = {
+        setup: function () {
+            $(this).on("press", $.noop);
+        }
+    };
 
 })(jQuery);
