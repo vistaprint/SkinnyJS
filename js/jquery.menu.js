@@ -501,7 +501,7 @@
 
                     // This event bubbled from a child panel's link (a leaf menu item).
                     // It doesn't have a Panel object of its own, so it should act like a regular link.
-                    if ((isBubbledClick || e.pointerType === "mouse") && e.button == 0) {
+                    if ((isBubbledClick || e.pointerType === "mouse") && e.button === 0) {
                         // Don't let the document handler catch this event, or the menu would close.
                         e.stopPropagation();
 
