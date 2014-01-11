@@ -140,6 +140,14 @@
 <li>pointerout: abstraction on top of mouseout (no touch equivalent)</li>
 </ul>
 
+<h3 id='why_this_is_important'>Why this is important</h3>
+
+<p>The PointerEvents API is a new standard that is likely to be adopted by major browsers. The existing APIs for user input, the MouseEvents and the TouchEvents APIS, offer many inconsistent behaviors that pointer events attempts to standardize. Some of inconsistencies are:</p>
+
+<ul>
+<li>Upon touchstart or touchend, if you call preventDefault() it will prevent the emulated mouse event (mousedown or mouseup respectively) and click event. Whereas if you call preventDefault() upon a mousedown or mouseup event, the click event is always fired. Pointer Events never canceled the click event.</li>
+</ul>
+
 <h3 id='usage'>Usage</h3>
 <div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#el&#39;</span><span class='p'>).</span><span class='nx'>on</span><span class='p'>(</span><span class='s1'>&#39;pointerdown&#39;</span><span class='p'>,</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> <span class='p'>{</span>
 

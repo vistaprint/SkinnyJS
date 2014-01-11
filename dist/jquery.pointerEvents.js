@@ -80,9 +80,18 @@
     var POINTER_TYPE_PEN = "pen";
     var POINTER_TYPE_MOUSE = "mouse";
 
+    // pointer events define button states as:
+    // mouse move (no buttons down): -1
+    // left mouse, touch contact and normal pen contact: 0
+    // middle mouse, 1
+    // right mouse, pen with barrel button pressed: 2
+    // x1 (back button on mouse), 3
+    // x2 (forward button on mouse), 4
+    // pen contact with eraser button pressed: 5
+
     // add our own pointer event hook/filter
     $.event.pointerHooks = {
-        props: "pointerType clientX clientY fromElement offsetX offsetY pageX pageY screenX screenY toElement".split(" "),
+        props: "pointerType button clientX clientY fromElement offsetX offsetY pageX pageY screenX screenY toElement".split(" "),
         filter: function (event, original) {
             var body, eventDoc, doc,
                 fromElement = original.fromElement;
@@ -116,8 +125,7 @@
                 event.relatedTarget = fromElement === event.target ? original.toElement : fromElement;
             }
 
-            // Add which for click: 1 === left; 2 === middle; 3 === right
-            // Note: button is not normalized, so don't use it
+            // Add pointerType
             if (!event.pointerType || typeof event.pointerType == "number") {
                 if (event.pointerType == 2) {
                     event.pointerType = POINTER_TYPE_TOUCH;
@@ -127,6 +135,9 @@
                     event.pointerType = POINTER_TYPE_MOUSE;
                 } else if (/^touch/i.test(original.originalType)) {
                     event.pointerType = POINTER_TYPE_TOUCH;
+
+                    // Add button for touch events
+                    event.button = 0;
                 } else if (/^mouse/i.test(original.originalType) || original.originalType == "click") {
                     event.pointerType = POINTER_TYPE_MOUSE;
                 } else {
