@@ -103,7 +103,9 @@
 
             $this.on("pointerdown", function (event) {
                 var start = $.event.special.sweep.start(event),
+                    startScroll = window.scrollY,
                     stop,
+                    stopScroll,
                     timer,
                     origTarget = event.target,
                     isPresshold = false;
@@ -111,12 +113,18 @@
                 // check that on pointermove we haven't swiped beyond the threshold for sweep
                 function move(e) {
                     stop = $.event.special.sweep.stop(e);
+                    stopScroll = window.scrollY;
                 }
 
                 // upon pointerup, if we didn't trigger "presshold" then trigger a "press".
                 function up(event) {
                     clearTimeout(timer);
                     // $document.off("pointercancel", clearPressHandlers);
+
+                    // check to see if they scrolled, even 5 pixels
+                    if (stopScroll && Math.abs(startScroll - stopScroll) > 5) {
+                        return;
+                    }
 
                     // check to see the action should be considered a a "sweep" event
                     if (stop && $.event.special.sweep.isSweep(start, stop)) {
@@ -146,11 +154,20 @@
                 timer = setTimeout(function () {
                     isPresshold = true;
 
-                    // check to see the action should be considered a a "sweep" event
-                    if (!stop || !$.event.special.sweep.isSweep(start, stop)) {
-                        event.type = "presshold";
-                        $.event.dispatch.call(thisObject, event);
+                    // check to see if they scrolled, even 5 pixels
+                    if (stopScroll && Math.abs(startScroll - stopScroll) > 5) {
+                        return;
                     }
+
+                    // check to see the action should be considered a a "sweep" event
+                    if (stop && $.event.special.sweep.isSweep(start, stop)) {
+                        return;
+                    }
+
+
+                    // Trigger the presshold event now
+                    event.type = "presshold";
+                    $.event.dispatch.call(thisObject, event);
                 }, $.event.special.press.pressholdThreshold);
             });
         }
