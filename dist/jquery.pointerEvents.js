@@ -211,7 +211,12 @@
             }
         }, function (pointerEventType, natives) {
             function onTouch(event) {
-                event.preventDefault(); // prevent the mouse event from firing as well
+                // prevent the mouse event from firing as well
+                // except for touchmove, preventing touchmove prevents scrolling,
+                // preventing this polyfill from working as expected when binded to large elements
+                if (event.type != "touchmove") {
+                    event.preventDefault();
+                }
                 triggerCustomEvent(this, pointerEventType, event);
             }
 

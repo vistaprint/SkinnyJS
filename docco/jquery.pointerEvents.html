@@ -152,8 +152,11 @@ create special custom events to mimic them</p>             </td>             <td
                 <span class="nx">touch</span><span class="o">:</span> <span class="s2">&quot;touchcancel&quot;</span>
             <span class="p">}</span>
         <span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">pointerEventType</span><span class="p">,</span> <span class="nx">natives</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">function</span> <span class="nx">onTouch</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span> <span class="c1">// prevent the mouse event from firing as well</span>
+            <span class="kd">function</span> <span class="nx">onTouch</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-23">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-23">&#182;</a>               </div>               <p>prevent the mouse event from firing as well
+except for touchmove, preventing touchmove prevents scrolling,
+preventing this polyfill from working as expected when binded to large elements</p>             </td>             <td class="code">               <div class="highlight"><pre>                <span class="k">if</span> <span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">type</span> <span class="o">!=</span> <span class="s2">&quot;touchmove&quot;</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+                <span class="p">}</span>
                 <span class="nx">triggerCustomEvent</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">pointerEventType</span><span class="p">,</span> <span class="nx">event</span><span class="p">);</span>
             <span class="p">}</span>
 
@@ -180,7 +183,7 @@ create special custom events to mimic them</p>             </td>             <td
                 <span class="p">}</span>
             <span class="p">};</span>
         <span class="p">});</span>
-    <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-23">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-23">&#182;</a>               </div>               <p>for IE10 specific, we proxy though events so we do not need to deal
+    <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-24">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-24">&#182;</a>               </div>               <p>for IE10 specific, we proxy though events so we do not need to deal
 with the various names or renaming of events.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">msPointerEnabled</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">pointerEnabled</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">,</span> <span class="p">{</span>
             <span class="nx">pointerdown</span><span class="o">:</span> <span class="p">{</span>
