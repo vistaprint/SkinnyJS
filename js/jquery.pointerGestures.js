@@ -121,6 +121,9 @@
                     clearTimeout(timer);
                     // $document.off("pointercancel", clearPressHandlers);
 
+                    // unbind the pointer move
+                    $this.off("pointermove", move);
+
                     // check to see if they scrolled, even 5 pixels
                     if (stopScroll && Math.abs(startScroll - stopScroll) > 5) {
                         return;
@@ -152,6 +155,9 @@
                 // $document.on("pointercancel", clearPressHandlers);
 
                 timer = setTimeout(function () {
+                    // unbind the pointer move
+                    $this.off("pointermove", move);
+
                     isPresshold = true;
 
                     // check to see if they scrolled, even 5 pixels
@@ -163,7 +169,6 @@
                     if (stop && $.event.special.sweep.isSweep(start, stop)) {
                         return;
                     }
-
 
                     // Trigger the presshold event now
                     event.type = "presshold";
