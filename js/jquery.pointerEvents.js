@@ -201,23 +201,22 @@
             // touch events send an array of touches we need to convert to the pointer events format
             // which means we need to fire multiple events per touch
             if (original.touches) {
+                var touches = original.touches;
                 var events = [];
-                var i, touch;
+                var ev, i, j;
 
                 // the problem with this is that on touchend it will remove the
                 // touch which has ended from the touches list, this means we do
                 // not want to fire pointerup for touches that are still there,
                 // we instead want to send a pointerup with the removed touch's identifier
-
                 if (event.type === "pointerup") {
+                    // convert TouchList to a standard array
                     _lastTouches = Array.prototype.slice.call(_lastTouches);
 
                     // find the touch that was removed
                     for (i = 0; i < original.touches.length; i++) {
-                        touch = original.touches[i];
-
-                        for (var j = 0; j < _lastTouches.length; j++) {
-                            if (_lastTouches[j].identifier === touch.identifier) {
+                        for (j = 0; j < _lastTouches.length; j++) {
+                            if (_lastTouches[j].identifier === original.touches[i].identifier) {
                                 _lastTouches.splice(j, 1);
                             }
                         }
@@ -226,23 +225,41 @@
                     // if we narrowed down the ended touch to one, then we found it
                     if (_lastTouches.length === 1) {
                         event.pointerId = _lastTouches[0].identifier;
+                        _lastTouches = original.touches;
                         return event;
                     }
-                } else {
-                    for (i = 0; i < original.touches.length; i++) {
-                        touch = original.touches[i];
-                        var ev = $.extend({}, event);
-                        // copy over information from the touch to the event
-                        ev.clientX = touch.clientX;
-                        ev.clientY = touch.clientY;
-                        ev.pageX = touch.pageX;
-                        ev.pageY = touch.pageY;
-                        ev.screenX = touch.screenX;
-                        ev.screenY = touch.screenY;
-                        // the touch id on emulated touch events from chrome is always 0 (zero)
-                        ev.pointerId = touch.identifier;
-                        events.push(ev);
+                }
+                // on pointerdown we need to only trigger a new pointerdown for the touch,
+                // and not the touches that were already there
+                else if (event.type === "pointerdown") {
+                    // convert TouchList to a standard array
+                    touches = Array.prototype.slice.call(original.touches);
+
+                    // find the new touch that was just added
+                    for (i = 0; i < touches.length; i++) {
+                        // last touches will be a list with one less touch
+                        for (j = 0; j < _lastTouches.length; j++) {
+                            if (touches[i].identifier === _lastTouches[j].identifier) {
+                                touches.splice(i, 1);
+                            }
+                        }
                     }
+                }
+
+                // this will be used on pointermove and pointerdown
+                for (i = 0; i < original.touches.length; i++) {
+                    var touch = original.touches[i];
+                    ev = $.extend({}, event);
+                    // copy over information from the touch to the event
+                    ev.clientX = touch.clientX;
+                    ev.clientY = touch.clientY;
+                    ev.pageX = touch.pageX;
+                    ev.pageY = touch.pageY;
+                    ev.screenX = touch.screenX;
+                    ev.screenY = touch.screenY;
+                    // the touch id on emulated touch events from chrome is always 0 (zero)
+                    ev.pointerId = touch.identifier;
+                    events.push(ev);
                 }
 
                 // do as little processing as you can here, this is done on touchmove and
@@ -271,14 +288,23 @@
     if (!support.pointer) {
         $.event.special.pointerdown = {
             touch: function (event) {
+                // prevent default to prevent the emulated mousedown event from being triggered,
+                // we will force-emulate the click event again from within tounend:pointerup
+                // event.preventDefault();
+
                 triggerCustomEvent(this, "pointerdown", event);
 
                 // set the pointer as currently down to prevent chorded pointerdown events
                 _isPointerDown = true;
             },
             mouse: function (event) {
+                // _isPointerDown is true when touch is down, this means we do not want to listen to mouse events too
+                if (_isPointerDown === true) {
+                    return;
+                }
+
                 // do not trigger another pointerdown event if currently down, prevent chorded pointerdown events
-                if (typeof _isPointerDown !== "boolean") {
+                if (_isPointerDown !== false) {
                     var button = getStandardizedButtonsProperty(event);
                     if (_isPointerDown !== button) {
                         _isPointerDown |= button;
@@ -287,12 +313,12 @@
                         triggerCustomEvent(this, "pointermove", event);
                         return;
                     }
-
-                    var jEvent = triggerCustomEvent(this, "pointerdown", event);
-
-                    // set the pointer as currently down to prevent chorded pointerdown events
-                    _isPointerDown = jEvent.buttons;
                 }
+
+                var jEvent = triggerCustomEvent(this, "pointerdown", event);
+
+                // set the pointer as currently down to prevent chorded pointerdown events
+                _isPointerDown = jEvent.buttons;
             },
             setup: function () {
                 if (support.touch) {
