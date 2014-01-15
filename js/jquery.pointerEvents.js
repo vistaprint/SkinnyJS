@@ -13,9 +13,6 @@
         // support for IE7-IE8
         originalEvent = originalEvent || window.event;
 
-        // store the original event type so we can use it in the fixHook
-        originalEvent.originalType = originalEvent.type;
-
         // Create a writable copy of the event object and normalize some properties
         var event = new jQuery.Event(originalEvent);
         event.type = eventType;
@@ -47,8 +44,19 @@
         // run the filter now
         event = $.event.pointerHooks.filter(event, originalEvent);
 
-        // trigger the true event
-        $.event.dispatch.call(elem, event);
+        // trigger the emulated pointer event
+        // the filter can return an array (only if the original was a touchmove),
+        // which means we need to trigger independent events
+        if ($.isArray(event)) {
+            $.each(event, function (i, ev) {
+                $.event.dispatch.call(elem, ev);
+            });
+        } else {
+            $.event.dispatch.call(elem, event);
+        }
+
+        // return the manipulated jQuery event
+        return event;
     }
 
     function addEvent(elem, type, func) {
@@ -75,45 +83,83 @@
         $.removeEvent(elem, type, func);
     }
 
+    // get the standardized "buttons" property as per the Pointer Events spec from a mouse event
+    function getStandardizedButtonsProperty(event) {
+        // in the DOM LEVEL 3 spec there is a new standard for the "buttons" property
+        // sadly, no browser currently supports this and only sends us the single "button" property
+        if (event.buttons) {
+            return event.buttons;
+        }
+
+        // standardize "which" property for use
+        var which = event.which;
+        if (!which && event.button !== undefined) {
+            which = (event.button & 1 ? 1 : (event.button & 2 ? 3 : (event.button & 4 ? 2 : 0)));
+        }
+
+        // no button down (can happen on mousemove)
+        if (which === 0) {
+            return 0;
+        }
+        // left button
+        else if (which === 1) {
+            return 1;
+        }
+        // middle mouse
+        else if (which === 2) {
+            return 4;
+        }
+        // right mouse
+        else if (which === 3) {
+            return 2;
+        }
+
+        // unknown?
+        return 0;
+    }
+
     var POINTER_TYPE_UNAVAILABLE = "unavailable";
     var POINTER_TYPE_TOUCH = "touch";
     var POINTER_TYPE_PEN = "pen";
     var POINTER_TYPE_MOUSE = "mouse";
 
-    // pointer events define button states as:
-    // mouse move (no buttons down): -1
-    // left mouse, touch contact and normal pen contact: 0
-    // middle mouse, 1
-    // right mouse, pen with barrel button pressed: 2
-    // x1 (back button on mouse), 3
-    // x2 (forward button on mouse), 4
-    // pen contact with eraser button pressed: 5
+    // signal to mark if the pointer is down and which button(s) are depressed
+    // used only as part of the polyfill for Touch and Mouse Events API
+    var _isPointerDown = false;
+
+    // storage of the last seen touches provided by the native touch events spec
+    var _lastTouches = [];
+
+    // ------ NOTE: THIS IS UNUSED, WE DO NOT ASSIGN BUTTON ------
+    // pointer events defines the "button" property as:
+    // mouse move (no buttons down)                         -1
+    // left mouse, touch contact and normal pen contact     0
+    // middle mouse                                         1
+    // right mouse, pen with barrel button pressed          2
+    // x1 (back button on mouse)                            3
+    // x2 (forward button on mouse)                         4
+    // pen contact with eraser button pressed               5
+    // ------ NOTE: THIS IS UNUSED, WE DO NOT ASSIGN BUTTON ------
+
+    // pointer events defines the "buttons" property as:
+    // mouse move (no buttons down)                         0
+    // left mouse, touch contact, and normal pen contact    1
+    // middle mouse                                         4
+    // right mouse, pen contact with barrel button pressed  2
+    // x1 (back) mouse                                      8
+    // x2 (forward) mouse                                   16
+    // pen contact with eraser button pressed               32
 
     // add our own pointer event hook/filter
     $.event.pointerHooks = {
-        props: "pointerType button clientX clientY fromElement offsetX offsetY pageX pageY screenX screenY toElement".split(" "),
+        props: "pointerType pointerId buttons clientX clientY fromElement offsetX offsetY pageX pageY screenX screenY toElement".split(" "),
         filter: function (event, original) {
-            var body, eventDoc, doc,
-                fromElement = original.fromElement;
-
-            // touch events send an array of touches, which 99.9% has one item anyway...
-            // reassign that touch to as the clientX/clientY
-            if (original.touches && original.touches.length > 0) {
-                var touch = original.touches[0];
-                event.clientX = touch.clientX;
-                event.clientY = touch.clientY;
-                event.pageX = touch.pageX;
-                event.pageY = touch.pageY;
-                event.screenX = touch.screenX;
-                event.screenY = touch.screenY;
-            }
-
             // Calculate pageX/Y if missing and clientX/Y available
             // this is just copied from jQuery's standard pageX/pageY fix
-            if (event.pageX == null && original.clientX != null) {
-                eventDoc = event.target.ownerDocument || document;
-                doc = eventDoc.documentElement;
-                body = eventDoc.body;
+            if (!original.touches && event.pageX == null && original.clientX != null) {
+                var eventDoc = event.target.ownerDocument || document;
+                var doc = eventDoc.documentElement;
+                var body = eventDoc.body;
 
                 event.pageX = original.clientX + (doc && doc.scrollLeft || body && body.scrollLeft || 0) - (doc && doc.clientLeft || body && body.clientLeft || 0);
                 event.pageY = original.clientY + (doc && doc.scrollTop || body && body.scrollTop || 0) - (doc && doc.clientTop || body && body.clientTop || 0);
@@ -121,8 +167,8 @@
 
             // Add relatedTarget, if necessary
             // also copied from jQuery's standard event fix
-            if (!event.relatedTarget && fromElement) {
-                event.relatedTarget = fromElement === event.target ? original.toElement : fromElement;
+            if (!event.relatedTarget && original.fromElement) {
+                event.relatedTarget = original.fromElement === event.target ? original.toElement : original.fromElement;
             }
 
             // Add pointerType
@@ -133,16 +179,77 @@
                     event.pointerType = POINTER_TYPE_PEN;
                 } else if (event.pointerType == 4) {
                     event.pointerType = POINTER_TYPE_MOUSE;
-                } else if (/^touch/i.test(original.originalType)) {
+                } else if (/^touch/i.test(original.type)) {
                     event.pointerType = POINTER_TYPE_TOUCH;
-
-                    // Add button for touch events
-                    event.button = 0;
-                } else if (/^mouse/i.test(original.originalType) || original.originalType == "click") {
+                    event.buttons = original.type === "touchend" ? 0 : 1;
+                } else if (/^mouse/i.test(original.type) || original.type == "click") {
+                    event.pointerId = 1; // as per the pointer events spec, the mouse is always pointer id 1
                     event.pointerType = POINTER_TYPE_MOUSE;
+                    event.buttons = original.type === "mouseup" ? 0 : getStandardizedButtonsProperty(original);
                 } else {
                     event.pointerType = POINTER_TYPE_UNAVAILABLE;
+                    event.buttons = 0;
                 }
+            }
+
+            // if we have the bitmask for the depressed buttons from the mouse events polyfill, use it to mimic buttons for
+            // browsers that do not support the HTML DOM LEVEL 3 events spec
+            if (event.type === "pointermove" && typeof _isPointerDown !== "boolean" && _isPointerDown !== event.buttons) {
+                event.buttons = _isPointerDown;
+            }
+
+            // touch events send an array of touches we need to convert to the pointer events format
+            // which means we need to fire multiple events per touch
+            if (original.touches) {
+                var events = [];
+                var i, touch;
+
+                // the problem with this is that on touchend it will remove the
+                // touch which has ended from the touches list, this means we do
+                // not want to fire pointerup for touches that are still there,
+                // we instead want to send a pointerup with the removed touch's identifier
+
+                if (event.type === "pointerup") {
+                    _lastTouches = Array.prototype.slice.call(_lastTouches);
+
+                    // find the touch that was removed
+                    for (i = 0; i < original.touches.length; i++) {
+                        touch = original.touches[i];
+
+                        for (var j = 0; j < _lastTouches.length; j++) {
+                            if (_lastTouches[j].identifier === touch.identifier) {
+                                _lastTouches.splice(j, 1);
+                            }
+                        }
+                    }
+
+                    // if we narrowed down the ended touch to one, then we found it
+                    if (_lastTouches.length === 1) {
+                        event.pointerId = _lastTouches[0].identifier;
+                        return event;
+                    }
+                } else {
+                    for (i = 0; i < original.touches.length; i++) {
+                        touch = original.touches[i];
+                        var ev = $.extend({}, event);
+                        // copy over information from the touch to the event
+                        ev.clientX = touch.clientX;
+                        ev.clientY = touch.clientY;
+                        ev.pageX = touch.pageX;
+                        ev.pageY = touch.pageY;
+                        ev.screenX = touch.screenX;
+                        ev.screenY = touch.screenY;
+                        // the touch id on emulated touch events from chrome is always 0 (zero)
+                        ev.pointerId = touch.identifier;
+                        events.push(ev);
+                    }
+                }
+
+                // do as little processing as you can here, this is done on touchmove and
+                // there can be a lot of those events firing quickly, we do not want the
+                // polyfill slowing down the application
+                _lastTouches = original.touches;
+                return events;
             }
 
             return event;
@@ -163,18 +270,28 @@
     // create special custom events to mimic them
     if (!support.pointer) {
         $.event.special.pointerdown = {
-            ignoreNextMousedownEvent: false,
-
             touch: function (event) {
-                // prevent the click event from firing as well
-                $.event.special.pointerdown.ignoreNextMousedownEvent = true;
                 triggerCustomEvent(this, "pointerdown", event);
+
+                // set the pointer as currently down to prevent chorded pointerdown events
+                _isPointerDown = true;
             },
             mouse: function (event) {
-                if (!$.event.special.pointerdown.ignoreNextMousedownEvent) {
-                    triggerCustomEvent(this, "pointerdown", event);
-                } else {
-                    $.event.special.pointerdown.ignoreNextMousedownEvent = false;
+                // do not trigger another pointerdown event if currently down, prevent chorded pointerdown events
+                if (typeof _isPointerDown !== "boolean") {
+                    var button = getStandardizedButtonsProperty(event);
+                    if (_isPointerDown !== button) {
+                        _isPointerDown |= button;
+                        // as per the pointer event spec, when the active "buttons" change it fires a new "pointermove"
+                        // with the new buttons, but not a new pointerdown event (chorded)
+                        triggerCustomEvent(this, "pointermove", event);
+                        return;
+                    }
+
+                    var jEvent = triggerCustomEvent(this, "pointerdown", event);
+
+                    // set the pointer as currently down to prevent chorded pointerdown events
+                    _isPointerDown = jEvent.buttons;
                 }
             },
             setup: function () {
@@ -191,11 +308,68 @@
             }
         };
 
-        jQuery.each({
-            pointerup: {
-                touch: "touchend",
-                mouse: "mouseup"
+        $.event.special.pointerup = {
+            touch: function (event) {
+                // prevent default to prevent the emulated mouseup event from being triggered
+                event.preventDefault();
+
+                triggerCustomEvent(this, "pointerup", event);
+
+                // release the pointerdown lock
+                _isPointerDown = false;
+
+                // on touchend, calling prevent default prevents the "mouseup" and "click" event
+                // however on native "mouseup" events preventing default does not cancel the "click" event
+                // as per the pointer event spec on "pointerup" preventing default should not cancel the "click" event
+                //
+                // we really do want to call this all the time, because if the function binded to this emulated
+                // poiunterup triggered above called prevent default it would also prevent the click, which
+                // would cause inconsistent behavior. To prevent the possibility of two click events though,
+                // we want to call prevent default all the time (as we do above) and then force trigger the click here
+                event.target.click();
             },
+            mouse: function (event) {
+                // the Mouse Events API provides the button on mouseup
+                var button = getStandardizedButtonsProperty(event);
+
+                // remove the button from the current pointers down signal
+                _isPointerDown ^= button;
+
+                // reset _isPointerDown to a boolean if no buttons are down
+                if (_isPointerDown === 0) {
+                    _isPointerDown = false;
+                }
+
+                // do not trigger another pointerdown event if currently down, prevent chorded pointerdown events
+                if (_isPointerDown) {
+                    // the mouse events spec shows that upon mouseup it fires a mousemove afterwards, which
+                    // will trigger the pointermove we need to trigger to follow the pointer events spec
+                    return;
+                }
+
+                var jEvent = triggerCustomEvent(this, "pointerup", event);
+
+                // set the pointer as currently down to prevent chorded pointerdown events
+                _isPointerDown = jEvent.buttons;
+
+                // release the pointer down lock on mouseup
+                _isPointerDown = false;
+            },
+            setup: function () {
+                if (support.touch) {
+                    addEvent(this, "touchend", $.event.special.pointerup.touch);
+                }
+                addEvent(this, "mouseup", $.event.special.pointerup.mouse);
+            },
+            teardown: function () {
+                if (support.touch) {
+                    removeEvent(this, "touchend", $.event.special.pointerup.touch);
+                }
+                removeEvent(this, "mouseup", $.event.special.pointerup.mouse);
+            }
+        };
+
+        jQuery.each({
             pointermove: {
                 touch: "touchmove",
                 mouse: "mousemove"
@@ -217,10 +391,15 @@
                 if (event.type != "touchmove") {
                     event.preventDefault();
                 }
+
                 triggerCustomEvent(this, pointerEventType, event);
             }
 
             function onMouse(event) {
+                if (event.type === "mousemove" && _isPointerDown === true) {
+                    return false;
+                }
+
                 triggerCustomEvent(this, pointerEventType, event);
             }
 
