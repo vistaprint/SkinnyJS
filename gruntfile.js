@@ -70,7 +70,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: "./js/",
-                    src: ["**/*.js", "!*modalDialog*"],
+                    src: ["**/*.js", "!*modalDialog*", "!*tutorialOverlay*"],
                     dest: "dist/"
                 }]
             },
@@ -167,6 +167,15 @@ module.exports = function (grunt) {
                     "js/jquery.modalDialog.unobtrusive.js"
                 ],
                 dest: "dist/jquery.modalDialogContent.js"
+            },
+            tutorialOverlay: {
+                src: [
+                    "js/jquery.tutorialOverlay.header.js",
+                    "js/jquery.tutorialOverlay.getSettings.js",
+                    "js/jquery.tutorialOverlay.js",
+                    "js/jquery.tutorialOverlay.unobtrusive.js"
+                ],
+                dest: "dist/jquery.tutorialOverlay.js"
             }
         },
         clean: {
@@ -240,8 +249,12 @@ module.exports = function (grunt) {
                 files: ["./js/**/*.modalDialog*.js"],
                 tasks: ["concat:modalDialog", "concat:modalDialogContent", "copy:distSite"]
             },
+            tutorialOverlay: {
+                files: ["./js/**/*.tutorialOverlay*.js"],
+                tasks: ["concat:tutorialOverlay", "copy:distSite"]
+            },
             copyJs: {
-                files: ["./js/**/*.js", "!**modalDialog**"],
+                files: ["./js/**/*.js", "!**modalDialog**", "!**tutorialOverlay**"],
                 tasks: ["copy:distJs", "copy:distSite"]
             },
             less: {
@@ -363,7 +376,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask("copyDist", ["copy:distJs", "copy:distCss", "copy:distOther"]);
 
-    grunt.registerTask("build", ["clean", "less", "copyDist", "concat:modalDialog", "concat:modalDialogContent", "strip_code", "uglify"]);
+    grunt.registerTask("build", ["clean", "less", "copyDist", "concat:modalDialog", "concat:modalDialogContent", "concat:tutorialOverlay", "strip_code", "uglify"]);
 
     grunt.registerTask("docs", ["mkdir:docco", "docco", "docco-add-links", "copy:doccoFix"]);
 
