@@ -43,12 +43,19 @@
   </div>
 </section>
 
+<!-- An invalid id specified to show on pageload.  Will be ignored. -->
+<div data-overlay-showonpageload='some invalid ID'></div>
+
 <!-- Unobtrusive overlay to show on page load -->
-<div id="onload-overlay" class="veil" data-overlay-showonpageload='true'>
-  <div data-rel="tutorialTip" data-target="header h1" data-position="south">^- The title is here. -^</div>
+<div id="onload-overlay" class="veil" data-overlay-showonpageload='onload-overlay'>
+  <div data-rel="tutorialTip" data-target="#invalidID" data-position="north">This tip will not be shown, because it has an invalid target.</div>
+  <div data-rel="tutorialTip" data-target="h1" data-position="south">^- The title is here. -^</div>
   <div data-rel="tutorialTip" data-target="#showBtn" data-position="east">&lt;-- This link will show an overlay via the JavaScript API.</div>
   <div data-rel="tutorialTip" data-target="#showUnobtrusive" data-position="east">&lt;-- This link will show an overlay using the 'unobtrusive' method using data attributes in the DOM.</div>
 </div>
+
+<!-- Since another showonpageload ID was specified earlier, it will take precedence.  This overlay will not be shown on page load. -->
+<div data-overlay-showonpageload='node-overlay'></div>
 
 <!-- Unobtrusive overlay exists in DOM and doesn't require extra JavaScript to run -->
 <div id="node-overlay" class="veil">

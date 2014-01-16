@@ -28,27 +28,36 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     var OVERLAY_DATA_KEY = "tutorialOverlayUnobtrusive";
 
     $(document).ready(function () {
-        var $overlay = $("[data-overlay-showonpageload]").first();
+        var $overlay = $("[data-overlay-showonpageload]");
 
-        if ($overlay.length) {
-            var settings = $.tutorialOverlay.getSettings($overlay);
-
-            if (settings.overlayId && (settings.overlayId !== $overlay.attr("id"))) {
-                //The element specified a different element as the actual overlay node.
-                var $overlayNode = $("#" + settings.overlayId);
-                var nodeSettings = $.tutorialOverlay.getSettings($overlayNode);
-
-                // Duplicate values on the element will win over values on the overlay node
-                settings = $.extend(nodeSettings, settings);
-            } else {
-                // Use this element as the overlay if no other ID was specified.
-                settings.overlayId = $overlay.attr("id");
+        //If more than one showonpageload overlay ID is specified, we'll use the first ID that exists in the page.
+        //  This should be a noop for any invalid IDs.  This means that if the overlay hasn't been added to the DOM
+        //  at the time this function runs, then it will not be shown automatically.
+        $overlay.each(function () {
+            var $el = $(this);
+            var settings = $.tutorialOverlay.getSettings($el);
+            //If a 'data-overlayid' was not specified, use the id specified in the 'data-overlay-showonpageload' attribute.
+            if (!settings.overlayId) {
+                settings.overlayId = $el.data("overlay-showonpageload");
             }
 
-            var tutorialOverlay = $.tutorialOverlay.create(settings);
+            if (settings.overlayId) {
+                var $overlayNode = $("#" + settings.overlayId);
+                if ($overlayNode.length) {
+                    //We found the node specified by the overlayId
+                    if (settings.overlayId !== $el.attr("id")) {
+                        //The element specified a different element as the actual overlay node.
+                        var nodeSettings = $.tutorialOverlay.getSettings($overlayNode);
 
-            tutorialOverlay.show();
-        }
+                        // Duplicate values on the element will win over values on the overlay node
+                        settings = $.extend(nodeSettings, settings);
+                    }
+                    var tutorialOverlay = $.tutorialOverlay.create(settings);
+                    tutorialOverlay.show();
+                    return false;  //Don't look for more overlay nodes from the list of overlayIds.
+                }
+            }
+        });
     });
 
     //TODO: This is for testing.  I don't see a need for this in the final API.
