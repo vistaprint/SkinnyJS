@@ -257,39 +257,42 @@
     };
 
     TutorialOverlay.prototype._decodePosition = function (positionStr) {
-        var pos = positionStr.match(/north|east|south|west/g);
-        pos = pos.slice(Math.max(pos.length - 2, 0));
         var posObj = {
             verticalCenter: true,
             horizontalCenter: true
         };
-        $.each(pos, function () {
-            switch (this.toString()) {
-            case "north":
-            case "top":
-                posObj.above = true;
-                posObj.verticalCenter = false;
-                break;
+        var pos = positionStr.match(/north|east|south|west/gi);
+        if (pos)
+        {
+            pos = pos.slice(Math.max(pos.length - 2, 0));
+            $.each(pos, function () {
+                switch (this.toString()) {
+                case "north":
+                case "top":
+                    posObj.above = true;
+                    posObj.verticalCenter = false;
+                    break;
 
-            case "south":
-            case "bottom":
-                posObj.above = false;
-                posObj.verticalCenter = false;
-                break;
+                case "south":
+                case "bottom":
+                    posObj.above = false;
+                    posObj.verticalCenter = false;
+                    break;
 
-            case "east":
-            case "right":
-                posObj.right = true;
-                posObj.horizontalCenter = false;
-                break;
+                case "east":
+                case "right":
+                    posObj.right = true;
+                    posObj.horizontalCenter = false;
+                    break;
 
-            case "west":
-            case "left":
-                posObj.right = false;
-                posObj.horizontalCenter = false;
-                break;
-            }
-        });
+                case "west":
+                case "left":
+                    posObj.right = false;
+                    posObj.horizontalCenter = false;
+                    break;
+                }
+            });
+        }
         return posObj;
     };
 
