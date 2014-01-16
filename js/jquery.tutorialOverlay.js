@@ -45,6 +45,7 @@
             this._$overlay = $("<div id='" + this._overlayId + "' class='veil'></div>");
             this._$overlay.appendTo(this.parent);
         }
+        this._$overlay.css("z-index", settings.zIndex);
         this.setHideOnClick(clickHide);
 
         this._initializeTips();
