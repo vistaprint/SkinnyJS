@@ -373,7 +373,7 @@
 
                 var jEvent = triggerCustomEvent(this, "pointerdown", event);
 
-                // set the pointer as currently down to prevent chorded pointerdown events
+                // set the pointer as currently down to prevent chorded "pointerdown" events
                 _isPointerDown = jEvent.buttons;
             },
             add: $.event.delegateSpecial(function (handleObj) {
@@ -398,7 +398,7 @@
 
         $.event.special.pointerup = {
             touch: function (event) {
-                // prevent default to prevent the emulated mouseup event from being triggered
+                // prevent default to prevent the emulated "mouseup" event from being triggered
                 event.preventDefault();
 
                 triggerCustomEvent(this, "pointerup", event);
@@ -406,12 +406,12 @@
                 // release the pointerdown lock
                 _isPointerDown = false;
 
-                // on touchend, calling prevent default prevents the "mouseup" and "click" event
+                // on "touchend", calling prevent default prevents the "mouseup" and "click" event
                 // however on native "mouseup" events preventing default does not cancel the "click" event
                 // as per the pointer event spec on "pointerup" preventing default should not cancel the "click" event
                 //
                 // we really do want to call this all the time, because if the function binded to this emulated
-                // poiunterup triggered above called prevent default it would also prevent the click, which
+                // "poiunterup" triggered above called prevent default it would also prevent the click, which
                 // would cause inconsistent behavior. To prevent the possibility of two click events though,
                 // we want to call prevent default all the time (as we do above) and then force trigger the click here
                 event.target.click();
@@ -432,19 +432,19 @@
                     _isPointerDown = false;
                 }
 
-                // do not trigger another pointerdown event if currently down, prevent chorded pointerdown events
+                // do not trigger another "pointerdown" event if currently down, prevent chorded pointerdown events
                 if (_isPointerDown) {
-                    // the mouse events spec shows that upon mouseup it fires a mousemove afterwards, which
-                    // will trigger the pointermove we need to trigger to follow the pointer events spec
+                    // the mouse events spec shows that upon "mouseup" it fires a "mousemove" afterwards, which
+                    // will trigger the "pointermove" we need to trigger to follow the pointer events spec
                     return;
                 }
 
                 var jEvent = triggerCustomEvent(this, "pointerup", event);
 
-                // set the pointer as currently down to prevent chorded pointerdown events
+                // set the pointer as currently down to prevent chorded "pointerdown" events
                 _isPointerDown = jEvent.buttons;
 
-                // release the pointer down lock on mouseup
+                // release the pointer down lock on "mouseup"
                 _isPointerDown = false;
             },
             add: $.event.delegateSpecial(function (handleObj) {
