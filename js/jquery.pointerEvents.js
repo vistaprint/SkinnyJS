@@ -344,13 +344,13 @@
     if (!support.pointer) {
         $.event.special.pointerdown = {
             touch: function (event) {
-                // prevent default to prevent the emulated mousedown event from being triggered,
+                // prevent default to prevent the emulated "mousedown" event from being triggered,
                 // we will force-emulate the click event again from within tounend:pointerup
                 // event.preventDefault();
 
                 triggerCustomEvent(this, "pointerdown", event);
 
-                // set the pointer as currently down to prevent chorded pointerdown events
+                // set the pointer as currently down to prevent chorded "pointerdown" events
                 _isPointerDown = true;
             },
             mouse: function (event) {
@@ -359,7 +359,7 @@
                     return;
                 }
 
-                // do not trigger another pointerdown event if currently down, prevent chorded pointerdown events
+                // do not trigger another "pointerdown" event if currently down, prevent chorded "pointerdown" events
                 if (_isPointerDown !== false) {
                     var button = getStandardizedButtonsProperty(event);
                     if (_isPointerDown !== button) {
@@ -384,6 +384,10 @@
 
                 // bind to mouse events
                 addEvent(this, "mousedown", handleObj.selector, $.event.special.pointerdown.mouse);
+
+                // ensure we also bind to "pointerup" to properly clear signals and fire click event on "touchend"
+                handleObj.pointerup = $.noop;
+                $(this).on("pointerup", handleObj.selector, handleObj.pointerup);
             }),
             remove: $.event.delegateSpecial.remove(function (handleObj) {
                 // unbind touch events
@@ -393,6 +397,11 @@
 
                 // unbind mouse events
                 removeEvent(this, "mousedown", handleObj.selector, $.event.special.pointerdown.mouse);
+
+                // unbind the special "pointerup" we added for cleanup
+                if (handleObj.pointerup) {
+                    $(this).off("pointerup", handleObj.selector, handleObj.pointerup);
+                }
             })
         };
 
