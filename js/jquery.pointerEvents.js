@@ -414,7 +414,9 @@
                 // "poiunterup" triggered above called prevent default it would also prevent the click, which
                 // would cause inconsistent behavior. To prevent the possibility of two click events though,
                 // we want to call prevent default all the time (as we do above) and then force trigger the click here
-                event.target.click();
+                if (event.target && event.target.click) {
+                    event.target.click();
+                }
             },
             mouse: function (event) {
                 // the Mouse Events API provides the button on mouseup
