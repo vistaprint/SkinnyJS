@@ -59,28 +59,43 @@
         return event;
     }
 
-    function addEvent(elem, type, func) {
-        if (elem.addEventListener) {
-            elem.addEventListener(type, func, false);
-        } else if (elem.attachEvent) {
-
-            // bind the function to correct "this" for IE8-
-            func._pointerEventWrapper = function (e) {
-                return func.call(elem, e);
+    function addEvent(elem, type, selector, func) {
+        // when we have a selector, let jQuery do the delegation
+        if (selector) {
+            func._pointerEventWrapper = function (event) {
+                return func.call(elem, event.originalEvent);
             };
 
-            elem.attachEvent("on" + type, func._pointerEventWrapper);
+            $(elem).on(type, selector, func._pointerEventWrapper);
+        }
+
+        // if we do not have a selector, we optimize by cutting jQuery out
+        else {
+            if (elem.addEventListener) {
+                elem.addEventListener(type, func, false);
+            } else if (elem.attachEvent) {
+
+                // bind the function to correct "this" for IE8-
+                func._pointerEventWrapper = function (e) {
+                    return func.call(elem, e);
+                };
+
+                elem.attachEvent("on" + type, func._pointerEventWrapper);
+            }
         }
     }
 
-    function removeEvent(elem, type, func) {
-
+    function removeEvent(elem, type, selector, func) {
         // Make sure for IE8- we unbind the wrapper
         if (func._pointerEventWrapper) {
             func = func._pointerEventWrapper;
         }
 
-        $.removeEvent(elem, type, func);
+        if (selector) {
+            $(elem).off(type, selector, func);
+        } else {
+            $.removeEvent(elem, type, func);
+        }
     }
 
     // get the standardized "buttons" property as per the Pointer Events spec from a mouse event
@@ -273,6 +288,47 @@
         }
     };
 
+    $.event.delegateSpecial = function (setup) {
+        return function (handleObj) {
+            var thisObject = this,
+                data = jQuery._data(thisObject);
+
+            if (!data.pointerEvents) {
+                data.pointerEvents = {};
+            }
+
+            if (!data.pointerEvents[handleObj.type]) {
+                data.pointerEvents[handleObj.type] = [];
+            }
+
+            if (!data.pointerEvents[handleObj.type].length) {
+                setup.call(thisObject, handleObj);
+            }
+
+            data.pointerEvents[handleObj.type].push(handleObj);
+        };
+    };
+
+    $.event.delegateSpecial.remove = function (teardown) {
+        return function (handleObj) {
+            var handlers,
+                thisObject = this,
+                data = jQuery._data(thisObject);
+
+            if (!data.pointerEvents) {
+                data.pointerEvents = {};
+            }
+
+            handlers = data.pointerEvents[handleObj.type];
+
+            handlers.splice(handlers.indexOf(handleObj), 1);
+
+            if (!handlers.length) {
+                teardown.call(thisObject, handleObj);
+            }
+        };
+    };
+
     // allow jQuery's native $.event.fix to find our pointer hooks
     $.extend($.event.fixHooks, {
         pointerdown: $.event.pointerHooks,
@@ -320,18 +376,24 @@
                 // set the pointer as currently down to prevent chorded pointerdown events
                 _isPointerDown = jEvent.buttons;
             },
-            setup: function () {
+            add: $.event.delegateSpecial(function (handleObj) {
+                // bind to touch events, some devices (chromebook) can send both touch and mouse events
                 if (support.touch) {
-                    addEvent(this, "touchstart", $.event.special.pointerdown.touch);
+                    addEvent(this, "touchstart", handleObj.selector, $.event.special.pointerdown.touch);
                 }
-                addEvent(this, "mousedown", $.event.special.pointerdown.mouse);
-            },
-            teardown: function () {
+
+                // bind to mouse events
+                addEvent(this, "mousedown", handleObj.selector, $.event.special.pointerdown.mouse);
+            }),
+            remove: $.event.delegateSpecial.remove(function (handleObj) {
+                // unbind touch events
                 if (support.touch) {
-                    removeEvent(this, "touchstart", $.event.special.pointerdown.touch);
+                    removeEvent(this, "touchstart", handleObj.selector, $.event.special.pointerdown.touch);
                 }
-                removeEvent(this, "mousedown", $.event.special.pointerdown.mouse);
-            }
+
+                // unbind mouse events
+                removeEvent(this, "mousedown", handleObj.selector, $.event.special.pointerdown.mouse);
+            })
         };
 
         $.event.special.pointerup = {
@@ -359,7 +421,11 @@
                 var button = getStandardizedButtonsProperty(event);
 
                 // remove the button from the current pointers down signal
-                _isPointerDown ^= button;
+                // _isPointerDown can be false here if two "mouseup" events are received in parallel,
+                // which can happen, say, if you bind to "pointerup" on a parent and a child (body and a link)
+                if (_isPointerDown !== false) {
+                    _isPointerDown ^= button;
+                }
 
                 // reset _isPointerDown to a boolean if no buttons are down
                 if (_isPointerDown === 0) {
@@ -381,25 +447,62 @@
                 // release the pointer down lock on mouseup
                 _isPointerDown = false;
             },
-            setup: function () {
+            add: $.event.delegateSpecial(function (handleObj) {
+                // bind to touch events, some devices (chromebook) can send both touch and mouse events
                 if (support.touch) {
-                    addEvent(this, "touchend", $.event.special.pointerup.touch);
+                    addEvent(this, "touchend", handleObj.selector, $.event.special.pointerup.touch);
                 }
-                addEvent(this, "mouseup", $.event.special.pointerup.mouse);
+
+                // bind mouse events
+                addEvent(this, "mouseup", handleObj.selector, $.event.special.pointerup.mouse);
+            }),
+            remove: $.event.delegateSpecial.remove(function (handleObj) {
+                // unbind touch events
+                if (support.touch) {
+                    removeEvent(this, "touchend", handleObj.selector, $.event.special.pointerup.touch);
+                }
+
+                // unbind mouse events
+                removeEvent(this, "mouseup", handleObj.selector, $.event.special.pointerup.mouse);
+            })
+        };
+
+        $.event.special.pointermove = {
+            touch: function (event) {
+                triggerCustomEvent(this, "pointermove", event);
             },
-            teardown: function () {
-                if (support.touch) {
-                    removeEvent(this, "touchend", $.event.special.pointerup.touch);
+            mouse: function (event) {
+                // _isPointerDown will be true if they currently have their finger (touch only) down
+                // because we cannot call preventDefault on the "touchmove" we get double triggers
+                // and we prevent it with this signal check.
+                // preventing default on "touchmove" prevents scrolling on mobile devices
+                if (_isPointerDown === true) {
+                    return false;
                 }
-                removeEvent(this, "mouseup", $.event.special.pointerup.mouse);
-            }
+
+                triggerCustomEvent(this, "pointermove", event);
+            },
+            add: $.event.delegateSpecial(function (handleObj) {
+                // bind to touch events, some devices (chromebook) can send both touch and mouse events
+                if (support.touch) {
+                    addEvent(this, "touchmove", handleObj.selector, $.event.special.pointermove.touch);
+                }
+
+                // bind mouse events
+                addEvent(this, "mousemove", handleObj.selector, $.event.special.pointermove.mouse);
+            }),
+            remove: $.event.delegateSpecial.remove(function (handleObj) {
+                // unbind touch events
+                if (support.touch) {
+                    removeEvent(this, "touchmove", handleObj.selector, $.event.special.pointermove.touch);
+                }
+
+                // unbind mouse events
+                removeEvent(this, "mousemove", handleObj.selector, $.event.special.pointermove.mouse);
+            })
         };
 
         jQuery.each({
-            pointermove: {
-                touch: "touchmove",
-                mouse: "mousemove"
-            },
             pointerover: {
                 mouse: "mouseover"
             },
@@ -411,39 +514,29 @@
             }
         }, function (pointerEventType, natives) {
             function onTouch(event) {
-                // prevent the mouse event from firing as well
-                // except for touchmove, preventing touchmove prevents scrolling,
-                // preventing this polyfill from working as expected when binded to large elements
-                if (event.type != "touchmove") {
-                    event.preventDefault();
-                }
-
+                event.preventDefault();
                 triggerCustomEvent(this, pointerEventType, event);
             }
 
             function onMouse(event) {
-                if (event.type === "mousemove" && _isPointerDown === true) {
-                    return false;
-                }
-
                 triggerCustomEvent(this, pointerEventType, event);
             }
 
             $.event.special[pointerEventType] = {
                 setup: function () {
                     if (support.touch && natives.touch) {
-                        addEvent(this, natives.touch, onTouch);
+                        addEvent(this, natives.touch, null, onTouch);
                     }
                     if (natives.mouse) {
-                        addEvent(this, natives.mouse, onMouse);
+                        addEvent(this, natives.mouse, null, onMouse);
                     }
                 },
                 teardown: function () {
                     if (support.touch && natives.touch) {
-                        removeEvent(this, natives.touch, onTouch);
+                        removeEvent(this, natives.touch, null, onTouch);
                     }
                     if (natives.mouse) {
-                        removeEvent(this, natives.mouse, onMouse);
+                        removeEvent(this, natives.mouse, null, onMouse);
                     }
                 }
             };
