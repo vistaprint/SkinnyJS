@@ -213,7 +213,7 @@
 
                     // Note: It is legitimate to have a Panel object without a submenu.
                     if (me.$panel) {
-                        // Event handler for clicking on panels. 
+                        // Event handler for clicking on panels.
                         // Handles firing the "selected" event.
                         me.$panel.click(function (e) {
                             // Find the parent menu item of the clicked element.
@@ -501,7 +501,7 @@
 
                     // This event bubbled from a child panel's link (a leaf menu item).
                     // It doesn't have a Panel object of its own, so it should act like a regular link.
-                    if ((isBubbledClick || e.pointerType === "mouse") && e.button === 0) {
+                    if ((isBubbledClick || e.pointerType === "mouse") && e.buttons === 1) {
                         // Don't let the document handler catch this event, or the menu would close.
                         e.stopPropagation();
 
