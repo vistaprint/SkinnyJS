@@ -53,7 +53,7 @@ describe('jquery.pointerEvents', function () {
     }
 
     describe('pointerdown', function () {
-        test('pointerdown', ['touchstart', 'mousedown']);
+        test('pointerdown', ['mousedown', 'touchstart']);
     });
 
     describe('pointerup', function () {
