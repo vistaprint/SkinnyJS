@@ -342,6 +342,15 @@
     // if browser does not natively handle pointer events,
     // create special custom events to mimic them
     if (!support.pointer) {
+        // stores the scroll-y offest on touchstart and is compared
+        // on touchend to see if we should trigger a click event
+        var _startScrollOffset;
+
+        // utility to return the scroll-y position
+        function scrollY() {
+            return Math.floor(window.scrollY || $(window).scrollTop());
+        }
+
         $.event.special.pointerdown = {
             touch: function (event) {
                 // prevent default to prevent the emulated "mousedown" event from being triggered,
@@ -352,6 +361,9 @@
 
                 // set the pointer as currently down to prevent chorded "pointerdown" events
                 _isPointerDown = true;
+
+                // set the scroll offset which is compared on touchend
+                _startScrollOffset = scrollY();
             },
             mouse: function (event) {
                 // _isPointerDown is true when touch is down, this means we do not want to listen to mouse events too
@@ -423,7 +435,12 @@
                 // "poiunterup" triggered above called prevent default it would also prevent the click, which
                 // would cause inconsistent behavior. To prevent the possibility of two click events though,
                 // we want to call prevent default all the time (as we do above) and then force trigger the click here
-                if (event.target && event.target.click) {
+                //
+                // we confirm that the user did not scroll, as touch events are very related to scrolling on
+                // touch devices, it's possible we may mis-fire a click event on an <a> anchor tag causing
+                // navigation even though this was a scroll attempt. Do the the browser's built in threshold
+                // to prevent accidental scrolling we do not add a threshold here.
+                if (event.target && event.target.click && _startScrollOffset === scrollY()) {
                     event.target.click();
                 }
             },
