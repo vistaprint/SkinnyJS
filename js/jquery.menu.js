@@ -530,10 +530,8 @@
 
                     me[me.isOpen ? "hideClick" : "showClick"](e);
 
-                    if (!me.isTopLevel) {
-                        e.stopPropagation();
-                    } else {
-                        _ignoreDocumentClick = true;
+                    if (me.isTopLevel) {
+                        _ignoreDocumentClick = +(new Date());
                     }
                 };
 
@@ -563,7 +561,7 @@
 
             // Hides all menus and submenus
             var hideAllClick = function (e) {
-                _ignoreDocumentClick = true;
+                _ignoreDocumentClick = +(new Date());
 
                 $.each(_rootMenu.children, function () {
                     this.hideForce(e);
@@ -574,8 +572,16 @@
             var documentClickHandler = function (e) {
                 // Check a flag which indicates the click is from the menu itself
                 if (_ignoreDocumentClick) {
+                    // store the time difference, we only listen to this
+                    // prevention if it's within 200ms of the original
+                    // event to prevent errors
+                    var timeDiff = +(new Date()) - _ignoreDocumentClick;
+
                     _ignoreDocumentClick = false;
-                    return;
+
+                    if (timeDiff < 200) {
+                        return;
+                    }
                 }
 
                 hideAllClick(e);
