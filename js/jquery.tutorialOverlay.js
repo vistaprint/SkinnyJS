@@ -1,50 +1,47 @@
-(function ($) {
+(function($) {
+    var OVERLAY_CLASS = "tutorial-overlay";
+    var TIP_CLASS = "tutorial-overlay-tip";
+    var CONTENT_CLASS = "tutorial-overlay-content";
+
+    var DATA_AUTOLOAD_ATTR = "data-overlay-autoload";
+    var DATA_ZINDEX_ATTR = "data-overlay-zindex";
+    var DATA_HIDE_ON_CLICK_ATTR = "data-overlay-hideonclick";
+    var DATA_TIP_TARGET_ATTR = "data-overlay-tip-target";
+    var DATA_TIP_POSITION_ATTR = "data-overlay-tip-position";
+
     var DEFAULT_TIP_OFFSET = 10;
     var DEFAULT_TIP_COLOR = "#FFFFFF";
     var DEFAULT_TIP_POSITION = "north";
 
-    var _overlayIdCounter = -1;
-    var OVERLAY_NAME_PREFIX = "tutorialOverlay-";
-
     // Default values
     $.tutorialOverlay.defaults = {
         zIndex: 10000, // Allow callers to participate in zIndex arms races
-        destroyOnClose: false, // If true, the overlay DOM will be destroyed and all events removed when the overlay closes
-        containerElement: "body", // A CSS selector or jQuery object for the element that should be the parent for the overlay DOM
+        //        destroyOnClose: false, // If true, the overlay DOM will be destroyed and all events removed when the overlay closes
         hideOnClick: true,
-        showOnPageLoad: false,
+        autoLoad: false,
     };
 
     function TutorialOverlay(settings) {
-        if (!settings)
-        {
+        if (!settings) {
             settings = {};
         }
         this.settings = settings;
-        this.parent = $(this.settings.containerElement || "body");
 
         $.proxyAll(this, "show", "hide", "destroy", "isShowing", "setHideOnClick", "addTip", "setCenterContent", "_render", "_clickHandler");
 
         this._tips = [];
-
-        this._centerContent = settings.centerContent;
-
-        if (settings.overlayId) {
-            this._overlayId = settings.overlayId;
-        } else {
-            this._overlayId = OVERLAY_NAME_PREFIX + (++_overlayIdCounter);
-        }
 
         var clickHide = $.tutorialOverlay.defaults.hideOnClick;
         if ((settings.hideOnClick !== undefined) && !settings.hideOnClick) {
             clickHide = settings.hideOnClick;
         }
 
-        this._$overlay = this.parent.find("#" + this._overlayId);
-        if (this._$overlay.length === 0) {
-            this._$overlay = $("<div id='" + this._overlayId + "' class='veil'></div>");
-            this._$overlay.appendTo(this.parent);
+        this._$overlay = settings.overlay;
+        var centerContent = this._$overlay.find(CONTENT_CLASS);
+        if (centerContent.length) {
+            this.setCenterContent(centerContent);
         }
+
         this._$overlay.css("z-index", settings.zIndex);
         this.setHideOnClick(clickHide);
 
@@ -52,12 +49,12 @@
     }
 
     // returns true iff the overlay is currently showing
-    TutorialOverlay.prototype.isShowing = function () {
+    TutorialOverlay.prototype.isShowing = function() {
         return this._$overlay && this._$overlay.is(":visible");
     };
 
     // shows the overlay
-    TutorialOverlay.prototype.show = function () {
+    TutorialOverlay.prototype.show = function() {
         if (!this.isShowing()) {
             this._$canvas = this._$overlay.find("canvas.veil-canvas");
             if (this._$canvas.length === 0) {
@@ -72,7 +69,7 @@
     };
 
     // hides the overlay
-    TutorialOverlay.prototype.hide = function () {
+    TutorialOverlay.prototype.hide = function() {
         this._$overlay.hide();
         if (this.settings.destroyOnClose) {
             this.destroy();
@@ -80,13 +77,13 @@
         }
     };
 
-    TutorialOverlay.prototype.destroy = function () {
+    TutorialOverlay.prototype.destroy = function() {
         this._$overlay.empty();
         this._$overlay.remove();
     };
 
     // set the hide-on-click behavior
-    TutorialOverlay.prototype.setHideOnClick = function (hideOnClick) {
+    TutorialOverlay.prototype.setHideOnClick = function(hideOnClick) {
         //TODO: add/remove click handler
         this.hideOnClick = hideOnClick;
 
@@ -104,48 +101,46 @@
     //      relative position (optional)
     //      color (optional)
     //      offset (optional)
-    TutorialOverlay.prototype.addTip = function (newTip) {
-        this._tips.push(
-            {
-                target: newTip.target,
-                content: newTip.content,
-                relativePos: newTip.position,
-                color: newTip.color,
-                offset: newTip.offset,
-            }
-        );
+    TutorialOverlay.prototype.addTip = function(newTip) {
+        this._tips.push({
+            target: newTip.target,
+            content: newTip.content,
+            relativePos: newTip.position,
+            color: newTip.color,
+            offset: newTip.offset,
+        });
     };
 
     // set the content to be displayed in the center of the overlay
-    TutorialOverlay.prototype.setCenterContent = function (newCenterContent) {
+    TutorialOverlay.prototype.setCenterContent = function(newCenterContent) {
         //TODO: repaint
         this._centerContent = newCenterContent;
     };
 
-    TutorialOverlay.prototype._initializeTips = function () {
+    TutorialOverlay.prototype._initializeTips = function() {
         if (this._$overlay) {
             //find tips in DOM
-            var domTips = this._$overlay.find("[data-rel='tutorialTip']");
+            var domTips = this._$overlay.find(".tutorial-overlay-tip");
             var tips = this._tips;
-            $.each(domTips, function () {
+            $.each(domTips, function() {
                 var $tipEl = $(this);
                 tips.push({
-                    target: $tipEl.data("target"),
-                    relativePos: $tipEl.data("position"),
+                    target: $tipEl.data("overlay-tip-target"),
+                    relativePos: $tipEl.data("overlay-tip-position"),
                     content: this,
-                    color: $tipEl.data("tip-color"),
-                    offset: $tipEl.data("tip-offset"),
+                    color: $tipEl.data("overlay-tip-color"),
+                    offset: $tipEl.data("overlay-tip-offset"),
                 });
             });
         }
     };
 
-    TutorialOverlay.prototype._render = function () {
+    TutorialOverlay.prototype._render = function() {
         var me = this;
 
         var context = this._$canvas[0].getContext("2d");
         //Ensure canvas fills the entire window
-        context.canvas.width  = window.innerWidth;
+        context.canvas.width = window.innerWidth;
         context.canvas.height = window.innerHeight;
 
         //Fill the entire canvas with a translucent veil
@@ -161,12 +156,11 @@
         //For each tip:
         //  position tip relative to target
         //  add tip content at absolute position
-        $.each(this._tips, function () {
+        $.each(this._tips, function() {
             //calculate the position of the tip
 
             var $tipTarget = $(this.target);
-            if (!this.$tip)
-            {
+            if (!this.$tip) {
                 this.$tip = $(this.content);
             }
             var $tipContent = this.$tip;
@@ -245,51 +239,49 @@
                 top: tipLocation.y + "px",
                 left: tipLocation.x + "px"
             }).show();
-            if (!$.contains(me._$overlay[0], $tipContent[0]))
-            {
+            if (!$.contains(me._$overlay[0], $tipContent[0])) {
                 me._$overlay.append($tipContent);
             }
         });
     };
 
-    TutorialOverlay.prototype._clickHandler = function () {
+    TutorialOverlay.prototype._clickHandler = function() {
         this.hide();
     };
 
-    TutorialOverlay.prototype._decodePosition = function (positionStr) {
+    TutorialOverlay.prototype._decodePosition = function(positionStr) {
         var posObj = {
             verticalCenter: true,
             horizontalCenter: true
         };
         var pos = positionStr.match(/north|east|south|west/gi);
-        if (pos)
-        {
+        if (pos) {
             pos = pos.slice(Math.max(pos.length - 2, 0));
-            $.each(pos, function () {
+            $.each(pos, function() {
                 switch (this.toString()) {
-                case "north":
-                case "top":
-                    posObj.above = true;
-                    posObj.verticalCenter = false;
-                    break;
+                    case "north":
+                    case "top":
+                        posObj.above = true;
+                        posObj.verticalCenter = false;
+                        break;
 
-                case "south":
-                case "bottom":
-                    posObj.above = false;
-                    posObj.verticalCenter = false;
-                    break;
+                    case "south":
+                    case "bottom":
+                        posObj.above = false;
+                        posObj.verticalCenter = false;
+                        break;
 
-                case "east":
-                case "right":
-                    posObj.right = true;
-                    posObj.horizontalCenter = false;
-                    break;
+                    case "east":
+                    case "right":
+                        posObj.right = true;
+                        posObj.horizontalCenter = false;
+                        break;
 
-                case "west":
-                case "left":
-                    posObj.right = false;
-                    posObj.horizontalCenter = false;
-                    break;
+                    case "west":
+                    case "left":
+                        posObj.right = false;
+                        posObj.horizontalCenter = false;
+                        break;
                 }
             });
         }
@@ -301,22 +293,82 @@
 
     // 1. default value
     // 2. settings passed
-    var ensureSettings = function (explicitSettings) {
+    var ensureSettings = function(explicitSettings) {
         var settings = $.extend({}, $.tutorialOverlay.defaults);
         // The explicitly specified settings take precedence
         $.extend(settings, explicitSettings);
         return settings;
     };
 
+    // Public sub-namespace for modal dialogs.
+    $.tutorialOverlay = $.tutorialOverlay || {};
+
     // Creates a new dialog from the specified settings.
-    $.tutorialOverlay.create = function (settings) {
+    $.tutorialOverlay.create = function(settings) {
         settings = ensureSettings(settings);
 
         var overlay;
-        
-        overlay = new TutorialOverlay(settings);
+
+        // Validate that there isn't an existing overlay open using the same content
+        if (settings.overlay) {
+            var existingOverlay = $(settings.overlay).tutorialOverlayInstance();
+
+            if (existingOverlay &&
+                existingOverlay.isShowing()) {
+                throw new Error("An attempt was made to create a tutorial overlay with a node which is already assigned to another open overlay.");
+            }
+        }
+        if (settings.overlay) {
+            var $overlay = $(settings.overlay);
+            if ($overlay.length === 0) {
+                throw new Error("Tutorial overlay not found.");
+            }
+
+            settings.overlay = $overlay;
+
+            overlay = new TutorialOverlay(settings);
+
+            //if (!settings.destroyOnClose) {
+            $overlay.tutorialOverlayInstance(overlay);
+            //}
+        }
+        if (!overlay) {
+            throw new Error("No content node specified.")
+        }
 
         return overlay;
+    };
+
+    var JQUERY_DATA_KEY = "tutorialOverlay";
+
+    $.fn.tutorialOverlayInstance = function(overlay) {
+        return !overlay ? this.data(JQUERY_DATA_KEY) : this.data(JQUERY_DATA_KEY, overlay);
+    };
+
+    // Idiomatic jQuery interface for tutorial overlays.
+    $.fn.tutorialOverlay = function(settings) {
+        var overlay;
+
+        // If the first argument is a string, it is a method name to call on the overlay
+        // associated with the DOM element.
+        if (typeof settings == "string") {
+            var action = settings;
+            overlay = this.tutorialOverlayInstance();
+            if (overlay && overlay[action]) {
+                overlay[action].apply(overlay, Array.prototype.slice(arguments, 1));
+            }
+        }
+        // Otherwise, create a new overlay.
+        else {
+            settings = settings || {};
+            settings.overlay = this[0];
+
+            overlay = $.tutorialOverlay.create(settings);
+
+            overlay.show();
+        }
+
+        return this;
     };
 
 })(jQuery);

@@ -1,24 +1,25 @@
 @import url(lib/mixin_lib.less);
 
-.veil
+.tutorial-overlay
 {
 	display:none;
 	position:absolute;
 	top:0;
 	left:0;
+	z-index: 10000;
 	
-	background-color: rgba(0, 0, 0, .6); // gracefully degrades to transparent for IE7-8
+	//background-color: rgba(0, 0, 0, .6); // gracefully degrades to transparent for IE7-8
 
 	canvas.veil-canvas
 	{
-		display:none;
 		position:absolute;
 		top:0;
 		left:0;
 	}
 }
 
-.white-tip
+.tutorial-overlay-tip
 {
-	color: white;
+	position:absolute;
+	z-index: 10100;
 }

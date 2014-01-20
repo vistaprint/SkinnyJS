@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="stylesheets/tutorial-overlay-demo.css" />
 
   <script type="text/javascript" src="javascripts/jquery.js"></script>
+  <!--TODO: Remove the explicit includes of skinnJS classes - use the builder to generate a skinny.js file -->
   <script type="text/javascript" src="../dist/jquery.proxyAll.js" /></script>
   <script type="text/javascript" src="../dist/jquery.clientRect.js" /></script>
   <script type="text/javascript" src="../dist/jquery.tutorialOverlay.js" /></script>
@@ -36,40 +37,34 @@
 </section>
 
 <section>
-  <h3>Example: Tutorial Overlay, unobtrusive</h3>
+  <h3>Example: Tutorial Overlay, from script, jQuery idiomatic</h3>
 
   <div>
-    <a href="#" id='showUnobtrusive' data-rel='tutorialOverlay' data-overlay-overlayid='node-overlay'>Open</a>
+    <a href="#" id='showIdiomatic'>Open</a>
   </div>
 </section>
 
-<!-- An invalid id specified to show on pageload.  Will be ignored. -->
-<div data-overlay-showonpageload='some invalid ID'></div>
-
 <!-- Unobtrusive overlay to show on page load -->
-<div id="onload-overlay" class="veil" data-overlay-showonpageload='onload-overlay'>
-  <div class="white-tip" data-rel="tutorialTip" data-target="#invalidID" data-position="north">This tip will not be shown, because it has an invalid target.</div>
-  <div class="white-tip" data-rel="tutorialTip" data-target="h1" data-position="south">^- The title is here. -^</div>
-  <div class="white-tip" data-rel="tutorialTip" data-target="#showBtn" data-position="east">&lt;-- This link will show an overlay via the JavaScript API.</div>
-  <div class="white-tip" data-rel="tutorialTip" data-target="#showUnobtrusive" data-position="east">&lt;-- This link will show an overlay using the 'unobtrusive' method using data attributes in the DOM.</div>
-  <div class="white-tip" data-rel="tutorialTip" data-target=".demo-target" data-position="northwest">North West</div>
-  <div class="white-tip" data-rel="tutorialTip" data-target=".demo-target" data-position="north">North</div>
-  <div class="white-tip" data-rel="tutorialTip" data-target=".demo-target" data-position="north east">North East</div>
-  <div class="white-tip" data-rel="tutorialTip" data-target=".demo-target" data-position="EAST">East</div>
-  <div class="white-tip" data-rel="tutorialTip" data-target=".demo-target" data-position="east-south">South East</div>
-  <div class="white-tip" data-rel="tutorialTip" data-target=".demo-target" data-position="south and ignored directions">South</div>
-  <div class="white-tip" data-rel="tutorialTip" data-target=".demo-target" data-position="bottomleft">South West</div>
-  <div class="white-tip" data-rel="tutorialTip" data-target=".demo-target" data-position="weSt is on the Left">West</div>
+<div id="onload-overlay" class="tutorial-overlay" data-overlay-autoload='true'>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target="#invalidID" data-overlay-tip-position="north">This tip will not be shown, because it has an invalid target.</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target="h1" data-overlay-tip-position="south">^- The title is here. -^</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target="#showBtn" data-overlay-tip-position="east">&lt;-- This link will show an overlay via the JavaScript API.</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target="#showIdiomatic" data-overlay-tip-position="east">&lt;-- This link will show an overlay using the 'unobtrusive' method using the jQuery idiomatic method.</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="northwest">North West</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="north">North</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="north east">North East</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="EAST">East</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="east-south">South East</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="south and ignored directions">South</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="bottomleft">South West</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="weSt is on the Left">West</div>
 </div>
 
-<!-- Since another showonpageload ID was specified earlier, it will take precedence.  This overlay will not be shown on page load. -->
-<div data-overlay-showonpageload='node-overlay'></div>
-
 <!-- Unobtrusive overlay exists in DOM and doesn't require extra JavaScript to run -->
-<div id="node-overlay" class="veil">
-  <div data-rel="tutorialTip" data-target="h1" data-position="east">This is the title.</div>
-  <div data-rel="tutorialTip" data-target="#showBtn" data-position="north">Click on this link to show an overlay via JavaScript.</div>
-  <div data-rel="tutorialTip" data-target="#showUnobtrusive" data-position="south">Click on this link to show the overlay defined in the DOM.</div>
+<div id="node-overlay" class="tutorial-overlay">
+  <div class="tutorial-overlay-tip" data-overlay-tip-target="h1" data-overlay-tip-position="east">This is the title.</div>
+  <div class="tutorial-overlay-tip" data-overlay-tip-target="#showBtn" data-overlay-tip-position="north">Click on this link to show an overlay via JavaScript.</div>
+  <div class="tutorial-overlay-tip" data-overlay-tip-target="#showIdiomatic" data-overlay-tip-position="south">Click on this link to show the overlay defined in the DOM.</div>
 </div>
 
 <div class="vertical-spacer"></div>
@@ -84,7 +79,9 @@
 <script type="text/javascript">
   //Show overlay on button click, via the JavaScript API
   $("#showBtn").click(function() {
+    var overlayElement = $("<div id='js-overlay' class='tutorial-overlay'></div>").appendTo($("body"));
     var overlay = $.tutorialOverlay.create({
+      overlay: overlayElement[0],
       destroyOnClose: true,
     });
 
@@ -97,7 +94,7 @@
     overlay.addTip(
       {
         content: "<div>Click here to show the overlay that is defined in the DOM.</div>",
-        target: "#showBtn",
+        target: "#showIdiomatic",
         position: "north"
       });
     overlay.addTip(
@@ -108,6 +105,9 @@
       });
 
     overlay.show();
+  });
+  $("#showIdiomatic").click(function() {
+    $("#node-overlay").tutorialOverlay();
   });
 </script>
   
