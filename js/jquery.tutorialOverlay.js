@@ -47,6 +47,17 @@
         this.setHideOnClick(clickHide);
 
         this._initializeTips();
+        var me = this;
+        this._$overlay.on("click", CLOSE_OVERLAY_CLASS, function(e) {
+            e.preventDefault();
+
+            // Defer to the next tick of the event loop. It makes it more useful
+            // to apply this class without having to worry if the close handler will
+            // run before any other handlers.
+            setTimeout(function() {
+                me.hide();
+            }, 0);
+        });
     }
 
     // returns true iff the overlay is currently showing

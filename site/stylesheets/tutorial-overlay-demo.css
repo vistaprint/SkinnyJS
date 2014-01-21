@@ -25,3 +25,16 @@ h3
 {
 	color: white;
 }
+
+.tutorial-overlay-content
+{
+	background-color: white;
+	border: 1px solid black;
+}
+
+.box-title
+{
+	border: 1px solid black;
+	font-size: 2em;
+	font-style: bold;
+}

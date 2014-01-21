@@ -49,8 +49,10 @@ Overlays are designed to be used unobtrusively, but the entire programmatic API 
 Here's an example of unobtrusive usage:
 
 {% highlight html %}
-<div class="tutorial-overlay" data-overlay-autoload="true">
-    <div class="tutorial-overlay-content"> Some content to display in the center of the overlay. </div>
+<div class="tutorial-overlay" data-overlay-autoload="true" data-overlay-hideonclick="false">
+    <div class="tutorial-overlay-content"> Some content to display in the center of the overlay.
+        <a href="#" class="close-overlay">Close Overlay</a>
+    </div>
     <!-- tips specify their content, target element, and position relative to the target -->
     <div class="tutorial-overlay-tip" data-overlay-tip-target="#invalidID" data-overlay-tip-position="north">This tip will not be shown, because it has an invalid target.</div>
     <div class="tutorial-overlay-tip" data-overlay-tip-target="img.example-image" data-overlay-tip-position="east">This tip will appear east of all &lt;img&gt; tags with the .example-image class.</div>

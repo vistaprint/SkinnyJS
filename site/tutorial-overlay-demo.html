@@ -45,7 +45,7 @@
 </section>
 
 <!-- Unobtrusive overlay to show on page load -->
-<div id="onload-overlay" class="tutorial-overlay" data-overlay-autoload='true'>
+<div id="onload-overlay" class="tutorial-overlay" data-overlay-autoload='true' data-overlay-hideonclick='false'>
   <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target="#invalidID" data-overlay-tip-position="north">This tip will not be shown, because it has an invalid target.</div>
   <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target="h1" data-overlay-tip-position="south">^- The title is here. -^</div>
   <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target="#showBtn" data-overlay-tip-position="east">&lt;-- This link will show an overlay via the JavaScript API.</div>
@@ -58,6 +58,15 @@
   <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="south and ignored directions">South</div>
   <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="bottomleft">South West</div>
   <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="weSt is on the Left">West</div>
+
+  <div class="tutorial-overlay-content">
+    <div class="box-title">Page Ready Overlay</div>
+    <div>
+      This overlay will show as soon as the page is ready.
+      The overlay can be closed via the link below, or by clicking any where on the 'veil'.
+    </div>
+    <a href="#" class="close-overlay">Close Overlay</div>
+  </div>
 </div>
 
 <!-- Unobtrusive overlay exists in DOM and doesn't require extra JavaScript to run -->
@@ -85,24 +94,21 @@
       destroyOnClose: true,
     });
 
-    overlay.addTip(
-      {
-        content: "<div>Click here to show the overlay using the JavaScript API.</div>",
-        target: "#showBtn",
-        position: "north"
-      });
-    overlay.addTip(
-      {
-        content: "<div>Click here to show the overlay that is defined in the DOM.</div>",
-        target: "#showIdiomatic",
-        position: "north"
-      });
-    overlay.addTip(
-      {
-        content: "<span>The title is here.</span>",
-        target: "h1",
-        position: "west"
-      });
+    overlay.addTip({
+      content: "<div>Click here to show the overlay using the JavaScript API.</div>",
+      target: "#showBtn",
+      position: "north"
+    });
+    overlay.addTip({
+      content: "<div>Click here to show the overlay that is defined in the DOM.</div>",
+      target: "#showIdiomatic",
+      position: "north"
+    });
+    overlay.addTip({
+      content: "<span>The title is here.</span>",
+      target: "h1",
+      position: "west"
+    });
 
     overlay.show();
   });
