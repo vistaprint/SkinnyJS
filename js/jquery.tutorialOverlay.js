@@ -245,8 +245,12 @@
         });
     };
 
-    TutorialOverlay.prototype._clickHandler = function() {
-        this.hide();
+    TutorialOverlay.prototype._clickHandler = function(e) {
+        //Ignore clicks in the centerContent element and its descendants.
+        //  TODO: there has to be a better way to do this.
+        if (!$.contains(this._centerContent[0], e.target)) {
+            this.hide();
+        }
     };
 
     TutorialOverlay.prototype._decodePosition = function(positionStr) {
@@ -295,6 +299,14 @@
     // 2. settings passed
     var ensureSettings = function(explicitSettings) {
         var settings = $.extend({}, $.tutorialOverlay.defaults);
+
+        // Read settings specified on the target node's custom HTML attributes
+        if (explicitSettings.overlay) {
+            var $target = $(explicitSettings.overlay);
+            var targetSettings = $.tutorialOverlay.getSettings($target);
+            $.extend(settings, targetSettings);
+        }
+
         // The explicitly specified settings take precedence
         $.extend(settings, explicitSettings);
         return settings;
