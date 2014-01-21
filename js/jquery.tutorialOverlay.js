@@ -1,13 +1,14 @@
 (function($) {
-    var OVERLAY_CLASS = "tutorial-overlay";
-    var TIP_CLASS = "tutorial-overlay-tip";
-    var CONTENT_CLASS = "tutorial-overlay-content";
+    var OVERLAY_CLASS = ".tutorial-overlay";
+    var TIP_CLASS = ".tutorial-overlay-tip";
+    var CONTENT_CLASS = ".tutorial-overlay-content";
+    var CLOSE_OVERLAY_CLASS = ".close-overlay";
 
     var DATA_AUTOLOAD_ATTR = "data-overlay-autoload";
     var DATA_ZINDEX_ATTR = "data-overlay-zindex";
-    var DATA_HIDE_ON_CLICK_ATTR = "data-overlay-hideonclick";
-    var DATA_TIP_TARGET_ATTR = "data-overlay-tip-target";
-    var DATA_TIP_POSITION_ATTR = "data-overlay-tip-position";
+    var DATA_HIDE_ON_CLICK_ATTR = "overlay-hideonclick";
+    var DATA_TIP_TARGET_ATTR = "overlay-tip-target";
+    var DATA_TIP_POSITION_ATTR = "overlay-tip-position";
 
     var DEFAULT_TIP_OFFSET = 10;
     var DEFAULT_TIP_COLOR = "#FFFFFF";
@@ -120,13 +121,13 @@
     TutorialOverlay.prototype._initializeTips = function() {
         if (this._$overlay) {
             //find tips in DOM
-            var domTips = this._$overlay.find(".tutorial-overlay-tip");
+            var domTips = this._$overlay.find(TIP_CLASS);
             var tips = this._tips;
             $.each(domTips, function() {
                 var $tipEl = $(this);
                 tips.push({
-                    target: $tipEl.data("overlay-tip-target"),
-                    relativePos: $tipEl.data("overlay-tip-position"),
+                    target: $tipEl.data(DATA_TIP_TARGET_ATTR),
+                    relativePos: $tipEl.data(DATA_TIP_POSITION_ATTR),
                     content: this,
                     color: $tipEl.data("overlay-tip-color"),
                     offset: $tipEl.data("overlay-tip-offset"),
