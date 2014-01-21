@@ -1,4 +1,3 @@
-/// <reference path="../dependencies/jquery.transit.js" />
 /// <reference path="jquery.queryString.js" />
 /// <reference path="jquery.postMessage.js" />
 /// <reference path="jquery.customEvent.js" />
