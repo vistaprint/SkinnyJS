@@ -1,4 +1,3 @@
-/// <reference path="../dependencies/jquery.transit.js" />
 /// <reference path="jquery.queryString.js" />
 /// <reference path="jquery.postMessage.js" />
 /// <reference path="jquery.customEvent.js" />
@@ -187,8 +186,6 @@ if (!Object.keys) {
         onajaxerror: null
     };
 
-    // If the jquery.transit library is loaded, use CSS3 transitions instead of jQuery.animate()
-    var _animateMethod = $.fn.transition ? "transition" : "animate";
     var _easing = $.fn.transition ? "out" : "swing";
 
     var _ua = $.modalDialog._ua;
@@ -365,9 +362,7 @@ if (!Object.keys) {
 
                 }, this);
 
-                // Animate with a CSS transition if possible,
-                // otherwise, fallback on a jquery animation
-                this.$container[_animateMethod]({
+                this.$container.animate({
                     top: initialTop
                 }, $.modalDialog.animationDuration, _easing)
                     .promise()
@@ -465,7 +460,7 @@ if (!Object.keys) {
         $(document).off("keydown", this._keydownHandler);
 
         this.$el.removeClass("dialog-visible");
-        this.$container[_animateMethod]({
+        this.$container.animate({
                 top: STARTING_TOP
             },
             $.modalDialog.animationDuration,
@@ -798,7 +793,7 @@ if (!Object.keys) {
     // Sets the height of the content in pixels.
     ModalDialog.prototype.center = function () {
         var pos = this._getDefaultPosition();
-        this.$container[_animateMethod]({
+        this.$container.animate({
             top: pos.top
         }, 400);
     };
@@ -813,7 +808,7 @@ if (!Object.keys) {
         if (animate === true) {
             var top = pos.top;
             delete pos.top;
-            this.$container.css(pos)[_animateMethod]({
+            this.$container.css(pos).animate({
                 top: top
             }, 400);
         } else {
