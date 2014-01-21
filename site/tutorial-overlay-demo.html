@@ -1,10 +1,14 @@
 <!doctype html>
+<!-- saved from url=(0014)about:internet -->
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
   <!--[if lt IE 9]> <script src="javascripts/html5shiv.js"></script> <![endif]-->
+
+  <!-- Use ExplorerCanvas polyfill for IE8 and earlier -->
+  <!--[if lte IE 8]><script src="../dependencies/excanvas.js"></script><![endif]-->
 
   <link rel="stylesheet" href="../dist/css/jquery.tutorialOverlay.css" />
   <link rel="stylesheet" href="stylesheets/tutorial-overlay-demo.css" />
@@ -63,9 +67,9 @@
     <div class="box-title">Page Ready Overlay</div>
     <div>
       This overlay will show as soon as the page is ready.
-      The overlay can be closed via the link below, or by clicking any where on the 'veil'.
+      The overlay can be closed via the link below.
     </div>
-    <a href="#" class="close-overlay">Close Overlay</div>
+    <a href="#" class="close-overlay">Close Overlay</a>
   </div>
 </div>
 

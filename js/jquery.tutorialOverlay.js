@@ -1,5 +1,6 @@
 (function($) {
     var OVERLAY_CLASS = ".tutorial-overlay";
+    var VEIL_CLASS = ".tutorial-overlay-veil";
     var TIP_CLASS = ".tutorial-overlay-tip";
     var CONTENT_CLASS = ".tutorial-overlay-content";
     var CLOSE_OVERLAY_CLASS = ".close-overlay";
@@ -44,9 +45,10 @@
         }
 
         this._$overlay.css("z-index", settings.zIndex);
-        this.setHideOnClick(clickHide);
 
         this._initializeTips();
+
+        this.setHideOnClick(clickHide);
         var me = this;
         this._$overlay.on("click", CLOSE_OVERLAY_CLASS, function(e) {
             e.preventDefault();
@@ -68,13 +70,12 @@
     // shows the overlay
     TutorialOverlay.prototype.show = function() {
         if (!this.isShowing()) {
-            this._$canvas = this._$overlay.find("canvas.veil-canvas");
-            if (this._$canvas.length === 0) {
-                this._$canvas = $("<canvas width='1024' height='1024' class='veil-canvas'></canvas>");
-            }
-            this._$overlay.append(this._$canvas);
-            this._$overlay.width(window.innerWidth);
-            this._$overlay.height(window.innerHeight);
+            this._ensureVeil();
+            this._ensureCanvas();
+
+            var $win = $(window);
+            this._$overlay.width($win.width());
+            this._$overlay.height($win.height());
             this._render();
             this._$overlay.show();
         }
@@ -96,7 +97,6 @@
 
     // set the hide-on-click behavior
     TutorialOverlay.prototype.setHideOnClick = function(hideOnClick) {
-        //TODO: add/remove click handler
         this.hideOnClick = hideOnClick;
 
         this._$overlay.off("click", this._clickHandler);
@@ -129,6 +129,43 @@
         this._centerContent = newCenterContent;
     };
 
+    /*
+     * Ensure that a 'veil' element exists in the overlay.  This is necessary to support older IE where transparency isn't supported.
+     * The 'veil' will be translucent and capture click events.  All other elements in the overlay should be rendered on top of it.
+     */
+    TutorialOverlay.prototype._ensureVeil = function() {
+        if (!this._$veil) {
+            var $veil = this._$overlay.find(VEIL_CLASS);
+            if (!$veil.length) {
+                //create and add a veil div
+                $veil = $("<div class=" + VEIL_CLASS.substring(1) + "></div>");
+                this._$overlay.prepend($veil);
+
+                //if (this.hideOnClick) {
+                //    $veil.on("click", this._clickHandler);
+                //}
+            }
+        }
+        this._$veil = $veil;
+    };
+
+    TutorialOverlay.prototype._ensureCanvas = function() {
+        if (!this._$canvas) {
+            var $canvas = this._$overlay.find("canvas.veil-canvas");
+            if (!$canvas.length) {
+                $canvas = $("<canvas width='1024' height='1024' class='veil-canvas'></canvas>");
+                this._$overlay.append($canvas);
+                if (typeof(G_vmlCanvasManager) != "undefined") {
+                    G_vmlCanvasManager.initElement($canvas[0]);
+                }
+                //if (this.hideOnClick) {
+                //    $canvas.on("click", this._clickHandler);
+                //}
+            }
+        }
+        this._$canvas = $canvas;
+    };
+
     TutorialOverlay.prototype._initializeTips = function() {
         if (this._$overlay) {
             //find tips in DOM
@@ -152,15 +189,16 @@
 
         var context = this._$canvas[0].getContext("2d");
         //Ensure canvas fills the entire window
-        context.canvas.width = window.innerWidth;
-        context.canvas.height = window.innerHeight;
+        var $win = $(window);
+        context.canvas.width = $win.width();
+        context.canvas.height = $win.height();
 
-        //Fill the entire canvas with a translucent veil
-        //context.beginPath();
-        context.fillStyle = "rgba(0, 0, 0, 0.6)";
-        context.fillRect(0, 0, context.canvas.width, context.canvas.height);
-
-        //TODO: If tip targets need to be highlighted via cutting of the veil, then do that here by filling the bounding box of the target in the canvas with 'destination-out' compositing.
+        //TODO: If tip targets need to be highlighted via cutting of the veil:
+        //      1) use fillRect to paint the translucent veil on the canvas INSTEAD OF CSS background-color on the overlay component
+        //      2) cut holes in the veil by filling the bounding box of the target in the canvas with 'destination-out' compositing.
+        //Fill the entire canvas with a translucent veil.
+        //context.fillStyle = "rgba(0, 0, 0, 0.6)";
+        //context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 
         //Center content
         //Draw content
@@ -260,7 +298,7 @@
     TutorialOverlay.prototype._clickHandler = function(e) {
         //Ignore clicks in the centerContent element and its descendants.
         //  TODO: there has to be a better way to do this.
-        if (!$.contains(this._centerContent[0], e.target)) {
+        if (!(this._centerContent && $.contains(this._centerContent[0], e.target))) {
             this.hide();
         }
     };
