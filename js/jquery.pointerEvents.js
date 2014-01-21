@@ -347,9 +347,9 @@
         var _startScrollOffset;
 
         // utility to return the scroll-y position
-        function scrollY() {
+        var scrollY = function () {
             return Math.floor(window.scrollY || $(window).scrollTop());
-        }
+        };
 
         $.event.special.pointerdown = {
             touch: function (event) {
