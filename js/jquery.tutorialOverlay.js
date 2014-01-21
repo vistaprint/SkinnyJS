@@ -1,6 +1,7 @@
 (function($) {
     var OVERLAY_CLASS = ".tutorial-overlay";
     var VEIL_CLASS = ".tutorial-overlay-veil";
+    var CANVAS_CLASS = ".tutorial-overlay-canvas";
     var TIP_CLASS = ".tutorial-overlay-tip";
     var CONTENT_CLASS = ".tutorial-overlay-content";
     var CLOSE_OVERLAY_CLASS = ".close-overlay";
@@ -138,7 +139,7 @@
             var $veil = this._$overlay.find(VEIL_CLASS);
             if (!$veil.length) {
                 //create and add a veil div
-                $veil = $("<div class=" + VEIL_CLASS.substring(1) + "></div>");
+                $veil = $("<div class='" + VEIL_CLASS.substring(1) + "''></div>");
                 this._$overlay.prepend($veil);
 
                 //if (this.hideOnClick) {
@@ -151,9 +152,9 @@
 
     TutorialOverlay.prototype._ensureCanvas = function() {
         if (!this._$canvas) {
-            var $canvas = this._$overlay.find("canvas.veil-canvas");
+            var $canvas = this._$overlay.find("canvas" + CANVAS_CLASS);
             if (!$canvas.length) {
-                $canvas = $("<canvas width='1024' height='1024' class='veil-canvas'></canvas>");
+                $canvas = $("<canvas width='1024' height='1024' class='" + CANVAS_CLASS.substring(1) + "'></canvas>");
                 this._$overlay.append($canvas);
                 if (typeof(G_vmlCanvasManager) != "undefined") {
                     G_vmlCanvasManager.initElement($canvas[0]);
