@@ -298,7 +298,7 @@
 
                 // TODO use a jQuery event
                 // Creates a new "fake" event for passing to event handlers
-                var getEvent = function (e) {
+                function getEvent(e) {
                     return {
                         $panel: me.$panel,
                         panel: me,
@@ -312,18 +312,18 @@
                             this.cancel = true;
                         }
                     };
-                };
+                }
 
                 // Adds/removes the "hover" class. Allows callers to 
                 // define their own rollover states.
                 // Note: We cant use CSS hover pseudo-classes because the rules
                 // for Windows/MacOS style menus don't follow the same rules.
-                var highlight = function (enabled) {
+                function highlight(enabled) {
                     highlightMenuItem(me.$item, enabled);
-                };
+                }
 
                 // Determines if the current menu should show on hover (in addition to click)
-                var shouldShowSubmenuOnHover = function () {
+                function shouldShowSubmenuOnHover() {
                     if (!me.isTopLevel) {
                         return true;
                     }
@@ -332,9 +332,9 @@
                     // if we're in "hover mode" (there has already been a click),
                     // or if we're in the "always on" hover mode.
                     return _clickHoverActivated || _options.showOnHover;
-                };
+                }
 
-                var mouseOver = function (e) {
+                function mouseOver(e) {
                     // In Windows/MacOS, top level menus highlight instantly, with no delay
                     if (me.isTopLevel) {
                         highlight(true);
@@ -345,9 +345,9 @@
                     }
 
                     me.show(e);
-                };
+                }
 
-                var mouseOut = function (e) {
+                function mouseOut(e) {
                     if (me.isTopLevel && !_options.showOnHover) {
                         return;
                     }
@@ -357,7 +357,7 @@
                     }
 
                     me.hide(e);
-                };
+                }
 
                 // Shows the panel
                 this.show = function (e) {
@@ -414,7 +414,7 @@
                     }
                 };
 
-                var showComplete = function (e) {
+                function showComplete(e) {
                     me.isOpen = true;
                     me.transitioning = false;
 
@@ -502,7 +502,7 @@
                     }
                 }
 
-                var toggleClick = function (e) {
+                function toggleClick(e) {
                     // we always want to stop the propagation to parent elements,
                     // this can cause the inner leaf items to close sub menus,
                     // or close the menus if it reaches the root document or
