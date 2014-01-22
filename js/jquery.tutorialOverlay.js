@@ -75,6 +75,7 @@
             this._ensureCanvas();
 
             this._render();
+            $(window).on("resize", this._render);
             this._$overlay.show();
         }
     };
@@ -82,6 +83,7 @@
     // hides the overlay
     TutorialOverlay.prototype.hide = function() {
         this._$overlay.hide();
+        $(window).off("resize", this._render);
         if (this.settings.destroyOnClose) {
             this.destroy();
             this._destroyed = true;
@@ -143,8 +145,8 @@
                 //    $veil.on("click", this._clickHandler);
                 //}
             }
+            this._$veil = $veil;
         }
-        this._$veil = $veil;
     };
 
     TutorialOverlay.prototype._ensureCanvas = function() {
