@@ -12,22 +12,15 @@
         _skins[name] = skin;
     };
 
-    // TODO: Promote to a plugin?
-    $.fn.swapClasses = function (class1, class2, enabled) {
-        var classToAdd = enabled ? class1 : class2;
-        var classToRemove = enabled ? class2 : class1;
-
-        if (!this.hasClass(classToAdd)) {
-            this.addClass(classToAdd).removeClass(classToRemove);
-        }
-
-        return this;
-    };
-
     // Hover highlighting
-    var highlightMenuItem = function ($item, enabled) {
-        $item.swapClasses("hover", "nohover", enabled);
-    };
+    function highlightMenuItem($item, enabled) {
+        var classToAdd = enabled ? "hover" : "nohover";
+        var classToRemove = enabled ? "nohover" : "hover";
+
+        if (!$item.hasClass(classToAdd)) {
+            $item.addClass(classToAdd).removeClass(classToRemove);
+        }
+    }
 
     // TODO: It would be nice to have a jQuery.findUntil(selector)
     // This is a simple substitute. Recurse until the an element is found
