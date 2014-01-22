@@ -479,6 +479,12 @@
                 // Sometimes, we need to prevent the native click event
                 // it's sad, but this is the best implementation I've created
                 function preventClickSometimes(e) {
+                    // we stop propagation to prevent this click from
+                    // going to the document handler to close all menus
+                    // this also prevents the clicks from going through
+                    // to items below the menu
+                    e.stopPropagation();
+
                     if (_shouldPreventNextClick) {
                         // compare the time difference, we only listen to this
                         // prevention if it's within 200ms of the original
@@ -488,14 +494,10 @@
                         // reset the trigger
                         _shouldPreventNextClick = false;
 
-                        // if the time difference is less than 200ms
-                        if (timeDiff < 200) {
+                        // if the time difference is less than 1000ms (1s)
+                        if (timeDiff < 1000) {
                             // prevent default to prevent navigation (possibly)
                             e.preventDefault();
-
-                            // we stop propagation to prevent this click from
-                            // going to the document handler to close all menus
-                            e.stopPropagation();
                         }
                     }
                 }
