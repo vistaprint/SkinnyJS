@@ -15,6 +15,8 @@
     var DEFAULT_TIP_OFFSET = 40;
     var DEFAULT_TIP_COLOR = "#FFFFFF";
     var DEFAULT_TIP_POSITION = "north";
+    var DEFAULT_ARROW_PADDING = 5;
+    var DEFAULT_ARROW_HEAD_SIZE = 10;
 
     // Default values
     $.tutorialOverlay.defaults = {
@@ -330,7 +332,7 @@
         canvasContext.quadraticCurveTo(controlPt.x, controlPt.y, endPt.x, endPt.y);
 
         //draw tip of arrow
-        var headlen = 10; // length of head in pixels
+        var headSize = DEFAULT_ARROW_HEAD_SIZE; // length of head in pixels
         var dx = endPt.x - controlPt.x;
         var dy = endPt.y - controlPt.y;
         var angle;
@@ -343,13 +345,13 @@
             angle = Math.atan2(dy, dx);
         }
         canvasContext.lineTo(
-            endPt.x - headlen * Math.cos(angle - Math.PI / 6),
-            endPt.y - headlen * Math.sin(angle - Math.PI / 6)
+            endPt.x - headSize * Math.cos(angle - Math.PI / 6),
+            endPt.y - headSize * Math.sin(angle - Math.PI / 6)
         );
         canvasContext.moveTo(endPt.x, endPt.y);
         canvasContext.lineTo(
-            endPt.x - headlen * Math.cos(angle + Math.PI / 6),
-            endPt.y - headlen * Math.sin(angle + Math.PI / 6)
+            endPt.x - headSize * Math.cos(angle + Math.PI / 6),
+            endPt.y - headSize * Math.sin(angle + Math.PI / 6)
         );
 
         canvasContext.stroke();
@@ -409,7 +411,7 @@
             tipLocation = {};
 
         //arrowPadding is the space between the end of the arrow and the tip/target, in pixels
-        var arrowPadding = Math.max(Math.min(5, offset - 2), 0); //Don't allow negative padding or padding more than the offset.
+        var arrowPadding = Math.max(Math.min(DEFAULT_ARROW_PADDING, offset - 2), 0); //Don't allow negative padding or padding more than the offset.
 
         //TODO: Handle collisions here?
         if (pos.above) {
