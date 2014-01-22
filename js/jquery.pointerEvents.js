@@ -167,7 +167,7 @@
 
     // add our own pointer event hook/filter
     $.event.pointerHooks = {
-        props: "pointerType pointerId buttons clientX clientY fromElement offsetX offsetY pageX pageY screenX screenY toElement".split(" "),
+        props: "pointerType pointerId buttons clientX clientY relatedTarget fromElement offsetX offsetY pageX pageY screenX screenY toElement".split(" "),
         filter: function (event, original) {
             // Calculate pageX/Y if missing and clientX/Y available
             // this is just copied from jQuery's standard pageX/pageY fix
