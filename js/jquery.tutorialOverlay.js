@@ -218,6 +218,7 @@
             if (!this.$tip) {
                 this.$tip = $(this.content);
             }
+            this.$tip.show(); //tip may have been hidden at other screen widths - make sure it is visible now to get a valid calculated size
             if (!$.contains(me._$overlay[0], this.$tip[0])) {
                 me._$overlay.append(this.$tip);
             }
@@ -242,6 +243,9 @@
         }
         $.each(this._tips, function() {
             this.sizeIndex = sizeIndex++;
+            //If the tip is display:block, this sometimes gives the full width of the overlay.
+            //  It would be possible to fix this in code by changing the display to inline-block before getting the size.
+            //TODO: What about images that haven't loaded yet?
             sizes[this.sizeIndex] = this.$tip.clientRect();
         });
 
@@ -255,6 +259,7 @@
         //      Position the center content
         //      Position each tip
 
+        var occupiedRects = [];
         //Center content
         if (this._$centerContent) {
             var rect = sizes[this._$centerContent.sizeIndex];
@@ -267,30 +272,51 @@
                 top: contentY + "px",
                 left: contentX + "px"
             });
+
+            occupiedRects.push({
+                top: contentY,
+                left: contentX,
+                bottom: contentY + rect.height,
+                right: contentX + rect.width,
+                width: rect.width,
+                height: rect.height
+            })
         }
 
         //For each tip:
         //  position tip relative to target
         //  add tip content at absolute position
         $.each(this._tips, function() {
-            me._renderTip(this, sizes[this.sizeIndex], context);
+            me._renderTip(this, sizes[this.sizeIndex], context, {
+                width: windowWidth,
+                height: windowHeight
+            }, occupiedRects);
         });
 
         // 5) Show the overlay
         this._$overlay.show();
     };
 
-    TutorialOverlay.prototype._renderTip = function(tip, tipRect, canvasContext) {
+    //TODO: use an options argument here.  Include things like arrow-padding, stroke width, etc.
+    TutorialOverlay.prototype._renderTip = function(tip, tipRect, canvasContext, windowSize, occupiedRects) {
         //calculate the position of the tip
         var $tipTarget = $(tip.target);
         if (!tip.$tip) {
             tip.$tip = $(tip.content);
         }
         var $tipContent = tip.$tip;
+        var targetRect;
         if (!$tipTarget.length || !$tipTarget.is(":visible")) {
             //Don't show the tip if we can't find the target.
             $tipContent.hide();
             return;
+        } else {
+            //else if target is not *entirely* on the screen, then return
+            targetRect = $tipTarget.clientRect();
+            if ((targetRect.left < 0) || (targetRect.right > windowSize.width) || (targetRect.top < 0) || (targetRect.bottom > windowSize.height)) {
+                $tipContent.hide();
+                return;
+            }
         }
 
         var positionStr = tip.relativePos;
@@ -303,10 +329,41 @@
             offset = DEFAULT_TIP_OFFSET;
         }
 
-        var points = this._calculatePosition(tipRect, $tipTarget.clientRect(), pos, offset);
+        var points = this._calculatePosition(tipRect, targetRect, pos, offset);
+
+        var tipLocation = points.tipLocation;
+        //Make sure tip is completely on the screen
+        tipLocation.x = Math.max(0, tipLocation.x);
+        tipLocation.y = Math.max(0, tipLocation.y);
+        if (tipLocation.x + tipRect.width > windowSize.width) {
+            tipLocation.x -= (tipLocation.x + tipRect.width) - windowSize.width;
+        }
+        if (tipLocation.y + tipRect.height > windowSize.height) {
+            tipLocation.y -= (tipLocation.y + tipRect.height) - windowSize.height;
+        }
+        //Check for collisions with the center content, other tips (and other child elements of the overlay?)
+        if (occupiedRects) {
+            var newTipRect = {
+                left: tipLocation.x,
+                top: tipLocation.y,
+                width: tipRect.width,
+                height: tipRect.height,
+                right: tipLocation.x + tipRect.width,
+                bottom: tipLocation.y + tipRect.height,
+            };
+
+            var intersectingRect = this._detectCollisions(newTipRect, occupiedRects);
+            if (!intersectingRect) {
+                occupiedRects.push(newTipRect);
+            } else {
+                //collision detected
+                // move the tip?
+                $tipContent.hide();
+                return;
+            }
+        }
 
         //Set the tip's position
-        var tipLocation = points.tipLocation;
         $tipContent.css({
             position: "absolute",
             top: tipLocation.y + "px",
@@ -452,6 +509,27 @@
             endPt: endPt,
             tipLocation: tipLocation
         };
+    };
+
+    TutorialOverlay.prototype._detectCollisions = function(rect1, otherRects) {
+        //stupid n^2 algorithm to detect collisions.
+        //  If performance is a concern, use a quadtree or even sort the list of otherRects
+        //  on one axis.
+        var collision = null;
+        for (var i = 0;
+            (i < otherRects.length) && !collision; i++) {
+            if (_rectsIntersect(otherRects[i], rect1)) {
+                collision = rect1;
+            }
+        }
+        return collision;
+    };
+
+    var _rectsIntersect = function(rect1, rect2) {
+        return !(rect2.left > rect1.right ||
+            rect2.right < rect1.left ||
+            rect2.top > rect1.bottom ||
+            rect2.bottom < rect1.top);
     };
 
     //Takes a settings object and calculates derived settings.
