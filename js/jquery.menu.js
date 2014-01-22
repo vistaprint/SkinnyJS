@@ -157,19 +157,23 @@
 
                 // Bind event handlers to DOM elements
                 var init = function () {
-                    me.$item
-                        // Assign a special class to distinguish menu items with a submenu from those without one.
-                        .addClass("menu-item-with-submenu")
-                        // Bind the special "press" event, when an item is tapped/clicked we determine what to do.
-                        .on({
-                            "press": toggleClick,
-                            "click": preventClickSometimes
-                        })
+                    // Assign a special class to distinguish menu items with a submenu from those without one.
+                    me.$item.addClass("menu-item-with-submenu")
+
+                    // Bind the special "press" event, when an item is tapped we determine what to do.
+                    me.$item.on({
+                        "press": toggleClick,
+                        "click": preventClickSometimes
+                    });
+
+                    // setup pointer hover events only when the option is enabled
+                    if (_options.showOnHover) {
                         // Set up event handlers to control submenus appearing on hover
-                        .hoverDelay(mouseOver, mouseOut, {
+                        me.$item.hoverDelay(showOnPointerOver, hideOnPointerOut, {
                             delayOver: me.isTopLevel && !_options.showOnHover ? 0 : 200,
                             delayOut: 500
                         });
+                    }
 
                     // Top menu items have different rules for rollovers (mimics Windows/MacOS menus)
                     if (me.isTopLevel) {
@@ -334,7 +338,7 @@
                     return _clickHoverActivated || _options.showOnHover;
                 }
 
-                function mouseOver(e) {
+                function showOnPointerOver(e) {
                     // In Windows/MacOS, top level menus highlight instantly, with no delay
                     if (me.isTopLevel) {
                         highlight(true);
@@ -347,7 +351,7 @@
                     me.show(e);
                 }
 
-                function mouseOut(e) {
+                function hideOnPointerOut(e) {
                     if (me.isTopLevel && !_options.showOnHover) {
                         return;
                     }
