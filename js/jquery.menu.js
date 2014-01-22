@@ -231,14 +231,21 @@
                         });
 
                         // Ensure a tags within a menu item with a submenu get disabled
+                        // This flag setting allows the menu to make sub menu items
+                        // only open/close the submenu, and prevent navigation with clicks
+                        // Note: That on touch events, these sub menu links always cause
+                        // the sub menu to toggle.
                         if (!_options.linksWithSubmenusEnabled) {
-                            getLinksWithSubmenus().on("click", preventDefault);
+                            getLinksWithSubmenus().on("click", function (event) {
+                                // prevent the navigation behavior
+                                event.preventDefault();
+
+                                // stop propagation to prevent this click from going to
+                                // document and elements beneath this menu item
+                                event.stopPropagation();
+                            });
                         }
                     }
-                };
-
-                var preventDefault = function (e) {
-                    e.preventDefault();
                 };
 
                 var getLinksWithSubmenus = function () {
