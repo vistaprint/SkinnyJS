@@ -12,7 +12,7 @@
     var DATA_TIP_TARGET_ATTR = "overlay-tip-target";
     var DATA_TIP_POSITION_ATTR = "overlay-tip-position";
 
-    var DEFAULT_TIP_OFFSET = 10;
+    var DEFAULT_TIP_OFFSET = 40;
     var DEFAULT_TIP_COLOR = "#FFFFFF";
     var DEFAULT_TIP_POSITION = "north";
 
@@ -74,9 +74,6 @@
             this._ensureVeil();
             this._ensureCanvas();
 
-            var $win = $(window);
-            this._$overlay.width($win.width());
-            this._$overlay.height($win.height());
             this._render();
             this._$overlay.show();
         }
@@ -193,6 +190,8 @@
         var $win = $(window);
         var windowWidth = $win.width();
         var windowHeight = $win.height();
+        this._$overlay.width(windowWidth);
+        this._$overlay.height(windowHeight);
         context.canvas.width = windowWidth;
         context.canvas.height = windowHeight;
 
@@ -407,12 +406,15 @@
             endPt = {},
             tipLocation = {};
 
-        //TODO: Fix the positioning code
+        //arrowPadding is the space between the end of the arrow and the tip/target, in pixels
+        var arrowPadding = Math.max(Math.min(5, offset - 2), 0); //Don't allow negative padding or padding more than the offset.
+
+        //TODO: Handle collisions here?
         if (pos.above) {
             //north
             startPt.y = targetRect.top - offset;
-            endPt.y = targetRect.top;
-            tipLocation.y = startPt.y - tipRect.height;
+            endPt.y = targetRect.top - arrowPadding;
+            tipLocation.y = startPt.y - (tipRect.height + arrowPadding);
         } else if (pos.verticalCenter) {
             //center
             startPt.y = targetRect.top + (targetRect.height / 2);
@@ -421,14 +423,14 @@
         } else {
             //south
             startPt.y = targetRect.bottom + offset;
-            endPt.y = targetRect.bottom;
-            tipLocation.y = startPt.y;
+            endPt.y = targetRect.bottom + arrowPadding;
+            tipLocation.y = startPt.y + arrowPadding;
         }
         if (pos.right) {
             //east
             startPt.x = targetRect.right + offset;
-            endPt.x = targetRect.right;
-            tipLocation.x = startPt.x;
+            endPt.x = targetRect.right + arrowPadding;
+            tipLocation.x = startPt.x + arrowPadding;
         } else if (pos.horizontalCenter) {
             //center
             startPt.x = targetRect.left + (targetRect.width / 2);
@@ -437,8 +439,8 @@
         } else {
             //west
             startPt.x = targetRect.left - offset;
-            endPt.x = targetRect.left;
-            tipLocation.x = startPt.x - tipRect.width;
+            endPt.x = targetRect.left - arrowPadding;
+            tipLocation.x = startPt.x - (tipRect.width + arrowPadding);
         }
 
         return {
