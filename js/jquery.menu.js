@@ -636,7 +636,9 @@
             // Note: This does not include the top level items with submenus, which have different
             // rules for rollovers. jQuery.find() only includes decendants, no the current set,
             // which is the top level menu items.
-            $topLevelItems.find(".menu-item").hover(
+            //
+            // we use hoverDelay because it internally filters out touch-based pointer events
+            $topLevelItems.find(".menu-item").hoverDelay(
                 function () {
                     highlightMenuItem($(this), true);
                 },
