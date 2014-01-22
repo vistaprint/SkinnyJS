@@ -30,7 +30,7 @@
         }
         this.settings = settings;
 
-        $.proxyAll(this, "show", "hide", "destroy", "isShowing", "setHideOnClick", "addTip", "setCenterContent", "_render", "_clickHandler");
+        $.proxyAll(this, "show", "hide", "destroy", "isShowing", "setHideOnClick", "addTip", "setCenterContent", "_render", "_renderTip", "_clickHandler");
 
         this._tips = [];
 
@@ -127,7 +127,7 @@
     // set the content to be displayed in the center of the overlay
     TutorialOverlay.prototype.setCenterContent = function(newCenterContent) {
         //TODO: repaint
-        this._centerContent = newCenterContent;
+        this._$centerContent = $(newCenterContent);
     };
 
     /*
@@ -191,8 +191,10 @@
         var context = this._$canvas[0].getContext("2d");
         //Ensure canvas fills the entire window
         var $win = $(window);
-        context.canvas.width = $win.width();
-        context.canvas.height = $win.height();
+        var windowWidth = $win.width();
+        var windowHeight = $win.height();
+        context.canvas.width = windowWidth;
+        context.canvas.height = windowHeight;
 
         //TODO: If tip targets need to be highlighted via cutting of the veil:
         //      1) use fillRect to paint the translucent veil on the canvas INSTEAD OF CSS background-color on the overlay component
@@ -201,105 +203,161 @@
         //context.fillStyle = "rgba(0, 0, 0, 0.6)";
         //context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 
+        //In order to measure the content and tips for proper positioning:
+        //  1) set the overlay to visibility:hidden
+        //  2) measure everything
+        //  3) set the overlay to display:none to prevent reflows while positioning
+        //  4) position everything
+        //  5) show the overlay
+
+        // Make sure all tips are in the overlay element before trying to calculate their size and positions:
+        $.each(this._tips, function() {
+            if (!this.$tip) {
+                this.$tip = $(this.content);
+            }
+            if (!$.contains(me._$overlay[0], this.$tip[0])) {
+                me._$overlay.append(this.$tip);
+            }
+        });
+
+        // 1) Make the overlay available to the browser's layout calculations:
+        this._$overlay.css({
+            visibility: "hidden",
+            display: "block"
+        });
+
+        // 2) Measure everything and calculate positions
+        //      (Since there's no good way to get a unique hash for the tip and content elements, use an array and index instead of a hashtable.)
+        //      Set up an array of clientRect
+        //      Calculate the centerContent's size and store it in the array
+        //      For each tip, calculate it's size and store it in the array
+        var sizes = [];
+        var sizeIndex = 0;
+        if (this._$centerContent) {
+            this._$centerContent.sizeIndex = sizeIndex++;
+            sizes[this._$centerContent.sizeIndex] = this._$centerContent.clientRect();
+        }
+        $.each(this._tips, function() {
+            this.sizeIndex = sizeIndex++;
+            sizes[this.sizeIndex] = this.$tip.clientRect();
+        });
+
+        // 3) Remove the overlay from the flow calculations
+        this._$overlay.css({
+            display: "none",
+            visibility: "visible"
+        });
+
+        // 4) Move everything to their new positions
+        //      Position the center content
+        //      Position each tip
+
         //Center content
-        //Draw content
+        if (this._$centerContent) {
+            var rect = sizes[this._$centerContent.sizeIndex];
+
+            var contentX = (windowWidth - rect.width) / 2;
+            var contentY = (windowHeight - rect.height) / 2;
+
+            this._$centerContent.css({
+                position: "absolute",
+                top: contentY + "px",
+                left: contentX + "px"
+            });
+        }
 
         //For each tip:
         //  position tip relative to target
         //  add tip content at absolute position
         $.each(this._tips, function() {
-            //calculate the position of the tip
-
-            var $tipTarget = $(this.target);
-            if (!this.$tip) {
-                this.$tip = $(this.content);
-            }
-            var $tipContent = this.$tip;
-            if (!$tipTarget.length) {
-                //Don't show the tip if we can't find the target.
-                $tipContent.hide();
-                return;
-            }
-
-            var targetRect = $tipTarget.clientRect();
-
-            var positionStr = this.relativePos;
-            if (!positionStr) {
-                positionStr = DEFAULT_TIP_POSITION;
-            }
-            var pos = me._decodePosition(positionStr);
-            var offset = this.offset;
-            if (!offset) {
-                offset = DEFAULT_TIP_OFFSET;
-            }
-
-            var startPt = {},
-                endPt = {},
-                controlPt = {},
-                tipLocation = {};
-
-            //TODO: Fix the positioning code
-            if (pos.above) {
-                //north
-                startPt.y = targetRect.top - offset;
-                endPt.y = targetRect.top;
-                tipLocation.y = startPt.y - $tipContent.height();
-            } else if (pos.verticalCenter) {
-                //center
-                startPt.y = targetRect.top + (targetRect.height / 2);
-                endPt.y = startPt.y;
-                tipLocation.y = targetRect.top;
-            } else {
-                //south
-                startPt.y = targetRect.bottom + offset;
-                endPt.y = targetRect.bottom;
-                tipLocation.y = startPt.y;
-            }
-            if (pos.right) {
-                //east
-                startPt.x = targetRect.right + offset;
-                endPt.x = targetRect.right;
-                tipLocation.x = startPt.x;
-            } else if (pos.horizontalCenter) {
-                //center
-                startPt.x = targetRect.left + (targetRect.width / 2);
-                endPt.x = startPt.x;
-                tipLocation.x = targetRect.left;
-            } else {
-                //west
-                startPt.x = targetRect.left - offset;
-                endPt.x = targetRect.left;
-                tipLocation.x = startPt.x - $tipContent.width();
-            }
-            controlPt.x = (startPt.x + endPt.x) / 2;
-            controlPt.y = (startPt.y + endPt.y) / 2;
-
-            //draw the tip
-            context.beginPath();
-            context.moveTo(startPt.x, startPt.y);
-            context.quadraticCurveTo(controlPt.x, controlPt.y, endPt.x, endPt.y);
-            var color = this.color;
-            if (!color) {
-                color = DEFAULT_TIP_COLOR;
-            }
-            context.strokeType = color;
-            context.stroke();
-
-            $tipContent.css({
-                position: "absolute",
-                top: tipLocation.y + "px",
-                left: tipLocation.x + "px"
-            }).show();
-            if (!$.contains(me._$overlay[0], $tipContent[0])) {
-                me._$overlay.append($tipContent);
-            }
+            me._renderTip(this, sizes[this.sizeIndex], context);
         });
+
+        // 5) Show the overlay
+        this._$overlay.show();
+    };
+
+    TutorialOverlay.prototype._renderTip = function(tip, tipRect, canvasContext) {
+        //calculate the position of the tip
+        var $tipTarget = $(tip.target);
+        if (!tip.$tip) {
+            tip.$tip = $(tip.content);
+        }
+        var $tipContent = tip.$tip;
+        if (!$tipTarget.length || !$tipTarget.is(":visible")) {
+            //Don't show the tip if we can't find the target.
+            $tipContent.hide();
+            return;
+        }
+
+        var positionStr = tip.relativePos;
+        if (!positionStr) {
+            positionStr = DEFAULT_TIP_POSITION;
+        }
+        var pos = this._decodePosition(positionStr);
+        var offset = tip.offset;
+        if (!offset) {
+            offset = DEFAULT_TIP_OFFSET;
+        }
+
+        var points = this._calculatePosition(tipRect, $tipTarget.clientRect(), pos, offset);
+
+        //Set the tip's position
+        var tipLocation = points.tipLocation;
+        $tipContent.css({
+            position: "absolute",
+            top: tipLocation.y + "px",
+            left: tipLocation.x + "px"
+        }).show();
+
+        this._renderArrow(points.startPt, points.endPt, tip.color, canvasContext);
+    };
+
+    TutorialOverlay.prototype._renderArrow = function(startPt, endPt, color, canvasContext) {
+        canvasContext.beginPath();
+        if (!color) {
+            color = DEFAULT_TIP_COLOR;
+        }
+        canvasContext.strokeStyle = color;
+
+        //draw curve from startPt to endPt
+        var controlPt = {
+            x: startPt.x,
+            y: endPt.y
+        };
+        canvasContext.moveTo(startPt.x, startPt.y);
+        canvasContext.quadraticCurveTo(controlPt.x, controlPt.y, endPt.x, endPt.y);
+
+        //draw tip of arrow
+        var headlen = 10; // length of head in pixels
+        var dx = endPt.x - controlPt.x;
+        var dy = endPt.y - controlPt.y;
+        var angle;
+        if (dx === 0) {
+            angle = Math.PI / 2;
+            if (startPt.y > endPt.y) {
+                angle *= 3;
+            }
+        } else {
+            angle = Math.atan2(dy, dx);
+        }
+        canvasContext.lineTo(
+            endPt.x - headlen * Math.cos(angle - Math.PI / 6),
+            endPt.y - headlen * Math.sin(angle - Math.PI / 6)
+        );
+        canvasContext.moveTo(endPt.x, endPt.y);
+        canvasContext.lineTo(
+            endPt.x - headlen * Math.cos(angle + Math.PI / 6),
+            endPt.y - headlen * Math.sin(angle + Math.PI / 6)
+        );
+
+        canvasContext.stroke();
     };
 
     TutorialOverlay.prototype._clickHandler = function(e) {
         //Ignore clicks in the centerContent element and its descendants.
         //  TODO: there has to be a better way to do this.
-        if (!(this._centerContent && $.contains(this._centerContent[0], e.target))) {
+        if (!(this._$centerContent && $.contains(this._$centerContent[0], e.target))) {
             this.hide();
         }
     };
@@ -341,6 +399,52 @@
             });
         }
         return posObj;
+    };
+
+    TutorialOverlay.prototype._calculatePosition = function(tipRect, targetRect, pos, offset) {
+        var startPt = {},
+            endPt = {},
+            tipLocation = {};
+
+        //TODO: Fix the positioning code
+        if (pos.above) {
+            //north
+            startPt.y = targetRect.top - offset;
+            endPt.y = targetRect.top;
+            tipLocation.y = startPt.y - tipRect.height;
+        } else if (pos.verticalCenter) {
+            //center
+            startPt.y = targetRect.top + (targetRect.height / 2);
+            endPt.y = startPt.y;
+            tipLocation.y = targetRect.top + ((targetRect.height - tipRect.height) / 2);
+        } else {
+            //south
+            startPt.y = targetRect.bottom + offset;
+            endPt.y = targetRect.bottom;
+            tipLocation.y = startPt.y;
+        }
+        if (pos.right) {
+            //east
+            startPt.x = targetRect.right + offset;
+            endPt.x = targetRect.right;
+            tipLocation.x = startPt.x;
+        } else if (pos.horizontalCenter) {
+            //center
+            startPt.x = targetRect.left + (targetRect.width / 2);
+            endPt.x = startPt.x;
+            tipLocation.x = targetRect.left + ((targetRect.width - tipRect.width) / 2);
+        } else {
+            //west
+            startPt.x = targetRect.left - offset;
+            endPt.x = targetRect.left;
+            tipLocation.x = startPt.x - tipRect.width;
+        }
+
+        return {
+            startPt: startPt,
+            endPt: endPt,
+            tipLocation: tipLocation
+        };
     };
 
     //Takes a settings object and calculates derived settings.

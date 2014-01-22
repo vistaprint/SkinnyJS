@@ -1,4 +1,4 @@
-h3
+h1,h3
 {
 	display:inline-block;
 }
@@ -8,6 +8,13 @@ h3
 	border: 1px solid black;
 	color: white;
 	background-color: red;
+
+	/*
+	Larger target to show how tips center themselves
+	display: inline-block;
+	width: 90px;
+	height: 50px;
+	*/
 }
 
 .vertical-spacer
@@ -30,11 +37,17 @@ h3
 {
 	background-color: white;
 	border: 1px solid black;
+
+}
+.tutorial-overlay-content div
+{
+	padding: 5px;
 }
 
 .box-title
 {
 	border: 1px solid black;
 	font-size: 2em;
-	font-style: bold;
+	font-weight: bold;
+	padding: 5px;
 }
