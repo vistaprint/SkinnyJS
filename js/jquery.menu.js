@@ -50,23 +50,6 @@
         return $(results);
     };
 
-    // Merges default options into the options passed in.
-    // Ensures that functions passed as null/undefined in options are replaced
-    // with no-op functions.
-    var mergeOptions = function (defaults) {
-        var merged = $.extend.apply({}, arguments);
-
-        //Ensure options have functions, even if they were passed as null/undefined
-        for (var option in merged) {
-            if (typeof defaults[option] == "function" &&
-                typeof merged[option] != "function") {
-                merged[option] = $.noop;
-            }
-        }
-
-        return merged;
-    };
-
     var _defaults = {
         // When true, the top level menu opens on mouseover (instead of on click, which is the default).
         showOnHover: true,
@@ -76,23 +59,29 @@
         linksWithSubmenusEnabled: false,
 
         // Event which fires when a menu item is selected.
-        selected: $.noop,
+        selected: null,
 
         // Event which fires before a menu panel is show. Can be used to prevent the panel from showing.
-        beforeShowPanel: $.noop,
+        beforeShowPanel: null,
 
         // Event which fires before a menu panel is hidden. Can be used to prevent the panel from hiding.
-        beforeHidePanel: $.noop,
+        beforeHidePanel: null,
 
         // Event which fires after a panel is shown.
-        showPanelComplete: $.noop,
+        showPanelComplete: null,
 
         // Event which fires after a panel is hidden.
-        hidePanelComplete: $.noop,
+        hidePanelComplete: null,
+
+        // Event which fires on show allowing you to override the animation
+        animationShow: null,
+
+        // Event which fires on hide allowing you to override the animation
+        animationHide: null,
 
         // Event which allows overriding the positioning of a panel when it is shown. 
         // This is defined by the skin by default, but can be overridden for any instance of the menu.
-        position: $.noop,
+        position: null,
 
         // The predefined skin to use for rendering this instance
         skin: "basic"
@@ -113,7 +102,7 @@
         }
 
         // Merge explicit options with skin and defaults
-        var _options = mergeOptions({}, _defaults, _skin || {}, options);
+        var _options = $.extend({}, _defaults, _skin || {}, options);
 
         // Resolve conflicting options
         if (!_options.showOnHover) {
@@ -217,7 +206,9 @@
                                     ev.$selectedItem = $clickedMenuItem;
                                     ev.selectedItem = $clickedMenuItem[0];
 
-                                    _options.selected.call(this, ev);
+                                    if (_options.selected) {
+                                        _options.selected.call(this, ev);
+                                    }
 
                                     // Give the event handler a chance to cancel the event.
                                     if (ev.cancel) {
@@ -382,7 +373,9 @@
                     if (me.$panel) {
                         ev = getEvent(e);
 
-                        _options.beforeShowPanel.call(me, ev);
+                        if (_options.beforeShowPanel) {
+                            _options.beforeShowPanel.call(me, ev);
+                        }
 
                         // Give the handler a chance to cancel the event
                         if (ev.cancel) {
@@ -408,8 +401,12 @@
 
                     // Hook for positioning strategies
                     ev = getEvent(e);
-                    _options.position(ev);
 
+                    // Fire the position event provided by the skin or options
+                    // to calculate positioning for the menu
+                    if (_options.position) {
+                        _options.position(ev);
+                    }
                     if (_options.animationShow) {
                         _options.animationShow.call(me, ev, showComplete);
                     } else if (me.isTopLevel) {
@@ -424,7 +421,9 @@
                     me.isOpen = true;
                     me.transitioning = false;
 
-                    _options.showPanelComplete.call(me, getEvent(e));
+                    if (_options.showPanelComplete) {
+                        _options.showPanelComplete.call(me, getEvent(e));
+                    }
                 };
 
                 this.hide = function (e) {
@@ -435,7 +434,9 @@
                     if (me.$panel) {
                         var ev = getEvent(e);
 
-                        _options.beforeHidePanel.call(me, ev);
+                        if (_options.beforeHidePanel) {
+                            _options.beforeHidePanel.call(me, ev);
+                        }
 
                         // Give the handler a chance to cancel the event
                         if (ev.cancel) {
@@ -469,7 +470,9 @@
                     me.isOpen = false;
                     me.transitioning = false;
 
-                    _options.hidePanelComplete.call(me, getEvent(e));
+                    if (_options.hidePanelComplete) {
+                        _options.hidePanelComplete.call(me, getEvent(e));
+                    }
                 };
 
                 // signal to prevent the next click, set during a touch event
