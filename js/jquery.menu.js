@@ -109,9 +109,6 @@
             _options.linksWithSubmenusEnabled = false;
         }
 
-        // Mimics the delay time in Windows/MacOS
-        var FADE_MS = 150;
-
         // Creates a menu "group" from a jQuery collection of top-level
         // menu items. This will be called once for each element in the
         // top level jQuery object's collection.
@@ -407,13 +404,13 @@
                     if (_options.position) {
                         _options.position(ev);
                     }
+
+                    // if we have a hook to override the animation we use
                     if (_options.animationShow) {
                         _options.animationShow.call(me, ev, showComplete);
-                    } else if (me.isTopLevel) {
+                    } else {
                         $panel.show();
                         showComplete();
-                    } else {
-                        $panel.fadeIn(FADE_MS, showComplete);
                     }
                 };
 
@@ -458,11 +455,9 @@
 
                     if (_options.animationHide) {
                         _options.animationHide.call(me, getEvent(e), hideComplete);
-                    } else if (me.isTopLevel) {
+                    } else {
                         $panel.hide();
                         hideComplete();
-                    } else {
-                        $panel.fadeOut(FADE_MS, hideComplete);
                     }
                 };
 
