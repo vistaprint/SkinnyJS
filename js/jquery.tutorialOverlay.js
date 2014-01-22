@@ -367,11 +367,12 @@
             verticalCenter: true,
             horizontalCenter: true
         };
-        var pos = positionStr.match(/north|east|south|west/gi);
+        var pos = positionStr.match(/north|east|south|west|top|right|bottom|left/gi);
         if (pos) {
+            //Use only the last two entries in the array of matches
             pos = pos.slice(Math.max(pos.length - 2, 0));
             $.each(pos, function() {
-                switch (this.toString()) {
+                switch (this.toLowerCase()) {
                     case "north":
                     case "top":
                         posObj.above = true;
