@@ -58,9 +58,9 @@
 
                 clearTimers($this);
 
-                function call() {
+                var call = function call() {
                     _options.over.call(thisObject, event);
-                }
+                };
 
                 if (_options.delayOver <= 0) {
                     call();
@@ -81,9 +81,9 @@
 
                 clearTimers($this);
 
-                function call() {
+                var call = function call() {
                     _options.out.call(thisObject, event);
-                }
+                };
 
                 if (_options.delayOut <= 0) {
                     call();
@@ -111,10 +111,10 @@
 // Create a wrapper similar to jQuery's mouseenter/leave events
 // using pointer events (pointerover/out) and event-time checks
 jQuery.each({
-    pointerenter: "pointerover",
-    pointerleave: "pointerout"
+    pointerenter: 'pointerover',
+    pointerleave: 'pointerout'
 }, function (orig, fix) {
-    jQuery.event.special[ orig ] = {
+    jQuery.event.special[orig] = {
         delegateType: fix,
         bindType: fix,
         handle: function (event) {

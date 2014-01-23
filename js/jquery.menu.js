@@ -158,7 +158,7 @@
                 // Bind event handlers to DOM elements
                 var init = function () {
                     // Assign a special class to distinguish menu items with a submenu from those without one.
-                    me.$item.addClass("menu-item-with-submenu")
+                    me.$item.addClass("menu-item-with-submenu");
 
                     // Bind the special "press" event, when an item is tapped we determine what to do.
                     me.$item.on({
@@ -432,7 +432,7 @@
                     if (_options.showPanelComplete) {
                         _options.showPanelComplete.call(me, getEvent(e));
                     }
-                };
+                }
 
                 this.hide = function (e) {
                     if (!me.isOpen || me.transitioning) {
