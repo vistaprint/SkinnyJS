@@ -191,13 +191,11 @@
 
         var context = this._$canvas[0].getContext("2d");
         //Ensure canvas fills the entire window
-        var $win = $(window);
-        var windowWidth = $win.width();
-        var windowHeight = $win.height();
-        this._$overlay.width(windowWidth);
-        this._$overlay.height(windowHeight);
-        context.canvas.width = windowWidth;
-        context.canvas.height = windowHeight;
+        var overlaySize = _getOverlaySize();
+        this._$overlay.width(overlaySize.width);
+        this._$overlay.height(overlaySize.height);
+        context.canvas.width = overlaySize.width;
+        context.canvas.height = overlaySize.height;
 
         //TODO: If tip targets need to be highlighted via cutting of the veil:
         //      1) use fillRect to paint the translucent veil on the canvas INSTEAD OF CSS background-color on the overlay component
@@ -263,9 +261,9 @@
         //Center content
         if (this._$centerContent) {
             var rect = sizes[this._$centerContent.sizeIndex];
-
-            var contentX = (windowWidth - rect.width) / 2;
-            var contentY = (windowHeight - rect.height) / 2;
+            var $window = $(window);
+            var contentX = ($window.width() - rect.width) / 2;
+            var contentY = ($window.height() - rect.height) / 2;
 
             this._$centerContent.css({
                 position: "absolute",
@@ -288,8 +286,8 @@
         //  add tip content at absolute position
         $.each(this._tips, function() {
             me._renderTip(this, sizes[this.sizeIndex], context, {
-                width: windowWidth,
-                height: windowHeight
+                width: overlaySize.width,
+                height: overlaySize.height
             }, occupiedRects);
         });
 
@@ -298,7 +296,7 @@
     };
 
     //TODO: use an options argument here.  Include things like arrow-padding, stroke width, etc.
-    TutorialOverlay.prototype._renderTip = function(tip, tipRect, canvasContext, windowSize, occupiedRects) {
+    TutorialOverlay.prototype._renderTip = function(tip, tipRect, canvasContext, overlaySize, occupiedRects) {
         //calculate the position of the tip
         var $tipTarget = $(tip.target);
         if (!tip.$tip) {
@@ -313,7 +311,7 @@
         } else {
             //else if target is not *entirely* on the screen, then return
             targetRect = $tipTarget.clientRect();
-            if ((targetRect.left < 0) || (targetRect.right > windowSize.width) || (targetRect.top < 0) || (targetRect.bottom > windowSize.height)) {
+            if ((targetRect.left < 0) || (targetRect.right > overlaySize.width) || (targetRect.top < 0) || (targetRect.bottom > overlaySize.height)) {
                 $tipContent.hide();
                 return;
             }
@@ -335,11 +333,11 @@
         //Make sure tip is completely on the screen
         tipLocation.x = Math.max(0, tipLocation.x);
         tipLocation.y = Math.max(0, tipLocation.y);
-        if (tipLocation.x + tipRect.width > windowSize.width) {
-            tipLocation.x -= (tipLocation.x + tipRect.width) - windowSize.width;
+        if (tipLocation.x + tipRect.width > overlaySize.width) {
+            tipLocation.x -= (tipLocation.x + tipRect.width) - overlaySize.width;
         }
-        if (tipLocation.y + tipRect.height > windowSize.height) {
-            tipLocation.y -= (tipLocation.y + tipRect.height) - windowSize.height;
+        if (tipLocation.y + tipRect.height > overlaySize.height) {
+            tipLocation.y -= (tipLocation.y + tipRect.height) - overlaySize.height;
         }
         //Check for collisions with the center content, other tips (and other child elements of the overlay?)
         if (occupiedRects) {
@@ -532,6 +530,15 @@
             rect2.bottom < rect1.top);
     };
 
+    var _getOverlaySize = function() {
+        var $document = $(document);
+
+        return {
+            width: $document.width(),
+            height: $document.height()
+        };
+    };
+
     //Takes a settings object and calculates derived settings.
     //Settings go in order:
 
@@ -552,10 +559,10 @@
         return settings;
     };
 
-    // Public sub-namespace for modal dialogs.
+    // Public sub-namespace for tutorial overlays.
     $.tutorialOverlay = $.tutorialOverlay || {};
 
-    // Creates a new dialog from the specified settings.
+    // Creates a new overlay from the specified settings.
     $.tutorialOverlay.create = function(settings) {
         settings = ensureSettings(settings);
 
