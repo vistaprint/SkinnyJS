@@ -25,7 +25,7 @@
     // TODO: It would be nice to have a jQuery.findUntil(selector)
     // This is a simple substitute. Recurse until the an element is found
     // with the specified class, and then stop searching in that node.
-    var findUntilInternal = function (elem, fnIsMatch, results) {
+    function findUntilInternal(elem, fnIsMatch, results) {
         if (elem.nodeType !== 1) {
             return;
         }
@@ -37,10 +37,10 @@
         for (var i = 0, len = elem.childNodes.length; i < len; i++) {
             findUntilInternal(elem.childNodes[i], fnIsMatch, results);
         }
-    };
+    }
 
     //jQuery wrapper
-    var findUntil = function ($elem, fnIsMatch) {
+    function findUntil($elem, fnIsMatch) {
         var results = [];
 
         $elem.each(function () {
@@ -48,7 +48,7 @@
         });
 
         return $(results);
-    };
+    }
 
     var _defaults = {
         // When true, the top level menu opens on mouseover (instead of on click, which is the default).
@@ -112,7 +112,7 @@
         // Creates a menu "group" from a jQuery collection of top-level
         // menu items. This will be called once for each element in the
         // top level jQuery object's collection.
-        var createMenuFromTopMenuItems = function ($topLevelItems) {
+        function createMenuFromTopMenuItems($topLevelItems) {
             // Assign a CSS class to help distinguish between top-level
             // and sub menus.
             $topLevelItems.addClass("menu-item-top");
@@ -133,7 +133,7 @@
             // the click came from the menu, so it should be ignored.
             var _ignoreDocumentClick = false;
 
-            var Panel = function ($panel, $item) {
+            var Panel = function Panel($panel, $item) {
                 var me = this;
 
                 this.$panel = $panel;
@@ -156,7 +156,7 @@
                 }
 
                 // Bind event handlers to DOM elements
-                var init = function () {
+                function init() {
                     // Assign a special class to distinguish menu items with a submenu from those without one.
                     me.$item.addClass("menu-item-with-submenu");
 
@@ -246,9 +246,9 @@
                             });
                         }
                     }
-                };
+                }
 
-                var getLinksWithSubmenus = function () {
+                function getLinksWithSubmenus() {
                     return findUntil(me.$item, function (elem, results) {
                         // Stop searching once we get to the nested panel.
                         // We're only interested in A tags owned by this specific
@@ -264,11 +264,11 @@
 
                         return true;
                     });
-                };
+                }
 
                 // Resolves the .parent property and adds this Panel
                 // to the parent's children property.
-                this.resolveParent = function () {
+                this.resolveParent = function resolveParent() {
                     me.parent = me.$parentPanel.data("PanelInstance") || _rootMenu;
                     me.parent.children.push(me);
                 };
@@ -276,7 +276,7 @@
                 var _level = null;
 
                 // Gets the level of the Panel in the heirarchy. 0 is the root menu item.
-                this.getLevel = function () {
+                this.getLevel = function getLevel() {
                     if (_level === null) {
                         _level = -1; // Account for _rootMenu: first level menu should be level 0
                         var current = me.parent;
@@ -292,7 +292,7 @@
                 var _siblings;
 
                 // Gets an array of the siblings of this Panel (Panels with the same parent)
-                this.getSiblings = function () {
+                this.getSiblings = function getSiblings() {
                     if (!_siblings) {
                         _siblings = [];
                         if (me.parent) {
@@ -371,7 +371,7 @@
                 }
 
                 // Shows the panel
-                this.show = function (e) {
+                this.show = function show(e) {
                     if (me.transitioning || me.isOpen) {
                         return;
                     }
@@ -434,7 +434,7 @@
                     }
                 }
 
-                this.hide = function (e) {
+                this.hide = function hide(e) {
                     if (!me.isOpen || me.transitioning) {
                         return;
                     }
@@ -472,14 +472,14 @@
                     }
                 };
 
-                var hideComplete = function (e) {
+                function hideComplete(e) {
                     me.isOpen = false;
                     me.transitioning = false;
 
                     if (_options.hidePanelComplete) {
                         _options.hidePanelComplete.call(me, getEvent(e));
                     }
-                };
+                }
 
                 // signal to prevent the next click, set during a touch event
                 // to prevent the click, because you cannot cancel the
@@ -580,16 +580,16 @@
             };
 
             // Hides all menus and submenus
-            var hideAllClick = function (e) {
+            function hideAllClick(e) {
                 _ignoreDocumentClick = +(new Date());
 
                 $.each(_rootMenu.children, function () {
                     this.hideForce(e);
                 });
-            };
+            }
 
             // Handler for a document click to close all menus
-            var documentClickHandler = function (e) {
+            function documentClickHandler(e) {
                 // Check a flag which indicates the click is from the menu itself
                 if (_ignoreDocumentClick) {
                     // store the time difference, we only listen to this
@@ -605,17 +605,17 @@
                 }
 
                 hideAllClick(e);
-            };
+            }
 
             _allCloseHandlers.push(hideAllClick);
 
-            var hideOtherMenus = function (e) {
+            function hideOtherMenus(e) {
                 for (var i = 0; i < _allCloseHandlers.length; i++) {
                     if (_allCloseHandlers[i] !== hideAllClick) {
                         _allCloseHandlers[i](e);
                     }
                 }
-            };
+            }
 
             // Create a Panel instance for each menu panel, store in an array
             $topLevelItems.find(".menu-panel").each(function () {
@@ -651,7 +651,7 @@
 
             // Bind a handler to close the menu if it is clicked off.
             $(document).on("click", documentClickHandler);
-        };
+        }
 
         // Loop through each menu container and create a menu "group".
         this.each(function () {
