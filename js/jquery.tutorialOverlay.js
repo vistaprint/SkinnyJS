@@ -197,6 +197,12 @@
         context.canvas.width = overlaySize.width;
         context.canvas.height = overlaySize.height;
 
+        var $window = $(window);
+        var windowSize = {
+            width: $window.width(),
+            height: $window.height()
+        };
+
         //TODO: If tip targets need to be highlighted via cutting of the veil:
         //      1) use fillRect to paint the translucent veil on the canvas INSTEAD OF CSS background-color on the overlay component
         //      2) cut holes in the veil by filling the bounding box of the target in the canvas with 'destination-out' compositing.
@@ -261,9 +267,8 @@
         //Center content
         if (this._$centerContent) {
             var rect = sizes[this._$centerContent.sizeIndex];
-            var $window = $(window);
-            var contentX = ($window.width() - rect.width) / 2;
-            var contentY = ($window.height() - rect.height) / 2;
+            var contentX = (windowSize.width - rect.width) / 2;
+            var contentY = (windowSize.height - rect.height) / 2;
 
             this._$centerContent.css({
                 position: "absolute",
@@ -286,8 +291,8 @@
         //  add tip content at absolute position
         $.each(this._tips, function() {
             me._renderTip(this, sizes[this.sizeIndex], context, {
-                width: overlaySize.width,
-                height: overlaySize.height
+                width: windowSize.width,
+                height: windowSize.height
             }, occupiedRects);
         });
 
