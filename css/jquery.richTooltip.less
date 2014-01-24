@@ -1,0 +1,167 @@
+[data-rel="tooltip"] + aside,
+.rich-tooltip-content
+{
+	display: none; // hide all tooltips by default
+	position: absolute; // position is calculated by JavaScript
+	box-sizing: border-box;
+	z-index: 10; // content should appear above the context
+	min-height: 30px;
+
+	// default styling
+	background: #fff;
+	border: 1px solid #000;
+	padding: 6px;
+
+	// javascript applies:
+	// top
+	// left
+	// margin
+
+	.rich-tooltip-close
+	{
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+
+	.rich-tooltip-arrow
+	{
+		@size: 15px;
+		@offset: 16px;
+		@border: #cecece;
+		@background: #fff;
+
+		position: absolute;
+		background: @background;
+		border: 1px solid @border;
+
+		// hide this awesome CSS arrow when in IE7
+		// .ie7 &
+		// {
+		// 	display: none;
+		// }
+
+		&:after,
+		&:before
+		{
+			border: solid transparent;
+			content: " ";
+			height: 0;
+			width: 0;
+			position: absolute;
+			pointer-events: none;
+		}
+
+		&:after
+		{
+			border-color: rgba(255, 255, 255, 0);
+			border-width: @size;
+		}
+
+		&:before
+		{
+			border-color: rgba(236, 236, 236, 0);
+			border-width: @offset;
+		}
+
+		// when tooltip is north (above) of context, arrow is pointing south (down)
+		.rich-tooltip-pos-north&, &.rich-tooltip-arrow-south
+		{
+			&:after,
+			&:before
+			{
+				top: 100%;
+				left: 50%;
+			}
+			&:after
+			{
+				border-top-color: @background;
+				margin-left: -@size;
+			}
+			&:before
+			{
+				border-top-color: @border;
+				margin-left: -@offset;
+			}
+		}
+
+		// when tooltip is east (right) of context, arrow is pointing west (left)
+		.rich-tooltip-pos-east&, &.rich-tooltip-arrow-west
+		{
+			&:after,
+			&:before
+			{
+				right: 100%;
+				top: 50%;
+			}
+			&:after
+			{
+				border-right-color: @background;
+				margin-top: -@size;
+			}
+			&:before
+			{
+				border-right-color: @border;
+				margin-top: -@offset;
+			}
+		}
+
+		// when tooltip is south (below) of context, arrow is pointing north (up)
+		.rich-tooltip-pos-south&, &.rich-tooltip-arrow-north
+		{
+			&:after,
+			&:before
+			{
+				bottom: 100%;
+				left: 50%;
+			}
+			&:after
+			{
+				border-bottom-color: @background;
+				margin-left: -@size;
+			}
+			&:before
+			{
+				border-bottom-color: @border;
+				margin-left: -@offset;
+			}
+		}
+
+		// when tooltip is west (left) of context, arrow is pointing east (right)
+		.rich-tooltip-pos-west&, &.rich-tooltip-arrow-east
+		{
+			&:after,
+			&:before
+			{
+				left: 100%;
+				top: 50%;
+			}
+			&:after
+			{
+				border-left-color: @background;
+				margin-top: -@size;
+			}
+			&:before
+			{
+				border-left-color: @border;
+				margin-top: -@offset;
+			}
+		}
+	}
+
+	@media screen and (max-device-width: 480px)
+	{
+		max-width: 100%;
+		width: 100%;
+		left: 0;
+	}
+}
+
+// allow access without javascript by hovering or by clicking and holding
+// body.nojs [data-rel="tooltip"]:hover + aside,
+// body.nojs [data-rel="tooltip"] + aside:hover,
+// body.nojs [data-rel="tooltip"]:active + aside,
+// body.nojs [data-rel="tooltip"] + aside:active
+// {
+// 	display: block;
+// }
