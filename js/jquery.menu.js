@@ -1,5 +1,6 @@
 /// <reference path="jquery.hoverDelay.js" />
 /// <reference path="jquery.pointerEvents.js" />
+/// <reference path="jquery.pointerGestures.js" />
 // TODO: Support modifying state in the future by storing an object using $.data(), implement $(selector).dropDownMenu("option", value);
 // TODO: Accessibility: Keyboard navigation (tab navigation already works)- close submenus on pressing enter (maybe)
 
@@ -177,27 +178,23 @@
 
                 // Bind event handlers to DOM elements
                 var init = function () {
-                    // Assign a special class to distinguish menu items with a submenu
-                    // from those without one.
-                    me.$item.addClass("menu-item-with-submenu");
-
-                    me.$item.on({
-                        "pointerdown": toggleClick,
-                        "click": function (event) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                        }
-                    });
-
-                    // Set up event handlers to control submenus appearing on hover
-                    me.$item.hoverDelay(mouseOver, mouseOut, {
-                        delayOver: me.isTopLevel && !_options.showOnHover ? 0 : 200,
-                        delayOut: 500
-                    });
+                    me.$item
+                        // Assign a special class to distinguish menu items with a submenu from those without one.
+                        .addClass("menu-item-with-submenu")
+                        // Bind the special "press" event, when an item is tapped/clicked we determine what to do.
+                        .on({
+                            "press": toggleClick,
+                            "click": preventClickSometimes
+                        })
+                        // Set up event handlers to control submenus appearing on hover
+                        .hoverDelay(mouseOver, mouseOut, {
+                            delayOver: me.isTopLevel && !_options.showOnHover ? 0 : 200,
+                            delayOut: 500
+                        });
 
                     // Top menu items have different rules for rollovers (mimics Windows/MacOS menus)
                     if (me.isTopLevel) {
-                        me.$item.on("mouseout", function (e) {
+                        me.$item.on("pointerout", function (e) {
                             if (!me.isOpen) {
                                 // Prevent mouseouts when rolling over tags within the same menu item.
                                 if (e.relatedTarget) {
@@ -213,7 +210,7 @@
 
                     // Note: It is legitimate to have a Panel object without a submenu.
                     if (me.$panel) {
-                        // Event handler for clicking on panels. 
+                        // Event handler for clicking on panels.
                         // Handles firing the "selected" event.
                         me.$panel.click(function (e) {
                             // Find the parent menu item of the clicked element.
@@ -482,47 +479,66 @@
                     _options.hidePanelComplete.call(me, getEvent(e));
                 };
 
-                var toggleClick = function (e) {
-                    var isBubbledClick = false;
+                // signal to prevent the next click, set during a touch event
+                // to prevent the click, because you cannot cancel the
+                // native "click" event reliably outside of the "click" event
+                // itself
+                var _shouldPreventNextClick = false;
 
-                    // If an item doesn't have a Panel object of its own, so it should act like a regular link.
-                    // This occurs only when the top-level item doesn't have a panel object, otherwise the panel.lenght will be 0
-                    if (!me.$panel) {
-                        location.href = $(e.target).closest("a").attr("href");
+                // Sometimes, we need to prevent the native click event
+                // it's sad, but this is the best implementation I've created
+                function preventClickSometimes(e) {
+                    if (_shouldPreventNextClick) {
+                        // compare the time difference, we only listen to this
+                        // prevention if it's within 200ms of the original
+                        // event to prevent errors
+                        var timeDiff = +(new Date()) - _shouldPreventNextClick;
+
+                        // reset the trigger
+                        _shouldPreventNextClick = false;
+
+                        // if the time difference is less than 200ms
+                        if (timeDiff < 200) {
+                            // prevent default to prevent navigation (possibly)
+                            e.preventDefault();
+
+                            // we stop propagation to prevent this click from
+                            // going to the document handler to close all menus
+                            e.stopPropagation();
+                        }
+                    }
+                }
+
+                var toggleClick = function (e) {
+                    // we always want to stop the propagation to parent elements,
+                    // this can cause the inner leaf items to close sub menus,
+                    // or close the menus if it reaches the root document or
+                    // just cause double-trigger if the target was the <a> when the
+                    // handler is on the <li>
+                    e.stopPropagation();
+
+                    // if this is a mouse click, we do not want to interrupt normal navigation
+                    // if there is no panel it should act like a regular link, always.
+                    if (!me.$panel || e.pointerType == "mouse") {
                         return;
                     }
 
+                    // determine if this event has bubbled
                     if (me.$panel.length > 0) {
                         var $closestPanel = $(e.target).closest(".menu-panel");
                         if ($closestPanel.length > 0 && $closestPanel[0] === me.$panel[0]) {
-                            isBubbledClick = true;
+                            _shouldPreventNextClick = false;
+
+                            // This event bubbled from a child panel's link (a leaf menu item).
+                            // It doesn't have a Panel object of its own, so it should act like a regular link.
+                            return;
                         }
-                    }
-
-                    // This event bubbled from a child panel's link (a leaf menu item).
-                    // It doesn't have a Panel object of its own, so it should act like a regular link.
-                    if ((isBubbledClick || e.pointerType === "mouse") && e.button === 0) {
-                        // Don't let the document handler catch this event, or the menu would close.
-                        e.stopPropagation();
-
-                        // Navitgate because the click event is canceled, if we can,
-                        // otherwise trigger the native click event link normal
-                        var anchor = $(e.target).closest("a");
-                        var href = anchor.attr("href");
-
-                        if (href && href.length > 0) {
-                            location.href = href;
-                        } else {
-                            anchor.trigger("jquery.menu.touch").trigger("click");
-                        }
-
-                        return;
                     }
 
                     // For touch events that aren't from leaf menu items,
                     // cancel the default event so touching the menu doesn't cause navigation.
+                    _shouldPreventNextClick = +(new Date());
                     e.preventDefault();
-                    e.stopPropagation();
 
                     if (me.transitioning) {
                         return;
@@ -530,10 +546,8 @@
 
                     me[me.isOpen ? "hideClick" : "showClick"](e);
 
-                    if (!me.isTopLevel) {
-                        e.stopPropagation();
-                    } else {
-                        _ignoreDocumentClick = true;
+                    if (me.isTopLevel) {
+                        _ignoreDocumentClick = +(new Date());
                     }
                 };
 
@@ -563,7 +577,7 @@
 
             // Hides all menus and submenus
             var hideAllClick = function (e) {
-                _ignoreDocumentClick = true;
+                _ignoreDocumentClick = +(new Date());
 
                 $.each(_rootMenu.children, function () {
                     this.hideForce(e);
@@ -574,8 +588,16 @@
             var documentClickHandler = function (e) {
                 // Check a flag which indicates the click is from the menu itself
                 if (_ignoreDocumentClick) {
+                    // store the time difference, we only listen to this
+                    // prevention if it's within 200ms of the original
+                    // event to prevent errors
+                    var timeDiff = +(new Date()) - _ignoreDocumentClick;
+
                     _ignoreDocumentClick = false;
-                    return;
+
+                    if (timeDiff < 200) {
+                        return;
+                    }
                 }
 
                 hideAllClick(e);

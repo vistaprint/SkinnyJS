@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <!--[if lt IE 9]> <script src="javascripts/html5shiv.js"></script> <![endif]-->
+
+  <link rel="stylesheet" href="../dist/css/jquery.richTooltip.css" />
+
+  <script type="text/javascript" src="javascripts/jquery.js"></script>
+  <script type="text/javascript" src="../dist/jquery.proxyAll.js" /></script>
+  <script type="text/javascript" src="../dist/jquery.calcRestrainedPos.js" /></script>
+  <script type="text/javascript" src="../dist/jquery.pointerEvents.js" /></script>
+  <script type="text/javascript" src="../dist/jquery.clientRect.js" /></script>
+  <script type="text/javascript" src="../dist/jquery.richTooltip.js" /></script>
+
+  <title>skinny.js</title>
+  <meta name="description" content="Skinny JS">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body class="nojs">
+
+<section>
+  <h3>Example: RichTooltips, unobtrusive</h3>
+
+  <div>
+    <span data-rel="tooltip" data-tooltip-pos="south">south</span>
+    <aside>
+        <p>hello world. only text.</p>
+    </aside>
+
+    <span data-rel="tooltip" data-tooltip-pos="east">east</span>
+    <aside style="width: 200px">
+      <header>header</header>
+      <p>some more text. some more text. some more text. some more text. some more text. some more text. some more text. some more text. some more text.</p>
+    </aside>
+
+    <span data-rel="tooltip" data-tooltip-pos="west">west</span>
+    <aside>
+      <header>header</header>
+      <p>Do something neat</p>
+    </aside>
+
+    <span data-rel="tooltip" data-tooltip-pos="north">north</span>
+    <aside>
+      <header>header</header>
+      <p>Do something neat</p>
+    </aside>
+  </div>
+
+  <div>
+    <p>Click on one of the directions above.</p>
+  </div>
+</section>
+
+<section>
+  <h3>Example: RichTooltips, programmatic</h3>
+
+  <div>
+    <a href="#" id="example1">programmatic click</a>
+
+    <script type="text/javascript">
+    $(function(){
+      var div = $('<div><p>my tooltip content</p></div>');
+      $('#example1').after(div).tooltip({ content: div });
+    });
+    </script>
+  </div>
+</section>
+
+<section>
+  <h3>Example: My account</h3>
+
+  <div>
+    <a href="#" data-rel="tooltip">programmatic click</a>
+    <aside class="tooltip-skin-large">
+      <h1 class="basic graphite">My Account #: 9805-0002-8381</h1>
+      <h1 class="basic carbon"> | My Account</h1>
+      <section>
+        <h5>Quick Reorder</h5>
+      </section>
+      <hr/>
+      <footer>
+        <a class="textbutton textbutton-skin-secondary">Sign Out</a>
+      </footer>
+    </aside>
+  </div>
+</section>
+
+</body>
+</html>

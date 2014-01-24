@@ -57,10 +57,6 @@ var dependencyTree = {
             path: "css/jquery.modalDialog.css",
             notes: "CSS file for modal dialogs. Include with jquery.modalDialog.js"
         }, {
-            name: "jquery.transit.js",
-            path: "http://ricostacruz.com/jquery.transit/",
-            notes: "Optional. Including the jquery.transit plugin with jquery.modalDialog will enable it to use CSS transitions when available."
-        }, {
             name: "History.js",
             path: "https://github.com/browserstate/history.js/",
             notes: "Optional. History.js is required if you wish to use the <a href='jquery.modalDialog.html#managing_history_browser_backforward_buttons' target='_blank'>jquery.modalDialog history management module</a>."
