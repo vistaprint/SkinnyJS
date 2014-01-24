@@ -37,24 +37,25 @@ $.fn.calcRestrainedPos = function (options) {
 
     switch (options.direction) {
     case 'north':
-        // first attempt to position tooltip directly centered above the context
+        // first attempt to position content directly centered above the context
         pos.top = context.top - content.height - offsets.vertical;
         pos.left = Math.max(offsets.padding, context.left + (context.width / 2) - (content.width / 2));
         break;
 
     case 'east':
-        // first attempt to position tooltip directly centered right of the context
+        // first attempt to position content directly centered right of the context
         pos.top = context.top + (context.height / 2) - (content.height / 2);
         pos.left = context.left + context.width + offsets.horizontal;
         break;
 
     case 'south':
-        // first attempt to position tooltip directly centered below the context
+        // first attempt to position content directly centered below the context
         pos.top = context.top + context.height + offsets.vertical;
         pos.left = Math.max(offsets.padding, context.left + (context.width / 2) - (content.width / 2));
         break;
 
     case 'west':
+        // first attempt to position content directly centered right of context
         pos.top = context.top + (context.height / 2) - (content.height / 2);
         pos.left = context.left - content.width - offsets.horizontal;
         break;
