@@ -13,8 +13,8 @@ $.fn.calcRestrainedPos = function (options) {
 
     // get the size of the viewport
     var viewport = {
-        width: $(window).width(),
-        height: $(window).height()
+        width: window.innerWidth || $(window).width(),
+        height: window.innerHeight || $(window).height()
     };
 
     // allow offsets to be passed
