@@ -148,7 +148,7 @@
     Tooltip.prototype.pos = function () {
 
         // calculate constants used repeatedly
-        var arrowRect = this.arrow.clientRect();
+        var arrowRect = {}; // this.arrow.clientRect();
 
         // override, css arrows do not return sized because it uses :before and :after
         if (this.options.pos === 'west' || this.options.pos === 'east') {
@@ -159,7 +159,7 @@
             arrowRect.height = 15;
         }
 
-        var pos = this.content.calcRestrainedPos({
+        var restrainedPos = this.content.calcRestrainedPos({
             direction: this.options.pos,
             context: this.context,
             container: this.container,
@@ -167,27 +167,34 @@
                 margin: 0
             },
             offsets: {
-                viewportPadding: PADDING,
+                viewport: PADDING,
                 vertical: arrowRect.height,
                 horizontal: arrowRect.width
             }
         });
 
+        var pos = restrainedPos.pos;
         var contextRect = this.context.clientRect();
         var arrowPos = {};
 
+        if (restrainedPos.direction !== this.options.pos) {
+            this.content
+                .removeClass('rich-tooltip-pos-' + this.options.pos)
+                .addClass('rich-tooltip-pos-' + restrainedPos.direction);
+        }
+
         // position the arrow for top and bottom
-        switch (this.options.pos) {
+        switch (restrainedPos.direction) {
         case 'north':
         case 'south':
             arrowPos.left = contextRect.left - pos.left + (contextRect.width / 2);
-            arrowPos[this.options.pos === 'north' ? 'bottom' : 'top'] = 0;
+            arrowPos[restrainedPos.direction === 'north' ? 'bottom' : 'top'] = 0;
             break;
 
         case 'east':
         case 'west':
             arrowPos.top = contextRect.top - pos.top + (contextRect.height / 2);
-            arrowPos[this.options.pos === 'east' ? 'left' : 'right'] = 0;
+            arrowPos[restrainedPos.direction === 'east' ? 'left' : 'right'] = 0;
             break;
         }
 
