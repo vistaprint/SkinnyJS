@@ -19,8 +19,13 @@ $.fn.calcRestrainedPos = function (options) {
 
     // allow offsets to be passed
     var offsets = $.extend({
-        // applies a padding distance between the content and context
         padding: 0,
+
+        // padding applied to content to keep it X pixels away from bounds of viewport
+        viewportPadding: 0,
+
+        // padding applied to content to keep it X pixels away from bounds of container
+        containerPadding: 0,
 
         // applies additional margin between the content and context
         vertical: 0,
@@ -31,64 +36,86 @@ $.fn.calcRestrainedPos = function (options) {
     var pos = options.reset || {};
 
     switch (options.direction) {
-    // case 'w':
-    //     pos.top = context.top + (context.height / 2) - (content.height / 2);
-    //     pos.left = context.left - content.width - offsets.margin;
-    //     break;
-
-    // case 'e':
-    //     pos.top = context.top + (context.height / 2) - (content.height / 2);
-    //     pos.left = context.left + context.width + offsets.margin;
-    //     break;
-
     case 'north':
-        // we first attempt to position tooltip directly centered below the context
+        // first attempt to position tooltip directly centered above the context
         pos.top = context.top - content.height - offsets.vertical;
         pos.left = Math.max(offsets.padding, context.left + (context.width / 2) - (content.width / 2));
+        break;
 
-        // compensate for a container for the position if we must
-        if (container && pos.left + content.width > container.width + container.left) {
-            pos.left = container.width + container.left - content.width;
-        }
-
-        // compensate for the position staying within the viewport
-        if (pos.left + content.width > viewport.width) {
-            pos.left = viewport.width - content.width - offsets.padding;
-        }
+    case 'east':
+        // first attempt to position tooltip directly centered right of the context
+        pos.top = context.top + (context.height / 2) - (content.height / 2);
+        pos.left = context.left + context.width + offsets.horizontal;
         break;
 
     case 'south':
-        // we first attempt to position tooltip directly centered below the context
+        // first attempt to position tooltip directly centered below the context
         pos.top = context.top + context.height + offsets.vertical;
         pos.left = Math.max(offsets.padding, context.left + (context.width / 2) - (content.width / 2));
+        break;
 
-        // compensate for the position staying within the container
-        if (container && pos.left + content.width > container.width + container.left) {
-            pos.left = container.width + container.left - content.width;
-        }
-
-        // compensate for the position staying within the viewport
-        if (pos.left + content.width > viewport.width) {
-            pos.left = viewport.width - content.width - offsets.padding;
-        }
+    case 'west':
+        pos.top = context.top + (context.height / 2) - (content.height / 2);
+        pos.left = context.left - content.width - offsets.horizontal;
         break;
     }
 
-    // calculate the max width to ensure the tooltip is not outside viewport
-    // assign a max-width to prevent tooltip from going outside of viewport
+    //-------------------------
+    // compensate for a container, if we must
+    //-------------------------
+
+    if (container) {
+        // compensate for container, appearing outside to north of container
+        if (pos.top < container.top) {
+            pos.top = container.top + offsets.containerPadding;
+        }
+        // compensate for container, appearing outside to south of container
+        else if (pos.top + content.height > container.top + container.height) {
+            pos.top = container.top + container.height - content.height - offsets.containerPadding;
+        }
+
+        // compensate for container, appearing outside to east of container
+        if (pos.left + content.width > container.left + container.width) {
+            pos.left = container.left + container.width - content.width - offsets.containerPadding;
+        }
+        // compensate for container, appearing outside to west of container
+        else if (pos.left < container.left) {
+            pos.left = container.left + offsets.containerPadding;
+        }
+    }
+
+    //-------------------------
+    // compensate for the viewport
+    //-------------------------
+
+    // north check
+    if (pos.top < offsets.viewportPadding) {
+        pos.top = offsets.viewportPadding;
+    }
+    // south check
+    else if (pos.top + content.height > viewport.height) {
+        pos.top = viewport.height - content.height - offsets.viewportPadding;
+    }
+
+    // east check
+    if (pos.left + content.width > viewport.width) {
+        pos.left = viewport.width - content.width - offsets.padding;
+    }
+    // west check
+    else if (pos.left < offsets.viewportPadding) {
+        pos.left = offsets.viewportPadding;
+    }
+
+    // calculate the max width to ensure the content is not outside viewport
     pos.maxWidth = viewport.width - pos.left - offsets.padding;
 
-    // ensure that the tooltip isn't too large for the viewport
+    // ensure that the content isn't too large for the viewport
     if (content.width >= viewport.width) {
         pos.width = 'auto';
         pos.left = '0px';
         pos.margin = '0 ' + offsets.padding + 'px';
         pos.maxWidth = '100%';
     }
-
-    // round numbers (IE compatibility)
-    // if (pos.top) pos.top = Math.round(pos.top);
-    // if (pos.left) pos.left = pos.
 
     if (options.apply) {
         return $(this).css(pos);

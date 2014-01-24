@@ -167,7 +167,7 @@
                 margin: 0
             },
             offsets: {
-                padding: PADDING,
+                viewportPadding: PADDING,
                 vertical: arrowRect.height,
                 horizontal: arrowRect.width
             }
