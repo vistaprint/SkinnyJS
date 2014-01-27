@@ -238,19 +238,64 @@
         //      (Since there's no good way to get a unique hash for the tip and content elements, use an array and index instead of a hashtable.)
         //      Set up an array of clientRect
         //      Calculate the centerContent's size and store it in the array
-        //      For each tip, calculate it's size and store it in the array
-        var sizes = [];
-        var sizeIndex = 0;
+        //      For each tip, calculate it's size and and initial position and store them in the array
+        var tipBounds = [];
+        var tipBoundsIndex = 0;
         if (this._$centerContent) {
-            this._$centerContent.sizeIndex = sizeIndex++;
-            sizes[this._$centerContent.sizeIndex] = this._$centerContent.clientRect();
+            this._$centerContent.tipBoundsIndex = tipBoundsIndex++;
+            tipBounds[this._$centerContent.tipBoundsIndex] = this._$centerContent.clientRect();
         }
+
         $.each(this._tips, function() {
-            this.sizeIndex = sizeIndex++;
+            this.tipBoundsIndex = tipBoundsIndex++;
+
+            //Make sure the target is completely visible on the page before calculating the tip position.
+            var $tipTarget = $(this.target);
+            if (!$tipTarget.length || !$tipTarget.is(":visible")) {
+                //Don't show the tip if we can't find the target.
+                tipBounds[this.tipBoundsIndex] = null;
+                return true; //skip this tip
+            } else {
+                //else if target is not *entirely* on the screen, then return
+                var targetRect = $tipTarget.clientRect();
+                if ((targetRect.left < 0) || (targetRect.right > overlaySize.width) || (targetRect.top < 0) || (targetRect.bottom > overlaySize.height)) {
+                    tipBounds[this.tipBoundsIndex] = null;
+                    return true; //skip this tip
+                }
+            }
+
             //If the tip is display:block, this sometimes gives the full width of the overlay.
             //  It would be possible to fix this in code by changing the display to inline-block before getting the size.
             //TODO: What about images that haven't loaded yet?
-            sizes[this.sizeIndex] = this.$tip.clientRect();
+            //TODO: What about web fonts that haven't loaded yet?
+            var tipRect = this.$tip.clientRect();
+
+            var offset = this.offset;
+            if (!offset) {
+                offset = DEFAULT_ARROW_PADDING;
+            }
+
+            //Calculate the original position of the tip.
+            var calculatedPos = this.$tip.calcRestrainedPos({
+                context: $(this.target),
+                direction: this.relativePos,
+                zoffsets: {
+                    vertical: offset,
+                    horizontal: offset,
+                    viewport: offset
+                }
+            });
+            if (!calculatedPos.pos.top) {
+                tipBounds[this.tipBoundsIndex] = null;
+                return true; //invalid direction - skip this tip
+            }
+            tipRect.left = calculatedPos.pos.left;
+            tipRect.right = tipRect.left + tipRect.width;
+            tipRect.top = calculatedPos.pos.top;
+            tipRect.bottom = tipRect.top + tipRect.height;
+            tipRect.direction = calculatedPos.direction;
+
+            tipBounds[this.tipBoundsIndex] = tipRect;
         });
 
         // 3) Remove the overlay from the flow calculations
@@ -266,7 +311,7 @@
         var occupiedRects = [];
         //Center content
         if (this._$centerContent) {
-            var rect = sizes[this._$centerContent.sizeIndex];
+            var rect = tipBounds[this._$centerContent.tipBoundsIndex];
             var contentX = (windowSize.width - rect.width) / 2;
             var contentY = (windowSize.height - rect.height) / 2;
 
@@ -283,17 +328,25 @@
                 right: contentX + rect.width,
                 width: rect.width,
                 height: rect.height
-            })
+            });
         }
 
         //For each tip:
         //  position tip relative to target
         //  add tip content at absolute position
         $.each(this._tips, function() {
-            me._renderTip(this, sizes[this.sizeIndex], context, {
-                width: windowSize.width,
-                height: windowSize.height
-            }, occupiedRects);
+            if (!this.$tip) {
+                this.$tip = $(this.content);
+            }
+            if (tipBounds[this.tipBoundsIndex]) {
+                me._renderTip(this, tipBounds[this.tipBoundsIndex], context, {
+                    width: windowSize.width,
+                    height: windowSize.height
+                }, occupiedRects);
+            } else {
+                //else the target is not entirely on the page
+                this.$tip.hide();
+            }
         });
 
         // 5) Show the overlay
@@ -304,46 +357,21 @@
     TutorialOverlay.prototype._renderTip = function(tip, tipRect, canvasContext, overlaySize, occupiedRects) {
         //calculate the position of the tip
         var $tipTarget = $(tip.target);
-        if (!tip.$tip) {
-            tip.$tip = $(tip.content);
-        }
-        var $tipContent = tip.$tip;
-        var targetRect;
-        if (!$tipTarget.length || !$tipTarget.is(":visible")) {
-            //Don't show the tip if we can't find the target.
-            $tipContent.hide();
-            return;
-        } else {
-            //else if target is not *entirely* on the screen, then return
-            targetRect = $tipTarget.clientRect();
-            if ((targetRect.left < 0) || (targetRect.right > overlaySize.width) || (targetRect.top < 0) || (targetRect.bottom > overlaySize.height)) {
-                $tipContent.hide();
-                return;
-            }
-        }
+        var targetRect = $tipTarget.clientRect();
 
-        var positionStr = tip.relativePos;
-        if (!positionStr) {
-            positionStr = DEFAULT_TIP_POSITION;
-        }
-        var pos = this._decodePosition(positionStr);
         var offset = tip.offset;
         if (!offset) {
-            offset = DEFAULT_TIP_OFFSET;
+            offset = DEFAULT_ARROW_SIZE;
         }
 
-        var points = this._calculatePosition(tipRect, targetRect, pos, offset);
+        //Calculate the arrow position
+        var arrow = this._addArrowToTip(tipRect, overlaySize);
 
-        var tipLocation = points.tipLocation;
-        //Make sure tip is completely on the screen
-        tipLocation.x = Math.max(0, tipLocation.x);
-        tipLocation.y = Math.max(0, tipLocation.y);
-        if (tipLocation.x + tipRect.width > overlaySize.width) {
-            tipLocation.x -= (tipLocation.x + tipRect.width) - overlaySize.width;
-        }
-        if (tipLocation.y + tipRect.height > overlaySize.height) {
-            tipLocation.y -= (tipLocation.y + tipRect.height) - overlaySize.height;
-        }
+        var tipLocation = {
+            x: tipRect.left,
+            y: tipRect.top
+        };
+
         //Check for collisions with the center content, other tips (and other child elements of the overlay?)
         if (occupiedRects) {
             var newTipRect = {
@@ -361,22 +389,22 @@
             } else {
                 //collision detected
                 // move the tip?
-                $tipContent.hide();
+                tip.$tip.hide();
                 return;
             }
         }
 
         //Set the tip's position
-        $tipContent.css({
+        tip.$tip.css({
             position: "absolute",
             top: tipLocation.y + "px",
             left: tipLocation.x + "px"
         }).show();
 
-        this._renderArrow(points.startPt, points.endPt, tip.color, canvasContext);
+        this._renderArrow(arrow.startPt, arrow.endPt, arrow.controlPt, tip.color, canvasContext);
     };
 
-    TutorialOverlay.prototype._renderArrow = function(startPt, endPt, color, canvasContext) {
+    TutorialOverlay.prototype._renderArrow = function(startPt, endPt, controlPt, color, canvasContext) {
         canvasContext.beginPath();
         if (!color) {
             color = DEFAULT_TIP_COLOR;
@@ -384,10 +412,6 @@
         canvasContext.strokeStyle = color;
 
         //draw curve from startPt to endPt
-        var controlPt = {
-            x: startPt.x,
-            y: endPt.y
-        };
         canvasContext.moveTo(startPt.x, startPt.y);
         canvasContext.quadraticCurveTo(controlPt.x, controlPt.y, endPt.x, endPt.y);
 
@@ -425,44 +449,161 @@
         }
     };
 
-    TutorialOverlay.prototype._decodePosition = function(positionStr) {
-        var posObj = {
-            verticalCenter: true,
-            horizontalCenter: true
-        };
-        var pos = positionStr.match(/north|east|south|west|top|right|bottom|left/gi);
-        if (pos) {
-            //Use only the last two entries in the array of matches
-            pos = pos.slice(Math.max(pos.length - 2, 0));
-            $.each(pos, function() {
-                switch (this.toLowerCase()) {
-                    case "north":
-                    case "top":
-                        posObj.above = true;
-                        posObj.verticalCenter = false;
-                        break;
+    //TODO: DRY and optimize
+    TutorialOverlay.prototype._addArrowToTip = function(tipRenderInfo, overlaySize, options) {
+        var overlayCenterX = overlaySize.width / 2;
+        var overlayCenterY = overlaySize.height / 2;
 
-                    case "south":
-                    case "bottom":
-                        posObj.above = false;
-                        posObj.verticalCenter = false;
-                        break;
+        var arrowPadding = (options && options.padding) ? options.padding : DEFAULT_ARROW_PADDING;
+        var arrowSize = (options && options.size) ? options.size : DEFAULT_ARROW_SIZE;
 
-                    case "east":
-                    case "right":
-                        posObj.right = true;
-                        posObj.horizontalCenter = false;
-                        break;
-
-                    case "west":
-                    case "left":
-                        posObj.right = false;
-                        posObj.horizontalCenter = false;
-                        break;
+        var arrow = {};
+        switch (tipRenderInfo.direction) {
+            case "north":
+                if (overlayCenterX - tipRenderInfo.left > tipRenderInfo.width / 2) {
+                    //Left of center
+                    //SSE curved arrow
+                    _translateRect(tipRenderInfo, -(arrowSize + tipRenderInfo.width / 2), -(arrowSize - tipRenderInfo.height / 2));
+                    arrow.startPt = {
+                        x: tipRenderInfo.right + arrowPadding,
+                        y: tipRenderInfo.top + tipRenderInfo.height / 2
+                    };
+                    arrow.endPt = {
+                        x: tipRenderInfo.right + arrowSize,
+                        y: arrow.startPt.y + (arrowSize - arrowPadding)
+                    };
+                    arrow.controlPt = {
+                        x: arrow.endPt.x,
+                        y: arrow.startPt.y
+                    }
+                } else {
+                    //Right of center
+                    //SSW curved arrow
+                    _translateRect(tipRenderInfo, arrowSize + tipRenderInfo.width / 2, -(arrowSize - tipRenderInfo.height / 2));
+                    arrow.startPt = {
+                        x: tipRenderInfo.left - arrowPadding,
+                        y: tipRenderInfo.top + tipRenderInfo.height / 2
+                    };
+                    arrow.endPt = {
+                        x: tipRenderInfo.left - arrowSize,
+                        y: arrow.startPt.y + (arrowSize - arrowPadding)
+                    };
+                    arrow.controlPt = {
+                        x: arrow.endPt.x,
+                        y: arrow.startPt.y
+                    }
                 }
-            });
+                break;
+
+            case "south":
+                if (overlayCenterX - tipRenderInfo.left > tipRenderInfo.width / 2) {
+                    //Left of center
+                    //NNE curved arrow
+                    _translateRect(tipRenderInfo, -(arrowSize + tipRenderInfo.width / 2), (arrowSize - tipRenderInfo.height / 2));
+                    arrow.startPt = {
+                        x: tipRenderInfo.right + arrowPadding,
+                        y: tipRenderInfo.top + tipRenderInfo.height / 2
+                    };
+                    arrow.endPt = {
+                        x: tipRenderInfo.right + arrowSize,
+                        y: arrow.startPt.y - (arrowSize - arrowPadding)
+                    };
+                    arrow.controlPt = {
+                        x: arrow.endPt.x,
+                        y: arrow.startPt.y
+                    }
+                } else {
+                    //Right of center
+                    //NNW curved arrow
+                    _translateRect(tipRenderInfo, arrowSize + tipRenderInfo.width / 2, (arrowSize - tipRenderInfo.height / 2));
+                    arrow.startPt = {
+                        x: tipRenderInfo.left - arrowPadding,
+                        y: tipRenderInfo.top + tipRenderInfo.height / 2
+                    };
+                    arrow.endPt = {
+                        x: tipRenderInfo.left - arrowSize,
+                        y: arrow.startPt.y - (arrowSize - arrowPadding)
+                    };
+                    arrow.controlPt = {
+                        x: arrow.endPt.x,
+                        y: arrow.startPt.y
+                    }
+                }
+                break;
+
+            case "east":
+                if (overlayCenterY - tipRenderInfo.top > tipRenderInfo.height / 2) {
+                    //Above center
+                    //WSW curved arrow
+                    _translateRect(tipRenderInfo, arrowSize / 2, -(arrowSize + tipRenderInfo.height / 2));
+                    arrow.startPt = {
+                        x: tipRenderInfo.left + arrowSize / 2,
+                        y: tipRenderInfo.bottom + arrowPadding
+                    };
+                    arrow.endPt = {
+                        x: tipRenderInfo.left - (arrowSize / 2) + arrowPadding,
+                        y: tipRenderInfo.bottom + arrowSize
+                    };
+                    arrow.controlPt = {
+                        x: arrow.startPt.x,
+                        y: arrow.endPt.y
+                    }
+                } else {
+                    //Below center
+                    //WNW curved arrow
+                    _translateRect(tipRenderInfo, arrowSize / 2, arrowSize + (tipRenderInfo.height / 2));
+                    arrow.startPt = {
+                        x: tipRenderInfo.left + arrowSize / 2,
+                        y: tipRenderInfo.top - arrowPadding
+                    };
+                    arrow.endPt = {
+                        x: tipRenderInfo.left - arrowSize / 2 + arrowPadding,
+                        y: tipRenderInfo.top - arrowSize
+                    };
+                    arrow.controlPt = {
+                        x: arrow.startPt.x,
+                        y: arrow.endPt.y
+                    }
+                }
+                break;
+
+            case "west":
+                if (overlayCenterY - tipRenderInfo.top > tipRenderInfo.height / 2) {
+                    //Above center
+                    //ESE curved arrow
+                    _translateRect(tipRenderInfo, -arrowSize / 2, -(arrowSize + tipRenderInfo.height / 2));
+                    arrow.startPt = {
+                        x: tipRenderInfo.right - arrowSize / 2,
+                        y: tipRenderInfo.bottom + arrowPadding
+                    };
+                    arrow.endPt = {
+                        x: tipRenderInfo.right + arrowSize / 2 - arrowPadding,
+                        y: tipRenderInfo.bottom + arrowSize
+                    };
+                    arrow.controlPt = {
+                        x: arrow.startPt.x,
+                        y: arrow.endPt.y
+                    }
+                } else {
+                    //Below center
+                    //ENE curved arrow
+                    _translateRect(tipRenderInfo, -arrowSize / 2, arrowSize + tipRenderInfo.height / 2);
+                    arrow.startPt = {
+                        x: tipRenderInfo.right - arrowSize / 2,
+                        y: tipRenderInfo.top - arrowPadding
+                    };
+                    arrow.endPt = {
+                        x: tipRenderInfo.right + arrowSize / 2 - arrowPadding,
+                        y: tipRenderInfo.top - arrowSize
+                    };
+                    arrow.controlPt = {
+                        x: arrow.startPt.x,
+                        y: arrow.endPt.y
+                    }
+                }
+                break;
         }
-        return posObj;
+        return arrow;
     };
 
     TutorialOverlay.prototype._calculatePosition = function(tipRect, targetRect, pos, offset) {
@@ -543,6 +684,13 @@
             height: $document.height()
         };
     };
+
+    var _translateRect = function(rect, dx, dy) {
+        rect.left += dx;
+        rect.top += dy;
+        rect.right = rect.left + rect.width;
+        rect.bottom = rect.top + rect.height;
+    }
 
     //Takes a settings object and calculates derived settings.
     //Settings go in order:
