@@ -12,9 +12,9 @@
     var DATA_TIP_TARGET_ATTR = "overlay-tip-target";
     var DATA_TIP_POSITION_ATTR = "overlay-tip-position";
 
-    var DEFAULT_TIP_OFFSET = 40;
     var DEFAULT_TIP_COLOR = "#FFFFFF";
     var DEFAULT_TIP_POSITION = "north";
+    var DEFAULT_ARROW_SIZE = 40;
     var DEFAULT_ARROW_PADDING = 5;
     var DEFAULT_ARROW_HEAD_SIZE = 10;
 
@@ -119,7 +119,7 @@
         this._tips.push({
             target: newTip.target,
             content: newTip.content,
-            relativePos: newTip.position,
+            relativePos: newTip.position.toLowerCase(),
             color: newTip.color,
             offset: newTip.offset,
         });
@@ -177,7 +177,7 @@
                 var $tipEl = $(this);
                 tips.push({
                     target: $tipEl.data(DATA_TIP_TARGET_ATTR),
-                    relativePos: $tipEl.data(DATA_TIP_POSITION_ATTR),
+                    relativePos: $tipEl.data(DATA_TIP_POSITION_ATTR).toLowerCase(),
                     content: this,
                     color: $tipEl.data("overlay-tip-color"),
                     offset: $tipEl.data("overlay-tip-offset"),
