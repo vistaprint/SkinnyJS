@@ -229,10 +229,13 @@
         });
 
         // 1) Make the overlay available to the browser's layout calculations:
-        this._$overlay.css({
-            visibility: "hidden",
-            display: "block"
-        });
+        var overlayWasVisible = this._$overlay.is(":visible");
+        if (!overlayWasVisible) {
+            this._$overlay.css({
+                visibility: "hidden",
+                display: "block"
+            });
+        }
 
         // 2) Measure everything and calculate positions
         //      (Since there's no good way to get a unique hash for the tip and content elements, use an array and index instead of a hashtable.)
@@ -258,7 +261,7 @@
             } else {
                 //else if target is not *entirely* on the screen, then return
                 var targetRect = $tipTarget.clientRect();
-                if ((targetRect.left < 0) || (targetRect.right > overlaySize.width) || (targetRect.top < 0) || (targetRect.bottom > overlaySize.height)) {
+                if ((targetRect.left < 0) || (targetRect.right > windowSize.width) || (targetRect.top < 0) || (targetRect.bottom > windowSize.height)) {
                     tipBounds[this.tipBoundsIndex] = null;
                     return true; //skip this tip
                 }
@@ -299,10 +302,12 @@
         });
 
         // 3) Remove the overlay from the flow calculations
-        this._$overlay.css({
-            display: "none",
-            visibility: "visible"
-        });
+        if (!overlayWasVisible) {
+            this._$overlay.css({
+                display: "none",
+                visibility: "visible"
+            });
+        }
 
         // 4) Move everything to their new positions
         //      Position the center content
