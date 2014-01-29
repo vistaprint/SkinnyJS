@@ -222,7 +222,10 @@
             if (!this.$tip) {
                 this.$tip = $(this.content);
             }
-            this.$tip.show(); //tip may have been hidden at other screen widths - make sure it is visible now to get a valid calculated size
+            this.$tip.css({
+                visibility: "hidden",
+                display: ""
+            }); //tip may have been hidden at other screen widths - make sure it is available now to get a valid calculated size
             if (!$.contains(me._$overlay[0], this.$tip[0])) {
                 me._$overlay.append(this.$tip);
             }
@@ -321,6 +324,7 @@
         //      Position each tip
 
         var occupiedRects = [];
+        var contentRect = null;
         //Center content
         if (this._$centerContent) {
             var rect = tipBounds[this._$centerContent.tipBoundsIndex];
@@ -333,14 +337,15 @@
                 left: contentX + "px"
             });
 
-            occupiedRects.push({
+            contentRect = {
                 top: contentY,
                 left: contentX,
                 bottom: contentY + rect.height,
                 right: contentX + rect.width,
                 width: rect.width,
                 height: rect.height
-            });
+            };
+            occupiedRects.push(contentRect);
         }
 
         //For each tip:
@@ -350,7 +355,10 @@
             if (!this.$tip) {
                 this.$tip = $(this.content);
             }
-            if (tipBounds[this.tipBoundsIndex]) {
+            var targetRect = $(this.target).clientRect();
+            if (tipBounds[this.tipBoundsIndex] &&
+                //If targetRect intersects center content, then ignore this tip.
+                (!contentRect || !_rectsIntersect(targetRect, contentRect))) {
                 me._renderTip(this, tipBounds[this.tipBoundsIndex], context, {
                     width: windowSize.width,
                     height: windowSize.height
@@ -486,7 +494,8 @@
         tip.$tip.css({
             position: "absolute",
             top: tipRect.top + "px",
-            left: tipRect.left + "px"
+            left: tipRect.left + "px",
+            visibility: ""
         }).show();
 
         this._renderArrow(arrow.startPt, arrow.endPt, arrow.controlPt, tip.color, canvasContext);
