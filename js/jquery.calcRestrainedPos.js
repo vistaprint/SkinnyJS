@@ -34,7 +34,7 @@
         // if a container is provided we must keep the position restrained within
         var container = options.container ? $(options.container).clientRect() : null;
 
-
+        // areas of the screen that are off-limits to the content
         var obstacles = options.exclusions;
 
         // get the size of the viewport
@@ -80,7 +80,7 @@
                 pos.top = context.top - content.height - offsets.vertical;
                 pos.left = Math.max(offsets.padding, context.left + (context.width / 2) - (content.width / 2));
                 // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
-                if (options.cornerAdjacent && (pos.left < context.left) && (pos.left + content.width > context.left + context.width)) {
+                if (options.cornerAdjacent && !isCornerAdjacent(direction, pos)) {
                     pos.left = context.left + offsets.padding;
                 }
                 break;
@@ -90,7 +90,7 @@
                 pos.top = context.top + (context.height / 2) - (content.height / 2);
                 pos.left = context.left + context.width + offsets.horizontal;
                 // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
-                if (options.cornerAdjacent && (pos.top < context.top) && (pos.top + content.height > context.top + context.height)) {
+                if (options.cornerAdjacent && !isCornerAdjacent(direction, pos)) {
                     pos.top = context.top + offsets.padding;
                 }
                 break;
@@ -100,7 +100,7 @@
                 pos.top = context.top + context.height + offsets.vertical;
                 pos.left = Math.max(offsets.padding, context.left + (context.width / 2) - (content.width / 2));
                 // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
-                if (options.cornerAdjacent && (pos.left < context.left) && (pos.left + content.width > context.left + context.width)) {
+                if (options.cornerAdjacent && !isCornerAdjacent(direction, pos)) {
                     pos.left = context.left + offsets.padding;
                 }
                 break;
@@ -110,7 +110,7 @@
                 pos.top = context.top + (context.height / 2) - (content.height / 2);
                 pos.left = context.left - content.width - offsets.horizontal;
                 // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
-                if (options.cornerAdjacent && (pos.top < context.top) && (pos.top + content.height > context.top + context.height)) {
+                if (options.cornerAdjacent && !isCornerAdjacent(direction, pos)) {
                     pos.top = context.top + offsets.padding;
                 }
                 break;
@@ -118,47 +118,87 @@
         }
 
         // compensate for a container, if we must
-        function compensateContainer() {
+        function compensateContainer(direction, posLimits) {
             if (container !== null) {
                 // compensate for container, appearing outside to north of container
                 if (pos.top < container.top) {
                     pos.top = container.top + offsets.container;
+                    if (options.cornerAdjacent && ((direction === 'east') || (direction === 'west')) && !isCornerAdjacent(direction, pos)) {
+                        //Need to keep the corners adjancent, so adjust the position and update the posLimits.
+                        pos.top = context.top + offsets.padding;
+                        posLimits.minY = pos.top;
+                    }
                 }
                 // compensate for container, appearing outside to south of container
                 else if (pos.top + content.height > container.top + container.height) {
                     pos.top = container.top + container.height - content.height - offsets.container;
+                    if (options.cornerAdjacent && ((direction === 'east') || (direction === 'west')) && !isCornerAdjacent(direction, pos)) {
+                        //Need to keep the corners adjancent, so adjust the position and update the posLimits.
+                        pos.top = (context.top + context.height - offsets.padding) - content.height;
+                        posLimits.maxY = pos.top;
+                    }
                 }
 
                 // compensate for container, appearing outside to east of container
                 if (pos.left + content.width > container.left + container.width) {
                     pos.left = container.left + container.width - content.width - offsets.container;
+                    if (options.cornerAdjacent && ((direction === 'north') || (direction === 'south')) && !isCornerAdjacent(direction, pos)) {
+                        //Need to keep the corners adjancent, so adjust the position and update the posLimits.
+                        pos.left = (context.left + context.width - offsets.padding) - content.width;
+                        posLimits.maxX = pos.left;
+                    }
                 }
                 // compensate for container, appearing outside to west of container
                 else if (pos.left < container.left) {
                     pos.left = container.left + offsets.container;
+                    if (options.cornerAdjacent && ((direction === 'north') || (direction === 'south')) && !isCornerAdjacent(direction, pos)) {
+                        //Need to keep the corners adjancent, so adjust the position and update the posLimits.
+                        pos.left = context.left + offsets.padding;
+                        posLimits.minX = pos.left;
+                    }
                 }
             }
         }
 
         // compensate for the viewport, if we haven't opted out
-        function compensateViewport() {
+        function compensateViewport(direction, posLimits) {
             if (options.viewport === true) {
                 // north check
                 if (pos.top < offsets.viewport) {
                     pos.top = offsets.viewport;
+                    if (options.cornerAdjacent && ((direction === 'east') || (direction === 'west')) && !isCornerAdjacent(direction, pos)) {
+                        //Need to keep the corners adjancent, so adjust the position and update the posLimits.
+                        pos.top = context.top + offsets.padding;
+                        posLimits.minY = pos.top;
+                    }
                 }
                 // south check
                 else if (pos.top + content.height > viewport.height) {
                     pos.top = viewport.height - content.height - offsets.viewport;
+                    if (options.cornerAdjacent && ((direction === 'east') || (direction === 'west')) && !isCornerAdjacent(direction, pos)) {
+                        //Need to keep the corners adjancent, so adjust the position and update the posLimits.
+                        pos.top = (context.top + context.height - offsets.padding) - content.height;
+                        posLimits.maxY = pos.top;
+                    }
                 }
 
                 // east check
                 if (pos.left + content.width > viewport.width) {
                     pos.left = viewport.width - content.width - offsets.viewport;
+                    if (options.cornerAdjacent && ((direction === 'north') || (direction === 'south')) && !isCornerAdjacent(direction, pos)) {
+                        //Need to keep the corners adjancent, so adjust the position and update the posLimits.
+                        pos.left = (context.left + context.width - offsets.padding) - content.width;
+                        posLimits.maxX = pos.left;
+                    }
                 }
                 // west check
                 else if (pos.left < offsets.viewport) {
                     pos.left = offsets.viewport;
+                    if (options.cornerAdjacent && ((direction === 'north') || (direction === 'south')) && !isCornerAdjacent(direction, pos)) {
+                        //Need to keep the corners adjancent, so adjust the position and update the posLimits.
+                        pos.left = context.left + offsets.padding;
+                        posLimits.minX = pos.left;
+                    }
                 }
             }
         }
@@ -356,7 +396,7 @@
                                     if (options.cornerAdjacent && (newPos.top < context.top + offsets.padding) && (newPos.top + content.height > context.top + context.height - offsets.padding)) {
                                         newPos.top = context.top + offsets.padding;
                                     }
-                                    if (newPos > posLimits.maxY) {
+                                    if (newPos.top > posLimits.maxY) {
                                         //cannot place box in this direction without intersection
                                         //stop checking obstacles
                                         i = obstacles.length;
@@ -417,7 +457,7 @@
                                     if (options.cornerAdjacent && (newPos.top < context.top + offsets.padding) && (newPos.top + content.height > context.top + context.height - offsets.padding)) {
                                         newPos.top = (context.top + context.height) - (content.height + offsets.padding);
                                     }
-                                    if (newPos < posLimits.minY) {
+                                    if (newPos.top < posLimits.minY) {
                                         //cannot place box in this direction without intersection
                                         //stop checking obstacles
                                         i = obstacles.length;
@@ -434,7 +474,7 @@
                             box.bottom = box.top + box.height;
                             break;
                         } //end switch (direction)
-                        if (i < obstacles.length) {
+                        if ((i > 0) && (i < obstacles.length)) {
                             i = 0; //restart loop
                         }
                     } //end if intersection found
@@ -469,17 +509,19 @@
             return limits;
         }
 
-        function areCornersAdjacent(box) {
+        function isCornerAdjacent(direction, position) {
             var adjacent = true;
             switch (direction) {
             case 'north':
             case 'south':
-                adjacent = (box.left >= context.left + offsets.padding) || (box.left + box.width <= context.left + context.width - offsets.padding);
+                adjacent = ((position.left >= context.left + offsets.padding) && (position.left <= context.left + context.width - offsets.padding)) ||
+                    ((position.left + content.width <= context.left + context.width - offsets.padding) && (position.left + content.width >= context.left + offsets.padding));
                 break;
 
             case 'east':
             case 'west':
-                adjacent = (box.top >= context.top + offsets.padding) || (box.top + box.height <= context.top + context.height - offsets.padding);
+                adjacent = ((position.top >= context.top + offsets.padding) && (position.top <= context.top + context.bottom - offsets.padding)) ||
+                    ((position.top + content.height <= context.top + context.height - offsets.padding) && (position.top + content.height <= context.top + context.height - offsets.padding));
                 break;
             }
             return adjacent;
@@ -513,14 +555,14 @@
         var maxBounds;
         while (true) {
             attemptDirection(direction);
-            compensateContainer();
-            compensateViewport();
             maxBounds = calculateMaxPositions(direction, {
                 minX: origMinX,
                 minY: origMinY,
                 maxX: origMaxX,
                 maxY: origMaxY
             });
+            compensateContainer(direction, maxBounds);
+            compensateViewport(direction, maxBounds);
             compensateObstacles(direction, maxBounds);
 
             var box = $.extend({}, content, pos);
@@ -528,7 +570,7 @@
             // verify position is not over the context and within expected limits
             if ((box.left < maxBounds.minX) || (box.left > maxBounds.maxX) ||
                 (box.top < maxBounds.minY) || (box.top > maxBounds.maxY) ||
-                (options.cornerAdjacent && !areCornersAdjacent(box)) ||
+                (options.cornerAdjacent && !isCornerAdjacent(direction, pos)) ||
                 $.doBoundingBoxesIntersect(box, context)) {
                 // check to see if we are about to start over
                 if (nextDirection[direction] === originalDirection) {
