@@ -475,7 +475,7 @@
                             break;
                         } //end switch (direction)
                         if ((i > 0) && (i < obstacles.length)) {
-                            i = 0; //restart loop
+                            i = -1; //restart loop
                         }
                     } //end if intersection found
                 } //end for loop
