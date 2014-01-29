@@ -5,6 +5,8 @@ title: jQuery.modalDialog
 
 # Modal dialogs
 
+<div class="toc">toc</div>
+
 The **jquery.modalDialog** plugin is an extremely powerful and extensible UI widget. It supports responsive design, and is touch friendly.
 
 Example dialog (desktop):
@@ -57,7 +59,7 @@ Dialogs publish [events](#events) that can be used to extend their functionality
 
 ## Usage
 
-### Adding jQuery.modalDialog to your site:
+### Adding jQuery.modalDialog to your site
 
 Using the (skinny.js Download Builder)[http://vistaprint.github.io/SkinnyJS/download-builder.html], create a custom build which includes jquery.modalDialog, along with any other skinny.js libraries you want. Include the following CSS and JavaScript files:
 
@@ -120,9 +122,11 @@ exactly to the [Settings](#settings) you can pass to the modalDialog programmati
 * **data-dialog-onbeforeopen**: An inline event handler that fires before the dialog is opened. See [Events](#events) for more information.  
 * **data-dialog-onclose**: An inline event handler that fires when the dialog is closed. See [Events](#events) for more information.        
 * **data-dialog-onbeforeclose**: An inline event handler that fires before the dialog is closed. See [Events](#events) for more information.      
-* **data-dialog-maxWidth**: Sets the maximum width of the dialog. Note that on small mobile devices, the actual width may be smaller, so you should design the dialog content accordingly. Defaults to 600.
+* **data-dialog-maxwidth**: Sets the maximum width of the dialog. Note that on small mobile devices, the actual width may be smaller, so you should design the dialog content accordingly. Defaults to 600.
 * **data-dialog-destroyOnClose**: If true, the dialog DOM will be destroyed and all events removed when the dialog closes. Defaults to ''false''.   
 * **data-dialog-skin**: The name of the skin to use for the dialog. Defaults to "primary".   
+* **data-dialog-enablehistory**: If set to false, [history management](#managing_history_browser_backforward_buttons) will be disabled for this dialog, even if enabled globally. Defaults to ''true''. 
+* **data-dialog-zindex**: Can be used to set the z-index for the dialog. Don't use this unless you need to participate in a pre-existing z-index arms race. Defaults to 10000.
 
 {% highlight html %}
 <a href="#fruitsAndNuts" data-rel="modalDialog">Fruits and Nuts</a>
@@ -156,7 +160,8 @@ exactly to the [Settings](#settings) you can pass to the modalDialog programmati
 * **onclose**: A handler for the ''close'' event. See [Events](#events)] for more information.
 * **onbeforeclose**: A handler for the ''beforeclose'' event. See [Events](#events) for more information.
 * **onajaxerror**:  A handler for the ''ajaxerror'' event. See [Events](#events) for more information.
-
+* **enableHistory**: If set to false, [history management](#managing_history_browser_backforward_buttons) will be disabled for this dialog, even if enabled globally. Defaults to ''true''. 
+* **zIndex**: Can be used to set the z-index for the dialog. Don't use this unless you need to participate in a pre-existing z-index arms race. Defaults to 10000.
 
 Here's an example. Note that you can (and usually should) do this all with *data-dialog* attributes:
 {% highlight javascript %}
@@ -180,8 +185,8 @@ $("#fruitsAndNuts").modalDialog({
 
 `$.modalDialog.create()` returns a dialog object with the following methods:
 
-* **open()**: Opens the dialog
-* **close()**: Closes the dialog
+* **open()**: Opens the dialog. Returns a promise that will be resolved when the open animation is complete.
+* **close()**: Closes the dialog. Returns a promise that will be resolved when the close animation is complete.
 * **center()**: Centers the dialog based on the current dimensions
 * **setTitle()**: Sets the title displayed in the dialog's title bar
 * **getWindow()**: Gets a reference to the window for the dialog. For an IFrame dialog, this is the content window, for node or AJAX dialogs, it is the host window. This is useful for sending messages between dialogs.
@@ -195,6 +200,53 @@ dialog.open();
  
 //close dialog
 dialog.close();
+{% endhighlight %}
+
+You can call any dialog methods using the jQuery idiomatic syntax as well:
+
+{% highlight javascript %}
+// Creates and opens the dialog
+$(".color-dialog").modalDialog();
+
+// Closes the dialog
+$(".color-dialog").modalDialog("close");
+
+// Centers the dialog
+$(".color-dialog").modalDialog("center");
+
+// Sets the title of the dialog
+$(".color-dialog").modalDialog("setTitle", "Select a Color");
+{% endhighlight %}
+
+Or, you can get the modal dialog object from the jQuery idiomatic syntax:
+
+{% highlight javascript %}
+// Creates and opens the dialog
+$(".color-dialog").modalDialog();
+
+// Closes the dialog
+var dialog = $(".color-dialog").modalDialogInstance();
+
+// Now you have a reference to the dialog
+dialog.close();
+{% endhighlight %}
+
+#### open(), close(), and promises
+open() and close() return promises. This allows chaining of actions:
+
+{% highlight javascript %}
+var dialog = $.modalDialog.create({ content: ".color-dialog" });
+dialog.open()
+    .then(function() {
+        // The dialog is completely open
+
+        // Close the dialog (also returns a promise)
+        return this.close();
+    })
+    .then(function() {
+        // The dialog is completely closed
+    });
+ 
 {% endhighlight %}
 
 ## Types of dialogs
@@ -216,8 +268,7 @@ Some examples:
 -->
 <a href="/nutrition-information/fruits-and-nuts.html" 
     data-rel="modalDialog" 
-    data-dialog-ajax="true" 
-    data-dialog-title="Fruits and Nuts">Fruits and Nuts</a>
+    data-dialog-ajax="true">Fruits and Nuts</a>
 {% endhighlight %}
 
 {% highlight javascript %}
@@ -231,7 +282,25 @@ dialog.close();
 
 #### AJAX dialog content
 
-AJAX dialogs' content should have no HTML/head/body tag frame; just render the HTML that goes in the dialog. 
+AJAX dialogs' content can be specified one of two ways:
+* **Full HTML documents**. The body of the document is extracted and added to the dialog. If there is a TITLE tag in the document, and a title wasn't explicitly set in the dialog settings, the TITLE tag text will be used for the dialog title bar.
+
+{% highlight html %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- value of the TITLE tag will display in the dialog's title bar -->
+  <title>Fruits and nuts</title>
+</head>
+<body>
+    Here's some information about fruits and nuts
+</body>
+</html>
+{% endhighlight %}
+
+
+* **Partial HTML** (i.e. just the HTML that should go in the dialog content).
 
 {% highlight html %}
 <!-- 
@@ -242,6 +311,9 @@ AJAX dialogs' content should have no HTML/head/body tag frame; just render the H
 {% endhighlight %}
 
 ##### JavaScripts in AJAX dialog content
+
+No modal dialog specific scripts need to be included in the AJAX dialog content.
+
 Any scripts included in the content will get loaded/executed dynamically, after the DOM elements have been loaded. Script tags that refer to scripts which are are already loaded in the window will be ignored (not loaded/executed a second time), but inline script snippets will be executed.
 
 **Note:** This is a feature of the skinny.js [jquery.partialLoad plugin](js/jquery.partialLoad.html), and can be used independently of modal dialogs.
@@ -369,11 +441,9 @@ For example, imagine you'd like to send a message to the host (parent) window fr
 
 Then, you can receive the message in the parent window:
 {% highlight javascript %}
-    $(window).on("message", function(e) 
-    {
+    $(window).on("message", function(e) {
         // Cross domain security
-        if (e.origin != "http://mydomain.com")
-        {
+        if (e.origin != "http://mydomain.com") {
             return;
         }
 
@@ -414,10 +484,8 @@ Here is an example of using the beforeopen event:
 {% highlight javascript %}
 $.modalDialog.create({ 
     url: "/foo.aspx", 
-    onbeforeopen: function(e) 
-    { 
-        if (!confirm("Are you sure you want to open this dialog?")) 
-        {
+    onbeforeopen: function(e) { 
+        if (!confirm("Are you sure you want to open this dialog?")) {
             e.preventDefault(); 
         }
     });
@@ -427,10 +495,8 @@ This example is completely equivalent:
 
 {% highlight javascript %}
 var dialog = $.modalDialog.create({ url: "/foo.aspx" });
-dialog.onbeforeopen.add(function(e) 
-{ 
-    if (!confirm("Are you sure you want to open this dialog?")) 
-    { 
+dialog.onbeforeopen.add(function(e) { 
+    if (!confirm("Are you sure you want to open this dialog?")) { 
         e.preventDefault(); 
     }
 });
@@ -453,6 +519,40 @@ $("#colorPickerLink").on("dialogcreate", function(e)
 {
     e.dialog.onopen.add(function() { alert("opened"); });
 });
+{% endhighlight %}
+
+### Managing history (browser back/forward buttons)
+
+The dialog API has a built-in history management module. It can be enabled by calling:
+
+{% highlight javascript %}
+$.modalDialog.enableHistory();
+{% endhighlight %}
+
+When a dialog is opened, the URL is updated with a querystring parameter that encapsulates the state of the dialog. If the user hits the "back" button,
+the dialog is closed. The history module handles cases where the user refreshes, clicks forward, etc.
+
+You can override the default parameter name that the history management module uses:
+
+{% highlight javascript %}
+// This will make URLs look like: /url.html?someAlternateParameterName={opaque parameters}
+$.modalDialog.enableHistory("someAlternateParameterName");
+{% endhighlight %}
+
+The history management module is disabled by default to accommodate more advanced applications that wish to manage history themselves (i.e. using a router in Backbone.js).
+
+You can also disable/enable history management per dialog:
+
+{% highlight javascript %}
+var dialog = $.modalDialog.create({ enableHistory: false });
+{% endhighlight %}
+
+Or declaratively:
+
+{% highlight html %}
+<div data-dialog-enablehistory="false" class="dialog-content">
+    content
+</div>
 {% endhighlight %}
 
 ### Skinning

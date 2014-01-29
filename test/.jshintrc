@@ -23,12 +23,16 @@
     "globals":
     {
         "jQuery": true,
-        "module": true,
-        "ok": true,
-        "equal": true,
-        "test": true,
-        "asyncTest": true,
-        "start": true,
-        "$": true
+        "$": true,
+        "mocha": true,
+        "describe": true,
+        "it": true,
+        "expect": true,
+        "before": true,
+        "beforeEach": true,
+        "after": true,
+        "afterEach": true,
+        "chai": true
     }
+
 }

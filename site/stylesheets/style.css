@@ -2995,3 +2995,21 @@ ul.library-defs a
 {
   font-weight: bold;
 }
+
+.toc
+{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 1px #e5e5e5 solid;
+  background-color: #efefef;
+  padding: 5px;
+  max-width: 500px;
+}
+
+.toc ol,
+.toc ol li
+{
+  list-style: none;
+  margin: 0;
+  padding-left: 8px;
+}

@@ -1,224 +1,249 @@
 /// <reference path="jquery.querystring.js" />
 
-(function($)
-{
+(function ($) {
 
-// Parses and manipulates a URL. 
-$.Url = function(url)
-{
-    var me = this;
+    // Parses and manipulates a URL. 
+    $.Url = function (url) {
+        var me = this;
 
-    // The anchor link- text after the # character
-    this.hash = "";
+        var _normalize = function (input) {
+            if (input == null || input === "") {
+                return "";
+            }
 
-    // http: or https:
-    this.protocol = "";
+            return input.toString();
+        };
 
-    // The server name- example: www.vistaprint.com
-    this.hostname = "";
+        // http: or https:
+        var _protocol = "";
 
-    // The server name- example: www.vistaprint.com
-    // Includes port string if specified- example www.vistaprint.com:80
-    this.host = "";
+        this.protocol = function (value) {
+            if (typeof value != "undefined") {
+                _protocol = _normalize(value);
 
-    // The TCP port (if specified)
-    this.port = "";
+                if (_protocol) {
+                    if (_protocol.charAt(_protocol.length - 1) != ":") {
+                        _protocol += ":";
+                    }
+                }
+            } else {
+                return _protocol;
+            }
+        };
 
-    // The querystring- example: val1=foo&val2=bar
-    this.queryString = "";
+        // The server name- example: www.vistaprint.com
+        var _hostname = "";
 
-    // The querystring with the initial ? if specified- example: ?val1=foo&val2=bar
-    this.search = "";
+        this.hostname = function (value) {
+            if (typeof value != "undefined") {
+                _hostname = _normalize(value);
+            } else {
+                return _hostname;
+            }
+        };
 
-    // The root relative path to the file- example: /vp/myfile.htm
-    this.pathname = "";
+        var _port = "";
 
-    var load = function(url)
-    {
-        var nextPartPos;
-        var temp = url;
+        // The TCP port (if specified)
+        this.port = function (value) {
+            if (typeof value != "undefined") {
+                _port = _normalize(value);
+            } else {
+                return _port;
+            }
+        };
 
-        // protocol: "http:" or "https:"
-        if (temp.search(/https\:\/\/+/i) === 0) //The ending + is to prevent comment removers from messing up this line
-        {
-            me.protocol = "https:";
-            temp = url.substr(8);
-        }
-        else if (temp.search(/http\:\/\/+/i) === 0) //The ending + is to prevent comment removers from messing up this line
-        {
-            me.protocol = "http:";
-            temp = url.substr(7);
-        }
+        // The server name- example: www.vistaprint.com
+        // Includes port string if specified- example www.vistaprint.com:80
+        this.host = function (value) {
+            if (typeof value != "undefined") {
+                value = _normalize(value);
 
-        if (temp.length === 0)
-        {
-            return;
-        }
+                // Separate hostname & port from host
+                if (value) {
+                    var colonPos = value.indexOf(":");
+                    if (colonPos != -1) {
+                        _hostname = value.substr(0, colonPos);
+                        _port = value.substr(colonPos + 1, value.length);
+                    } else {
+                        _hostname = _normalize(value);
+                        _port = "";
+                    }
+                } else {
+                    _hostname = "";
+                    _port = "";
+                }
+            } else {
+                var out = _hostname;
+                if (_port) {
+                    out += ":" + _port;
+                }
+                return out;
+            }
+        };
 
-        //host: contains hostname and port if specified (i.e. www.vistaprint.com:80)
-        if (me.protocol !== "")
-        {
-            //match a slash, hash, colon, or question mark
-            nextPartPos = temp.search(/[\/\?\#]/i);
-            if (nextPartPos == -1)
+        var _pathname = "";
+
+        // The root relative path to the file- example: /vp/myfile.htm
+        this.pathname = function (value) {
+            if (typeof value != "undefined") {
+                _pathname = _normalize(value);
+            } else {
+                return _pathname;
+            }
+        };
+
+        // The querystring- example: val1=foo&val2=bar
+        this.queryString = {};
+
+        // The querystring with the initial ? if specified- example: ?val1=foo&val2=bar
+        this.search = function (value) {
+            if (typeof value != "undefined") {
+                value = _normalize(value);
+                me.queryString = $.deparam(value);
+            } else {
+                var qs = $.param(me.queryString);
+                return qs ? "?" + qs : qs;
+            }
+        };
+
+        // The anchor link- text after the # character
+        var _hash = "";
+
+        this.hash = function (value) {
+            if (typeof value != "undefined") {
+                value = _normalize(value);
+
+                // Always ensure there is a # for any non-empty string
+                if (value.length > 0) {
+                    if (value.charAt(0) != "#") {
+                        value = "#" + value;
+                    }
+                }
+                _hash = value;
+            } else {
+                return _hash;
+            }
+        };
+
+        var load = function (url) {
+            var nextPartPos;
+            var temp = url;
+
+            // protocol: "http:" or "https:"
+            if (temp.search(/https\:\/\/+/i) === 0) //The ending + is to prevent comment removers from messing up this line
             {
-                me.host = temp;
+                _protocol = "https:";
+                temp = url.substr(8);
+            } else if (temp.search(/http\:\/\/+/i) === 0) //The ending + is to prevent comment removers from messing up this line
+            {
+                _protocol = "http:";
+                temp = url.substr(7);
+            }
+
+            if (temp.length === 0) {
                 return;
             }
 
-            me.host = temp.substring(0, nextPartPos);
-            temp = temp.substr(nextPartPos);
-        }
+            // host: contains hostname and port if specified (i.e. www.vistaprint.com:80)
+            if (_protocol !== "") {
+                //match a slash, hash, colon, or question mark
+                nextPartPos = temp.search(/[\/\?\#]/i);
+                if (nextPartPos == -1) {
+                    me.host(temp);
+                    return;
+                }
 
-        // Separate hostname & port from host
-        if (me.host && me.host !== "")
-        {
-            var colorPos = me.host.indexOf(":");
-            if (colorPos != -1)
-            {
-                me.hostname = me.host.substr(0, colorPos);
-                me.port = me.host.substr(colorPos + 1, me.host.length);
-            }
-            else
-            {
-                me.hostname = me.host;
-            }
-        }
-
-        if (temp.length === 0)
-        {
-            return;
-        }
-
-        nextPartPos = temp.search(/[\?\#]/i);
-
-        //pathname: i.e. /vp/mypage.htm
-        if (nextPartPos !== 0)
-        {
-            if (nextPartPos == -1)
-            {
-                me.pathname = temp;
-                return;
-            }
-
-            me.pathname = temp.substr(0, nextPartPos);
-            temp = temp.substr(nextPartPos);
-        }
-
-        if (temp.length === 0)
-        {
-            return;
-        }
-
-        // queryString (i.e. myval1=1&myval2=2)
-        // search: same as querystring with initial question mark (i.e. ?myval1=1&myval2=2)
-        if (temp.indexOf("?") === 0)
-        {
-            nextPartPos = temp.indexOf("#");
-
-            if (nextPartPos == -1)
-            {
-                me.queryString = temp.substr(1); //cut off the initial ?
-                temp = "";
-            }
-            else
-            {
-                me.queryString = temp.substring(1, nextPartPos);
+                me.host(temp.substring(0, nextPartPos));
                 temp = temp.substr(nextPartPos);
             }
 
-            updateSearch();
-        }
+            if (temp.length === 0) {
+                return;
+            }
 
-        if (temp.length === 0)
-        {
-            return;
-        }
+            nextPartPos = temp.search(/[\?\#]/i);
 
-        //hash (i.e. anchor link- #myanchor)
-        if (temp.indexOf("#") === 0)
-        {
-            me.hash = temp;
-        }
+            //pathname: i.e. /vp/mypage.htm
+            if (nextPartPos !== 0) {
+                if (nextPartPos == -1) {
+                    _pathname = temp;
+                    return;
+                }
+
+                _pathname = temp.substr(0, nextPartPos);
+                temp = temp.substr(nextPartPos);
+            }
+
+            if (temp.length === 0) {
+                return;
+            }
+
+            // queryString (i.e. myval1=1&myval2=2)
+            // search: same as querystring with initial question mark (i.e. ?myval1=1&myval2=2)
+            if (temp.indexOf("?") === 0) {
+                nextPartPos = temp.indexOf("#");
+
+                if (nextPartPos == -1) {
+                    me.queryString = $.deparam(temp.substr(1));
+                    temp = "";
+                } else {
+                    me.queryString = $.deparam(temp.substring(1, nextPartPos));
+                    temp = temp.substr(nextPartPos);
+                }
+            }
+
+            if (temp.length === 0) {
+                return;
+            }
+
+            //hash (i.e. anchor link- #myanchor)
+            if (temp.indexOf("#") === 0) {
+                _hash = temp;
+            }
+        };
+
+        // Gets the URL as a string
+        this.toString = function () {
+            var url = "";
+            var host = me.host();
+            if (host) {
+                url = (_protocol || "http:") + "//" + me.host();
+            }
+            return url + me.pathname() + me.search() + me.hash();
+        };
+
+        // Gets a specific querystring value from its key name
+        this.get = function (key, defaultValue) {
+            if (!me.queryString.hasOwnProperty(key)) {
+                return defaultValue;
+            }
+
+            return _normalize(me.queryString[key]);
+        };
+
+        // Sets a specific querystring value by its key name
+        this.set = function (key, value) {
+            if (key == null || key === "") {
+                throw new Error("Invalid key: " + key);
+            }
+
+            me.queryString[key] = value;
+        };
+
+        // Removes a specific querystring value by its key name
+        this.remove = function (key) {
+            delete me.queryString[key];
+        };
+
+
+        this.getItemOrDefault = this.get;
+        this.getOrDefault = this.get;
+        this.getItem = this.get;
+        this.setItem = this.set;
+        this.removeItem = this.remove;
+
+        load(url ? url.toString() : "");
     };
-
-    var updateSearch = function()
-    {
-        me.search = "";
-        if (me.queryString && me.queryString !== "")
-        {
-            me.search = "?" + me.queryString;
-        }
-    };
-
-    // Gets the URL as a string
-    this.toString = function()
-    {
-        var sPort = me.port;
-        var sProtocol = me.protocol;
-
-        if (sPort && sPort !== "")
-        {
-            sPort = ":" + sPort;
-        }
-        if (sProtocol && sProtocol !== "")
-        {
-            sProtocol = sProtocol + "//";
-        }
-        return sProtocol + me.hostname + sPort + me.pathname + me.search + me.hash;
-    };
-
-    // Gets a specific querystring value from its key name
-    this.getItem = function(key, defaultValue)
-    {
-        var qs = $.deparam(me.queryString);
-
-        var value = qs[key];
-        if (typeof value == "undefined")
-        {
-            return defaultValue;
-        }
-
-        return value;
-    };
-
-    this.getItemOrDefault = this.getItem;
-
-    // Sets a specific querystring value by its key name
-    this.setItem = function(key, value)
-    {
-        var qs = $.deparam(me.queryString);
-
-        if (value === null || typeof value == "undefined")
-        {
-            value = "";
-        }
-        else if (typeof value != "string")
-        {
-            value = value.toString();
-        }
-
-        qs[key] = value;
-        me.queryString = $.param(qs);
-
-        updateSearch();
-    };
-
-    // Removes a specific querystring value by its key name
-    this.removeItem = function(key)
-    {
-        var qs = $.deparam(me.queryString);
-        delete qs[key];
-        me.queryString = $.param(qs);
-
-        me.search = "";
-        if (me.queryString !== "")
-        {
-            me.search = "?" + me.queryString;
-        }
-    };
-
-    load(url.toString());
-};
 
 })(jQuery);

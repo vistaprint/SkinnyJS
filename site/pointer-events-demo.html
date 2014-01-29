@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+	<script type="text/javascript" src="javascripts/jquery.js"></script>
+	<script type="text/javascript" src="../dist/jquery.pointerEvents.js"></script>
+	<script type="text/javascript" src="../dist/jquery.pointerGestures.js"></script>
+	<script type="text/javascript">
+		function log(e, log)
+		{
+			var text = (+new Date) + ': ' + e.type + '|type:' + e.pointerType + '|id:' + e.pointerId + '|' + e.buttons;
+			$('<li>').text(text).appendTo($('#log-' + log));
+		}
+
+		$(function()
+		{
+			var canvas = document.getElementById("canvas");
+			var ctx;
+			if (canvas.getContext) {
+				ctx = canvas.getContext("2d");
+				ctx.fillStyle = "black";
+			}
+
+			var cords = {};
+
+			$('canvas').on({
+				pointerdown: function (e)
+				{
+					log(e, 'canvas');
+
+					e.preventDefault();
+					e.stopPropagation();
+
+					cords[e.pointerId] = true;
+				},
+
+				pointerup: function (e)
+				{
+					log(e, 'canvas');
+					if (e.pointerId !== undefined) {
+						delete cords[e.pointerId];
+					} else {
+						debugger;
+					}
+				},
+
+				pointercancel: function (e)
+				{
+					log(e, 'canvas');
+					if (e.pointerId !== undefined) {
+						delete cords[e.pointerId];
+					} else {
+						debugger;
+					}
+				},
+
+				pointermove: function(e)
+				{
+					if (!cords[e.pointerId]) {
+						return;
+					}
+					log(e, 'canvas');
+					var x = e.pageX;
+					var y = e.pageY;
+					x -= canvas.offsetLeft;
+					y -= canvas.offsetTop;
+
+					ctx.fillRect(x, y, 5, 5);
+				}
+			});
+
+			function preventDefault(e) {
+				e.preventDefault();
+			}
+
+			function bindAll(el, logType) {
+				function customLog(e) {
+					log(e, logType);
+				}
+
+				return $(el).on({
+					touchstart: customLog,
+					// touchmove: customLog,
+					touchend: customLog,
+					mouseup: customLog,
+					mousedown: customLog,
+					// mousemove: customLog,
+					click: customLog,
+					dblclick: customLog,
+					contextmenu: customLog,
+					pointerdown: customLog,
+					pointerup: customLog,
+					press: customLog,
+					presshold: customLog,
+					sweepright: customLog,
+					sweepleft: customLog,
+					touchcancel: customLog,
+					pointercancel: customLog //,
+					// pointermove: customLog
+				});
+			}
+
+			bindAll('#record', 'record');
+			bindAll('#bubble', 'bubble');
+			bindAll('#prevent-down', 'prevent-down').on('pointerdown', preventDefault);
+			bindAll('#prevent-up', 'prevent-up').on('pointerup', preventDefault);
+
+			// clear log utility
+			$('.clear-log').on('click', function () {
+				$(this).parent().find('> ul').empty();
+			});
+		});
+	</script>
+
+	<style text="text/css">
+	canvas { touch-action: none; -ms-touch-action: none; }
+	</style>
+</head>
+<body>
+	<h1>Draw on canvas</h1>
+	<div style="float: left">
+		<canvas id="canvas" width="300" height="300" style="border: 1px solid black;"></canvas>
+	</div>
+	<div style="float: right">
+		<button class="clear-log">clear</button>
+		<ul id="log-canvas"></ul>
+	</div>
+
+	<h1 style="clear: both">Track events</h1>
+	<div style="float: left">
+		<div style="background: blue; color: white; padding: 10px" id="record">tap me to record activity</div>
+	</div>
+	<div style="float: right">
+		<button class="clear-log">clear</button>
+		<ul id="log-record"></ul>
+	</div>
+
+	<h1 style="clear: both">Bubbled event</h1>
+	<div style="float: left">
+		<div id="bubble">
+			<a href="#" style="background: blue; color: white; padding: 10px">tap me to record activity</a>
+		</div>
+	</div>
+	<div style="float: right">
+		<button class="clear-log">clear</button>
+		<ul id="log-bubble"></ul>
+	</div>
+
+	<h1 style="clear: both">Prevent default on pointerdown</h1>
+	<div style="float: left">
+		<div id="prevent-down">
+			<a href="#" style="background: blue; color: white; padding: 10px">tap me to record activity</a>
+		</div>
+	</div>
+	<div style="float: right">
+		<button class="clear-log">clear</button>
+		<ul id="log-prevent-down"></ul>
+	</div>
+
+	<h1 style="clear: both">Prevent default on pointerup</h1>
+	<div style="float: left">
+		<div id="prevent-up">
+			<a href="#" style="background: blue; color: white; padding: 10px">tap me to record activity</a>
+		</div>
+	</div>
+	<div style="float: right">
+		<button class="clear-log">clear</button>
+		<ul id="log-prevent-up"></ul>
+	</div>
+</body>
+</html>

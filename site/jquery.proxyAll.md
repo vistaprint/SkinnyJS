@@ -11,25 +11,20 @@ Binding a method to an object ensures that the "this" variable always refers to 
 ### Usage
 
 {% highlight javascript %}
-    var Car = function()
-    {
+    var Car = function() {
         $.proxyAll(this);
     };
      
-    Car.prototype = 
-    {
-        drive: function(speed)
-        {
+    Car.prototype = {
+        drive: function(speed) {
             // some implementation
         },
      
-        driveFast: function()
-        {
+        driveFast: function() {
             this.drive("120mph");
         },
      
-        driveSlow: function()
-        {
+        driveSlow: function() {
             this.drive("15mph");
         }
     };

@@ -9,9 +9,8 @@ Wraps HTML5 postMessage for cross-origin message sending between windows.
 Fallback implementation works on browsers that don't support postMessage.
 
 Based on concepts from: <http://benalman.com/projects/jquery-postmessage-plugin/>
-Improved for non-awesome browsers by using iframes for communication instead of  
-url fragments and polling. This technique eliminates race conditions where messages sent
-in rapid succession might not be received. It also removes the need for polling.
+
+Improved for non-awesome browsers by using iframes for communication instead of url fragments and polling. This technique eliminates race conditions where messages sent in rapid succession might not be received. It also removes the need for polling.
 
 Supports almost any conceivable browser, tested with IE6+
 
@@ -75,8 +74,7 @@ In general, its a good idea to filter out requests from unknown domains. This ex
 
 {% highlight javascript %}
     $(window).on("message", function(e) {
-            if (e.origin !== "http://www.foo.com")
-            {
+            if (e.origin !== "http://www.foo.com") {
                 return;
             }
             alert(e.data); // Alerts "this is a message"
@@ -87,8 +85,7 @@ This example alerts every message it receives, from any subdomain of foo.com:
 
 {% highlight javascript %}
     $(window).on("message", function(e) {
-        if (origin.search(/http:\/\/[^\.]*\.foo\.com$/gi) < 0)
-        {
+        if (origin.search(/http:\/\/[^\.]*\.foo\.com$/gi) < 0) {
             return;
         }
         alert(e.data); // Alerts "this is a message"
@@ -99,13 +96,11 @@ Its also a common practice to "namespace" messages so your handlers don't respon
 
 {% highlight javascript %}
     $(window).on("message", function(e) {
-        if (e.origin !== "http://www.foo.com")
-        {
+        if (e.origin !== "http://www.foo.com") {
             return;
         }
         
-        if (e.data.indexOf("fruit:") !== 0)
-        {
+        if (e.data.indexOf("fruit:") !== 0) {
             return;
         }
          

@@ -13,6 +13,7 @@ Uses declarative syntax to define a dialog. Syntax:
     data-dialog-skin="{skin}"
     data-dialog-ajax="{true or false}"
     data-dialog-destroyonclose="{true or false}"
+    data-dialog-zIndex="{default zIndex}"
     >link</a>
 
 For node dialogs, these same properties can also be put on the dialog node as well.
@@ -23,31 +24,26 @@ the trigger tag unobtrusive
 TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 */
 
-(function($) 
-{
+(function ($) {
     var DIALOG_DATA_KEY = "modalDialogUnobtrusive";
 
     // Click handler for all links which open dialogs
-    var dialogLinkHandler = function(e)
-    {
+    var dialogLinkHandler = function (e) {
         e.preventDefault();
-        
-        var $link = $(e.target);
+
+        var $link = $(e.currentTarget);
 
         var dialog = $link.data(DIALOG_DATA_KEY);
 
-        if (!dialog)
-        {
+        if (!dialog) {
             var href = $link.attr("href");
 
-            if (!href)
-            {
+            if (!href) {
                 throw new Error("no href specified with data-rel='modalDialog'");
             }
 
             // Create a dialog settings object
-            var settings = 
-            {
+            var settings = {
                 contentOrUrl: href
             };
 
@@ -61,13 +57,12 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
             $link.trigger(evt);
 
-            if (evt.isDefaultPrevented())
-            {
+            if (evt.isDefaultPrevented()) {
                 return;
             }
 
             dialog = $.modalDialog.create(settings);
-            
+
             // Give unobtrusive scripts a chance to modify the dialog
             evt = new $.Event("dialogcreate");
             evt.dialogSettings = settings;
@@ -75,8 +70,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
             $link.trigger(evt);
 
-            if (evt.isDefaultPrevented())
-            {
+            if (evt.isDefaultPrevented()) {
                 return;
             }
 
@@ -91,12 +85,18 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     $(document).on("click", "[data-rel='modalDialog']", dialogLinkHandler);
 
     // Helpful utility: A class that will make a button close dialogs by default
-    $(document).on("click", ".close-dialog", function(e)
-    {
+    $(document).on("click", ".close-dialog", function (e) {
         e.preventDefault();
-        $.modalDialog.getCurrent().close();
+
+        // Defer to the next tick of the event loop. It makes it more useful
+        // to apply this class without having to worry if the close handler will
+        // run before any other handlers.
+        setTimeout(function () {
+            var dialog = $.modalDialog.getCurrent();
+            if (dialog) {
+                dialog.close();
+            }
+        }, 0);
     });
 
 })(jQuery);
-
-

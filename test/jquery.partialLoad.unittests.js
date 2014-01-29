@@ -1,94 +1,99 @@
-﻿
-$(document).ready(function()
-{
-    function cleanup()
-    {
-        $("#contentContainer").empty();
-    }
+ /* globals CONTENT_SCRIPT_GLOBAL1, INLINE_GLOBAL1 */
+ mocha.setup({
+     globals: ["CONTENT_SCRIPT_GLOBAL1", "INLINE_GLOBAL1"]
+ });
 
-    module(
-        "jquery.partialLoad",
-        {
-            setup: cleanup,
-            teardown: cleanup
-        });
+ describe("jquery.partialLoad()", function () {
+     var assert = chai.assert;
 
-    asyncTest("Ensure content is loaded with no scripts", 2, function()
-    {
-        $("#contentContainer").partialLoad(
-            "content/jquery.partialLoad.content.html", 
-            "#interestingContent1", 
-            function() 
-            { 
-                var content = $("#contentContainer").html();
+     function cleanup() {
+         $("#contentContainer").empty();
+     }
 
-                equal(content, "<div id=\"interestingContent1\">interesting content 1</div>");
-                ok(typeof CONTENT_SCRIPT_GLOBAL1 == "undefined", "Ensure a script from an element other than the target is NOT executed");
+     beforeEach(cleanup);
+     afterEach(cleanup);
 
-                start();
-            });
-    });
+     it("should load content from a page containing scripts, but not load the scripts if they're not in the target element", function (done) {
+         $("#contentContainer").partialLoad(
+             "content/jquery.partialLoad.content.html",
+             "#interestingContent1",
+             function () {
+                 var content = $("#contentContainer").html();
 
-    asyncTest("Ensure script in content is executed", 2, function()
-    {
-        $("#contentContainer").partialLoad(
-            "content/jquery.partialLoad.content.html", 
-            "#withContentScript1", 
-            function() 
-            { 
-                var content = $("#contentContainer .interesting-inner").html();
+                 assert.equal(content, "<div id=\"interestingContent1\">interesting content 1</div>");
+                 assert.isUndefined(window.CONTENT_SCRIPT_GLOBAL1, "Ensure a script from an element other than the target is NOT executed");
 
-                equal(content, "with content script 1");
-                ok(typeof CONTENT_SCRIPT_GLOBAL1 != "undefined", "Ensure a script from the current element is executed");
+                 done();
+             });
+     });
 
-                start();
-            });
-    });
+     it("should load content from a page and execute scripts from the target element", function (done) {
+         $("#contentContainer").partialLoad(
+             "content/jquery.partialLoad.content.html",
+             "#withContentScript1",
+             function () {
+                 var content = $("#contentContainer .interesting-inner").html();
 
-    asyncTest("Ensure inline script in content is executed", 2, function()
-    {
-        $("#contentContainer").partialLoad(
-            "content/jquery.partialLoad.content.html", 
-            "#withInlineScript", 
-            function() 
-            { 
-                var content = $("#contentContainer .interesting-inner").html();
+                 assert.equal(content, "with content script 1");
+                 assert.isDefined(CONTENT_SCRIPT_GLOBAL1, "Ensure a script from the current element is executed");
 
-                equal(content, "with inline script");
-                ok(typeof INLINE_GLOBAL1 != "undefined", "Ensure an inline from the current element is executed");
+                 done();
+             });
+     });
 
-                start();
-            });
-    });
+     it("should load content and execute inline scripts in the target element", function (done) {
+         $("#contentContainer").partialLoad(
+             "content/jquery.partialLoad.content.html",
+             "#withInlineScript",
+             function () {
+                 var content = $("#contentContainer .interesting-inner").html();
 
-    asyncTest("Ensure script in content is not executed if already loaded", 2, function()
-    {
-        $("#contentContainer").partialLoad(
-            "content/jquery.partialLoad.content.html", 
-            "#withDuplicateScript", 
-            function() 
-            { 
-                var content = $("#contentContainer .interesting-inner").html();
+                 assert.equal(content, "with inline script");
+                 assert.isDefined(INLINE_GLOBAL1, "Ensure an inline from the current element is executed");
 
-                equal(content, "with duplicate script");
-                equal(window.CONTENT_SCRIPT_DEFINE_ONCE, 1, "Ensure a script from the current element is not executed because it is already loaded");
+                 done();
+             });
+     });
 
-                start();
-            });
-    });
+     it("should load content and not execute scripts in the target element if they are already loaded", function (done) {
+         $("#contentContainer").partialLoad(
+             "content/jquery.partialLoad.content.html",
+             "#withDuplicateScript",
+             function () {
+                 var content = $("#contentContainer .interesting-inner").html();
 
-    asyncTest("Ensure script in content is not executed if already loaded, with no target selector", 2, function()
-    {
-        $("#contentContainer").partialLoad(
-            "content/jquery.partialLoad.content.html", 
-            function() 
-            { 
-                var content = $("#contentContainer #bodyContent .interesting-inner").html();
+                 assert.equal(content, "with duplicate script");
+                 assert.equal(window.CONTENT_SCRIPT_DEFINE_ONCE, 1, "Ensure a script from the current element is not executed because it is already loaded");
 
-                equal(content, "body content", "Ensure all body content is loaded if no target selector is passed");
-                equal(window.CONTENT_SCRIPT_DEFINE_ONCE, 1, "Ensure a script from the current element is not executed because it is already loaded");
+                 done();
+             });
+     });
 
-                start();
-            });
-    });
-});
+     it("should load content and not execute scripts if they are already loaded, with no target selector specified", function (done) {
+         $("#contentContainer").partialLoad(
+             "content/jquery.partialLoad.content.html",
+             function () {
+                 var content = $("#contentContainer #bodyContent .interesting-inner").html();
+
+                 assert.equal(content, "body content", "Ensure all body content is loaded if no target selector is passed");
+                 assert.equal(window.CONTENT_SCRIPT_DEFINE_ONCE, 1, "Ensure a script from the current element is not executed because it is already loaded");
+
+                 done();
+             });
+     });
+
+     it("should load content and remove meta, noscript, and link tags", function (done) {
+         $("#contentContainer").partialLoad(
+             "content/jquery.partialLoad.contentWithMeta.html",
+             function () {
+                 var $content = $("#contentContainer");
+
+                 assert.equal($content.find("meta").length, 0, "Should remove all meta tags");
+                 assert.equal($content.find("link").length, 1, "Should remove all stylesheets that are not unique");
+                 assert.equal($content.find("link").attr("href"), "content/somecss.css", "Should leave unique stylesheet");
+                 assert.equal($content.find("title").length, 1, "Should preserve title from content");
+                 assert.equal($content.find("title").text(), "jquery.partialLoad test content");
+                 done();
+             });
+     });
+ });

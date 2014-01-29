@@ -15,12 +15,10 @@ This is implemented as a thin wrapper on jQuery.Callbacks().
 Here's a simple class *Car* that exposes the event *ondrive*:
 
 {% highlight javascript %}
-    var Car = function()
-    {
+    var Car = function() {
         $.CustomEvent.create(this, "ondrive");
     
-        this.drive = function()
-        {
+        this.drive = function() {
             // TODO some driving implementation
             this.ondrive.fire();
         }
@@ -37,12 +35,10 @@ A consumer of Car could observe the event:
 We can also customize the event object that is passed to observers:
 
 {% highlight javascript %}
-    var Car = function()
-    {
+    var Car = function() {
         $.CustomEvent.create(this, "ondrive");
     
-        this.drive = function(speed)
-        {
+        this.drive = function(speed) {
             // Data will be passed to handlers via the event object
             this.ondrive.fire({ speed: speed }); 
         }
@@ -58,15 +54,12 @@ such as *preventDefault()* and *isDefaultPrevented()* to allow observers to infl
 object.
 
 {% highlight javascript %}
-    var Car = function()
-    {
+    var Car = function() {
         $.CustomEvent.create(this, "ondrive");
     
-        this.drive = function()
-        {
+        this.drive = function() {
             var evt = this.ondrive.fire(); 
-            if (evt.isDefaultPrevented())
-            {
+            if (evt.isDefaultPrevented()) {
                 // Stop driving!!!
             }
         }

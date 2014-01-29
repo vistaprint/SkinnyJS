@@ -3,17 +3,20 @@
 <head>
   <meta charset="utf-8">
   <title>jquery.partialLoad unit tests (jquery 1.7.2)</title>
-  <link rel="stylesheet" href="../dependencies/qunit.css">
+  <link rel="stylesheet" href="../dependencies/mocha.css">
+  <link href="content/somecss-alreadyloaded.css" rel="stylesheet" />
 </head>
 <body>
-  <div id="qunit"></div>
-  <div id="qunit-fixture"></div>
+  <div id="mocha"></div>
 
   <div id="contentContainer"></div>
 
-  <script src="../dependencies/qunit.js"></script>
-  <!-- ensure jquery.partialLoad.js works with old jQuery: the signature of $.buildFragment() changes in 1.9-->
   <script src="../dependencies/jquery-1.7.2.js"></script>
+  <script src="../dependencies/mocha.js"></script>
+  <script src="../dependencies/chai.js"></script>
+  <script src="unittests.shared.js"></script>
+  <!-- ensure jquery.partialLoad.js works with old jQuery: the signature of $.buildFragment() changes in 1.9-->
+
   <script src="../js/jquery.partialLoad.js"></script>
   <script src="content/jquery.partialLoad.contentScriptLoadOnce.js"></script>
   <script src="jquery.partialLoad.unittests.js"></script>
