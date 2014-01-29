@@ -17,6 +17,7 @@
   <!--TODO: Remove the explicit includes of skinnJS classes - use the builder to generate a skinny.js file -->
   <script type="text/javascript" src="../dist/jquery.proxyAll.js" /></script>
   <script type="text/javascript" src="../dist/jquery.clientRect.js" /></script>
+  <script type="text/javascript" src="../dist/jquery.calcRestrainedPos.js" /></script>
   <script type="text/javascript" src="../dist/jquery.tutorialOverlay.js" /></script>
 
   <!--<script type="text/javascript" src="javascripts/tutorial-overlay-demo.js" /></script>
@@ -59,9 +60,9 @@
   <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="north east">North East</div>
   <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="EAST">East</div>
   <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="east-south">South East</div>
-  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="south and ignored directions">South</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="south">South</div>
   <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="bottomleft">South West</div>
-  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="weSt is on the Left">West</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="weSt">West</div>
 
   <div class="tutorial-overlay-content">
     <div class="box-title">Page Ready Overlay</div>
@@ -99,12 +100,12 @@
     });
 
     overlay.addTip({
-      content: "<div>Click here to show the overlay using the JavaScript API.</div>",
+      content: "<span>Click here to show the overlay using the JavaScript API.</span>",
       target: "#showBtn",
       position: "north"
     });
     overlay.addTip({
-      content: "<div>Click here to show the overlay that is defined in the DOM.</div>",
+      content: "<span>Click here to show the overlay that is defined in the DOM.</span>",
       target: "#showIdiomatic",
       position: "north"
     });
