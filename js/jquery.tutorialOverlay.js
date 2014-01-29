@@ -485,6 +485,7 @@
             } else {
                 //collision detected
                 // move the tip?
+                //Note: this should never happen in practice.  See above TODO.
                 tip.$tip.hide();
                 return;
             }
@@ -835,13 +836,13 @@
         case "WSW":
         case "WNW":
             //Arrow points west
-            valid = (endPt.y >= targetRect.bottom) && (endPt.y <= targetRect.top) && (endPt.x <= targetRect.left);
+            valid = (endPt.y >= targetRect.top) && (endPt.y <= targetRect.bottom) && (endPt.x >= targetRect.right);
             break;
 
         case "ESE":
         case "ENE":
             //Arrow points east
-            valid = (endPt.y >= targetRect.bottom) && (endPt.y <= targetRect.top) && (endPt.x >= targetRect.right);
+            valid = (endPt.y >= targetRect.top) && (endPt.y <= targetRect.bottom) && (endPt.x <= targetRect.left);
             break;
         }
         return valid;
