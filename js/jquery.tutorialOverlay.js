@@ -164,8 +164,8 @@
                 //    $canvas.on("click", this._clickHandler);
                 //}
             }
+            this._$canvas = $canvas;
         }
-        this._$canvas = $canvas;
     };
 
     TutorialOverlay.prototype._initializeTips = function () {
@@ -465,7 +465,6 @@
             return;
         }
 
-
         //Check for collisions with the center content, other tips (and other child elements of the overlay?)
         if (occupiedRects) {
             newTipRect = $.extend({}, tipRect);
@@ -482,7 +481,6 @@
                 return;
             }
         }
-
 
         //Set the tip's position
         tip.$tip.css({
@@ -895,7 +893,7 @@
         rect.width += dw;
         rect.height += dh;
         _translateRect(rect, -dw / 2, -dh / 2);
-    }
+    };
 
     var _addPointToRect = function (x, y, rect) {
         if (x < rect.left) {
@@ -967,7 +965,7 @@
             //}
         }
         if (!overlay) {
-            throw new Error("No content node specified.")
+            throw new Error("No content node specified.");
         }
 
         return overlay;
