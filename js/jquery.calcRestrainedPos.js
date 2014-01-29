@@ -223,14 +223,14 @@
                              */
                             if ((box.left < rect.left) && (box.left + box.width > rect.left)) {
                                 //shift box left if possible
-                                newPos.left = rect.left - (box.width + 1);
+                                newPos.left = rect.left - (box.width + offsets.horizontal);
                                 // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
                                 if (options.cornerAdjacent && (newPos.left < context.left + offsets.padding) && (newPos.left + content.width > context.left + context.width - offsets.padding)) {
                                     newPos.left = (context.left + context.width) - (content.width + offsets.padding);
                                 }
                                 if (newPos.left < posLimits.minX) {
                                     //cannot shift box that far - try other side:
-                                    newPos.left = (rect.left + rect.width) + 1;
+                                    newPos.left = (rect.left + rect.width) + offsets.horizontal;
                                     // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
                                     if (options.cornerAdjacent && (newPos.left < context.left + offsets.padding) && (newPos.left + content.width > context.left + context.width - offsets.padding)) {
                                         newPos.left = context.left + offsets.padding;
@@ -278,14 +278,14 @@
                              */
                             else /*if ((box.left < rect.left + rect.width) && (box.left + box.width > rect.left + rect.width))*/ {
                                 //shift box right if possible
-                                newPos.left = (rect.left + rect.width) + 1;
+                                newPos.left = (rect.left + rect.width) + offsets.horizontal;
                                 // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
                                 if (options.cornerAdjacent && (newPos.left < context.left + offsets.padding) && (newPos.left + content.width > context.left + context.width - offsets.padding)) {
                                     newPos.left = context.left + offsets.padding;
                                 }
                                 if (newPos.left > posLimits.maxX) {
                                     //cannot shift box that far - try other side:
-                                    newPos.left = rect.left - (box.width + 1);
+                                    newPos.left = rect.left - (box.width + offsets.horizontal);
                                     // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
                                     if (options.cornerAdjacent && (newPos.left < context.left + offsets.padding) && (newPos.left + content.width > context.left + context.width - offsets.padding)) {
                                         newPos.left = (context.left + context.width) - (content.width + offsets.padding);
@@ -344,14 +344,14 @@
                              */
                             if ((box.top < rect.top) && (box.top + box.height >= rect.top)) {
                                 //shift box up if possible
-                                newPos.top = rect.top - (box.height + 1);
+                                newPos.top = rect.top - (box.height + offsets.vertical);
                                 // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
                                 if (options.cornerAdjacent && (newPos.top < context.top + offsets.padding) && (newPos.top + content.height > context.top + context.height - offsets.padding)) {
                                     newPos.top = (context.top + context.height) - (content.height + offsets.padding);
                                 }
                                 if (newPos.top < posLimits.minY) {
                                     //cannot shift box that far - try other side:
-                                    newPos.top = (rect.top + rect.height) + 1;
+                                    newPos.top = (rect.top + rect.height) + offsets.vertical;
                                     // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
                                     if (options.cornerAdjacent && (newPos.top < context.top + offsets.padding) && (newPos.top + content.height > context.top + context.height - offsets.padding)) {
                                         newPos.top = context.top + offsets.padding;
@@ -405,14 +405,14 @@
                              */
                             else /*if ((box.top > rect.top) && (box.top + box.height > rect.top))*/ {
                                 //shift box down if possible
-                                newPos.top = (rect.top + rect.height) + 1;
+                                newPos.top = (rect.top + rect.height) + offsets.vertical;
                                 // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
                                 if (options.cornerAdjacent && (newPos.top < context.top + offsets.padding) && (newPos.top + content.height > context.top + context.height - offsets.padding)) {
                                     newPos.top = context.top + offsets.padding;
                                 }
                                 if (newPos.top > posLimits.maxY) {
                                     //cannot shift box that far - try other side:
-                                    newPos.top = rect.top - (box.height + 1);
+                                    newPos.top = rect.top - (box.height + offsets.vertical);
                                     // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
                                     if (options.cornerAdjacent && (newPos.top < context.top + offsets.padding) && (newPos.top + content.height > context.top + context.height - offsets.padding)) {
                                         newPos.top = (context.top + context.height) - (content.height + offsets.padding);
