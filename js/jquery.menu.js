@@ -553,7 +553,7 @@
                     if (me.isTopLevel) {
                         _ignoreDocumentClick = +(new Date());
                     }
-                };
+                }
 
                 this.showClick = function (e) {
                     if (me.isTopLevel) {
