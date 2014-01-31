@@ -12,27 +12,20 @@
         _skins[name] = skin;
     };
 
-    // TODO: Promote to a plugin?
-    $.fn.swapClasses = function (class1, class2, enabled) {
-        var classToAdd = enabled ? class1 : class2;
-        var classToRemove = enabled ? class2 : class1;
-
-        if (!this.hasClass(classToAdd)) {
-            this.addClass(classToAdd).removeClass(classToRemove);
-        }
-
-        return this;
-    };
-
     // Hover highlighting
-    var highlightMenuItem = function ($item, enabled) {
-        $item.swapClasses("hover", "nohover", enabled);
-    };
+    function highlightMenuItem($item, enabled) {
+        var classToAdd = enabled ? "hover" : "nohover";
+        var classToRemove = enabled ? "nohover" : "hover";
+
+        if (!$item.hasClass(classToAdd)) {
+            $item.addClass(classToAdd).removeClass(classToRemove);
+        }
+    }
 
     // TODO: It would be nice to have a jQuery.findUntil(selector)
     // This is a simple substitute. Recurse until the an element is found
     // with the specified class, and then stop searching in that node.
-    var findUntilInternal = function (elem, fnIsMatch, results) {
+    function findUntilInternal(elem, fnIsMatch, results) {
         if (elem.nodeType !== 1) {
             return;
         }
@@ -44,10 +37,10 @@
         for (var i = 0, len = elem.childNodes.length; i < len; i++) {
             findUntilInternal(elem.childNodes[i], fnIsMatch, results);
         }
-    };
+    }
 
     //jQuery wrapper
-    var findUntil = function ($elem, fnIsMatch) {
+    function findUntil($elem, fnIsMatch) {
         var results = [];
 
         $elem.each(function () {
@@ -55,24 +48,7 @@
         });
 
         return $(results);
-    };
-
-    // Merges default options into the options passed in.
-    // Ensures that functions passed as null/undefined in options are replaced
-    // with no-op functions.
-    var mergeOptions = function (defaults) {
-        var merged = $.extend.apply({}, arguments);
-
-        //Ensure options have functions, even if they were passed as null/undefined
-        for (var option in merged) {
-            if (typeof defaults[option] == "function" &&
-                typeof merged[option] != "function") {
-                merged[option] = $.noop;
-            }
-        }
-
-        return merged;
-    };
+    }
 
     var _defaults = {
         // When true, the top level menu opens on mouseover (instead of on click, which is the default).
@@ -83,23 +59,29 @@
         linksWithSubmenusEnabled: false,
 
         // Event which fires when a menu item is selected.
-        selected: $.noop,
+        selected: null,
 
         // Event which fires before a menu panel is show. Can be used to prevent the panel from showing.
-        beforeShowPanel: $.noop,
+        beforeShowPanel: null,
 
         // Event which fires before a menu panel is hidden. Can be used to prevent the panel from hiding.
-        beforeHidePanel: $.noop,
+        beforeHidePanel: null,
 
         // Event which fires after a panel is shown.
-        showPanelComplete: $.noop,
+        showPanelComplete: null,
 
         // Event which fires after a panel is hidden.
-        hidePanelComplete: $.noop,
+        hidePanelComplete: null,
+
+        // Event which fires on show allowing you to override the animation
+        animationShow: null,
+
+        // Event which fires on hide allowing you to override the animation
+        animationHide: null,
 
         // Event which allows overriding the positioning of a panel when it is shown. 
         // This is defined by the skin by default, but can be overridden for any instance of the menu.
-        position: $.noop,
+        position: null,
 
         // The predefined skin to use for rendering this instance
         skin: "basic"
@@ -120,20 +102,17 @@
         }
 
         // Merge explicit options with skin and defaults
-        var _options = mergeOptions({}, _defaults, _skin || {}, options);
+        var _options = $.extend({}, _defaults, _skin || {}, options);
 
         // Resolve conflicting options
         if (!_options.showOnHover) {
             _options.linksWithSubmenusEnabled = false;
         }
 
-        // Mimics the delay time in Windows/MacOS
-        var FADE_MS = 150;
-
         // Creates a menu "group" from a jQuery collection of top-level
         // menu items. This will be called once for each element in the
         // top level jQuery object's collection.
-        var createMenuFromTopMenuItems = function ($topLevelItems) {
+        function createMenuFromTopMenuItems($topLevelItems) {
             // Assign a CSS class to help distinguish between top-level
             // and sub menus.
             $topLevelItems.addClass("menu-item-top");
@@ -154,7 +133,7 @@
             // the click came from the menu, so it should be ignored.
             var _ignoreDocumentClick = false;
 
-            var Panel = function ($panel, $item) {
+            var Panel = function Panel($panel, $item) {
                 var me = this;
 
                 this.$panel = $panel;
@@ -177,20 +156,24 @@
                 }
 
                 // Bind event handlers to DOM elements
-                var init = function () {
-                    me.$item
-                        // Assign a special class to distinguish menu items with a submenu from those without one.
-                        .addClass("menu-item-with-submenu")
-                        // Bind the special "press" event, when an item is tapped/clicked we determine what to do.
-                        .on({
-                            "press": toggleClick,
-                            "click": preventClickSometimes
-                        })
+                function init() {
+                    // Assign a special class to distinguish menu items with a submenu from those without one.
+                    me.$item.addClass("menu-item-with-submenu");
+
+                    // Bind the special "press" event, when an item is tapped we determine what to do.
+                    me.$item.on({
+                        "press": toggleClick,
+                        "click": preventClickSometimes
+                    });
+
+                    // setup pointer hover events only when the option is enabled
+                    if (_options.showOnHover) {
                         // Set up event handlers to control submenus appearing on hover
-                        .hoverDelay(mouseOver, mouseOut, {
+                        me.$item.hoverDelay(showOnPointerOver, hideOnPointerOut, {
                             delayOver: me.isTopLevel && !_options.showOnHover ? 0 : 200,
                             delayOut: 500
                         });
+                    }
 
                     // Top menu items have different rules for rollovers (mimics Windows/MacOS menus)
                     if (me.isTopLevel) {
@@ -224,7 +207,9 @@
                                     ev.$selectedItem = $clickedMenuItem;
                                     ev.selectedItem = $clickedMenuItem[0];
 
-                                    _options.selected.call(this, ev);
+                                    if (_options.selected) {
+                                        _options.selected.call(this, ev);
+                                    }
 
                                     // Give the event handler a chance to cancel the event.
                                     if (ev.cancel) {
@@ -246,17 +231,24 @@
                         });
 
                         // Ensure a tags within a menu item with a submenu get disabled
+                        // This flag setting allows the menu to make sub menu items
+                        // only open/close the submenu, and prevent navigation with clicks
+                        // Note: That on touch events, these sub menu links always cause
+                        // the sub menu to toggle.
                         if (!_options.linksWithSubmenusEnabled) {
-                            getLinksWithSubmenus().on("click", preventDefault);
+                            getLinksWithSubmenus().on("click", function (event) {
+                                // prevent the navigation behavior
+                                event.preventDefault();
+
+                                // stop propagation to prevent this click from going to
+                                // document and elements beneath this menu item
+                                event.stopPropagation();
+                            });
                         }
                     }
-                };
+                }
 
-                var preventDefault = function (e) {
-                    e.preventDefault();
-                };
-
-                var getLinksWithSubmenus = function () {
+                function getLinksWithSubmenus() {
                     return findUntil(me.$item, function (elem, results) {
                         // Stop searching once we get to the nested panel.
                         // We're only interested in A tags owned by this specific
@@ -272,11 +264,11 @@
 
                         return true;
                     });
-                };
+                }
 
                 // Resolves the .parent property and adds this Panel
                 // to the parent's children property.
-                this.resolveParent = function () {
+                this.resolveParent = function resolveParent() {
                     me.parent = me.$parentPanel.data("PanelInstance") || _rootMenu;
                     me.parent.children.push(me);
                 };
@@ -284,7 +276,7 @@
                 var _level = null;
 
                 // Gets the level of the Panel in the heirarchy. 0 is the root menu item.
-                this.getLevel = function () {
+                this.getLevel = function getLevel() {
                     if (_level === null) {
                         _level = -1; // Account for _rootMenu: first level menu should be level 0
                         var current = me.parent;
@@ -300,7 +292,7 @@
                 var _siblings;
 
                 // Gets an array of the siblings of this Panel (Panels with the same parent)
-                this.getSiblings = function () {
+                this.getSiblings = function getSiblings() {
                     if (!_siblings) {
                         _siblings = [];
                         if (me.parent) {
@@ -317,7 +309,7 @@
 
                 // TODO use a jQuery event
                 // Creates a new "fake" event for passing to event handlers
-                var getEvent = function (e) {
+                function getEvent(e) {
                     return {
                         $panel: me.$panel,
                         panel: me,
@@ -331,18 +323,18 @@
                             this.cancel = true;
                         }
                     };
-                };
+                }
 
                 // Adds/removes the "hover" class. Allows callers to 
                 // define their own rollover states.
                 // Note: We cant use CSS hover pseudo-classes because the rules
                 // for Windows/MacOS style menus don't follow the same rules.
-                var highlight = function (enabled) {
+                function highlight(enabled) {
                     highlightMenuItem(me.$item, enabled);
-                };
+                }
 
                 // Determines if the current menu should show on hover (in addition to click)
-                var shouldShowSubmenuOnHover = function () {
+                function shouldShowSubmenuOnHover() {
                     if (!me.isTopLevel) {
                         return true;
                     }
@@ -351,9 +343,9 @@
                     // if we're in "hover mode" (there has already been a click),
                     // or if we're in the "always on" hover mode.
                     return _clickHoverActivated || _options.showOnHover;
-                };
+                }
 
-                var mouseOver = function (e) {
+                function showOnPointerOver(e) {
                     // In Windows/MacOS, top level menus highlight instantly, with no delay
                     if (me.isTopLevel) {
                         highlight(true);
@@ -364,9 +356,9 @@
                     }
 
                     me.show(e);
-                };
+                }
 
-                var mouseOut = function (e) {
+                function hideOnPointerOut(e) {
                     if (me.isTopLevel && !_options.showOnHover) {
                         return;
                     }
@@ -376,10 +368,10 @@
                     }
 
                     me.hide(e);
-                };
+                }
 
                 // Shows the panel
-                this.show = function (e) {
+                this.show = function show(e) {
                     if (me.transitioning || me.isOpen) {
                         return;
                     }
@@ -389,7 +381,9 @@
                     if (me.$panel) {
                         ev = getEvent(e);
 
-                        _options.beforeShowPanel.call(me, ev);
+                        if (_options.beforeShowPanel) {
+                            _options.beforeShowPanel.call(me, ev);
+                        }
 
                         // Give the handler a chance to cancel the event
                         if (ev.cancel) {
@@ -415,26 +409,32 @@
 
                     // Hook for positioning strategies
                     ev = getEvent(e);
-                    _options.position(ev);
 
+                    // Fire the position event provided by the skin or options
+                    // to calculate positioning for the menu
+                    if (_options.position) {
+                        _options.position(ev);
+                    }
+
+                    // if we have a hook to override the animation we use
                     if (_options.animationShow) {
                         _options.animationShow.call(me, ev, showComplete);
-                    } else if (me.isTopLevel) {
+                    } else {
                         $panel.show();
                         showComplete();
-                    } else {
-                        $panel.fadeIn(FADE_MS, showComplete);
                     }
                 };
 
-                var showComplete = function (e) {
+                function showComplete(e) {
                     me.isOpen = true;
                     me.transitioning = false;
 
-                    _options.showPanelComplete.call(me, getEvent(e));
-                };
+                    if (_options.showPanelComplete) {
+                        _options.showPanelComplete.call(me, getEvent(e));
+                    }
+                }
 
-                this.hide = function (e) {
+                this.hide = function hide(e) {
                     if (!me.isOpen || me.transitioning) {
                         return;
                     }
@@ -442,7 +442,9 @@
                     if (me.$panel) {
                         var ev = getEvent(e);
 
-                        _options.beforeHidePanel.call(me, ev);
+                        if (_options.beforeHidePanel) {
+                            _options.beforeHidePanel.call(me, ev);
+                        }
 
                         // Give the handler a chance to cancel the event
                         if (ev.cancel) {
@@ -464,20 +466,20 @@
 
                     if (_options.animationHide) {
                         _options.animationHide.call(me, getEvent(e), hideComplete);
-                    } else if (me.isTopLevel) {
+                    } else {
                         $panel.hide();
                         hideComplete();
-                    } else {
-                        $panel.fadeOut(FADE_MS, hideComplete);
                     }
                 };
 
-                var hideComplete = function (e) {
+                function hideComplete(e) {
                     me.isOpen = false;
                     me.transitioning = false;
 
-                    _options.hidePanelComplete.call(me, getEvent(e));
-                };
+                    if (_options.hidePanelComplete) {
+                        _options.hidePanelComplete.call(me, getEvent(e));
+                    }
+                }
 
                 // signal to prevent the next click, set during a touch event
                 // to prevent the click, because you cannot cancel the
@@ -488,6 +490,12 @@
                 // Sometimes, we need to prevent the native click event
                 // it's sad, but this is the best implementation I've created
                 function preventClickSometimes(e) {
+                    // we stop propagation to prevent this click from
+                    // going to the document handler to close all menus
+                    // this also prevents the clicks from going through
+                    // to items below the menu
+                    e.stopPropagation();
+
                     if (_shouldPreventNextClick) {
                         // compare the time difference, we only listen to this
                         // prevention if it's within 200ms of the original
@@ -497,19 +505,15 @@
                         // reset the trigger
                         _shouldPreventNextClick = false;
 
-                        // if the time difference is less than 200ms
-                        if (timeDiff < 200) {
+                        // if the time difference is less than 1000ms (1s)
+                        if (timeDiff < 1000) {
                             // prevent default to prevent navigation (possibly)
                             e.preventDefault();
-
-                            // we stop propagation to prevent this click from
-                            // going to the document handler to close all menus
-                            e.stopPropagation();
                         }
                     }
                 }
 
-                var toggleClick = function (e) {
+                function toggleClick(e) {
                     // we always want to stop the propagation to parent elements,
                     // this can cause the inner leaf items to close sub menus,
                     // or close the menus if it reaches the root document or
@@ -549,7 +553,7 @@
                     if (me.isTopLevel) {
                         _ignoreDocumentClick = +(new Date());
                     }
-                };
+                }
 
                 this.showClick = function (e) {
                     if (me.isTopLevel) {
@@ -576,16 +580,16 @@
             };
 
             // Hides all menus and submenus
-            var hideAllClick = function (e) {
+            function hideAllClick(e) {
                 _ignoreDocumentClick = +(new Date());
 
                 $.each(_rootMenu.children, function () {
                     this.hideForce(e);
                 });
-            };
+            }
 
             // Handler for a document click to close all menus
-            var documentClickHandler = function (e) {
+            function documentClickHandler(e) {
                 // Check a flag which indicates the click is from the menu itself
                 if (_ignoreDocumentClick) {
                     // store the time difference, we only listen to this
@@ -601,17 +605,17 @@
                 }
 
                 hideAllClick(e);
-            };
+            }
 
             _allCloseHandlers.push(hideAllClick);
 
-            var hideOtherMenus = function (e) {
+            function hideOtherMenus(e) {
                 for (var i = 0; i < _allCloseHandlers.length; i++) {
                     if (_allCloseHandlers[i] !== hideAllClick) {
                         _allCloseHandlers[i](e);
                     }
                 }
-            };
+            }
 
             // Create a Panel instance for each menu panel, store in an array
             $topLevelItems.find(".menu-panel").each(function () {
@@ -632,7 +636,9 @@
             // Note: This does not include the top level items with submenus, which have different
             // rules for rollovers. jQuery.find() only includes decendants, no the current set,
             // which is the top level menu items.
-            $topLevelItems.find(".menu-item").hover(
+            //
+            // we use hoverDelay because it internally filters out touch-based pointer events
+            $topLevelItems.find(".menu-item").hoverDelay(
                 function () {
                     highlightMenuItem($(this), true);
                 },
@@ -645,7 +651,7 @@
 
             // Bind a handler to close the menu if it is clicked off.
             $(document).on("click", documentClickHandler);
-        };
+        }
 
         // Loop through each menu container and create a menu "group".
         this.each(function () {

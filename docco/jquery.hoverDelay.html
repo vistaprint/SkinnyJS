@@ -11,20 +11,30 @@
         <span class="nx">out</span><span class="o">:</span> <span class="nx">$</span><span class="p">.</span><span class="nx">noop</span><span class="p">,</span>
         <span class="nx">delayOver</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
         <span class="nx">delayOut</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="nx">mouseOnly</span><span class="o">:</span> <span class="kc">true</span>
+        <span class="nx">touch</span><span class="o">:</span> <span class="kc">false</span>
     <span class="p">};</span>
 
     <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">hoverDelay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">over</span><span class="p">,</span> <span class="nx">out</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">isPlainObject</span><span class="p">(</span><span class="nx">over</span><span class="p">))</span> <span class="p">{</span>
             <span class="nx">options</span> <span class="o">=</span> <span class="nx">over</span><span class="p">;</span>
         <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">options</span> <span class="o">=</span> <span class="p">{};</span>
+            <span class="p">}</span>
+
             <span class="nx">options</span><span class="p">.</span><span class="nx">over</span> <span class="o">=</span> <span class="nx">over</span><span class="p">;</span>
             <span class="nx">options</span><span class="p">.</span><span class="nx">out</span> <span class="o">=</span> <span class="nx">out</span><span class="p">;</span>
         <span class="p">}</span>
 
         <span class="kd">var</span> <span class="nx">_options</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">_defaults</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
 
+        <span class="kd">var</span> <span class="nx">useTimers</span> <span class="o">=</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">delayOver</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">delayOut</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
+
         <span class="kd">var</span> <span class="nx">clearTimers</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">useTimers</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span><span class="p">;</span>
+            <span class="p">}</span>
+
             <span class="kd">var</span> <span class="nx">overTimer</span> <span class="o">=</span> <span class="nx">el</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">OVER_TIMER</span><span class="p">);</span>
             <span class="kd">var</span> <span class="nx">outTimer</span> <span class="o">=</span> <span class="nx">el</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">OUT_TIMER</span><span class="p">);</span>
 
@@ -39,50 +49,92 @@
             <span class="p">}</span>
         <span class="p">};</span>
 
-        <span class="kd">function</span> <span class="nx">mouseOver</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">$</span><span class="p">.</span><span class="nx">support</span><span class="p">.</span><span class="nx">pointer</span> <span class="o">||</span> <span class="o">!</span><span class="nx">_options</span><span class="p">.</span><span class="nx">mouseOnly</span> <span class="o">||</span> <span class="nx">event</span><span class="p">.</span><span class="nx">pointerType</span> <span class="o">==</span> <span class="s1">&#39;mouse&#39;</span><span class="p">)</span> <span class="p">{</span>
-                <span class="kd">var</span> <span class="nx">me</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-                <span class="nx">clearTimers</span><span class="p">(</span><span class="nx">me</span><span class="p">);</span>
+        <span class="kd">function</span> <span class="nx">pointerEnter</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>sto ppropagation because this mouseover event can
+double fire if a child of the element used is the target</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
 
-                <span class="kd">var</span> <span class="nx">call</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="kd">function</span> <span class="nx">call</span><span class="p">()</span> <span class="p">{</span>
-                    <span class="nx">_options</span><span class="p">.</span><span class="nx">over</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">event</span><span class="p">);</span>
-                <span class="p">},</span> <span class="k">this</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">_options</span><span class="p">.</span><span class="nx">touch</span> <span class="o">||</span> <span class="o">!</span><span class="nx">event</span><span class="p">.</span><span class="nx">pointerType</span> <span class="o">||</span> <span class="nx">event</span><span class="p">.</span><span class="nx">pointerType</span> <span class="o">!==</span> <span class="s1">&#39;touch&#39;</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">thisObject</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
+                    <span class="nx">$this</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">thisObject</span><span class="p">);</span>
+
+                <span class="nx">clearTimers</span><span class="p">(</span><span class="nx">$this</span><span class="p">);</span>
+
+                <span class="kd">var</span> <span class="nx">call</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">call</span><span class="p">()</span> <span class="p">{</span>
+                    <span class="nx">_options</span><span class="p">.</span><span class="nx">over</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">thisObject</span><span class="p">,</span> <span class="nx">event</span><span class="p">);</span>
+                <span class="p">};</span>
 
                 <span class="k">if</span> <span class="p">(</span><span class="nx">_options</span><span class="p">.</span><span class="nx">delayOver</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
                     <span class="nx">call</span><span class="p">();</span>
                 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                    <span class="nx">me</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">OVER_TIMER</span><span class="p">,</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="nx">call</span><span class="p">,</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">delayOver</span><span class="p">));</span>
+                    <span class="nx">$this</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">OVER_TIMER</span><span class="p">,</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="nx">call</span><span class="p">,</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">delayOver</span><span class="p">));</span>
                 <span class="p">}</span>
             <span class="p">}</span>
         <span class="p">}</span>
 
-        <span class="kd">function</span> <span class="nx">mouseOut</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">$</span><span class="p">.</span><span class="nx">support</span><span class="p">.</span><span class="nx">pointer</span> <span class="o">||</span> <span class="o">!</span><span class="nx">_options</span><span class="p">.</span><span class="nx">mouseOnly</span> <span class="o">||</span> <span class="nx">event</span><span class="p">.</span><span class="nx">pointerType</span> <span class="o">==</span> <span class="s1">&#39;mouse&#39;</span><span class="p">)</span> <span class="p">{</span>
-                <span class="kd">var</span> <span class="nx">me</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-                <span class="nx">clearTimers</span><span class="p">(</span><span class="nx">me</span><span class="p">);</span>
+        <span class="kd">function</span> <span class="nx">pointerLeave</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>sto ppropagation because this mouseover event can
+double fire if a child of the element used is the target</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
 
-                <span class="kd">var</span> <span class="nx">call</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="kd">function</span> <span class="nx">call</span><span class="p">()</span> <span class="p">{</span>
-                    <span class="nx">_options</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">me</span><span class="p">,</span> <span class="nx">event</span><span class="p">);</span>
-                <span class="p">},</span> <span class="k">this</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">_options</span><span class="p">.</span><span class="nx">touch</span> <span class="o">||</span> <span class="o">!</span><span class="nx">event</span><span class="p">.</span><span class="nx">pointerType</span> <span class="o">||</span> <span class="nx">event</span><span class="p">.</span><span class="nx">pointerType</span> <span class="o">!==</span> <span class="s1">&#39;touch&#39;</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">thisObject</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
+                    <span class="nx">$this</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">thisObject</span><span class="p">);</span>
+
+                <span class="nx">clearTimers</span><span class="p">(</span><span class="nx">$this</span><span class="p">);</span>
+
+                <span class="kd">var</span> <span class="nx">call</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">call</span><span class="p">()</span> <span class="p">{</span>
+                    <span class="nx">_options</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">thisObject</span><span class="p">,</span> <span class="nx">event</span><span class="p">);</span>
+                <span class="p">};</span>
 
                 <span class="k">if</span> <span class="p">(</span><span class="nx">_options</span><span class="p">.</span><span class="nx">delayOut</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
                     <span class="nx">call</span><span class="p">();</span>
                 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                    <span class="nx">me</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">OUT_TIMER</span><span class="p">,</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="nx">call</span><span class="p">,</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">delayOut</span><span class="p">));</span>
+                    <span class="nx">$this</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">OUT_TIMER</span><span class="p">,</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="nx">call</span><span class="p">,</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">delayOut</span><span class="p">));</span>
                 <span class="p">}</span>
             <span class="p">}</span>
         <span class="p">}</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">support</span><span class="p">.</span><span class="nx">pointer</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">({</span>
-                <span class="s1">&#39;pointerover&#39;</span><span class="o">:</span> <span class="nx">mouseOver</span><span class="p">,</span>
-                <span class="s1">&#39;pointerout&#39;</span><span class="o">:</span> <span class="nx">mouseOut</span>
+                <span class="s1">&#39;pointerenter&#39;</span><span class="o">:</span> <span class="nx">pointerEnter</span><span class="p">,</span>
+                <span class="s1">&#39;pointerleave&#39;</span><span class="o">:</span> <span class="nx">pointerLeave</span>
             <span class="p">});</span>
         <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">hover</span><span class="p">(</span><span class="nx">mouseOver</span><span class="p">,</span> <span class="nx">mouseOut</span><span class="p">);</span>
+            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">({</span>
+                <span class="s1">&#39;mouseenter&#39;</span><span class="o">:</span> <span class="nx">pointerEnter</span><span class="p">,</span>
+                <span class="s1">&#39;mouseleave&#39;</span><span class="o">:</span> <span class="nx">pointerLeave</span>
+            <span class="p">});</span>
         <span class="p">}</span>
     <span class="p">};</span>
 
 <span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Create a wrapper similar to jQuery's mouseenter/leave events
+using pointer events (pointerover/out) and event-time checks</p>             </td>             <td class="code">               <div class="highlight"><pre>
+<span class="nx">jQuery</span><span class="p">.</span><span class="nx">each</span><span class="p">({</span>
+    <span class="nx">pointerenter</span><span class="o">:</span> <span class="s1">&#39;pointerover&#39;</span><span class="p">,</span>
+    <span class="nx">pointerleave</span><span class="o">:</span> <span class="s1">&#39;pointerout&#39;</span>
+<span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">orig</span><span class="p">,</span> <span class="nx">fix</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">jQuery</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">[</span><span class="nx">orig</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nx">delegateType</span><span class="o">:</span> <span class="nx">fix</span><span class="p">,</span>
+        <span class="nx">bindType</span><span class="o">:</span> <span class="nx">fix</span><span class="p">,</span>
+        <span class="nx">handle</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">ret</span><span class="p">,</span>
+                <span class="nx">target</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
+                <span class="nx">related</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">relatedTarget</span><span class="p">,</span>
+                <span class="nx">handleObj</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">handleObj</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>For mousenter/leave call the handler if related is outside the target.
+NB: No relatedTarget if the mouse left/entered the browser window</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">related</span> <span class="o">||</span> <span class="p">(</span><span class="nx">related</span> <span class="o">!==</span> <span class="nx">target</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">related</span><span class="p">)))</span> <span class="p">{</span>
+                <span class="nx">event</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">origType</span><span class="p">;</span>
+                <span class="nx">ret</span> <span class="o">=</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">handler</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
+                <span class="nx">event</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="nx">fix</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="nx">ret</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+<span class="p">});</span>
 
 </pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
