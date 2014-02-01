@@ -486,9 +486,7 @@
 
         //Returns the position in the specified range that avoids all of the obstacles on an axis.
         //  Returns null if no position is possible without intersection.
-        function _getBestPositionInRange(minPos, maxPos, offset, initialRanges, nextObstacle) {
-            var ranges = initialRanges || [];
-
+        function _getBestPositionInRange(minPos, maxPos, offset, nextObstacle) {
             /*
              * For each object { pos, size } in nextObstacle:
              *  For each range in ranges:
@@ -520,6 +518,10 @@
              *
              */
 
+            var ranges = [{
+                min: minPos,
+                max: maxPos
+            }];
             var i, obstacleStart, obstacleEnd, range;
             var obstacle;
             while (ranges.length && (obstacle = nextObstacle())) {
@@ -602,50 +604,30 @@
                 return;
             }
             var i = 0;
-            var initialRanges = [];
             var minPos, maxPos;
+            var occupiedRects = obstacles.slice(); //copy obstacles array so that we may modify it
             if (((direction === 'east') || (direction === 'west'))) {
                 var left = posLimits.minX - offsets.horizontal;
                 var right = posLimits.minX + content.width + offsets.horizontal;
                 minPos = posLimits.minY;
                 maxPos = posLimits.maxY;
-                if (options.cornerAdjacent) {
-                    //Split the range into two parts:
-                    //  range for when bottom corner of content is adjacent to context
-                    var range1 = {
-                        min: minPos,
-                        max: Math.min((context.top + context.height) - (content.height + offsets.padding), maxPos)
-                    };
-                    //  range for when top corner of content is adjacent to context
-                    var range2 = {
-                        min: Math.max((context.top + offsets.padding), minPos),
-                        max: maxPos
-                    };
-                    //if ranges completely overlap, just use one
-                    if (((range1.min <= range2.min) && (range1.max >= range2.max)) ||
-                        ((range2.min <= range1.min) && (range2.max >= range1.max))) {
-                        initialRanges.push({
-                            min: minPos,
-                            max: maxPos
-                        });
-                    } else {
-                        initialRanges.push(range1);
-                        initialRanges.push(range2);
-                    }
-                } else {
-                    initialRanges.push({
-                        min: minPos,
-                        max: maxPos
+                if (options.cornerAdjacent && (content.height > context.height)) {
+                    //Add range that's off limits where the corners won't be adjacent.
+                    occupiedRects.splice(0, 0, {
+                        left: left,
+                        width: right - left,
+                        top: (context.top + context.height) - content.height,
+                        height: content.height - context.height
                     });
                 }
 
                 //Look for a position in the vertical range
-                var newPos = _getBestPositionInRange(minPos, maxPos, offsets.vertical, initialRanges, function() {
+                var newPos = _getBestPositionInRange(minPos, maxPos, offsets.vertical, function() {
                     //iterator that returns a { pos, size } iff it intersects the axis of the range we're interested in
                     var next = null;
                     var rect;
-                    for (; !next && (i < obstacles.length); i++) {
-                        rect = obstacles[i];
+                    for (; !next && (i < occupiedRects.length); i++) {
+                        rect = occupiedRects[i];
                         if ((rect.left <= right) && (rect.left + rect.width >= left)) {
                             next = {
                                 pos: rect.top,
@@ -668,43 +650,23 @@
                 var bottom = posLimits.minY + content.height + offsets.vertical;
                 minPos = posLimits.minX;
                 maxPos = posLimits.maxX;
-                if (options.cornerAdjacent) {
-                    //Split the range into two parts:
-                    //  range for when right corner of content is adjacent to context
-                    var range1 = {
-                        min: minPos,
-                        max: Math.min((context.left + context.width) - (content.width + offsets.padding), maxPos)
-                    };
-                    //  range for when left corner of content is adjacent to context
-                    var range2 = {
-                        min: Math.max((context.left + offsets.padding), minPos),
-                        max: maxPos
-                    }
-                    //if ranges completely overlap, just use one
-                    if (((range1.min <= range2.min) && (range1.max >= range2.max)) ||
-                        ((range2.min <= range1.min) && (range2.max >= range1.max))) {
-                        initialRanges.push({
-                            min: minPos,
-                            max: maxPos
-                        });
-                    } else {
-                        initialRanges.push(range1);
-                        initialRanges.push(range2);
-                    }
-                } else {
-                    initialRanges.push({
-                        min: minPos,
-                        max: maxPos
+                if (options.cornerAdjacent && (content.width > context.width)) {
+                    //Add range that's off limits where the corners won't be adjacent.
+                    occupiedRects.splice(0, 0, {
+                        top: top,
+                        height: bottom - top,
+                        left: (context.left + context.width) - content.width,
+                        width: content.width - context.width
                     });
                 }
 
                 //Look for a position in the horizontal range
-                var newPos = _getBestPositionInRange(minPos, maxPos, offsets.horizontal, initialRanges, function() {
+                var newPos = _getBestPositionInRange(minPos, maxPos, offsets.horizontal, function() {
                     //iterator that returns a { pos, size } iff it intersects the axis of the range we're interested in
                     var next = null;
                     var rect;
-                    for (; !next && (i < obstacles.length); i++) {
-                        rect = obstacles[i];
+                    for (; !next && (i < occupiedRects.length); i++) {
+                        rect = occupiedRects[i];
                         if ((rect.top <= bottom) && (rect.top + rect.height >= top)) {
                             next = {
                                 pos: rect.left,
