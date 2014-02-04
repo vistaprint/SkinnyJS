@@ -14,6 +14,7 @@
 
     var DEFAULT_TIP_COLOR = "#FFFFFF";
     var DEFAULT_TIP_POSITION = "north";
+    //TODO: Make these settings configurable.
     var DEFAULT_ARROW_SIZE = 40;
     var DEFAULT_ARROW_PADDING = 5;
     var DEFAULT_ARROW_HEAD_SIZE = 10;

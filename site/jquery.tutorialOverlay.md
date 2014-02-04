@@ -46,6 +46,9 @@ Using the (skinny.js Download Builder)[http://vistaprint.github.io/SkinnyJS/down
 
 Overlays are designed to be used unobtrusively, but the entire programmatic API is exposed as well.
 
+Tutorial Overlays can be specified in the HTML via the **tutorial-overlay** class.  Any element within this overlay element that has the **tutorial-overlay-tip** class will be a tip on the overaly.  The main content to render in the center of the overlay is indicated with the **tutorial-overlay-content** class.
+By default, any element with a class of **close-overlay** will close the overlay when clicked.
+
 Here's an example of unobtrusive usage:
 
 {% highlight html %}
@@ -89,6 +92,19 @@ When using the programmatic syntax to show overlays, you can use the following a
 </div>
 {% endhighlight %}
 
+#### Declarative tip attributes
+
+When using the programmatic syntax to show overlays, you can use the following attributes to declaratively define settings for the tips/callouts in the overlay (note that these correspond exactly to the [Settings](#settings) you can pass to the tutorialOverlay programmatic API):
+
+* **data-overlay-tip-target**: Set the target element to which the the tip will be relatively positioned.
+* **data-overlay-tip-position**: "north", "south", "east", or "west.  Describes the desired position relative to the target element.
+* **data-overlay-tip-color**: The color of the tip arrow.
+* **data-overlay-tip-offset**: The number of pixels of space between the tip and the target.
+
+{% highlight html %}
+<div class="tutorial-overlay-tip" data-overlay-tip-target="#someImage" data-overlay-tip-position="east">This tip will appear to the right of #someImage.</div>
+{% endhighlight %}
+
 #### Settings
 
 `$(selector).tutorialOverlay()` (and `$.tutorialOverlay.create()`) takes a settings object as an argument. Here are the available settings:
@@ -96,7 +112,7 @@ When using the programmatic syntax to show overlays, you can use the following a
 * **zindex**: Can be used to set the z-index for the overlay. Don't use this unless you need to participate in a pre-existing z-index arms race. Defaults to 10000.         
 //* **destroyOnClose**: If true, the overlay DOM will be destroyed and all events removed when the overlay closes. Defaults to ''false''.   
 * **hideOnClick**: If true, the overlay will be closed when the user clicks on it.  Defaults to ''true''.
-* **autoLoad**: Specifies the id of an element to use as an overlay and shows it on page load.
+* **autoLoad**: Specifies whether to show this overlay on page load.
 
 Here's an example. Note that you can (and usually should) do this all with *data-overlay* attributes:
 {% highlight javascript %}
@@ -116,11 +132,11 @@ $("#tutorialOverlay").tutorialOverlay({
 `$.tutorialOverlay.create()` returns an overlay object with the following methods:
 
 * **show()**: Shows the overlay.
-* **close()**: Closes the overlay.
+* **hide()**: Closes the overlay.
 * **destroy()**: Removes the overlay from the DOM and removes all events.
 * **isShowing()**: Returns true iff the overlay is currently being displayed.
 * **setHideOnClick()**: Specify whether the overlay should hide when the user clicks on it.
-* **addtip()**: Add a tip to the overlay.
+* **addTip()**: Add a tip to the overlay.
 * **setCenterContent()**:  Set the content to display in the center of the overlay.
 
 For example:
@@ -130,7 +146,7 @@ var overlay = $.tutorialOverlay.create({ autoLoad: "false" });
 overlay.show();
  
 //close overlay
-overlay.close();
+overlay.hide();
 {% endhighlight %}
 
 You can call any overlay methods using the jQuery idiomatic syntax as well:
@@ -142,5 +158,5 @@ $("#tutorialOverlay").tutorialOverlay("show", options);
 $(""#tutorialOverlay").tutorialOverlay("addTip", tooltipOptions);
 
 // Closes the overlay
-$("#tutorialOverlay").tutorialOverlay("close");
+$("#tutorialOverlay").tutorialOverlay("hide");
 {% endhighlight %}
