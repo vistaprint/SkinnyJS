@@ -1,6 +1,6 @@
 /// <reference path="jquery.clientRect.js" />
 
-(function($) {
+(function ($) {
 
     var defaults = {
         apply: false,
@@ -18,7 +18,7 @@
     };
 
     // calculate a position restrained within a container and the viewport
-    $.fn.calcRestrainedPos = function(options) {
+    $.fn.calcRestrainedPos = function (options) {
         // merge options
         options = $.extend({}, defaults, options);
 
@@ -75,45 +75,45 @@
         function attemptDirection(direction) {
             content = getContentSize(direction);
             switch (direction) {
-                case 'north':
-                    // first attempt to position content directly centered above the context
-                    pos.top = context.top - content.height - offsets.vertical;
-                    pos.left = Math.max(offsets.padding, context.left + (context.width / 2) - (content.width / 2));
-                    // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
-                    if (options.cornerAdjacent && !isCornerAdjacent(direction, pos)) {
-                        pos.left = context.left + offsets.padding;
-                    }
-                    break;
+            case 'north':
+                // first attempt to position content directly centered above the context
+                pos.top = context.top - content.height - offsets.vertical;
+                pos.left = Math.max(offsets.padding, context.left + (context.width / 2) - (content.width / 2));
+                // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
+                if (options.cornerAdjacent && !isCornerAdjacent(direction, pos)) {
+                    pos.left = context.left + offsets.padding;
+                }
+                break;
 
-                case 'east':
-                    // first attempt to position content directly centered right of the context
-                    pos.top = context.top + (context.height / 2) - (content.height / 2);
-                    pos.left = context.left + context.width + offsets.horizontal;
-                    // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
-                    if (options.cornerAdjacent && !isCornerAdjacent(direction, pos)) {
-                        pos.top = context.top + offsets.padding;
-                    }
-                    break;
+            case 'east':
+                // first attempt to position content directly centered right of the context
+                pos.top = context.top + (context.height / 2) - (content.height / 2);
+                pos.left = context.left + context.width + offsets.horizontal;
+                // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
+                if (options.cornerAdjacent && !isCornerAdjacent(direction, pos)) {
+                    pos.top = context.top + offsets.padding;
+                }
+                break;
 
-                case 'south':
-                    // first attempt to position content directly centered below the context
-                    pos.top = context.top + context.height + offsets.vertical;
-                    pos.left = Math.max(offsets.padding, context.left + (context.width / 2) - (content.width / 2));
-                    // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
-                    if (options.cornerAdjacent && !isCornerAdjacent(direction, pos)) {
-                        pos.left = context.left + offsets.padding;
-                    }
-                    break;
+            case 'south':
+                // first attempt to position content directly centered below the context
+                pos.top = context.top + context.height + offsets.vertical;
+                pos.left = Math.max(offsets.padding, context.left + (context.width / 2) - (content.width / 2));
+                // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
+                if (options.cornerAdjacent && !isCornerAdjacent(direction, pos)) {
+                    pos.left = context.left + offsets.padding;
+                }
+                break;
 
-                case 'west':
-                    // first attempt to position content directly centered right of context
-                    pos.top = context.top + (context.height / 2) - (content.height / 2);
-                    pos.left = context.left - content.width - offsets.horizontal;
-                    // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
-                    if (options.cornerAdjacent && !isCornerAdjacent(direction, pos)) {
-                        pos.top = context.top + offsets.padding;
-                    }
-                    break;
+            case 'west':
+                // first attempt to position content directly centered right of context
+                pos.top = context.top + (context.height / 2) - (content.height / 2);
+                pos.left = context.left - content.width - offsets.horizontal;
+                // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
+                if (options.cornerAdjacent && !isCornerAdjacent(direction, pos)) {
+                    pos.top = context.top + offsets.padding;
+                }
+                break;
             }
         }
 
@@ -231,248 +231,248 @@
                             left: box.left
                         };
                         switch (direction) {
-                            case 'north':
-                            case 'south':
-                                /*
-                                 *       Example cases:
-                                 *              ------------
-                                 *          ____|____ rect |
-                                 *         |__box____|------
-                                 *        --------------------
-                                 *        |     context      |
-                                 *
-                                 *              ------------
-                                 *          ____|_____rect_|__
-                                 *         |__box_____________|
-                                 *        --------------------
-                                 *        |     context      |
-                                 *
-                                 *       Solution:
-                                 *              ------------
-                                 *    _________ |     rect |
-                                 *   |__box____|------------
-                                 *        --------------------
-                                 *        |     context      |
-                                 *
-                                 *             OR
-                                 *              ------------
-                                 *              |     rect | _________
-                                 *              ------------|__box____|
-                                 *        --------------------
-                                 *        |     context      |
-                                 */
-                                if ((box.left < rect.left) && (box.left + box.width > rect.left)) {
-                                    //shift box left if possible
-                                    newPos.left = rect.left - (box.width + offsets.horizontal);
-                                    // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
-                                    if (options.cornerAdjacent && (newPos.left < context.left + offsets.padding) && (newPos.left + content.width > context.left + context.width - offsets.padding)) {
-                                        newPos.left = (context.left + context.width) - (content.width + offsets.padding);
-                                    }
-                                    if (newPos.left < posLimits.minX) {
-                                        //cannot shift box that far - try other side:
-                                        newPos.left = (rect.left + rect.width) + offsets.horizontal;
-                                        // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
-                                        if (options.cornerAdjacent && (newPos.left < context.left + offsets.padding) && (newPos.left + content.width > context.left + context.width - offsets.padding)) {
-                                            newPos.left = context.left + offsets.padding;
-                                        }
-                                        if (newPos.left > posLimits.maxX) {
-                                            //cannot place box in this direction without intersection
-                                            //stop checking obstacles
-                                            i = obstacles.length;
-                                        } else {
-                                            //update position limits
-                                            posLimits.minX = newPos.left;
-                                        }
-                                    } else {
-                                        //update position limits
-                                        posLimits.maxX = newPos.left;
-                                    }
+                        case 'north':
+                        case 'south':
+                            /*
+                             *       Example cases:
+                             *              ------------
+                             *          ____|____ rect |
+                             *         |__box____|------
+                             *        --------------------
+                             *        |     context      |
+                             *
+                             *              ------------
+                             *          ____|_____rect_|__
+                             *         |__box_____________|
+                             *        --------------------
+                             *        |     context      |
+                             *
+                             *       Solution:
+                             *              ------------
+                             *    _________ |     rect |
+                             *   |__box____|------------
+                             *        --------------------
+                             *        |     context      |
+                             *
+                             *             OR
+                             *              ------------
+                             *              |     rect | _________
+                             *              ------------|__box____|
+                             *        --------------------
+                             *        |     context      |
+                             */
+                            if ((box.left < rect.left) && (box.left + box.width > rect.left)) {
+                                //shift box left if possible
+                                newPos.left = rect.left - (box.width + offsets.horizontal);
+                                // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
+                                if (options.cornerAdjacent && (newPos.left < context.left + offsets.padding) && (newPos.left + content.width > context.left + context.width - offsets.padding)) {
+                                    newPos.left = (context.left + context.width) - (content.width + offsets.padding);
                                 }
-                                /*
-                                 *       Example cases:
-                                 *     ------------
-                                 *     |   rect __|______
-                                 *     --------|__box____|
-                                 *        --------------------
-                                 *        |     context      |
-                                 *
-                                 *     --------------------
-                                 *     |   rect ________  |
-                                 *     --------|__box___|--
-                                 *        --------------------
-                                 *        |     context      |
-                                 *
-                                 *       Solution:
-                                 *     ------------
-                                 *     |     rect | _________
-                                 *     ------------|__box____|
-                                 *        --------------------
-                                 *        |     context      |
-                                 *
-                                 *              OR
-                                 *              ------------
-                                 *    _________ |     rect |
-                                 *   |__box____|------------
-                                 *        --------------------
-                                 *        |     context      |
-                                 */
-                                else /*if ((box.left < rect.left + rect.width) && (box.left + box.width > rect.left + rect.width))*/ {
-                                    //shift box right if possible
+                                if (newPos.left < posLimits.minX) {
+                                    //cannot shift box that far - try other side:
                                     newPos.left = (rect.left + rect.width) + offsets.horizontal;
                                     // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
                                     if (options.cornerAdjacent && (newPos.left < context.left + offsets.padding) && (newPos.left + content.width > context.left + context.width - offsets.padding)) {
                                         newPos.left = context.left + offsets.padding;
                                     }
                                     if (newPos.left > posLimits.maxX) {
-                                        //cannot shift box that far - try other side:
-                                        newPos.left = rect.left - (box.width + offsets.horizontal);
-                                        // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
-                                        if (options.cornerAdjacent && (newPos.left < context.left + offsets.padding) && (newPos.left + content.width > context.left + context.width - offsets.padding)) {
-                                            newPos.left = (context.left + context.width) - (content.width + offsets.padding);
-                                        }
-                                        if (newPos.left < posLimits.minX) {
-                                            //cannot place box in this direction without intersection
-                                            //stop checking obstacles
-                                            i = obstacles.length;
-                                        } else {
-                                            //update position limits
-                                            posLimits.maxX = newPos.left;
-                                        }
+                                        //cannot place box in this direction without intersection
+                                        //stop checking obstacles
+                                        i = obstacles.length;
                                     } else {
                                         //update position limits
                                         posLimits.minX = newPos.left;
                                     }
+                                } else {
+                                    //update position limits
+                                    posLimits.maxX = newPos.left;
                                 }
-                                box.left = newPos.left;
-                                box.right = box.left + box.width;
-                                break;
-
-                            case 'west':
-                            case 'east':
-                                /*
-                                 *       Example cases:
-                                 *         _________   ___
-                                 *   -----|__box____| |
-                                 *   | rect     |     |
-                                 *   ------------     | context
-                                 *                    |
-                                 *                    |___
-                                 *
-                                 *          ________   ___
-                                 *   ------| box    | |
-                                 *   | rect|        | |
-                                 *   ------|        | | context
-                                 *         |________| |
-                                 *                    |___
-                                 *
-                                 *       Solution:
-                                 *                     ___
-                                 *         _________  |
-                                 *        |__box____| |
-                                 *   ------------     | context
-                                 *   | rect     |     |
-                                 *   ------------     |___
-                                 *          OR
-                                 *                     ___
-                                 *   ------------     |
-                                 *   | rect     |     |
-                                 *   ------------     | context
-                                 *         _________  |
-                                 *        |__box____| |
-                                 *                    |___
-                                 *
-                                 */
-                                if ((box.top < rect.top) && (box.top + box.height >= rect.top)) {
-                                    //shift box up if possible
-                                    newPos.top = rect.top - (box.height + offsets.vertical);
+                            }
+                            /*
+                             *       Example cases:
+                             *     ------------
+                             *     |   rect __|______
+                             *     --------|__box____|
+                             *        --------------------
+                             *        |     context      |
+                             *
+                             *     --------------------
+                             *     |   rect ________  |
+                             *     --------|__box___|--
+                             *        --------------------
+                             *        |     context      |
+                             *
+                             *       Solution:
+                             *     ------------
+                             *     |     rect | _________
+                             *     ------------|__box____|
+                             *        --------------------
+                             *        |     context      |
+                             *
+                             *              OR
+                             *              ------------
+                             *    _________ |     rect |
+                             *   |__box____|------------
+                             *        --------------------
+                             *        |     context      |
+                             */
+                            else /*if ((box.left < rect.left + rect.width) && (box.left + box.width > rect.left + rect.width))*/ {
+                                //shift box right if possible
+                                newPos.left = (rect.left + rect.width) + offsets.horizontal;
+                                // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
+                                if (options.cornerAdjacent && (newPos.left < context.left + offsets.padding) && (newPos.left + content.width > context.left + context.width - offsets.padding)) {
+                                    newPos.left = context.left + offsets.padding;
+                                }
+                                if (newPos.left > posLimits.maxX) {
+                                    //cannot shift box that far - try other side:
+                                    newPos.left = rect.left - (box.width + offsets.horizontal);
                                     // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
-                                    if (options.cornerAdjacent && (newPos.top < context.top + offsets.padding) && (newPos.top + content.height > context.top + context.height - offsets.padding)) {
-                                        newPos.top = (context.top + context.height) - (content.height + offsets.padding);
+                                    if (options.cornerAdjacent && (newPos.left < context.left + offsets.padding) && (newPos.left + content.width > context.left + context.width - offsets.padding)) {
+                                        newPos.left = (context.left + context.width) - (content.width + offsets.padding);
                                     }
-                                    if (newPos.top < posLimits.minY) {
-                                        //cannot shift box that far - try other side:
-                                        newPos.top = (rect.top + rect.height) + offsets.vertical;
-                                        // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
-                                        if (options.cornerAdjacent && (newPos.top < context.top + offsets.padding) && (newPos.top + content.height > context.top + context.height - offsets.padding)) {
-                                            newPos.top = context.top + offsets.padding;
-                                        }
-                                        if (newPos.top > posLimits.maxY) {
-                                            //cannot place box in this direction without intersection
-                                            //stop checking obstacles
-                                            i = obstacles.length;
-                                        } else {
-                                            //update position limits
-                                            posLimits.minY = newPos.top;
-                                        }
+                                    if (newPos.left < posLimits.minX) {
+                                        //cannot place box in this direction without intersection
+                                        //stop checking obstacles
+                                        i = obstacles.length;
                                     } else {
                                         //update position limits
-                                        posLimits.maxY = newPos.top;
+                                        posLimits.maxX = newPos.left;
                                     }
+                                } else {
+                                    //update position limits
+                                    posLimits.minX = newPos.left;
                                 }
-                                /*
-                                 *       Example cases:
-                                 *                     ___
-                                 *   ------------     |
-                                 *   | rect_____|___  |
-                                 *   -----|__box____| | context
-                                 *                    |
-                                 *                    |___
-                                 *
-                                 *                     ___
-                                 *   ------------     |
-                                 *   | rect_____|___  |
-                                 *   |    |__box____| | context
-                                 *   |          |     |
-                                 *   ------------     |___
-                                 *
-                                 *
-                                 *       Solution:
-                                 *                     ___
-                                 *   ------------     |
-                                 *   | rect     |     |
-                                 *   ------------     | context
-                                 *         _________  |
-                                 *        |__box____| |
-                                 *                    |___
-                                 *
-                                 *          OR
-                                 *                     ___
-                                 *         _________  |
-                                 *        |__box____| |
-                                 *   ------------     | context
-                                 *   | rect     |     |
-                                 *   ------------     |___
-                                 */
-                                else /*if ((box.top > rect.top) && (box.top + box.height > rect.top))*/ {
-                                    //shift box down if possible
+                            }
+                            box.left = newPos.left;
+                            box.right = box.left + box.width;
+                            break;
+
+                        case 'west':
+                        case 'east':
+                            /*
+                             *       Example cases:
+                             *         _________   ___
+                             *   -----|__box____| |
+                             *   | rect     |     |
+                             *   ------------     | context
+                             *                    |
+                             *                    |___
+                             *
+                             *          ________   ___
+                             *   ------| box    | |
+                             *   | rect|        | |
+                             *   ------|        | | context
+                             *         |________| |
+                             *                    |___
+                             *
+                             *       Solution:
+                             *                     ___
+                             *         _________  |
+                             *        |__box____| |
+                             *   ------------     | context
+                             *   | rect     |     |
+                             *   ------------     |___
+                             *          OR
+                             *                     ___
+                             *   ------------     |
+                             *   | rect     |     |
+                             *   ------------     | context
+                             *         _________  |
+                             *        |__box____| |
+                             *                    |___
+                             *
+                             */
+                            if ((box.top < rect.top) && (box.top + box.height >= rect.top)) {
+                                //shift box up if possible
+                                newPos.top = rect.top - (box.height + offsets.vertical);
+                                // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
+                                if (options.cornerAdjacent && (newPos.top < context.top + offsets.padding) && (newPos.top + content.height > context.top + context.height - offsets.padding)) {
+                                    newPos.top = (context.top + context.height) - (content.height + offsets.padding);
+                                }
+                                if (newPos.top < posLimits.minY) {
+                                    //cannot shift box that far - try other side:
                                     newPos.top = (rect.top + rect.height) + offsets.vertical;
                                     // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
                                     if (options.cornerAdjacent && (newPos.top < context.top + offsets.padding) && (newPos.top + content.height > context.top + context.height - offsets.padding)) {
                                         newPos.top = context.top + offsets.padding;
                                     }
                                     if (newPos.top > posLimits.maxY) {
-                                        //cannot shift box that far - try other side:
-                                        newPos.top = rect.top - (box.height + offsets.vertical);
-                                        // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
-                                        if (options.cornerAdjacent && (newPos.top < context.top + offsets.padding) && (newPos.top + content.height > context.top + context.height - offsets.padding)) {
-                                            newPos.top = (context.top + context.height) - (content.height + offsets.padding);
-                                        }
-                                        if (newPos.top < posLimits.minY) {
-                                            //cannot place box in this direction without intersection
-                                            //stop checking obstacles
-                                            i = obstacles.length;
-                                        } else {
-                                            //update position limits
-                                            posLimits.maxY = newPos.top;
-                                        }
+                                        //cannot place box in this direction without intersection
+                                        //stop checking obstacles
+                                        i = obstacles.length;
                                     } else {
                                         //update position limits
                                         posLimits.minY = newPos.top;
                                     }
+                                } else {
+                                    //update position limits
+                                    posLimits.maxY = newPos.top;
                                 }
-                                box.top = newPos.top;
-                                box.bottom = box.top + box.height;
-                                break;
+                            }
+                            /*
+                             *       Example cases:
+                             *                     ___
+                             *   ------------     |
+                             *   | rect_____|___  |
+                             *   -----|__box____| | context
+                             *                    |
+                             *                    |___
+                             *
+                             *                     ___
+                             *   ------------     |
+                             *   | rect_____|___  |
+                             *   |    |__box____| | context
+                             *   |          |     |
+                             *   ------------     |___
+                             *
+                             *
+                             *       Solution:
+                             *                     ___
+                             *   ------------     |
+                             *   | rect     |     |
+                             *   ------------     | context
+                             *         _________  |
+                             *        |__box____| |
+                             *                    |___
+                             *
+                             *          OR
+                             *                     ___
+                             *         _________  |
+                             *        |__box____| |
+                             *   ------------     | context
+                             *   | rect     |     |
+                             *   ------------     |___
+                             */
+                            else /*if ((box.top > rect.top) && (box.top + box.height > rect.top))*/ {
+                                //shift box down if possible
+                                newPos.top = (rect.top + rect.height) + offsets.vertical;
+                                // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
+                                if (options.cornerAdjacent && (newPos.top < context.top + offsets.padding) && (newPos.top + content.height > context.top + context.height - offsets.padding)) {
+                                    newPos.top = context.top + offsets.padding;
+                                }
+                                if (newPos.top > posLimits.maxY) {
+                                    //cannot shift box that far - try other side:
+                                    newPos.top = rect.top - (box.height + offsets.vertical);
+                                    // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
+                                    if (options.cornerAdjacent && (newPos.top < context.top + offsets.padding) && (newPos.top + content.height > context.top + context.height - offsets.padding)) {
+                                        newPos.top = (context.top + context.height) - (content.height + offsets.padding);
+                                    }
+                                    if (newPos.top < posLimits.minY) {
+                                        //cannot place box in this direction without intersection
+                                        //stop checking obstacles
+                                        i = obstacles.length;
+                                    } else {
+                                        //update position limits
+                                        posLimits.maxY = newPos.top;
+                                    }
+                                } else {
+                                    //update position limits
+                                    posLimits.minY = newPos.top;
+                                }
+                            }
+                            box.top = newPos.top;
+                            box.bottom = box.top + box.height;
+                            break;
                         } //end switch (direction)
                         if ((i > 0) && (i < obstacles.length)) {
                             i = -1; //restart loop
@@ -486,7 +486,7 @@
 
         //Returns the position in the specified range that avoids all of the obstacles on an axis.
         //  Returns null if no position is possible without intersection.
-        function _getBestPositionInRange(minPos, maxPos, offset, nextObstacle) {
+        function _getBestPositionInRange(minPos, maxPos, contentSize, offset, nextObstacle) {
             /*
              * For each object { pos, size } in nextObstacle:
              *  For each range in ranges:
@@ -525,7 +525,7 @@
             var i, obstacleStart, obstacleEnd, range;
             var obstacle;
             while (ranges.length && (obstacle = nextObstacle())) {
-                obstacleStart = obstacle.pos - offset;
+                obstacleStart = obstacle.pos - (offset + contentSize);
                 obstacleEnd = obstacle.pos + obstacle.size + offset;
                 for (i = 0; i < ranges.length; i++) {
                     range = ranges[i];
@@ -604,13 +604,14 @@
                 return;
             }
             var i = 0;
-            var minPos, maxPos;
+            var minPos, maxPos, contentSize;
             var occupiedRects = obstacles.slice(); //copy obstacles array so that we may modify it
             if (((direction === 'east') || (direction === 'west'))) {
                 var left = posLimits.minX - offsets.horizontal;
                 var right = posLimits.minX + content.width + offsets.horizontal;
                 minPos = posLimits.minY;
                 maxPos = posLimits.maxY;
+                contentSize = content.height;
                 if (options.cornerAdjacent && (content.height > context.height)) {
                     //Add range that's off limits where the corners won't be adjacent.
                     occupiedRects.splice(0, 0, {
@@ -622,7 +623,7 @@
                 }
 
                 //Look for a position in the vertical range
-                var newPos = _getBestPositionInRange(minPos, maxPos, offsets.vertical, function() {
+                var newPos = _getBestPositionInRange(minPos, maxPos, contentSize, offsets.vertical, function () {
                     //iterator that returns a { pos, size } iff it intersects the axis of the range we're interested in
                     var next = null;
                     var rect;
@@ -650,6 +651,7 @@
                 var bottom = posLimits.minY + content.height + offsets.vertical;
                 minPos = posLimits.minX;
                 maxPos = posLimits.maxX;
+                contentSize = content.width;
                 if (options.cornerAdjacent && (content.width > context.width)) {
                     //Add range that's off limits where the corners won't be adjacent.
                     occupiedRects.splice(0, 0, {
@@ -661,7 +663,7 @@
                 }
 
                 //Look for a position in the horizontal range
-                var newPos = _getBestPositionInRange(minPos, maxPos, offsets.horizontal, function() {
+                var newPos = _getBestPositionInRange(minPos, maxPos, contentSize, offsets.horizontal, function () {
                     //iterator that returns a { pos, size } iff it intersects the axis of the range we're interested in
                     var next = null;
                     var rect;
@@ -689,25 +691,25 @@
 
         function calculateMaxPositions(direction, limits) {
             switch (direction) {
-                case 'north':
-                case 'south':
-                    //minX is full content width to the west of the container
-                    limits.minX = Math.max(limits.minX, (context.left - content.width) + offsets.padding);
-                    //maxX is full content width to the east of the container
-                    limits.maxX = Math.min((context.left + context.width) - offsets.padding, limits.maxX - content.width);
-                    //minY and maxY are equal since the content shouldn't be moved vertically
-                    limits.minY = limits.maxY = pos.top;
-                    break;
+            case 'north':
+            case 'south':
+                //minX is full content width to the west of the container
+                limits.minX = Math.max(limits.minX, (context.left - content.width) + offsets.padding);
+                //maxX is full content width to the east of the container
+                limits.maxX = Math.min((context.left + context.width) - offsets.padding, limits.maxX - content.width);
+                //minY and maxY are equal since the content shouldn't be moved vertically
+                limits.minY = limits.maxY = pos.top;
+                break;
 
-                case 'east':
-                case 'west':
-                    //minY is as north as the content can get
-                    limits.minY = Math.max(limits.minY, (context.top - content.height) + offsets.padding);
-                    //maxX is as south as the content can get
-                    limits.maxY = Math.min((context.top + context.height) - offsets.padding, limits.maxY - content.height);
-                    //minX and maxX shouldn't change
-                    limits.minX = limits.maxX = pos.left;
-                    break;
+            case 'east':
+            case 'west':
+                //minY is as north as the content can get
+                limits.minY = Math.max(limits.minY, (context.top - content.height) + offsets.padding);
+                //maxX is as south as the content can get
+                limits.maxY = Math.min((context.top + context.height) - offsets.padding, limits.maxY - content.height);
+                //minX and maxX shouldn't change
+                limits.minX = limits.maxX = pos.left;
+                break;
             }
             return limits;
         }
@@ -715,17 +717,17 @@
         function isCornerAdjacent(direction, position) {
             var adjacent = true;
             switch (direction) {
-                case 'north':
-                case 'south':
-                    adjacent = ((position.left >= context.left + offsets.padding) && (position.left <= context.left + context.width - offsets.padding)) ||
-                        ((position.left + content.width <= context.left + context.width - offsets.padding) && (position.left + content.width >= context.left + offsets.padding));
-                    break;
+            case 'north':
+            case 'south':
+                adjacent = ((position.left >= context.left + offsets.padding) && (position.left <= context.left + context.width - offsets.padding)) ||
+                    ((position.left + content.width <= context.left + context.width - offsets.padding) && (position.left + content.width >= context.left + offsets.padding));
+                break;
 
-                case 'east':
-                case 'west':
-                    adjacent = ((position.top >= context.top + offsets.padding) && (position.top <= context.top + context.bottom - offsets.padding)) ||
-                        ((position.top + content.height <= context.top + context.height - offsets.padding) && (position.top + content.height <= context.top + context.height - offsets.padding));
-                    break;
+            case 'east':
+            case 'west':
+                adjacent = ((position.top >= context.top + offsets.padding) && (position.top <= context.top + context.bottom - offsets.padding)) ||
+                    ((position.top + content.height <= context.top + context.height - offsets.padding) && (position.top + content.height <= context.top + context.height - offsets.padding));
+                break;
             }
             return adjacent;
         }
