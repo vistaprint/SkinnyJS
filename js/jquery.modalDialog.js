@@ -114,7 +114,7 @@
     };
 
     // Opens the dialog
-    ModalDialog.prototype.open = function () {
+    ModalDialog.prototype.open = function (disableAnimation) {
         var deferred = this._initDeferred("open", deferred);
 
         // Ensure the dialog doesn't open once its already opened.. 
@@ -211,11 +211,18 @@
 
                 }, this);
 
-                this.$container.animate({
-                    top: initialTop
-                }, $.modalDialog.animationDuration, _easing)
-                    .promise()
-                    .then(animationCallback, animationCallback);
+                if (disableAnimation) {
+                    // If animation is disabled, just move the dialog into position synchronously, 
+                    // and then do the callback on the next event loop tick.
+                    this.$container.css({ top: initialTop });
+                    setTimeout(animationCallback, 0);
+                } else {
+                    // Otherwise, animate open
+                    this.$container.animate({ top: initialTop}, $.modalDialog.animationDuration, _easing)
+                        .promise()
+                        .then(animationCallback, animationCallback);
+                }
+
             } else {
                 this._clearDeferred("open");
             }
