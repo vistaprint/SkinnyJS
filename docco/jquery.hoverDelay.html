@@ -49,10 +49,8 @@
             <span class="p">}</span>
         <span class="p">};</span>
 
-        <span class="kd">function</span> <span class="nx">pointerEnter</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>sto ppropagation because this mouseover event can
-double fire if a child of the element used is the target</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
+        <span class="kd">function</span> <span class="nx">pointerEnter</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>sto ppropagation because this mouseover event can
+double fire if a child of the element used is the target</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
 
             <span class="k">if</span> <span class="p">(</span><span class="nx">_options</span><span class="p">.</span><span class="nx">touch</span> <span class="o">||</span> <span class="o">!</span><span class="nx">event</span><span class="p">.</span><span class="nx">pointerType</span> <span class="o">||</span> <span class="nx">event</span><span class="p">.</span><span class="nx">pointerType</span> <span class="o">!==</span> <span class="s1">&#39;touch&#39;</span><span class="p">)</span> <span class="p">{</span>
                 <span class="kd">var</span> <span class="nx">thisObject</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
@@ -72,10 +70,8 @@ double fire if a child of the element used is the target</p>             </td>  
             <span class="p">}</span>
         <span class="p">}</span>
 
-        <span class="kd">function</span> <span class="nx">pointerLeave</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>sto ppropagation because this mouseover event can
-double fire if a child of the element used is the target</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
+        <span class="kd">function</span> <span class="nx">pointerLeave</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>sto ppropagation because this mouseover event can
+double fire if a child of the element used is the target</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
 
             <span class="k">if</span> <span class="p">(</span><span class="nx">_options</span><span class="p">.</span><span class="nx">touch</span> <span class="o">||</span> <span class="o">!</span><span class="nx">event</span><span class="p">.</span><span class="nx">pointerType</span> <span class="o">||</span> <span class="nx">event</span><span class="p">.</span><span class="nx">pointerType</span> <span class="o">!==</span> <span class="s1">&#39;touch&#39;</span><span class="p">)</span> <span class="p">{</span>
                 <span class="kd">var</span> <span class="nx">thisObject</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
@@ -108,11 +104,8 @@ double fire if a child of the element used is the target</p>             </td>  
         <span class="p">}</span>
     <span class="p">};</span>
 
-<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Create a wrapper similar to jQuery's mouseenter/leave events
-using pointer events (pointerover/out) and event-time checks</p>             </td>             <td class="code">               <div class="highlight"><pre>
-<span class="nx">jQuery</span><span class="p">.</span><span class="nx">each</span><span class="p">({</span>
+<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Create a wrapper similar to jQuery's mouseenter/leave events
+using pointer events (pointerover/out) and event-time checks</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">jQuery</span><span class="p">.</span><span class="nx">each</span><span class="p">({</span>
     <span class="nx">pointerenter</span><span class="o">:</span> <span class="s1">&#39;pointerover&#39;</span><span class="p">,</span>
     <span class="nx">pointerleave</span><span class="o">:</span> <span class="s1">&#39;pointerout&#39;</span>
 <span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">orig</span><span class="p">,</span> <span class="nx">fix</span><span class="p">)</span> <span class="p">{</span>
@@ -123,11 +116,8 @@ using pointer events (pointerover/out) and event-time checks</p>             </t
             <span class="kd">var</span> <span class="nx">ret</span><span class="p">,</span>
                 <span class="nx">target</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
                 <span class="nx">related</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">relatedTarget</span><span class="p">,</span>
-                <span class="nx">handleObj</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">handleObj</span><span class="p">;</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>For mousenter/leave call the handler if related is outside the target.
-NB: No relatedTarget if the mouse left/entered the browser window</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">related</span> <span class="o">||</span> <span class="p">(</span><span class="nx">related</span> <span class="o">!==</span> <span class="nx">target</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">related</span><span class="p">)))</span> <span class="p">{</span>
+                <span class="nx">handleObj</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">handleObj</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>For mousenter/leave call the handler if related is outside the target.
+NB: No relatedTarget if the mouse left/entered the browser window</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">related</span> <span class="o">||</span> <span class="p">(</span><span class="nx">related</span> <span class="o">!==</span> <span class="nx">target</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">related</span><span class="p">)))</span> <span class="p">{</span>
                 <span class="nx">event</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">origType</span><span class="p">;</span>
                 <span class="nx">ret</span> <span class="o">=</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">handler</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
                 <span class="nx">event</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="nx">fix</span><span class="p">;</span>
