@@ -156,7 +156,8 @@
         if (!this._$canvas) {
             var $canvas = this._$overlay.find("canvas" + CANVAS_CLASS);
             if (!$canvas.length) {
-                $canvas = $("<canvas width='1024' height='1024' class='" + CANVAS_CLASS.substring(1) + "'></canvas>");
+                var overlaySize = _getOverlaySize();
+                $canvas = $("<canvas width='" + (overlaySize.width || 1024) + "' height='" + (overlaySize.height || 1024) + "' class='" + CANVAS_CLASS.substring(1) + "'></canvas>");
                 this._$overlay.append($canvas);
                 if (typeof (G_vmlCanvasManager) != "undefined") {
                     G_vmlCanvasManager.initElement($canvas[0]);
@@ -192,17 +193,14 @@
 
         var context = this._$canvas[0].getContext("2d");
         //Ensure canvas fills the entire window
-        var overlaySize = _getOverlaySize();
-        this._$overlay.width(overlaySize.width);
-        this._$overlay.height(overlaySize.height);
-        context.canvas.width = overlaySize.width;
-        context.canvas.height = overlaySize.height;
 
         var $window = $(window);
         var windowSize = {
             width: $window.width(),
             height: $window.height()
         };
+        context.canvas.width = context.canvas.clientWidth || windowSize.width;
+        context.canvas.height = context.canvas.clientHeight || windowSize.height;
 
         //TODO: If tip targets need to be highlighted via cutting of the veil:
         //      1) use fillRect to paint the translucent veil on the canvas INSTEAD OF CSS background-color on the overlay component
