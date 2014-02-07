@@ -540,12 +540,35 @@
         canvasContext.stroke();
     };
 
+    TutorialOverlay.prototype._detectCollisions = function (rect1, otherRects) {
+        //stupid n^2 algorithm to detect collisions.
+        //  If performance is a concern, use a quadtree or even sort the list of otherRects
+        //  on one axis.
+        var collision = null;
+        for (var i = 0;
+            (i < otherRects.length) && !collision; i++) {
+            if (_rectsIntersect(otherRects[i], rect1)) {
+                collision = otherRects[i];
+            }
+        }
+        return collision;
+    };
+
     TutorialOverlay.prototype._clickHandler = function (e) {
         //Ignore clicks in the centerContent element and its descendants.
         //  TODO: there has to be a better way to do this.
         if (!(this._$centerContent && $.contains(this._$centerContent[0], e.target))) {
             this.hide();
         }
+    };
+
+    var timeout;
+    TutorialOverlay.prototype._windowResized = function () {
+        //Debounce the resize event with a timeout.
+        if (timeout) {
+            clearTimeout(timeout);
+        }
+        timeout = setTimeout(this._render, 50);
     };
 
     //TODO: DRY and optimize
@@ -791,29 +814,6 @@
         _calculateArrow(tipRenderInfo, arrow, newDirection, arrowPadding, arrowSize);
     };
 
-    TutorialOverlay.prototype._detectCollisions = function (rect1, otherRects) {
-        //stupid n^2 algorithm to detect collisions.
-        //  If performance is a concern, use a quadtree or even sort the list of otherRects
-        //  on one axis.
-        var collision = null;
-        for (var i = 0;
-            (i < otherRects.length) && !collision; i++) {
-            if (_rectsIntersect(otherRects[i], rect1)) {
-                collision = otherRects[i];
-            }
-        }
-        return collision;
-    };
-
-    var timeout;
-    TutorialOverlay.prototype._windowResized = function () {
-        //Debounce the resize event with a timeout.
-        if (timeout) {
-            clearTimeout(timeout);
-        }
-        timeout = setTimeout(this._render, 50);
-    };
-
     /*
      * If the arrow does not point to the rect defined by tipRenderInfo,
      *   then return false;
@@ -858,6 +858,7 @@
         arrow.controlPt.y += dy;
     };
 
+    //Get estimates of the tip size, including arrow, for each direction.
     var _estimateTipSizes = function (tipRect, overlaySize, arrowOptions) {
         var expectedTipSizes = {};
         expectedTipSizes["north"] = $.extend({}, tipRect);
@@ -874,13 +875,6 @@
         return expectedTipSizes;
     };
 
-    var _rectsIntersect = function (rect1, rect2) {
-        return !(rect2.left > rect1.right ||
-            rect2.right < rect1.left ||
-            rect2.top > rect1.bottom ||
-            rect2.bottom < rect1.top);
-    };
-
     var _getOverlaySize = function () {
         var $document = $(document);
 
@@ -888,6 +882,13 @@
             width: $document.width(),
             height: $document.height()
         };
+    };
+
+    var _rectsIntersect = function (rect1, rect2) {
+        return !(rect2.left > rect1.right ||
+            rect2.right < rect1.left ||
+            rect2.top > rect1.bottom ||
+            rect2.bottom < rect1.top);
     };
 
     var _translateRect = function (rect, dx, dy) {
@@ -1013,5 +1014,4 @@
 
         return this;
     };
-
 })(jQuery);
