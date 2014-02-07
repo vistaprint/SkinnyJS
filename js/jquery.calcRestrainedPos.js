@@ -73,7 +73,6 @@
         }
 
         function attemptDirection(direction) {
-            content = getContentSize(direction);
             switch (direction) {
             case 'north':
                 // first attempt to position content directly centered above the context
@@ -732,6 +731,11 @@
             return adjacent;
         }
 
+        function _isPointInRange(position, maxPositions) {
+            return (position.left < maxPositions.minX) || (position.left > maxPositions.maxX) ||
+                (position.top < maxPositions.minY) || (position.top > maxPositions.maxY);
+        }
+
         // attempt the direction requested first
         var direction = options.direction;
         //Default to "north" if the direction is invalid.
@@ -759,6 +763,7 @@
         }
         var maxBounds;
         while (true) {
+            content = getContentSize(direction);
             attemptDirection(direction);
             maxBounds = calculateMaxPositions(direction, {
                 minX: origMinX,
@@ -768,13 +773,14 @@
             });
             compensateContainer(direction, maxBounds);
             compensateViewport(direction, maxBounds);
-            compensateObstacles2(direction, maxBounds);
-
+            if (!_isPointInRange(pos, maxBounds)) {
+                //Skip the most expensive step if the position is already out of the maxBounds limits.
+                compensateObstacles2(direction, maxBounds);
+            }
             var box = $.extend({}, content, pos);
 
             // verify position is not over the context and within expected limits
-            if ((box.left < maxBounds.minX) || (box.left > maxBounds.maxX) ||
-                (box.top < maxBounds.minY) || (box.top > maxBounds.maxY) ||
+            if (_isPointInRange(pos, maxBounds) ||
                 (options.cornerAdjacent && !isCornerAdjacent(direction, pos)) ||
                 $.doBoundingBoxesIntersect(box, context)) {
                 // check to see if we are about to start over
