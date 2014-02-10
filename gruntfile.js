@@ -172,6 +172,8 @@ module.exports = function (grunt) {
                 src: [
                     "js/jquery.tutorialOverlay.header.js",
                     "js/jquery.tutorialOverlay.getSettings.js",
+                    "js/jquery.tutorialOverlayTip.js",
+                    "js/jquery.tutorialOverlayArrow.js",
                     "js/jquery.tutorialOverlay.js",
                     "js/jquery.tutorialOverlay.unobtrusive.js"
                 ],
@@ -269,32 +271,34 @@ module.exports = function (grunt) {
                 spawn: false
             }
         },
-        jsbeautifier : {
+        jsbeautifier: {
             all: {
                 src: ["js/**/*.js", "test/**/*.js", "site/javascript/**/*.js"],
-                options: { js: { jslintHappy: true } }
+                options: {
+                    js: {
+                        jslintHappy: true
+                    }
+                }
             }
         },
-        lineending : {
+        lineending: {
             all: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: "./js/",
-                        src: ["./**/*.js"],
-                        dest: "./js/"
-                    }, {
-                        expand: true,
-                        cwd: "./test/",
-                        src: ["./**/*.js"],
-                        dest: "./test/"
-                    }, {
-                        expand: true,
-                        cwd: "./site/javascript/",
-                        src: ["./**/*.js"],
-                        dest: "./site/javascript/"
-                    }
-                ],
+                files: [{
+                    expand: true,
+                    cwd: "./js/",
+                    src: ["./**/*.js"],
+                    dest: "./js/"
+                }, {
+                    expand: true,
+                    cwd: "./test/",
+                    src: ["./**/*.js"],
+                    dest: "./test/"
+                }, {
+                    expand: true,
+                    cwd: "./site/javascript/",
+                    src: ["./**/*.js"],
+                    dest: "./site/javascript/"
+                }],
                 options: {
                     eol: "crlf"
                 }

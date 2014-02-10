@@ -33,7 +33,7 @@
         }
         this.settings = settings;
 
-        $.proxyAll(this, "show", "hide", "destroy", "isShowing", "setHideOnClick", "addTip", "setCenterContent", "_render", "_renderTip", "_clickHandler", "_windowResized");
+        $.proxyAll(this, "show", "hide", "destroy", "isShowing", "setHideOnClick", "addTip", "setCenterContent", "_render", "_clickHandler", "_windowResized");
 
         this._tips = [];
 
@@ -117,13 +117,12 @@
     //      color (optional)
     //      offset (optional)
     TutorialOverlay.prototype.addTip = function (newTip) {
-        this._tips.push({
-            target: newTip.target,
-            content: newTip.content,
-            relativePos: newTip.position.toLowerCase(),
-            color: newTip.color,
-            offset: newTip.offset,
-        });
+        //Sanitize the direction/position attribute
+        var options = $.extend({}, newTip);
+        if (newTip.position) {
+            options.direction = newTip.position.toLowerCase();
+        }
+        this._tips.push($.tutorialOverlay.createTip(options));
     };
 
     // set the content to be displayed in the center of the overlay
@@ -174,12 +173,12 @@
         if (this._$overlay) {
             //find tips in DOM
             var domTips = this._$overlay.find(TIP_CLASS);
-            var tips = this._tips;
+            var me = this;
             $.each(domTips, function () {
                 var $tipEl = $(this);
-                tips.push({
+                me.addTip({
                     target: $tipEl.data(DATA_TIP_TARGET_ATTR),
-                    relativePos: $tipEl.data(DATA_TIP_POSITION_ATTR).toLowerCase(),
+                    position: $tipEl.data(DATA_TIP_POSITION_ATTR),
                     content: this,
                     color: $tipEl.data("overlay-tip-color"),
                     offset: $tipEl.data("overlay-tip-offset"),
@@ -281,14 +280,11 @@
             }
 
             //Calculate the original position of the tip.
-            var estimatedTipSizes = _estimateTipSizes(tipRect, windowSize, {
-                padding: DEFAULT_ARROW_PADDING,
-                size: DEFAULT_ARROW_SIZE
-            });
+            var estimatedTipSizes = this.getSizeEstimates(tipRect, windowSize);
             var calculatedPos = this.$tip.calcRestrainedPos({
                 contentSizes: estimatedTipSizes,
                 context: $tipTarget,
-                direction: this.relativePos,
+                direction: this.position,
                 offsets: {
                     vertical: offset,
                     horizontal: offset,
@@ -357,11 +353,15 @@
             var targetRect = $(this.target).clientRect();
             if (tipBounds[this.tipBoundsIndex] &&
                 //If targetRect intersects center content, then ignore this tip.
-                (!contentRect || !_rectsIntersect(targetRect, contentRect))) {
-                me._renderTip(this, tipBounds[this.tipBoundsIndex], context, {
-                    width: windowSize.width,
-                    height: windowSize.height
-                }, occupiedRects);
+                (!contentRect || !$.rectsIntersect(targetRect, contentRect))) {
+                this.render(
+                    $.extend({}, tipBounds[this.tipBoundsIndex]),
+                    context, {
+                        width: windowSize.width,
+                        height: windowSize.height
+                    },
+                    occupiedRects
+                );
             } else {
                 //else the target is not entirely on the page
                 this.$tip.hide();
@@ -370,186 +370,6 @@
 
         // 5) Show the overlay
         this._$overlay.show();
-    };
-
-    //TODO: use an options argument here.  Include things like arrow-padding, stroke width, etc.
-    TutorialOverlay.prototype._renderTip = function (tip, tipRect, canvasContext, overlaySize, occupiedRects) {
-        //calculate the position of the tip
-        var offset = this.offset;
-        if (!offset) {
-            offset = DEFAULT_ARROW_PADDING;
-        }
-        var viewportMargin = DEFAULT_ARROW_SIZE / 2;
-
-        var arrowPadding = DEFAULT_ARROW_PADDING;
-        var arrowOptions = {
-            padding: arrowPadding,
-            size: DEFAULT_ARROW_SIZE
-        };
-
-        //Calculate possible tip rects for each direction.
-        var expectedTipSizes = _estimateTipSizes(tipRect, overlaySize, arrowOptions);
-
-        var arrow = _addArrowToTip(tipRect, overlaySize, arrowOptions);
-        var newTipRect = $.extend({}, tipRect);
-        _addPointToRect(arrow.endPt.x, arrow.endPt.y, newTipRect);
-        var calculatedPos = tip.$tip.calcRestrainedPos({
-            contentSizes: expectedTipSizes,
-            context: tip.target,
-            direction: tipRect.direction,
-            offsets: {
-                vertical: offset,
-                horizontal: offset,
-                viewport: viewportMargin,
-                padding: arrowPadding
-            },
-            exclusions: occupiedRects,
-            cornerAdjacent: true
-        });
-        if (calculatedPos && calculatedPos.pos.top) {
-            if (calculatedPos.direction !== tipRect.direction) {
-                //Adjust the arrow.
-                tipRect.direction = calculatedPos.direction;
-
-                arrow = _addArrowToTip(tipRect, overlaySize, arrowOptions);
-                newTipRect = $.extend({}, tipRect);
-                _addPointToRect(arrow.endPt.x, arrow.endPt.y, newTipRect);
-            }
-
-            var dx = calculatedPos.pos.left - newTipRect.left;
-            var dy = calculatedPos.pos.top - newTipRect.top;
-            if ((dx !== 0) || (dy !== 0)) {
-                _translateRect(tipRect, dx, dy);
-                _translateArrow(arrow, dx, dy);
-
-                //Check arrow position - it may need to be changed if it no longer points to the target
-                var targetRect = $(tip.target).clientRect();
-                _growRect(targetRect, -arrowPadding * 2);
-                if (!_isValidArrow(targetRect, arrow)) {
-                    _toggleArrow(tipRect, arrow, arrowOptions);
-                    var endPt = arrow.endPt;
-                    switch (arrow.direction) {
-                    case "SSE":
-                    case "SSW":
-                    case "NNE":
-                    case "NNW":
-                        //Arrow points south/north
-                        if (endPt.x > targetRect.right) {
-                            dx = targetRect.right - endPt.x;
-                        } else if (endPt.x < targetRect.left) {
-                            dx = targetRect.left - endPt.x;
-                        } else {
-                            dx = 0;
-                        }
-                        dy = 0;
-                        break;
-
-                    case "WSW":
-                    case "WNW":
-                    case "ESE":
-                    case "ENE":
-                        //Arrow points east/west
-                        if (endPt.y > targetRect.bottom) {
-                            dy = targetRect.bottom - endPt.y;
-                        } else if (endPt.y < targetRect.top) {
-                            dy = targetRect.top - endPt.y;
-                        } else {
-                            dy = 0;
-                        }
-                        dx = 0;
-                        break;
-                    }
-                    if ((dx !== 0) || (dy !== 0)) {
-                        //TODO: Does this state still occur?
-                        _translateRect(tipRect, dx, dy);
-                        _translateArrow(arrow, dx, dy);
-                    }
-                }
-            }
-        } else {
-            //can't position it.  Give up.
-            tip.$tip.hide();
-            return;
-        }
-
-        //Check for collisions with the center content, other tips (and other child elements of the overlay?)
-        if (occupiedRects) {
-            newTipRect = $.extend({}, tipRect);
-            _addPointToRect(arrow.endPt.x, arrow.endPt.y, newTipRect);
-
-            //TODO: This shouldn't be needed any more.
-            var intersectingRect = this._detectCollisions(newTipRect, occupiedRects);
-            if (!intersectingRect) {
-                occupiedRects.push(newTipRect);
-            } else {
-                //collision detected
-                // move the tip?
-                //Note: this should never happen in practice.  See above TODO.
-                tip.$tip.hide();
-                return;
-            }
-        }
-
-        //Set the tip's position
-        tip.$tip.css({
-            position: "absolute",
-            top: tipRect.top + "px",
-            left: tipRect.left + "px",
-            visibility: ""
-        }).show();
-
-        this._renderArrow(arrow.startPt, arrow.endPt, arrow.controlPt, tip.color, canvasContext);
-    };
-
-    TutorialOverlay.prototype._renderArrow = function (startPt, endPt, controlPt, color, canvasContext) {
-        canvasContext.beginPath();
-        if (!color) {
-            color = DEFAULT_TIP_COLOR;
-        }
-        canvasContext.strokeStyle = color;
-
-        //draw curve from startPt to endPt
-        canvasContext.moveTo(startPt.x, startPt.y);
-        canvasContext.quadraticCurveTo(controlPt.x, controlPt.y, endPt.x, endPt.y);
-
-        //draw tip of arrow
-        var headSize = DEFAULT_ARROW_HEAD_SIZE; // length of head in pixels
-        var dx = endPt.x - controlPt.x;
-        var dy = endPt.y - controlPt.y;
-        var angle;
-        if (dx === 0) {
-            angle = Math.PI / 2;
-            if (startPt.y > endPt.y) {
-                angle *= 3;
-            }
-        } else {
-            angle = Math.atan2(dy, dx);
-        }
-        canvasContext.lineTo(
-            endPt.x - headSize * Math.cos(angle - Math.PI / 6),
-            endPt.y - headSize * Math.sin(angle - Math.PI / 6)
-        );
-        canvasContext.moveTo(endPt.x, endPt.y);
-        canvasContext.lineTo(
-            endPt.x - headSize * Math.cos(angle + Math.PI / 6),
-            endPt.y - headSize * Math.sin(angle + Math.PI / 6)
-        );
-
-        canvasContext.stroke();
-    };
-
-    TutorialOverlay.prototype._detectCollisions = function (rect1, otherRects) {
-        //stupid n^2 algorithm to detect collisions.
-        //  If performance is a concern, use a quadtree or even sort the list of otherRects
-        //  on one axis.
-        var collision = null;
-        for (var i = 0;
-            (i < otherRects.length) && !collision; i++) {
-            if (_rectsIntersect(otherRects[i], rect1)) {
-                collision = otherRects[i];
-            }
-        }
-        return collision;
     };
 
     TutorialOverlay.prototype._clickHandler = function (e) {
@@ -569,310 +389,6 @@
         timeout = setTimeout(this._render, 50);
     };
 
-    //TODO: DRY and optimize
-    var _addArrowToTip = function (tipRenderInfo, overlaySize, options) {
-        var overlayCenterX = overlaySize.width / 2;
-        var overlayCenterY = overlaySize.height / 2;
-
-        var arrowPadding = (options && options.padding) ? options.padding : DEFAULT_ARROW_PADDING;
-        var arrowSize = (options && options.size) ? options.size : DEFAULT_ARROW_SIZE;
-
-        var arrow = {};
-        switch (tipRenderInfo.direction) {
-        case "north":
-            if (overlayCenterX - tipRenderInfo.left > tipRenderInfo.width / 2) {
-                //Left of center
-                //SSE curved arrow
-                _translateRect(tipRenderInfo, -(arrowSize + tipRenderInfo.width / 2), -(arrowSize - tipRenderInfo.height / 2));
-                _calculateArrow(tipRenderInfo, arrow, "SSE", arrowPadding, arrowSize);
-            } else {
-                //Right of center
-                //SSW curved arrow
-                _translateRect(tipRenderInfo, arrowSize + tipRenderInfo.width / 2, -(arrowSize - tipRenderInfo.height / 2));
-                _calculateArrow(tipRenderInfo, arrow, "SSW", arrowPadding, arrowSize);
-            }
-            break;
-
-        case "south":
-            if (overlayCenterX - tipRenderInfo.left > tipRenderInfo.width / 2) {
-                //Left of center
-                //NNE curved arrow
-                _translateRect(tipRenderInfo, -(arrowSize + tipRenderInfo.width / 2), (arrowSize - tipRenderInfo.height / 2));
-                _calculateArrow(tipRenderInfo, arrow, "NNE", arrowPadding, arrowSize);
-            } else {
-                //Right of center
-                //NNW curved arrow
-                _translateRect(tipRenderInfo, arrowSize + tipRenderInfo.width / 2, (arrowSize - tipRenderInfo.height / 2));
-                _calculateArrow(tipRenderInfo, arrow, "NNW", arrowPadding, arrowSize);
-            }
-            break;
-
-        case "east":
-            if (overlayCenterY - tipRenderInfo.top > tipRenderInfo.height / 2) {
-                //Above center
-                //WSW curved arrow
-                _translateRect(tipRenderInfo, arrowSize / 2, -(arrowSize + tipRenderInfo.height / 2));
-                _calculateArrow(tipRenderInfo, arrow, "WSW", arrowPadding, arrowSize);
-            } else {
-                //Below center
-                //WNW curved arrow
-                _translateRect(tipRenderInfo, arrowSize / 2, arrowSize + (tipRenderInfo.height / 2));
-                _calculateArrow(tipRenderInfo, arrow, "WNW", arrowPadding, arrowSize);
-            }
-            break;
-
-        case "west":
-            if (overlayCenterY - tipRenderInfo.top > tipRenderInfo.height / 2) {
-                //Above center
-                //ESE curved arrow
-                _translateRect(tipRenderInfo, -arrowSize / 2, -(arrowSize + tipRenderInfo.height / 2));
-                _calculateArrow(tipRenderInfo, arrow, "ESE", arrowPadding, arrowSize);
-            } else {
-                //Below center
-                //ENE curved arrow
-                _translateRect(tipRenderInfo, -arrowSize / 2, arrowSize + tipRenderInfo.height / 2);
-                _calculateArrow(tipRenderInfo, arrow, "ENE", arrowPadding, arrowSize);
-            }
-            break;
-        }
-        return arrow;
-    };
-
-    var _calculateArrow = function (tipRenderInfo, arrow, arrowDirection, arrowPadding, arrowSize) {
-        switch (arrowDirection) {
-        case "SSE":
-            arrow.startPt = {
-                x: tipRenderInfo.right + arrowPadding,
-                y: tipRenderInfo.top + tipRenderInfo.height / 2
-            };
-            arrow.endPt = {
-                x: tipRenderInfo.right + arrowSize,
-                y: arrow.startPt.y + (arrowSize - arrowPadding)
-            };
-            arrow.controlPt = {
-                x: arrow.endPt.x,
-                y: arrow.startPt.y
-            };
-            break;
-
-        case "SSW":
-            arrow.startPt = {
-                x: tipRenderInfo.left - arrowPadding,
-                y: tipRenderInfo.top + tipRenderInfo.height / 2
-            };
-            arrow.endPt = {
-                x: tipRenderInfo.left - arrowSize,
-                y: arrow.startPt.y + (arrowSize - arrowPadding)
-            };
-            arrow.controlPt = {
-                x: arrow.endPt.x,
-                y: arrow.startPt.y
-            };
-            break;
-
-        case "NNE":
-            arrow.startPt = {
-                x: tipRenderInfo.right + arrowPadding,
-                y: tipRenderInfo.top + tipRenderInfo.height / 2
-            };
-            arrow.endPt = {
-                x: tipRenderInfo.right + arrowSize,
-                y: arrow.startPt.y - (arrowSize - arrowPadding)
-            };
-            arrow.controlPt = {
-                x: arrow.endPt.x,
-                y: arrow.startPt.y
-            };
-            break;
-
-        case "NNW":
-            arrow.startPt = {
-                x: tipRenderInfo.left - arrowPadding,
-                y: tipRenderInfo.top + tipRenderInfo.height / 2
-            };
-            arrow.endPt = {
-                x: tipRenderInfo.left - arrowSize,
-                y: arrow.startPt.y - (arrowSize - arrowPadding)
-            };
-            arrow.controlPt = {
-                x: arrow.endPt.x,
-                y: arrow.startPt.y
-            };
-            break;
-
-        case "WSW":
-            arrow.startPt = {
-                x: tipRenderInfo.left + arrowSize / 2,
-                y: tipRenderInfo.bottom + arrowPadding
-            };
-            arrow.endPt = {
-                x: tipRenderInfo.left - (arrowSize / 2) + arrowPadding,
-                y: tipRenderInfo.bottom + arrowSize
-            };
-            arrow.controlPt = {
-                x: arrow.startPt.x,
-                y: arrow.endPt.y
-            };
-            break;
-
-        case "WNW":
-            arrow.startPt = {
-                x: tipRenderInfo.left + arrowSize / 2,
-                y: tipRenderInfo.top - arrowPadding
-            };
-            arrow.endPt = {
-                x: tipRenderInfo.left - arrowSize / 2 + arrowPadding,
-                y: tipRenderInfo.top - arrowSize
-            };
-            arrow.controlPt = {
-                x: arrow.startPt.x,
-                y: arrow.endPt.y
-            };
-            break;
-
-        case "ESE":
-            arrow.startPt = {
-                x: tipRenderInfo.right - arrowSize / 2,
-                y: tipRenderInfo.bottom + arrowPadding
-            };
-            arrow.endPt = {
-                x: tipRenderInfo.right + arrowSize / 2 - arrowPadding,
-                y: tipRenderInfo.bottom + arrowSize
-            };
-            arrow.controlPt = {
-                x: arrow.startPt.x,
-                y: arrow.endPt.y
-            };
-            break;
-
-        case "ENE":
-            arrow.startPt = {
-                x: tipRenderInfo.right - arrowSize / 2,
-                y: tipRenderInfo.top - arrowPadding
-            };
-            arrow.endPt = {
-                x: tipRenderInfo.right + arrowSize / 2 - arrowPadding,
-                y: tipRenderInfo.top - arrowSize
-            };
-            arrow.controlPt = {
-                x: arrow.startPt.x,
-                y: arrow.endPt.y
-            };
-            break;
-        }
-        arrow.direction = arrowDirection;
-    };
-
-    var _toggleArrow = function (tipRenderInfo, arrow, options) {
-        var arrowPadding = (options && options.padding) ? options.padding : DEFAULT_ARROW_PADDING;
-        var arrowSize = (options && options.size) ? options.size : DEFAULT_ARROW_SIZE;
-
-        var newDirection = arrow.direction;
-        switch (arrow.direction) {
-        case "SSE":
-            newDirection = "SSW";
-            _translateRect(tipRenderInfo, arrowSize, 0);
-            break;
-
-        case "SSW":
-            newDirection = "SSE";
-            _translateRect(tipRenderInfo, -arrowSize, 0);
-            break;
-
-        case "NNE":
-            newDirection = "NNW";
-            _translateRect(tipRenderInfo, arrowSize, 0);
-            break;
-
-        case "NNW":
-            newDirection = "NNE";
-            _translateRect(tipRenderInfo, -arrowSize, 0);
-            break;
-
-        case "WSW":
-            newDirection = "WNW";
-            _translateRect(tipRenderInfo, 0, arrowSize);
-            break;
-
-        case "WNW":
-            newDirection = "WSW";
-            _translateRect(tipRenderInfo, 0, -arrowSize);
-            break;
-
-        case "ESE":
-            newDirection = "ENE";
-            _translateRect(tipRenderInfo, 0, arrowSize);
-            break;
-
-        case "ENE":
-            newDirection = "ESE";
-            _translateRect(tipRenderInfo, 0, -arrowSize);
-            break;
-        }
-        _calculateArrow(tipRenderInfo, arrow, newDirection, arrowPadding, arrowSize);
-    };
-
-    /*
-     * If the arrow does not point to the rect defined by tipRenderInfo,
-     *   then return false;
-     */
-    var _isValidArrow = function (targetRect, arrow) {
-        var valid = false;
-        var endPt = arrow.endPt;
-        switch (arrow.direction) {
-        case "SSE":
-        case "SSW":
-            //Arrow points south
-            valid = (endPt.x >= targetRect.left) && (endPt.x <= targetRect.right) && (endPt.y <= targetRect.top);
-            break;
-
-        case "NNE":
-        case "NNW":
-            //Arrow points north
-            valid = (endPt.x >= targetRect.left) && (endPt.x <= targetRect.right) && (endPt.y >= targetRect.bottom);
-            break;
-
-        case "WSW":
-        case "WNW":
-            //Arrow points west
-            valid = (endPt.y >= targetRect.top) && (endPt.y <= targetRect.bottom) && (endPt.x >= targetRect.right);
-            break;
-
-        case "ESE":
-        case "ENE":
-            //Arrow points east
-            valid = (endPt.y >= targetRect.top) && (endPt.y <= targetRect.bottom) && (endPt.x <= targetRect.left);
-            break;
-        }
-        return valid;
-    };
-
-    var _translateArrow = function (arrow, dx, dy) {
-        arrow.startPt.x += dx;
-        arrow.startPt.y += dy;
-        arrow.endPt.x += dx;
-        arrow.endPt.y += dy;
-        arrow.controlPt.x += dx;
-        arrow.controlPt.y += dy;
-    };
-
-    //Get estimates of the tip size, including arrow, for each direction.
-    var _estimateTipSizes = function (tipRect, overlaySize, arrowOptions) {
-        var expectedTipSizes = {};
-        expectedTipSizes["north"] = $.extend({}, tipRect);
-        expectedTipSizes["north"].direction = "north";
-        var arrow = _addArrowToTip(expectedTipSizes["north"], overlaySize, arrowOptions);
-        _addPointToRect(arrow.endPt.x, arrow.endPt.y, expectedTipSizes["north"]);
-        expectedTipSizes["south"] = expectedTipSizes["north"]; //north/south should be same size
-        expectedTipSizes["west"] = $.extend({}, tipRect);
-        expectedTipSizes["west"].direction = "west";
-        arrow = _addArrowToTip(expectedTipSizes["west"], overlaySize, arrowOptions);
-        _addPointToRect(arrow.endPt.x, arrow.endPt.y, expectedTipSizes["west"]);
-        expectedTipSizes["east"] = expectedTipSizes["west"]; //east/west should be same size
-
-        return expectedTipSizes;
-    };
-
     var _getOverlaySize = function () {
         var $document = $(document);
 
@@ -880,46 +396,6 @@
             width: $document.width(),
             height: $document.height()
         };
-    };
-
-    var _rectsIntersect = function (rect1, rect2) {
-        return !(rect2.left > rect1.right ||
-            rect2.right < rect1.left ||
-            rect2.top > rect1.bottom ||
-            rect2.bottom < rect1.top);
-    };
-
-    var _translateRect = function (rect, dx, dy) {
-        rect.left += dx;
-        rect.top += dy;
-        rect.right = rect.left + rect.width;
-        rect.bottom = rect.top + rect.height;
-    };
-
-    var _growRect = function (rect, dw, dh) {
-        if ((typeof (dh) === "undefined") || isNaN(dh)) {
-            dh = dw;
-        }
-        rect.width += dw;
-        rect.height += dh;
-        _translateRect(rect, -dw / 2, -dh / 2);
-    };
-
-    var _addPointToRect = function (x, y, rect) {
-        if (x < rect.left) {
-            rect.left = x;
-            rect.width = rect.right - rect.left;
-        } else if (x > rect.right) {
-            rect.right = x;
-            rect.width = rect.right - rect.left;
-        }
-        if (y < rect.top) {
-            rect.top = y;
-            rect.height = rect.bottom - rect.top;
-        } else if (y > rect.bottom) {
-            rect.bottom = y;
-            rect.height = rect.bottom - rect.top;
-        }
     };
 
     //Takes a settings object and calculates derived settings.
