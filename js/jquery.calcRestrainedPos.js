@@ -732,8 +732,8 @@
         }
 
         function _isPointInRange(position, maxPositions) {
-            return (position.left < maxPositions.minX) || (position.left > maxPositions.maxX) ||
-                (position.top < maxPositions.minY) || (position.top > maxPositions.maxY);
+            return (position.left >= maxPositions.minX) && (position.left <= maxPositions.maxX) &&
+                (position.top >= maxPositions.minY) && (position.top <= maxPositions.maxY);
         }
 
         // attempt the direction requested first
@@ -773,14 +773,13 @@
             });
             compensateContainer(direction, maxBounds);
             compensateViewport(direction, maxBounds);
-            if (!_isPointInRange(pos, maxBounds)) {
-                //Skip the most expensive step if the position is already out of the maxBounds limits.
+            if (_isPointInRange(pos, maxBounds)) {
                 compensateObstacles2(direction, maxBounds);
-            }
+            } //Else skip the most expensive step if the position is already out of the maxBounds limits.
             var box = $.extend({}, content, pos);
 
             // verify position is not over the context and within expected limits
-            if (_isPointInRange(pos, maxBounds) ||
+            if (!_isPointInRange(pos, maxBounds) ||
                 (options.cornerAdjacent && !isCornerAdjacent(direction, pos)) ||
                 $.doBoundingBoxesIntersect(box, context)) {
                 // check to see if we are about to start over
