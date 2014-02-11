@@ -95,7 +95,7 @@ Tip for Tutorial Overlay
 
                 //Check arrow position - it may need to be changed if it no longer points to the target
                 var targetRect = $(this.target).clientRect();
-                $.growRect(targetRect, -arrowPadding * 2);
+                $.growRect(targetRect, -arrowPadding);
                 if (!arrow.isValid(targetRect)) {
                     arrow.toggleDirection(tipRect);
                     /*
@@ -159,9 +159,8 @@ Tip for Tutorial Overlay
                 //collision detected
                 // move the tip?
                 //Note: this should never happen in practice.  See above TODO.
-                this.color = "#FF0000";
-                //                this.$tip.hide();
-                //                return;
+                this.$tip.hide();
+                return;
             }
         }
 
