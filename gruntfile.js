@@ -172,8 +172,8 @@ module.exports = function (grunt) {
                 src: [
                     "js/jquery.tutorialOverlay.header.js",
                     "js/jquery.tutorialOverlay.getSettings.js",
-                    "js/jquery.tutorialOverlayTip.js",
-                    "js/jquery.tutorialOverlayArrow.js",
+                    "js/jquery.tutorialOverlay.Tip.js",
+                    "js/jquery.tutorialOverlay.Arrow.js",
                     "js/jquery.tutorialOverlay.js",
                     "js/jquery.tutorialOverlay.unobtrusive.js"
                 ],
