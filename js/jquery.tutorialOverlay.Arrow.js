@@ -4,12 +4,20 @@ Arrows for Tutorial Overlay tips
 (function ($) {
     $.tutorialOverlay = $.tutorialOverlay || {};
 
+    /**
+     * Public factory method to create an Arrow.
+     * @param {rectangle} tipRect - the bounding box of the Tip
+     * @param {Object} options - the options used to initialize this Arrow.
+     **/
     $.tutorialOverlay.createArrow = function (tipRect, options) {
         return new Arrow(tipRect, options);
     };
 
     /**
      * An Arrow to be drawn connecting a tip to its target.
+     * @constructor
+     * @param {rectangle} tipRect - the bounding box of the Tip
+     * @param {Object} options - the options used to initialize this Arrow.
      **/
     function Arrow(tipRect, options) {
         //Private variables
@@ -99,7 +107,7 @@ Arrows for Tutorial Overlay tips
             _calculatePoints(tipRect);
         };
 
-        /*
+        /**
          * If the arrow does not point to the rect defined by targetRect,
          *   then return false;
          * @param {rectangle} targetRect - the Arrow is expected to point to this rectangle
@@ -140,10 +148,19 @@ Arrows for Tutorial Overlay tips
             return valid;
         };
 
+        /**
+         * Adjust the Tip's bounding box to include this Arrow.
+         * @param {rectangle} tipRect - the bounding box of the Tip
+         **/
         this.addToTip = function (tipRect) {
             $.addPointToRect(_endPt.x, _endPt.y, tipRect);
         };
 
+        /**
+         * Move the location of the Arrow.
+         * @param {Number} dx - the amount to move horizontally
+         * @param {Number} dy - the amount to move vertically
+         **/
         this.translate = function (dx, dy) {
             _startPt.x += dx;
             _startPt.y += dy;
@@ -164,7 +181,7 @@ Arrows for Tutorial Overlay tips
          *  Together start, end, control make up three corners of the bounding box of the arrow.
          * @param {string} color - The color to render the arrow.
          * @param {CanvasRenderingContext2D} canvasContext - The HTML Canvas context to render to.
-         */
+         **/
         this.render = function (color, canvasContext) {
             _drawFn(canvasContext, {
                 startX: _startPt.x,
@@ -178,6 +195,10 @@ Arrows for Tutorial Overlay tips
             });
         };
 
+        /**
+         * Calculate the start, control, and end points of this arrow.
+         * @param {rectangle} tipRect - the Tip's bounding box
+         **/
         var _calculatePoints = function (tipRect) {
             //Make sure that right/bottom are valid.
             tipRect.right = tipRect.left + tipRect.width;
@@ -306,6 +327,13 @@ Arrows for Tutorial Overlay tips
             }
         };
 
+        /**
+         * The default arrow-drawing function.
+         * This function draws an arc from startPt to endPt, using controlPt to determine the midpoint and size of the arc.
+         * @param {CanvasRenderingContext2D} canvasContext - The HTML Canvas context to render to.
+         * @param {Oject} options - The options to use when rendering the arrow, including the start, control, and end points.
+         * @see render
+         **/
         var _defaultDrawFn = function (canvasContext, options) {
             canvasContext.beginPath();
             if (options.color) {
@@ -349,6 +377,7 @@ Arrows for Tutorial Overlay tips
             canvasContext.stroke();
         };
 
+        //Ensure that a drawing function is specified.
         if (!_drawFn) {
             _drawFn = _defaultDrawFn;
         }
