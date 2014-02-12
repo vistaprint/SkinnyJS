@@ -8,6 +8,9 @@ Arrows for Tutorial Overlay tips
         return new Arrow(tipRect, options);
     };
 
+    /**
+     * An Arrow to be drawn connecting a tip to its target.
+     **/
     function Arrow(tipRect, options) {
         //Private variables
         var _padding = options.padding; //space between arrow and tip/target
@@ -17,18 +20,34 @@ Arrows for Tutorial Overlay tips
         var _drawFn = options.drawFn; //function used to draw the arrow head
         var _endPt, _startPt, _controlPt; //points used for rendering the arrow
 
+        /**
+         * Get the padding used for this Arrow.
+         * @returns {Number} the padding
+         **/
         this.getPadding = function () {
             return _padding;
         };
 
+        /**
+         * Get the size of this Arrow.  The Arrow's bounding box is assumed to be square.
+         * @returns {Number} the size of the arrow
+         **/
         this.getSize = function () {
             return _size;
         };
 
+        /**
+         * Get the direction of this Arrow.
+         * @returns {String} the direction of the arrow
+         **/
         this.getDirection = function () {
             return _direction;
         };
 
+        /**
+         * Switch the direction of the arrow.
+         * @param {rectangle} tipRect - the bounding box of the associated Tip
+         **/
         this.toggleDirection = function (tipRect) {
             var newDirection = _direction;
             var dx = 0;
@@ -44,6 +63,7 @@ Arrows for Tutorial Overlay tips
                 dx = -_size;
                 break;
 
+            default:
             case 'NNE':
                 newDirection = 'NNW';
                 dx = _size;
@@ -82,6 +102,8 @@ Arrows for Tutorial Overlay tips
         /*
          * If the arrow does not point to the rect defined by targetRect,
          *   then return false;
+         * @param {rectangle} targetRect - the Arrow is expected to point to this rectangle
+         * @returns {Boolean} true iff the arrow points to targetRect
          */
         this.isValid = function (targetRect) {
             var valid = false;
@@ -96,6 +118,7 @@ Arrows for Tutorial Overlay tips
                 valid = (endPt.x >= targetRect.left) && (endPt.x <= targetRect.right) && (endPt.y <= targetRect.top);
                 break;
 
+            default:
             case 'NNE':
             case 'NNW':
                 //Arrow points north
@@ -130,6 +153,18 @@ Arrows for Tutorial Overlay tips
             _controlPt.y += dy;
         };
 
+        /**
+         * Renders the arrow using a custom function.
+         * The function is passed an options object containing:
+         *  color - the color to use when rendering the arrow
+         *  headSize - the size of the head of the arrow
+         *  startX, startY - the coordinates for the start of the arrow
+         *  endX, endY - the coordinates for the end of the arrow
+         *  controlX, controlY - the coordinates for the 'control point' of the arrow
+         *  Together start, end, control make up three corners of the bounding box of the arrow.
+         * @param {string} color - The color to render the arrow.
+         * @param {CanvasRenderingContext2D} canvasContext - The HTML Canvas context to render to.
+         */
         this.render = function (color, canvasContext) {
             _drawFn(canvasContext, {
                 startX: _startPt.x,
@@ -178,6 +213,7 @@ Arrows for Tutorial Overlay tips
                 };
                 break;
 
+            default:
             case 'NNE':
                 _startPt = {
                     x: tipRect.right + _padding,
@@ -253,7 +289,6 @@ Arrows for Tutorial Overlay tips
                 };
                 break;
 
-            default:
             case 'ENE':
                 _startPt = {
                     x: tipRect.right - _size / 2,
