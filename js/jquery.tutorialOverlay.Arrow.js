@@ -2,281 +2,323 @@
 Arrows for Tutorial Overlay tips
 */
 (function ($) {
+    $.tutorialOverlay = $.tutorialOverlay || {};
 
-    function Arrow(tipRect, options) {
-        this.padding = options.padding;
-        this.size = options.size;
-        this.headSize = options.headSize;
-        this.direction = options.direction;
-        this.drawHeadFn = options.drawHeadFn;
-
-        _calculateArrow(this, tipRect);
-    }
-
-    //TODO: what's a better way to do this?
     $.tutorialOverlay.createArrow = function (tipRect, options) {
         return new Arrow(tipRect, options);
     };
 
-    Arrow.prototype.toggleDirection = function (tipRect) {
-        var newDirection = this.direction;
-        switch (this.direction) {
-        case 'SSE':
-            newDirection = 'SSW';
-            $.translateRect(tipRect, this.size, 0);
-            break;
+    function Arrow(tipRect, options) {
+        //Private variables
+        var _padding = options.padding; //space between arrow and tip/target
+        var _size = options.size; //size of the drawn arrow's [square] bounding box
+        var _headSize = options.headSize; //size of the arrow head
+        var _direction = options.direction; //direction of the arrow
+        var _drawFn = options.drawFn; //function used to draw the arrow head
+        var _endPt, _startPt, _controlPt; //points used for rendering the arrow
 
-        case 'SSW':
-            newDirection = 'SSE';
-            $.translateRect(tipRect, -this.size, 0);
-            break;
+        this.getPadding = function () {
+            return _padding;
+        };
 
-        case 'NNE':
-            newDirection = 'NNW';
-            $.translateRect(tipRect, this.size, 0);
-            break;
+        this.getSize = function () {
+            return _size;
+        };
 
-        case 'NNW':
-            newDirection = 'NNE';
-            $.translateRect(tipRect, -this.size, 0);
-            break;
+        this.getDirection = function () {
+            return _direction;
+        };
 
-        case 'WSW':
-            newDirection = 'WNW';
-            $.translateRect(tipRect, 0, this.size);
-            break;
+        this.toggleDirection = function (tipRect) {
+            var newDirection = _direction;
+            var dx = 0;
+            var dy = 0;
+            switch (_direction) {
+            case 'SSE':
+                newDirection = 'SSW';
+                dx = _size;
+                break;
 
-        case 'WNW':
-            newDirection = 'WSW';
-            $.translateRect(tipRect, 0, -this.size);
-            break;
+            case 'SSW':
+                newDirection = 'SSE';
+                dx = -_size;
+                break;
 
-        case 'ESE':
-            newDirection = 'ENE';
-            $.translateRect(tipRect, 0, this.size);
-            break;
+            case 'NNE':
+                newDirection = 'NNW';
+                dx = _size;
+                break;
 
-        case 'ENE':
-            newDirection = 'ESE';
-            $.translateRect(tipRect, 0, -this.size);
-            break;
-        }
-        this.direction = newDirection;
-        _calculateArrow(this, tipRect);
-    };
+            case 'NNW':
+                newDirection = 'NNE';
+                dx = -_size;
+                break;
 
-    /*
-     * If the arrow does not point to the rect defined by targetRect,
-     *   then return false;
-     */
-    Arrow.prototype.isValid = function (targetRect) {
-        var valid = false;
-        var endPt = this.endPt;
-        switch (this.direction) {
-        case 'SSE':
-        case 'SSW':
-            //Arrow points south
-            valid = (endPt.x >= targetRect.left) && (endPt.x <= targetRect.right) && (endPt.y <= targetRect.top);
-            break;
+            case 'WSW':
+                newDirection = 'WNW';
+                dy = _size;
+                break;
 
-        case 'NNE':
-        case 'NNW':
-            //Arrow points north
-            valid = (endPt.x >= targetRect.left) && (endPt.x <= targetRect.right) && (endPt.y >= targetRect.bottom);
-            break;
+            case 'WNW':
+                newDirection = 'WSW';
+                dy = -_size;
+                break;
 
-        case 'WSW':
-        case 'WNW':
-            //Arrow points west
-            valid = (endPt.y >= targetRect.top) && (endPt.y <= targetRect.bottom) && (endPt.x >= targetRect.right);
-            break;
+            case 'ESE':
+                newDirection = 'ENE';
+                dy = _size;
+                break;
 
-        case 'ESE':
-        case 'ENE':
-            //Arrow points east
-            valid = (endPt.y >= targetRect.top) && (endPt.y <= targetRect.bottom) && (endPt.x <= targetRect.left);
-            break;
-        }
-        return valid;
-    };
+            case 'ENE':
+                newDirection = 'ESE';
+                dy = -_size;
+                break;
+            }
+            $.translateRect(tipRect, dx, dy);
+            _direction = newDirection;
+            _calculatePoints(tipRect);
+        };
 
-    Arrow.prototype.addToTip = function (tipRect) {
-        $.addPointToRect(this.endPt.x, this.endPt.y, tipRect);
-    };
+        /*
+         * If the arrow does not point to the rect defined by targetRect,
+         *   then return false;
+         */
+        this.isValid = function (targetRect) {
+            var valid = false;
+            var endPt = _endPt;
+            //Make sure that right/bottom are valid.
+            targetRect.right = targetRect.left + targetRect.width;
+            targetRect.bottom = targetRect.top + targetRect.height;
+            switch (_direction) {
+            case 'SSE':
+            case 'SSW':
+                //Arrow points south
+                valid = (endPt.x >= targetRect.left) && (endPt.x <= targetRect.right) && (endPt.y <= targetRect.top);
+                break;
 
-    Arrow.prototype.translate = function (dx, dy) {
-        this.startPt.x += dx;
-        this.startPt.y += dy;
-        this.endPt.x += dx;
-        this.endPt.y += dy;
-        this.controlPt.x += dx;
-        this.controlPt.y += dy;
-    };
+            case 'NNE':
+            case 'NNW':
+                //Arrow points north
+                valid = (endPt.x >= targetRect.left) && (endPt.x <= targetRect.right) && (endPt.y >= targetRect.bottom);
+                break;
 
-    Arrow.prototype.render = function (color, canvasContext) {
-        canvasContext.beginPath();
-        if (color) {
-            canvasContext.strokeStyle = color;
-        }
+            case 'WSW':
+            case 'WNW':
+                //Arrow points west
+                valid = (endPt.y >= targetRect.top) && (endPt.y <= targetRect.bottom) && (endPt.x >= targetRect.right);
+                break;
 
-        //draw curve from startPt to endPt
-        canvasContext.moveTo(this.startPt.x, this.startPt.y);
-        canvasContext.quadraticCurveTo(this.controlPt.x, this.controlPt.y, this.endPt.x, this.endPt.y);
+            case 'ESE':
+            case 'ENE':
+                //Arrow points east
+                valid = (endPt.y >= targetRect.top) && (endPt.y <= targetRect.bottom) && (endPt.x <= targetRect.left);
+                break;
+            }
+            return valid;
+        };
 
-        //draw tip of arrow
-        if (this.drawHeadFn) {
-            this.drawHeadFn(
-                this.startPt.x, this.startPt.y,
-                this.controlPt.x, this.controlPt.y,
-                this.endPt.x, this.endPt.y
-            );
-        } else {
-            var dx = this.endPt.x - this.controlPt.x;
-            var dy = this.endPt.y - this.controlPt.y;
+        this.addToTip = function (tipRect) {
+            $.addPointToRect(_endPt.x, _endPt.y, tipRect);
+        };
+
+        this.translate = function (dx, dy) {
+            _startPt.x += dx;
+            _startPt.y += dy;
+            _endPt.x += dx;
+            _endPt.y += dy;
+            _controlPt.x += dx;
+            _controlPt.y += dy;
+        };
+
+        this.render = function (color, canvasContext) {
+            _drawFn(canvasContext, {
+                startX: _startPt.x,
+                startY: _startPt.y,
+                controlX: _controlPt.x,
+                controlY: _controlPt.y,
+                endX: _endPt.x,
+                endY: _endPt.y,
+                headSize: _headSize,
+                color: color
+            });
+        };
+
+        var _calculatePoints = function (tipRect) {
+            //Make sure that right/bottom are valid.
+            tipRect.right = tipRect.left + tipRect.width;
+            tipRect.bottom = tipRect.top + tipRect.height;
+            switch (_direction) {
+            case 'SSE':
+                _startPt = {
+                    x: tipRect.right + _padding,
+                    y: tipRect.top + tipRect.height / 2
+                };
+                _endPt = {
+                    x: tipRect.right + _size,
+                    y: _startPt.y + (_size - _padding)
+                };
+                _controlPt = {
+                    x: _endPt.x,
+                    y: _startPt.y
+                };
+                break;
+
+            case 'SSW':
+                _startPt = {
+                    x: tipRect.left - _padding,
+                    y: tipRect.top + tipRect.height / 2
+                };
+                _endPt = {
+                    x: tipRect.left - _size,
+                    y: _startPt.y + (_size - _padding)
+                };
+                _controlPt = {
+                    x: _endPt.x,
+                    y: _startPt.y
+                };
+                break;
+
+            case 'NNE':
+                _startPt = {
+                    x: tipRect.right + _padding,
+                    y: tipRect.top + tipRect.height / 2
+                };
+                _endPt = {
+                    x: tipRect.right + _size,
+                    y: _startPt.y - (_size - _padding)
+                };
+                _controlPt = {
+                    x: _endPt.x,
+                    y: _startPt.y
+                };
+                break;
+
+            case 'NNW':
+                _startPt = {
+                    x: tipRect.left - _padding,
+                    y: tipRect.top + tipRect.height / 2
+                };
+                _endPt = {
+                    x: tipRect.left - _size,
+                    y: _startPt.y - (_size - _padding)
+                };
+                _controlPt = {
+                    x: _endPt.x,
+                    y: _startPt.y
+                };
+                break;
+
+            case 'WSW':
+                _startPt = {
+                    x: tipRect.left + _size / 2,
+                    y: tipRect.bottom + _padding
+                };
+                _endPt = {
+                    x: tipRect.left - (_size / 2) + _padding,
+                    y: tipRect.bottom + _size
+                };
+                _controlPt = {
+                    x: _startPt.x,
+                    y: _endPt.y
+                };
+                break;
+
+            case 'WNW':
+                _startPt = {
+                    x: tipRect.left + _size / 2,
+                    y: tipRect.top - _padding
+                };
+                _endPt = {
+                    x: tipRect.left - _size / 2 + _padding,
+                    y: tipRect.top - _size
+                };
+                _controlPt = {
+                    x: _startPt.x,
+                    y: _endPt.y
+                };
+                break;
+
+            case 'ESE':
+                _startPt = {
+                    x: tipRect.right - _size / 2,
+                    y: tipRect.bottom + _padding
+                };
+                _endPt = {
+                    x: tipRect.right + _size / 2 - _padding,
+                    y: tipRect.bottom + _size
+                };
+                _controlPt = {
+                    x: _startPt.x,
+                    y: _endPt.y
+                };
+                break;
+
+            default:
+            case 'ENE':
+                _startPt = {
+                    x: tipRect.right - _size / 2,
+                    y: tipRect.top - _padding
+                };
+                _endPt = {
+                    x: tipRect.right + _size / 2 - _padding,
+                    y: tipRect.top - _size
+                };
+                _controlPt = {
+                    x: _startPt.x,
+                    y: _endPt.y
+                };
+                break;
+            }
+        };
+
+        var _defaultDrawFn = function (canvasContext, options) {
+            canvasContext.beginPath();
+            if (options.color) {
+                canvasContext.strokeStyle = options.color;
+            }
+
+            var startX = options.startX;
+            var startY = options.startY;
+            var controlX = options.controlX;
+            var controlY = options.controlY;
+            var endX = options.endX;
+            var endY = options.endY;
+            var headSize = options.headSize;
+
+            //draw curve from startPt to endPt
+            canvasContext.moveTo(startX, startY);
+            canvasContext.quadraticCurveTo(controlX, controlY, endX, endY);
+
+            //draw tip of arrow
+            var dx = endX - controlX;
+            var dy = endY - controlY;
             var angle;
             if (dx === 0) {
                 angle = Math.PI / 2;
-                if (this.startPt.y > this.endPt.y) {
+                if (startY > endY) {
                     angle *= 3;
                 }
             } else {
                 angle = Math.atan2(dy, dx);
             }
             canvasContext.lineTo(
-                this.endPt.x - this.headSize * Math.cos(angle - Math.PI / 6),
-                this.endPt.y - this.headSize * Math.sin(angle - Math.PI / 6)
+                endX - headSize * Math.cos(angle - Math.PI / 6),
+                endY - headSize * Math.sin(angle - Math.PI / 6)
             );
-            canvasContext.moveTo(this.endPt.x, this.endPt.y);
+            canvasContext.moveTo(endX, endY);
             canvasContext.lineTo(
-                this.endPt.x - this.headSize * Math.cos(angle + Math.PI / 6),
-                this.endPt.y - this.headSize * Math.sin(angle + Math.PI / 6)
+                endX - headSize * Math.cos(angle + Math.PI / 6),
+                endY - headSize * Math.sin(angle + Math.PI / 6)
             );
+
+            canvasContext.stroke();
+        };
+
+        if (!_drawFn) {
+            _drawFn = _defaultDrawFn;
         }
 
-        canvasContext.stroke();
-    };
-
-    var _calculateArrow = function (arrow, tipRect) {
-        switch (arrow.direction) {
-        case 'SSE':
-            arrow.startPt = {
-                x: tipRect.right + arrow.padding,
-                y: tipRect.top + tipRect.height / 2
-            };
-            arrow.endPt = {
-                x: tipRect.right + arrow.size,
-                y: arrow.startPt.y + (arrow.size - arrow.padding)
-            };
-            arrow.controlPt = {
-                x: arrow.endPt.x,
-                y: arrow.startPt.y
-            };
-            break;
-
-        case 'SSW':
-            arrow.startPt = {
-                x: tipRect.left - arrow.padding,
-                y: tipRect.top + tipRect.height / 2
-            };
-            arrow.endPt = {
-                x: tipRect.left - arrow.size,
-                y: arrow.startPt.y + (arrow.size - arrow.padding)
-            };
-            arrow.controlPt = {
-                x: arrow.endPt.x,
-                y: arrow.startPt.y
-            };
-            break;
-
-        case 'NNE':
-            arrow.startPt = {
-                x: tipRect.right + arrow.padding,
-                y: tipRect.top + tipRect.height / 2
-            };
-            arrow.endPt = {
-                x: tipRect.right + arrow.size,
-                y: arrow.startPt.y - (arrow.size - arrow.padding)
-            };
-            arrow.controlPt = {
-                x: arrow.endPt.x,
-                y: arrow.startPt.y
-            };
-            break;
-
-        case 'NNW':
-            arrow.startPt = {
-                x: tipRect.left - arrow.padding,
-                y: tipRect.top + tipRect.height / 2
-            };
-            arrow.endPt = {
-                x: tipRect.left - arrow.size,
-                y: arrow.startPt.y - (arrow.size - arrow.padding)
-            };
-            arrow.controlPt = {
-                x: arrow.endPt.x,
-                y: arrow.startPt.y
-            };
-            break;
-
-        case 'WSW':
-            arrow.startPt = {
-                x: tipRect.left + arrow.size / 2,
-                y: tipRect.bottom + arrow.padding
-            };
-            arrow.endPt = {
-                x: tipRect.left - (arrow.size / 2) + arrow.padding,
-                y: tipRect.bottom + arrow.size
-            };
-            arrow.controlPt = {
-                x: arrow.startPt.x,
-                y: arrow.endPt.y
-            };
-            break;
-
-        case 'WNW':
-            arrow.startPt = {
-                x: tipRect.left + arrow.size / 2,
-                y: tipRect.top - arrow.padding
-            };
-            arrow.endPt = {
-                x: tipRect.left - arrow.size / 2 + arrow.padding,
-                y: tipRect.top - arrow.size
-            };
-            arrow.controlPt = {
-                x: arrow.startPt.x,
-                y: arrow.endPt.y
-            };
-            break;
-
-        case 'ESE':
-            arrow.startPt = {
-                x: tipRect.right - arrow.size / 2,
-                y: tipRect.bottom + arrow.padding
-            };
-            arrow.endPt = {
-                x: tipRect.right + arrow.size / 2 - arrow.padding,
-                y: tipRect.bottom + arrow.size
-            };
-            arrow.controlPt = {
-                x: arrow.startPt.x,
-                y: arrow.endPt.y
-            };
-            break;
-
-        case 'ENE':
-            arrow.startPt = {
-                x: tipRect.right - arrow.size / 2,
-                y: tipRect.top - arrow.padding
-            };
-            arrow.endPt = {
-                x: tipRect.right + arrow.size / 2 - arrow.padding,
-                y: tipRect.top - arrow.size
-            };
-            arrow.controlPt = {
-                x: arrow.startPt.x,
-                y: arrow.endPt.y
-            };
-            break;
-        }
-    };
+        //Initialize points
+        _calculatePoints(tipRect);
+    }
 })(jQuery);

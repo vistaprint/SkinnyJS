@@ -1,9 +1,9 @@
-/// <reference path="jquery.tutorialOverlayArrow.js" />
-
 /*
 Tip for Tutorial Overlay
 */
 (function ($) {
+    $.tutorialOverlay = $.tutorialOverlay || {};
+
     var DEFAULT_TIP_COLOR = "#FFFFFF";
     var DEFAULT_TIP_DIRECTION = "north";
     var DEFAULT_TIP_OFFSET = 5;
@@ -59,8 +59,8 @@ Tip for Tutorial Overlay
         var arrowOptions = this.getArrowOptions();
 
         var arrow = _addArrow(tipRect, overlaySize, arrowOptions);
-        var viewportMargin = arrow.size / 2;
-        var arrowPadding = arrow.padding;
+        var viewportMargin = arrow.getSize() / 2;
+        var arrowPadding = arrow.getPadding();
 
         var newTipRect = $.extend({}, tipRect);
         arrow.addToTip(newTipRect);
