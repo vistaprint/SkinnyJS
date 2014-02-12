@@ -313,7 +313,7 @@ describe("jquery.tutorialOverlayArrow", function () {
         });
     };
 
-    describe("$.tutorialOverlay.createArrow()", function () {
+    describe("$.tutorialOverlay.createArrow", function () {
         var arrow = $.tutorialOverlay.createArrow(tipRect, arrowOptions);
         it("should create an Arrow with the correct padding", function () {
             assert.strictEqual(arrow.getPadding(), arrowOptions.padding);
@@ -343,7 +343,7 @@ describe("jquery.tutorialOverlayArrow", function () {
         });
     });
 
-    describe("$.tutorialOverlay.toggleDirection()", function () {
+    describe("#.toggleDirection", function () {
         testToggle("NNE", "NNW", {
             top: tipRect.top,
             left: tipRect.left + arrowOptions.size,
@@ -406,7 +406,7 @@ describe("jquery.tutorialOverlayArrow", function () {
         });
     });
 
-    describe("$.tutorialOverlay.isValid()", function () {
+    describe("#.isValid", function () {
         var rect = $.extend({}, tipRect);
         var options = $.extend({}, arrowOptions);
 
@@ -570,5 +570,118 @@ describe("jquery.tutorialOverlayArrow", function () {
             options.direction = DIRECTIONS[i];
             describe(options.direction, testValid);
         }
+    });
+
+    describe("#.addToTip", function () {
+        //create Arrow
+        var options = $.extend({}, arrowOptions);
+
+        var startX, startY, endX, endY, controlX, controlY;
+        options.drawFn = function (canvasContext, options) {
+            startX = options.startX;
+            startY = options.startY;
+            endX = options.endX;
+            endY = options.endY;
+            controlX = options.controlX;
+            controlY = options.controlY;
+        };
+
+        var testAddToTip = function (direction) {
+            //create tipRect
+            var rect = $.extend({}, tipRect);
+            options.direction = direction;
+            var arrow = $.tutorialOverlay.createArrow(rect, options);
+
+            //get endPt coordinates
+            arrow.render();
+
+            //invoke addToTip
+            arrow.addToTip(rect);
+
+            //assert the tipRect now contains the Arrow rect
+            var arrowRect = {
+                top: Math.min(startY, endY, controlY),
+                left: Math.min(startX, endX, controlX),
+            };
+            arrowRect.width = Math.max(startX, endX, controlX) - arrowRect.left;
+            arrowRect.height = Math.max(startY, endY, controlY) - arrowRect.top;
+            var expectedLeft = Math.min(tipRect.left, arrowRect.left);
+            var expectedTop = Math.min(tipRect.top, arrowRect.top);
+            var expectedRight = Math.max(tipRect.left + tipRect.width, arrowRect.left + arrowRect.width);
+            var expectedBottom = Math.max(tipRect.top + tipRect.height, arrowRect.top + arrowRect.height);
+
+            it("should calculate the correct union of " + direction + " Arrow and Tip", function () {
+                rectEquals(rect, expectedTop, expectedLeft, expectedRight - expectedLeft, expectedBottom - expectedTop);
+            });
+        };
+        DIRECTIONS.forEach(testAddToTip);
+    });
+
+    describe("#.translate", function () {
+        //create tipRect
+        var rect = $.extend({}, tipRect);
+        //create Arrow options
+        var options = $.extend({}, arrowOptions);
+
+        var startX, startY, endX, endY, controlX, controlY;
+        options.drawFn = function (canvasContext, options) {
+            startX = options.startX;
+            startY = options.startY;
+            endX = options.endX;
+            endY = options.endY;
+            controlX = options.controlX;
+            controlY = options.controlY;
+        };
+
+        var testTranslate = function (dx, dy) {
+            it("should move the Arrow " + dx + ", " + dy, function () {
+                //Create arrow
+                var arrow = $.tutorialOverlay.createArrow(rect, options);
+                arrow.render();
+                var originalStartX = startX;
+                var originalStartY = startY;
+                var originalEndX = endX;
+                var originalEndY = endY;
+                var originalControlX = controlX;
+                var originalControlY = controlY;
+
+                //Move the arrow
+                arrow.translate(dx, dy);
+                arrow.render();
+
+                assert.strictEqual(startX, originalStartX + dx);
+                assert.strictEqual(startY, originalStartY + dy);
+                assert.strictEqual(endX, originalEndX + dx);
+                assert.strictEqual(endY, originalEndY + dy);
+                assert.strictEqual(controlX, originalControlX + dx);
+                assert.strictEqual(controlY, originalControlY + dy);
+            });
+        };
+
+        testTranslate(10, 10);
+        testTranslate(10, -10);
+        testTranslate(-10, 10);
+        testTranslate(-10, -10);
+        testTranslate(0, 0);
+    });
+
+    describe("#.render", function () {
+        //create tipRect
+        var rect = $.extend({}, tipRect);
+        //create Arrow options
+        var options = $.extend({}, arrowOptions);
+
+        var testHeadSize = options.headSize;
+        var testColor = "somecolor";
+        var testCanvasContext = "somecanvascontext";
+        options.drawFn = function (canvasContext, options) {
+            assert.strictEqual(canvasContext, testCanvasContext);
+            assert.strictEqual(options.color, testColor);
+            assert.strictEqual(options.headSize, testHeadSize);
+        };
+        it("should invoke the custom drawing function with expected parameters", function () {
+            var arrow = $.tutorialOverlay.createArrow(rect, options);
+            arrow.render(testColor, testCanvasContext);
+        });
     });
 });
