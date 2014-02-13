@@ -1,6 +1,9 @@
-/*
-Arrows for Tutorial Overlay tips
-*/
+/**
+ * @fileOverview Arrows for Tutorial Overlay tips.
+ * @author Tex Clayton
+ * @version 1.2
+ */
+
 (function ($) {
     $.tutorialOverlay = $.tutorialOverlay || {};
 
