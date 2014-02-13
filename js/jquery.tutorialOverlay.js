@@ -9,15 +9,6 @@
     var DATA_AUTOLOAD_ATTR = "data-overlay-autoload";
     var DATA_ZINDEX_ATTR = "data-overlay-zindex";
     var DATA_HIDE_ON_CLICK_ATTR = "overlay-hideonclick";
-    var DATA_TIP_TARGET_ATTR = "overlay-tip-target";
-    var DATA_TIP_POSITION_ATTR = "overlay-tip-position";
-
-    var DEFAULT_TIP_COLOR = "#FFFFFF";
-    var DEFAULT_TIP_POSITION = "north";
-    //TODO: Make these settings configurable.
-    var DEFAULT_ARROW_SIZE = 40;
-    var DEFAULT_ARROW_PADDING = 5;
-    var DEFAULT_ARROW_HEAD_SIZE = 10;
 
     // Default values
     $.tutorialOverlay.defaults = {
@@ -117,10 +108,10 @@
     //      color (optional)
     //      offset (optional)
     TutorialOverlay.prototype.addTip = function (newTip) {
-        //Sanitize the direction/position attribute
         var options = $.extend({}, newTip);
-        if (newTip.position) {
-            options.direction = newTip.position.toLowerCase();
+        if (options.position && !options.direction) {
+            options.direction = options.position;
+            delete options.position;
         }
         this._tips.push($.tutorialOverlay.createTip(options));
     };
@@ -172,17 +163,9 @@
     TutorialOverlay.prototype._initializeTips = function () {
         if (this._$overlay) {
             //find tips in DOM
-            var domTips = this._$overlay.find(TIP_CLASS);
-            var me = this;
-            $.each(domTips, function () {
-                var $tipEl = $(this);
-                me.addTip({
-                    target: $tipEl.data(DATA_TIP_TARGET_ATTR),
-                    position: $tipEl.data(DATA_TIP_POSITION_ATTR),
-                    content: this,
-                    color: $tipEl.data("overlay-tip-color"),
-                    offset: $tipEl.data("overlay-tip-offset"),
-                });
+            var tips = this._tips;
+            this._$overlay.find(TIP_CLASS).each(function () {
+                tips.push($(this).tutorialOverlayTip());
             });
         }
     };
@@ -217,15 +200,14 @@
 
         // Make sure all tips are in the overlay element before trying to calculate their size and positions:
         $.each(this._tips, function () {
-            if (!this.$tip) {
-                this.$tip = $(this.content);
-            }
-            this.$tip.css({
+            var $tip = this.getTipEl();
+            //tip may have been hidden at other screen widths - make sure it is available now to get a valid calculated size
+            $tip.css({
                 visibility: "hidden",
                 display: ""
-            }); //tip may have been hidden at other screen widths - make sure it is available now to get a valid calculated size
-            if (!$.contains(me._$overlay[0], this.$tip[0])) {
-                me._$overlay.append(this.$tip);
+            });
+            if (!$.contains(me._$overlay[0], $tip[0])) {
+                me._$overlay.append($tip);
             }
         });
 
@@ -252,58 +234,7 @@
 
         $.each(this._tips, function () {
             this.tipBoundsIndex = tipBoundsIndex++;
-
-            //Make sure the target is completely visible on the page before calculating the tip position.
-            var $tipTarget = $(this.target);
-            if (!$tipTarget.length || !$tipTarget.is(":visible")) {
-                //Don't show the tip if we can't find the target.
-                tipBounds[this.tipBoundsIndex] = null;
-                return true; //skip this tip
-            } else {
-                //else if target is not *entirely* on the screen, then return
-                var targetRect = $tipTarget.clientRect();
-                if ((targetRect.left < 0) || (targetRect.right > windowSize.width) || (targetRect.top < 0) || (targetRect.bottom > windowSize.height)) {
-                    tipBounds[this.tipBoundsIndex] = null;
-                    return true; //skip this tip
-                }
-            }
-
-            //If the tip is display:block, this sometimes gives the full width of the overlay.
-            //  It would be possible to fix this in code by changing the display to inline-block before getting the size.
-            //TODO: What about images that haven't loaded yet?
-            //TODO: What about web fonts that haven't loaded yet?
-            var tipRect = this.$tip.clientRect();
-
-            var offset = this.offset;
-            if (!offset) {
-                offset = DEFAULT_ARROW_PADDING;
-            }
-
-            //Calculate the original position of the tip.
-            var estimatedTipSizes = this.getSizeEstimates(tipRect, windowSize);
-            var calculatedPos = this.$tip.calcRestrainedPos({
-                contentSizes: estimatedTipSizes,
-                context: $tipTarget,
-                direction: this.position,
-                offsets: {
-                    vertical: offset,
-                    horizontal: offset,
-                    viewport: offset,
-                    padding: offset
-                },
-                cornerAdjacent: true
-            });
-            if (!calculatedPos || !calculatedPos.pos.top) {
-                tipBounds[this.tipBoundsIndex] = null;
-                return true; //invalid direction - skip this tip
-            }
-            tipRect.left = calculatedPos.pos.left;
-            tipRect.right = tipRect.left + tipRect.width;
-            tipRect.top = calculatedPos.pos.top;
-            tipRect.bottom = tipRect.top + tipRect.height;
-            tipRect.direction = calculatedPos.direction;
-
-            tipBounds[this.tipBoundsIndex] = tipRect;
+            tipBounds[this.tipBoundsIndex] = this.getTipBounds();
         });
 
         // 3) Remove the overlay from the flow calculations
@@ -319,9 +250,9 @@
         //      Position each tip
 
         var occupiedRects = [];
-        var contentRect = null;
         //Center content
         if (this._$centerContent) {
+            //Add the centerContent bounding box to the list of occupiedRects
             var rect = tipBounds[this._$centerContent.tipBoundsIndex];
             var contentX = (windowSize.width - rect.width) / 2;
             var contentY = (windowSize.height - rect.height) / 2;
@@ -332,40 +263,30 @@
                 left: contentX + "px"
             });
 
-            contentRect = {
+            occupiedRects.push({
                 top: contentY,
                 left: contentX,
                 bottom: contentY + rect.height,
                 right: contentX + rect.width,
                 width: rect.width,
                 height: rect.height
-            };
-            occupiedRects.push(contentRect);
+            });
         }
 
         //For each tip:
         //  position tip relative to target
         //  add tip content at absolute position
+        var tipRect;
         $.each(this._tips, function () {
-            if (!this.$tip) {
-                this.$tip = $(this.content);
-            }
-            var targetRect = $(this.target).clientRect();
-            if (tipBounds[this.tipBoundsIndex] &&
-                //If targetRect intersects center content, then ignore this tip.
-                (!contentRect || !$.rectsIntersect(targetRect, contentRect))) {
-                this.render(
-                    $.extend({}, tipBounds[this.tipBoundsIndex]),
-                    context, {
-                        width: windowSize.width,
-                        height: windowSize.height
-                    },
-                    occupiedRects
-                );
-            } else {
-                //else the target is not entirely on the page
-                this.$tip.hide();
-            }
+            tipRect = tipBounds[this.tipBoundsIndex];
+            this.render(
+                tipRect ? $.extend({}, tipRect) : tipRect,
+                context, {
+                    width: windowSize.width,
+                    height: windowSize.height
+                },
+                occupiedRects
+            );
         });
 
         // 5) Show the overlay
