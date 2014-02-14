@@ -173,6 +173,45 @@ describe("jquery.tutorialOverlay.Arrow", function () {
         return pt;
     };
 
+    /**
+     * Create an Arrow decorated with a getPoints() function that returns the start, control, and end points (as well as headSize).
+     * @param {object} rect The rectangle to use when creating the Arrow
+     * @param {object} options The options to use when creating the Arrow
+     * @returns {Arrow} an Arrow with a getPoints() function
+     */
+    var createTestArrow = function (rect, options) {
+        var _startPt, _endPt, _controlPt, _headSize;
+
+        var _drawFn = function (canvasContext, options) {
+            _startPt = {
+                x: options.startX,
+                y: options.startY
+            };
+            _endPt = {
+                x: options.endX,
+                y: options.endY
+            };
+            _controlPt = {
+                x: options.controlX,
+                y: options.controlY
+            };
+            _headSize = options.headSize;
+        };
+
+        options.drawFn = _drawFn;
+        var arrow = $.tutorialOverlay.createArrow(rect, options);
+        arrow.getPoints = function () {
+            arrow.render();
+            return {
+                start: _startPt,
+                end: _endPt,
+                control: _controlPt,
+                headSize: _headSize
+            };
+        };
+        return arrow;
+    };
+
     describe("$.tutorialOverlay.createArrow", function () {
         var arrow = $.tutorialOverlay.createArrow(tipRect, arrowOptions);
         it("should create an Arrow with the correct padding", function () {
@@ -200,19 +239,15 @@ describe("jquery.tutorialOverlay.Arrow", function () {
             var expectedControlX = pt.x;
             var expectedControlY = pt.y;
 
-            options.drawFn = function (canvasContext, options) {
-                assert.strictEqual(options.startX, expectedStartX);
-                assert.strictEqual(options.startY, expectedStartY);
-                assert.strictEqual(options.controlX, expectedControlX);
-                assert.strictEqual(options.controlY, expectedControlY);
-                assert.strictEqual(options.endX, expectedEndX);
-                assert.strictEqual(options.endY, expectedEndY);
-                assert.strictEqual(options.headSize, options.headSize);
-            };
-
-            var arrow = $.tutorialOverlay.createArrow(rect, options);
-
-            arrow.render();
+            var arrow = createTestArrow(rect, options);
+            var points = arrow.getPoints();
+            assert.strictEqual(points.start.x, expectedStartX);
+            assert.strictEqual(points.start.y, expectedStartY);
+            assert.strictEqual(points.control.x, expectedControlX);
+            assert.strictEqual(points.control.y, expectedControlY);
+            assert.strictEqual(points.end.x, expectedEndX);
+            assert.strictEqual(points.end.y, expectedEndY);
+            assert.strictEqual(points.headSize, arrowOptions.headSize);
         };
 
         var testCalculatedPoints = function (direction) {
@@ -239,18 +274,7 @@ describe("jquery.tutorialOverlay.Arrow", function () {
             var options = $.extend({}, arrowOptions);
             options.direction = startDirection;
 
-            var prevStartX, prevStartY, prevEndX, prevEndY, prevControlX, prevControlY;
-
-            options.drawFn = function (canvasContext, options) {
-                prevStartX = options.startX;
-                prevStartY = options.startY;
-                prevEndX = options.endX;
-                prevEndY = options.endY;
-                prevControlX = options.controlX;
-                prevControlY = options.controlY;
-            };
-
-            var arrow = $.tutorialOverlay.createArrow(rect, options);
+            var arrow = createTestArrow(rect, options);
 
             //For each direction, calculate expected new direction and expected new points.
             //  assert that the rect was properly translated,
@@ -281,15 +305,15 @@ describe("jquery.tutorialOverlay.Arrow", function () {
                 it("should translate the tip rect to make room for the arrow change", function () {
                     rectEquals(firstRect, expectedTipRect.top, expectedTipRect.left, expectedTipRect.width, expectedTipRect.height);
                 });
-                arrow.render();
-                var firstStartX = prevStartX;
-                var firstStartY = prevStartY;
-                var firstEndX = prevEndX;
-                var firstEndY = prevEndY;
-                var firstControlX = prevControlX;
-                var firstControlY = prevControlY;
+                var points = arrow.getPoints();
+
+                var firstStartX = points.start.x;
+                var firstStartY = points.start.y;
+                var firstEndX = points.end.x;
+                var firstEndY = points.end.y;
+                var firstControlX = points.control.x;
+                var firstControlY = points.control.y;
                 it("should calculate new render control points", function () {
-                    //TODO:
                     assert.strictEqual(firstStartX, firstExpectedStartX);
                     assert.strictEqual(firstStartY, firstExpectedStartY);
                     assert.strictEqual(firstControlX, firstExpectedControlX);
@@ -325,13 +349,13 @@ describe("jquery.tutorialOverlay.Arrow", function () {
                 var secondExpectedControlX = pt.x;
                 var secondExpectedControlY = pt.y;
 
-                arrow.render();
-                var secondStartX = prevStartX;
-                var secondStartY = prevStartY;
-                var secondEndX = prevEndX;
-                var secondEndY = prevEndY;
-                var secondControlX = prevControlX;
-                var secondControlY = prevControlY;
+                points = arrow.getPoints();
+                var secondStartX = points.start.x;
+                var secondStartY = points.start.y;
+                var secondEndX = points.end.x;
+                var secondEndY = points.end.y;
+                var secondControlX = points.control.x;
+                var secondControlY = points.control.y;
 
                 it("should revert the render control points when repeated", function () {
                     assert.strictEqual(secondStartX, secondExpectedStartX);
@@ -410,19 +434,13 @@ describe("jquery.tutorialOverlay.Arrow", function () {
         var rect = $.extend({}, tipRect);
         var options = $.extend({}, arrowOptions);
 
-        var startX, startY, endX, endY, controlX, controlY;
-        options.drawFn = function (canvasContext, options) {
-            startX = options.startX;
-            startY = options.startY;
-            endX = options.endX;
-            endY = options.endY;
-            controlX = options.controlX;
-            controlY = options.controlY;
-        };
-
         var testValid = function () {
-            var arrow = $.tutorialOverlay.createArrow(rect, options);
-            arrow.render();
+            var arrow = createTestArrow(rect, options);
+            var points = arrow.getPoints();
+            var endX = points.end.x;
+            var endY = points.end.y;
+            var controlX = points.control.x;
+            var controlY = points.control.y;
 
             var testRect, r;
             var validRects = [];
@@ -576,24 +594,18 @@ describe("jquery.tutorialOverlay.Arrow", function () {
         //create Arrow
         var options = $.extend({}, arrowOptions);
 
-        var startX, startY, endX, endY, controlX, controlY;
-        options.drawFn = function (canvasContext, options) {
-            startX = options.startX;
-            startY = options.startY;
-            endX = options.endX;
-            endY = options.endY;
-            controlX = options.controlX;
-            controlY = options.controlY;
-        };
-
         var testAddToTip = function (direction) {
             //create tipRect
             var rect = $.extend({}, tipRect);
             options.direction = direction;
-            var arrow = $.tutorialOverlay.createArrow(rect, options);
-
-            //get endPt coordinates
-            arrow.render();
+            var arrow = createTestArrow(rect, options);
+            var points = arrow.getPoints();
+            var startX = points.start.x;
+            var startY = points.start.y;
+            var endX = points.end.x;
+            var endY = points.end.y;
+            var controlX = points.control.x;
+            var controlY = points.control.y;
 
             //invoke addToTip
             arrow.addToTip(rect);
@@ -636,25 +648,25 @@ describe("jquery.tutorialOverlay.Arrow", function () {
         var testTranslate = function (dx, dy) {
             it("should move the Arrow " + dx + ", " + dy, function () {
                 //Create arrow
-                var arrow = $.tutorialOverlay.createArrow(rect, options);
-                arrow.render();
-                var originalStartX = startX;
-                var originalStartY = startY;
-                var originalEndX = endX;
-                var originalEndY = endY;
-                var originalControlX = controlX;
-                var originalControlY = controlY;
+                var arrow = createTestArrow(rect, options);
+                var points = arrow.getPoints();
+                var originalStartX = points.start.x;
+                var originalStartY = points.start.y;
+                var originalEndX = points.end.x;
+                var originalEndY = points.end.y;
+                var originalControlX = points.control.x;
+                var originalControlY = points.control.y;
 
                 //Move the arrow
                 arrow.translate(dx, dy);
-                arrow.render();
+                points = arrow.getPoints();
 
-                assert.strictEqual(startX, originalStartX + dx);
-                assert.strictEqual(startY, originalStartY + dy);
-                assert.strictEqual(endX, originalEndX + dx);
-                assert.strictEqual(endY, originalEndY + dy);
-                assert.strictEqual(controlX, originalControlX + dx);
-                assert.strictEqual(controlY, originalControlY + dy);
+                assert.strictEqual(points.start.x, originalStartX + dx);
+                assert.strictEqual(points.start.y, originalStartY + dy);
+                assert.strictEqual(points.end.x, originalEndX + dx);
+                assert.strictEqual(points.end.y, originalEndY + dy);
+                assert.strictEqual(points.control.x, originalControlX + dx);
+                assert.strictEqual(points.control.y, originalControlY + dy);
             });
         };
 
