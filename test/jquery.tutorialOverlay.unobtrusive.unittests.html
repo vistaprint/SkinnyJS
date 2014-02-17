@@ -12,16 +12,15 @@
   <script src="../dependencies/jquery.js"></script>
   <script src="../dependencies/mocha.js"></script>
   <script src="../dependencies/chai.js"></script>
-  <script src="unittests.shared.js"></script>
-
-  <!--test specific dependencies-->
-  <script src="../js/jquery.proxyAll.js"></script>
-  <script src="../js/jquery.tutorialOverlay.getSettings.js"></script>
-  <script src="../js/jquery.tutorialOverlay.js"></script>
-
+  
   <div id="test-div">
     <h3>$.tutorialOverlay Unit Tests</h3>
 
+    <div id="onload-overlay" class="tutorial-overlay" data-overlay-autoload='true' data-overlay-hideonclick='false'>
+      <div id="autoload-invalid-tip" class="tutorial-overlay-tip" data-overlay-tip-target="#invalidID" data-overlay-tip-position="north">This tip will not be shown, because it has an invalid target.</div>
+
+      <div id="autoload-test-tip" class="tutorial-overlay-tip" data-overlay-tip-target="h3" data-overlay-tip-position="south" data-overlay-tip-offset="13">The title is here.</div>
+    </div>
     <div id="manual-load-overlay" class="tutorial-overlay" data-overlay-autoload='false' data-overlay-hideonclick='false'>
       <div id="invalid-tip" class="tutorial-overlay-tip" data-overlay-tip-target="#invalidID" data-overlay-tip-position="north">This tip will not be shown, because it has an invalid target.</div>
 
@@ -31,6 +30,11 @@
     <div id="test-target" style="position: absolute">test target</div>
   </div>
 
-  <script src="jquery.tutorialOverlay.unittests.js"></script>
+  <!--test specific dependencies-->
+  <script src="../js/jquery.proxyAll.js"></script>
+  <script src="../js/jquery.tutorialOverlay.getSettings.js"></script>
+  <script src="../js/jquery.tutorialOverlay.js"></script>
+  <script src="../js/jquery.tutorialOverlay.unobtrusive.js"></script>
+  <script src="jquery.tutorialOverlay.unobtrusive.unittests.js"></script>
 </body>
 </html>

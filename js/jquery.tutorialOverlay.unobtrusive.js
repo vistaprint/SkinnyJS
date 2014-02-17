@@ -3,7 +3,7 @@ Uses declarative syntax to show a tutorial overlay on page ready.
 */
 (function ($) {
     $(window).load(function () {
-        var $overlay = $("[data-overlay-autoload]");
+        var $overlay = $("[data-overlay-autoload][data-overlay-autoload!='false']");
 
         //If more than one autoload overlay is specified, we'll use the first one we find.
         $overlay.each(function () {
