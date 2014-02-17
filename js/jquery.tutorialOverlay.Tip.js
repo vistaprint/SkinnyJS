@@ -209,17 +209,7 @@
                 newTipRect = $.extend({}, tipRect);
                 arrow.addToTip(newTipRect);
 
-                //TODO: This shouldn't be needed any more.
-                var intersectingRect = _detectCollisions(newTipRect, occupiedRects);
-                if (!intersectingRect) {
-                    occupiedRects.push(newTipRect);
-                } else {
-                    //collision detected
-                    // move the tip?
-                    //Note: this should never happen in practice.  See above TODO.
-                    this.getTipEl().hide();
-                    return;
-                }
+                occupiedRects.push(newTipRect);
             }
 
             //Set the tip's position
@@ -354,20 +344,6 @@
             expectedTipSizes["east"] = expectedTipSizes["west"]; //east/west should be same size
 
             return expectedTipSizes;
-        };
-
-        var _detectCollisions = function (rect1, otherRects) {
-            //stupid n^2 algorithm to detect collisions.
-            //  If performance is a concern, use a quadtree or even sort the list of otherRects
-            //  on one axis.
-            var collision = null;
-            for (var i = 0;
-                (i < otherRects.length) && !collision; i++) {
-                if ($.rectsIntersect(otherRects[i], rect1)) {
-                    collision = otherRects[i];
-                }
-            }
-            return collision;
         };
     }
 }(jQuery));
