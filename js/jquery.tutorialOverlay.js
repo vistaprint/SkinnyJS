@@ -15,6 +15,9 @@
     var DATA_ZINDEX_ATTR = "data-overlay-zindex";
     var DATA_HIDE_ON_CLICK_ATTR = "overlay-hideonclick";
 
+    // Public sub-namespace for tutorial overlays.
+    $.tutorialOverlay = $.tutorialOverlay || {};
+
     /**
      * Default values for Tutorial Overlay settings.
      * @constant
@@ -26,9 +29,6 @@
         autoLoad: false,
     };
 
-    // Public sub-namespace for tutorial overlays.
-    $.tutorialOverlay = $.tutorialOverlay || {};
-
     /**
      * Takes a settings object and calculates derived settings.
      * Settings go in order:
@@ -36,10 +36,12 @@
      * 1. default value
      * 2. settings passed
      *
+     * @private
      * @param {object} explicitSettings the settings specified by the consumer
      * @returns {object} the calculated Tutorial Overlay settings
      **/
-    var ensureSettings = function (explicitSettings) {
+    //TODO: Move all .getSettings related code into a new class.
+    var _ensureSettings = function (explicitSettings) {
         var settings = $.extend({}, $.tutorialOverlay.defaults);
 
         // Read settings specified on the target node's custom HTML attributes
@@ -54,9 +56,13 @@
         return settings;
     };
 
-    // Creates a new overlay from the specified settings.
+    /**
+     * Creates a new Tutorial Overlay from the specified settings.
+     * @param {object} settings the settings to use when creating the Tutorial Overlay
+     * @returns {TutorialOverlay} a new Tutorial Overlay
+     **/
     $.tutorialOverlay.create = function (settings) {
-        settings = ensureSettings(settings);
+        settings = _ensureSettings(settings);
 
         var overlay;
 
@@ -90,14 +96,33 @@
         return overlay;
     };
 
+
+    /**
+     * The data key to use to store the Tutorial Overlay instance.
+     * @private
+     * @constant
+     **/
     var JQUERY_DATA_KEY = "tutorialOverlay";
 
+    /**
+     * Get/Set the Tutorial Overlay instance for the specified element.
+     * If no parameter is specified, then it will not change the data.
+     * @param {TutorialOverlay} [overlay] the Tutorial Overlay to be associated with this element
+     * @returns {TutorialOverlay} the Tutorial Overlay associated with this element, or null if none
+     **/
     $.fn.tutorialOverlayInstance = function (overlay) {
         return !overlay ? this.data(JQUERY_DATA_KEY) : this.data(JQUERY_DATA_KEY, overlay);
     };
 
-    // Idiomatic jQuery interface for tutorial overlays.
+    /**
+     * Idiomatic jQuery interface for tutorial overlays.
+     * When passed a string, the specified method will be invoked on the associated Tutorial Overlay.
+     * Otherwise, it will create a new Tutorial Overlay.
+     * @param {object} [settings] the settings to use when creating the Tutorial Overlay
+     * @returns the jQuery object this function was invoked on
+     **/
     $.fn.tutorialOverlay = function (settings) {
+        var result = this; //return this jQuery object by default, to enable chaining
         var overlay;
 
         // If the first argument is a string, it is a method name to call on the overlay
@@ -106,7 +131,10 @@
             var action = settings;
             overlay = this.tutorialOverlayInstance();
             if (overlay && overlay[action]) {
-                overlay[action].apply(overlay, Array.prototype.slice(arguments, 1));
+                var actionResult = overlay[action].apply(overlay, Array.prototype.slice.apply(arguments).slice(1));
+                if (typeof (actionResult) !== "undefined") {
+                    result = actionResult;
+                }
             }
         }
         // Otherwise, create a new overlay.
@@ -119,16 +147,29 @@
             overlay.show();
         }
 
-        return this;
+        return result;
     };
 
+    /**
+     * A Tutorial Overlay
+     * @constructor
+     * @param {object} settings the settings used to initialize this Tutorial Overlay.
+     **/
     function TutorialOverlay(settings) {
+        /**
+         * Flag to indicate whether or not to hide the overlay when the user clicks on it.
+         * @private
+         **/
+        var _hideOnClick = $.tutorialOverlay.defaults.hideOnClick;
+
         // returns true iff the overlay is currently showing
         this.isShowing = function () {
             return this._$overlay && this._$overlay.is(":visible");
         };
 
-        // shows the overlay
+        /**
+         * Show the overlay.
+         **/
         this.show = function () {
             if (!this.isShowing()) {
                 this._ensureVeil();
@@ -136,43 +177,55 @@
 
                 this.render();
                 $(window).on("resize", $.proxy(_windowResized, this));
+                _attachCloseClassHandler(this._$overlay);
                 this._$overlay.show();
             }
         };
 
-        // hides the overlay
+        /**
+         * Hide the overlay.
+         * Will remove the overlay element if destroyOnClose is true.
+         **/
         this.hide = function () {
             this._$overlay.hide();
             $(window).off("resize", _windowResized);
+            _detachCloseClassHander(this._$overlay);
             if (this.settings.destroyOnClose) {
                 this.destroy();
-                this._destroyed = true;
             }
         };
 
+        /**
+         * Remove the overlay element from the DOM and unbind all event handlers.
+         **/
         this.destroy = function () {
             this._$overlay.empty();
             this._$overlay.remove();
         };
 
-        // set the hide-on-click behavior
+        /**
+         * Set the hide-on-click behavior.
+         * @param {boolean} hideOnClick If true, the Overlay will hide when the user clicks on it.
+         **/
         this.setHideOnClick = function (hideOnClick) {
-            this.hideOnClick = hideOnClick;
+            _hideOnClick = hideOnClick;
 
             this._$overlay.off("click", _clickHandler);
 
-            if (this.hideOnClick) {
+            if (_hideOnClick) {
                 this._$overlay.on("click", $.proxy(_clickHandler, this));
             }
         };
 
-        // add a new Tip
-        //  A Tip should have:
-        //      content
-        //      target
-        //      relative position (optional)
-        //      color (optional)
-        //      offset (optional)
+        /**
+         * Add a new Tip to the Tutorial Overlay.
+         * @param {object} newTip The options to use when creating the new Tip.  Should contain the following properties:
+         *    content
+         *    target
+         *    relative position (optional)
+         *    color (optional)
+         *    offset (optional)
+         */
         this.addTip = function (newTip) {
             var options = $.extend({}, newTip);
             if (options.position && !options.direction) {
@@ -182,12 +235,17 @@
             this._tips.push($.tutorialOverlay.createTip(options));
         };
 
-        // set the content to be displayed in the center of the overlay
+        /**
+         * Set the content to be displayed in the center of the overlay.
+         * @param {string|object} newCenterContent The jQuery object or selector to use as the center content in the Tutorial Overlay.
+         **/
         this.setCenterContent = function (newCenterContent) {
-            //TODO: repaint
             this._$centerContent = $(newCenterContent);
         };
 
+        /**
+         * Layout and render the Tutorial Overlay and all of its contents.
+         **/
         this.render = function () {
             var me = this;
 
@@ -311,10 +369,11 @@
             this._$overlay.show();
         };
 
-        /*
+        /**
          * Ensure that a 'veil' element exists in the overlay.  This is necessary to support older IE where transparency isn't supported.
          * The 'veil' will be translucent and capture click events.  All other elements in the overlay should be rendered on top of it.
-         */
+         * @private
+         **/
         this._ensureVeil = function () {
             if (!this._$veil) {
                 var $veil = this._$overlay.find(VEIL_CLASS);
@@ -323,7 +382,7 @@
                     $veil = $("<div class='" + VEIL_CLASS.substring(1) + "''></div>");
                     this._$overlay.prepend($veil);
 
-                    //if (this.hideOnClick) {
+                    //if (_hideOnClick) {
                     //    $veil.on("click", $.proxy(_clickHandler, this));
                     //}
                 }
@@ -331,6 +390,10 @@
             }
         };
 
+        /**
+         * Ensure that a 'canvas' element exists in the overlay.  The tip arrows will be drawn on this canvas.
+         * @private
+         **/
         this._ensureCanvas = function () {
             if (!this._$canvas) {
                 var $canvas = this._$overlay.find("canvas" + CANVAS_CLASS);
@@ -341,7 +404,7 @@
                     if (typeof (G_vmlCanvasManager) != "undefined") {
                         G_vmlCanvasManager.initElement($canvas[0]);
                     }
-                    //if (this.hideOnClick) {
+                    //if (_hideOnClick) {
                     //    $canvas.on("click", $.proxy(_clickHandler, this));
                     //}
                 }
@@ -349,6 +412,10 @@
             }
         };
 
+        /**
+         * Initialize the list of Tips from the DOM.
+         * @private
+         **/
         this._initializeTips = function () {
             if (this._$overlay) {
                 //find tips in DOM
@@ -359,14 +426,22 @@
             }
         };
 
+        /**
+         * Handle clicks on the Tutorial Overlay.  Hide the overlay if hideOnClose is true.
+         * @private
+         **/
         var _clickHandler = function (e) {
             //Ignore clicks in the centerContent element and its descendants.
             //  TODO: there has to be a better way to do this.
-            if (!(this._$centerContent && $.contains(this._$centerContent[0], e.target))) {
+            if (_hideOnClick && !(this._$centerContent && $.contains(this._$centerContent[0], e.target))) {
                 this.hide();
             }
         };
 
+        /**
+         * Handle window resize events.  Force the Overlay to be re-laid out and rendered.
+         * @private
+         **/
         var timeout;
         var _windowResized = function () {
             //Debounce the resize event with a timeout.
@@ -376,6 +451,36 @@
             timeout = setTimeout(this.render, 50);
         };
 
+        /**
+         * Attach a click handler to all elements in the Overlay with the close-overlay class.  This handler will hide the overlay.
+         * @private
+         **/
+        var _attachCloseClassHandler = function ($overlay) {
+            _detachCloseClassHander($overlay); //prevent duplicates
+            $overlay.on("click", CLOSE_OVERLAY_CLASS, function (e) {
+                e.preventDefault();
+
+                // Defer to the next tick of the event loop. It makes it more useful
+                // to apply this class without having to worry if the close handler will
+                // run before any other handlers.
+                setTimeout(function () {
+                    $overlay.tutorialOverlayInstance().hide();
+                }, 0);
+            });
+        };
+
+        /**
+         * Detach the click handler from all elements in the Overlay with the close-overlay class.
+         * @private
+         **/
+        var _detachCloseClassHander = function ($overlay) {
+            $overlay.off("click", CLOSE_OVERLAY_CLASS);
+        };
+
+        /**
+         * Get the width and height of the overlay.
+         * @private
+         **/
         var _getOverlaySize = function () {
             var $document = $(document);
 
@@ -396,11 +501,6 @@
 
         this._tips = [];
 
-        var clickHide = $.tutorialOverlay.defaults.hideOnClick;
-        if ((settings.hideOnClick !== undefined) && !settings.hideOnClick) {
-            clickHide = settings.hideOnClick;
-        }
-
         this._$overlay = settings.overlay;
         this._$overlay.css("z-index", settings.zIndex);
 
@@ -411,17 +511,6 @@
 
         this._initializeTips();
 
-        this.setHideOnClick(clickHide);
-        var me = this;
-        this._$overlay.on("click", CLOSE_OVERLAY_CLASS, function (e) {
-            e.preventDefault();
-
-            // Defer to the next tick of the event loop. It makes it more useful
-            // to apply this class without having to worry if the close handler will
-            // run before any other handlers.
-            setTimeout(function () {
-                me.hide();
-            }, 0);
-        });
+        this.setHideOnClick(((settings.hideOnClick !== undefined) && !settings.hideOnClick) ? settings.hideOnClick : $.tutorialOverlay.defaults.hideOnClick);
     }
 })(jQuery);
