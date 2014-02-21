@@ -29,7 +29,8 @@
     "grunt-contrib-compress": "~0.5.2",
     "grunt-string-replace": "~0.2.4",
     "grunt-jsbeautifier": "~0.2.3",
-    "grunt-lineending": "~0.2.1"
+    "grunt-lineending": "~0.2.1",
+    "grunt-wget": "~0.1.0"
   },
   "scripts": {
     "test": "grunt test"

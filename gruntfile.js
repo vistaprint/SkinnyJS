@@ -190,6 +190,17 @@ module.exports = function (grunt) {
                     eol: "crlf"
                 }
             }
+        },
+        wget: {
+            filesObject: {
+                options: {
+                    baseUrl: "http://vistaprint.github.io/PointyJS/"
+                },
+                files: {
+                    "dependencies/jquery.pointerEvents.js": "dist/jquery.pointerEvents.js",
+                    "dependencies/jquery.pointerGestures.js": "dist/jquery.pointerGestures.js"
+                }
+            }
         }
     };
 
@@ -210,6 +221,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-strip-code");
     grunt.loadNpmTasks("grunt-jsbeautifier");
     grunt.loadNpmTasks("grunt-lineending");
+    grunt.loadNpmTasks("grunt-wget");
 
     // Wrap the mocha task
     grunt.renameTask("mocha", "orig-mocha");
@@ -263,4 +275,6 @@ module.exports = function (grunt) {
     grunt.registerTask("build", ["clean", "less", "copyDist", "concat:modalDialog", "concat:modalDialogContent", "strip_code", "uglify"]);
 
     grunt.registerTask("beautify", ["jsbeautifier", "lineending"]);
+
+    grunt.registerTask("update", ["wget"]);    
 };

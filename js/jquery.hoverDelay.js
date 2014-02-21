@@ -1,4 +1,4 @@
-/// <reference path="jquery.pointerEvents.js" />
+/// <reference path="../dependencies/jquery.pointerEvents.js" />
 
 (function ($) {
     var OVER_TIMER = 'skinnyjs-hoverDelay-overTimer';

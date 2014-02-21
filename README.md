@@ -25,7 +25,6 @@ Skinny libraries
 * [jQuery.msAjax](http://vistaprint.github.io/SkinnyJS/jquery.msAjax.html): Microsoft friendly AJAX. Handles the quirks of ASMX, WCF, DataJsonContractSerializer, Microsoft's JSON date format, and provides an interface identical to jQuery.ajax().
 * [jQuery.ns](http://vistaprint.github.io/SkinnyJS/jquery.ns.html): Declare namespaces without boilerplate
 * [jQuery.partialLoad](http://vistaprint.github.io/SkinnyJS/jquery.partialLoad.html): Works like jQuery.load, but is more intelligent about executing downloaded scripts (i.e. don't re-run scripts that are already loaded)
-* [jQuery.pointerEvents](http://vistaprint.github.io/SkinnyJS/jquery.pointerEvents.html): A full-featured polyfill for the [pointer events api](http://www.w3.org/TR/pointerevents/), which abstracts between mouse and touch events. 
 * [jQuery.postMessage](http://vistaprint.github.io/SkinnyJS/jquery.postMessage.html): Provides cross-document messaging support, works on all browsers to IE6 (without URL fragments and polling).
 * [jQuery.proxyAll](http://vistaprint.github.io/SkinnyJS/jquery.proxyAll.html): Binds functions to their host object (like jQuery.proxy(), but for all functions declared as properties of an object at once)
 * [jQuery.queryString](http://vistaprint.github.io/SkinnyJS/jquery.queryString.html): Parses querystrings (the opposite of jQuery.param())
