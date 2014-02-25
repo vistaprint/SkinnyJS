@@ -2,11 +2,14 @@
 <a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.imageSize.js" target="_blank">View this file on Github</a>
 
 <hr style="height: 1px; border:0; background-color:#4A525A">
-             <h1>               jquery.imageSize.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Scales and positions an image so that it totally fills the container specified by the "closestSelector",
+             <h1>               jquery.imageSize.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Scales and positions an image so that it totally fills the container specified by the "closestSelector",
 it crops, rather than stretches, the image. The container should have overflow:hidden.
 @param {String} src The URL of the image to load
 @param {Object} closestSelector jQuery selector to determine the container to fill
-@param {Function} callback Optional callback once image has been resized</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">fillClosest</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">src</span><span class="p">,</span> <span class="nx">closestSelector</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+@param {Function} callback Optional callback once image has been resized</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">fillClosest</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">src</span><span class="p">,</span> <span class="nx">closestSelector</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
             <span class="kd">var</span> <span class="nx">img</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
 
@@ -34,7 +37,10 @@ it crops, rather than stretches, the image. The container should have overflow:h
         <span class="kd">var</span> <span class="nx">containerWidth</span> <span class="o">=</span> <span class="nx">$container</span><span class="p">.</span><span class="nx">width</span><span class="p">();</span>
         <span class="kd">var</span> <span class="nx">containerAspectRatio</span> <span class="o">=</span> <span class="nx">containerWidth</span> <span class="o">/</span> <span class="nx">containerHeight</span><span class="p">;</span>
         <span class="kd">var</span> <span class="nx">scale</span><span class="p">;</span>
-        <span class="kd">var</span> <span class="nx">margin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>The container is skinnier than the image so we need to move the image to the left</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">if</span> <span class="p">(</span><span class="nx">containerAspectRatio</span> <span class="o">&lt;</span> <span class="nx">aspectRatio</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">margin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>The container is skinnier than the image so we need to move the image to the left</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">containerAspectRatio</span> <span class="o">&lt;</span> <span class="nx">aspectRatio</span><span class="p">)</span> <span class="p">{</span>
             <span class="nx">scale</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">aspectRatio</span> <span class="o">/</span> <span class="nx">containerAspectRatio</span> <span class="o">*</span> <span class="mi">100</span><span class="p">);</span>
 
             <span class="k">if</span> <span class="p">(</span><span class="nx">scale</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">)</span> <span class="p">{</span>
@@ -46,7 +52,9 @@ it crops, rather than stretches, the image. The container should have overflow:h
                 <span class="s2">&quot;margin-left&quot;</span><span class="o">:</span> <span class="o">-</span><span class="nx">margin</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;width&quot;</span><span class="o">:</span> <span class="nx">scale</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span>
             <span class="p">};</span>
-        <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>The container is fatter than the image so we need to move the image up</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">else</span> <span class="p">{</span>
+        <span class="p">}</span>
+</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>The container is fatter than the image so we need to move the image up</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="k">else</span> <span class="p">{</span>
             <span class="nx">scale</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">containerAspectRatio</span> <span class="o">/</span> <span class="nx">aspectRatio</span> <span class="o">*</span> <span class="mi">100</span><span class="p">);</span>
 
             <span class="k">if</span> <span class="p">(</span><span class="nx">scale</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">)</span> <span class="p">{</span>
@@ -59,11 +67,14 @@ it crops, rather than stretches, the image. The container should have overflow:h
                 <span class="s2">&quot;width&quot;</span><span class="o">:</span> <span class="s2">&quot;100%&quot;</span>
             <span class="p">};</span>
         <span class="p">}</span>
-    <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Scales and resizes an image DOM element so that it fits and is centered in a box with the specified width
+    <span class="p">};</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Scales and resizes an image DOM element so that it fits and is centered in a box with the specified width
 and height. 
 src: The URL of the image to load
 boundingBox: A rectangle with the maximum width and height
-callback: Optional callback once image has been resized</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">fitToBoundingBox</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">src</span><span class="p">,</span> <span class="nx">boundingBox</span><span class="p">,</span> <span class="nx">callback</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+callback: Optional callback once image has been resized</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">fitToBoundingBox</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">src</span><span class="p">,</span> <span class="nx">boundingBox</span><span class="p">,</span> <span class="nx">callback</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
             <span class="kd">var</span> <span class="nx">img</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
 
@@ -87,20 +98,25 @@ callback: Optional callback once image has been resized</p>             </td>   
     <span class="nx">$</span><span class="p">.</span><span class="nx">fitToBoundingBox</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">rect</span><span class="p">,</span> <span class="nx">boundingBox</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">aspectRatio</span> <span class="o">=</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">width</span> <span class="o">/</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
         <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">rectWithAspectRatio</span><span class="p">(</span><span class="nx">boundingBox</span><span class="p">,</span> <span class="nx">aspectRatio</span><span class="p">);</span>
-    <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Preloads the specified image and calls back the specified function 
+    <span class="p">};</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Preloads the specified image and calls back the specified function 
 with a size (width/height) representing the intrinsic size of the image.
 src: The URL of the image to load
 success: A function that takes a size object as its only argument
-error: A function will be called if there is an error loading the image.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">$</span><span class="p">.</span><span class="nx">naturalSize</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">src</span><span class="p">,</span> <span class="nx">success</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+error: A function will be called if there is an error loading the image.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">naturalSize</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">src</span><span class="p">,</span> <span class="nx">success</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">deferred</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
 
         <span class="kd">var</span> <span class="nx">img</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Image</span><span class="p">();</span>
 
-        <span class="kd">var</span> <span class="nx">successWrapper</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>HACK for IE7- With images that are cached, IE7
+        <span class="kd">var</span> <span class="nx">successWrapper</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>HACK for IE7- With images that are cached, IE7
 fires image load events synchronously in the .src setter.
 The setter blocks while the onload event handlers execute, which can cause
 strange behavior in the caller of this method.
-Simulate behavior of other browsers by manually queuing the callback.</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="nb">window</span><span class="p">.</span><span class="nx">setTimeout</span><span class="p">(</span>
+Simulate behavior of other browsers by manually queuing the callback.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="nb">window</span><span class="p">.</span><span class="nx">setTimeout</span><span class="p">(</span>
                 <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                     <span class="kd">var</span> <span class="nx">size</span> <span class="o">=</span> <span class="p">{</span>
                         <span class="nx">width</span><span class="o">:</span> <span class="nx">img</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span>
@@ -128,8 +144,11 @@ Simulate behavior of other browsers by manually queuing the callback.</p>       
         <span class="nx">img</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">src</span><span class="p">;</span>
 
         <span class="k">return</span> <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span>
-    <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>Finds the maximum rectangle size that can fit in the specified container rectangle
-using the specified aspect ratio.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">$</span><span class="p">.</span><span class="nx">rectWithAspectRatio</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">containerRect</span><span class="p">,</span> <span class="nx">aspectRatio</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">};</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>Finds the maximum rectangle size that can fit in the specified container rectangle
+using the specified aspect ratio.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">rectWithAspectRatio</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">containerRect</span><span class="p">,</span> <span class="nx">aspectRatio</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">rect</span> <span class="o">=</span> <span class="p">{</span>
             <span class="nx">top</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
             <span class="nx">left</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>

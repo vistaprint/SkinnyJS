@@ -105,6 +105,14 @@ var dependencyTree = {
     "jquery.scrollAnchor": {
         deps: []
     },
+    "jquery.tutorialOverlay": {
+        deps: ["jquery.clientRect", "jquery.proxyAll"],
+        other: [{
+            name: "Explorer Canvas",
+            path: "https://github.com/LeoDutra/excanvas",
+            notes: "Canvas polyfill for older IE.  Add <!--[if lte IE 8]><script src='excanvas.js'></script><![endif]--> in the <head> of the page."
+        }]
+    },
     "jquery.uncomment": {
         deps: []
     },

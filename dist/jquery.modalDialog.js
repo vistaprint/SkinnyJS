@@ -265,7 +265,7 @@ if (!Object.keys) {
     };
 
     // Opens the dialog
-    ModalDialog.prototype.open = function (disableAnimation) {
+    ModalDialog.prototype.open = function () {
         var deferred = this._initDeferred("open", deferred);
 
         // Ensure the dialog doesn't open once its already opened.. 
@@ -362,18 +362,11 @@ if (!Object.keys) {
 
                 }, this);
 
-                if (disableAnimation) {
-                    // If animation is disabled, just move the dialog into position synchronously, 
-                    // and then do the callback on the next event loop tick.
-                    this.$container.css({ top: initialTop });
-                    setTimeout(animationCallback, 0);
-                } else {
-                    // Otherwise, animate open
-                    this.$container.animate({ top: initialTop}, $.modalDialog.animationDuration, _easing)
-                        .promise()
-                        .then(animationCallback, animationCallback);
-                }
-
+                this.$container.animate({
+                    top: initialTop
+                }, $.modalDialog.animationDuration, _easing)
+                    .promise()
+                    .then(animationCallback, animationCallback);
             } else {
                 this._clearDeferred("open");
             }
@@ -1719,7 +1712,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
         var deferred = new $.Deferred();
 
-        updateFromUrl(true) // Disable animation when the dialog state is restored from the URL
+        updateFromUrl()
             .then(
                 function () {
                     try {
@@ -1993,7 +1986,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     };
 
     // Listen to URL changes and open/close dialogs accordingly
-    var updateFromUrl = function (disableAnimation) {
+    var updateFromUrl = function () {
         var deferred = new $.Deferred();
 
         // An array of parsed dialog parameters from the URL
@@ -2036,7 +2029,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
                 // If the handlers were enabled, we'd get infinite looping.
                 _disableHandlers = true;
 
-                dialog.open(disableAnimation) // Disable animation when the dialog state is being restored from the URL on page init
+                dialog.open()
                     .then(function () {
                         // Recurse until all dialogs embedded in the URL are open
                         topmostStackPos++;
@@ -2106,6 +2099,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
         return deferred;
     };
+
 
 
 })(jQuery);

@@ -1,0 +1,127 @@
+<!doctype html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <!--[if lt IE 9]> <script src="javascripts/html5shiv.js"></script> <![endif]-->
+
+  <!-- Use ExplorerCanvas polyfill for IE8 and earlier -->
+  <!--[if lte IE 8]><script src="../dependencies/excanvas.js"></script><![endif]-->
+
+  <link rel="stylesheet" href="dist/css/jquery.tutorialOverlay.css" />
+  <link rel="stylesheet" href="stylesheets/tutorial-overlay-demo.css" />
+
+  <script type="text/javascript" src="javascripts/jquery.js"></script>
+  <!--TODO: Remove the explicit includes of skinnJS classes - use the builder to generate a skinny.js file -->
+  <script type="text/javascript" src="dist/jquery.proxyAll.js" /></script>
+  <script type="text/javascript" src="dist/jquery.clientRect.js" /></script>
+  <script type="text/javascript" src="dist/jquery.rectUtils.js" /></script>
+  <script type="text/javascript" src="dist/jquery.calcRestrainedPos.js" /></script>
+  <script type="text/javascript" src="dist/jquery.tutorialOverlay.js" /></script>
+
+  <!--<script type="text/javascript" src="javascripts/tutorial-overlay-demo.js" /></script>
+-->
+  <title>SkinnyJS Tutorial Overlay Demo</title>
+  <meta name="description" content="Skinny JS">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+<h1>SkinnyJS Tutorial Overlay Demo</h1>
+
+<section>
+  <h3>Example: Tutorial Overlay, from script</h3>
+
+  <div>
+    <a href="#" id='showBtn'>Open</a>
+  </div>
+</section>
+
+<section>
+  <h3>Example: Tutorial Overlay, from script, jQuery idiomatic</h3>
+
+  <div>
+    <a href="#" id='showIdiomatic'>Open</a>
+  </div>
+</section>
+
+<!-- Unobtrusive overlay to show on page load -->
+<div id="onload-overlay" class="tutorial-overlay" data-overlay-autoload='true' data-overlay-hideonclick='false'>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target="#invalidID" data-overlay-tip-position="north">This tip will not be shown, because it has an invalid target.</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target="h1" data-overlay-tip-position="south">The title is here.</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target="#showBtn" data-overlay-tip-position="east">This link will show an overlay via the JavaScript API.</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target="#showIdiomatic" data-overlay-tip-position="east">This link will show an overlay using the 'unobtrusive' method using the jQuery idiomatic method.</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="northwest">North West</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="north">North</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="north east">North East</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="EAST">East</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="east-south">South East</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="south">South</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="bottomleft">South West</div>
+  <div class="tutorial-overlay-tip white-tip" data-overlay-tip-target=".demo-target" data-overlay-tip-position="weSt">West</div>
+
+  <div class="tutorial-overlay-content">
+    <div class="box-title">Page Ready Overlay</div>
+    <div>
+      This overlay will show as soon as the page is ready.
+      The overlay can be closed via the link below.
+    </div>
+    <a href="#" class="close-overlay">Close Overlay</a>
+  </div>
+</div>
+
+<!-- Unobtrusive overlay exists in DOM and doesn't require extra JavaScript to run -->
+<div id="node-overlay" class="tutorial-overlay">
+  <div class="tutorial-overlay-tip" data-overlay-tip-target="h1" data-overlay-tip-position="east">This is the title.</div>
+  <div class="tutorial-overlay-tip" data-overlay-tip-target="#showBtn" data-overlay-tip-position="north">Click on this link to show an overlay via JavaScript.</div>
+  <div class="tutorial-overlay-tip" data-overlay-tip-target="#showIdiomatic" data-overlay-tip-position="south">Click on this link to show the overlay defined in the DOM.</div>
+</div>
+
+<div class="vertical-spacer"></div>
+<div class="target-container">
+  <span class="horizontal-spacer"></span>
+  <span class="demo-target">
+    Target
+  </span>
+  <span class="horizontal-spacer"></span>
+</div>
+
+<script type="text/javascript">
+  //Show overlay on button click, via the JavaScript API
+  $("#showBtn").click(function() {
+    var overlayElement = $("<div id='js-overlay' class='tutorial-overlay'></div>").appendTo($("body"));
+    var overlay = $.tutorialOverlay.create({
+      overlay: overlayElement[0],
+      destroyOnClose: true,
+    });
+
+    overlay.addTip({
+      content: "<span>Click here to show the overlay using the JavaScript API.</span>",
+      target: "#showBtn",
+      position: "north"
+    });
+    overlay.addTip({
+      content: "<span>Click here to show the overlay that is defined in the DOM.</span>",
+      target: "#showIdiomatic",
+      position: "north"
+    });
+    overlay.addTip({
+      content: "<span>The title is here.</span>",
+      target: "h1",
+      position: "west"
+    });
+
+    overlay.show();
+  });
+  $("#showIdiomatic").click(function() {
+    $("#node-overlay").tutorialOverlay();
+  });
+</script>
+  
+</body>
+</html>
