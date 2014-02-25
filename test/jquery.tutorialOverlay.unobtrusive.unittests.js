@@ -24,7 +24,7 @@ $(window).on("load", function () {
     describe("jquery.tutorialOverlay", function () {
         var assert = chai.assert;
 
-        var manualLoadOverlayId = "#manual-load-overlay";
+        // var manualLoadOverlayId = "#manual-load-overlay";
 
 
         //Clean up the DOM
@@ -33,12 +33,12 @@ $(window).on("load", function () {
             $.fn.tutorialOverlayTip = origOverlayTipFactory;
         });
 
-        var getOverlaySettings = function () {
-            var settings = $.extend({}, $.tutorialOverlay.defaults);
-            settings.overlay = manualLoadOverlayId;
-            settings.hideOnClick = false; //prevent lingering event listener reference
-            return settings;
-        };
+        // var getOverlaySettings = function () {
+        //     var settings = $.extend({}, $.tutorialOverlay.defaults);
+        //     settings.overlay = manualLoadOverlayId;
+        //     settings.hideOnClick = false; //prevent lingering event listener reference
+        //     return settings;
+        // };
 
         it("should automatically open a Tutorial Overlay on page load", function () {
             var $overlay = $(".tutorial-overlay[data-overlay-autoload][data-overlay-autoload!='false']");

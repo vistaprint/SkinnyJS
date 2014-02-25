@@ -37,17 +37,6 @@ if (!Object.keys) {
         return false;
     };
 
-    var parseFunction = function (body) {
-        // Evil is necessary to turn inline HTML handlers into functions
-        /* jshint evil: true */
-
-        if (!body) {
-            return null;
-        }
-
-        return new Function("event", body);
-    };
-
     // The properties to copy from HTML data-overlay-* attributes
     // to the overlay settings object
     var _props = {

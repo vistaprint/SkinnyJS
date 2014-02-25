@@ -3,17 +3,20 @@
  * @author Tex Clayton
  * @version 1.3
  */
+
+ /* globals G_vmlCanvasManager */
+
 (function ($) {
-    var OVERLAY_CLASS = ".tutorial-overlay";
+    // var OVERLAY_CLASS = ".tutorial-overlay";
     var VEIL_CLASS = ".tutorial-overlay-veil";
     var CANVAS_CLASS = ".tutorial-overlay-canvas";
     var TIP_CLASS = ".tutorial-overlay-tip";
     var CONTENT_CLASS = ".tutorial-overlay-content";
     var CLOSE_OVERLAY_CLASS = ".close-overlay";
 
-    var DATA_AUTOLOAD_ATTR = "data-overlay-autoload";
-    var DATA_ZINDEX_ATTR = "data-overlay-zindex";
-    var DATA_HIDE_ON_CLICK_ATTR = "overlay-hideonclick";
+    // var DATA_AUTOLOAD_ATTR = "data-overlay-autoload";
+    // var DATA_ZINDEX_ATTR = "data-overlay-zindex";
+    // var DATA_HIDE_ON_CLICK_ATTR = "overlay-hideonclick";
 
     // Public sub-namespace for tutorial overlays.
     $.tutorialOverlay = $.tutorialOverlay || {};
@@ -26,7 +29,7 @@
         zIndex: 10000, // Allow callers to participate in zIndex arms races
         //destroyOnClose: false, // If true, the overlay DOM will be destroyed and all events removed when the overlay closes
         hideOnClick: true,
-        autoLoad: false,
+        autoLoad: false
     };
 
     /**

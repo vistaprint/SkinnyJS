@@ -295,5 +295,5 @@ module.exports = function (grunt) {
 
     grunt.registerTask("beautify", ["jsbeautifier", "lineending"]);
 
-    grunt.registerTask("update", ["wget"]);    
+    grunt.registerTask("update", ["wget"]);
 };

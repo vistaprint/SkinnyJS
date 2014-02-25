@@ -30,7 +30,7 @@
             direction: this.data(DATA_TIP_POSITION_ATTR),
             content: this[0],
             color: this.data(DATA_TIP_COLOR_ATTR),
-            offset: this.data(DATA_TIP_OFFSET_ATTR),
+            offset: this.data(DATA_TIP_OFFSET_ATTR)
         });
     };
 

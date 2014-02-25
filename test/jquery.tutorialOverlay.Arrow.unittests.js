@@ -613,7 +613,7 @@ describe("jquery.tutorialOverlay.Arrow", function () {
             //assert the tipRect now contains the Arrow rect
             var arrowRect = {
                 top: Math.min(startY, endY, controlY),
-                left: Math.min(startX, endX, controlX),
+                left: Math.min(startX, endX, controlX)
             };
             arrowRect.width = Math.max(startX, endX, controlX) - arrowRect.left;
             arrowRect.height = Math.max(startY, endY, controlY) - arrowRect.top;
