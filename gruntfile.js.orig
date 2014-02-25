@@ -169,8 +169,13 @@ module.exports = function (grunt) {
                 tasks: ["concat:tutorialOverlay", "copy:distSite"]
             },
             copyJs: {
-                files: ["./js/**/*.js", "!**modalDialog**", "!**tutorialOverlay**"],
+<<<<<<< HEAD
+                files: ["./js/**/*.js", "!**modalDialog**"],
                 tasks: ["copy:distJs"]
+=======
+                files: ["./js/**/*.js", "!**modalDialog**", "!**tutorialOverlay**"],
+                tasks: ["copy:distJs", "copy:distSite"]
+>>>>>>> 1031ae6ea12bf796b2e7ee12d029254b0d171b80
             },
             less: {
                 files: ["./css/**/*.less"],
@@ -182,16 +187,22 @@ module.exports = function (grunt) {
         },
         jsbeautifier: {
             all: {
+<<<<<<< HEAD
                 src: ["js/**/*.js", "test/**/*.js"],
+                options: { js: { jslintHappy: true } }
+=======
+                src: ["js/**/*.js", "test/**/*.js", "site/javascript/**/*.js"],
                 options: {
                     js: {
                         jslintHappy: true
                     }
                 }
+>>>>>>> 1031ae6ea12bf796b2e7ee12d029254b0d171b80
             }
         },
         lineending: {
             all: {
+<<<<<<< HEAD
                 files: [
                     {
                         expand: true,
@@ -205,6 +216,24 @@ module.exports = function (grunt) {
                         dest: "./test/"
                     }
                 ],
+=======
+                files: [{
+                    expand: true,
+                    cwd: "./js/",
+                    src: ["./**/*.js"],
+                    dest: "./js/"
+                }, {
+                    expand: true,
+                    cwd: "./test/",
+                    src: ["./**/*.js"],
+                    dest: "./test/"
+                }, {
+                    expand: true,
+                    cwd: "./site/javascript/",
+                    src: ["./**/*.js"],
+                    dest: "./site/javascript/"
+                }],
+>>>>>>> 1031ae6ea12bf796b2e7ee12d029254b0d171b80
                 options: {
                     eol: "crlf"
                 }
@@ -294,6 +323,10 @@ module.exports = function (grunt) {
     grunt.registerTask("build", ["clean", "less", "copyDist", "concat:modalDialog", "concat:modalDialogContent", "concat:tutorialOverlay", "strip_code", "uglify"]);
 
     grunt.registerTask("beautify", ["jsbeautifier", "lineending"]);
+<<<<<<< HEAD
 
     grunt.registerTask("update", ["wget"]);    
 };
+=======
+};
+>>>>>>> 1031ae6ea12bf796b2e7ee12d029254b0d171b80

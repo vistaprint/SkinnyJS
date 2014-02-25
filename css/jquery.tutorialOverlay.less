@@ -1,0 +1,45 @@
+@import url(lib/mixin_lib.less);
+
+.tutorial-overlay
+{
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 10000;
+
+	.tutorial-overlay-veil
+	{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+
+		background: black;
+		.opacity(.6);
+	}
+
+	canvas.tutorial-overlay-canvas
+	{
+		position:absolute;
+		top:0;
+		left:0;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.tutorial-overlay-tip
+{
+	position: absolute;
+	z-index: 10100;
+}
+
+.tutorial-overlay-content
+{
+	position: absolute;
+	z-index: 10200;
+}
