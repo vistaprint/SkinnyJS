@@ -265,7 +265,7 @@ if (!Object.keys) {
     };
 
     // Opens the dialog
-    ModalDialog.prototype.open = function () {
+    ModalDialog.prototype.open = function (disableAnimation) {
         var deferred = this._initDeferred("open", deferred);
 
         // Ensure the dialog doesn't open once its already opened.. 
@@ -362,11 +362,18 @@ if (!Object.keys) {
 
                 }, this);
 
-                this.$container.animate({
-                    top: initialTop
-                }, $.modalDialog.animationDuration, _easing)
-                    .promise()
-                    .then(animationCallback, animationCallback);
+                if (disableAnimation) {
+                    // If animation is disabled, just move the dialog into position synchronously, 
+                    // and then do the callback on the next event loop tick.
+                    this.$container.css({ top: initialTop });
+                    setTimeout(animationCallback, 0);
+                } else {
+                    // Otherwise, animate open
+                    this.$container.animate({ top: initialTop}, $.modalDialog.animationDuration, _easing)
+                        .promise()
+                        .then(animationCallback, animationCallback);
+                }
+
             } else {
                 this._clearDeferred("open");
             }
@@ -599,7 +606,7 @@ if (!Object.keys) {
 
             this._buildContent();
 
-            this.$content.find('*[data-action="close"]').on("click", this._close);
+            this.$contentContainer.on("click", '*[data-action="close"]', this._close);
 
             this.$contentContainer.append(this.$content);
 
@@ -617,7 +624,13 @@ if (!Object.keys) {
 
     // Subclasses should override to do something when a cached DOM is used
     ModalDialog.prototype._alreadyBuilt = function () {
-        // noop
+
+        // Two node dialogs can share the same content node (this isn't true of AJAX or IFRAME dialogs).
+        // Ensure the content node is still owned by this dialog
+        if (this.$content.parent()[0] !== this.$contentContainer[0]) {
+            this._buildContent();
+            this.$contentContainer.append(this.$content);
+        }
     };
 
     ModalDialog.prototype._getChromeHeight = function () {
@@ -1712,7 +1725,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
         var deferred = new $.Deferred();
 
-        updateFromUrl()
+        updateFromUrl(true) // Disable animation when the dialog state is restored from the URL
             .then(
                 function () {
                     try {
@@ -1986,7 +1999,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     };
 
     // Listen to URL changes and open/close dialogs accordingly
-    var updateFromUrl = function () {
+    var updateFromUrl = function (disableAnimation) {
         var deferred = new $.Deferred();
 
         // An array of parsed dialog parameters from the URL
@@ -2029,7 +2042,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
                 // If the handlers were enabled, we'd get infinite looping.
                 _disableHandlers = true;
 
-                dialog.open()
+                dialog.open(disableAnimation) // Disable animation when the dialog state is being restored from the URL on page init
                     .then(function () {
                         // Recurse until all dialogs embedded in the URL are open
                         topmostStackPos++;

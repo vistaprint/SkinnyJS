@@ -33,7 +33,7 @@ case it was meant to be part of the initial page state.</p>             </td>   
 
         <span class="kd">var</span> <span class="nx">deferred</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
 
-        <span class="nx">updateFromUrl</span><span class="p">()</span>
+        <span class="nx">updateFromUrl</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="c1">// Disable animation when the dialog state is restored from the URL</span>
             <span class="p">.</span><span class="nx">then</span><span class="p">(</span>
                 <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                     <span class="k">try</span> <span class="p">{</span>
@@ -307,7 +307,7 @@ then the UI has been updated already, and we shouldn't update anything.</p>     
     <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-26">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-26">&#182;</a>               </div>               <p>Listen to URL changes and open/close dialogs accordingly</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">updateFromUrl</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">updateFromUrl</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">disableAnimation</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">deferred</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-27">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-27">&#182;</a>               </div>               <p>An array of parsed dialog parameters from the URL</p>             </td>             <td class="code">               <div class="highlight"><pre>
@@ -350,7 +350,7 @@ because we're currently reading the URL and updating the dialogs.
 If the handlers were enabled, we'd get infinite looping.</p>             </td>             <td class="code">               <div class="highlight"><pre>
                 <span class="nx">_disableHandlers</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
 
-                <span class="nx">dialog</span><span class="p">.</span><span class="nx">open</span><span class="p">()</span>
+                <span class="nx">dialog</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">disableAnimation</span><span class="p">)</span> <span class="c1">// Disable animation when the dialog state is being restored from the URL on page init</span>
                     <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 </pre></div>             </td>           </tr>                               <tr id="section-34">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-34">&#182;</a>               </div>               <p>Recurse until all dialogs embedded in the URL are open</p>             </td>             <td class="code">               <div class="highlight"><pre>
                         <span class="nx">topmostStackPos</span><span class="o">++</span><span class="p">;</span>
