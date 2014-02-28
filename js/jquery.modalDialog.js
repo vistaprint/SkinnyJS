@@ -455,7 +455,7 @@
 
             this._buildContent();
 
-            this.$content.find('*[data-action="close"]').on("click", this._close);
+            this.$contentContainer.on("click", '*[data-action="close"]', this._close);
 
             this.$contentContainer.append(this.$content);
 
@@ -473,7 +473,13 @@
 
     // Subclasses should override to do something when a cached DOM is used
     ModalDialog.prototype._alreadyBuilt = function () {
-        // noop
+
+        // Two node dialogs can share the same content node (this isn't true of AJAX or IFRAME dialogs).
+        // Ensure the content node is still owned by this dialog
+        if (this.$content.parent()[0] !== this.$contentContainer[0]) {
+            this._buildContent();
+            this.$contentContainer.append(this.$content);
+        }
     };
 
     ModalDialog.prototype._getChromeHeight = function () {
