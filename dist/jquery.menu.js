@@ -1,6 +1,6 @@
 /// <reference path="jquery.hoverDelay.js" />
-/// <reference path="jquery.pointerEvents.js" />
-/// <reference path="jquery.pointerGestures.js" />
+/// <reference path="pointy.js" />
+/// <reference path="pointy.gestures.js" />
 // TODO: Support modifying state in the future by storing an object using $.data(), implement $(selector).dropDownMenu("option", value);
 // TODO: Accessibility: Keyboard navigation (tab navigation already works)- close submenus on pressing enter (maybe)
 

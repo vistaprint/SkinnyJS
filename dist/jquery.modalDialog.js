@@ -6,7 +6,7 @@
 /// <reference path="jquery.proxyAll.js" />
 /// <reference path="jquery.disableEvent.js" />
 /// <reference path="jquery.partialLoad.js" />
-/// <reference path="jquery.pointerEvents.js" />
+/// <reference path="pointy.js" />
 
 (function ($) {
     $.modalDialog = $.modalDialog || {};
@@ -2112,7 +2112,6 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
         return deferred;
     };
-
 
 
 })(jQuery);
