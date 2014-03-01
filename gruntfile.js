@@ -197,8 +197,8 @@ module.exports = function (grunt) {
                     baseUrl: "http://vistaprint.github.io/PointyJS/"
                 },
                 files: {
-                    "dependencies/jquery.pointerEvents.js": "dist/jquery.pointerEvents.js",
-                    "dependencies/jquery.pointerGestures.js": "dist/jquery.pointerGestures.js"
+                    "dependencies/pointy.js": "dist/pointy.js",
+                    "dependencies/pointy.gestures.js": "dist/pointy.gestures.js"
                 }
             }
         }
@@ -272,9 +272,9 @@ module.exports = function (grunt) {
 
     grunt.registerTask("copyDist", ["copy:distJs", "copy:distCss", "copy:distOther"]);
 
-    grunt.registerTask("build", ["clean", "less", "copyDist", "concat:modalDialog", "concat:modalDialogContent", "strip_code", "uglify"]);
+    grunt.registerTask("build", ["update", "clean", "less", "copyDist", "concat:modalDialog", "concat:modalDialogContent", "strip_code", "uglify"]);
 
     grunt.registerTask("beautify", ["jsbeautifier", "lineending"]);
 
-    grunt.registerTask("update", ["wget"]);    
+    grunt.registerTask("update", ["wget"]);
 };

@@ -1,4 +1,4 @@
-/// <reference path="jquery.pointerEvents.js" />
+/// <reference path="pointy.js" />
 
 (function ($) {
 
