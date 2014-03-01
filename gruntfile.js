@@ -197,8 +197,8 @@ module.exports = function (grunt) {
                     baseUrl: "http://vistaprint.github.io/PointyJS/"
                 },
                 files: {
-                    "dependencies/pointy.js": "dist/pointy.js",
-                    "dependencies/pointy.gestures.js": "dist/pointy.gestures.js"
+                    "js/pointy.js": "dist/pointy.js",
+                    "js/pointy.gestures.js": "dist/pointy.gestures.js"
                 }
             }
         }

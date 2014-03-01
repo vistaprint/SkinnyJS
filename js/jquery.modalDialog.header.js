@@ -6,4 +6,4 @@
 /// <reference path="jquery.proxyAll.js" />
 /// <reference path="jquery.disableEvent.js" />
 /// <reference path="jquery.partialLoad.js" />
-/// <reference path="../dependencies/pointy.js" />
+/// <reference path="pointy.js" />
