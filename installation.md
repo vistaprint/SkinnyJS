@@ -10,6 +10,14 @@
 * Install NPM packages
  * ```npm install```
 
+# Integration with pointy.js
+skinny.js has a hard dependency on pointy.js, and keeps a local copy of pointy.js just as if it was a regular skinny.js module. 
+
+To update pointy.js:
+
+* Run ```grunt update
+* Then commit any changes to pointy.js or pointy.gestures.js
+
 # Notes
 * Debugging:
  * Use node-inspector
