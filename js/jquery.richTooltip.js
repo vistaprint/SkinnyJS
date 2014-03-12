@@ -39,8 +39,8 @@
         // configure the context
         this.context.attr('data-rel', 'tooltip');
 
-        // setup the events
-        if (this.options.action === 'hover') {
+        // setup the hover events, only when there is no touch
+        if (this.options.action === 'hover' && !('ontouchstart' in document) && !navigator.pointerEnabled && !navigator.msPointerEnabled) {
             // hover is desktop only, and does not support pointer events
             this.context.hover(this.show, this.unhover);
 
@@ -48,8 +48,10 @@
             this.content.hover(this.show, this.unhover);
         }
 
-        // always show on click, even with hover enabled
-        this.context.on('click', this.toggle);
+        // otherwise, if we do not want hover support, or have touch support use click only
+        else {
+            this.context.on('click', this.toggle);
+        }
 
         // find the container element
         this.container = this.options.container ? $(this.options.container) : null;
@@ -219,7 +221,7 @@
         this.arrow.css(arrowPos);
     };
 
-    $.fn.tooltip = function jQueryTooltip(options) {
+    $.fn.tooltip = $.fn.richTooltip = function jQueryTooltip(options) {
         var el = $(this);
         var tooltip = el.data('__tooltip');
 
@@ -249,12 +251,12 @@
     // initialize all existing tooltips
     $(function () {
         $('[data-rel="tooltip"] + aside').each(function (i, el) {
-            var context = $(el).prev().addClass('rich-tooltip-context');
             var content = $(el);
+            var context = content.prev().addClass('rich-tooltip-context');
             var data = context.data();
 
             // translate data attributes to options
-            context.tooltip({
+            context.richTooltip({
                 content: content,
                 action: data.tooltipAction || 'click',
                 pos: data.tooltipPos || 'south',
@@ -269,7 +271,7 @@
             var content = $(data.tooltip);
 
             // translate data attributes to options
-            context.tooltip({
+            context.richTooltip({
                 content: content,
                 action: data.tooltipAction || 'click',
                 pos: data.tooltipPos || 'south',
