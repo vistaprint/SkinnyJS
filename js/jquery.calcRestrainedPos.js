@@ -203,7 +203,7 @@
         }
 
         // compensate for exclusions
-        function compensateObstacles(direction, posLimits) {
+        /*function compensateObstacles(direction, posLimits) {
             if (obstacles) {
                 var box = $.extend({}, content, pos);
                 var rect;
@@ -232,34 +232,33 @@
                         switch (direction) {
                         case 'north':
                         case 'south':
-                            /*
-                             *       Example cases:
-                             *              ------------
-                             *          ____|____ rect |
-                             *         |__box____|------
-                             *        --------------------
-                             *        |     context      |
-                             *
-                             *              ------------
-                             *          ____|_____rect_|__
-                             *         |__box_____________|
-                             *        --------------------
-                             *        |     context      |
-                             *
-                             *       Solution:
-                             *              ------------
-                             *    _________ |     rect |
-                             *   |__box____|------------
-                             *        --------------------
-                             *        |     context      |
-                             *
-                             *             OR
-                             *              ------------
-                             *              |     rect | _________
-                             *              ------------|__box____|
-                             *        --------------------
-                             *        |     context      |
-                             */
+                             //       Example cases:
+                             //              ------------
+                             //          ____|____ rect |
+                             //         |__box____|------
+                             //        --------------------
+                             //        |     context      |
+                             //
+                             //              ------------
+                             //          ____|_____rect_|__
+                             //         |__box_____________|
+                             //        --------------------
+                             //        |     context      |
+                             //
+                             //       Solution:
+                             //              ------------
+                             //    _________ |     rect |
+                             //   |__box____|------------
+                             //        --------------------
+                             //        |     context      |
+                             //
+                             //             OR
+                             //              ------------
+                             //              |     rect | _________
+                             //              ------------|__box____|
+                             //        --------------------
+                             //        |     context      |
+                             
                             if ((box.left < rect.left) && (box.left + box.width > rect.left)) {
                                 //shift box left if possible
                                 newPos.left = rect.left - (box.width + offsets.horizontal);
@@ -287,35 +286,35 @@
                                     posLimits.maxX = newPos.left;
                                 }
                             }
-                            /*
-                             *       Example cases:
-                             *     ------------
-                             *     |   rect __|______
-                             *     --------|__box____|
-                             *        --------------------
-                             *        |     context      |
-                             *
-                             *     --------------------
-                             *     |   rect ________  |
-                             *     --------|__box___|--
-                             *        --------------------
-                             *        |     context      |
-                             *
-                             *       Solution:
-                             *     ------------
-                             *     |     rect | _________
-                             *     ------------|__box____|
-                             *        --------------------
-                             *        |     context      |
-                             *
-                             *              OR
-                             *              ------------
-                             *    _________ |     rect |
-                             *   |__box____|------------
-                             *        --------------------
-                             *        |     context      |
-                             */
-                            else /*if ((box.left < rect.left + rect.width) && (box.left + box.width > rect.left + rect.width))*/ {
+
+                             //       Example cases:
+                             //     ------------
+                             //     |   rect __|______
+                             //     --------|__box____|
+                             //        --------------------
+                             //        |     context      |
+                             //
+                             //     --------------------
+                             //     |   rect ________  |
+                             //     --------|__box___|--
+                             //        --------------------
+                             //        |     context      |
+                             //
+                             //       Solution:
+                             //     ------------
+                             //     |     rect | _________
+                             //     ------------|__box____|
+                             //        --------------------
+                             //        |     context      |
+                             //
+                             //              OR
+                             //              ------------
+                             //    _________ |     rect |
+                             //   |__box____|------------
+                             //        --------------------
+                             //        |     context      |
+
+                            else { // if ((box.left < rect.left + rect.width) && (box.left + box.width > rect.left + rect.width)) {
                                 //shift box right if possible
                                 newPos.left = (rect.left + rect.width) + offsets.horizontal;
                                 // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
@@ -348,39 +347,38 @@
 
                         case 'west':
                         case 'east':
-                            /*
-                             *       Example cases:
-                             *         _________   ___
-                             *   -----|__box____| |
-                             *   | rect     |     |
-                             *   ------------     | context
-                             *                    |
-                             *                    |___
-                             *
-                             *          ________   ___
-                             *   ------| box    | |
-                             *   | rect|        | |
-                             *   ------|        | | context
-                             *         |________| |
-                             *                    |___
-                             *
-                             *       Solution:
-                             *                     ___
-                             *         _________  |
-                             *        |__box____| |
-                             *   ------------     | context
-                             *   | rect     |     |
-                             *   ------------     |___
-                             *          OR
-                             *                     ___
-                             *   ------------     |
-                             *   | rect     |     |
-                             *   ------------     | context
-                             *         _________  |
-                             *        |__box____| |
-                             *                    |___
-                             *
-                             */
+
+                             //       Example cases:
+                             //         _________   ___
+                             //   -----|__box____| |
+                             //   | rect     |     |
+                             //   ------------     | context
+                             //                    |
+                             //                    |___
+                             //
+                             //          ________   ___
+                             //   ------| box    | |
+                             //   | rect|        | |
+                             //   ------|        | | context
+                             //         |________| |
+                             //                    |___
+                             //
+                             //       Solution:
+                             //                     ___
+                             //         _________  |
+                             //        |__box____| |
+                             //   ------------     | context
+                             //   | rect     |     |
+                             //   ------------     |___
+                             //          OR
+                             //                     ___
+                             //   ------------     |
+                             //   | rect     |     |
+                             //   ------------     | context
+                             //         _________  |
+                             //        |__box____| |
+                             //                    |___
+
                             if ((box.top < rect.top) && (box.top + box.height >= rect.top)) {
                                 //shift box up if possible
                                 newPos.top = rect.top - (box.height + offsets.vertical);
@@ -408,41 +406,41 @@
                                     posLimits.maxY = newPos.top;
                                 }
                             }
-                            /*
-                             *       Example cases:
-                             *                     ___
-                             *   ------------     |
-                             *   | rect_____|___  |
-                             *   -----|__box____| | context
-                             *                    |
-                             *                    |___
-                             *
-                             *                     ___
-                             *   ------------     |
-                             *   | rect_____|___  |
-                             *   |    |__box____| | context
-                             *   |          |     |
-                             *   ------------     |___
-                             *
-                             *
-                             *       Solution:
-                             *                     ___
-                             *   ------------     |
-                             *   | rect     |     |
-                             *   ------------     | context
-                             *         _________  |
-                             *        |__box____| |
-                             *                    |___
-                             *
-                             *          OR
-                             *                     ___
-                             *         _________  |
-                             *        |__box____| |
-                             *   ------------     | context
-                             *   | rect     |     |
-                             *   ------------     |___
-                             */
-                            else /*if ((box.top > rect.top) && (box.top + box.height > rect.top))*/ {
+
+                             //       Example cases:
+                             //                     ___
+                             //   ------------     |
+                             //   | rect_____|___  |
+                             //   -----|__box____| | context
+                             //                    |
+                             //                    |___
+                             //
+                             //                     ___
+                             //   ------------     |
+                             //   | rect_____|___  |
+                             //   |    |__box____| | context
+                             //   |          |     |
+                             //   ------------     |___
+                             //
+                             //
+                             //       Solution:
+                             //                     ___
+                             //   ------------     |
+                             //   | rect     |     |
+                             //   ------------     | context
+                             //         _________  |
+                             //        |__box____| |
+                             //                    |___
+                             //
+                             //          OR
+                             //                     ___
+                             //         _________  |
+                             //        |__box____| |
+                             //   ------------     | context
+                             //   | rect     |     |
+                             //   ------------     |___
+
+                            else { // if ((box.top > rect.top) && (box.top + box.height > rect.top)) {
                                 //shift box down if possible
                                 newPos.top = (rect.top + rect.height) + offsets.vertical;
                                 // If content corner is required to be adjacent to the context edge, then we adjust if necessary.
@@ -481,7 +479,7 @@
                 pos.left = box.left;
                 pos.top = box.top;
             } //end if obstacles
-        }
+        }*/
 
         //Returns the position in the specified range that avoids all of the obstacles on an axis.
         //  Returns null if no position is possible without intersection.
@@ -558,11 +556,11 @@
                         i--;
                     }
                 }
-            };
+            }
 
             //Checked all obstacles across the valid position ranges
             // Now calculate the position closest to the ideal (centered relative to context).
-            var idealPos = context.left + (context.width - content.width) / 2
+            var idealPos = context.left + (context.width - content.width) / 2;
             var newPos = minPos - 1;
             var delta = Number.MAX_VALUE;
             var rangeDelta;
@@ -603,7 +601,7 @@
                 return;
             }
             var i = 0;
-            var minPos, maxPos, contentSize;
+            var minPos, maxPos, newPos, contentSize;
             var occupiedRects = obstacles.slice(); //copy obstacles array so that we may modify it
             if (((direction === 'east') || (direction === 'west'))) {
                 var left = posLimits.minX - offsets.horizontal;
@@ -622,7 +620,7 @@
                 }
 
                 //Look for a position in the vertical range
-                var newPos = _getBestPositionInRange(minPos, maxPos, contentSize, offsets.vertical, function () {
+                newPos = _getBestPositionInRange(minPos, maxPos, contentSize, offsets.vertical, function () {
                     //iterator that returns a { pos, size } iff it intersects the axis of the range we're interested in
                     var next = null;
                     var rect;
@@ -662,7 +660,7 @@
                 }
 
                 //Look for a position in the horizontal range
-                var newPos = _getBestPositionInRange(minPos, maxPos, contentSize, offsets.horizontal, function () {
+                newPos = _getBestPositionInRange(minPos, maxPos, contentSize, offsets.horizontal, function () {
                     //iterator that returns a { pos, size } iff it intersects the axis of the range we're interested in
                     var next = null;
                     var rect;
