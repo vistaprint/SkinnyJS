@@ -7,6 +7,7 @@
   <!--[if lt IE 9]> <script src="javascripts/html5shiv.js"></script> <![endif]-->
 
   <link rel="stylesheet" href="dist/css/jquery.richTooltip.css" />
+  <style>body, html { width: 100%; height: 100%; }</style>
 
   <script type="text/javascript" src="javascripts/jquery.js"></script>
   <script type="text/javascript" src="dist/jquery.proxyAll.js" /></script>
@@ -19,7 +20,7 @@
   <meta name="description" content="Skinny JS">
   <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
-<body class="nojs">
+<body>
 
 <section>
   <h3>Example: RichTooltips, unobtrusive</h3>
@@ -48,9 +49,34 @@
       <p>Do something neat</p>
     </aside>
   </div>
+</section>
+
+<section style="margin: 0 auto; position: absolute; top: 50%; margin-top: -25%; width: 100%; text-align: center;">
+  <h3>Example: RichTooltips, unobtrusive</h3>
 
   <div>
-    <p>Click on one of the directions above.</p>
+    <span data-rel="tooltip" data-tooltip-pos="south">south</span>
+    <aside>
+        <p>hello world. only text.</p>
+    </aside>
+
+    <span data-rel="tooltip" data-tooltip-pos="east">east</span>
+    <aside style="width: 200px">
+      <header>header</header>
+      <p>some more text. some more text. some more text. some more text. some more text. some more text. some more text. some more text. some more text.</p>
+    </aside>
+
+    <span data-rel="tooltip" data-tooltip-pos="west">west</span>
+    <aside>
+      <header>header</header>
+      <p>Do something neat</p>
+    </aside>
+
+    <span data-rel="tooltip" data-tooltip-pos="north">north</span>
+    <aside>
+      <header>header</header>
+      <p>Do something neat</p>
+    </aside>
   </div>
 </section>
 
@@ -62,7 +88,7 @@
 
     <script type="text/javascript">
     $(function(){
-      var div = $('<div><p>my tooltip content</p></div>');
+      var div = $('<aside><header>programmatic tooltip</header><p>my tooltip content</p></aside>');
       $('#example1').after(div).tooltip({ content: div });
     });
     </script>
@@ -70,15 +96,16 @@
 </section>
 
 <section>
-  <h3>Example: My account</h3>
+  <h3>Example: Large skin example</h3>
 
   <div>
-    <a href="#" data-rel="tooltip">programmatic click</a>
-    <aside class="tooltip-skin-large">
-      <h1 class="basic graphite">My Account #: 9805-0002-8381</h1>
-      <h1 class="basic carbon"> | My Account</h1>
+    <a href="#" data-rel="tooltip">open example</a>
+    <aside class="rich-tooltip-skin-large" style="width: 500px">
+      <header>
+        <h1>Some header text</h1>
+      </header>
       <section>
-        <h5>Quick Reorder</h5>
+        <p>Some tooltip content. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce porta ligula et velit pharetra, luctus venenatis neque rhoncus. Vestibulum in velit dictum, dictum lorem nec, venenatis est. Nam pellentesque lobortis lorem, a semper nisi posuere eu. In fermentum blandit massa non fermentum.</p>
       </section>
       <hr/>
       <footer>

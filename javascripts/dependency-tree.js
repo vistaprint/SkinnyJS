@@ -45,10 +45,10 @@ var dependencyTree = {
         deps: []
     },
     "jquery.menu": {
-        deps: ["pointy"]
+        deps: ["jquery.pointerEvents"]
     },
     "jquery.modalDialog": {
-        deps: ["jquery.queryString", "jquery.postMessage", "jquery.customEvent", "jquery.clientRect", "jquery.hostIframe", "jquery.proxyAll", "jquery.partialLoad", "pointy"],
+        deps: ["jquery.queryString", "jquery.postMessage", "jquery.customEvent", "jquery.clientRect", "jquery.hostIframe", "jquery.proxyAll", "jquery.partialLoad", "jquery.pointerEvents"],
         single: true,
         notes: "Should be included separately, after other skinny.js modules, on pages that open modal dialogs, " +
             "but NOT in iframe dialog content window documents. Should not be included on the same document as jquery.modalDialogContent.",
@@ -63,7 +63,7 @@ var dependencyTree = {
         }]
     },
     "jquery.modalDialogContent": {
-        deps: ["jquery.queryString", "jquery.contentSize", "jquery.customEvent", "pointy"],
+        deps: ["jquery.queryString", "jquery.contentSize", "jquery.customEvent", "jquery.pointerEvents"],
         single: true,
         notes: "Should be included separately, after other skinny.js modules, in iframe dialog content windows. " +
             "Should NOT be included on the same document as jquery.modalDialog.",
@@ -90,11 +90,11 @@ var dependencyTree = {
             notes: "postMessage polyfill HTML file for browsers that don't support postMessage. Make this accessible on your web server, and <a href='#jquery.postMessage.js' target='_blank'>configure jquery.postMessage to point to it</a>."
         }]
     },
-    "pointy": {
+    "jquery.pointerEvents": {
         deps: []
     },
-    "pointy.gestures": {
-        deps: ["pointy"]
+    "jquery.pointerGestures": {
+        deps: ["jquery.pointerEvents"]
     },
     "jquery.proxyAll": {
         deps: []
@@ -104,6 +104,14 @@ var dependencyTree = {
     },
     "jquery.scrollAnchor": {
         deps: []
+    },
+    "jquery.tutorialOverlay": {
+        deps: ["jquery.clientRect", "jquery.proxyAll"],
+        other: [{
+            name: "Explorer Canvas",
+            path: "https://github.com/LeoDutra/excanvas",
+            notes: "Canvas polyfill for older IE.  Add <!--[if lte IE 8]><script src='excanvas.js'></script><![endif]--> in the <head> of the page."
+        }]
     },
     "jquery.uncomment": {
         deps: []
