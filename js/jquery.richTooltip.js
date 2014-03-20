@@ -97,6 +97,7 @@
 
         this.content.show();
         this.pos();
+        this.context.addClass('rich-tooltip-open'); // indicate to the context the tooltip is open
 
         this.viewportSize = {
             height: $(window).height(),
@@ -117,6 +118,7 @@
     Tooltip.prototype.hide = function () {
         this._clearHoverTimeout();
         this.content.hide();
+        this.context.removeClass('rich-tooltip-open'); // indicate to the context the tooltip is now closed
 
         // remove event listeners
         $(window).off('resize', this.onWindowResize);
@@ -164,17 +166,19 @@
 
     Tooltip.prototype.pos = function () {
 
-        // calculate constants used repeatedly
-        var arrowRect = {}; // this.arrow.clientRect();
+        // find the size of the arrow
+        var arrowRect = (function (self) {
+            if (self.arrow.css('display') == 'none') {
+                return { width: 0, height: 0 };
+            }
 
-        // override, css arrows do not return sized because it uses :before and :after
-        if (this.options.pos === 'west' || this.options.pos === 'east') {
-            arrowRect.width = 15;
-            arrowRect.height = 25;
-        } else {
-            arrowRect.width = 25;
-            arrowRect.height = 15;
-        }
+            // override, css arrows do not return sized because it uses :before and :after
+            if (self.options.pos === 'left' || self.options.pos === 'right') {
+                return { width: 15, height: 25 };
+            } else {
+                return { width: 25, height: 15 };
+            }
+        })(this);
 
         var restrainedPos = $.calcRestrainedPos({
             giveMeSomething: true,
