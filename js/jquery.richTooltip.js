@@ -3,7 +3,6 @@
 /// <reference path="jquery.calcRestrainedPos.js" />
 
 (function ($) {
-    var tooltips = [];
 
     var defaults = {
         pos: 'south'
@@ -11,9 +10,6 @@
 
     function Tooltip(context, options) {
         $.proxyAll(this, 'show', 'hide', 'toggle', 'pos', 'unhover', 'onWindowResize', 'onDocumentClick');
-
-        // add this tooltip to the array of tooltips for the page
-        tooltips.push(this);
 
         // target context element that initalizes this tooltip
         this.context = $(context);
@@ -82,14 +78,8 @@
     Tooltip.prototype.show = function () {
         this._clearHoverTimeout();
 
-        // ensure all other tooltips are closed
-        if (tooltips.forEach) {
-            tooltips.forEach(function (tooltip) {
-                if (tooltip !== this) {
-                    tooltip.hide();
-                }
-            }, this);
-        }
+        // ensure all other tooltips and other overlay controls are closed
+        $(document).trigger('closeEverything');
 
         this.content.show();
         this.pos();
