@@ -63,9 +63,6 @@
             this.arrow = $('<div class="rich-tooltip-arrow" />').appendTo(this.content);
         }
 
-        // insert close button
-        $('<span class="rich-tooltip-close textbutton textbutton-skin-secondary textbutton-round" data-rel="close"><span class="textbutton-icon textbutton-icon-delete" /></span>').appendTo(this.content);
-
         // anything with [data-rel="close"] can be used to close the tooltip
         this.content.on('click', '[data-rel="close"]', this.hide);
     }
