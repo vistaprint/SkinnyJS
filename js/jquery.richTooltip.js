@@ -1,6 +1,7 @@
 /// <reference path="jquery.clientRect.js" />
 /// <reference path="jquery.proxyAll.js" />
 /// <reference path="jquery.calcRestrainedPos.js" />
+/// <reference path="jquery.hoverDelay.js" />
 
 (function ($) {
 
@@ -36,11 +37,20 @@
 
         // setup the hover events, only when there is no touch
         if (this.options.action === 'hover' && !('ontouchstart' in document) && !navigator.pointerEnabled && !navigator.msPointerEnabled) {
-            // hover is desktop only, and does not support pointer events
-            this.context.hover(this.show, this.unhover);
+            // soft dependency on hoverDelay
+            if ($.fn.hoverDelay) {
+                // hover is desktop only, and does not support pointer events
+                this.context.hoverDelay(this.show, this.unhover, { delayOver: 200, delayOut: 500 });
 
-            // hover over the tooltip content should not hide the tooltip yet
-            this.content.hover(this.show, this.unhover);
+                // hover over the tooltip content should not hide the tooltip yet
+                this.content.hoverDelay(this.show, this.unhover, { delayOver: 200, delayOut: 500 });
+            } else {
+                // hover is desktop only, and does not support pointer events
+                this.context.hover(this.show, this.unhover);
+
+                // hover over the tooltip content should not hide the tooltip yet
+                this.content.hover(this.show, this.unhover);
+            }
         }
 
         // otherwise, if we do not want hover support, or have touch support use click only
