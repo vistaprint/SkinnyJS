@@ -43,14 +43,11 @@
 
         var me = this;
 
-        // TODO support removing this callback by calling this.remove().
-        // This currently wont work because the wrapper is in the callbacks list
-
         var wrapper = $.proxy(function () {
             try {
                 callback.apply(this, arguments);
             } finally {
-                me.remove(callback);
+                me.remove(wrapper);
             }
 
         }, this);
