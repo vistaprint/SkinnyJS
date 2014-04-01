@@ -18,7 +18,6 @@
 	padding: 6px;
 
 	// box shadow
-	// box-shadow: 3px 3px 5px 5px #f2f2f2;
 	.drop-shadow(0, 2px, 2px, 2px, 0.4);
 
 	// javascript applies:
@@ -41,7 +40,7 @@
 
 		position: absolute;
 		background: @background;
-		border: 1px solid @border;
+		// border: 1px solid @border;
 
 		// hide this awesome CSS arrow when in IE7
 		// .ie7 &
@@ -73,7 +72,7 @@
 		}
 
 		// when tooltip is north (above) of context, arrow is pointing south (down)
-		.rich-tooltip-pos-north&, &.rich-tooltip-arrow-south
+		&.rich-tooltip-arrow-south
 		{
 			&:after,
 			&:before
@@ -94,7 +93,7 @@
 		}
 
 		// when tooltip is east (right) of context, arrow is pointing west (left)
-		.rich-tooltip-pos-east&, &.rich-tooltip-arrow-west
+		&.rich-tooltip-arrow-west
 		{
 			&:after,
 			&:before
@@ -115,7 +114,7 @@
 		}
 
 		// when tooltip is south (below) of context, arrow is pointing north (up)
-		.rich-tooltip-pos-south&, &.rich-tooltip-arrow-north
+		&.rich-tooltip-arrow-north
 		{
 			&:after,
 			&:before
@@ -136,7 +135,7 @@
 		}
 
 		// when tooltip is west (left) of context, arrow is pointing east (right)
-		.rich-tooltip-pos-west&, &.rich-tooltip-arrow-east
+		&.rich-tooltip-arrow-east
 		{
 			&:after,
 			&:before

@@ -4,9 +4,17 @@
 /// <reference path="jquery.hoverDelay.js" />
 
 (function ($) {
+    var arrowDirections = {
+        south: 'north',
+        north: 'south',
+        east: 'west',
+        west: 'east'
+    };
 
     var defaults = {
-        pos: 'south'
+        pos: 'south',
+        arrowDirection: null,
+        arrowStyle: 'outset'
     };
 
     function Tooltip(context, options) {
@@ -67,6 +75,11 @@
         // no arrow found, create one
         if (this.arrow.length === 0) {
             this.arrow = $('<div class="rich-tooltip-arrow" />').appendTo(this.content);
+        }
+
+        // standardize to have an arrow direction
+        if (!this.options.arrowDirection) {
+            this.options.arrowDirection = arrowDirections[this.options.pos];
         }
 
         // anything with [data-rel="close"] can be used to close the tooltip
@@ -164,12 +177,12 @@
 
         // find the size of the arrow
         var arrowRect = (function (self) {
-            if (self.arrow.css('display') == 'none') {
+            if (self.arrow.css('display') == 'none' || self.options.arrowStyle === 'inset') {
                 return { width: 0, height: 0 };
             }
 
             // override, css arrows do not return sized because it uses :before and :after
-            if (self.options.pos === 'left' || self.options.pos === 'right') {
+            if (self.options.arrowDirection === 'east' || self.options.arrowDirection === 'west') {
                 return { width: 15, height: 25 };
             } else {
                 return { width: 25, height: 15 };
@@ -202,6 +215,14 @@
                 .addClass('rich-tooltip-pos-' + restrainedPos.direction);
         }
 
+        // determine the new arrow direction
+        var arrowDirection = this.options.arrowDirection || arrowDirections[restrainedPos.direction];
+
+        // remove any previously added tooltip arrow direction class
+        $.each(arrowDirections, $.proxy(function (tooltipPosition, arrowDir) {
+            this.arrow.removeClass('tooltip-arrow-' + arrowDir);
+        }, this));
+
         // position the arrow for top and bottom
         switch (restrainedPos.direction) {
         case 'north':
@@ -217,8 +238,34 @@
             break;
         }
 
+        // if we are changing the default behavior we have to adjust slightly
+        if (this.options.arrowStyle === 'inset') {
+            switch (arrowDirection) {
+            case 'north':
+                arrowPos.top += 1;
+                break;
+
+            case 'east':
+                arrowPos.left -= 1;
+                break;
+
+            case 'south':
+                arrowPos.top -= 1;
+                break;
+
+            case 'west':
+                arrowPos.left += 1;
+                break;
+            }
+        }
+
         this.content.css(pos);
-        this.arrow.css(arrowPos);
+
+        this.arrow
+            // add the tooltip arrow direction class
+            .addClass('tooltip-arrow-' + arrowDirection)
+            // assign the new arrow styling
+            .css(arrowPos);
     };
 
     $.fn.tooltip = $.fn.richTooltip = function jQueryTooltip(options) {
@@ -260,7 +307,9 @@
                 content: content,
                 action: data.tooltipAction || 'click',
                 pos: data.tooltipPos || 'south',
-                container: data.tooltipContainer || undefined
+                container: data.tooltipContainer || undefined,
+                arrowDirection: data.tooltipArrowDirection || null,
+                arrowStyle: data.tooltipArrowStyle || null
             });
         });
 
@@ -275,7 +324,9 @@
                 content: content,
                 action: data.tooltipAction || 'click',
                 pos: data.tooltipPos || 'south',
-                container: data.tooltipContainer || undefined
+                container: data.tooltipContainer || undefined,
+                arrowDirection: data.tooltipArrowDirection || null,
+                arrowStyle: data.tooltipArrowStyle || null
             });
         });
     });
