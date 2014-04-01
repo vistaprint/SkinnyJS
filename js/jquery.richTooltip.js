@@ -43,15 +43,15 @@
         // configure the context
         this.context.attr('data-rel', 'tooltip');
 
-        // setup the hover events, only when there is no touch
-        if (this.options.action === 'hover' && !('ontouchstart' in document) && !navigator.pointerEnabled && !navigator.msPointerEnabled) {
+        // setup the hover events
+        if (this.options.action === 'hover') {
             // soft dependency on hoverDelay
             if ($.fn.hoverDelay) {
                 // hover is desktop only, and does not support pointer events
-                this.context.hoverDelay(this.show, this.unhover, { delayOver: 200, delayOut: 500 });
+                this.context.hoverDelay(this.show, this.unhover, { delayOver: 200, delayOut: 500, addChildren: this.content });
 
                 // hover over the tooltip content should not hide the tooltip yet
-                this.content.hoverDelay(this.show, this.unhover, { delayOver: 200, delayOut: 500 });
+                this.content.hoverDelay(this.show, this.unhover, { delayOver: 200, delayOut: 500, addChildren: this.context });
             } else {
                 // hover is desktop only, and does not support pointer events
                 this.context.hover(this.show, this.unhover);
@@ -59,10 +59,24 @@
                 // hover over the tooltip content should not hide the tooltip yet
                 this.content.hover(this.show, this.unhover);
             }
-        }
 
-        // otherwise, if we do not want hover support, or have touch support use click only
-        else {
+            var pointerDownEvent = null;
+
+            // listen to pointer down and record the event to be used on click
+            // calling prevent default on pointerup/pointerdown does not
+            // prevent navigation, preventDefault must happen within click event
+            this.context.on('pointerdown', function (event) {
+                pointerDownEvent = event;
+            });
+
+            // listen to clicks, and call prevent default on touch devices
+            this.context.on('click', $.proxy(function (event) {
+                if (pointerDownEvent && pointerDownEvent.pointerType === 'touch') {
+                    this.toggle(event);
+                }
+            }, this));
+        } else {
+            // when hover is off, we simply toggle on click event
             this.context.on('click', this.toggle);
         }
 
