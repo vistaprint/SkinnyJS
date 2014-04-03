@@ -60,19 +60,37 @@
                 this.content.hover(this.show, this.unhover);
             }
 
-            var pointerDownEvent = null;
+            // timestamp of last touch event, used to determine if we should preventDefault on the next click event
+            var ignoreNextClick = null;
+
+            var checkEvent = function (event) {
+                event.preventDefault();
+
+                // if this is a touch type event, then record it
+                if (event.pointerType === 'touch') {
+                    ignoreNextClick = +(new Date());
+                }
+            };
 
             // listen to pointer down and record the event to be used on click
             // calling prevent default on pointerup/pointerdown does not
             // prevent navigation, preventDefault must happen within click event
-            this.context.on('pointerdown', function (event) {
-                pointerDownEvent = event;
+            this.context.on({
+                'pointerdown': checkEvent,
+                'pointerup': checkEvent
             });
 
             // listen to clicks, and call prevent default on touch devices
             this.context.on('click', $.proxy(function (event) {
-                if (pointerDownEvent && pointerDownEvent.pointerType === 'touch') {
-                    this.toggle(event);
+                if (ignoreNextClick !== null) {
+                    // calculate time delta between last touch event and now
+                    var timeDiff = +(new Date()) - ignoreNextClick;
+
+                    // if time delta is less than 300ms, assume this is a touch tap
+                    // and toggle visibility of tooltip rather than allow navigation
+                    if (timeDiff < 300) {
+                        this.toggle(event);
+                    }
                 }
             }, this));
         } else {
