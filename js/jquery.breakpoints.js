@@ -15,7 +15,15 @@
 
         $el.data(EVENTS_KEY, true);
 
-        var update = function () {
+        var update = function (e) {
+
+            // Only recalculate breakpoints if the event is fired on the element or its parent
+            if (e && e.target && !$.isWindow(e.target)) {
+                if (e.target !== $el[0] && !$.contains(e.target, $el[0])) {
+                    return;
+                }
+            }
+
             skinny.breakpoints.update(el, breakpoints);
         };
 
