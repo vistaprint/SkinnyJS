@@ -124,13 +124,13 @@
     </div>
     
 
-    <h2 id='jquerypartialload'>jQuery.partialLoad</h2>
+    <h2 id="jquerypartialload">jQuery.partialLoad</h2>
 
 <p>Similar to $.load(), though this will execute scripts on the target page more intelligently.</p>
 
 <p>If a target selector is passed, it will load only the target DOM fragment into the current DOM element. In this case, it will execute all scripts in the target DOM. Inline scripts in the target DOM will also be executed. If no target selector is passed, it will load ALL scripts on the requested page, EXCEPT for scripts that have been loaded on the host page already. Inline scripts from the whole page will be executed.</p>
 
-<h3 id='usage'>Usage</h3>
+<h3 id="usage">Usage</h3>
 <div class='highlight'><pre><code class='javascript'>    <span class='c1'>// The jQuery object&#39;s DOM element will be populated with the web service content</span>
     <span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.contentRegion&quot;</span><span class='p'>).</span><span class='nx'>partialLoad</span><span class='p'>(</span> 
 

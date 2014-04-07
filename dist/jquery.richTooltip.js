@@ -1,20 +1,24 @@
 /// <reference path="jquery.clientRect.js" />
 /// <reference path="jquery.proxyAll.js" />
 /// <reference path="jquery.calcRestrainedPos.js" />
-/// <reference path="pointy.js" />
+/// <reference path="jquery.hoverDelay.js" />
 
 (function ($) {
-    var tooltips = [];
+    var arrowDirections = {
+        south: 'north',
+        north: 'south',
+        east: 'west',
+        west: 'east'
+    };
 
     var defaults = {
-        pos: 'south'
+        pos: 'south',
+        arrowDirection: null,
+        arrowStyle: 'outset'
     };
 
     function Tooltip(context, options) {
         $.proxyAll(this, 'show', 'hide', 'toggle', 'pos', 'unhover', 'onWindowResize', 'onDocumentClick');
-
-        // add this tooltip to the array of tooltips for the page
-        tooltips.push(this);
 
         // target context element that initalizes this tooltip
         this.context = $(context);
@@ -39,17 +43,58 @@
         // configure the context
         this.context.attr('data-rel', 'tooltip');
 
-        // setup the hover events, only when there is no touch
-        if (this.options.action === 'hover' && !('ontouchstart' in document) && !navigator.pointerEnabled && !navigator.msPointerEnabled) {
-            // hover is desktop only, and does not support pointer events
-            this.context.hover(this.show, this.unhover);
+        // setup the hover events
+        if (this.options.action === 'hover') {
+            // soft dependency on hoverDelay
+            if ($.fn.hoverDelay) {
+                // hover is desktop only, and does not support pointer events
+                this.context.hoverDelay(this.show, this.unhover, { delayOver: 200, delayOut: 500, addChildren: this.content });
 
-            // hover over the tooltip content should not hide the tooltip yet
-            this.content.hover(this.show, this.unhover);
-        }
+                // hover over the tooltip content should not hide the tooltip yet
+                this.content.hoverDelay(this.show, this.unhover, { delayOver: 200, delayOut: 500, addChildren: this.context });
+            } else {
+                // hover is desktop only, and does not support pointer events
+                this.context.hover(this.show, this.unhover);
 
-        // otherwise, if we do not want hover support, or have touch support use click only
-        else {
+                // hover over the tooltip content should not hide the tooltip yet
+                this.content.hover(this.show, this.unhover);
+            }
+
+            // timestamp of last touch event, used to determine if we should preventDefault on the next click event
+            var ignoreNextClick = null;
+
+            var checkEvent = function (event) {
+                event.preventDefault();
+
+                // if this is a touch type event, then record it
+                if (event.pointerType === 'touch') {
+                    ignoreNextClick = +(new Date());
+                }
+            };
+
+            // listen to pointer down and record the event to be used on click
+            // calling prevent default on pointerup/pointerdown does not
+            // prevent navigation, preventDefault must happen within click event
+            this.context.on({
+                'pointerdown': checkEvent,
+                'pointerup': checkEvent
+            });
+
+            // listen to clicks, and call prevent default on touch devices
+            this.context.on('click', $.proxy(function (event) {
+                if (ignoreNextClick !== null) {
+                    // calculate time delta between last touch event and now
+                    var timeDiff = +(new Date()) - ignoreNextClick;
+
+                    // if time delta is less than 300ms, assume this is a touch tap
+                    // and toggle visibility of tooltip rather than allow navigation
+                    if (timeDiff < 300) {
+                        this.toggle(event);
+                    }
+                }
+            }, this));
+        } else {
+            // when hover is off, we simply toggle on click event
             this.context.on('click', this.toggle);
         }
 
@@ -64,8 +109,10 @@
             this.arrow = $('<div class="rich-tooltip-arrow" />').appendTo(this.content);
         }
 
-        // insert close button
-        $('<span class="rich-tooltip-close textbutton textbutton-skin-secondary textbutton-round" data-rel="close"><span class="textbutton-icon textbutton-icon-delete" /></span>').appendTo(this.content);
+        // standardize to have an arrow direction
+        if (!this.options.arrowDirection) {
+            this.options.arrowDirection = arrowDirections[this.options.pos];
+        }
 
         // anything with [data-rel="close"] can be used to close the tooltip
         this.content.on('click', '[data-rel="close"]', this.hide);
@@ -86,17 +133,12 @@
     Tooltip.prototype.show = function () {
         this._clearHoverTimeout();
 
-        // ensure all other tooltips are closed
-        if (tooltips.forEach) {
-            tooltips.forEach(function (tooltip) {
-                if (tooltip !== this) {
-                    tooltip.hide();
-                }
-            }, this);
-        }
+        // ensure all other tooltips and other overlay controls are closed
+        $(document).trigger('closeEverything');
 
         this.content.show();
         this.pos();
+        this.context.addClass('rich-tooltip-open'); // indicate to the context the tooltip is open
 
         this.viewportSize = {
             height: $(window).height(),
@@ -117,6 +159,7 @@
     Tooltip.prototype.hide = function () {
         this._clearHoverTimeout();
         this.content.hide();
+        this.context.removeClass('rich-tooltip-open'); // indicate to the context the tooltip is now closed
 
         // remove event listeners
         $(window).off('resize', this.onWindowResize);
@@ -164,17 +207,19 @@
 
     Tooltip.prototype.pos = function () {
 
-        // calculate constants used repeatedly
-        var arrowRect = {}; // this.arrow.clientRect();
+        // find the size of the arrow
+        var arrowRect = (function (self) {
+            if (self.arrow.css('display') == 'none' || self.options.arrowStyle === 'inset') {
+                return { width: 0, height: 0 };
+            }
 
-        // override, css arrows do not return sized because it uses :before and :after
-        if (this.options.pos === 'west' || this.options.pos === 'east') {
-            arrowRect.width = 15;
-            arrowRect.height = 25;
-        } else {
-            arrowRect.width = 25;
-            arrowRect.height = 15;
-        }
+            // override, css arrows do not return sized because it uses :before and :after
+            if (self.options.arrowDirection === 'east' || self.options.arrowDirection === 'west') {
+                return { width: 15, height: 25 };
+            } else {
+                return { width: 25, height: 15 };
+            }
+        })(this);
 
         var restrainedPos = $.calcRestrainedPos({
             giveMeSomething: true,
@@ -202,6 +247,14 @@
                 .addClass('rich-tooltip-pos-' + restrainedPos.direction);
         }
 
+        // determine the new arrow direction
+        var arrowDirection = this.options.arrowDirection || arrowDirections[restrainedPos.direction];
+
+        // remove any previously added tooltip arrow direction class
+        $.each(arrowDirections, $.proxy(function (tooltipPosition, arrowDir) {
+            this.arrow.removeClass('tooltip-arrow-' + arrowDir);
+        }, this));
+
         // position the arrow for top and bottom
         switch (restrainedPos.direction) {
         case 'north':
@@ -217,8 +270,34 @@
             break;
         }
 
+        // if we are changing the default behavior we have to adjust slightly
+        if (this.options.arrowStyle === 'inset') {
+            switch (arrowDirection) {
+            case 'north':
+                arrowPos.top += 1;
+                break;
+
+            case 'east':
+                arrowPos.left -= 1;
+                break;
+
+            case 'south':
+                arrowPos.top -= 1;
+                break;
+
+            case 'west':
+                arrowPos.left += 1;
+                break;
+            }
+        }
+
         this.content.css(pos);
-        this.arrow.css(arrowPos);
+
+        this.arrow
+            // add the tooltip arrow direction class
+            .addClass('tooltip-arrow-' + arrowDirection)
+            // assign the new arrow styling
+            .css(arrowPos);
     };
 
     $.fn.tooltip = $.fn.richTooltip = function jQueryTooltip(options) {
@@ -260,7 +339,9 @@
                 content: content,
                 action: data.tooltipAction || 'click',
                 pos: data.tooltipPos || 'south',
-                container: data.tooltipContainer || undefined
+                container: data.tooltipContainer || undefined,
+                arrowDirection: data.tooltipArrowDirection || null,
+                arrowStyle: data.tooltipArrowStyle || null
             });
         });
 
@@ -275,7 +356,9 @@
                 content: content,
                 action: data.tooltipAction || 'click',
                 pos: data.tooltipPos || 'south',
-                container: data.tooltipContainer || undefined
+                container: data.tooltipContainer || undefined,
+                arrowDirection: data.tooltipArrowDirection || null,
+                arrowStyle: data.tooltipArrowStyle || null
             });
         });
     });
