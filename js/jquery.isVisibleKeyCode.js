@@ -1,3 +1,5 @@
+/* global jQuery */
+
 jQuery.Event.prototype.isVisibleKeyCode = function () {
 
     if (typeof (this.keyCode) == "undefined") {

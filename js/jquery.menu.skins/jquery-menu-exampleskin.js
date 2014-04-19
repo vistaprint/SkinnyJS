@@ -1,3 +1,5 @@
+/* global jQuery */
+
 (function ($) {
     var TRANSITION_TIME = 300;
 

@@ -1,5 +1,5 @@
  /* jshint quotmark:false */
-
+ /* eslint quotes:0 */
  $.modalDialog.iframeLoadTimeout = 1000;
  $.modalDialog.animationDuration = 100;
 

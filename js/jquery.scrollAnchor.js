@@ -1,3 +1,5 @@
+/* global jQuery */
+
 // Simple smooth scrolling for anchors with internal page hash references.
 
 // To opt-in to have anchors animate their scrolling, add attr data-scroll-anchor:

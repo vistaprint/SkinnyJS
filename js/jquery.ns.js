@@ -1,3 +1,5 @@
+/* global jQuery */
+
 // Defines namespaces
 jQuery.ns = function (namespace) {
     var parts = namespace.split(".");

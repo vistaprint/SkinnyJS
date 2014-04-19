@@ -2,6 +2,7 @@
 /// <reference path="jquery.proxyAll.js" />
 /// <reference path="jquery.calcRestrainedPos.js" />
 /// <reference path="jquery.hoverDelay.js" />
+/* global jQuery */
 
 (function ($) {
     var arrowDirections = {
@@ -48,10 +49,18 @@
             // soft dependency on hoverDelay
             if ($.fn.hoverDelay) {
                 // hover is desktop only, and does not support pointer events
-                this.context.hoverDelay(this.show, this.unhover, { delayOver: 200, delayOut: 500, addChildren: this.content });
+                this.context.hoverDelay(this.show, this.unhover, {
+                    delayOver: 200,
+                    delayOut: 500,
+                    addChildren: this.content
+                });
 
                 // hover over the tooltip content should not hide the tooltip yet
-                this.content.hoverDelay(this.show, this.unhover, { delayOver: 200, delayOut: 500, addChildren: this.context });
+                this.content.hoverDelay(this.show, this.unhover, {
+                    delayOver: 200,
+                    delayOut: 500,
+                    addChildren: this.context
+                });
             } else {
                 // hover is desktop only, and does not support pointer events
                 this.context.hover(this.show, this.unhover);
@@ -210,14 +219,23 @@
         // find the size of the arrow
         var arrowRect = (function (self) {
             if (self.arrow.css('display') == 'none' || self.options.arrowStyle === 'inset') {
-                return { width: 0, height: 0 };
+                return {
+                    width: 0,
+                    height: 0
+                };
             }
 
             // override, css arrows do not return sized because it uses :before and :after
             if (self.options.arrowDirection === 'east' || self.options.arrowDirection === 'west') {
-                return { width: 15, height: 25 };
+                return {
+                    width: 15,
+                    height: 25
+                };
             } else {
-                return { width: 25, height: 15 };
+                return {
+                    width: 25,
+                    height: 15
+                };
             }
         })(this);
 
@@ -294,10 +312,10 @@
         this.content.css(pos);
 
         this.arrow
-            // add the tooltip arrow direction class
-            .addClass('tooltip-arrow-' + arrowDirection)
-            // assign the new arrow styling
-            .css(arrowPos);
+        // add the tooltip arrow direction class
+        .addClass('tooltip-arrow-' + arrowDirection)
+        // assign the new arrow styling
+        .css(arrowPos);
     };
 
     $.fn.tooltip = $.fn.richTooltip = function jQueryTooltip(options) {
@@ -315,11 +333,11 @@
         }
     };
 
-    $.fn.isChildOf = function jQueryIsChildOf(filter_string) {
+    $.fn.isChildOf = function jQueryIsChildOf(filterString) {
         var parents = $(this).parents();
 
         for (var j = 0; j < parents.length; j++) {
-            if ($(parents[j]).is(filter_string)) {
+            if ($(parents[j]).is(filterString)) {
                 return true;
             }
         }

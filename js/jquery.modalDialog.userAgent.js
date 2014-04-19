@@ -1,3 +1,5 @@
+/* global jQuery */
+
 (function ($) {
     $.modalDialog = $.modalDialog || {};
 

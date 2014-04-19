@@ -1,3 +1,5 @@
+/* global jQuery */
+
 (function ($) {
 
     // Utility class to manage multiple callbacks.

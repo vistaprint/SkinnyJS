@@ -10,8 +10,8 @@ module.exports = function (grunt) {
     var config = {
         pkg: grunt.file.readJSON("package.json"),
         jshint: {
-            uses_defaults: ["gruntfile.js", "js/**/*.js"],
-            with_overrides: {
+            usesDefaults: ["gruntfile.js", "js/**/*.js"],
+            withOverrides: {
                 options: {
                     jshintrc: "test/.jshintrc"
                 },
@@ -21,6 +21,24 @@ module.exports = function (grunt) {
             },
             options: {
                 jshintrc: ".jshintrc"
+            }
+        },
+        eslint: {
+            usesDefaults: ["gruntfile.js", "js/**/jquery.*.js", "js/breakpoints.js", "js/date-parse.js"],
+            withOverrides: {
+                options: {
+                    config: "test/eslint.json"
+                    // ,
+                    // rulesdir: "test/eslint-rules"
+                },
+                files: {
+                    src: ["test/**/*.js"]
+                }
+            },
+            options: {
+                config: "eslint.json"
+                // ,
+                // rulesdir: "eslint-rules"
             }
         },
         connect: {
@@ -165,27 +183,29 @@ module.exports = function (grunt) {
                 spawn: false
             }
         },
-        jsbeautifier : {
+        jsbeautifier: {
             all: {
                 src: ["js/**/*.js", "test/**/*.js"],
-                options: { js: { jslintHappy: true } }
+                options: {
+                    js: {
+                        jslintHappy: true
+                    }
+                }
             }
         },
-        lineending : {
+        lineending: {
             all: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: "./js/",
-                        src: ["./**/*.js"],
-                        dest: "./js/"
-                    }, {
-                        expand: true,
-                        cwd: "./test/",
-                        src: ["./**/*.js"],
-                        dest: "./test/"
-                    }
-                ],
+                files: [{
+                    expand: true,
+                    cwd: "./js/",
+                    src: ["./**/*.js"],
+                    dest: "./js/"
+                }, {
+                    expand: true,
+                    cwd: "./test/",
+                    src: ["./**/*.js"],
+                    dest: "./test/"
+                }],
                 options: {
                     eol: "crlf"
                 }
@@ -209,6 +229,7 @@ module.exports = function (grunt) {
 
     // NPM tasks
     grunt.loadNpmTasks("grunt-contrib-jshint");
+    grunt.loadNpmTasks("grunt-eslint");
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-contrib-less");
     grunt.loadNpmTasks("grunt-mocha");

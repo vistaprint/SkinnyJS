@@ -1,4 +1,4 @@
-(function (Date, undefined) {
+(function (Date) {
     var origParse = Date.parse,
         numericKeys = [1, 4, 5, 6, 7, 10, 11];
 
@@ -20,8 +20,11 @@
         }
 
         if (struct) {
+
+            /* eslint no-cond-assign:0 */
             // Avoid NaN timestamps caused by "undefined" values being passed to Date.UTC
-            for (var i = 0, k;
+            var k;
+            for (var i = 0;
                 (k = numericKeys[i]); ++i) {
                 struct[k] = +struct[k] || 0;
             }
@@ -30,10 +33,10 @@
             struct[2] = (+struct[2] || 1) - 1;
             struct[3] = +struct[3] || 1;
 
-            if (struct[8] !== 'Z' && struct[9] !== undefined) {
+            if (struct[8] !== "Z" && typeof (struct[9]) !== "undefined") {
                 minutesOffset = struct[10] * 60 + struct[11];
 
-                if (struct[9] === '+') {
+                if (struct[9] === "+") {
                     minutesOffset = 0 - minutesOffset;
                 }
             }

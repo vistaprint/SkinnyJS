@@ -1,3 +1,5 @@
+/* global jQuery */
+
 // Support reading settings from a node dialog's element
 
 // Minimal polyfill for Object.keys
@@ -40,6 +42,7 @@ if (!Object.keys) {
     var parseFunction = function (body) {
         // Evil is necessary to turn inline HTML handlers into functions
         /* jshint evil: true */
+        /* eslint no-new-func: 0 */
 
         if (!body) {
             return null;

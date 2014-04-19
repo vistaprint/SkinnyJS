@@ -1,5 +1,5 @@
  /*jshint quotmark:false */
-
+ /*eslint quotes:0 */
  describe("jquery.modalDialog.multiple", function () {
      var assert = chai.assert;
 
@@ -30,12 +30,9 @@
         var $content = $('<div id="content" class="dialog-content">foobar</div>');
         $content.appendTo("body");
 
-        var dialog;
-
         clickDialogLink($link)
             .then(function () {
                 // capture the instance of the dialog so we can compare it later
-                dialog = this;
 
                 assert.isTrue(this.isOpen(), "Dialog is open");
                 assert.equal(this.$contentContainer.text().trim(), "foobar");

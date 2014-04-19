@@ -1,3 +1,5 @@
+/* global jQuery */
+
 (function ($) {
 
     // Scales and positions an image so that it totally fills the container specified by the "closestSelector",

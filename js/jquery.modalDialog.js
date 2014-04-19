@@ -1,4 +1,5 @@
 // TODO what to do with preventEventBubbling?
+/* global jQuery */
 
 (function ($) {
     if ($.modalDialog && $.modalDialog._isContent) {
@@ -214,11 +215,15 @@
                 if (disableAnimation) {
                     // If animation is disabled, just move the dialog into position synchronously, 
                     // and then do the callback on the next event loop tick.
-                    this.$container.css({ top: initialTop });
+                    this.$container.css({
+                        top: initialTop
+                    });
                     setTimeout(animationCallback, 0);
                 } else {
                     // Otherwise, animate open
-                    this.$container.animate({ top: initialTop}, $.modalDialog.animationDuration, _easing)
+                    this.$container.animate({
+                        top: initialTop
+                    }, $.modalDialog.animationDuration, _easing)
                         .promise()
                         .then(animationCallback, animationCallback);
                 }
@@ -416,6 +421,7 @@
     // Builds the DOM for the dialog chrome
     ModalDialog.prototype._build = function () {
         /*jshint quotmark:false*/
+        /*eslint quotes:0*/
 
         if (this._destroyed) {
             throw new Error("This dialog has been destroyed");
@@ -832,14 +838,14 @@
 
     IFrameDialog.prototype.setHeight = function (contentHeight, center, skipAnimation) {
         var applyChange = skipAnimation ?
-                function ($content, css) {
-                    $content.css(css);
-                } :
-                function ($content, css) {
-                    $content.animate(css, {
-                        duration: 400
-                    });
-                };
+            function ($content, css) {
+                $content.css(css);
+            } :
+            function ($content, css) {
+                $content.animate(css, {
+                    duration: 400
+                });
+            };
 
         applyChange(this.$content, {
             height: contentHeight

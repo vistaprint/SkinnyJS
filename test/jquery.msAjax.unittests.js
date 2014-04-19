@@ -1,10 +1,10 @@
-describe("jquery.msAjax_private.msJsonDateOnlySanitizer()", function () {
+describe("jquery.msAjaxPrivate.msJsonDateOnlySanitizer()", function () {
 
     var assert = chai.assert;
 
     it("should not interpret a PO box as a date", function () {
 
-        var val = $.msAjax_private.msJsonDateOnlySanitizer("somekey", "PO box 1234");
+        var val = $.msAjaxPrivate.msJsonDateOnlySanitizer("somekey", "PO box 1234");
 
         assert.ok(isNaN(val));
     });

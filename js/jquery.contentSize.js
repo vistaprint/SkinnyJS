@@ -1,4 +1,5 @@
 /// <reference path="jquery.clientRect.js" />
+/* global jQuery */
 
 (function ($) {
 

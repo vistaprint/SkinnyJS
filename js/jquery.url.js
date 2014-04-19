@@ -1,4 +1,5 @@
 /// <reference path="jquery.querystring.js" />
+/* global jQuery */
 
 (function ($) {
 

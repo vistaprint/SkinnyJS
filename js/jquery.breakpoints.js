@@ -1,5 +1,5 @@
 /// <reference path="breakpoints.js" />
-/* globals skinny */
+/* global skinny, jQuery */
 
 (function ($) {
 

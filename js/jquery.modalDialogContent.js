@@ -1,3 +1,5 @@
+/* global jQuery */
+
 // This is a library for use in content windows that live inside a FramedDialog.
 // All its methods work cross-domain.
 

@@ -3,6 +3,7 @@
 /// <reference path="pointy.gestures.js" />
 // TODO: Support modifying state in the future by storing an object using $.data(), implement $(selector).dropDownMenu("option", value);
 // TODO: Accessibility: Keyboard navigation (tab navigation already works)- close submenus on pressing enter (maybe)
+/* global jQuery */
 
 (function ($) {
     var _skins = {};

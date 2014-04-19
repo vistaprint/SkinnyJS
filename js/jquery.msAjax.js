@@ -1,5 +1,6 @@
 /// <reference path="../dependencies/json2.js" />
 /// <reference path="date-parse.js" />
+/* global jQuery */
 
 (function (window, $) {
     // Remove ASMX specific metadata from JSON
@@ -159,7 +160,7 @@
     $.ajaxWcf = $.msAjax;
 
     /* test-code */
-    $.msAjax_private = {
+    $.msAjaxPrivate = {
         msJsonDateOnlySanitizer: msJsonDateOnlySanitizer
     };
     /* end-test-code */

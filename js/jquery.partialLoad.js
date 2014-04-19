@@ -1,3 +1,5 @@
+/* global jQuery */
+
 (function (window, $) {
     var _currentScripts;
 

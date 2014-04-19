@@ -1,4 +1,5 @@
 /// <reference path="jquery.delimitedString.js" />
+/* global jQuery */
 
 (function ($) {
     var PLUS_RE = /\+/gi;

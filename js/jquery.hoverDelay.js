@@ -1,8 +1,9 @@
 /// <reference path="pointy.js" />
+/* global jQuery */
 
 (function ($) {
-    var OVER_TIMER = 'skinnyjs-hoverDelay-overTimer';
-    var OUT_TIMER = 'skinnyjs-hoverDelay-outTimer';
+    var OVER_TIMER = "skinnyjs-hoverDelay-overTimer";
+    var OUT_TIMER = "skinnyjs-hoverDelay-outTimer";
 
     var _defaults = {
         over: $.noop,
@@ -63,7 +64,7 @@
             // double fire if a child of the element used is the target
             event.stopPropagation();
 
-            if (_options.touch || !event.pointerType || event.pointerType !== 'touch') {
+            if (_options.touch || !event.pointerType || event.pointerType !== "touch") {
                 var thisObject = this,
                     $this = $(thisObject);
 
@@ -86,7 +87,7 @@
             // double fire if a child of the element used is the target
             event.stopPropagation();
 
-            if (_options.touch || !event.pointerType || event.pointerType !== 'touch') {
+            if (_options.touch || !event.pointerType || event.pointerType !== "touch") {
                 var thisObject = this,
                     $this = $(thisObject);
 
@@ -106,11 +107,11 @@
                 // create a timeout for the leave observer, which is cleared
                 // if the client re-enters the target area before the timer is triggered
                 $this.data(OUT_TIMER, setTimeout(function () {
-                    $(document).off('pointermove', pointerMove);
+                    $(document).off("pointermove", pointerMove);
 
                     if (pointerPosition) {
                         var overElement = document.elementFromPoint(pointerPosition.x, pointerPosition.y);
-                        if (thisObject === overElement || jQuery.contains(thisObject, overElement) || overAdditionalChildren(overElement)) {
+                        if (thisObject === overElement || $.contains(thisObject, overElement) || overAdditionalChildren(overElement)) {
                             return; // since it appears the mouse is in fact over the targeted area, do not trigger the callback
                         }
 
@@ -120,7 +121,7 @@
                     call();
                 }, _options.delayOut));
 
-                $(document).on('pointermove', pointerMove);
+                $(document).on("pointermove", pointerMove);
             }
         }
 
@@ -153,7 +154,7 @@
 
             for (var i = 0, l = children.length; i < l; i++) {
                 var target = children[i];
-                if (target === overElement || jQuery.contains(target, overElement)) {
+                if (target === overElement || $.contains(target, overElement)) {
                     return true;
                 }
             }
@@ -162,8 +163,8 @@
         }
 
         return this.on({
-            'pointerenter': pointerEnter,
-            'pointerleave': pointerLeave
+            "pointerenter": pointerEnter,
+            "pointerleave": pointerLeave
         });
     };
 
@@ -172,8 +173,8 @@
 // Create a wrapper similar to jQuery's mouseenter/leave events
 // using pointer events (pointerover/out) and event-time checks
 jQuery.each({
-    pointerenter: navigator.pointerEnabled ? 'pointerover' : (navigator.msPointerEnabled ? 'MSPointerOver' : 'mouseover'),
-    pointerleave: navigator.pointerEnabled ? 'pointerout' : (navigator.msPointerEnabled ? 'MSPointerOut' : 'mouseout')
+    pointerenter: navigator.pointerEnabled ? "pointerover" : (navigator.msPointerEnabled ? "MSPointerOver" : "mouseover"),
+    pointerleave: navigator.pointerEnabled ? "pointerout" : (navigator.msPointerEnabled ? "MSPointerOut" : "mouseout")
 }, function (orig, fix) {
     jQuery.event.special[orig] = {
         delegateType: fix,

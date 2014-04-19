@@ -1,4 +1,4 @@
-/* globals Window */
+/* globals jQuery, Window */
 
 (function (window, $) {
     var cacheBuster = 1;

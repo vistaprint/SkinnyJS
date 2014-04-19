@@ -6,6 +6,7 @@ $.modalDialog.animationDuration = 100;
 describe("jquery.modalDialog.history", function () {
 
     /* jshint quotmark:false */
+    /* eslint quotes:0 */
 
     var assert = chai.assert;
 

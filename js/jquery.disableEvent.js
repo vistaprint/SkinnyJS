@@ -1,3 +1,5 @@
+/* global jQuery */
+
 (function ($) {
     // jQuery 1.8+ stores event data in the private $._data() method,
     // whereas earlier versions stored using in the public fn.data() method.
@@ -29,19 +31,6 @@
 
     var _initialized = false;
     var _originalAddEvent;
-
-    // Lazily initialize. Pages that don't use this plugin shouldn't
-    // pay the overhead to monkey patch $.event.add().
-    function initialize() {
-        if (_initialized) {
-            return;
-        }
-
-        _initialized = true;
-
-        _originalAddEvent = $.event.add;
-        $.event.add = addEvent;
-    }
 
     // Monkey patched version of $.event.add
     var addEvent = function (elem, types, handler, data, selector) {
@@ -83,6 +72,19 @@
         _originalAddEvent.call(this, elem, types, handler, data, selector);
     };
 
+    // Lazily initialize. Pages that don't use this plugin shouldn't
+    // pay the overhead to monkey patch $.event.add().
+    function initialize() {
+        if (_initialized) {
+            return;
+        }
+
+        _initialized = true;
+
+        _originalAddEvent = $.event.add;
+        $.event.add = addEvent;
+    }
+
     // Disables all handlers for the specified event type(s) on the element
     // Handlers added after this is called will be cached, but not actually added
     $.fn.disableEvent = function (eventType) {
@@ -105,6 +107,7 @@
 
                     // re-add with jQuery
                     /*jshint evil:true*/
+                    /*eslint no-new-func: 0*/
                     $el.on(eventType, new Function("event", attr));
                 }
             });

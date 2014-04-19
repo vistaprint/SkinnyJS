@@ -1,4 +1,4 @@
-// ## jQuery.uncomment
+/* global jQuery */
 
 (function ($) {
     $.fn.uncomment = function () {

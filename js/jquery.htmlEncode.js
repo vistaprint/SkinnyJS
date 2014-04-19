@@ -1,3 +1,5 @@
+/* global jQuery */
+
 (function ($) {
     var map = {
         "&": "&amp;",

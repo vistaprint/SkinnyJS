@@ -1,11 +1,16 @@
 (function () {
 
-    // Polyfill for String.trim()
-    if (!String.prototype.trim) {
-        String.prototype.trim = function () {
-            return this.replace(/^\s+|\s+$/g, "");
+    var trim;
+    if (String.prototype.trim) {
+        trim = function (s) {
+            return s.replace(/^\s+|\s+$/g, "");
+        };
+    } else {
+        trim = function (s) {
+            return s.trim();
         };
     }
+
 
     // int comparer for sorts
     var compareInts = function compare(a, b) {
@@ -126,7 +131,7 @@
                     throw new Error("Invalid breakpoint attribute: " + attr);
                 }
 
-                ret[key.trim()] = value.trim();
+                ret[trim(key)] = trim(value);
             }
         }
 
@@ -137,9 +142,9 @@
     var getBreakpointsFromAttr = function (el) {
         var attr = el.attributes["data-breakpoints"];
         if (!attr || !attr.value) {
-            return;
+            return null;
         }
-        return parseBreakpointsAttr(attr.value.trim());
+        return parseBreakpointsAttr(trim(attr.value));
     };
 
     // Gets an element from an ID, or if el is an element already, just returns it.
@@ -196,7 +201,11 @@
             var width = this.update(el, breakpoints);
 
             // Store the elements for jQuery to hook on later
-            this.all.push({ el: el, breakpoints: breakpoints, startWidth: width });
+            this.all.push({
+                el: el,
+                breakpoints: breakpoints,
+                startWidth: width
+            });
 
             return breakpoints;
         },

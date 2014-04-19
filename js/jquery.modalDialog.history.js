@@ -2,6 +2,7 @@
 // TODO: Need to support stacking dialogs:
 // i.e. ?dialogs=#foo,ajax:/foo.html,iframe:/foo.html
 // TODO require history.js
+/* global jQuery */
 
 (function ($) {
     var DEFAULT_DIALOG_PARAM_NAME = "sdialogid";
@@ -13,7 +14,7 @@
     $.modalDialog.enableHistory = function (dialogParamName) {
         // Ensure enableHistory isn't called twice
         if (_historyEnabled) {
-            return;
+            return null;
         }
 
         _historyEnabled = true;
@@ -30,24 +31,24 @@
         var deferred = new $.Deferred();
 
         updateFromUrl(true) // Disable animation when the dialog state is restored from the URL
-            .then(
-                function () {
-                    try {
-                        $.modalDialog.onopen.add(openHandler);
-                        $.modalDialog.onclose.add(closeHandler);
+        .then(
+            function () {
+                try {
+                    $.modalDialog.onopen.add(openHandler);
+                    $.modalDialog.onclose.add(closeHandler);
 
-                        //History.pushState(null, document.title, document.location.href);
+                    //History.pushState(null, document.title, document.location.href);
 
-                        History.Adapter.bind(window, "statechange", popstateHandler);
+                    History.Adapter.bind(window, "statechange", popstateHandler);
 
-                        deferred.resolve();
-                    } catch (ex) {
-                        deferred.reject(ex);
-                    }
-                },
-                function (ex) {
+                    deferred.resolve();
+                } catch (ex) {
                     deferred.reject(ex);
-                });
+                }
+            },
+            function (ex) {
+                deferred.reject(ex);
+            });
 
         return deferred;
     };
@@ -347,15 +348,15 @@
                 _disableHandlers = true;
 
                 dialog.open(disableAnimation) // Disable animation when the dialog state is being restored from the URL on page init
-                    .then(function () {
-                        // Recurse until all dialogs embedded in the URL are open
-                        topmostStackPos++;
-                        try {
-                            openDialogsUntilUrlMatches();
-                        } catch (ex) {
-                            deferred.reject(ex);
-                        }
-                    });
+                .then(function () {
+                    // Recurse until all dialogs embedded in the URL are open
+                    topmostStackPos++;
+                    try {
+                        openDialogsUntilUrlMatches();
+                    } catch (ex) {
+                        deferred.reject(ex);
+                    }
+                });
             } else {
                 setTimeout(function () {
                         deferred.resolve();

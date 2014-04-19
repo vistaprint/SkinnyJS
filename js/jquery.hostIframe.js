@@ -1,3 +1,5 @@
+/* global jQuery */
+
 (function ($) {
     var DOCUMENT_NODE = 9;
 

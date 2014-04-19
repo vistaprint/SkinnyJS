@@ -1,3 +1,5 @@
+/* global jQuery */
+
 (function ($) {
 
     // Expose support flag. Aids in unit testing.

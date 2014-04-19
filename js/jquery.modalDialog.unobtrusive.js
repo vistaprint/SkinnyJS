@@ -1,3 +1,5 @@
+/* global jQuery */
+
 /*
 Uses declarative syntax to define a dialog. Syntax:
 

@@ -1,3 +1,5 @@
+/* global jQuery */
+
 (function ($) {
 
     // Takes a plain javascript object (key value pairs), and encodes it as a string 
