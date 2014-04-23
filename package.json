@@ -31,7 +31,7 @@
     "grunt-jsbeautifier": "~0.2.3",
     "grunt-lineending": "~0.2.1",
     "grunt-wget": "~0.1.0",
-    "grunt-eslint": "^0.4.0"
+    "grunt-eslint": "~0.4.0"
   },
   "scripts": {
     "test": "grunt test"
