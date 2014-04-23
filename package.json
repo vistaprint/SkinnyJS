@@ -5,6 +5,9 @@
   "directories": {
     "test": "test"
   },
+  "engines": {
+    "node": ">=0.10.0"
+  },
   "dependencies": {
     "file": "0.2.1",
     "mkdirp": "~0.3.4",
