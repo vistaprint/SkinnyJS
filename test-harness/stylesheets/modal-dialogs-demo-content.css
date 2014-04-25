@@ -1,0 +1,34 @@
+.spice-dialog
+{
+	position:relative;
+	clear: both;
+}
+
+.spice-dialog h2
+{
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+@media (max-width: 500px) {
+
+	.spice-dialog .left-column,
+	.spice-dialog .right-column
+	{
+		float: inherit;
+		width: 100%;
+	}
+}
+
+.spice-dialog .left-column
+{
+	float: left;
+	width: 50%;
+}
+
+.spice-dialog .right-column
+{
+	float: right;
+	width: 47%;
+}
+
