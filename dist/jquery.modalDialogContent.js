@@ -337,7 +337,7 @@ $.modalDialog.create()
         },
 
         setTitleFromContent: function () {
-            this.setTitle($("head title").text());
+            this.setTitle(document.title);
         },
 
         notifyReady: function () {
