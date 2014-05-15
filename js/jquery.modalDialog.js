@@ -428,7 +428,7 @@
                 '<div class="dialog-container" id="' + this.settings._fullId + 'Container">' +
                 '  <div class="dialog-header">' +
                 '    <a href="#" class="dialog-close-button"><span class="dialog-close-button-icon"></span></a>' +
-                '    <h1>' + this.settings.title + '</h1>' +
+                '    <h1>' + (this.settings.title || "") + '</h1>' +
                 '  </div>' +
                 '  <div class="dialog-content-container">' +
                 '  </div>' +
@@ -680,7 +680,7 @@
 
     // Sets the title of the dialog in the header.
     ModalDialog.prototype.setTitle = function (title) {
-        this.$container.find(".dialog-header h1").text(title);
+        this.$container.find(".dialog-header h1").text(title || "");
     };
 
     // Gets the title of the dialog in the header.
@@ -832,14 +832,12 @@
 
     IFrameDialog.prototype.setHeight = function (contentHeight, center, skipAnimation) {
         var applyChange = skipAnimation ?
-                function ($content, css) {
-                    $content.css(css);
-                } :
-                function ($content, css) {
-                    $content.animate(css, {
-                        duration: 400
-                    });
-                };
+            function ($content, css) {
+                $content.css(css);
+            } :
+            function ($content, css) {
+                $content.animate(css, { duration: 400 });
+            };
 
         applyChange(this.$content, {
             height: contentHeight

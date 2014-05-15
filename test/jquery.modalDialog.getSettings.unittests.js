@@ -19,6 +19,15 @@
          $div.remove();
      });
 
+     it("should parse an empty title attribute as an empty string", function () {
+         var $div = createDiv('data-dialog-title=""');
+         var settings = $.modalDialog.getSettings($div);
+
+         assert.equal(settings.title, "");
+
+         $div.remove();
+     });
+
      it("should not create a title property when no attribute is present", function () {
          var $div = createDiv('');
          var settings = $.modalDialog.getSettings($div);
