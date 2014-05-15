@@ -76,6 +76,9 @@ if (!Object.keys) {
     var ATTR_PREFIX = "data-dialog-";
 
     var parseNone = function (s) {
+        if (s === "") {
+            return s;
+        }
         return s || null;
     };
 

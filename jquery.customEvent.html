@@ -124,17 +124,17 @@
     </div>
     
 
-    <h2 id="jquerycustomevent">jQuery.customEvent</h2>
+    <h2 id='jquerycustomevent'>jQuery.customEvent</h2>
 
 <p>A class that implements an observable event.</p>
 
-<p>This is useful when jQuery custom events aren’t appropriate because there’s no DOM element involved.</p>
+<p>This is useful when jQuery custom events aren&#8217;t appropriate because there&#8217;s no DOM element involved.</p>
 
 <p>This is implemented as a thin wrapper on jQuery.Callbacks().</p>
 
-<h3 id="usage">Usage</h3>
+<h3 id='usage'>Usage</h3>
 
-<p>Here’s a simple class <em>Car</em> that exposes the event <em>ondrive</em>:</p>
+<p>Here&#8217;s a simple class <em>Car</em> that exposes the event <em>ondrive</em>:</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='kd'>var</span> <span class='nx'>Car</span> <span class='o'>=</span> <span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
         <span class='nx'>$</span><span class='p'>.</span><span class='nx'>CustomEvent</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>(</span><span class='k'>this</span><span class='p'>,</span> <span class='s2'>&quot;ondrive&quot;</span><span class='p'>);</span>
     
@@ -161,7 +161,7 @@
     <span class='kd'>var</span> <span class='nx'>car</span> <span class='o'>=</span> <span class='k'>new</span> <span class='nx'>Car</span><span class='p'>();</span>
     <span class='nx'>car</span><span class='p'>.</span><span class='nx'>ondrive</span><span class='p'>.</span><span class='nx'>add</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> <span class='p'>{</span> <span class='nx'>alert</span><span class='p'>(</span><span class='s2'>&quot;my car is driving at &quot;</span> <span class='o'>+</span> <span class='nx'>e</span><span class='p'>.</span><span class='nx'>speed</span> <span class='o'>+</span> <span class='s2'>&quot;mph!&quot;</span><span class='p'>);</span> <span class='p'>});</span>
 </code></pre></div>
-<p>The event object passed to handlers of jQuery.CustomEvent is a jQuery.Event, and is also returned from jQuery.CustomEvent.fire(). This is useful if you want to use jQuery.Event’s methods, such as <em>preventDefault()</em> and <em>isDefaultPrevented()</em> to allow observers to influence the behavior of the object.</p>
+<p>The event object passed to handlers of jQuery.CustomEvent is a jQuery.Event, and is also returned from jQuery.CustomEvent.fire(). This is useful if you want to use jQuery.Event&#8217;s methods, such as <em>preventDefault()</em> and <em>isDefaultPrevented()</em> to allow observers to influence the behavior of the object.</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='kd'>var</span> <span class='nx'>Car</span> <span class='o'>=</span> <span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
         <span class='nx'>$</span><span class='p'>.</span><span class='nx'>CustomEvent</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>(</span><span class='k'>this</span><span class='p'>,</span> <span class='s2'>&quot;ondrive&quot;</span><span class='p'>);</span>
     
