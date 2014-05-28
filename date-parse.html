@@ -124,19 +124,19 @@
     </div>
     
 
-    <h2 id='dateparse'>Date.parse</h2>
+    <h2 id="dateparse">Date.parse</h2>
 
 <p>Enhances Date.parse() to support ISO 8601 and Microsoft-style dates.</p>
 
-<p>Based on Colin Snover&#8217;s <a href='https://github.com/csnover/js-iso8601'>js-iso8601.js</a></p>
+<p>Based on Colin Snover’s <a href="https://github.com/csnover/js-iso8601">js-iso8601.js</a></p>
 
-<h3 id='usage'>Usage</h3>
+<h3 id="usage">Usage</h3>
 
 <p>This library provides 3 methods:</p>
 
-<h4 id='dateparsedate'>Date.parse(date)</h4>
+<h4 id="dateparsedate">Date.parse(date)</h4>
 
-<p>Enhanced version of JavaScript&#8217;s native Date.parse() If &#8216;date&#8217; is a date in either ISO 8601, <a href='http://msdn.microsoft.com/en-us/library/bb299886.aspx#intro_to_json_sidebarb'>Microsoft&#8217;s date format</a>, or in any format the browser&#8217;s Date.parse() implementation supports, a Date value (integer) is returned (which can be turned into a date using the Date()constructor), otherwise NaN.</p>
+<p>Enhanced version of JavaScript’s native Date.parse() If ‘date’ is a date in either ISO 8601, <a href="http://msdn.microsoft.com/en-us/library/bb299886.aspx#intro_to_json_sidebarb">Microsoft’s date format</a>, or in any format the browser’s Date.parse() implementation supports, a Date value (integer) is returned (which can be turned into a date using the Date()constructor), otherwise NaN.</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='c1'>// returns a date value using native Date.parse()</span>
     <span class='kd'>var</span> <span class='nx'>date</span> <span class='o'>=</span> <span class='nb'>Date</span><span class='p'>.</span><span class='nx'>parse</span><span class='p'>(</span><span class='s2'>&quot;Aug 9, 1995&quot;</span><span class='p'>);</span>
     
@@ -146,18 +146,18 @@
     <span class='c1'>// returns a date value, knows about [Microsoft&#39;s JSON date format](http://msdn.microsoft.com/en-us/library/bb299886.aspx#intro_to_json_sidebarb)</span>
     <span class='kd'>var</span> <span class='nx'>date</span> <span class='o'>=</span> <span class='nb'>Date</span><span class='p'>.</span><span class='nx'>parse</span><span class='p'>(</span><span class='s2'>&quot;\/Date(628318530718)\/&quot;</span><span class='p'>);</span>
 </code></pre></div>
-<h4 id='dateparseisodate'>Date.parseISO(date)</h4>
+<h4 id="dateparseisodate">Date.parseISO(date)</h4>
 
-<p>If &#8216;date&#8217; is an ISO 8601 date, a date value is returned, otherwise NaN.</p>
+<p>If ‘date’ is an ISO 8601 date, a date value is returned, otherwise NaN.</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='c1'>// returns NaN because the date is not ISO8601</span>
     <span class='kd'>var</span> <span class='nx'>date</span> <span class='o'>=</span> <span class='nb'>Date</span><span class='p'>.</span><span class='nx'>parseISO</span><span class='p'>(</span><span class='s2'>&quot;Aug 9, 1995&quot;</span><span class='p'>);</span>
     
     <span class='c1'>// returns a date value</span>
     <span class='kd'>var</span> <span class='nx'>date</span> <span class='o'>=</span> <span class='nb'>Date</span><span class='p'>.</span><span class='nx'>parseISO</span><span class='p'>(</span><span class='s2'>&quot;2011-10-10T14:48:00&quot;</span><span class='p'>);</span>
 </code></pre></div>
-<h4 id='dateparsemsdatedate'>Date.parseMsDate(date)</h4>
+<h4 id="dateparsemsdatedate">Date.parseMsDate(date)</h4>
 
-<p>If &#8216;date&#8217; is a date in <a href='http://msdn.microsoft.com/en-us/library/bb299886.aspx#intro_to_json_sidebarb'>Microsoft&#8217;s date format</a>, a date value is returned, otherwise NaN.</p>
+<p>If ‘date’ is a date in <a href="http://msdn.microsoft.com/en-us/library/bb299886.aspx#intro_to_json_sidebarb">Microsoft’s date format</a>, a date value is returned, otherwise NaN.</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='c1'>// returns NaN because the date is not in Microsoft format</span>
     <span class='kd'>var</span> <span class='nx'>date</span> <span class='o'>=</span> <span class='nb'>Date</span><span class='p'>.</span><span class='nx'>parseMsDate</span><span class='p'>(</span><span class='s2'>&quot;Aug 9, 1995&quot;</span><span class='p'>);</span>
     

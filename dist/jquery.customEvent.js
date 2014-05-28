@@ -63,7 +63,12 @@
         }
     };
 
-    // Utility for adding an even to an object more tersely
+    // Removes all event handlers
+    $.CustomEvent.prototype.empty = function () {
+        this._callbacks.empty();
+    };
+
+    // Utility for adding an event to an object more tersely
 
     // * {object} host: The object owning the event
     // * {string} eventType: The event type (i.e. "close", open")
