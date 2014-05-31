@@ -33,34 +33,45 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
         var $link = $(e.currentTarget);
 
+        var href = $link.attr("href");
+
+        if (!href) {
+            throw new Error("no href specified with data-rel='modalDialog'");
+        }
+
+        // Create a dialog settings object
+        var settings = {
+            contentOrUrl: href
+        };
+
+        // Duplicate values on the link will win over values on the dialog node
+        var linkSettings = $.modalDialog.getSettings($link);
+        $.extend(settings, linkSettings);
+
+        // Give unobtrusive scripts a chance to modify the settings
+        var evt = new $.Event("dialogsettingscreate");
+        evt.dialogSettings = settings;
+
+        $link.trigger(evt);
+
+        if (evt.isDefaultPrevented()) {
+            return;
+        }
+
         var dialog = $link.data(DIALOG_DATA_KEY);
 
+        // If the dialog has been previously opened, ensure that the settings haven't changed.
+        // If so, discard the cached dialog and create a new one.
+        if (dialog) {
+            var processedSettings = $.modalDialog._ensureSettings(settings);
+
+            if (!$.modalDialog._areSettingsEqual(dialog.settings, processedSettings)) {
+                dialog._destroy();
+                dialog = null;
+            }
+        }
+
         if (!dialog) {
-            var href = $link.attr("href");
-
-            if (!href) {
-                throw new Error("no href specified with data-rel='modalDialog'");
-            }
-
-            // Create a dialog settings object
-            var settings = {
-                contentOrUrl: href
-            };
-
-            // Duplicate values on the link will win over values on the dialog node
-            var linkSettings = $.modalDialog.getSettings($link);
-            $.extend(settings, linkSettings);
-
-            // Give unobtrusive scripts a chance to modify the settings
-            var evt = new $.Event("dialogsettingscreate");
-            evt.dialogSettings = settings;
-
-            $link.trigger(evt);
-
-            if (evt.isDefaultPrevented()) {
-                return;
-            }
-
             dialog = $.modalDialog.create(settings);
 
             // Give unobtrusive scripts a chance to modify the dialog
@@ -74,8 +85,11 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
                 return;
             }
 
-            // Cache the dialog object so it won't be initialized again
-            $link.data(DIALOG_DATA_KEY, dialog);
+            // Unless destroyOnClose is specified,
+            // cache the dialog object so it won't be initialized again
+            if (!settings.destroyOnClose) {
+                $link.data(DIALOG_DATA_KEY, dialog);
+            }
         }
 
         dialog.open();

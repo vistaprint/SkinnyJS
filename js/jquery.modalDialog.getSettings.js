@@ -64,6 +64,7 @@ if (!Object.keys) {
         "ajax": parseBool,
         "onajaxerror": parseFunction,
         "destroyOnClose": parseBool,
+        "reuse": parseBool,
         "skin": parseNone,
         "enableHistory": parseBool,
         "zIndex": parseInt
