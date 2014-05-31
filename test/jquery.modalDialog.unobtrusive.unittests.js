@@ -1,12 +1,12 @@
  /*jshint quotmark:false */
 
  describe("jquery.modalDialog.unobtrusive", function () {
-     var assert = chai.assert;
+    var assert = chai.assert;
 
-     $.modalDialog.iframeLoadTimeout = 1000;
-     $.modalDialog.animationDuration = 100;
+    $.modalDialog.iframeLoadTimeout = 1000;
+    $.modalDialog.animationDuration = 100;
 
-     var clickDialogLink = function ($link) {
+    var clickDialogLink = function ($link) {
          var deferred = new $.Deferred();
          var openHandler = function () {
              $.modalDialog.onopen.remove(openHandler);
@@ -20,7 +20,7 @@
          return deferred;
      };
 
-     var ensureLinkOpensDialog = function (dialogType, linkAttributes) {
+     var ensureLinkOpensDialog = function (dialogType, linkAttributes, secondHref, verify) {
          it("Ensure unobtrusive link opens " + dialogType + " dialog", function (done) {
              var $link = $('<a ' + linkAttributes + ' data-rel="modalDialog">link</a>');
              $link.appendTo("body");
@@ -47,6 +47,18 @@
 
                      return this.close();
                  })
+                 .then(function() {
+                    $link.attr("href", secondHref);
+                    return clickDialogLink($link);
+                 })
+                 .then(function() {
+                    var dialog2 = this;
+
+                    assert.notEqual(dialog, dialog2);
+                    verify(dialog2);
+
+                    return dialog2.close();
+                 })
                  .then(function () {
                      // Clean up
                      $link.remove();
@@ -56,11 +68,25 @@
          });
      };
 
-     ensureLinkOpensDialog("node", 'href="#simpleDialog"');
+     ensureLinkOpensDialog("node", 'href="#simpleDialog"', "#simpleDialog2", function (dialog) {
+        assert.equal(dialog.settings.content[0], $("#simpleDialog2")[0]);
+     });
 
-     ensureLinkOpensDialog("iframe", 'href="content/jquery.modalDialog.iframeContent.html"');
+     ensureLinkOpensDialog(
+        "iframe", 
+        'href="content/jquery.modalDialog.iframeContent.html"',
+        "content/jquery.modalDialog.iframeContent.html?second=1",
+        function (dialog) {
+            assert(dialog.settings.url, "content/jquery.modalDialog.iframeContent.html?second=1");
+        });
 
-     ensureLinkOpensDialog("ajax", 'href="content/jquery.modalDialog.ajaxContent.html" data-dialog-ajax="true"');
+     ensureLinkOpensDialog(
+        "ajax",
+        'href="content/jquery.modalDialog.ajaxContent.html" data-dialog-ajax="true"',
+        "content/jquery.modalDialog.ajaxContent.html?second=1",
+        function (dialog) {
+            assert(dialog.settings.url, "content/jquery.modalDialog.ajaxContent.html?second=1");
+        });
 
      //TODO this should be in its own unit test suite
      it("Ensure iframe dialog can be opened twice", function (done) {
