@@ -127,6 +127,7 @@ if (!Object.keys) {
         "ajax": parseBool,
         "onajaxerror": parseFunction,
         "destroyOnClose": parseBool,
+        "reuse": parseBool,
         "skin": parseNone,
         "enableHistory": parseBool,
         "zIndex": parseInt
@@ -179,6 +180,7 @@ if (!Object.keys) {
         url: null, // The URL for the content of an IFrame or AJAX dialog
         content: null, // A CSS selector or jQuery object for a content node to use for a node dialog
         destroyOnClose: false, // If true, the dialog DOM will be destroyed and all events removed when the dialog closes
+        reuse: true, // If true, dialogs instances will be stored with the associated DOM element and reused when invoked. Only used by $.fn.modalDialog().
         containerElement: "body", // A CSS selector or jQuery object for the element that should be the parent for the dialog DOM (useful for working with jQuery mobile)
         preventEventBubbling: true, // If true, click and touch events are prevented from bubbling up to the document
         enableHistory: true, // If the history module is enabled, this can be used to disable history if set false
@@ -525,8 +527,6 @@ if (!Object.keys) {
 
         if (this.settings.destroyOnClose) {
             this._destroy();
-            this._destroyed = true;
-            delete _fullIdMap[this.settings._fullId];
         }
 
         if ($.modalDialog.isSmallScreen() && this.triggerWindowResize) {
@@ -549,10 +549,17 @@ if (!Object.keys) {
     };
 
     ModalDialog.prototype._destroy = function () {
+        if (this._destroyed) {
+            return;
+        }
+
         // Put the content node back on the body.
         // It could be used again.
         this.$content.detach().appendTo("body");
         this.$el.remove();
+
+        delete _fullIdMap[this.settings._fullId];
+        this._destroyed = true;
     };
 
     ModalDialog.prototype._updateZIndexes = function () {
@@ -897,7 +904,7 @@ if (!Object.keys) {
         this.$frame = $('<iframe src="' + this.settings.url +
             '" name="' + this.settings._fullId +
             '" seamless allowtransparency="true" width="100%" style="height:' +
-            this.settings.initialHeight + 'px;" class="dialog-frame" scrolling="no" frameborder="0" framespacing="0"></iframe>');
+            (this.height || this.settings.initialHeight) + 'px;" class="dialog-frame" scrolling="no" frameborder="0" framespacing="0"></iframe>');
 
         if ($.modalDialog.iframeLoadTimeout > 0) {
             // When the iframe loads, even if its a failed status (i.e. 404), the load event will fire.
@@ -971,7 +978,7 @@ if (!Object.keys) {
     IFrameDialog.prototype.postMessage = function (message) {
         var win = this.getWindow();
 
-        var hostname = this.settings.frameHostname;
+        var hostname = this.frameHostname;
         if (!hostname) {
             // Get the domain of the target window. If the URL is relative, its the same as the current page.
             hostname = this.settings.url.indexOf("http") === 0 ? this.settings.url : document.location.href;
@@ -1004,7 +1011,7 @@ if (!Object.keys) {
             });
         }
 
-        this.settings.initialHeight = contentHeight;
+        this.height = contentHeight;
     };
 
     // Sets the height of the iframe to the detected height of the iframe content document.
@@ -1027,7 +1034,7 @@ if (!Object.keys) {
             this._iframeLoadTimer = null;
         }
 
-        this.settings.frameHostname = hostname;
+        this.frameHostname = hostname;
 
         ModalDialog.prototype._finishOpen.apply(this);
     };
@@ -1150,7 +1157,7 @@ if (!Object.keys) {
     // 1. default value
     // 2. setting provided on content element
     // 3. settings passed
-    var ensureSettings = function (explicitSettings) {
+    $.modalDialog._ensureSettings = function (explicitSettings) {
         var settings = $.extend({}, $.modalDialog.defaults);
 
         // An iframe dialog may have sent a reference to dialog content,
@@ -1200,6 +1207,28 @@ if (!Object.keys) {
         return settings;
     };
 
+    $.modalDialog._areSettingsEqual = function (a, b) {
+        for (var key in a) {
+            if (key == "_fullId") {
+                continue;
+            }
+            var aVal = a[key];
+            var bVal = b[key];
+            if (aVal !== bVal) {
+                // Comparison of jQuery objects will
+                // always return false because the object references are different.
+                // Instead, compare the DOM nodes.
+                if (aVal.jquery && bVal.jquery && aVal[0] === bVal[0])
+                {
+                    continue;
+                }
+                return false;
+            }
+        }
+
+        return true;
+    };
+
     // Gets the dialog by the fullId.
 
     // * {string} fullId The full ID of the dialog (including all parent ids)
@@ -1220,7 +1249,7 @@ if (!Object.keys) {
 
     // Creates a new dialog from the specified settings.
     $.modalDialog.create = function (settings) {
-        settings = ensureSettings(settings);
+        settings = $.modalDialog._ensureSettings(settings);
 
         var dialog = getDialog(settings._fullId);
 
@@ -1627,34 +1656,45 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
         var $link = $(e.currentTarget);
 
+        var href = $link.attr("href");
+
+        if (!href) {
+            throw new Error("no href specified with data-rel='modalDialog'");
+        }
+
+        // Create a dialog settings object
+        var settings = {
+            contentOrUrl: href
+        };
+
+        // Duplicate values on the link will win over values on the dialog node
+        var linkSettings = $.modalDialog.getSettings($link);
+        $.extend(settings, linkSettings);
+
+        // Give unobtrusive scripts a chance to modify the settings
+        var evt = new $.Event("dialogsettingscreate");
+        evt.dialogSettings = settings;
+
+        $link.trigger(evt);
+
+        if (evt.isDefaultPrevented()) {
+            return;
+        }
+
         var dialog = $link.data(DIALOG_DATA_KEY);
 
+        // If the dialog has been previously opened, ensure that the settings haven't changed.
+        // If so, discard the cached dialog and create a new one.
+        if (dialog) {
+            var processedSettings = $.modalDialog._ensureSettings(settings);
+
+            if (!$.modalDialog._areSettingsEqual(dialog.settings, processedSettings)) {
+                dialog._destroy();
+                dialog = null;
+            }
+        }
+
         if (!dialog) {
-            var href = $link.attr("href");
-
-            if (!href) {
-                throw new Error("no href specified with data-rel='modalDialog'");
-            }
-
-            // Create a dialog settings object
-            var settings = {
-                contentOrUrl: href
-            };
-
-            // Duplicate values on the link will win over values on the dialog node
-            var linkSettings = $.modalDialog.getSettings($link);
-            $.extend(settings, linkSettings);
-
-            // Give unobtrusive scripts a chance to modify the settings
-            var evt = new $.Event("dialogsettingscreate");
-            evt.dialogSettings = settings;
-
-            $link.trigger(evt);
-
-            if (evt.isDefaultPrevented()) {
-                return;
-            }
-
             dialog = $.modalDialog.create(settings);
 
             // Give unobtrusive scripts a chance to modify the dialog
@@ -1668,8 +1708,11 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
                 return;
             }
 
-            // Cache the dialog object so it won't be initialized again
-            $link.data(DIALOG_DATA_KEY, dialog);
+            // Unless destroyOnClose is specified,
+            // cache the dialog object so it won't be initialized again
+            if (!settings.destroyOnClose) {
+                $link.data(DIALOG_DATA_KEY, dialog);
+            }
         }
 
         dialog.open();
@@ -2113,7 +2156,6 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
         return deferred;
     };
-
 
 
 })(jQuery);

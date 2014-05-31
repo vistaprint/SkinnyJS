@@ -124,15 +124,15 @@
     </div>
     
 
-    <h2 id="jqueryurl">jQuery.Url</h2>
+    <h2 id='jqueryurl'>jQuery.Url</h2>
 
-<p>This class parses/encodes URLs, and provides an interface that parallels the browser’s Location object, except using jQuery style getter/setter methods instead of simple properties.</p>
+<p>This class parses/encodes URLs, and provides an interface that parallels the browser&#8217;s Location object, except using jQuery style getter/setter methods instead of simple properties.</p>
 
-<p>Note: This class doesn’t support some of the more esoteric features of URLs. If you need this kind of support, you should use a more robust (and heavyweight) implementation such as <a href="https://github.com/joyent/node/blob/master/lib/url.js">node.js’s Url module</a>.</p>
+<p>Note: This class doesn&#8217;t support some of the more esoteric features of URLs. If you need this kind of support, you should use a more robust (and heavyweight) implementation such as <a href='https://github.com/joyent/node/blob/master/lib/url.js'>node.js&#8217;s Url module</a>.</p>
 
-<h3 id="usage">Usage</h3>
+<h3 id='usage'>Usage</h3>
 
-<h4 id="parse_a_url">Parse a URL:</h4>
+<h4 id='parse_a_url'>Parse a URL:</h4>
 <div class='highlight'><pre><code class='javascript'>    <span class='kd'>var</span> <span class='nx'>url</span> <span class='o'>=</span> <span class='k'>new</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>Url</span><span class='p'>(</span><span class='s2'>&quot;http://www.foo.com:8080/pages/page1.html?key1=value1&amp;key2=value2#someAnchor&quot;</span><span class='p'>)</span>
     
     <span class='nx'>url</span><span class='p'>.</span><span class='nx'>protocol</span><span class='p'>()</span> <span class='o'>===</span> <span class='s2'>&quot;http&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
@@ -147,7 +147,7 @@
     <span class='nx'>url</span><span class='p'>.</span><span class='nx'>queryString</span><span class='p'>.</span><span class='nx'>key1</span> <span class='o'>===</span> <span class='s2'>&quot;value1&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
     <span class='nx'>url</span><span class='p'>.</span><span class='nx'>queryString</span><span class='p'>.</span><span class='nx'>key2</span> <span class='o'>===</span> <span class='s2'>&quot;value2&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
 </code></pre></div>
-<h4 id="manipulating_the_querystring">Manipulating the querystring</h4>
+<h4 id='manipulating_the_querystring'>Manipulating the querystring</h4>
 
 <p>Once the URL is parsed, you can manipulate the querystring:</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='c1'>// Adds a parameter, or overwrites one if it already exists</span>
@@ -163,7 +163,7 @@
     <span class='c1'>// Removes a parameter</span>
     <span class='nx'>url</span><span class='p'>.</span><span class='nx'>remove</span><span class='p'>(</span><span class='s2'>&quot;key3&quot;</span><span class='p'>)</span>
 </code></pre></div>
-<h4 id="serializing_back_to_a_url_string">Serializing back to a URL string</h4>
+<h4 id='serializing_back_to_a_url_string'>Serializing back to a URL string</h4>
 
 <p>The <em>toString()</em> method of $.Url will write back to a string:</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='nb'>document</span><span class='p'>.</span><span class='nx'>location</span> <span class='o'>=</span> <span class='nx'>url</span><span class='p'>.</span><span class='nx'>toString</span><span class='p'>();</span>
