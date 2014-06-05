@@ -1,5 +1,3 @@
-// TODO what to do with preventEventBubbling?
-
 (function ($) {
     if ($.modalDialog && $.modalDialog._isContent) {
         throw new Error("Attempt to load jquery.modalDialogContent.js in the same window as jquery.modalDialog.js.");
