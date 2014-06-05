@@ -423,12 +423,20 @@
     ModalDialog.prototype._build = function () {
         /*jshint quotmark:false*/
 
+        var me = this;
+
         if (this._destroyed) {
             throw new Error("This dialog has been destroyed");
         }
 
         if (!this.$el) {
             this.$bg = $('<div class="dialog-background"></div>');
+
+            this.$bg.on("click mousedown mouseup touchstart touchend", function (e) {
+                if (me.settings.preventEventBubbling) {
+                    e.stopPropagation();
+                }
+            });
 
             this.$container = $(
                 '<div class="dialog-container" id="' + this.settings._fullId + 'Container">' +
@@ -838,12 +846,8 @@
 
     IFrameDialog.prototype.setHeight = function (contentHeight, center, skipAnimation) {
         var applyChange = skipAnimation ?
-            function ($content, css) {
-                $content.css(css);
-            } :
-            function ($content, css) {
-                $content.animate(css, { duration: 400 });
-            };
+                function ($content, css) { $content.css(css); } :
+                function ($content, css) { $content.animate(css, { duration: 400 }); };
 
         applyChange(this.$content, {
             height: contentHeight
@@ -1063,8 +1067,7 @@
                 // Comparison of jQuery objects will
                 // always return false because the object references are different.
                 // Instead, compare the DOM nodes.
-                if (aVal.jquery && bVal.jquery && aVal[0] === bVal[0])
-                {
+                if (aVal.jquery && bVal.jquery && aVal[0] === bVal[0]) {
                     continue;
                 }
                 return false;
