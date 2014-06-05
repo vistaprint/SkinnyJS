@@ -1,7 +1,8 @@
-/// <reference path="jquery.querystring.js" />
 /// <reference path="jquery.contentSize.js" />
 /// <reference path="jquery.customEvent.js" />
+/// <reference path="jquery.disableEvent.js" />
 /// <reference path="jquery.postMessage.js" />
+/// <reference path="jquery.querystring.js" />
 
 (function ($) {
     $.modalDialog = $.modalDialog || {};
@@ -122,7 +123,6 @@ if (!Object.keys) {
         "ajax": parseBool,
         "onajaxerror": parseFunction,
         "destroyOnClose": parseBool,
-        "reuse": parseBool,
         "skin": parseNone,
         "enableHistory": parseBool,
         "zIndex": parseInt
