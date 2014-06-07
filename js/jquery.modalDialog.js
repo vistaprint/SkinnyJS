@@ -34,8 +34,6 @@
         onajaxerror: null
     };
 
-    var _easing = $.fn.transition ? "out" : "swing";
-
     var _ua = $.modalDialog._ua;
 
     $.modalDialog.iframeLoadTimeout = 0;
@@ -217,7 +215,7 @@
                     setTimeout(animationCallback, 0);
                 } else {
                     // Otherwise, animate open
-                    this.$container.animate({ top: initialTop}, $.modalDialog.animationDuration, _easing)
+                    this.$container.animate({ top: initialTop}, $.modalDialog.animationDuration, "swing")
                         .promise()
                         .then(animationCallback, animationCallback);
                 }
@@ -319,7 +317,7 @@
                 top: STARTING_TOP
             },
             $.modalDialog.animationDuration,
-            _easing
+            "swing"
         )
             .promise()
             .then(
