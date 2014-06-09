@@ -59,10 +59,15 @@
 
 // Support reading settings from a node dialog's element
 
-// Minimal polyfill for Object.keys
-// <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys>
-if (!Object.keys) {
-    Object.keys = function (obj) {
+(function ($) {
+    var ATTR_PREFIX = "data-dialog-";
+
+    var getKeys = function (obj) {
+
+        if (Object.keys) {
+            return Object.keys(obj);
+        }
+
         var keys = [];
         for (var key in obj) {
             if (obj.hasOwnProperty(key)) {
@@ -71,10 +76,6 @@ if (!Object.keys) {
         }
         return keys;
     };
-}
-
-(function ($) {
-    var ATTR_PREFIX = "data-dialog-";
 
     var parseNone = function (s) {
         if (s === "") {
@@ -134,7 +135,7 @@ if (!Object.keys) {
     $.modalDialog.getSettings = function ($el) {
         var settings = {};
 
-        $.each(Object.keys(_props), function (i, key) {
+        $.each(getKeys(_props), function (i, key) {
             // $.fn.attr is case insensitive
             var value = $el.attr(ATTR_PREFIX + key);
             if (typeof value != "undefined") {

@@ -63,10 +63,15 @@
 
 // Support reading settings from a node dialog's element
 
-// Minimal polyfill for Object.keys
-// <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys>
-if (!Object.keys) {
-    Object.keys = function (obj) {
+(function ($) {
+    var ATTR_PREFIX = "data-dialog-";
+
+    var getKeys = function (obj) {
+
+        if (Object.keys) {
+            return Object.keys(obj);
+        }
+
         var keys = [];
         for (var key in obj) {
             if (obj.hasOwnProperty(key)) {
@@ -75,10 +80,6 @@ if (!Object.keys) {
         }
         return keys;
     };
-}
-
-(function ($) {
-    var ATTR_PREFIX = "data-dialog-";
 
     var parseNone = function (s) {
         if (s === "") {
@@ -138,7 +139,7 @@ if (!Object.keys) {
     $.modalDialog.getSettings = function ($el) {
         var settings = {};
 
-        $.each(Object.keys(_props), function (i, key) {
+        $.each(getKeys(_props), function (i, key) {
             // $.fn.attr is case insensitive
             var value = $el.attr(ATTR_PREFIX + key);
             if (typeof value != "undefined") {
@@ -151,8 +152,6 @@ if (!Object.keys) {
     };
 
 })(jQuery);
-
-// TODO what to do with preventEventBubbling?
 
 (function ($) {
     if ($.modalDialog && $.modalDialog._isContent) {
@@ -179,7 +178,6 @@ if (!Object.keys) {
         url: null, // The URL for the content of an IFrame or AJAX dialog
         content: null, // A CSS selector or jQuery object for a content node to use for a node dialog
         destroyOnClose: false, // If true, the dialog DOM will be destroyed and all events removed when the dialog closes
-        reuse: true, // If true, dialogs instances will be stored with the associated DOM element and reused when invoked. Only used by $.fn.modalDialog().
         containerElement: "body", // A CSS selector or jQuery object for the element that should be the parent for the dialog DOM (useful for working with jQuery mobile)
         preventEventBubbling: true, // If true, click and touch events are prevented from bubbling up to the document
         enableHistory: true, // If the history module is enabled, this can be used to disable history if set false
@@ -189,8 +187,6 @@ if (!Object.keys) {
         onbeforeclose: null,
         onajaxerror: null
     };
-
-    var _easing = $.fn.transition ? "out" : "swing";
 
     var _ua = $.modalDialog._ua;
 
@@ -373,7 +369,7 @@ if (!Object.keys) {
                     setTimeout(animationCallback, 0);
                 } else {
                     // Otherwise, animate open
-                    this.$container.animate({ top: initialTop}, $.modalDialog.animationDuration, _easing)
+                    this.$container.animate({ top: initialTop}, $.modalDialog.animationDuration, "swing")
                         .promise()
                         .then(animationCallback, animationCallback);
                 }
@@ -475,7 +471,7 @@ if (!Object.keys) {
                 top: STARTING_TOP
             },
             $.modalDialog.animationDuration,
-            _easing
+            "swing"
         )
             .promise()
             .then(
