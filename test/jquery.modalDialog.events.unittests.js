@@ -1,6 +1,7 @@
 $.modalDialog.iframeLoadTimeout = 1000;
 $.modalDialog.animationDuration = 100;
 
+// Events unit test
 describe("jquery.modalDialog", function () {
     var assert = chai.assert;
 
