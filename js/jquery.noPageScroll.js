@@ -1,4 +1,3 @@
-/// <reference path="underscore.js" />
 (function ($) {
 
     var prevent = function(e) {
