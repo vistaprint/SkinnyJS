@@ -1,5 +1,7 @@
 (function ($) {
 
+    var initialOverflow = $("body").css("overflow");
+
     var prevent = function(e) {
         e.stopPropagation();
         e.preventDefault();
@@ -19,7 +21,7 @@
             $("body").css("overflow", "hidden");
             return;
         } else if (eventType == "touchend"){
-            $("body").css("overflow", "visible");
+            $("body").css("overflow", initialOverflow);
             return;
         }
 
