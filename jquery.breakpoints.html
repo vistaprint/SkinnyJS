@@ -124,11 +124,11 @@
     </div>
     
 
-    <h2 id='jquerybreakpoints'>jQuery.breakpoints</h2>
+    <h2 id="jquerybreakpoints">jQuery.breakpoints</h2>
 
 <p>Applies CSS classes automatically to an element according on its pixel width. This is designed to be similar in concept to media queries, but using the size of an element instead of the size of the browser window. This is useful for designing components to be responsive, without assuming that they will be 100% of the window size.</p>
 
-<h3 id='usage'>Usage</h3>
+<h3 id="usage">Usage</h3>
 
 <p>The easiest way to create breakpoints for an element is to specify them in terms of max widths, and let the plugin calculate the corresponding min widths:</p>
 
@@ -154,14 +154,14 @@
     <span class='k'>background-image</span><span class='o'>:</span> <span class='sx'>url(small-size.jpg)</span><span class='p'>;</span>
 <span class='p'>}</span>
 </code></pre></div>
-<h4 id='overlapping_breakpoints'>Overlapping breakpoints</h4>
+<h4 id="overlapping_breakpoints">Overlapping breakpoints</h4>
 
-<p>You can create overlapping breakpoints. Note in this example, that the &#8220;mobile&#8221; and &#8220;mobileOrTablet&#8221; breakpoints overlap:</p>
+<p>You can create overlapping breakpoints. Note in this example, that the “mobile” and “mobileOrTablet” breakpoints overlap:</p>
 <div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.foo&quot;</span><span class='p'>).</span><span class='nx'>breakpoints</span><span class='p'>({</span> <span class='s2'>&quot;mobile&quot;</span><span class='o'>:</span> <span class='p'>{</span> <span class='nx'>min</span><span class='o'>:</span> <span class='mi'>0</span><span class='p'>,</span> <span class='nx'>max</span><span class='o'>:</span> <span class='mi'>480</span> <span class='p'>},</span> <span class='s2'>&quot;mobileOrTablet&quot;</span><span class='o'>:</span> <span class='p'>{</span> <span class='nx'>min</span><span class='o'>:</span> <span class='mi'>0</span><span class='p'>,</span> <span class='nx'>max</span><span class='o'>:</span> <span class='mi'>760</span> <span class='p'>}});</span>
 </code></pre></div>
-<h4 id='triggering_breakpoints_manually'>Triggering breakpoints manually</h4>
+<h4 id="triggering_breakpoints_manually">Triggering breakpoints manually</h4>
 
-<p>Breakpoints are updated automatically when the screen resizes (i.e. the &#8220;resize&#8221; or &#8220;orientationchange&#8221; event). If you modify content manually (i.e. through script), and want to trigger a recalculation of the breakpoints, you can do this by triggering the breakpoints:refresh event:</p>
+<p>Breakpoints are updated automatically when the screen resizes (i.e. the “resize” or “orientationchange” event). If you modify content manually (i.e. through script), and want to trigger a recalculation of the breakpoints, you can do this by triggering the breakpoints:refresh event:</p>
 <div class='highlight'><pre><code class='javascript'><span class='c1'>// Set up breakpoints</span>
 <span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.foo&quot;</span><span class='p'>).</span><span class='nx'>breakpoints</span><span class='p'>();</span>
 
@@ -170,9 +170,9 @@
 <span class='c1'>// Trigger a recalculation of breakpoints:</span>
 <span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.foo&quot;</span><span class='p'>).</span><span class='nx'>trigger</span><span class='p'>(</span><span class='s2'>&quot;breakpoints:refresh&quot;</span><span class='p'>);</span>
 </code></pre></div>
-<h4 id='optimization'>Optimization</h4>
+<h4 id="optimization">Optimization</h4>
 
-<p>On highly optimized websites, it is a best practice to load most JavaScript files asynchronously and after content is loaded. However, if you&#8217;re using jquery.breakpoints, you would want to have the plugin run and set CSS classes as early as possible to avoid unnecessary reflows.</p>
+<p>On highly optimized websites, it is a best practice to load most JavaScript files asynchronously and after content is loaded. However, if you’re using jquery.breakpoints, you would want to have the plugin run and set CSS classes as early as possible to avoid unnecessary reflows.</p>
 
 <p>To support this scenario, the jquery.breakpoints plugin is separated into 2 parts:</p>
 

@@ -208,6 +208,11 @@
 
             var width = el.offsetWidth;
 
+            // If the element hasn't yet been rendered, don't modify the CSS classes
+            if (width === 0) {
+                return;
+            }
+
             var classMap = parseClassMap(el.className);
 
             for (var name in breakpoints) {
@@ -227,6 +232,7 @@
 
         all: []
     };
+
 
 
 })();
