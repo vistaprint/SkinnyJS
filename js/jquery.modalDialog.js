@@ -414,11 +414,19 @@
         this.$container.css("z-index", zIndex);
     };
 
+    ModalDialog.prototype._preventClickBubbling = function ($el) {
+        var me = this;
+
+        $el.on("click mousedown mouseup touchstart touchend", function (e) {
+                if (me.settings.preventEventBubbling) {
+                    e.stopPropagation();
+                }
+            });
+    };
+
     // Builds the DOM for the dialog chrome
     ModalDialog.prototype._build = function () {
         /*jshint quotmark:false*/
-
-        var me = this;
 
         if (this._destroyed) {
             throw new Error("This dialog has been destroyed");
@@ -426,12 +434,6 @@
 
         if (!this.$el) {
             this.$bg = $('<div class="dialog-background"></div>');
-
-            this.$bg.on("click mousedown mouseup touchstart touchend", function (e) {
-                if (me.settings.preventEventBubbling) {
-                    e.stopPropagation();
-                }
-            });
 
             this.$container = $(
                 '<div class="dialog-container" id="' + this.settings._fullId + 'Container">' +
@@ -443,6 +445,9 @@
                 '  </div>' +
                 '</div>'
             );
+
+            this._preventClickBubbling(this.$bg);
+            this._preventClickBubbling(this.$container);
 
             this.$el = $([this.$bg[0], this.$container[0]]).addClass("dialog-skin-" + this.settings.skin);
 

@@ -22,7 +22,12 @@ describe("jquery.modalDialog", function () {
                 .then(function () {
 
                     dialog.$bg.trigger("click");
+                    assert.isTrue(bodyClicked);
 
+                    // Reset and try again on the container
+                    bodyClicked = false;
+
+                    dialog.$container.trigger("click");
                     assert.isTrue(bodyClicked);
 
                     return dialog.close();
@@ -50,7 +55,10 @@ describe("jquery.modalDialog", function () {
                 .then(function () {
 
                     dialog.$bg.trigger("click");
+                    assert.isFalse(bodyClicked);
 
+                    // try again on the container
+                    dialog.$container.trigger("click");
                     assert.isFalse(bodyClicked);
 
                     return dialog.close();
