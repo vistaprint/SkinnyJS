@@ -418,11 +418,19 @@ It could be used again.</p>             </td>             <td class="code">     
         <span class="k">this</span><span class="p">.</span><span class="nx">$container</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;z-index&quot;</span><span class="p">,</span> <span class="nx">zIndex</span><span class="p">);</span>
     <span class="p">};</span>
 
+    <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_preventClickBubbling</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$el</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+
+        <span class="nx">$el</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;click mousedown mouseup touchstart touchend&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">preventEventBubbling</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">e</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
+                <span class="p">}</span>
+            <span class="p">});</span>
+    <span class="p">};</span>
+
 </pre></div>             </td>           </tr>                               <tr id="section-31">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-31">&#182;</a>               </div>               <p>Builds the DOM for the dialog chrome</p>             </td>             <td class="code">               <div class="highlight"><pre>
     <span class="nx">ModalDialog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_build</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
         <span class="cm">/*jshint quotmark:false*/</span>
-
-        <span class="kd">var</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_destroyed</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;This dialog has been destroyed&quot;</span><span class="p">);</span>
@@ -430,12 +438,6 @@ It could be used again.</p>             </td>             <td class="code">     
 
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">this</span><span class="p">.</span><span class="nx">$bg</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;div class=&quot;dialog-background&quot;&gt;&lt;/div&gt;&#39;</span><span class="p">);</span>
-
-            <span class="k">this</span><span class="p">.</span><span class="nx">$bg</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;click mousedown mouseup touchstart touchend&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">preventEventBubbling</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">e</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
-                <span class="p">}</span>
-            <span class="p">});</span>
 
             <span class="k">this</span><span class="p">.</span><span class="nx">$container</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span>
                 <span class="s1">&#39;&lt;div class=&quot;dialog-container&quot; id=&quot;&#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">_fullId</span> <span class="o">+</span> <span class="s1">&#39;Container&quot;&gt;&#39;</span> <span class="o">+</span>
@@ -447,6 +449,9 @@ It could be used again.</p>             </td>             <td class="code">     
                 <span class="s1">&#39;  &lt;/div&gt;&#39;</span> <span class="o">+</span>
                 <span class="s1">&#39;&lt;/div&gt;&#39;</span>
             <span class="p">);</span>
+
+            <span class="k">this</span><span class="p">.</span><span class="nx">_preventClickBubbling</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$bg</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">_preventClickBubbling</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$container</span><span class="p">);</span>
 
             <span class="k">this</span><span class="p">.</span><span class="nx">$el</span> <span class="o">=</span> <span class="nx">$</span><span class="p">([</span><span class="k">this</span><span class="p">.</span><span class="nx">$bg</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="k">this</span><span class="p">.</span><span class="nx">$container</span><span class="p">[</span><span class="mi">0</span><span class="p">]]).</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&quot;dialog-skin-&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">skin</span><span class="p">);</span>
 
