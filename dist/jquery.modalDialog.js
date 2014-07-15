@@ -179,7 +179,7 @@
         content: null, // A CSS selector or jQuery object for a content node to use for a node dialog
         destroyOnClose: false, // If true, the dialog DOM will be destroyed and all events removed when the dialog closes
         containerElement: "body", // A CSS selector or jQuery object for the element that should be the parent for the dialog DOM (useful for working with jQuery mobile)
-        preventEventBubbling: true, // If true, click and touch events are prevented from bubbling up to the document
+        preventEventBubbling: false, // If true, click and touch events are prevented from bubbling up to the document
         enableHistory: true, // If the history module is enabled, this can be used to disable history if set false
         onopen: null,
         onclose: null,
@@ -2166,6 +2166,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
         return deferred;
     };
+
 
 
 })(jQuery);
