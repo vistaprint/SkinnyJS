@@ -576,9 +576,14 @@
         this._initialMousePos = getMousePos(e);
         this._initialDialogPos = this.$container.offset();
 
-        $(document)
-            .on("pointermove", this._drag)
-            .one("pointerup", this._stopDrag);
+        $(document).on("pointermove", this._drag);
+
+        // For pointerup events, we can't use the document, because the option
+        // "preventEventBubbling" will prevent "click-like" events from bubbling to the 
+        // document. Use $bg in addition to the header in case the dialog hasn't caught
+        // up with the mouse when the pointerup event occurs.
+        this.$header.on("pointerup", this._stopDrag);
+        this.$bg.on("pointerup", this._stopDrag);
 
         // when there is an iframe and your cursor goes over
         // the iframe content it stops firing on the parent window
@@ -613,6 +618,8 @@
         delete this._initialDialogPos;
 
         $(document).off("pointermove", this._drag);
+        this.$header.off("pointerup", this._stopDrag);
+        this.$bg.off("pointerup", this._stopDrag);
 
         if (this._overlay) {
             this._overlay.remove();
