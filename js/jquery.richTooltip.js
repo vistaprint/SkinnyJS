@@ -77,7 +77,14 @@
             // prevent navigation, preventDefault must happen within click event
             this.context.on({
                 'pointerdown': checkEvent,
-                'pointerup': checkEvent
+                'pointerup': $.proxy(function (event) {
+                    checkEvent(event);
+
+                    // toggle visibility on touches
+                    if (event.pointerType === 'touch') {
+                        this.toggle(event);
+                    }
+                }, this)
             });
 
             // listen to clicks, and call prevent default on touch devices
@@ -86,10 +93,12 @@
                     // calculate time delta between last touch event and now
                     var timeDiff = +(new Date()) - ignoreNextClick;
 
-                    // if time delta is less than 300ms, assume this is a touch tap
-                    // and toggle visibility of tooltip rather than allow navigation
-                    if (timeDiff < 300) {
-                        this.toggle(event);
+                    // ignore all clicks for a period of time after the last touch event,
+                    // we could ignore all future click events as well, except some devices
+                    // have mice and touch screens so this allows for both to work.
+                    if (timeDiff < 2500) {
+                        event.preventDefault();
+                        event.stopPropagation(); // do not let this trickle up to the document
                     }
                 }
             }, this));
