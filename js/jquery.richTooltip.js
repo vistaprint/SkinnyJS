@@ -317,6 +317,8 @@
         if (typeof options === 'string' && options in tooltip) {
             tooltip[options]();
         }
+
+        return this;
     };
 
     $.fn.isChildOf = function jQueryIsChildOf(filter_string) {
