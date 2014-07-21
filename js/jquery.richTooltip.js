@@ -140,12 +140,21 @@
     Tooltip.prototype.show = function () {
         this._clearHoverTimeout();
 
+        if (this.visible) {
+            return;
+        }
+
         // ensure all other tooltips and other overlay controls are closed
-        $(document).trigger('closeEverything');
+        $(document).trigger('closeEverything', this);
 
         this.content.show();
         this.pos();
-        this.context.addClass('rich-tooltip-open'); // indicate to the context the tooltip is open
+
+        // mark the tooltip as visible
+        this.visible = true;
+
+        // indicate to the context the tooltip is open
+        this.context.addClass('rich-tooltip-open').trigger('richTooltip:open');
 
         this.viewportSize = {
             height: $(window).height(),
@@ -158,28 +167,41 @@
 
         // hide the tooltip if user clicks outside of the tooltip
         $(document).on('click', this.onDocumentClick);
-        $(document).one('closeEverything', this.hide);
-
-        this.visible = true;
+        $(document).one('closeEverything', $.proxy(function (event, item) {
+            if (item !== this) {
+                this.hide();
+            }
+        }, this));
     };
 
     Tooltip.prototype.hide = function () {
         this._clearHoverTimeout();
+
+        if (!this.visible) {
+            return;
+        }
+
         this.content.hide();
-        this.context.removeClass('rich-tooltip-open'); // indicate to the context the tooltip is now closed
+
+        // mark the tooltip as not visible
+        this.visible = false;
+
+        // indicate to the context the tooltip is now closed
+        this.context.removeClass('rich-tooltip-open').trigger('richTooltip:close');
 
         // remove event listeners
         $(window).off('resize', this.onWindowResize);
         // $(window).off('scroll', this.hide);
         $(document).off('click', this.onDocumentClick);
         $(document).off('closeEverything', this.hide);
-
-        this.visible = false;
     };
 
     Tooltip.prototype.toggle = function (event) {
         if (event) {
             event.preventDefault();
+
+            // we need to call stop propagation or else this will trigger
+            // up to the document and result in closing the tooltip.
             event.stopPropagation();
         }
 
