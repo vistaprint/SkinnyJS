@@ -11,6 +11,9 @@
         west: 'east'
     };
 
+    // commonly used array for looping over
+    var directions = ['north', 'south', 'west', 'east'];
+
     var defaults = {
         pos: 'south',
         arrowDirection: null,
@@ -115,12 +118,7 @@
 
         // no arrow found, create one
         if (this.arrow.length === 0) {
-            this.arrow = $('<div class="rich-tooltip-arrow" />').appendTo(this.content);
-        }
-
-        // standardize to have an arrow direction
-        if (!this.options.arrowDirection) {
-            this.options.arrowDirection = arrowDirections[this.options.pos];
+            this.arrow = $('<div class="rich-tooltip-arrow"><div class="hack" /></div>').appendTo(this.content);
         }
 
         // anything with [data-rel="close"] can be used to close the tooltip
@@ -259,11 +257,6 @@
         // determine the new arrow direction
         var arrowDirection = this.options.arrowDirection || arrowDirections[restrainedPos.direction];
 
-        // remove any previously added tooltip arrow direction class
-        $.each(arrowDirections, $.proxy(function (tooltipPosition, arrowDir) {
-            this.arrow.removeClass('tooltip-arrow-' + arrowDir);
-        }, this));
-
         // position the arrow for top and bottom
         switch (restrainedPos.direction) {
         case 'north':
@@ -303,8 +296,10 @@
         this.content.css(pos);
 
         this.arrow
+            // remove any previously added tooltip arrow direction class
+            .removeClass(directions.join(' '))
             // add the tooltip arrow direction class
-            .addClass('tooltip-arrow-' + arrowDirection)
+            .addClass(arrowDirection)
             // assign the new arrow styling
             .css(arrowPos);
     };

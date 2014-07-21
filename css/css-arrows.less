@@ -1,0 +1,304 @@
+.css-arrow-base(@size: 15px, @border-width: 1px, @border-color, @background-color)
+{
+	position: absolute;
+	background: @background-color;
+	// border: @border-width solid @border-color;
+
+	width: @size * 2;
+	height: 0px;
+	// margin-left: -@size;
+
+	// hide this awesome CSS arrow when in IE7
+	.ie7 &
+	{
+		display: none;
+	}
+
+	// hack element, can be injected to fix mobile webkit rendering bug
+	.hack
+	{
+		background: inherit;
+		width: @size * 2 - 2px;
+		left: 1px;
+		height: 3px;
+		top: -2px;
+		position: absolute;
+		z-index: 1;
+	}
+
+	&.east .hack,
+	&.west .hack
+	{
+		display: none;
+	}
+
+	&:after,
+	&:before
+	{
+		border: solid transparent;
+		content: " ";
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+	}
+
+	&:after
+	{
+		border-color: rgba(255, 255, 255, 0);
+		border-width: @size;
+	}
+
+	&:before
+	{
+		border-color: rgba(190, 195, 197, 0);
+		border-width: @size + @border-width;
+	}
+}
+
+// arrow that is pointing up
+.css-arrow-north-base()
+{
+	&:after,
+	&:before
+	{
+		bottom: 100%;
+		left: 50%;
+	}
+}
+
+.css-arrow-north-color(@border-color, @background-color)
+{
+	&:after
+	{
+		border-bottom-color: @background-color;
+	}
+
+	&:before
+	{
+		border-bottom-color: @border-color;
+	}
+}
+
+.css-arrow-north-size(@size, @border-width)
+{
+	&:after
+	{
+		margin-left: -@size;
+	}
+
+	&:before
+	{
+		margin-left: -(@size + @border-width);
+	}
+}
+
+// arrow that is pointing right
+.css-arrow-east-base()
+{
+	&:after,
+	&:before
+	{
+		left: 100%;
+		top: 50%;
+	}
+}
+
+.css-arrow-east-color(@border-color, @background-color)
+{
+	&:after
+	{
+		border-left-color: @background-color;
+	}
+
+	&:before
+	{
+		border-left-color: @border-color;
+	}
+}
+
+.css-arrow-east-size(@size, @border-width)
+{
+	&:after
+	{
+		margin-top: -@size;
+	}
+
+	&:before
+	{
+		margin-top: -(@size + @border-width);
+	}
+}
+
+// arrow that is pointing down
+.css-arrow-south-base()
+{
+	&:after,
+	&:before
+	{
+		top: 100%;
+		left: 50%;
+	}
+}
+
+.css-arrow-south-color(@border-color, @background-color)
+{
+	&:after
+	{
+		border-top-color: @background-color;
+	}
+
+	&:before
+	{
+		border-top-color: @border-color;
+	}
+}
+
+.css-arrow-south-size(@size, @border-width)
+{
+	&:after
+	{
+		margin-left: -@size;
+	}
+
+	&:before
+	{
+		margin-left: -(@size + @border-width);
+	}
+}
+
+// arrow that is pointing left
+.css-arrow-west-base()
+{
+	&:after,
+	&:before
+	{
+		right: 100%;
+		top: 50%;
+	}
+}
+
+.css-arrow-west-color(@border-color, @background-color)
+{
+	&:after
+	{
+		border-right-color: @background-color;
+	}
+
+	&:before
+	{
+		border-right-color: @border-color;
+	}
+}
+
+.css-arrow-west-size(@size, @border-width)
+{
+	&:after
+	{
+		margin-top: -@size;
+	}
+
+	&:before
+	{
+		margin-top: -(@size + @border-width);
+	}
+}
+
+.css-arrow(@size, @border-width, @border-color, @background-color)
+{
+	.css-arrow-base(@size, @border-width, @border-color, @background-color);
+
+	&.north
+	{
+		.css-arrow-north-base();
+		.css-arrow-north-color(@border-color, @background-color);
+		.css-arrow-north-size(@size, @border-width);
+	}
+
+	&.east
+	{
+		.css-arrow-east-base();
+		.css-arrow-east-color(@border-color, @background-color);
+		.css-arrow-east-size(@size, @border-width);
+	}
+
+	&.south
+	{
+		.css-arrow-south-base();
+		.css-arrow-south-color(@border-color, @background-color);
+		.css-arrow-south-size(@size, @border-width);
+	}
+
+	&.west
+	{
+		.css-arrow-west-base();
+		.css-arrow-west-color(@border-color, @background-color);
+		.css-arrow-west-size(@size, @border-width);
+	}
+}
+
+.css-arrow-color(@border-color, @background-color)
+{
+	background: @background-color;
+
+	&.north
+	{
+		.css-arrow-north-color(@border-color, @background-color);
+	}
+
+	&.east
+	{
+		.css-arrow-east-color(@border-color, @background-color);
+	}
+
+	&.south
+	{
+		.css-arrow-south-color(@border-color, @background-color);
+	}
+
+	&.west
+	{
+		.css-arrow-west-color(@border-color, @background-color);
+	}
+}
+
+// TODO: .css-arrow-size is untested
+.css-arrow-size(@size, @border-width)
+{
+	width: @size * 2;
+
+	.hack
+	{
+		width: @size * 2 - 2px;
+	}
+
+	&:after
+	{
+		border-width: @size;
+	}
+
+	&:before
+	{
+		border-width: @size + @border-width;
+	}
+
+	&.north
+	{
+		.css-arrow-north-size(@size, @border-width);
+	}
+
+	&.east
+	{
+		.css-arrow-east-size(@size, @border-width);
+	}
+
+	&.south
+	{
+		.css-arrow-south-size(@size, @border-width);
+	}
+
+	&.west
+	{
+		.css-arrow-west-size(@size, @border-width);
+	}
+}
