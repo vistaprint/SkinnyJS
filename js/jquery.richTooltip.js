@@ -211,22 +211,13 @@
 
     // padding constant used during position calculations
     var PADDING = 10;
+    var ARROW_WIDTH = 15;
 
     Tooltip.prototype.pos = function () {
 
         // find the size of the arrow
-        var arrowRect = (function (self) {
-            if (self.arrow.css('display') == 'none' || self.options.arrowStyle === 'inset') {
-                return { width: 0, height: 0 };
-            }
-
-            // override, css arrows do not return sized because it uses :before and :after
-            if (self.options.arrowDirection === 'east' || self.options.arrowDirection === 'west') {
-                return { width: 15, height: 25 };
-            } else {
-                return { width: 25, height: 15 };
-            }
-        })(this);
+        // .css-arrow elements do not have a size itself because it uses :before and :after
+        var arrowSize = this.options.arrowStyle === 'inset' || this.arrow.css('display') == 'none' ? 0 : ARROW_WIDTH;
 
         var restrainedPos = $.calcRestrainedPos({
             giveMeSomething: true,
@@ -239,8 +230,8 @@
             },
             offsets: {
                 viewport: PADDING,
-                vertical: arrowRect.height,
-                horizontal: arrowRect.width
+                vertical: arrowSize,
+                horizontal: arrowSize
             }
         });
 
@@ -261,13 +252,13 @@
         switch (restrainedPos.direction) {
         case 'north':
         case 'south':
-            arrowPos.left = contextRect.left - pos.left + (contextRect.width / 2);
+            arrowPos.left = contextRect.left - pos.left + (contextRect.width / 2) - ARROW_WIDTH;
             arrowPos[restrainedPos.direction === 'north' ? 'bottom' : 'top'] = 0;
             break;
 
         case 'east':
         case 'west':
-            arrowPos.top = contextRect.top - pos.top + (contextRect.height / 2);
+            arrowPos.top = contextRect.top - pos.top + (contextRect.height / 2) - ARROW_WIDTH;
             arrowPos[restrainedPos.direction === 'east' ? 'left' : 'right'] = 0;
             break;
         }
