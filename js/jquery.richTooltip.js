@@ -24,7 +24,7 @@
         $.proxyAll(this, 'show', 'hide', 'toggle', 'pos', 'unhover', 'onWindowResize', 'onDocumentClick');
 
         // target context element that initalizes this tooltip
-        this.context = $(context);
+        this.context = $(context).addClass('rich-tooltip-context');
 
         // store options
         this.options = $.extend({}, defaults, options || {});
@@ -334,8 +334,8 @@
     // initialize all existing tooltips
     $(function () {
         $('[data-rel="tooltip"] + aside').each(function (i, el) {
-            var content = $(el);
-            var context = content.prev().addClass('rich-tooltip-context');
+            var content = $(el); // this is the aside
+            var context = content.prev(); // element prior to aside
             var data = context.data();
 
             // translate data attributes to options
