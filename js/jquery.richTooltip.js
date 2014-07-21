@@ -154,7 +154,7 @@
 
         // hide the tooltip if the browser resizes, the user can open it back up easily
         $(window).on('resize', this.onWindowResize);
-        $(window).one('scroll', this.hide);
+        // $(window).one('scroll', this.hide);
 
         // hide the tooltip if user clicks outside of the tooltip
         $(document).on('click', this.onDocumentClick);
@@ -170,7 +170,7 @@
 
         // remove event listeners
         $(window).off('resize', this.onWindowResize);
-        $(window).off('scroll', this.hide);
+        // $(window).off('scroll', this.hide);
         $(document).off('click', this.onDocumentClick);
         $(document).off('closeEverything', this.hide);
 
