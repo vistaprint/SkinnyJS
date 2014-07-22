@@ -124,13 +124,13 @@
     </div>
     
 
-    <h2 id="jquerycontentsize">jQuery.contentSize</h2>
+    <h2 id='jquerycontentsize'>jQuery.contentSize</h2>
 
-<p>Returns the height and width of the specified page’s content: the total scrolling size.</p>
+<p>Returns the height and width of the specified page&#8217;s content: the total scrolling size.</p>
 
 <p>Measures the document content using a more accurate approach relying on body.scrollHeight, especially when the content is in an iframe- in which case, the body.scrollHeight always returns the viewport size, even if the content is smaller.</p>
 
-<h3 id="usage">Usage</h3>
+<h3 id='usage'>Usage</h3>
 
 <p>Gets the content width, including scrollbars:</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='kd'>var</span> <span class='nx'>rect</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>(</span><span class='nb'>window</span><span class='p'>).</span><span class='nx'>contentSize</span><span class='p'>();</span>
@@ -141,7 +141,7 @@
 <p>Works in a window inside an iframe:</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='kd'>var</span> <span class='nx'>rect</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>(</span><span class='nx'>iframeWindow</span><span class='p'>).</span><span class='nx'>contentSize</span><span class='p'>();</span>
 </code></pre></div>
-<h3 id="dependencies">Dependencies</h3>
+<h3 id='dependencies'>Dependencies</h3>
 
 <p>This library uses jquery.clientRect (part of skinny.js) to measure elements efficiently.</p>
   </div>

@@ -2870,7 +2870,7 @@ BDO[DIR="rtl"] {
 
 .markdown-body img {
   max-width: 100%;
-  @include box-sizing(border-box);
+  box-sizing: border-box;
 }
 
 .highlight  { background: #ffffff; }

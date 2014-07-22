@@ -124,28 +124,28 @@
     </div>
     
 
-    <h2 id="jquerycookies">jQuery.cookies</h2>
+    <h2 id='jquerycookies'>jQuery.cookies</h2>
 
 <p>jQuery.cookies is a general purpose cookie library with several distinguishing design features:</p>
 
 <ol>
-<li>Ability to specify defaults for domain, path, and “permanent” cookie expiration date</li>
+<li>Ability to specify defaults for domain, path, and &#8220;permanent&#8221; cookie expiration date</li>
 
-<li>Presumes that most cookies are intended as either session scoped or permanent. Most web developers don’t want to set expiration dates manually.</li>
+<li>Presumes that most cookies are intended as either session scoped or permanent. Most web developers don&#8217;t want to set expiration dates manually.</li>
 
 <li>Ability to easily manage sub-values within top-level cookies.</li>
 </ol>
 
-<h3 id="usage">Usage</h3>
+<h3 id='usage'>Usage</h3>
 
 <p>jQuery.cookies allows setting a default path, domain, and expiration date (for permanent cookies) for all usages of its API where these values are not explicitly specified. To set defaults, use $.cookies.setDefaults(). The options include:</p>
 
 <ul>
-<li><strong>path</strong>: Sets the default path. By default, it is “/”.</li>
+<li><strong>path</strong>: Sets the default path. By default, it is &#8221;/&#8221;.</li>
 
-<li><strong>domain</strong>: Sets the default domain. By default, it is ””.</li>
+<li><strong>domain</strong>: Sets the default domain. By default, it is &#8221;&#8221;.</li>
 
-<li><strong>permanentDate</strong>: Sets the expiration date to use for cookies you declare “permanent”. By default, it is 1 year into the future. This should be specified as a UTC date.</li>
+<li><strong>permanentDate</strong>: Sets the expiration date to use for cookies you declare &#8220;permanent&#8221;. By default, it is 1 year into the future. This should be specified as a UTC date.</li>
 </ul>
 <div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>cookies</span><span class='p'>.</span><span class='nx'>setDefaults</span><span class='p'>({</span> 
         <span class='nx'>path</span><span class='o'>:</span> <span class='s2'>&quot;/&quot;</span><span class='p'>,</span> 
@@ -153,9 +153,9 @@
         <span class='nx'>permanentDate</span><span class='o'>:</span> <span class='s2'>&quot;Sun, 13 Oct 2100 19:53:24 GMT&quot;</span>
     <span class='p'>});</span>
 </code></pre></div>
-<h4 id="setting_and_getting_cookies">Setting and getting cookies</h4>
+<h4 id='setting_and_getting_cookies'>Setting and getting cookies</h4>
 
-<p>Here’s a basic example of setting and getting a top-level cookie:</p>
+<p>Here&#8217;s a basic example of setting and getting a top-level cookie:</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='c1'>// Sets a top-level session cookie</span>
     <span class='nx'>$</span><span class='p'>.</span><span class='nx'>cookies</span><span class='p'>.</span><span class='nx'>set</span><span class='p'>(</span><span class='s2'>&quot;userid&quot;</span><span class='p'>,</span> <span class='s2'>&quot;12345&quot;</span><span class='p'>);</span>
 
@@ -185,7 +185,7 @@
         <span class='nx'>path</span><span class='o'>:</span> <span class='s2'>&quot;/special-directory&quot;</span>
     <span class='p'>});</span>
 </code></pre></div>
-<h4 id="working_with_sub_values">Working with sub values</h4>
+<h4 id='working_with_sub_values'>Working with sub values</h4>
 
 <p>You can use an object to specify sub-values for a cookie:</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='c1'>// Use an object literal to pass key-value pairs</span>
@@ -203,12 +203,12 @@
         <span class='nx'>value</span><span class='o'>:</span> <span class='p'>{</span> <span class='nx'>id</span><span class='o'>:</span> <span class='s2'>&quot;12345&quot;</span><span class='p'>,</span> <span class='nx'>favoriteColor</span><span class='o'>:</span> <span class='s2'>&quot;blue&quot;</span> <span class='p'>}</span>    
     <span class='p'>});</span>
 </code></pre></div>
-<h4 id="removing_cookies">Removing cookies</h4>
+<h4 id='removing_cookies'>Removing cookies</h4>
 
 <p>To remove/delete a cookie, use jQuery.cookie.remove():</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>cookies</span><span class='p'>.</span><span class='nx'>remove</span><span class='p'>(</span><span class='s2'>&quot;user&quot;</span><span class='p'>);</span>
 </code></pre></div>
-<h4 id="checking_if_cookies_are_enabled">Checking if cookies are enabled</h4>
+<h4 id='checking_if_cookies_are_enabled'>Checking if cookies are enabled</h4>
 <div class='highlight'><pre><code class='javascript'>    <span class='k'>if</span> <span class='p'>(</span><span class='nx'>$</span><span class='p'>.</span><span class='nx'>cookies</span><span class='p'>.</span><span class='nx'>enabled</span><span class='p'>())</span>
     <span class='p'>{</span>
         <span class='c1'>// use cookies</span>
