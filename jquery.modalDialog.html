@@ -124,43 +124,47 @@
     </div>
     
 
-    <h1 id='modal_dialogs'>Modal dialogs</h1>
+    <h1 id="modal_dialogs">Modal dialogs</h1>
 <div class='toc'>toc</div>
 <p>The <strong>jquery.modalDialog</strong> plugin is an extremely powerful and extensible UI widget. It supports responsive design, and is touch friendly.</p>
 
 <p>Example dialog (desktop):</p>
-<img alt='Modal dialog: desktop' src='images/dialog-desktop.jpg' class='screenshot' />
+
+<p><img alt='Modal dialog: desktop' class='screenshot' src='images/dialog-desktop.jpg' /></p>
+
 <p>Example dialog (mobile):</p>
-<img alt='Modal dialog: mobile' src='images/dialog-mobile.jpg' class='screenshot' />
-<h2 id='features'>Features</h2>
 
-<h3 id='content_sources'>Content sources</h3>
+<p><img alt='Modal dialog: mobile' class='screenshot' src='images/dialog-mobile.jpg' /></p>
 
-<p>For a dialog&#8217;s content, the framework can use one of the following techniques:</p>
+<h2 id="features">Features</h2>
+
+<h3 id="content_sources">Content sources</h3>
+
+<p>For a dialog’s content, the framework can use one of the following techniques:</p>
 
 <ul>
-<li>Use an element on the page (&#8220;node dialog&#8221;).</li>
+<li>Use an element on the page (“node dialog”).</li>
 
-<li>Display a different page within the dialog (&#8220;IFrame dialog&#8221;). This is really useful for encapsulating the content of a dialog and isolating it from the parent page.</li>
+<li>Display a different page within the dialog (“IFrame dialog”). This is really useful for encapsulating the content of a dialog and isolating it from the parent page.</li>
 
-<li>Load content via AJAX (&#8220;ajax dialog&#8221;). This is also useful for encapsulating the content of a dialog.</li>
+<li>Load content via AJAX (“ajax dialog”). This is also useful for encapsulating the content of a dialog.</li>
 </ul>
 
-<h3 id='cross_domain_support'>Cross domain support</h3>
+<h3 id="cross_domain_support">Cross domain support</h3>
 
 <ul>
 <li>The API for IFrame dialogs works seamlessly across different domains (i.e. www.vistaprint.com vs secure.vistaprint.com) by internally using window.postMessage()</li>
 </ul>
 
-<h3 id='simple_sizing_rules'>Simple sizing rules</h3>
+<h3 id="simple_sizing_rules">Simple sizing rules</h3>
 
 <ul>
-<li>A dialog&#8217;s height is based on the content size. There is no explicit method to specify the height.</li>
+<li>A dialog’s height is based on the content size. There is no explicit method to specify the height.</li>
 
-<li>Even iframe dialogs&#8217; height is based on automatic content size detection.</li>
+<li>Even iframe dialogs’ height is based on automatic content size detection.</li>
 </ul>
 
-<h3 id='mobile_support_via_responsive_design'>Mobile support (via responsive design)</h3>
+<h3 id="mobile_support_via_responsive_design">Mobile support (via responsive design)</h3>
 
 <p>The dialog framework supports mobile devices via responsive design.</p>
 
@@ -170,29 +174,29 @@
 <li>On small mobile devices (i.e. phone/ipod), the dialogs snap to near-full screen, and are not draggable.</li>
 </ul>
 
-<h3 id='unobtrusive_syntax'>Unobtrusive syntax</h3>
+<h3 id="unobtrusive_syntax">Unobtrusive syntax</h3>
 
 <p>Dialogs can be created with a simple markup-based syntax, or, if you need more control, you can use the full rich dialog API.</p>
 
 <p>This unobtrusive syntax makes your dialogs SEO friendly, and will help you design sites that gracefully degrade on older devices.</p>
 
-<h3 id='skinning_support'>Skinning support</h3>
+<h3 id="skinning_support">Skinning support</h3>
 
 <p>Dialogs can be skinned simply via CSS. Multiple skins are supported.</p>
 
-<h3 id='event_driven_extensibility'>Event driven extensibility</h3>
+<h3 id="event_driven_extensibility">Event driven extensibility</h3>
 
-<p>Dialogs publish <a href='#events'>events</a> that can be used to extend their functionality.</p>
+<p>Dialogs publish <a href="#events">events</a> that can be used to extend their functionality.</p>
 
-<h2 id='demo'>Demo</h2>
+<h2 id="demo">Demo</h2>
 
-<p><a href='modal-dialogs-demo.html'>Live demo&#160;&#187;</a></p>
+<p><a href="modal-dialogs-demo.html">Live demo</a></p>
 
-<h2 id='usage'>Usage</h2>
+<h2 id="usage">Usage</h2>
 
-<h3 id='adding_jquerymodaldialog_to_your_site'>Adding jQuery.modalDialog to your site</h3>
+<h3 id="adding_jquerymodaldialog_to_your_site">Adding jQuery.modalDialog to your site</h3>
 
-<p>Using the <a href='download-builder.html'>skinny.js Download Builder</a>, create a custom build which includes jquery.modalDialog, along with any other skinny.js libraries you want. Include the following CSS and JavaScript files:</p>
+<p>Using the <a href="download-builder.html">skinny.js Download Builder</a>, create a custom build which includes jquery.modalDialog, along with any other skinny.js libraries you want. Include the following CSS and JavaScript files:</p>
 <div class='highlight'><pre><code class='html'><span class='c'>&lt;!--Modal dialog structure--&gt;</span>
 <span class='nt'>&lt;link</span> <span class='na'>rel=</span><span class='s'>&quot;stylesheet&quot;</span> <span class='na'>href=</span><span class='s'>&quot;skinnyjs/css/jquery.modalDialog.css&quot;</span> <span class='nt'>/&gt;</span>
 
@@ -208,11 +212,11 @@
 <span class='c'>&lt;!--skinny.js Modal dialog library--&gt;</span>
 <span class='nt'>&lt;script </span><span class='na'>type=</span><span class='s'>&quot;text/javascript&quot;</span> <span class='na'>src=</span><span class='s'>&quot;skinnyjs/jquery.modalDialog.js&quot;</span><span class='nt'>&gt;&lt;/script&gt;</span>
 </code></pre></div>
-<h3 id='creating_a_dialog'>Creating a dialog</h3>
+<h3 id="creating_a_dialog">Creating a dialog</h3>
 
 <p>Dialogs are designed to be used unobtrusively, but the entire programmatic API is exposed as well.</p>
 
-<p>Here&#8217;s an example of unobtrusive usage:</p>
+<p>Here’s an example of unobtrusive usage:</p>
 <div class='highlight'><pre><code class='html'><span class='c'>&lt;!-- define a link to a dialog --&gt;</span>
 <span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;#fruitsAndNuts&quot;</span> <span class='na'>data-rel=</span><span class='s'>&quot;modalDialog&quot;</span><span class='nt'>&gt;</span>Fruits and Nuts<span class='nt'>&lt;/a&gt;</span>
 
@@ -221,7 +225,7 @@
     Fruits and nuts are delicious, and good for you too.
 <span class='nt'>&lt;/div&gt;</span>
 </code></pre></div>
-<p>Note the <strong>data-rel=&#8221;modalDialog&#8221;</strong> attribute: this automatically creates an event handler which will open a dialog using the target of the link&#8217;s <em>href</em> as the dialog content.</p>
+<p>Note the <strong>data-rel=”modalDialog”</strong> attribute: this automatically creates an event handler which will open a dialog using the target of the link’s <em>href</em> as the dialog content.</p>
 
 <p>To create a dialog programmatically, use one of the following methods:</p>
 <div class='highlight'><pre><code class='javascript'><span class='c1'>// Returns a jQuery object. Used for function/jQuery style code/chaining.</span>
@@ -230,34 +234,34 @@
 <span class='c1'>// Returns a ModalDialog object that can be used in OO style code.</span>
 <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>({</span> <span class='nx'>content</span><span class='o'>:</span> <span class='s2'>&quot;#fruitsAndNuts&quot;</span> <span class='p'>}).</span><span class='nx'>open</span><span class='p'>();</span>
 </code></pre></div>
-<p>For more information on the OO style, see <a href='#dialog_object_methods'>Dialog object methods</a>.</p>
+<p>For more information on the OO style, see <a href="#dialog_object_methods">Dialog object methods</a>.</p>
 
-<h4 id='declarative_dialog_attributes'>Declarative dialog attributes</h4>
+<h4 id="declarative_dialog_attributes">Declarative dialog attributes</h4>
 
-<p>When using the programmatic syntax to open dialogs, you can use the following attributes to declaratively define settings for the dialog (note that these correspond exactly to the <a href='#settings'>Settings</a> you can pass to the modalDialog programmatic API):</p>
+<p>When using the programmatic syntax to open dialogs, you can use the following attributes to declaratively define settings for the dialog (note that these correspond exactly to the <a href="#settings">Settings</a> you can pass to the modalDialog programmatic API):</p>
 
 <ul>
 <li><strong>data-dialog-title</strong>: Defines the title that shows in the title bar of the dialog</li>
 
-<li><strong>data-dialog-onopen</strong>: An inline event handler that fires when the dialog is opened. See <a href='#events'>Events</a> for more information.</li>
+<li><strong>data-dialog-onopen</strong>: An inline event handler that fires when the dialog is opened. See <a href="#events">Events</a> for more information.</li>
 
-<li><strong>data-dialog-onbeforeopen</strong>: An inline event handler that fires before the dialog is opened. See <a href='#events'>Events</a> for more information.</li>
+<li><strong>data-dialog-onbeforeopen</strong>: An inline event handler that fires before the dialog is opened. See <a href="#events">Events</a> for more information.</li>
 
-<li><strong>data-dialog-onclose</strong>: An inline event handler that fires when the dialog is closed. See <a href='#events'>Events</a> for more information.</li>
+<li><strong>data-dialog-onclose</strong>: An inline event handler that fires when the dialog is closed. See <a href="#events">Events</a> for more information.</li>
 
-<li><strong>data-dialog-onbeforeclose</strong>: An inline event handler that fires before the dialog is closed. See <a href='#events'>Events</a> for more information.</li>
+<li><strong>data-dialog-onbeforeclose</strong>: An inline event handler that fires before the dialog is closed. See <a href="#events">Events</a> for more information.</li>
 
 <li><strong>data-dialog-maxwidth</strong>: Sets the maximum width of the dialog. Note that on small mobile devices, the actual width may be smaller, so you should design the dialog content accordingly. Defaults to 600.</li>
 
-<li><strong>data-dialog-destroyOnClose</strong>: If true, the dialog DOM will be destroyed and all events removed when the dialog closes. Defaults to &#8221;false&#8221;.</li>
+<li><strong>data-dialog-destroyOnClose</strong>: If true, the dialog DOM will be destroyed and all events removed when the dialog closes. Defaults to ”false”.</li>
 
-<li><strong>data-dialog-skin</strong>: The name of the skin to use for the dialog. Defaults to &#8220;primary&#8221;.</li>
+<li><strong>data-dialog-skin</strong>: The name of the skin to use for the dialog. Defaults to “primary”.</li>
 
-<li><strong>data-dialog-enablehistory</strong>: If set to false, <a href='#managing_history_browser_backforward_buttons'>history management</a> will be disabled for this dialog, even if enabled globally. Defaults to &#8221;true&#8221;.</li>
+<li><strong>data-dialog-enablehistory</strong>: If set to false, <a href="#managing_history_browser_backforward_buttons">history management</a> will be disabled for this dialog, even if enabled globally. Defaults to ”true”.</li>
 
 <li><strong>data-dialog-url</strong>: If specified, this URL (or selector) will be used instead of the one specified in the href attribute. This is useful for progressive enhancement, where you would prefer to send non-javascript supporting browsers (or crawlers) to a different URL.</li>
 
-<li><strong>data-dialog-zindex</strong>: Can be used to set the z-index for the dialog. Don&#8217;t use this unless you need to participate in a pre-existing z-index arms race. Defaults to 10000.</li>
+<li><strong>data-dialog-zindex</strong>: Can be used to set the z-index for the dialog. Don’t use this unless you need to participate in a pre-existing z-index arms race. Defaults to 10000.</li>
 </ul>
 <div class='highlight'><pre><code class='html'><span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;#fruitsAndNuts&quot;</span> <span class='na'>data-rel=</span><span class='s'>&quot;modalDialog&quot;</span><span class='nt'>&gt;</span>Fruits and Nuts<span class='nt'>&lt;/a&gt;</span>
 
@@ -270,7 +274,7 @@
     Fruits and nuts are delicious, and good for you too.
 <span class='nt'>&lt;/div&gt;</span>
 </code></pre></div>
-<h4 id='settings'>Settings</h4>
+<h4 id="settings">Settings</h4>
 
 <p><code>$(selector).modalDialog()</code> (and <code>$.modalDialog.create()</code>) takes a settings object as an argument. Here are the available settings:</p>
 
@@ -281,36 +285,36 @@
 
 <li><strong>maxWidth</strong>: Sets the maximum width of the dialog. Note that on small mobile devices, the actual width may be smaller, so you should design the dialog content accordingly. Defaults to 600.</li>
 
-<li><strong>skin</strong>: The name of the skin to use for the dialog. Defaults to &#8220;primary&#8221;.</li>
+<li><strong>skin</strong>: The name of the skin to use for the dialog. Defaults to “primary”.</li>
 
-<li><strong>ajax</strong>: Determines how the &#8221;url&#8221; setting is interpreted. If true, the URL is the source for an AJAX dialog. If false, it will be the URL of an IFrame dialog.</li>
+<li><strong>ajax</strong>: Determines how the ”url” setting is interpreted. If true, the URL is the source for an AJAX dialog. If false, it will be the URL of an IFrame dialog.</li>
 
 <li><strong>url</strong>: The URL for the content of an IFrame or AJAX dialog.</li>
 
 <li><strong>content</strong>: A CSS selector or jQuery object for a content node to use for a node dialog (omitted when using the $.fn.modalDialog() syntax)</li>
 
-<li><strong>destroyOnClose</strong>: If true, the dialog DOM will be destroyed and all events removed when the dialog closes. Defaults to &#8221;false&#8221;.</li>
+<li><strong>destroyOnClose</strong>: If true, the dialog DOM will be destroyed and all events removed when the dialog closes. Defaults to ”false”.</li>
 
-<li><strong>containerElement</strong>: A CSS selector or jQuery object for the element that should be the parent for the dialog DOM (useful for working with jQuery mobile). Defaults to &#8220;body&#8221;.</li>
+<li><strong>containerElement</strong>: A CSS selector or jQuery object for the element that should be the parent for the dialog DOM (useful for working with jQuery mobile). Defaults to “body”.</li>
 
-<li><strong>preventEventBubbling</strong>: If true, click and touch events are prevented from bubbling up to the document. Defaults to &#8221;true&#8221;.</li>
+<li><strong>preventEventBubbling</strong>: If true, click and touch events are prevented from bubbling up to the document. Defaults to ”true”.</li>
 
-<li><strong>onbeforeopen</strong>: A handler for the &#8221;beforeopen&#8221; event. See <a href='#events'>Events</a> for more information.</li>
+<li><strong>onbeforeopen</strong>: A handler for the ”beforeopen” event. See <a href="#events">Events</a> for more information.</li>
 
-<li><strong>onopen</strong>: A handler for the &#8221;open&#8221; event. See <a href='#events'>Events</a> for more information.</li>
+<li><strong>onopen</strong>: A handler for the ”open” event. See <a href="#events">Events</a> for more information.</li>
 
-<li><strong>onclose</strong>: A handler for the &#8221;close&#8221; event. See <a href='#events'>Events</a>] for more information.</li>
+<li><strong>onclose</strong>: A handler for the ”close” event. See <a href="#events">Events</a>] for more information.</li>
 
-<li><strong>onbeforeclose</strong>: A handler for the &#8221;beforeclose&#8221; event. See <a href='#events'>Events</a> for more information.</li>
+<li><strong>onbeforeclose</strong>: A handler for the ”beforeclose” event. See <a href="#events">Events</a> for more information.</li>
 
-<li><strong>onajaxerror</strong>: A handler for the &#8221;ajaxerror&#8221; event. See <a href='#events'>Events</a> for more information.</li>
+<li><strong>onajaxerror</strong>: A handler for the ”ajaxerror” event. See <a href="#events">Events</a> for more information.</li>
 
-<li><strong>enableHistory</strong>: If set to false, <a href='#managing_history_browser_backforward_buttons'>history management</a> will be disabled for this dialog, even if enabled globally. Defaults to &#8221;true&#8221;.</li>
+<li><strong>enableHistory</strong>: If set to false, <a href="#managing_history_browser_backforward_buttons">history management</a> will be disabled for this dialog, even if enabled globally. Defaults to ”true”.</li>
 
-<li><strong>zIndex</strong>: Can be used to set the z-index for the dialog. Don&#8217;t use this unless you need to participate in a pre-existing z-index arms race. Defaults to 10000.</li>
+<li><strong>zIndex</strong>: Can be used to set the z-index for the dialog. Don’t use this unless you need to participate in a pre-existing z-index arms race. Defaults to 10000.</li>
 </ul>
 
-<p>Here&#8217;s an example. Note that you can (and usually should) do this all with <em>data-dialog</em> attributes:</p>
+<p>Here’s an example. Note that you can (and usually should) do this all with <em>data-dialog</em> attributes:</p>
 <div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;#fruitsAndNuts&quot;</span><span class='p'>).</span><span class='nx'>modalDialog</span><span class='p'>({</span> 
     <span class='nx'>title</span><span class='o'>:</span> <span class='s2'>&quot;Fruits and Nuts&quot;</span><span class='p'>,</span>
     <span class='nx'>skin</span><span class='o'>:</span> <span class='s2'>&quot;secondary&quot;</span><span class='p'>,</span>
@@ -324,7 +328,7 @@
     Fruits and nuts are delicious, and good for you too.
 <span class='nt'>&lt;/div&gt;</span>
 </code></pre></div>
-<h3 id='dialog_object_methods'>Dialog object methods</h3>
+<h3 id="dialog_object_methods">Dialog object methods</h3>
 
 <p><code>$.modalDialog.create()</code> returns a dialog object with the following methods:</p>
 
@@ -335,7 +339,7 @@
 
 <li><strong>center()</strong>: Centers the dialog based on the current dimensions</li>
 
-<li><strong>setTitle()</strong>: Sets the title displayed in the dialog&#8217;s title bar</li>
+<li><strong>setTitle()</strong>: Sets the title displayed in the dialog’s title bar</li>
 
 <li><strong>getWindow()</strong>: Gets a reference to the window for the dialog. For an IFrame dialog, this is the content window, for node or AJAX dialogs, it is the host window. This is useful for sending messages between dialogs.</li>
 
@@ -372,7 +376,7 @@
 <span class='c1'>// Now you have a reference to the dialog</span>
 <span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>close</span><span class='p'>();</span>
 </code></pre></div>
-<h4 id='open_close_and_promises'>open(), close(), and promises</h4>
+<h4 id="open_close_and_promises">open(), close(), and promises</h4>
 
 <p>open() and close() return promises. This allows chaining of actions:</p>
 <div class='highlight'><pre><code class='javascript'><span class='kd'>var</span> <span class='nx'>dialog</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>({</span> <span class='nx'>content</span><span class='o'>:</span> <span class='s2'>&quot;.color-dialog&quot;</span> <span class='p'>});</span>
@@ -388,13 +392,13 @@
     <span class='p'>});</span>
  
 </code></pre></div>
-<h2 id='types_of_dialogs'>Types of dialogs</h2>
+<h2 id="types_of_dialogs">Types of dialogs</h2>
 
-<h3 id='node_dialogs'>Node dialogs</h3>
+<h3 id="node_dialogs">Node dialogs</h3>
 
-<p>So far, all examples are &#8220;node dialogs&#8221;. These are dialogs that use an element on the page as the dialog&#8217;s content.</p>
+<p>So far, all examples are “node dialogs”. These are dialogs that use an element on the page as the dialog’s content.</p>
 
-<h3 id='ajax_dialogs'>AJAX dialogs</h3>
+<h3 id="ajax_dialogs">AJAX dialogs</h3>
 
 <p>An AJAX dialog is created using content which is dynamically loaded from a URL.</p>
 
@@ -413,9 +417,9 @@
 <span class='c1'>//close dialog</span>
 <span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>close</span><span class='p'>();</span>
 </code></pre></div>
-<h4 id='ajax_dialog_content'>AJAX dialog content</h4>
+<h4 id="ajax_dialog_content">AJAX dialog content</h4>
 
-<p>AJAX dialogs&#8217; content can be specified one of two ways: * <strong>Full HTML documents</strong>. The body of the document is extracted and added to the dialog. If there is a TITLE tag in the document, and a title wasn&#8217;t explicitly set in the dialog settings, the TITLE tag text will be used for the dialog title bar.</p>
+<p>AJAX dialogs’ content can be specified one of two ways: * <strong>Full HTML documents</strong>. The body of the document is extracted and added to the dialog. If there is a TITLE tag in the document, and a title wasn’t explicitly set in the dialog settings, the TITLE tag text will be used for the dialog title bar.</p>
 <div class='highlight'><pre><code class='html'><span class='cp'>&lt;!DOCTYPE html&gt;</span>
 <span class='nt'>&lt;html&gt;</span>
 <span class='nt'>&lt;head&gt;</span>
@@ -437,26 +441,26 @@
 <span class='c'>--&gt;</span>
 <span class='nt'>&lt;div&gt;</span>Here&#39;s some information about fruits and nuts<span class='nt'>&lt;/div&gt;</span>
 </code></pre></div>
-<h5 id='javascripts_in_ajax_dialog_content'>JavaScripts in AJAX dialog content</h5>
+<h5 id="javascripts_in_ajax_dialog_content">JavaScripts in AJAX dialog content</h5>
 
 <p>No modal dialog specific scripts need to be included in the AJAX dialog content.</p>
 
 <p>Any scripts included in the content will get loaded/executed dynamically, after the DOM elements have been loaded. Script tags that refer to scripts which are are already loaded in the window will be ignored (not loaded/executed a second time), but inline script snippets will be executed.</p>
 
-<p><strong>Note:</strong> This is a feature of the skinny.js <a href='jquery.partialLoad.html'>jquery.partialLoad plugin</a>, and can be used independently of modal dialogs.</p>
+<p><strong>Note:</strong> This is a feature of the skinny.js <a href="jquery.partialLoad.html">jquery.partialLoad plugin</a>, and can be used independently of modal dialogs.</p>
 
-<h3 id='iframe_dialogs'>IFrame dialogs</h3>
+<h3 id="iframe_dialogs">IFrame dialogs</h3>
 
 <p>IFrame dialogs contain an embedded IFrame that shows a self-contained webpage. These are particularly useful for a few reasons:</p>
 
 <ul>
-<li>They can encapsulate the dialog&#8217;s content completely.</li>
+<li>They can encapsulate the dialog’s content completely.</li>
 
 <li>HTML, scripts, and CSS are completely isolated from the parent window.</li>
 
 <li>They can load content cross-domain.</li>
 
-<li>You can use the exact same API from the content window as in the host window. This is implemented using a proxy which communicates with the host window via the skinny.js <a href='jquery.postMessage.html'>jquery.postMessage plugin</a></li>
+<li>You can use the exact same API from the content window as in the host window. This is implemented using a proxy which communicates with the host window via the skinny.js <a href="jquery.postMessage.html">jquery.postMessage plugin</a></li>
 </ul>
 
 <p>To create an IFrame dialog, use the following syntax:</p>
@@ -473,9 +477,9 @@
 </code></pre></div>
 <p>In an IFrame dialog, the height of the dialog is determined by the content.</p>
 
-<h4 id='content_of_an_iframe_dialog'>Content of an IFrame dialog</h4>
+<h4 id="content_of_an_iframe_dialog">Content of an IFrame dialog</h4>
 
-<p>IFrame dialog content windows can be complete HTML documents. They should not include the main layout of your site, because they will be contained within the dialog&#8217;s &#8220;chrome&#8221;.</p>
+<p>IFrame dialog content windows can be complete HTML documents. They should not include the main layout of your site, because they will be contained within the dialog’s “chrome”.</p>
 <div class='highlight'><pre><code class='html'><span class='c'>&lt;!--Modal dialog content structure--&gt;</span>
 <span class='nt'>&lt;link</span> <span class='na'>rel=</span><span class='s'>&quot;stylesheet&quot;</span> <span class='na'>href=</span><span class='s'>&quot;skinnyjs/css/jquery.modalDialogContent.css&quot;</span> <span class='nt'>/&gt;</span>
 
@@ -494,17 +498,17 @@
 <span class='c'>--&gt;</span>
 <span class='nt'>&lt;script </span><span class='na'>type=</span><span class='s'>&quot;text/javascript&quot;</span> <span class='na'>src=</span><span class='s'>&quot;skinnyjs/jquery.modalDialogContent.js&quot;</span><span class='nt'>&gt;&lt;/script&gt;</span>
 </code></pre></div>
-<h5 id='notifying_the_parent_window_when_the_iframe_is_rendered_and_ready_to_show'>Notifying the parent window when the IFrame is rendered and ready to show</h5>
+<h5 id="notifying_the_parent_window_when_the_iframe_is_rendered_and_ready_to_show">Notifying the parent window when the IFrame is rendered and ready to show</h5>
 
-<p>The dialog framework waits to show an IFrame dialog until it&#8217;s content window notifies it that it is fully rendered. By default, this happens on window.onload.</p>
+<p>The dialog framework waits to show an IFrame dialog until it’s content window notifies it that it is fully rendered. By default, this happens on window.onload.</p>
 
 <p>In certain cases, a dialog may require extra initialization (i.e. it may use JavaScript to render some content), and is not necessarily ready on window.onload. To handle this, you would want to disable manual notification to the framework that the dialog is ready by setting the following property (in the content window):</p>
 <div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>manualNotifyReady</span> <span class='o'>=</span> <span class='kc'>true</span><span class='p'>;</span>
 </code></pre></div>
-<p>Then, when your dialog&#8217;s content is fully rendered, call:</p>
+<p>Then, when your dialog’s content is fully rendered, call:</p>
 <div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>getCurrent</span><span class='p'>().</span><span class='nx'>notifyReady</span><span class='p'>();</span>
 </code></pre></div>
-<h5 id='dialog_size'>Dialog size</h5>
+<h5 id="dialog_size">Dialog size</h5>
 
 <p>The size of the dialog is determined automatically based on the size of the content in the IFrame. Because it can be tricky to determine the height of content in HTML, there are a few configuration options to help the framework determine the size:</p>
 
@@ -514,24 +518,24 @@
 <li><strong>$.modalDialog.sizeElement</strong>: A CSS selector for an element that the framework should measure to get the size of the content. By default, it looks for an element matching the selector .dialog-content-size.</li>
 </ul>
 
-<p>If $.modalDialog.autoSizing&#8217; is set false, then you will want to resize the dialog manually using one of the following methods:</p>
+<p>If $.modalDialog.autoSizing’ is set false, then you will want to resize the dialog manually using one of the following methods:</p>
 <div class='highlight'><pre><code class='javascript'><span class='c1'>// Set height explicitly</span>
 <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>getCurrent</span><span class='p'>().</span><span class='nx'>setHeight</span><span class='p'>(</span><span class='mi'>400</span><span class='p'>);</span>
 
 <span class='c1'>// Set height based on content</span>
 <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>getCurrent</span><span class='p'>().</span><span class='nx'>setHeightFromContent</span><span class='p'>();</span>
 </code></pre></div>
-<h5 id='dialog_title'>Dialog title</h5>
+<h5 id="dialog_title">Dialog title</h5>
 
 <p>The title displayed in the dialog is driven by the HTML title tag of the document in the IFrame. You can override this by specifically calling:</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>getCurrent</span><span class='p'>().</span><span class='nx'>setTitle</span><span class='p'>(</span><span class='s2'>&quot;New title&quot;</span><span class='p'>);</span>
 </code></pre></div>
-<h5 id='crossdomain_support'>Cross-domain support</h5>
+<h5 id="crossdomain_support">Cross-domain support</h5>
 
 <p>If your IFrame content is in a different domain than the parent window, you need to tell the content window how to reach the parent window:</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>parentHostName</span> <span class='o'>=</span> <span class='s2'>&quot;http://www.vistaprint.com&quot;</span><span class='p'>;</span>
 </code></pre></div>
-<h5 id='calling_other_dialog_apis_from_the_iframe_content_window'>Calling other dialog APIs from the iframe content window</h5>
+<h5 id="calling_other_dialog_apis_from_the_iframe_content_window">Calling other dialog APIs from the iframe content window</h5>
 
 <p>You can use any of the dialog APIs from the iframe content window. For example:</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='c1'>// Close the dialog</span>
@@ -540,11 +544,11 @@
     <span class='c1'>// Center the dialog</span>
     <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>getCurrent</span><span class='p'>().</span><span class='nx'>center</span><span class='p'>();</span>
 </code></pre></div>
-<h5 id='sending_messages_between_windows'>Sending messages between windows</h5>
+<h5 id="sending_messages_between_windows">Sending messages between windows</h5>
 
-<p>You can use the dialog framework to post messages between windows (uses either HTML5 postMessage() or the <a href='js/jquery.postMessage.html'>jquery.postMessage plugin</a> under the hood).</p>
+<p>You can use the dialog framework to post messages between windows (uses either HTML5 postMessage() or the <a href="js/jquery.postMessage.html">jquery.postMessage plugin</a> under the hood).</p>
 
-<p>For example, imagine you&#8217;d like to send a message to the host (parent) window from a dialog content window. Here&#8217;s the code that you would call in the content window:</p>
+<p>For example, imagine you’d like to send a message to the host (parent) window from a dialog content window. Here’s the code that you would call in the content window:</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='c1'>// Send a message using the skinny.js jquery.postMessage() plugin</span>
     <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>getCurrent</span><span class='p'>().</span><span class='nx'>postMessageToParent</span><span class='p'>(</span><span class='s2'>&quot;hi parent, here&#39;s some data from your child&quot;</span><span class='p'>);</span>
 </code></pre></div>
@@ -561,7 +565,7 @@
 <p>Or, conversely, you can send a message to the iframe dialog content window from the parent:</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>getCurrent</span><span class='p'>().</span><span class='nx'>postMessage</span><span class='p'>(</span><span class='s2'>&quot;hi child, here&#39;s some data from your parent&quot;</span><span class='p'>);</span>
 </code></pre></div>
-<h3 id='creating_multiple_active_dialogs'>Creating multiple active dialogs</h3>
+<h3 id="creating_multiple_active_dialogs">Creating multiple active dialogs</h3>
 
 <p>Dialogs can be opened in succession (i.e. a dialog can open another dialog). This even works from an IFrame dialog, and even across domains.</p>
 
@@ -569,7 +573,7 @@
 
 <p><strong>Warning</strong>: There is one important exception: An IFrame dialog cannot open a node dialog. This is because the IFrame is, by definition, in a different window than the host window, and cannot share its DOM with the parent window. You can, however, open an AJAX dialog, or another IFrame dialog from an IFrame dialog.</p>
 
-<h3 id='events'>Events</h3>
+<h3 id="events">Events</h3>
 
 <p>Dialogs support a number of lifecycle events:</p>
 
@@ -585,7 +589,7 @@
 <li><strong>ajaxerror</strong>: Fires if an error occurs loading an AJAX dialog.</li>
 </ul>
 
-<h4 id='handling_events'>Handling events</h4>
+<h4 id="handling_events">Handling events</h4>
 
 <p>There are two ways to assign event handlers, as options to <code>$.modalDialog.create()</code>, or by adding event handlers to the dialog object returned by <code>$.modalDialog.create()</code>.</p>
 
@@ -608,7 +612,7 @@
 </code></pre></div>
 <p><strong>Tip</strong>: These events are even supported in cross-domain IFrame dialogs!</p>
 
-<h4 id='unobtrusive_dialog_events'>Unobtrusive dialog events</h4>
+<h4 id="unobtrusive_dialog_events">Unobtrusive dialog events</h4>
 
 <p>If you want to assign handlers unobtrusively, you can access the dialog when it is created with the dialogcreate event:</p>
 <div class='highlight'><pre><code class='html'><span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;#colorPicker&quot;</span> <span class='na'>data-rel=</span><span class='s'>&quot;modalDialog&quot;</span> <span class='na'>id=</span><span class='s'>&quot;colorPickerLink&quot;</span><span class='nt'>&gt;</span>Show color picker<span class='nt'>&lt;/a&gt;</span>
@@ -619,12 +623,12 @@
     <span class='nx'>e</span><span class='p'>.</span><span class='nx'>dialog</span><span class='p'>.</span><span class='nx'>onopen</span><span class='p'>.</span><span class='nx'>add</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span> <span class='nx'>alert</span><span class='p'>(</span><span class='s2'>&quot;opened&quot;</span><span class='p'>);</span> <span class='p'>});</span>
 <span class='p'>});</span>
 </code></pre></div>
-<h3 id='managing_history_browser_backforward_buttons'>Managing history (browser back/forward buttons)</h3>
+<h3 id="managing_history_browser_backforward_buttons">Managing history (browser back/forward buttons)</h3>
 
 <p>The dialog API has a built-in history management module. It can be enabled by calling:</p>
 <div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>.</span><span class='nx'>modalDialog</span><span class='p'>.</span><span class='nx'>enableHistory</span><span class='p'>();</span>
 </code></pre></div>
-<p>When a dialog is opened, the URL is updated with a querystring parameter that encapsulates the state of the dialog. If the user hits the &#8220;back&#8221; button, the dialog is closed. The history module handles cases where the user refreshes, clicks forward, etc.</p>
+<p>When a dialog is opened, the URL is updated with a querystring parameter that encapsulates the state of the dialog. If the user hits the “back” button, the dialog is closed. The history module handles cases where the user refreshes, clicks forward, etc.</p>
 
 <p>You can override the default parameter name that the history management module uses:</p>
 <div class='highlight'><pre><code class='javascript'><span class='c1'>// This will make URLs look like: /url.html?someAlternateParameterName={opaque parameters}</span>
@@ -640,7 +644,7 @@
     content
 <span class='nt'>&lt;/div&gt;</span>
 </code></pre></div>
-<h3 id='skinning'>Skinning</h3>
+<h3 id="skinning">Skinning</h3>
 
 <p>To create a skin (theme) for a dialog, you simply create a CSS class. Then you can assign the skin using the <strong>data-dialog-skin</strong> attribute or settings option.</p>
 
@@ -649,15 +653,18 @@
 <ul>
 <li><strong>primary</strong>: A basic theme.</li>
 
-<li><strong>neutral</strong>: A variation on the &#8216;primary&#8217; theme.</li>
+<li><strong>neutral</strong>: A variation on the ‘primary’ theme.</li>
 
 <li><strong>lightbox</strong>: A variation that demonstrates the power of responsive design. On desktop/tablet, this displays as a regular dialog, but on a small mobile device, it will display in a lightbox/gallery style.</li>
 </ul>
 
 <p>Lightbox skin (desktop):</p>
-<img src='images/lightbox-desktop.jpg' class='screenshot' />
+
+<p><img class='screenshot' src='images/lightbox-desktop.jpg' /></p>
+
 <p>Lightbox skin (mobile):</p>
-<img src='images/lightbox-mobile.jpg' class='screenshot' />
+
+<p><img class='screenshot' src='images/lightbox-mobile.jpg' /></p>
   </div>
 </div>
  
