@@ -1,10 +1,12 @@
 @import url(lib/mixin_lib.less);
+@import url(css-arrows.less);
 
 [data-rel="tooltip"] + aside,
 .rich-tooltip-content
 {
-	@border: #ececec; // @platinum
-	@background: #fff;
+	@white:		#fff;
+	@silver:	#b5babf;
+	@charcoal:	#111a22;
 
 	display: none; // hide all tooltips by default
 	position: absolute; // position is calculated by JavaScript
@@ -13,8 +15,8 @@
 	min-height: 30px;
 
 	// default styling
-	background: @background;
-	border: 1px solid @border;
+	background: @white;
+	border: 1px solid @silver;
 	padding: 6px;
 
 	// box shadow
@@ -27,7 +29,6 @@
 
 	.rich-tooltip-close
 	{
-		display: none;
 		position: absolute;
 		top: 10px;
 		right: 10px;
@@ -36,124 +37,9 @@
 	.rich-tooltip-arrow
 	{
 		@size: 15px;
-		@offset: 16px;
+		@border-width: 1px;
 
-		position: absolute;
-		background: @background;
-		// border: 1px solid @border;
-
-		// hide this awesome CSS arrow when in IE7
-		// .ie7 &
-		// {
-		// 	display: none;
-		// }
-
-		&:after,
-		&:before
-		{
-			border: solid transparent;
-			content: " ";
-			height: 0;
-			width: 0;
-			position: absolute;
-			pointer-events: none;
-		}
-
-		&:after
-		{
-			border-color: rgba(255, 255, 255, 0);
-			border-width: @size;
-		}
-
-		&:before
-		{
-			border-color: rgba(236, 236, 236, 0);
-			border-width: @offset;
-		}
-
-		// when tooltip is north (above) of context, arrow is pointing south (down)
-		&.rich-tooltip-arrow-south
-		{
-			&:after,
-			&:before
-			{
-				top: 100%;
-				left: 50%;
-			}
-			&:after
-			{
-				border-top-color: @background;
-				margin-left: -@size;
-			}
-			&:before
-			{
-				border-top-color: @border;
-				margin-left: -@offset;
-			}
-		}
-
-		// when tooltip is east (right) of context, arrow is pointing west (left)
-		&.rich-tooltip-arrow-west
-		{
-			&:after,
-			&:before
-			{
-				right: 100%;
-				top: 50%;
-			}
-			&:after
-			{
-				border-right-color: @background;
-				margin-top: -@size;
-			}
-			&:before
-			{
-				border-right-color: @border;
-				margin-top: -@offset;
-			}
-		}
-
-		// when tooltip is south (below) of context, arrow is pointing north (up)
-		&.rich-tooltip-arrow-north
-		{
-			&:after,
-			&:before
-			{
-				bottom: 100%;
-				left: 50%;
-			}
-			&:after
-			{
-				border-bottom-color: @background;
-				margin-left: -@size;
-			}
-			&:before
-			{
-				border-bottom-color: @border;
-				margin-left: -@offset;
-			}
-		}
-
-		// when tooltip is west (left) of context, arrow is pointing east (right)
-		&.rich-tooltip-arrow-east
-		{
-			&:after,
-			&:before
-			{
-				left: 100%;
-				top: 50%;
-			}
-			&:after
-			{
-				border-left-color: @background;
-				margin-top: -@size;
-			}
-			&:before
-			{
-				border-left-color: @border;
-				margin-top: -@offset;
-			}
-		}
+		.css-arrow(@size, @border-width, @silver, @white);
 	}
 
 	@media screen and (max-device-width: 480px)
@@ -163,33 +49,53 @@
 		left: 0;
 	}
 
-	&.rich-tooltip-skin-large
+	&.rich-tooltip-skin-large,
+	&.large
 	{
 		// adjust default styling for skin
 		padding: 0;
+        .drop-shadow(5px, 5px, 5px, 0.6);
 
 		header
 		{
-			padding: 30px;
-			background: inherit;
+			padding: 20px 30px 15px 30px;
+			background: inherit;    
 		}
 
 		section
 		{
-			padding: 0 30px 30px 30px;
+			padding: 0 30px;
 			background: inherit;
 		}
 
 		footer
 		{
-			padding: 15px;
-			background: #f9f9f9; // @mist
+			padding: 20px;
+		}
+	}
+
+	&.rich-tooltip-skin-emphasis,
+	&.emphasis
+	{
+		background-color: @charcoal;
+		color: @white;
+		.rounded();
+		.drop-shadow(0px, 0px, 0px, 0);
+
+		.rich-tooltip-arrow
+		{
+			.css-arrow-color(@charcoal, @charcoal);
 		}
 
-		// all large tooltips get the close button
-		.rich-tooltip-close
+		header
 		{
-			display: block;
+			text-transform: uppercase;
+		}
+
+		header,
+		section
+		{
+			background: inherit;
 		}
 	}
 }
