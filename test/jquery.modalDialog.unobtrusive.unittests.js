@@ -139,7 +139,7 @@
                  // capture the instance of the dialog so we can compare it later
                  dialog = this;
 
-                 assert.equal(dialog.settings.url, "content/jquery.modalDialog.iframeContent.html?datalink=1")
+                 assert.equal(dialog.settings.url, "content/jquery.modalDialog.iframeContent.html?datalink=1");
 
                  return this.close();
              })
