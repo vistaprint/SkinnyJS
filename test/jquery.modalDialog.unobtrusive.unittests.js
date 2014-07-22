@@ -21,7 +21,7 @@
      };
 
      var ensureLinkOpensDialog = function (dialogType, linkAttributes, secondHref, verify) {
-         it("Ensure unobtrusive link opens " + dialogType + " dialog", function (done) {
+         it("will open an unobtrusive link for a " + dialogType + " dialog", function (done) {
              var $link = $('<a ' + linkAttributes + ' data-rel="modalDialog">link</a>');
              $link.appendTo("body");
 
@@ -77,7 +77,7 @@
         'href="content/jquery.modalDialog.iframeContent.html"',
         "content/jquery.modalDialog.iframeContent.html?second=1",
         function (dialog) {
-            assert(dialog.settings.url, "content/jquery.modalDialog.iframeContent.html?second=1");
+            assert.equal(dialog.settings.url, "content/jquery.modalDialog.iframeContent.html?second=1");
         });
 
      ensureLinkOpensDialog(
@@ -85,11 +85,11 @@
         'href="content/jquery.modalDialog.ajaxContent.html" data-dialog-ajax="true"',
         "content/jquery.modalDialog.ajaxContent.html?second=1",
         function (dialog) {
-            assert(dialog.settings.url, "content/jquery.modalDialog.ajaxContent.html?second=1");
+            assert.equal(dialog.settings.url, "content/jquery.modalDialog.ajaxContent.html?second=1");
         });
 
      //TODO this should be in its own unit test suite
-     it("Ensure iframe dialog can be opened twice", function (done) {
+     it("will open an iframe twice", function (done) {
          var dialog = $.modalDialog.create({
              url: "content/jquery.modalDialog.iframeContent.html"
          });
@@ -126,5 +126,28 @@
                  function () {
                      done();
                  });
+     });
+
+     it("will use data-dialog-url if present", function (done) {
+         var $link = $('<a href="noscript-url.html" data-dialog-url="content/jquery.modalDialog.iframeContent.html?datalink=1" data-rel="modalDialog">link</a>');
+         $link.appendTo("body");
+
+         var dialog;
+
+         clickDialogLink($link)
+             .then(function () {
+                 // capture the instance of the dialog so we can compare it later
+                 dialog = this;
+
+                 assert.equal(dialog.settings.url, "content/jquery.modalDialog.iframeContent.html?datalink=1")
+
+                 return this.close();
+             })
+             .then(function () {
+                 // Clean up
+                 $link.remove();
+
+                 done();
+             });
      });
  });
