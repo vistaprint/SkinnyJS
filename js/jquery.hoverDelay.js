@@ -37,7 +37,7 @@
 
         var _options = $.extend({}, _defaults, options);
 
-        var useTimers = _options.delayOver > 0 || _options.delayOut > 0;
+        var useTimers = typeof _options.delayOver === 'function' || _options.delayOver > 0 || _options.delayOut > 0;
 
         var clearTimers = function (el) {
             if (!useTimers) {
@@ -73,10 +73,16 @@
                     _options.over.call(thisObject, event);
                 };
 
-                if (_options.delayOver <= 0) {
+                var delay = _options.delayOver;
+
+                if (typeof delay === 'function') {
+                    delay = delay();
+                }
+
+                if (delay <= 0) {
                     call();
                 } else {
-                    $this.data(OVER_TIMER, setTimeout(call, _options.delayOver));
+                    $this.data(OVER_TIMER, setTimeout(call, delay));
                 }
             }
         }

@@ -93,7 +93,7 @@
     };
 
     var Panel = function MenuPanel(menu, panel, item) {
-        $.proxyAll(this, 'onPress', 'onClick', 'showOnPointerOver', 'hideOnPointerOut', 'showComplete', 'hideComplete');
+        $.proxyAll(this, 'onPress', 'onClick', 'onPointerOver', 'onPointerOut', 'showComplete', 'hideComplete');
         var me = this;
 
         this.menu = menu;
@@ -134,9 +134,27 @@
 
         // setup pointer hover events only when the option is enabled
         if (this.options.showOnHover) {
+            var delayOver = 200;
+
+            if (this.isTopLevel) {
+                delayOver = function () {
+                    for (var i = 0; i < me.menu.siblings.length; i++) {
+                        var menu = me.menu.siblings[i];
+                        for (var j = 0; j < menu.rootMenu.children.length; j++) {
+                            var panel = menu.rootMenu.children[j];
+                            if (panel.isTopLevel && panel.isOpen) {
+                                return 0;
+                            }
+                        }
+                    }
+
+                    return 200;
+                };
+            }
+
             // Set up event handlers to control submenus appearing on hover
-            this.$item.hoverDelay(this.showOnPointerOver, this.hideOnPointerOut, {
-                delayOver: 200,
+            this.$item.hoverDelay(this.onPointerOver, this.onPointerOut, {
+                delayOver: delayOver,
                 delayOut: 500
             });
         }
@@ -254,7 +272,7 @@
     // Gets the level of the Panel in the heirarchy. 0 is the root menu item.
     Panel.prototype.getLevel = function PanelGetLevel() {
         if (!this._level) {
-            this._level = -1; // Account for _rootMenu: first level menu should be level 0
+            this._level = -1; // Account for rootMenu: first level menu should be level 0
             var current = this.parent;
             while (current) {
                 current = current.parent;
@@ -298,7 +316,7 @@
         return this.menu.clickHoverActivated || this.options.showOnHover;
     };
 
-    Panel.prototype.showOnPointerOver = function (event) {
+    Panel.prototype.onPointerOver = function (event) {
         // In Windows/MacOS, top level menus highlight instantly, with no delay
         if (this.isTopLevel) {
             highlightMenuItem(this.$item, true);
@@ -311,7 +329,7 @@
         this.show(event);
     };
 
-    Panel.prototype.hideOnPointerOut = function (event) {
+    Panel.prototype.onPointerOut = function (event) {
         if (this.isTopLevel && !this.options.showOnHover) {
             return;
         }
@@ -528,7 +546,12 @@
         // array of all Panel instances within this menu
         this.panels = [];
 
-        // The menu panel heirarchy root element
+        // array of other jQuery elements adjacent to this menu (i.e. on the same menu-bar)
+        this.siblings = this.options.siblings.map(function (i, sibling) {
+            return $(sibling).data('dropDownMenu');
+        });
+
+        // The menu panel hierarchy root element
         this.rootMenu = {
             parent: null,
             children: []
@@ -624,12 +647,15 @@
         }
 
         // Merge explicit options with skin and defaults
-        var _options = $.extend({}, _defaults, _skin || {}, options);
+        var o = $.extend({}, _defaults, _skin || {}, options);
 
         // Resolve conflicting options
-        if (!_options.showOnHover) {
-            _options.linksWithSubmenusEnabled = false;
+        if (!o.showOnHover) {
+            o.linksWithSubmenusEnabled = false;
         }
+
+        // save the jquery selection to get siblings
+        var selection = $(this);
 
         // Loop through each menu container and create a menu 'group'.
         this.each(function () {
@@ -643,9 +669,18 @@
                 return true;
             });
 
+            var menu = new Menu(
+                $topLevelItems,
+                $.extend({}, o, {
+                    siblings: selection.not(this)
+                })
+            );
+
+            $(this).data('dropDownMenu', menu);
+
             // Invoke the create menu function with a jQuery object
             // containing all the top level menu items.
-            _menus.push(new Menu($topLevelItems, _options));
+            _menus.push(menu);
         });
 
         // Allow the jQuery chain to remain unbroken.
