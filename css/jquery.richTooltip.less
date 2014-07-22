@@ -4,6 +4,10 @@
 [data-rel="tooltip"] + aside,
 .rich-tooltip-content
 {
+	@white:		#fff;
+	@silver:	#b5babf;
+	@charcoal:	#111a22;
+
 	display: none; // hide all tooltips by default
 	position: absolute; // position is calculated by JavaScript
 	box-sizing: border-box;
@@ -34,9 +38,8 @@
 	{
 		@size: 15px;
 		@border-width: 1px;
-		@background: #fff;
 
-		.css-arrow(@size, @border-width, @border-color, @background);
+		.css-arrow(@size, @border-width, @silver, @white);
 	}
 
 	@media screen and (max-device-width: 480px)
