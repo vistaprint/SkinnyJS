@@ -21,7 +21,7 @@
     };
 
     function Tooltip(context, options) {
-        $.proxyAll(this, 'show', 'hide', 'toggle', 'pos', 'unhover', 'onWindowResize', 'onDocumentClick');
+        $.proxyAll(this, 'show', 'hide', 'toggle', 'pos', 'unhover', 'onWindowResize', 'onDocumentClick', 'onUiElementOpen');
 
         // target context element that initalizes this tooltip
         this.context = $(context).addClass('rich-tooltip-context');
@@ -144,8 +144,8 @@
             return;
         }
 
-        // ensure all other tooltips and other overlay controls are closed
-        $(document).trigger('closeEverything', this);
+        // tell other ui events we are opening, hopefully they all close themselves
+        $(document).trigger('ui.element.open', this);
 
         this.content.show();
         this.pos();
@@ -163,15 +163,12 @@
 
         // hide the tooltip if the browser resizes, the user can open it back up easily
         $(window).on('resize', this.onWindowResize);
-        // $(window).one('scroll', this.hide);
 
         // hide the tooltip if user clicks outside of the tooltip
         $(document).on('click', this.onDocumentClick);
-        $(document).one('closeEverything', $.proxy(function (event, item) {
-            if (item !== this) {
-                this.hide();
-            }
-        }, this));
+
+        // listen for other ui elements opening, and if one opens, close this tooltip
+        $(document).one('ui.element.open', this.onUiElementOpen);
     };
 
     Tooltip.prototype.hide = function () {
@@ -191,9 +188,8 @@
 
         // remove event listeners
         $(window).off('resize', this.onWindowResize);
-        // $(window).off('scroll', this.hide);
         $(document).off('click', this.onDocumentClick);
-        $(document).off('closeEverything', this.hide);
+        $(document).off('ui.element.open', this.onUiElementOpen);
     };
 
     Tooltip.prototype.toggle = function (event) {
@@ -209,6 +205,12 @@
             this.hide();
         } else {
             this.show();
+        }
+    };
+
+    Tooltip.prototype.onUiElementOpen = function (event, item) {
+        if (item !== this) {
+            this.hide();
         }
     };
 
