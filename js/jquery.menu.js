@@ -113,7 +113,7 @@
         this.transitioning = false;
 
         // Store a reference to this instance from the DOM element
-        if (this.$panel) {
+        if (this.$panel.length > 0) {
             this.$panel.data('PanelInstance', this);
         }
 
@@ -136,7 +136,7 @@
         if (this.options.showOnHover) {
             var delayOver = 200;
 
-            if (this.isTopLevel) {
+            if (this.isTopLevel && this.menu.siblings.length > 0) {
                 delayOver = function () {
                     for (var i = 0; i < me.menu.siblings.length; i++) {
                         var menu = me.menu.siblings[i];
@@ -176,7 +176,7 @@
         }
 
         // Note: It is legitimate to have a Panel object without a submenu.
-        if (this.$panel) {
+        if (this.$panel.length > 0) {
             // Event handler for clicking on panels.
             // Handles firing the "selected" event.
             this.$panel.on('click', function (e) {
@@ -316,6 +316,10 @@
         return this.menu.clickHoverActivated || this.options.showOnHover;
     };
 
+    // called by hoverDelay on the pointerover event
+    // this should hopefully never be called by touch devices,
+    // if it is, things get screwy. On emulated touch the mouse
+    // events still fire
     Panel.prototype.onPointerOver = function (event) {
         // In Windows/MacOS, top level menus highlight instantly, with no delay
         if (this.isTopLevel) {
@@ -347,7 +351,7 @@
             return;
         }
 
-        if (this.$panel) {
+        if (this.$panel.length > 0) {
             var customEvent = this.getEvent('beforeShowPanel', e);
 
             if (this.options.beforeShowPanel) {
@@ -360,6 +364,9 @@
             }
         }
 
+        // Trigger to let other controls know this is is opening
+        $(document).trigger('ui.element.open', this);
+
         // Ensure that all siblings are hidden
         $.each(this.getSiblings(), function (i, sibling) {
             sibling.hide(e);
@@ -370,7 +377,7 @@
         // Ensure the current menu item is highlighted
         highlightMenuItem(this.$item, true);
 
-        if (!this.$panel) {
+        if (this.$panel.length === 0) {
             return;
         }
 
@@ -405,7 +412,7 @@
             return;
         }
 
-        if (this.$panel) {
+        if (this.$panel.length > 0) {
             var ev = this.getEvent(e);
 
             if (this.options.beforeHidePanel) {
@@ -420,7 +427,7 @@
 
         highlightMenuItem(this.$item, false);
 
-        if (!this.$panel) {
+        if (this.$panel.length === 0) {
             return;
         }
 
@@ -484,7 +491,7 @@
 
         // if this is a mouse click, we do not want to interrupt normal navigation
         // if there is no panel it should act like a regular link, always.
-        if (!this.$panel || e.pointerType == 'mouse') {
+        if (this.$panel.length === 0 || e.pointerType == 'mouse') {
             return;
         }
 
@@ -677,9 +684,6 @@
             );
 
             $(this).data('dropDownMenu', menu);
-
-            // Invoke the create menu function with a jQuery object
-            // containing all the top level menu items.
             _menus.push(menu);
         });
 
