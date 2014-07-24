@@ -63,46 +63,14 @@
                 this.content.hover(this.show, this.unhover);
             }
 
-            // timestamp of last touch event, used to determine if we should preventDefault on the next click event
-            var ignoreNextClick = null;
-
-            var checkEvent = function (event) {
-                event.preventDefault();
-
-                // if this is a touch type event, then record it
-                if (event.pointerType === 'touch') {
-                    ignoreNextClick = +(new Date());
-                }
-            };
-
             // listen to pointer down and record the event to be used on click
             // calling prevent default on pointerup/pointerdown does not
             // prevent navigation, preventDefault must happen within click event
-            this.context.on({
-                'pointerdown': checkEvent,
-                'pointerup': $.proxy(function (event) {
-                    checkEvent(event);
-
-                    // toggle visibility on touches
-                    if (event.pointerType === 'touch') {
-                        this.toggle(event);
-                    }
-                }, this)
-            });
-
-            // listen to clicks, and call prevent default on touch devices
-            this.context.on('click', $.proxy(function (event) {
-                if (ignoreNextClick !== null) {
-                    // calculate time delta between last touch event and now
-                    var timeDiff = +(new Date()) - ignoreNextClick;
-
-                    // ignore all clicks for a period of time after the last touch event,
-                    // we could ignore all future click events as well, except some devices
-                    // have mice and touch screens so this allows for both to work.
-                    if (timeDiff < 2500) {
-                        event.preventDefault();
-                        event.stopPropagation(); // do not let this trickle up to the document
-                    }
+            this.context.on('press', $.proxy(function (event) {
+                // toggle visibility on touches
+                if (event.pointerType === 'touch') {
+                    event.preventClick();
+                    this.toggle(event);
                 }
             }, this));
         } else {
