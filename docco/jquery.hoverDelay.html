@@ -39,7 +39,7 @@ children of the target element's dom.</p>             </td>             <td clas
 
         <span class="kd">var</span> <span class="nx">_options</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">_defaults</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
 
-        <span class="kd">var</span> <span class="nx">useTimers</span> <span class="o">=</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">delayOver</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">delayOut</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">useTimers</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">delayOver</span> <span class="o">===</span> <span class="s1">&#39;function&#39;</span> <span class="o">||</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">delayOver</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">delayOut</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
 
         <span class="kd">var</span> <span class="nx">clearTimers</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">useTimers</span><span class="p">)</span> <span class="p">{</span>
@@ -75,10 +75,16 @@ double fire if a child of the element used is the target</p>             </td>  
                     <span class="nx">_options</span><span class="p">.</span><span class="nx">over</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">thisObject</span><span class="p">,</span> <span class="nx">event</span><span class="p">);</span>
                 <span class="p">};</span>
 
-                <span class="k">if</span> <span class="p">(</span><span class="nx">_options</span><span class="p">.</span><span class="nx">delayOver</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">delay</span> <span class="o">=</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">delayOver</span><span class="p">;</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">delay</span> <span class="o">===</span> <span class="s1">&#39;function&#39;</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">delay</span> <span class="o">=</span> <span class="nx">delay</span><span class="p">();</span>
+                <span class="p">}</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="nx">delay</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
                     <span class="nx">call</span><span class="p">();</span>
                 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                    <span class="nx">$this</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">OVER_TIMER</span><span class="p">,</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="nx">call</span><span class="p">,</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">delayOver</span><span class="p">));</span>
+                    <span class="nx">$this</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">OVER_TIMER</span><span class="p">,</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="nx">call</span><span class="p">,</span> <span class="nx">delay</span><span class="p">));</span>
                 <span class="p">}</span>
             <span class="p">}</span>
         <span class="p">}</span>
