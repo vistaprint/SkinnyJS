@@ -133,14 +133,22 @@
         return 0;
     }
 
+    function returnFalse() { return false; }
+    function returnTrue() { return true; }
+
     var POINTER_TYPE_UNAVAILABLE = "unavailable";
     var POINTER_TYPE_TOUCH = "touch";
     var POINTER_TYPE_PEN = "pen";
     var POINTER_TYPE_MOUSE = "mouse";
 
-    // signal to mark if the pointer is down and which button(s) are depressed
-    // used only as part of the polyfill for Touch and Mouse Events API
-    var _isPointerDown = false;
+    // indicator to mark whether touch events are in progress
+    // when null, it means we have never received a touch event
+    // when true, user is currently touching something
+    // when false, user just released their finger (reset on mousedown if needed)
+    var _touching = null;
+
+    // bitmask to identify which buttons are currently down
+    var _buttons = 0;
 
     // storage of the last seen touches provided by the native touch events spec
     var _lastTouches = [];
@@ -209,13 +217,22 @@
 
             // if we have the bitmask for the depressed buttons from the mouse events polyfill, use it to mimic buttons for
             // browsers that do not support the HTML DOM LEVEL 3 events spec
-            if (event.type === "pointermove" && typeof _isPointerDown !== "boolean" && _isPointerDown !== event.buttons) {
-                event.buttons = _isPointerDown;
+            if (event.type === "pointermove" && _touching === null && _buttons !== event.buttons) {
+                event.buttons = _buttons;
             }
+
+            // prevent the follow native click event from occurring, can be used to prevent
+            // clicks on pointerdown or pointerup or from gestures like press and presshold
+            event.preventClick = function () {
+                event.isClickPrevented = returnTrue;
+                $(event.target).one("click", returnFalse);
+            };
+
+            event.isClickPrevented = returnFalse;
 
             // touch events send an array of touches we need to convert to the pointer events format
             // which means we need to fire multiple events per touch
-            if (original.touches) {
+            if (original.touches && event.type !== "pointercancel") {
                 var touches = original.touches;
                 var events = [];
                 var ev, i, j;
@@ -353,40 +370,37 @@
 
         $.event.special.pointerdown = {
             touch: function (event) {
-                // prevent default to prevent the emulated "mousedown" event from being triggered,
-                // we will force-emulate the click event again from within tounend:pointerup
-                // event.preventDefault();
+                // set the pointer as currently down to prevent chorded PointerDown events
+                _touching = true;
 
+                // trigger a new PointerDown event
                 triggerCustomEvent(this, "pointerdown", event);
 
-                // set the pointer as currently down to prevent chorded "pointerdown" events
-                _isPointerDown = true;
-
-                // set the scroll offset which is compared on touchend
+                // set the scroll offset which is compared on TouchEnd
                 _startScrollOffset = scrollY();
             },
             mouse: function (event) {
-                // _isPointerDown is true when touch is down, this means we do not want to listen to mouse events too
-                if (_isPointerDown === true) {
+                // if we just had a touchstart, ignore this MouseDown event, to prevent double firing of PointerDown
+                if (_touching === true) {
                     return;
                 }
 
-                // do not trigger another "pointerdown" event if currently down, prevent chorded "pointerdown" events
-                if (_isPointerDown !== false) {
-                    var button = getStandardizedButtonsProperty(event);
-                    if (_isPointerDown !== button) {
-                        _isPointerDown |= button;
-                        // as per the pointer event spec, when the active "buttons" change it fires a new "pointermove"
-                        // with the new buttons, but not a new pointerdown event (chorded)
-                        triggerCustomEvent(this, "pointermove", event);
-                        return;
-                    }
+                // we reset the touch to null, to indicate that we're listening to mouse events currently
+                _touching = null;
+
+                // update the _buttons bitmask
+                var button = getStandardizedButtonsProperty(event);
+                var wasAButtonDownAlready = _buttons !== 0;
+                _buttons |= button;
+
+                // do not trigger another PointerDown event if currently down, prevent chorded PointerDown events
+                if (wasAButtonDownAlready && _buttons !== button) {
+                    // per the Pointer Events spec, when the active buttons change it fires only a PointerMove event
+                    triggerCustomEvent(this, "pointermove", event);
+                    return;
                 }
 
-                var jEvent = triggerCustomEvent(this, "pointerdown", event);
-
-                // set the pointer as currently down to prevent chorded "pointerdown" events
-                _isPointerDown = jEvent.buttons;
+                triggerCustomEvent(this, "pointerdown", event);
             },
             add: $.event.delegateSpecial(function (handleObj) {
                 // bind to touch events, some devices (chromebook) can send both touch and mouse events
@@ -422,10 +436,22 @@
                 // prevent default to prevent the emulated "mouseup" event from being triggered
                 event.preventDefault();
 
-                triggerCustomEvent(this, "pointerup", event);
+                // safety check, if _touching is null then we just had a mouse event and shouldn't
+                // listen to touch events right now
+                if (_touching === null) {
+                    return;
+                }
 
-                // release the pointerdown lock
-                _isPointerDown = false;
+                // indicate that currently release the pointerdown lock
+                _touching = false;
+
+                var jEvent = triggerCustomEvent(this, "pointerup", event);
+
+                // if we are preventing the next click event, then simply don't trigger one below
+                if (jEvent.isClickPrevented()) {
+                    $(event.target).off("click", returnFalse);
+                    return;
+                }
 
                 // on "touchend", calling prevent default prevents the "mouseup" and "click" event
                 // however on native "mouseup" events preventing default does not cancel the "click" event
@@ -443,37 +469,37 @@
                 if (event.target && event.target.click && _startScrollOffset === scrollY()) {
                     event.target.click();
                 }
+
+                // on iOS 5 there is no native click function on elements, therefore we need to let jQuery handle it (AR-16405)
+                // on Android 4.1, you cannot prevent it from firing the native click event on touchend (GD-155106)
+                else if (event.target && _startScrollOffset === scrollY()) {
+                    var clickTimer = setTimeout(function () {
+                        $(event.target).click();
+                    }, 200);
+
+                    $(event.target).one("click", function () {
+                        clearTimeout(clickTimer);
+                    });
+                }
             },
             mouse: function (event) {
-                // the Mouse Events API provides the button on mouseup
-                var button = getStandardizedButtonsProperty(event);
-
-                // remove the button from the current pointers down signal
-                // _isPointerDown can be false here if two "mouseup" events are received in parallel,
-                // which can happen, say, if you bind to "pointerup" on a parent and a child (body and a link)
-                if (_isPointerDown !== false) {
-                    _isPointerDown ^= button;
-                }
-
-                // reset _isPointerDown to a boolean if no buttons are down
-                if (_isPointerDown === 0) {
-                    _isPointerDown = false;
-                }
-
-                // do not trigger another "pointerdown" event if currently down, prevent chorded pointerdown events
-                if (_isPointerDown) {
-                    // the mouse events spec shows that upon "mouseup" it fires a "mousemove" afterwards, which
-                    // will trigger the "pointermove" we need to trigger to follow the pointer events spec
+                // if originally we had a TouchStart or we ended with a TouchEnd event, ignore this MouseUp
+                if (_touching === false) {
                     return;
                 }
 
-                var jEvent = triggerCustomEvent(this, "pointerup", event);
+                _buttons ^= getStandardizedButtonsProperty(event);
 
-                // set the pointer as currently down to prevent chorded "pointerdown" events
-                _isPointerDown = jEvent.buttons;
+                // we only trigger a PointerUp event if no buttons are down, prevent chorded PointerDown events
+                if (_buttons === 0) {
+                    triggerCustomEvent(this, "pointerup", event);
+                } else {
+                    // per the Pointer Events spec, when the active buttons change it fires only a PointerMove event
+                    triggerCustomEvent(this, "pointermove", event);
+                }
 
-                // release the pointer down lock on "mouseup"
-                _isPointerDown = false;
+                // Mouse Events spec shows that after a MouseUp it fires a MouseMove, which will trigger
+                // the PointerMove needed to follow the Pointer Events spec which describes the same thing
             },
             add: $.event.delegateSpecial(function (handleObj) {
                 // bind to touch events, some devices (chromebook) can send both touch and mouse events
@@ -500,12 +526,12 @@
                 triggerCustomEvent(this, "pointermove", event);
             },
             mouse: function (event) {
-                // _isPointerDown will be true if they currently have their finger (touch only) down
-                // because we cannot call preventDefault on the "touchmove" we get double triggers
-                // and we prevent it with this signal check.
-                // preventing default on "touchmove" prevents scrolling on mobile devices
-                if (_isPointerDown === true) {
-                    return false;
+                // _touching will be true if they currently have their finger (touch only) down
+                // because we cannot call preventDefault on the "touchmove" without preventing
+                // scrolling on most things, we do this check to ensure we don't double fire
+                // move events.
+                if (_touching === true) {
+                    return;
                 }
 
                 triggerCustomEvent(this, "pointermove", event);
@@ -542,7 +568,6 @@
             }
         }, function (pointerEventType, natives) {
             function onTouch(event) {
-                event.preventDefault();
                 triggerCustomEvent(this, pointerEventType, event);
             }
 

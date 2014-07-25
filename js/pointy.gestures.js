@@ -37,16 +37,6 @@
                 Math.abs(start.coords[1] - stop.coords[1]) < $.event.special.sweep.verticalDistanceThreshold;
         },
 
-        handleSweep: function (start, stop) {
-            if ($.event.special.sweep.isSweep(start, stop, true)) {
-                var dir = start.coords[0] > stop.coords[0] ? "left" : "right";
-
-                start.origin
-                    .trigger("sweep", dir)
-                    .trigger("sweep" + dir);
-            }
-        },
-
         add: $.event.delegateSpecial(function (handleObj) {
             var thisObject = this,
                 $this = $(thisObject);
@@ -77,8 +67,17 @@
                 function up() {
                     $this.off("pointermove", move);
 
-                    if (start && stop) {
-                        $.event.special.sweep.handleSweep(start, stop);
+                    if (start && stop && $.event.special.sweep.isSweep(start, stop, true)) {
+                        var dir = start.coords[0] > stop.coords[0] ? "left" : "right";
+
+                        event.type = "sweep";
+                        event.direction = dir;
+
+                        $.event.dispatch.call(thisObject, event);
+
+                        event.type = "sweep" + dir;
+
+                        $.event.dispatch.call(thisObject, event);
                     }
 
                     start = stop = undefined;
