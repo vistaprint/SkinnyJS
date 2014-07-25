@@ -93,7 +93,7 @@
     };
 
     var Panel = function MenuPanel(menu, panel, item) {
-        $.proxyAll(this, 'onPress', 'onClick', 'onPointerOver', 'onPointerOut', 'showComplete', 'hideComplete');
+        $.proxyAll(this, 'onPress', 'onPointerOver', 'onPointerOut', 'showComplete', 'hideComplete');
         var me = this;
 
         this.menu = menu;
@@ -117,20 +117,11 @@
             this.$panel.data('PanelInstance', this);
         }
 
-        // signal to prevent the next click, set during a touch event
-        // to prevent the click, because you cannot cancel the
-        // native "click" event reliably outside of the "click" event
-        // itself
-        this.shouldPreventNextClick = false;
-
         this.$item
             // Assign a special class to distinguish menu items with a submenu from those without one.
             .addClass('menu-item-with-submenu')
             // Bind the special "press" event, when an item is tapped we determine what to do.
-            .on({
-                'press': this.onPress,
-                'click': this.onClick
-            });
+            .on('press', this.onPress);
 
         // setup pointer hover events only when the option is enabled
         if (this.options.showOnHover) {
@@ -454,33 +445,6 @@
         }
     };
 
-    // preventClickSometimes
-    // Sometimes, we need to prevent the native click event
-    // it's sad, but this is the best implementation I've created
-    Panel.prototype.onClick = function PanelOnClick(event) {
-        // we stop propagation to prevent this click from
-        // going to the document handler to close all menus
-        // this also prevents the clicks from going through
-        // to items below the menu
-        event.stopPropagation();
-
-        if (this.shouldPreventNextClick) {
-            // compare the time difference, we only listen to this
-            // prevention if it's within 200ms of the original
-            // event to prevent errors
-            var timeDiff = +(new Date()) - this.shouldPreventNextClick;
-
-            // reset the trigger
-            this.shouldPreventNextClick = false;
-
-            // if the time difference is less than 1000ms (1s)
-            if (timeDiff < 1000) {
-                // prevent default to prevent navigation (possibly)
-                event.preventDefault();
-            }
-        }
-    };
-
     Panel.prototype.onPress = function (e) {
         // we always want to stop the propagation to parent elements,
         // this can cause the inner leaf items to close sub menus,
@@ -491,7 +455,7 @@
 
         // if this is a mouse click, we do not want to interrupt normal navigation
         // if there is no panel it should act like a regular link, always.
-        if (this.$panel.length === 0 || e.pointerType == 'mouse') {
+        if (this.$panel.length === 0 || e.pointerType === 'mouse') {
             return;
         }
 
@@ -499,18 +463,17 @@
         if (this.$panel.length > 0) {
             var $closestPanel = $(e.target).closest('.menu-panel');
             if ($closestPanel.length > 0 && $closestPanel[0] === this.$panel[0]) {
-                this.shouldPreventNextClick = false;
-
                 // This event bubbled from a child panel's link (a leaf menu item).
                 // It doesn't have a Panel object of its own, so it should act like a regular link.
                 return;
             }
         }
 
-        // For touch events that aren't from leaf menu items,
-        // cancel the default event so touching the menu doesn't cause navigation.
-        this.shouldPreventNextClick = +(new Date());
+        // At this point we know this is a touch event, and we want to toggle the panel.
+
+        // Prevent the click event to prevent navigation
         e.preventDefault();
+        e.preventClick();
 
         if (this.transitioning) {
             return;
