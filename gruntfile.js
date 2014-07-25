@@ -192,8 +192,9 @@ module.exports = function (grunt) {
             }
         },
         wget: {
-            filesObject: {
+            basic: {
                 options: {
+                    overwrite: true,
                     baseUrl: "http://vistaprint.github.io/PointyJS/"
                 },
                 files: {
