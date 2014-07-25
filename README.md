@@ -37,6 +37,7 @@ Skinny UI components
 
 * [jQuery.menu](http://vistaprint.github.io/SkinnyJS/jquery.menu.html): A traditional hierarchical menu widget, designed from the ground up to be both touch and mouse friendly. TODO: Get existing docs from the wiki
 * [jQuery.modalDialog](http://vistaprint.github.io/SkinnyJS/jquery.modalDialog.html): A powerful modal dialog system that works across all devices: TODO: Get existing docs from the wiki
+* [jQuery.richTooltip](http://vistaprint.github.io/SkinnyJS/jquery.richTooltip.html): Responsive tooltips that support HTML content.
 
 Dependencies
 ------------------
