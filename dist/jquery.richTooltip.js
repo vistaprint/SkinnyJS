@@ -3,7 +3,7 @@
 /// <reference path="jquery.calcRestrainedPos.js" />
 /// <reference path="jquery.hoverDelay.js" />
 
-(function ($) {
+(function ($, undefined) {
     var arrowDirections = {
         south: 'north',
         north: 'south',
@@ -17,7 +17,9 @@
     var defaults = {
         pos: 'south',
         arrowDirection: null,
-        arrowStyle: 'outset'
+        arrowStyle: 'outset',
+        closeOnWindowResize: true,
+        closeOnDocumentClick: true
     };
 
     function Tooltip(context, options) {
@@ -63,46 +65,14 @@
                 this.content.hover(this.show, this.unhover);
             }
 
-            // timestamp of last touch event, used to determine if we should preventDefault on the next click event
-            var ignoreNextClick = null;
-
-            var checkEvent = function (event) {
-                event.preventDefault();
-
-                // if this is a touch type event, then record it
-                if (event.pointerType === 'touch') {
-                    ignoreNextClick = +(new Date());
-                }
-            };
-
             // listen to pointer down and record the event to be used on click
             // calling prevent default on pointerup/pointerdown does not
             // prevent navigation, preventDefault must happen within click event
-            this.context.on({
-                'pointerdown': checkEvent,
-                'pointerup': $.proxy(function (event) {
-                    checkEvent(event);
-
-                    // toggle visibility on touches
-                    if (event.pointerType === 'touch') {
-                        this.toggle(event);
-                    }
-                }, this)
-            });
-
-            // listen to clicks, and call prevent default on touch devices
-            this.context.on('click', $.proxy(function (event) {
-                if (ignoreNextClick !== null) {
-                    // calculate time delta between last touch event and now
-                    var timeDiff = +(new Date()) - ignoreNextClick;
-
-                    // ignore all clicks for a period of time after the last touch event,
-                    // we could ignore all future click events as well, except some devices
-                    // have mice and touch screens so this allows for both to work.
-                    if (timeDiff < 2500) {
-                        event.preventDefault();
-                        event.stopPropagation(); // do not let this trickle up to the document
-                    }
+            this.context.on('press', $.proxy(function (event) {
+                // toggle visibility on touches
+                if (event.pointerType === 'touch') {
+                    event.preventClick();
+                    this.toggle(event);
                 }
             }, this));
         } else {
@@ -162,10 +132,14 @@
         };
 
         // hide the tooltip if the browser resizes, the user can open it back up easily
-        $(window).on('resize', this.onWindowResize);
+        if (this.options.closeOnWindowResize) {
+            $(window).on('resize', this.onWindowResize);
+        }
 
         // hide the tooltip if user clicks outside of the tooltip
-        $(document).on('click', this.onDocumentClick);
+        if (this.options.closeOnDocumentClick) {
+            $(document).on('click', this.onDocumentClick);
+        }
 
         // listen for other ui elements opening, and if one opens, close this tooltip
         $(document).one('ui.element.open', this.onUiElementOpen);
@@ -187,8 +161,15 @@
         this.context.removeClass('rich-tooltip-open').trigger('richTooltip:close');
 
         // remove event listeners
-        $(window).off('resize', this.onWindowResize);
-        $(document).off('click', this.onDocumentClick);
+        if (this.options.closeOnWindowResize) {
+            $(window).off('resize', this.onWindowResize);
+        }
+
+        if (this.options.closeOnDocumentClick) {
+            $(document).off('click', this.onDocumentClick);
+        }
+
+        // stop listening for other ui elements opening, since we no longer need to care
         $(document).off('ui.element.open', this.onUiElementOpen);
     };
 
@@ -261,7 +242,12 @@
 
         var pos = restrainedPos.pos;
         var contextRect = this.context.clientRect();
-        var arrowPos = {};
+        var arrowPos = {
+            top: 'auto',
+            right: 'auto',
+            bottom: 'auto',
+            left: 'auto'
+        };
 
         if (restrainedPos.direction !== this.options.pos) {
             this.content
@@ -350,37 +336,38 @@
 
     // initialize all existing tooltips
     $(function () {
+        // translate data attributes to options
+        function getOptionsFromData(context, content) {
+            var data = context.data();
+
+            if (!content) {
+                content = $(data.tooltip);
+            }
+
+            return {
+                content: content,
+                action: data.tooltipAction || 'click',
+                pos: data.tooltipPos || 'south',
+                container: data.tooltipContainer || undefined,
+                arrowDirection: data.tooltipArrowDirection || null,
+                arrowStyle: data.tooltipArrowStyle || null,
+                closeOnWindowResize: data.tooltipIgnoreWindowResize === undefined,
+                closeOnDocumentClick: data.tooltipIgnoreDocumentClick === undefined
+            };
+        }
+
+        // convert <span data-rel="tooltip" /><aside /> to tooltips
         $('[data-rel="tooltip"] + aside').each(function (i, el) {
             var content = $(el); // this is the aside
             var context = content.prev(); // element prior to aside
-            var data = context.data();
 
-            // translate data attributes to options
-            context.richTooltip({
-                content: content,
-                action: data.tooltipAction || 'click',
-                pos: data.tooltipPos || 'south',
-                container: data.tooltipContainer || undefined,
-                arrowDirection: data.tooltipArrowDirection || null,
-                arrowStyle: data.tooltipArrowStyle || null
-            });
+            context.richTooltip(getOptionsFromData(context, content));
         });
 
         // allow instances without the <aside> directly after the context
-        $('[data-tooltip]').each(function (i, el) {
-            var context = $(el);
-            var data = context.data();
-            var content = $(data.tooltip);
-
-            // translate data attributes to options
-            context.richTooltip({
-                content: content,
-                action: data.tooltipAction || 'click',
-                pos: data.tooltipPos || 'south',
-                container: data.tooltipContainer || undefined,
-                arrowDirection: data.tooltipArrowDirection || null,
-                arrowStyle: data.tooltipArrowStyle || null
-            });
+        $('[data-tooltip]').each(function (i, context) {
+            context = $(context);
+            context.richTooltip(getOptionsFromData(context));
         });
     });
 })(jQuery);

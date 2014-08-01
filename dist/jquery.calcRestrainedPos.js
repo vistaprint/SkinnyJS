@@ -43,6 +43,12 @@
             height: document.documentElement.clientHeight
         };
 
+        // get the current scroll position of the window
+        var scroll = {
+            x: $(window).scrollLeft(),
+            y: $(window).scrollTop()
+        };
+
         // allow offsets to be passed
         var offsets = $.extend({
             padding: 0,
@@ -163,8 +169,8 @@
         function compensateViewport(direction, posLimits) {
             if (options.viewport === true) {
                 // north check
-                if (pos.top < offsets.viewport) {
-                    pos.top = offsets.viewport;
+                if (pos.top < scroll.y + offsets.viewport) {
+                    pos.top = scroll.y + offsets.viewport;
                     if (options.cornerAdjacent && ((direction === 'east') || (direction === 'west')) && !isCornerAdjacent(direction, pos)) {
                         //Need to keep the corners adjancent, so adjust the position and update the posLimits.
                         pos.top = context.top + offsets.padding;
@@ -172,8 +178,8 @@
                     }
                 }
                 // south check
-                else if (pos.top + content.height > viewport.height) {
-                    pos.top = viewport.height - content.height - offsets.viewport;
+                else if (pos.top + content.height > scroll.y + viewport.height) {
+                    pos.top = scroll.y + viewport.height - content.height - offsets.viewport;
                     if (options.cornerAdjacent && ((direction === 'east') || (direction === 'west')) && !isCornerAdjacent(direction, pos)) {
                         //Need to keep the corners adjancent, so adjust the position and update the posLimits.
                         pos.top = (context.top + context.height - offsets.padding) - content.height;
@@ -182,8 +188,8 @@
                 }
 
                 // east check
-                if (pos.left + content.width > viewport.width) {
-                    pos.left = viewport.width - content.width - offsets.viewport;
+                if (pos.left + content.width > scroll.x + viewport.width) {
+                    pos.left = scroll.x + viewport.width - content.width - offsets.viewport;
                     if (options.cornerAdjacent && ((direction === 'north') || (direction === 'south')) && !isCornerAdjacent(direction, pos)) {
                         //Need to keep the corners adjancent, so adjust the position and update the posLimits.
                         pos.left = (context.left + context.width - offsets.padding) - content.width;
@@ -191,8 +197,8 @@
                     }
                 }
                 // west check
-                else if (pos.left < offsets.viewport) {
-                    pos.left = offsets.viewport;
+                else if (pos.left < scroll.x + offsets.viewport) {
+                    pos.left = scroll.x + offsets.viewport;
                     if (options.cornerAdjacent && ((direction === 'north') || (direction === 'south')) && !isCornerAdjacent(direction, pos)) {
                         //Need to keep the corners adjancent, so adjust the position and update the posLimits.
                         pos.left = context.left + offsets.padding;
