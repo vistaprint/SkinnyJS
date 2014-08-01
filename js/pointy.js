@@ -1,4 +1,12 @@
-// Pointer Events polyfill for jQuery
+/*!
+ * Pointy.js
+ * Pointer Events polyfill for jQuery
+ * https://github.com/vistaprint/PointyJS
+ *
+ * Depends on jQuery, see http://jquery.org
+ *
+ * Developed by Vistaprint.com
+ */
 
 (function ($, window, document, undefined) {
 
@@ -175,7 +183,7 @@
 
     // add our own pointer event hook/filter
     $.event.pointerHooks = {
-        props: "pointerType pointerId buttons clientX clientY relatedTarget fromElement offsetX offsetY pageX pageY screenX screenY toElement".split(" "),
+        props: "pointerType pointerId pressure buttons clientX clientY relatedTarget fromElement offsetX offsetY pageX pageY screenX screenY width height toElement".split(" "),
         filter: function (event, original) {
             // Calculate pageX/Y if missing and clientX/Y available
             // this is just copied from jQuery's standard pageX/pageY fix
@@ -195,7 +203,7 @@
             }
 
             // Add pointerType
-            if (!event.pointerType || typeof event.pointerType == "number") {
+            if (!event.pointerType || typeof event.pointerType === "number") {
                 if (event.pointerType == 2) {
                     event.pointerType = POINTER_TYPE_TOUCH;
                 } else if (event.pointerType == 3) {
@@ -204,8 +212,8 @@
                     event.pointerType = POINTER_TYPE_MOUSE;
                 } else if (/^touch/i.test(original.type)) {
                     event.pointerType = POINTER_TYPE_TOUCH;
-                    event.buttons = original.type === "touchend" ? 0 : 1;
-                } else if (/^mouse/i.test(original.type) || original.type == "click") {
+                    event.buttons = original.type === "touchend" || original.type === "touchcancel" ? 0 : 1;
+                } else if (/^mouse/i.test(original.type) || original.type === "click") {
                     event.pointerId = 1; // as per the pointer events spec, the mouse is always pointer id 1
                     event.pointerType = POINTER_TYPE_MOUSE;
                     event.buttons = original.type === "mouseup" ? 0 : getStandardizedButtonsProperty(original);
@@ -219,6 +227,16 @@
             // browsers that do not support the HTML DOM LEVEL 3 events spec
             if (event.type === "pointermove" && _touching === null && _buttons !== event.buttons) {
                 event.buttons = _buttons;
+            }
+
+            // standardize the pressure attribute
+            if (!event.pressure) {
+                event.pressure = event.buttons > 0 ? 0.5 : 0;
+            }
+
+            // standardize the width and height, these represent the contact geometry
+            if (event.width === undefined || event.height === undefined) {
+                event.width = event.height = 0;
             }
 
             // prevent the follow native click event from occurring, can be used to prevent
@@ -633,6 +651,37 @@
             MSPointerOver: $.event.pointerHooks,
             MSPointerOut: $.event.pointerHooks,
             MSPointerCancel: $.event.pointerHooks
+        });
+    }
+
+    // add support for pointerenter and pointerlave
+    // pointerenter and pointerleave were added in IE11, they do not exist in IE10
+    if (!support.pointer || (navigator.msPointerEnabled && !navigator.pointerEnabled)) {
+        // Create a wrapper similar to jQuery's mouseenter/leave events
+        // using pointer events (pointerover/out) and event-time checks
+        jQuery.each({
+            pointerenter: navigator.msPointerEnabled ? "MSPointerOver" : "mouseover",
+            pointerleave: navigator.msPointerEnabled ? "MSPointerOut" : "mouseout"
+        }, function (orig, fix) {
+            jQuery.event.special[orig] = {
+                delegateType: fix,
+                bindType: fix,
+                handle: function (event) {
+                    var ret,
+                        target = this,
+                        related = event.relatedTarget,
+                        handleObj = event.handleObj;
+
+                    // For mousenter/leave call the handler if related is outside the target.
+                    // NB: No relatedTarget if the mouse left/entered the browser window
+                    if (!related || (related !== target && !jQuery.contains(target, related))) {
+                        event.type = handleObj.origType;
+                        ret = handleObj.handler.apply(this, arguments);
+                        event.type = fix;
+                    }
+                    return ret;
+                }
+            };
         });
     }
 

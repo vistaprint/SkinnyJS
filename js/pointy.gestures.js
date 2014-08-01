@@ -1,3 +1,14 @@
+/*!
+ * Pointy.js
+ * Pointer Events polyfill for jQuery
+ * https://github.com/vistaprint/PointyJS
+ *
+ * Depends on jQuery, see http://jquery.org
+ *
+ * Developed by Vistaprint.com
+ *
+ * pointy.gestures.js adds special events to jQuery for added fun.
+ */
 /// <reference path="pointy.js" />
 
 (function ($) {
