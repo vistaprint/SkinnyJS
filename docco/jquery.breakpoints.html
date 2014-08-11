@@ -1,60 +1,360 @@
-<!DOCTYPE html>  <html> <head>   <title>jquery.breakpoints.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="breakpoints.html">                 breakpoints.js               </a>                                           <a class="source" href="date-parse.html">                 date-parse.js               </a>                                           <a class="source" href="jquery.breakpoints.html">                 jquery.breakpoints.js               </a>                                           <a class="source" href="jquery.calcRestrainedPos.html">                 jquery.calcRestrainedPos.js               </a>                                           <a class="source" href="jquery.clientRect.html">                 jquery.clientRect.js               </a>                                           <a class="source" href="jquery.contentSize.html">                 jquery.contentSize.js               </a>                                           <a class="source" href="jquery.cookies.html">                 jquery.cookies.js               </a>                                           <a class="source" href="jquery.css.html">                 jquery.css.js               </a>                                           <a class="source" href="jquery.customEvent.html">                 jquery.customEvent.js               </a>                                           <a class="source" href="jquery.delimitedString.html">                 jquery.delimitedString.js               </a>                                           <a class="source" href="jquery.disableEvent.html">                 jquery.disableEvent.js               </a>                                           <a class="source" href="jquery.hostIframe.html">                 jquery.hostIframe.js               </a>                                           <a class="source" href="jquery.hoverDelay.html">                 jquery.hoverDelay.js               </a>                                           <a class="source" href="jquery.htmlEncode.html">                 jquery.htmlEncode.js               </a>                                           <a class="source" href="jquery.imageSize.html">                 jquery.imageSize.js               </a>                                           <a class="source" href="jquery.isVisibleKeyCode.html">                 jquery.isVisibleKeyCode.js               </a>                                           <a class="source" href="jquery.menu.html">                 jquery.menu.js               </a>                                           <a class="source" href="jquery-menu-exampleskin.html">                 jquery-menu-exampleskin.js               </a>                                           <a class="source" href="jquery.modalDialog.deviceFixes.html">                 jquery.modalDialog.deviceFixes.js               </a>                                           <a class="source" href="jquery.modalDialog.getSettings.html">                 jquery.modalDialog.getSettings.js               </a>                                           <a class="source" href="jquery.modalDialog.header.html">                 jquery.modalDialog.header.js               </a>                                           <a class="source" href="jquery.modalDialog.history.html">                 jquery.modalDialog.history.js               </a>                                           <a class="source" href="jquery.modalDialog.html">                 jquery.modalDialog.js               </a>                                           <a class="source" href="jquery.modalDialog.unobtrusive.html">                 jquery.modalDialog.unobtrusive.js               </a>                                           <a class="source" href="jquery.modalDialog.userAgent.html">                 jquery.modalDialog.userAgent.js               </a>                                           <a class="source" href="jquery.modalDialogContent.header.html">                 jquery.modalDialogContent.header.js               </a>                                           <a class="source" href="jquery.modalDialogContent.html">                 jquery.modalDialogContent.js               </a>                                           <a class="source" href="jquery.msAjax.html">                 jquery.msAjax.js               </a>                                           <a class="source" href="jquery.ns.html">                 jquery.ns.js               </a>                                           <a class="source" href="jquery.partialLoad.html">                 jquery.partialLoad.js               </a>                                           <a class="source" href="jquery.postMessage.html">                 jquery.postMessage.js               </a>                                           <a class="source" href="jquery.proxyAll.html">                 jquery.proxyAll.js               </a>                                           <a class="source" href="jquery.queryString.html">                 jquery.queryString.js               </a>                                           <a class="source" href="jquery.richTooltip.html">                 jquery.richTooltip.js               </a>                                           <a class="source" href="jquery.scrollAnchor.html">                 jquery.scrollAnchor.js               </a>                                           <a class="source" href="jquery.uncomment.html">                 jquery.uncomment.js               </a>                                           <a class="source" href="jquery.url.html">                 jquery.url.js               </a>                                           <a class="source" href="pointy.gestures.html">                 pointy.gestures.js               </a>                                           <a class="source" href="pointy.html">                 pointy.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs"><a href="../index.html">Home</a> | 
-<a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.breakpoints.js" target="_blank">View this file on Github</a>
+<!DOCTYPE html>
 
-<hr style="height: 1px; border:0; background-color:#4A525A">
-             <h1>               jquery.breakpoints.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>/ <reference path="breakpoints.js" /></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="cm">/* globals skinny */</span>
+<html>
+<head>
+  <title>jquery.breakpoints.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="breakpoints.html">
+                breakpoints.js
+              </a>
+            
+              
+              <a class="source" href="date-parse.html">
+                date-parse.js
+              </a>
+            
+              
+              <a class="source" href="jquery.breakpoints.html">
+                jquery.breakpoints.js
+              </a>
+            
+              
+              <a class="source" href="jquery.calcRestrainedPos.html">
+                jquery.calcRestrainedPos.js
+              </a>
+            
+              
+              <a class="source" href="jquery.clientRect.html">
+                jquery.clientRect.js
+              </a>
+            
+              
+              <a class="source" href="jquery.contentSize.html">
+                jquery.contentSize.js
+              </a>
+            
+              
+              <a class="source" href="jquery.cookies.html">
+                jquery.cookies.js
+              </a>
+            
+              
+              <a class="source" href="jquery.css.html">
+                jquery.css.js
+              </a>
+            
+              
+              <a class="source" href="jquery.customEvent.html">
+                jquery.customEvent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.delimitedString.html">
+                jquery.delimitedString.js
+              </a>
+            
+              
+              <a class="source" href="jquery.disableEvent.html">
+                jquery.disableEvent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.hostIframe.html">
+                jquery.hostIframe.js
+              </a>
+            
+              
+              <a class="source" href="jquery.hoverDelay.html">
+                jquery.hoverDelay.js
+              </a>
+            
+              
+              <a class="source" href="jquery.htmlEncode.html">
+                jquery.htmlEncode.js
+              </a>
+            
+              
+              <a class="source" href="jquery.imageSize.html">
+                jquery.imageSize.js
+              </a>
+            
+              
+              <a class="source" href="jquery.isVisibleKeyCode.html">
+                jquery.isVisibleKeyCode.js
+              </a>
+            
+              
+              <a class="source" href="jquery.menu.html">
+                jquery.menu.js
+              </a>
+            
+              
+              <a class="source" href="jquery-menu-exampleskin.html">
+                jquery-menu-exampleskin.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.deviceFixes.html">
+                jquery.modalDialog.deviceFixes.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.getSettings.html">
+                jquery.modalDialog.getSettings.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.header.html">
+                jquery.modalDialog.header.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.history.html">
+                jquery.modalDialog.history.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.html">
+                jquery.modalDialog.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.unobtrusive.html">
+                jquery.modalDialog.unobtrusive.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.userAgent.html">
+                jquery.modalDialog.userAgent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialogContent.header.html">
+                jquery.modalDialogContent.header.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialogContent.html">
+                jquery.modalDialogContent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.msAjax.html">
+                jquery.msAjax.js
+              </a>
+            
+              
+              <a class="source" href="jquery.ns.html">
+                jquery.ns.js
+              </a>
+            
+              
+              <a class="source" href="jquery.partialLoad.html">
+                jquery.partialLoad.js
+              </a>
+            
+              
+              <a class="source" href="jquery.postMessage.html">
+                jquery.postMessage.js
+              </a>
+            
+              
+              <a class="source" href="jquery.proxyAll.html">
+                jquery.proxyAll.js
+              </a>
+            
+              
+              <a class="source" href="jquery.queryString.html">
+                jquery.queryString.js
+              </a>
+            
+              
+              <a class="source" href="jquery.richTooltip.html">
+                jquery.richTooltip.js
+              </a>
+            
+              
+              <a class="source" href="jquery.scrollAnchor.html">
+                jquery.scrollAnchor.js
+              </a>
+            
+              
+              <a class="source" href="jquery.uncomment.html">
+                jquery.uncomment.js
+              </a>
+            
+              
+              <a class="source" href="jquery.url.html">
+                jquery.url.js
+              </a>
+            
+              
+              <a class="source" href="pointy.gestures.html">
+                pointy.gestures.js
+              </a>
+            
+              
+              <a class="source" href="pointy.html">
+                pointy.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>jquery.breakpoints.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>/ <reference path="breakpoints.js" /></p>
 
-<span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/* globals skinny */</span>
 
-    <span class="kd">var</span> <span class="nx">EVENTS_KEY</span> <span class="o">=</span> <span class="s2">&quot;breakpoints-events&quot;</span><span class="p">;</span>
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span>
 
-    <span class="kd">var</span> <span class="nx">setupEvents</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">el</span><span class="p">,</span> <span class="nx">breakpoints</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">$el</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">el</span><span class="p">);</span>
+    <span class="hljs-keyword">var</span> EVENTS_KEY = <span class="hljs-string">"breakpoints-events"</span>;
 
-</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Ensure events aren't set more than once for the same element</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">$el</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">EVENTS_KEY</span><span class="p">))</span> <span class="p">{</span>
-            <span class="k">return</span><span class="p">;</span>
-        <span class="p">}</span>
+    <span class="hljs-keyword">var</span> setupEvents = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(el, breakpoints)</span> {</span>
+        <span class="hljs-keyword">var</span> $el = $(el);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Ensure events aren’t set more than once for the same element</p>
 
-        <span class="nx">$el</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">EVENTS_KEY</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> ($el.data(EVENTS_KEY)) {
+            <span class="hljs-keyword">return</span>;
+        }
 
-        <span class="kd">var</span> <span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        $el.data(EVENTS_KEY, <span class="hljs-literal">true</span>);
 
-</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Only recalculate breakpoints if the event is fired on the element or its parent</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">e</span> <span class="o">&amp;&amp;</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">$</span><span class="p">.</span><span class="nx">isWindow</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">))</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span> <span class="o">!==</span> <span class="nx">$el</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">$</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">,</span> <span class="nx">$el</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="p">{</span>
-                    <span class="k">return</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
+        <span class="hljs-keyword">var</span> update = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Only recalculate breakpoints if the event is fired on the element or its parent</p>
 
-            <span class="nx">skinny</span><span class="p">.</span><span class="nx">breakpoints</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">el</span><span class="p">,</span> <span class="nx">breakpoints</span><span class="p">);</span>
-        <span class="p">};</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (e &amp;&amp; e.target &amp;&amp; !$.isWindow(e.target)) {
+                <span class="hljs-keyword">if</span> (e.target !== $el[<span class="hljs-number">0</span>] &amp;&amp; !$.contains(e.target, $el[<span class="hljs-number">0</span>])) {
+                    <span class="hljs-keyword">return</span>;
+                }
+            }
 
-        <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="nx">update</span><span class="p">);</span>
-        <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;resize orientationchange breakpoints:refresh&quot;</span><span class="p">,</span> <span class="nx">update</span><span class="p">);</span>
-    <span class="p">};</span>
+            skinny.breakpoints.update(el, breakpoints);
+        };
 
-</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Public API for initializing breakpoints for elements after the page loads</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">breakpoints</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">breakpoints</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">bp</span> <span class="o">=</span> <span class="nx">skinny</span><span class="p">.</span><span class="nx">breakpoints</span><span class="p">.</span><span class="nx">setup</span><span class="p">(</span><span class="nx">el</span><span class="p">,</span> <span class="nx">breakpoints</span><span class="p">);</span>
-            <span class="nx">setupEvents</span><span class="p">(</span><span class="nx">el</span><span class="p">,</span> <span class="nx">bp</span><span class="p">);</span>
-        <span class="p">});</span>
+        $(document).ready(update);
+        $(window).on(<span class="hljs-string">"resize orientationchange breakpoints:refresh"</span>, update);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Public API for initializing breakpoints for elements after the page loads</p>
 
-        <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
-    <span class="p">};</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.fn.breakpoints = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(breakpoints)</span> {</span>
+        <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, el)</span> {</span>
+            <span class="hljs-keyword">var</span> bp = skinny.breakpoints.setup(el, breakpoints);
+            setupEvents(el, bp);
+        });
 
-    <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+    };
 
-</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Setup events for any elements that were initialized inline by skinny.breakpoints.setup()</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">skinny</span><span class="p">.</span><span class="nx">breakpoints</span><span class="p">.</span><span class="nx">all</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">setupEvents</span><span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">el</span><span class="p">,</span> <span class="nx">item</span><span class="p">.</span><span class="nx">breakpoints</span><span class="p">);</span>
-        <span class="p">});</span>
+    $(document).ready(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Setup events for any elements that were initialized inline by skinny.breakpoints.setup()</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Process elements set up for breakpoints unobtrusively</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;[data-breakpoints]&quot;</span><span class="p">).</span><span class="nx">breakpoints</span><span class="p">();</span>
-    <span class="p">});</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        $.each(skinny.breakpoints.all, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, item)</span> {</span>
+            setupEvents(item.el, item.breakpoints);
+        });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Process elements set up for breakpoints unobtrusively</p>
 
-<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        $(<span class="hljs-string">"[data-breakpoints]"</span>).breakpoints();
+    });
 
-</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
+})(jQuery);</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

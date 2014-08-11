@@ -1,72 +1,410 @@
-<!DOCTYPE html>  <html> <head>   <title>date-parse.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="breakpoints.html">                 breakpoints.js               </a>                                           <a class="source" href="date-parse.html">                 date-parse.js               </a>                                           <a class="source" href="jquery.breakpoints.html">                 jquery.breakpoints.js               </a>                                           <a class="source" href="jquery.calcRestrainedPos.html">                 jquery.calcRestrainedPos.js               </a>                                           <a class="source" href="jquery.clientRect.html">                 jquery.clientRect.js               </a>                                           <a class="source" href="jquery.contentSize.html">                 jquery.contentSize.js               </a>                                           <a class="source" href="jquery.cookies.html">                 jquery.cookies.js               </a>                                           <a class="source" href="jquery.css.html">                 jquery.css.js               </a>                                           <a class="source" href="jquery.customEvent.html">                 jquery.customEvent.js               </a>                                           <a class="source" href="jquery.delimitedString.html">                 jquery.delimitedString.js               </a>                                           <a class="source" href="jquery.disableEvent.html">                 jquery.disableEvent.js               </a>                                           <a class="source" href="jquery.hostIframe.html">                 jquery.hostIframe.js               </a>                                           <a class="source" href="jquery.hoverDelay.html">                 jquery.hoverDelay.js               </a>                                           <a class="source" href="jquery.htmlEncode.html">                 jquery.htmlEncode.js               </a>                                           <a class="source" href="jquery.imageSize.html">                 jquery.imageSize.js               </a>                                           <a class="source" href="jquery.isVisibleKeyCode.html">                 jquery.isVisibleKeyCode.js               </a>                                           <a class="source" href="jquery.menu.html">                 jquery.menu.js               </a>                                           <a class="source" href="jquery-menu-exampleskin.html">                 jquery-menu-exampleskin.js               </a>                                           <a class="source" href="jquery.modalDialog.deviceFixes.html">                 jquery.modalDialog.deviceFixes.js               </a>                                           <a class="source" href="jquery.modalDialog.getSettings.html">                 jquery.modalDialog.getSettings.js               </a>                                           <a class="source" href="jquery.modalDialog.header.html">                 jquery.modalDialog.header.js               </a>                                           <a class="source" href="jquery.modalDialog.history.html">                 jquery.modalDialog.history.js               </a>                                           <a class="source" href="jquery.modalDialog.html">                 jquery.modalDialog.js               </a>                                           <a class="source" href="jquery.modalDialog.unobtrusive.html">                 jquery.modalDialog.unobtrusive.js               </a>                                           <a class="source" href="jquery.modalDialog.userAgent.html">                 jquery.modalDialog.userAgent.js               </a>                                           <a class="source" href="jquery.modalDialogContent.header.html">                 jquery.modalDialogContent.header.js               </a>                                           <a class="source" href="jquery.modalDialogContent.html">                 jquery.modalDialogContent.js               </a>                                           <a class="source" href="jquery.msAjax.html">                 jquery.msAjax.js               </a>                                           <a class="source" href="jquery.ns.html">                 jquery.ns.js               </a>                                           <a class="source" href="jquery.partialLoad.html">                 jquery.partialLoad.js               </a>                                           <a class="source" href="jquery.postMessage.html">                 jquery.postMessage.js               </a>                                           <a class="source" href="jquery.proxyAll.html">                 jquery.proxyAll.js               </a>                                           <a class="source" href="jquery.queryString.html">                 jquery.queryString.js               </a>                                           <a class="source" href="jquery.richTooltip.html">                 jquery.richTooltip.js               </a>                                           <a class="source" href="jquery.scrollAnchor.html">                 jquery.scrollAnchor.js               </a>                                           <a class="source" href="jquery.uncomment.html">                 jquery.uncomment.js               </a>                                           <a class="source" href="jquery.url.html">                 jquery.url.js               </a>                                           <a class="source" href="pointy.gestures.html">                 pointy.gestures.js               </a>                                           <a class="source" href="pointy.html">                 pointy.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs"><a href="../index.html">Home</a> | 
-<a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/date-parse.js" target="_blank">View this file on Github</a>
+<!DOCTYPE html>
 
-<hr style="height: 1px; border:0; background-color:#4A525A">
-             <h1>               date-parse.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nb">Date</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">origParse</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parse</span><span class="p">,</span>
-        <span class="nx">numericKeys</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">];</span>
+<html>
+<head>
+  <title>date-parse.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="breakpoints.html">
+                breakpoints.js
+              </a>
+            
+              
+              <a class="source" href="date-parse.html">
+                date-parse.js
+              </a>
+            
+              
+              <a class="source" href="jquery.breakpoints.html">
+                jquery.breakpoints.js
+              </a>
+            
+              
+              <a class="source" href="jquery.calcRestrainedPos.html">
+                jquery.calcRestrainedPos.js
+              </a>
+            
+              
+              <a class="source" href="jquery.clientRect.html">
+                jquery.clientRect.js
+              </a>
+            
+              
+              <a class="source" href="jquery.contentSize.html">
+                jquery.contentSize.js
+              </a>
+            
+              
+              <a class="source" href="jquery.cookies.html">
+                jquery.cookies.js
+              </a>
+            
+              
+              <a class="source" href="jquery.css.html">
+                jquery.css.js
+              </a>
+            
+              
+              <a class="source" href="jquery.customEvent.html">
+                jquery.customEvent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.delimitedString.html">
+                jquery.delimitedString.js
+              </a>
+            
+              
+              <a class="source" href="jquery.disableEvent.html">
+                jquery.disableEvent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.hostIframe.html">
+                jquery.hostIframe.js
+              </a>
+            
+              
+              <a class="source" href="jquery.hoverDelay.html">
+                jquery.hoverDelay.js
+              </a>
+            
+              
+              <a class="source" href="jquery.htmlEncode.html">
+                jquery.htmlEncode.js
+              </a>
+            
+              
+              <a class="source" href="jquery.imageSize.html">
+                jquery.imageSize.js
+              </a>
+            
+              
+              <a class="source" href="jquery.isVisibleKeyCode.html">
+                jquery.isVisibleKeyCode.js
+              </a>
+            
+              
+              <a class="source" href="jquery.menu.html">
+                jquery.menu.js
+              </a>
+            
+              
+              <a class="source" href="jquery-menu-exampleskin.html">
+                jquery-menu-exampleskin.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.deviceFixes.html">
+                jquery.modalDialog.deviceFixes.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.getSettings.html">
+                jquery.modalDialog.getSettings.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.header.html">
+                jquery.modalDialog.header.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.history.html">
+                jquery.modalDialog.history.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.html">
+                jquery.modalDialog.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.unobtrusive.html">
+                jquery.modalDialog.unobtrusive.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.userAgent.html">
+                jquery.modalDialog.userAgent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialogContent.header.html">
+                jquery.modalDialogContent.header.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialogContent.html">
+                jquery.modalDialogContent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.msAjax.html">
+                jquery.msAjax.js
+              </a>
+            
+              
+              <a class="source" href="jquery.ns.html">
+                jquery.ns.js
+              </a>
+            
+              
+              <a class="source" href="jquery.partialLoad.html">
+                jquery.partialLoad.js
+              </a>
+            
+              
+              <a class="source" href="jquery.postMessage.html">
+                jquery.postMessage.js
+              </a>
+            
+              
+              <a class="source" href="jquery.proxyAll.html">
+                jquery.proxyAll.js
+              </a>
+            
+              
+              <a class="source" href="jquery.queryString.html">
+                jquery.queryString.js
+              </a>
+            
+              
+              <a class="source" href="jquery.richTooltip.html">
+                jquery.richTooltip.js
+              </a>
+            
+              
+              <a class="source" href="jquery.scrollAnchor.html">
+                jquery.scrollAnchor.js
+              </a>
+            
+              
+              <a class="source" href="jquery.uncomment.html">
+                jquery.uncomment.js
+              </a>
+            
+              
+              <a class="source" href="jquery.url.html">
+                jquery.url.js
+              </a>
+            
+              
+              <a class="source" href="pointy.gestures.html">
+                pointy.gestures.js
+              </a>
+            
+              
+              <a class="source" href="pointy.html">
+                pointy.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>date-parse.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(Date, undefined)</span> {</span>
+    <span class="hljs-keyword">var</span> origParse = <span class="hljs-built_in">Date</span>.parse,
+        numericKeys = [<span class="hljs-number">1</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Parses the date in ISO8601 format
+If “strict” is true Whether or not to perform a strict parse, which requires all parts of the date to be present</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Parses the date in ISO8601 format
-If "strict" is true Whether or not to perform a strict parse, which requires all parts of the date to be present</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nb">Date</span><span class="p">.</span><span class="nx">parseISO</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">date</span><span class="p">,</span> <span class="nx">strict</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">struct</span><span class="p">,</span> <span class="nx">minutesOffset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">Date</span>.parseISO = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(date, strict)</span> {</span>
+        <span class="hljs-keyword">var</span> struct, minutesOffset = <span class="hljs-number">0</span>;
 
-        <span class="nx">strict</span> <span class="o">=</span> <span class="o">!!</span> <span class="nx">strict</span><span class="p">;</span>
+        strict = !! strict;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Example date string: +002011-06-15T21:40:05.121+06:00</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Example date string: +002011-06-15T21:40:05.121+06:00</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+        <span class="hljs-keyword">if</span> (!strict) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Non-strict parsing</p>
 
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">strict</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Non-strict parsing</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="nx">struct</span> <span class="o">=</span> <span class="sr">/^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">date</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Strict parsing</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="nx">struct</span> <span class="o">=</span> <span class="sr">/^(\d{4}|[+\-]\d{6})\-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\.(\d{3})(?:(Z)|([+\-]))(\d{2}):(\d{2})$/</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">date</span><span class="p">);</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            struct = <span class="hljs-regexp">/^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/</span>.exec(date);
+        } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Strict parsing</p>
 
-        <span class="k">if</span> <span class="p">(</span><span class="nx">struct</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Avoid NaN timestamps caused by "undefined" values being passed to Date.UTC</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">k</span><span class="p">;</span>
-                <span class="p">(</span><span class="nx">k</span> <span class="o">=</span> <span class="nx">numericKeys</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">struct</span><span class="p">[</span><span class="nx">k</span><span class="p">]</span> <span class="o">=</span> <span class="o">+</span><span class="nx">struct</span><span class="p">[</span><span class="nx">k</span><span class="p">]</span> <span class="o">||</span> <span class="mi">0</span><span class="p">;</span>
-            <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            struct = <span class="hljs-regexp">/^(\d{4}|[+\-]\d{6})\-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\.(\d{3})(?:(Z)|([+\-]))(\d{2}):(\d{2})$/</span>.exec(date);
+        }
 
-</pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Allow undefined days and months</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="nx">struct</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">+</span><span class="nx">struct</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">||</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-            <span class="nx">struct</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="o">+</span><span class="nx">struct</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">||</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="hljs-keyword">if</span> (struct) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Avoid NaN timestamps caused by “undefined” values being passed to Date.UTC</p>
 
-            <span class="k">if</span> <span class="p">(</span><span class="nx">struct</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">!==</span> <span class="s1">&#39;Z&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">!==</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">minutesOffset</span> <span class="o">=</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">11</span><span class="p">];</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, k;
+                (k = numericKeys[i]); ++i) {
+                struct[k] = +struct[k] || <span class="hljs-number">0</span>;
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Allow undefined days and months</p>
 
-                <span class="k">if</span> <span class="p">(</span><span class="nx">struct</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">===</span> <span class="s1">&#39;+&#39;</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">minutesOffset</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">-</span> <span class="nx">minutesOffset</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            struct[<span class="hljs-number">2</span>] = (+struct[<span class="hljs-number">2</span>] || <span class="hljs-number">1</span>) - <span class="hljs-number">1</span>;
+            struct[<span class="hljs-number">3</span>] = +struct[<span class="hljs-number">3</span>] || <span class="hljs-number">1</span>;
 
-            <span class="k">return</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">UTC</span><span class="p">(</span><span class="nx">struct</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="nx">minutesOffset</span><span class="p">,</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="nx">struct</span><span class="p">[</span><span class="mi">7</span><span class="p">]);</span>
-        <span class="p">}</span>
+            <span class="hljs-keyword">if</span> (struct[<span class="hljs-number">8</span>] !== <span class="hljs-string">'Z'</span> &amp;&amp; struct[<span class="hljs-number">9</span>] !== <span class="hljs-literal">undefined</span>) {
+                minutesOffset = struct[<span class="hljs-number">10</span>] * <span class="hljs-number">60</span> + struct[<span class="hljs-number">11</span>];
 
-        <span class="k">return</span> <span class="kc">NaN</span><span class="p">;</span>
-    <span class="p">};</span>
+                <span class="hljs-keyword">if</span> (struct[<span class="hljs-number">9</span>] === <span class="hljs-string">'+'</span>) {
+                    minutesOffset = <span class="hljs-number">0</span> - minutesOffset;
+                }
+            }
 
-    <span class="kd">var</span> <span class="nx">msDateRegEx</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="sr">/^\/Date\((d|-|.*)\)[\/|\\]$/</span><span class="p">);</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">Date</span>.UTC(struct[<span class="hljs-number">1</span>], struct[<span class="hljs-number">2</span>], struct[<span class="hljs-number">3</span>], struct[<span class="hljs-number">4</span>], struct[<span class="hljs-number">5</span>] + minutesOffset, struct[<span class="hljs-number">6</span>], struct[<span class="hljs-number">7</span>]);
+        }
 
-</pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>Parses the date in Microsoft format</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nb">Date</span><span class="p">.</span><span class="nx">parseMsDate</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">date</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">msDateRegEx</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">date</span><span class="p">))</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="nb">RegExp</span><span class="p">.</span><span class="nx">$1</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="kc">NaN</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">};</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">NaN</span>;
+    };
 
-</pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Enhances the native JavaScript Date.parse function to support ISO8601 and Microsoft format dates.
+    <span class="hljs-keyword">var</span> msDateRegEx = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(<span class="hljs-regexp">/^\/Date\((d|-|.*)\)[\/|\\]$/</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Parses the date in Microsoft format</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">Date</span>.parseMsDate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(date)</span> {</span>
+        <span class="hljs-keyword">if</span> (msDateRegEx.test(date)) {
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseFloat</span>(<span class="hljs-built_in">RegExp</span>.$<span class="hljs-number">1</span>, <span class="hljs-number">10</span>);
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">NaN</span>;
+        }
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Enhances the native JavaScript Date.parse function to support ISO8601 and Microsoft format dates.
 Note: ES5 15.9.4.2 states that the string should attempt to be parsed as a an ISO8601 string
-before falling back to any implementation-specific date parsing. The native Date.parse() doesn't 
-do this on all browsers, so it needs to be overwritten to force this behavior and ensure consistency.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nb">Date</span><span class="p">.</span><span class="nx">parse</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">date</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">origParse</span><span class="p">(</span><span class="nx">date</span><span class="p">)</span> <span class="o">||</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parseMsDate</span><span class="p">(</span><span class="nx">date</span><span class="p">)</span> <span class="o">||</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parseISO</span><span class="p">(</span><span class="nx">date</span><span class="p">)</span> <span class="o">||</span> <span class="kc">NaN</span><span class="p">;</span>
-    <span class="p">};</span>
+before falling back to any implementation-specific date parsing. The native Date.parse() doesn’t 
+do this on all browsers, so it needs to be overwritten to force this behavior and ensure consistency.</p>
 
-<span class="p">}(</span><span class="nb">Date</span><span class="p">));</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">Date</span>.parse = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(date)</span> {</span>
+        <span class="hljs-keyword">return</span> origParse(date) || <span class="hljs-built_in">Date</span>.parseMsDate(date) || <span class="hljs-built_in">Date</span>.parseISO(date) || <span class="hljs-literal">NaN</span>;
+    };
 
-</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
+}(<span class="hljs-built_in">Date</span>));</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

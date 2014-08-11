@@ -1,231 +1,729 @@
-<!DOCTYPE html>  <html> <head>   <title>jquery.partialLoad.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="breakpoints.html">                 breakpoints.js               </a>                                           <a class="source" href="date-parse.html">                 date-parse.js               </a>                                           <a class="source" href="jquery.breakpoints.html">                 jquery.breakpoints.js               </a>                                           <a class="source" href="jquery.calcRestrainedPos.html">                 jquery.calcRestrainedPos.js               </a>                                           <a class="source" href="jquery.clientRect.html">                 jquery.clientRect.js               </a>                                           <a class="source" href="jquery.contentSize.html">                 jquery.contentSize.js               </a>                                           <a class="source" href="jquery.cookies.html">                 jquery.cookies.js               </a>                                           <a class="source" href="jquery.css.html">                 jquery.css.js               </a>                                           <a class="source" href="jquery.customEvent.html">                 jquery.customEvent.js               </a>                                           <a class="source" href="jquery.delimitedString.html">                 jquery.delimitedString.js               </a>                                           <a class="source" href="jquery.disableEvent.html">                 jquery.disableEvent.js               </a>                                           <a class="source" href="jquery.hostIframe.html">                 jquery.hostIframe.js               </a>                                           <a class="source" href="jquery.hoverDelay.html">                 jquery.hoverDelay.js               </a>                                           <a class="source" href="jquery.htmlEncode.html">                 jquery.htmlEncode.js               </a>                                           <a class="source" href="jquery.imageSize.html">                 jquery.imageSize.js               </a>                                           <a class="source" href="jquery.isVisibleKeyCode.html">                 jquery.isVisibleKeyCode.js               </a>                                           <a class="source" href="jquery.menu.html">                 jquery.menu.js               </a>                                           <a class="source" href="jquery-menu-exampleskin.html">                 jquery-menu-exampleskin.js               </a>                                           <a class="source" href="jquery.modalDialog.deviceFixes.html">                 jquery.modalDialog.deviceFixes.js               </a>                                           <a class="source" href="jquery.modalDialog.getSettings.html">                 jquery.modalDialog.getSettings.js               </a>                                           <a class="source" href="jquery.modalDialog.header.html">                 jquery.modalDialog.header.js               </a>                                           <a class="source" href="jquery.modalDialog.history.html">                 jquery.modalDialog.history.js               </a>                                           <a class="source" href="jquery.modalDialog.html">                 jquery.modalDialog.js               </a>                                           <a class="source" href="jquery.modalDialog.unobtrusive.html">                 jquery.modalDialog.unobtrusive.js               </a>                                           <a class="source" href="jquery.modalDialog.userAgent.html">                 jquery.modalDialog.userAgent.js               </a>                                           <a class="source" href="jquery.modalDialogContent.header.html">                 jquery.modalDialogContent.header.js               </a>                                           <a class="source" href="jquery.modalDialogContent.html">                 jquery.modalDialogContent.js               </a>                                           <a class="source" href="jquery.msAjax.html">                 jquery.msAjax.js               </a>                                           <a class="source" href="jquery.ns.html">                 jquery.ns.js               </a>                                           <a class="source" href="jquery.partialLoad.html">                 jquery.partialLoad.js               </a>                                           <a class="source" href="jquery.postMessage.html">                 jquery.postMessage.js               </a>                                           <a class="source" href="jquery.proxyAll.html">                 jquery.proxyAll.js               </a>                                           <a class="source" href="jquery.queryString.html">                 jquery.queryString.js               </a>                                           <a class="source" href="jquery.richTooltip.html">                 jquery.richTooltip.js               </a>                                           <a class="source" href="jquery.scrollAnchor.html">                 jquery.scrollAnchor.js               </a>                                           <a class="source" href="jquery.uncomment.html">                 jquery.uncomment.js               </a>                                           <a class="source" href="jquery.url.html">                 jquery.url.js               </a>                                           <a class="source" href="pointy.gestures.html">                 pointy.gestures.js               </a>                                           <a class="source" href="pointy.html">                 pointy.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs"><a href="../index.html">Home</a> | 
-<a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.partialLoad.js" target="_blank">View this file on Github</a>
+<!DOCTYPE html>
 
-<hr style="height: 1px; border:0; background-color:#4A525A">
-             <h1>               jquery.partialLoad.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">_currentScripts</span><span class="p">;</span>
+<html>
+<head>
+  <title>jquery.partialLoad.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="breakpoints.html">
+                breakpoints.js
+              </a>
+            
+              
+              <a class="source" href="date-parse.html">
+                date-parse.js
+              </a>
+            
+              
+              <a class="source" href="jquery.breakpoints.html">
+                jquery.breakpoints.js
+              </a>
+            
+              
+              <a class="source" href="jquery.calcRestrainedPos.html">
+                jquery.calcRestrainedPos.js
+              </a>
+            
+              
+              <a class="source" href="jquery.clientRect.html">
+                jquery.clientRect.js
+              </a>
+            
+              
+              <a class="source" href="jquery.contentSize.html">
+                jquery.contentSize.js
+              </a>
+            
+              
+              <a class="source" href="jquery.cookies.html">
+                jquery.cookies.js
+              </a>
+            
+              
+              <a class="source" href="jquery.css.html">
+                jquery.css.js
+              </a>
+            
+              
+              <a class="source" href="jquery.customEvent.html">
+                jquery.customEvent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.delimitedString.html">
+                jquery.delimitedString.js
+              </a>
+            
+              
+              <a class="source" href="jquery.disableEvent.html">
+                jquery.disableEvent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.hostIframe.html">
+                jquery.hostIframe.js
+              </a>
+            
+              
+              <a class="source" href="jquery.hoverDelay.html">
+                jquery.hoverDelay.js
+              </a>
+            
+              
+              <a class="source" href="jquery.htmlEncode.html">
+                jquery.htmlEncode.js
+              </a>
+            
+              
+              <a class="source" href="jquery.imageSize.html">
+                jquery.imageSize.js
+              </a>
+            
+              
+              <a class="source" href="jquery.isVisibleKeyCode.html">
+                jquery.isVisibleKeyCode.js
+              </a>
+            
+              
+              <a class="source" href="jquery.menu.html">
+                jquery.menu.js
+              </a>
+            
+              
+              <a class="source" href="jquery-menu-exampleskin.html">
+                jquery-menu-exampleskin.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.deviceFixes.html">
+                jquery.modalDialog.deviceFixes.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.getSettings.html">
+                jquery.modalDialog.getSettings.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.header.html">
+                jquery.modalDialog.header.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.history.html">
+                jquery.modalDialog.history.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.html">
+                jquery.modalDialog.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.unobtrusive.html">
+                jquery.modalDialog.unobtrusive.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.userAgent.html">
+                jquery.modalDialog.userAgent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialogContent.header.html">
+                jquery.modalDialogContent.header.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialogContent.html">
+                jquery.modalDialogContent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.msAjax.html">
+                jquery.msAjax.js
+              </a>
+            
+              
+              <a class="source" href="jquery.ns.html">
+                jquery.ns.js
+              </a>
+            
+              
+              <a class="source" href="jquery.partialLoad.html">
+                jquery.partialLoad.js
+              </a>
+            
+              
+              <a class="source" href="jquery.postMessage.html">
+                jquery.postMessage.js
+              </a>
+            
+              
+              <a class="source" href="jquery.proxyAll.html">
+                jquery.proxyAll.js
+              </a>
+            
+              
+              <a class="source" href="jquery.queryString.html">
+                jquery.queryString.js
+              </a>
+            
+              
+              <a class="source" href="jquery.richTooltip.html">
+                jquery.richTooltip.js
+              </a>
+            
+              
+              <a class="source" href="jquery.scrollAnchor.html">
+                jquery.scrollAnchor.js
+              </a>
+            
+              
+              <a class="source" href="jquery.uncomment.html">
+                jquery.uncomment.js
+              </a>
+            
+              
+              <a class="source" href="jquery.url.html">
+                jquery.url.js
+              </a>
+            
+              
+              <a class="source" href="pointy.gestures.html">
+                pointy.gestures.js
+              </a>
+            
+              
+              <a class="source" href="pointy.html">
+                pointy.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>jquery.partialLoad.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(window, $)</span> {</span>
+    <span class="hljs-keyword">var</span> _currentScripts;
 
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">partialLoad</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">target</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Default to a GET request</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="kd">var</span> <span class="nx">type</span> <span class="o">=</span> <span class="s2">&quot;GET&quot;</span><span class="p">;</span>
-        <span class="kd">var</span> <span class="nx">response</span><span class="p">;</span>
+    $.fn.partialLoad = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(url, target, data, callback)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Default to a GET request</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Overload simulation
-if target is a function, assume its a callback</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">isFunction</span><span class="p">(</span><span class="nx">target</span><span class="p">))</span> <span class="p">{</span>
-            <span class="nx">callback</span> <span class="o">=</span> <span class="nx">target</span><span class="p">;</span>
-            <span class="nx">target</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>If the third param is a function, assume that it's the callback</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">isFunction</span><span class="p">(</span><span class="nx">data</span><span class="p">))</span> <span class="p">{</span>
-                <span class="nx">callback</span> <span class="o">=</span> <span class="nx">data</span><span class="p">;</span>
-                <span class="nx">data</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
-            <span class="p">}</span>
-</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Otherwise, its data to POST</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">data</span> <span class="o">===</span> <span class="s2">&quot;object&quot;</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">data</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">.</span><span class="nx">param</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">jQuery</span><span class="p">.</span><span class="nx">ajaxSettings</span><span class="p">.</span><span class="nx">traditional</span><span class="p">);</span>
-                <span class="nx">type</span> <span class="o">=</span> <span class="s2">&quot;POST&quot;</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> type = <span class="hljs-string">"GET"</span>;
+        <span class="hljs-keyword">var</span> response;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Overload simulation
+if target is a function, assume its a callback</p>
 
-        <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (jQuery.isFunction(target)) {
+            callback = target;
+            target = <span class="hljs-literal">undefined</span>;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (data) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>If the third param is a function, assume that it’s the callback</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>This section derived from the internals of jQuery.fn.load()</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (jQuery.isFunction(data)) {
+                callback = data;
+                data = <span class="hljs-literal">undefined</span>;
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Otherwise, its data to POST</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Request the remote document</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
-            <span class="nx">url</span><span class="o">:</span> <span class="nx">url</span><span class="p">,</span>
-            <span class="nx">type</span><span class="o">:</span> <span class="nx">type</span><span class="p">,</span>
-            <span class="nx">dataType</span><span class="o">:</span> <span class="s2">&quot;html&quot;</span><span class="p">,</span>
-            <span class="nx">data</span><span class="o">:</span> <span class="nx">data</span>
-        <span class="p">}).</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">responseText</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>Save response for use in complete callback</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="nx">response</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">;</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> data === <span class="hljs-string">"object"</span>) {
+                data = jQuery.param(data, jQuery.ajaxSettings.traditional);
+                type = <span class="hljs-string">"POST"</span>;
+            }
+        }
 
-            <span class="nx">self</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
-                <span class="kd">var</span> <span class="nx">$el</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">el</span><span class="p">);</span>
-                <span class="kd">var</span> <span class="nx">scripts</span> <span class="o">=</span> <span class="p">[];</span>
-                <span class="kd">var</span> <span class="nx">fragment</span> <span class="o">=</span> <span class="nx">getFragmentAndScripts</span><span class="p">(</span><span class="nx">responseText</span><span class="p">,</span> <span class="nx">target</span><span class="p">,</span> <span class="nx">$el</span><span class="p">,</span> <span class="nx">scripts</span><span class="p">);</span>
+        <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>This section derived from the internals of jQuery.fn.load()</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>This call might cause exceptions, but we still want the callbacks to happen</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="k">try</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>See if a selector was specified</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                    <span class="nx">$el</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">fragment</span><span class="p">);</span>
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Request the remote document</p>
 
-                    <span class="k">if</span> <span class="p">(</span><span class="nx">scripts</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">scripts</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">elem</span><span class="p">)</span> <span class="p">{</span>
-                            <span class="k">if</span> <span class="p">(</span><span class="nx">elem</span><span class="p">.</span><span class="nx">src</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>Load scripts that haven't yet been loaded</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                                <span class="nx">execScriptUnique</span><span class="p">(</span><span class="nx">elem</span><span class="p">.</span><span class="nx">src</span><span class="p">);</span>
-                            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>Execute inline scripts. No way to de-dupe these.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                                <span class="nx">$</span><span class="p">.</span><span class="nx">globalEval</span><span class="p">((</span><span class="nx">elem</span><span class="p">.</span><span class="nx">text</span> <span class="o">||</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">||</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="nx">rcleanScript</span><span class="p">,</span> <span class="s2">&quot;/*$0*/&quot;</span><span class="p">));</span>
-                            <span class="p">}</span>
-                        <span class="p">});</span>
-                    <span class="p">}</span>
-                <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>suppressing these errors</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="p">}</span>
-            <span class="p">});</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        $.ajax({
+            url: url,
+            type: type,
+            dataType: <span class="hljs-string">"html"</span>,
+            data: data
+        }).done(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(responseText)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Save response for use in complete callback</p>
 
-        <span class="p">}).</span><span class="nx">complete</span><span class="p">(</span><span class="nx">callback</span> <span class="o">&amp;&amp;</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">jqXHR</span><span class="p">,</span> <span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">self</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">callback</span><span class="p">,</span> <span class="nx">response</span> <span class="o">||</span> <span class="p">[</span><span class="nx">jqXHR</span><span class="p">.</span><span class="nx">responseText</span><span class="p">,</span> <span class="nx">status</span><span class="p">,</span> <span class="nx">jqXHR</span><span class="p">]);</span>
-        <span class="p">});</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            response = <span class="hljs-built_in">arguments</span>;
 
-        <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
-    <span class="p">};</span>
+            self.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, el)</span> {</span>
+                <span class="hljs-keyword">var</span> $el = $(el);
+                <span class="hljs-keyword">var</span> scripts = [];
+                <span class="hljs-keyword">var</span> fragment = getFragmentAndScripts(responseText, target, $el, scripts);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>This call might cause exceptions, but we still want the callbacks to happen</p>
 
-    <span class="kd">var</span> <span class="nx">execScriptUnique</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">src</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">srcLower</span> <span class="o">=</span> <span class="nx">src</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">();</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">try</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>See if a selector was specified</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p>Build a 'set' of already loaded scripts so we can ensure
-that they don't get loaded more than once.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">_currentScripts</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">_currentScripts</span> <span class="o">=</span> <span class="p">{};</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    $el.html(fragment);
 
-            <span class="kd">var</span> <span class="nx">currentScripts</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">&quot;SCRIPT&quot;</span><span class="p">);</span>
-            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">currentScripts</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="nx">currentScripts</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">src</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">_currentScripts</span><span class="p">[</span><span class="nx">currentScripts</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">src</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+                    <span class="hljs-keyword">if</span> (scripts.length) {
+                        $.each(scripts, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, elem)</span> {</span>
+                            <span class="hljs-keyword">if</span> (elem.src) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Load scripts that haven’t yet been loaded</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p>This script is already loaded. Don't load it again.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">_currentScripts</span><span class="p">[</span><span class="nx">srcLower</span><span class="p">])</span> <span class="p">{</span>
-            <span class="k">return</span><span class="p">;</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                                execScriptUnique(elem.src);
+                            } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Execute inline scripts. No way to de-dupe these.</p>
 
-        <span class="nx">_currentScripts</span><span class="p">[</span><span class="nx">srcLower</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                                $.globalEval((elem.text || elem.textContent || elem.innerHTML || <span class="hljs-string">""</span>).replace(rcleanScript, <span class="hljs-string">"/*$0*/"</span>));
+                            }
+                        });
+                    }
+                } <span class="hljs-keyword">catch</span> (e) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>suppressing these errors</p>
 
-        <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
-            <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span>
-            <span class="nx">global</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-            <span class="nx">url</span><span class="o">:</span> <span class="nx">src</span><span class="p">,</span>
-            <span class="nx">async</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-            <span class="nx">dataType</span><span class="o">:</span> <span class="s2">&quot;script&quot;</span>
-        <span class="p">});</span>
-    <span class="p">};</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                }
+            });
 
-    <span class="kd">var</span> <span class="nx">_currentStylesheets</span><span class="p">;</span>
+        }).complete(callback &amp;&amp; <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(jqXHR, status)</span> {</span>
+            self.each(callback, response || [jqXHR.responseText, status, jqXHR]);
+        });
 
-    <span class="kd">var</span> <span class="nx">isStylesheetUnique</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">href</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">hrefLower</span> <span class="o">=</span> <span class="nx">href</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">();</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+    };
 
-</pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <p>Build a 'set' of already loaded scripts so we can ensure
-that they don't get loaded more than once.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">_currentStylesheets</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">_currentStylesheets</span> <span class="o">=</span> <span class="p">{};</span>
+    <span class="hljs-keyword">var</span> execScriptUnique = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(src)</span> {</span>
+        <span class="hljs-keyword">var</span> srcLower = src.toLowerCase();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Build a ‘set’ of already loaded scripts so we can ensure
+that they don’t get loaded more than once.</p>
 
-            <span class="kd">var</span> <span class="nx">currentStylesheets</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">&quot;LINK&quot;</span><span class="p">);</span>
-            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">currentStylesheets</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="nx">currentStylesheets</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">href</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">_currentStylesheets</span><span class="p">[</span><span class="nx">currentStylesheets</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">href</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (!_currentScripts) {
+            _currentScripts = {};
 
-</pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <p>This stylesheet is already loaded. Don't load it again.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">_currentStylesheets</span><span class="p">[</span><span class="nx">hrefLower</span><span class="p">])</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
-        <span class="p">}</span>
+            <span class="hljs-keyword">var</span> currentScripts = document.getElementsByTagName(<span class="hljs-string">"SCRIPT"</span>);
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; currentScripts.length; i++) {
+                <span class="hljs-keyword">if</span> (currentScripts[i].src) {
+                    _currentScripts[currentScripts[i].src.toLowerCase()] = <span class="hljs-literal">true</span>;
+                }
+            }
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>This script is already loaded. Don’t load it again.</p>
 
-        <span class="nx">_currentStylesheets</span><span class="p">[</span><span class="nx">hrefLower</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (_currentScripts[srcLower]) {
+            <span class="hljs-keyword">return</span>;
+        }
 
-        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
-    <span class="p">};</span>
+        _currentScripts[srcLower] = <span class="hljs-literal">true</span>;
 
-    <span class="kd">var</span> <span class="nx">rcleanScript</span> <span class="o">=</span> <span class="sr">/^\s*&lt;!(?:\[CDATA\[|\-\-)/</span><span class="p">;</span>
+        $.ajax({
+            type: <span class="hljs-string">"GET"</span>,
+            global: <span class="hljs-literal">false</span>,
+            url: src,
+            async: <span class="hljs-literal">false</span>,
+            dataType: <span class="hljs-string">"script"</span>
+        });
+    };
 
-    <span class="kd">var</span> <span class="nx">getFragmentAndScripts</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">responseText</span><span class="p">,</span> <span class="nx">selector</span><span class="p">,</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">scripts</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">$target</span><span class="p">;</span>
+    <span class="hljs-keyword">var</span> _currentStylesheets;
 
-        <span class="k">if</span> <span class="p">(</span><span class="nx">selector</span><span class="p">)</span> <span class="p">{</span>
+    <span class="hljs-keyword">var</span> isStylesheetUnique = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(href)</span> {</span>
+        <span class="hljs-keyword">var</span> hrefLower = href.toLowerCase();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Build a ‘set’ of already loaded scripts so we can ensure
+that they don’t get loaded more than once.</p>
 
-            <span class="kd">var</span> <span class="nx">$temp</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;&lt;div&gt;&quot;</span><span class="p">);</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (!_currentStylesheets) {
+            _currentStylesheets = {};
 
-</pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <p>A selector was specified. Load only the fragment.
-This will cause scripts in the fragment to be executed by jQuery.fn.html().</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="nx">$temp</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">responseText</span><span class="p">;</span>
+            <span class="hljs-keyword">var</span> currentStylesheets = document.getElementsByTagName(<span class="hljs-string">"LINK"</span>);
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; currentStylesheets.length; i++) {
+                <span class="hljs-keyword">if</span> (currentStylesheets[i].href) {
+                    _currentStylesheets[currentStylesheets[i].href.toLowerCase()] = <span class="hljs-literal">true</span>;
+                }
+            }
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>This stylesheet is already loaded. Don’t load it again.</p>
 
-            <span class="nx">$target</span> <span class="o">=</span> <span class="nx">$temp</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">selector</span><span class="p">);</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (_currentStylesheets[hrefLower]) {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }
 
-            <span class="nx">$target</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s2">&quot;script&quot;</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">elem</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">scripts</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">elem</span><span class="p">);</span>
-            <span class="p">});</span>
+        _currentStylesheets[hrefLower] = <span class="hljs-literal">true</span>;
 
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    };
 
-</pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <p>HACK: jQuery 1.9 changed the signature of $.buildFragment() to expect a raw DOM document object,
-whereas previous versions expected a jQuery object, and would look up its ownerDocument.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">compareVersion</span><span class="p">(</span><span class="nx">jqueryVersion</span><span class="p">(),</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">context</span> <span class="o">=</span> <span class="nx">context</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">ownerDocument</span><span class="p">;</span>
-            <span class="p">}</span>
+    <span class="hljs-keyword">var</span> rcleanScript = <span class="hljs-regexp">/^\s*&lt;!(?:\[CDATA\[|\-\-)/</span>;
 
-</pre></div>             </td>           </tr>                               <tr id="section-20">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>               <p>No selector was specified. Load all scripts on the page, as long as they haven't been loaded before.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="kd">var</span> <span class="nx">fragment</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">buildFragment</span><span class="p">([</span><span class="nx">responseText</span><span class="p">],</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">scripts</span><span class="p">);</span>
+    <span class="hljs-keyword">var</span> getFragmentAndScripts = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(responseText, selector, context, scripts)</span> {</span>
+        <span class="hljs-keyword">var</span> $target;
 
-            <span class="nx">$target</span> <span class="o">=</span> <span class="nx">fragment</span><span class="p">.</span><span class="nx">fragment</span> <span class="o">||</span> <span class="nx">fragment</span><span class="p">;</span>
-        <span class="p">}</span>
+        <span class="hljs-keyword">if</span> (selector) {
 
-        <span class="k">if</span> <span class="p">(</span><span class="nx">scripts</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">scripts</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">elem</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="nx">elem</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">elem</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">elem</span><span class="p">);</span>
-                <span class="p">}</span>
-            <span class="p">});</span>
-        <span class="p">}</span>
+            <span class="hljs-keyword">var</span> $temp = $(<span class="hljs-string">"&lt;div&gt;"</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>A selector was specified. Load only the fragment.
+This will cause scripts in the fragment to be executed by jQuery.fn.html().</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-21">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>               <p>Remove meta, link
-Preserve title: These don't hurt anything, and the modal dialog framework uses them
-to get the title of the dialog.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="kd">var</span> <span class="nx">REMOVE_LIST</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="nx">META</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-            <span class="nx">LINK</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-            <span class="nx">NOSCRIPT</span><span class="o">:</span> <span class="kc">true</span>
-        <span class="p">};</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            $temp[<span class="hljs-number">0</span>].innerHTML = responseText;
 
-        <span class="kd">var</span> <span class="nx">nodes</span> <span class="o">=</span> <span class="nx">$target</span><span class="p">.</span><span class="nx">jquery</span> <span class="o">?</span> <span class="nx">$target</span> <span class="o">:</span> <span class="nx">$target</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">;</span>
+            $target = $temp.find(selector);
 
-        <span class="k">if</span> <span class="p">(</span><span class="nx">nodes</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">nodes</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
-                <span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="nx">nodes</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+            $target.find(<span class="hljs-string">"script"</span>).map(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, elem)</span> {</span>
+                scripts.push(elem);
+            });
 
-                <span class="k">if</span> <span class="p">(</span><span class="nx">REMOVE_LIST</span><span class="p">[</span><span class="nx">child</span><span class="p">.</span><span class="nx">tagName</span><span class="p">])</span> <span class="p">{</span>
+        } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>HACK: jQuery 1.9 changed the signature of $.buildFragment() to expect a raw DOM document object,
+whereas previous versions expected a jQuery object, and would look up its ownerDocument.</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-22">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-22">&#182;</a>               </div>               <p>Only remove stylesheets that have already been added</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                    <span class="k">if</span> <span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">tagName</span> <span class="o">==</span> <span class="s2">&quot;LINK&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">child</span><span class="p">.</span><span class="nx">rel</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;stylesheet&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">child</span><span class="p">.</span><span class="nx">href</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="k">if</span> <span class="p">(</span><span class="nx">isStylesheetUnique</span><span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">href</span><span class="p">))</span> <span class="p">{</span>
-                            <span class="k">continue</span><span class="p">;</span>
-                        <span class="p">}</span>
-                    <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (compareVersion(jqueryVersion(), [<span class="hljs-number">1</span>, <span class="hljs-number">9</span>, <span class="hljs-number">0</span>]) &gt;= <span class="hljs-number">0</span>) {
+                context = context[<span class="hljs-number">0</span>].ownerDocument;
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>No selector was specified. Load all scripts on the page, as long as they haven’t been loaded before.</p>
 
-                    <span class="nx">$target</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">child</span><span class="p">);</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">var</span> fragment = $.buildFragment([responseText], context, scripts);
 
-        <span class="k">return</span> <span class="nx">$target</span><span class="p">;</span>
-    <span class="p">};</span>
+            $target = fragment.fragment || fragment;
+        }
 
-    <span class="kd">function</span> <span class="nx">jqueryVersion</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span>
-            <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">jquery</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">),</span>
-            <span class="kd">function</span> <span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
-            <span class="p">});</span>
-    <span class="p">}</span>
+        <span class="hljs-keyword">if</span> (scripts.length) {
+            $.each(scripts, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, elem)</span> {</span>
+                <span class="hljs-keyword">if</span> (elem.parentNode) {
+                    elem.parentNode.removeChild(elem);
+                }
+            });
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Remove meta, link
+Preserve title: These don’t hurt anything, and the modal dialog framework uses them
+to get the title of the dialog.</p>
 
-    <span class="kd">function</span> <span class="nx">compareVersion</span><span class="p">(</span><span class="nx">v1</span><span class="p">,</span> <span class="nx">v2</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">v1</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">!=</span> <span class="nx">v2</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="p">(</span><span class="nx">v1</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nx">v2</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> REMOVE_LIST = {
+            META: <span class="hljs-literal">true</span>,
+            LINK: <span class="hljs-literal">true</span>,
+            NOSCRIPT: <span class="hljs-literal">true</span>
+        };
 
-        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="p">}</span>
+        <span class="hljs-keyword">var</span> nodes = $target.jquery ? $target : $target.childNodes;
 
-<span class="p">})(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">jQuery</span><span class="p">);</span>
+        <span class="hljs-keyword">if</span> (nodes) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = nodes.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) {
+                <span class="hljs-keyword">var</span> child = nodes[i];
 
-</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
+                <span class="hljs-keyword">if</span> (REMOVE_LIST[child.tagName]) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Only remove stylesheets that have already been added</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">if</span> (child.tagName == <span class="hljs-string">"LINK"</span> &amp;&amp; child.rel.toLowerCase() == <span class="hljs-string">"stylesheet"</span> &amp;&amp; child.href) {
+                        <span class="hljs-keyword">if</span> (isStylesheetUnique(child.href)) {
+                            <span class="hljs-keyword">continue</span>;
+                        }
+                    }
+
+                    $target.removeChild(child);
+                }
+            }
+        }
+
+        <span class="hljs-keyword">return</span> $target;
+    };
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">jqueryVersion</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">return</span> $.map(
+            $.fn.jquery.split(<span class="hljs-string">"."</span>),
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> {</span>
+                <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(value, <span class="hljs-number">10</span>);
+            });
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareVersion</span><span class="hljs-params">(v1, v2)</span> {</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i++) {
+            <span class="hljs-keyword">if</span> (v1[i] != v2[i]) {
+                <span class="hljs-keyword">return</span> (v1[i] &gt; v2[i]) ? <span class="hljs-number">1</span> : -<span class="hljs-number">1</span>;
+            }
+        }
+
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    }
+
+})(window, jQuery);</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

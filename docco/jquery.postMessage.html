@@ -1,331 +1,976 @@
-<!DOCTYPE html>  <html> <head>   <title>jquery.postMessage.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="breakpoints.html">                 breakpoints.js               </a>                                           <a class="source" href="date-parse.html">                 date-parse.js               </a>                                           <a class="source" href="jquery.breakpoints.html">                 jquery.breakpoints.js               </a>                                           <a class="source" href="jquery.calcRestrainedPos.html">                 jquery.calcRestrainedPos.js               </a>                                           <a class="source" href="jquery.clientRect.html">                 jquery.clientRect.js               </a>                                           <a class="source" href="jquery.contentSize.html">                 jquery.contentSize.js               </a>                                           <a class="source" href="jquery.cookies.html">                 jquery.cookies.js               </a>                                           <a class="source" href="jquery.css.html">                 jquery.css.js               </a>                                           <a class="source" href="jquery.customEvent.html">                 jquery.customEvent.js               </a>                                           <a class="source" href="jquery.delimitedString.html">                 jquery.delimitedString.js               </a>                                           <a class="source" href="jquery.disableEvent.html">                 jquery.disableEvent.js               </a>                                           <a class="source" href="jquery.hostIframe.html">                 jquery.hostIframe.js               </a>                                           <a class="source" href="jquery.hoverDelay.html">                 jquery.hoverDelay.js               </a>                                           <a class="source" href="jquery.htmlEncode.html">                 jquery.htmlEncode.js               </a>                                           <a class="source" href="jquery.imageSize.html">                 jquery.imageSize.js               </a>                                           <a class="source" href="jquery.isVisibleKeyCode.html">                 jquery.isVisibleKeyCode.js               </a>                                           <a class="source" href="jquery.menu.html">                 jquery.menu.js               </a>                                           <a class="source" href="jquery-menu-exampleskin.html">                 jquery-menu-exampleskin.js               </a>                                           <a class="source" href="jquery.modalDialog.deviceFixes.html">                 jquery.modalDialog.deviceFixes.js               </a>                                           <a class="source" href="jquery.modalDialog.getSettings.html">                 jquery.modalDialog.getSettings.js               </a>                                           <a class="source" href="jquery.modalDialog.header.html">                 jquery.modalDialog.header.js               </a>                                           <a class="source" href="jquery.modalDialog.history.html">                 jquery.modalDialog.history.js               </a>                                           <a class="source" href="jquery.modalDialog.html">                 jquery.modalDialog.js               </a>                                           <a class="source" href="jquery.modalDialog.unobtrusive.html">                 jquery.modalDialog.unobtrusive.js               </a>                                           <a class="source" href="jquery.modalDialog.userAgent.html">                 jquery.modalDialog.userAgent.js               </a>                                           <a class="source" href="jquery.modalDialogContent.header.html">                 jquery.modalDialogContent.header.js               </a>                                           <a class="source" href="jquery.modalDialogContent.html">                 jquery.modalDialogContent.js               </a>                                           <a class="source" href="jquery.msAjax.html">                 jquery.msAjax.js               </a>                                           <a class="source" href="jquery.ns.html">                 jquery.ns.js               </a>                                           <a class="source" href="jquery.partialLoad.html">                 jquery.partialLoad.js               </a>                                           <a class="source" href="jquery.postMessage.html">                 jquery.postMessage.js               </a>                                           <a class="source" href="jquery.proxyAll.html">                 jquery.proxyAll.js               </a>                                           <a class="source" href="jquery.queryString.html">                 jquery.queryString.js               </a>                                           <a class="source" href="jquery.richTooltip.html">                 jquery.richTooltip.js               </a>                                           <a class="source" href="jquery.scrollAnchor.html">                 jquery.scrollAnchor.js               </a>                                           <a class="source" href="jquery.uncomment.html">                 jquery.uncomment.js               </a>                                           <a class="source" href="jquery.url.html">                 jquery.url.js               </a>                                           <a class="source" href="pointy.gestures.html">                 pointy.gestures.js               </a>                                           <a class="source" href="pointy.html">                 pointy.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs"><a href="../index.html">Home</a> | 
-<a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.postMessage.js" target="_blank">View this file on Github</a>
+<!DOCTYPE html>
 
-<hr style="height: 1px; border:0; background-color:#4A525A">
-             <h1>               jquery.postMessage.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="cm">/* globals Window */</span>
+<html>
+<head>
+  <title>jquery.postMessage.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="breakpoints.html">
+                breakpoints.js
+              </a>
+            
+              
+              <a class="source" href="date-parse.html">
+                date-parse.js
+              </a>
+            
+              
+              <a class="source" href="jquery.breakpoints.html">
+                jquery.breakpoints.js
+              </a>
+            
+              
+              <a class="source" href="jquery.calcRestrainedPos.html">
+                jquery.calcRestrainedPos.js
+              </a>
+            
+              
+              <a class="source" href="jquery.clientRect.html">
+                jquery.clientRect.js
+              </a>
+            
+              
+              <a class="source" href="jquery.contentSize.html">
+                jquery.contentSize.js
+              </a>
+            
+              
+              <a class="source" href="jquery.cookies.html">
+                jquery.cookies.js
+              </a>
+            
+              
+              <a class="source" href="jquery.css.html">
+                jquery.css.js
+              </a>
+            
+              
+              <a class="source" href="jquery.customEvent.html">
+                jquery.customEvent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.delimitedString.html">
+                jquery.delimitedString.js
+              </a>
+            
+              
+              <a class="source" href="jquery.disableEvent.html">
+                jquery.disableEvent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.hostIframe.html">
+                jquery.hostIframe.js
+              </a>
+            
+              
+              <a class="source" href="jquery.hoverDelay.html">
+                jquery.hoverDelay.js
+              </a>
+            
+              
+              <a class="source" href="jquery.htmlEncode.html">
+                jquery.htmlEncode.js
+              </a>
+            
+              
+              <a class="source" href="jquery.imageSize.html">
+                jquery.imageSize.js
+              </a>
+            
+              
+              <a class="source" href="jquery.isVisibleKeyCode.html">
+                jquery.isVisibleKeyCode.js
+              </a>
+            
+              
+              <a class="source" href="jquery.menu.html">
+                jquery.menu.js
+              </a>
+            
+              
+              <a class="source" href="jquery-menu-exampleskin.html">
+                jquery-menu-exampleskin.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.deviceFixes.html">
+                jquery.modalDialog.deviceFixes.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.getSettings.html">
+                jquery.modalDialog.getSettings.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.header.html">
+                jquery.modalDialog.header.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.history.html">
+                jquery.modalDialog.history.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.html">
+                jquery.modalDialog.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.unobtrusive.html">
+                jquery.modalDialog.unobtrusive.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.userAgent.html">
+                jquery.modalDialog.userAgent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialogContent.header.html">
+                jquery.modalDialogContent.header.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialogContent.html">
+                jquery.modalDialogContent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.msAjax.html">
+                jquery.msAjax.js
+              </a>
+            
+              
+              <a class="source" href="jquery.ns.html">
+                jquery.ns.js
+              </a>
+            
+              
+              <a class="source" href="jquery.partialLoad.html">
+                jquery.partialLoad.js
+              </a>
+            
+              
+              <a class="source" href="jquery.postMessage.html">
+                jquery.postMessage.js
+              </a>
+            
+              
+              <a class="source" href="jquery.proxyAll.html">
+                jquery.proxyAll.js
+              </a>
+            
+              
+              <a class="source" href="jquery.queryString.html">
+                jquery.queryString.js
+              </a>
+            
+              
+              <a class="source" href="jquery.richTooltip.html">
+                jquery.richTooltip.js
+              </a>
+            
+              
+              <a class="source" href="jquery.scrollAnchor.html">
+                jquery.scrollAnchor.js
+              </a>
+            
+              
+              <a class="source" href="jquery.uncomment.html">
+                jquery.uncomment.js
+              </a>
+            
+              
+              <a class="source" href="jquery.url.html">
+                jquery.url.js
+              </a>
+            
+              
+              <a class="source" href="pointy.gestures.html">
+                pointy.gestures.js
+              </a>
+            
+              
+              <a class="source" href="pointy.html">
+                pointy.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>jquery.postMessage.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/* globals Window */</span>
 
-<span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">cacheBuster</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(window, $)</span> {</span>
+    <span class="hljs-keyword">var</span> cacheBuster = <span class="hljs-number">1</span>;
 
-    <span class="kd">var</span> <span class="nx">browserSupportsPostMessage</span> <span class="o">=</span> <span class="o">!!</span> <span class="nb">window</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">;</span>
+    <span class="hljs-keyword">var</span> browserSupportsPostMessage = !! window.postMessage;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Given a URL, returns the domain portion (i.e. <a href="http://www.somedomain.com">http://www.somedomain.com</a>)</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Given a URL, returns the domain portion (i.e. http://www.somedomain.com)</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">function</span> <span class="nx">getDomainFromUrl</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">url</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/([^:]+:\/\/[^\/]+).*/</span><span class="p">,</span> <span class="s2">&quot;$1&quot;</span><span class="p">);</span>
-    <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getDomainFromUrl</span><span class="hljs-params">(url)</span> {</span>
+        <span class="hljs-keyword">return</span> url.replace(<span class="hljs-regexp">/([^:]+:\/\/[^\/]+).*/</span>, <span class="hljs-string">"$1"</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Given a domain pattern (i.e. <a href="http://somedomain.com">http://somedomain.com</a>) matches against a specified domain</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Given a domain pattern (i.e. http://somedomain.com) matches against a specified domain</p>             </td>             <td class="code">               <div class="highlight"><pre>
-
-</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <ul>
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <ul>
 <li>{String or Function} originPatternOrFunction: A pattern or a function to match against sourceOrigin</li>
 <li>{String} sourceOrigin: The string to match using the originPatternOrFunction</li>
-</ul>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">function</span> <span class="nx">isOriginMatch</span><span class="p">(</span><span class="nx">originPatternOrFunction</span><span class="p">,</span> <span class="nx">sourceOrigin</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="p">(</span><span class="nx">originPatternOrFunction</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span> <span class="o">&amp;&amp;</span>
-            <span class="nx">sourceOrigin</span> <span class="o">!==</span> <span class="nx">originPatternOrFunction</span> <span class="o">&amp;&amp;</span>
-            <span class="nx">originPatternOrFunction</span> <span class="o">!==</span> <span class="s2">&quot;*&quot;</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">isFunction</span><span class="p">(</span><span class="nx">originPatternOrFunction</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">originPatternOrFunction</span><span class="p">(</span><span class="nx">sourceOrigin</span><span class="p">))</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
-        <span class="p">}</span>
+</ul>
 
-        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
-    <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isOriginMatch</span><span class="hljs-params">(originPatternOrFunction, sourceOrigin)</span> {</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> (originPatternOrFunction) == <span class="hljs-string">"string"</span> &amp;&amp;
+            sourceOrigin !== originPatternOrFunction &amp;&amp;
+            originPatternOrFunction !== <span class="hljs-string">"*"</span>) {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ($.isFunction(originPatternOrFunction) &amp;&amp; !originPatternOrFunction(sourceOrigin)) {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }
 
-</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Try to find the relationship between the current window
-and a provided window reference.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Try to find the relationship between the current window
+and a provided window reference.</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <ul>
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <ul>
 <li>{Window} window: Current window or window sending event.</li>
 <li>{Window} target: Target window</li>
 <li>{number} level: Do not pass originally. Used only by recursion.</li>
-</ul>             </td>             <td class="code">               <div class="highlight"><pre>
+</ul>
 
-</pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Will return a short reference string or false if cannot be found.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">function</span> <span class="nx">transverseLevel</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">target</span><span class="p">,</span> <span class="nx">level</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">i</span><span class="p">;</span>
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Will return a short reference string or false if cannot be found.</p>
 
-        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">level</span> <span class="o">==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">level</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">transverseLevel</span><span class="hljs-params">(window, target, level)</span> {</span>
+        <span class="hljs-keyword">var</span> i;
 
-</pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>Try to find the target in window.frames</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">frames</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">try</span> <span class="p">{</span>
-                <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nb">window</span><span class="p">.</span><span class="nx">frames</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="k">try</span> <span class="p">{</span>
-                        <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">frames</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">===</span> <span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
-                            <span class="k">return</span> <span class="s2">&quot;f,&quot;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">;</span>
-                        <span class="p">}</span>
-                    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">number</span> <span class="o">!==</span> <span class="o">-</span><span class="mi">2147024891</span><span class="p">)</span> <span class="c1">// WTF is this?</span>
-                        <span class="p">{</span>
-                            <span class="k">throw</span> <span class="nx">e</span><span class="p">;</span>
-                        <span class="p">}</span>
-                    <span class="p">}</span>
-                <span class="p">}</span>
-            <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">ex</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="nx">ex</span><span class="p">.</span><span class="nx">number</span> <span class="o">!==</span> <span class="o">-</span><span class="mi">2146823279</span><span class="p">)</span> <span class="c1">// and, WTF is this?</span>
-                <span class="p">{</span>
-                    <span class="k">throw</span> <span class="nx">ex</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> level == <span class="hljs-string">"undefined"</span>) {
+            level = <span class="hljs-number">0</span>;
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Try to find the target in window.frames</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Try to find the target in window.parent</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">parent</span> <span class="o">&amp;&amp;</span> <span class="nb">window</span><span class="p">.</span><span class="nx">parent</span> <span class="o">===</span> <span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="s2">&quot;p&quot;</span><span class="p">;</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (window.frames) {
+            <span class="hljs-keyword">try</span> {
+                <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; window.frames.length; i++) {
+                    <span class="hljs-keyword">try</span> {
+                        <span class="hljs-keyword">if</span> (window.frames[i] === target) {
+                            <span class="hljs-keyword">return</span> <span class="hljs-string">"f,"</span> + i;
+                        }
+                    } <span class="hljs-keyword">catch</span> (e) {
+                        <span class="hljs-keyword">if</span> (e.number !== -<span class="hljs-number">2147024891</span>) <span class="hljs-comment">// WTF is this?</span>
+                        {
+                            <span class="hljs-keyword">throw</span> e;
+                        }
+                    }
+                }
+            } <span class="hljs-keyword">catch</span> (ex) {
+                <span class="hljs-keyword">if</span> (ex.number !== -<span class="hljs-number">2146823279</span>) <span class="hljs-comment">// and, WTF is this?</span>
+                {
+                    <span class="hljs-keyword">throw</span> ex;
+                }
+            }
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Try to find the target in window.parent</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>Try to find the target in window.opener</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">opener</span> <span class="o">&amp;&amp;</span> <span class="nb">window</span><span class="p">.</span><span class="nx">opener</span> <span class="o">===</span> <span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="s2">&quot;o&quot;</span><span class="p">;</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (window.parent &amp;&amp; window.parent === target) {
+            <span class="hljs-keyword">return</span> <span class="hljs-string">"p"</span>;
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Try to find the target in window.opener</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>Prevent infinite recursion. 
-There's really no good reason you need 4 levels deep of frames!</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">level</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (window.opener &amp;&amp; window.opener === target) {
+            <span class="hljs-keyword">return</span> <span class="hljs-string">"o"</span>;
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Prevent infinite recursion. 
+There’s really no good reason you need 4 levels deep of frames!</p>
 
-        <span class="kd">var</span> <span class="nx">ref</span><span class="p">;</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (level &gt;= <span class="hljs-number">4</span>) {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }
 
-</pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>Recurse through window.frames</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">frames</span> <span class="o">&amp;&amp;</span> <span class="nb">window</span><span class="p">.</span><span class="nx">frames</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nb">window</span><span class="p">.</span><span class="nx">frames</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">ref</span> <span class="o">=</span> <span class="nx">transverseLevel</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">frames</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">target</span><span class="p">,</span> <span class="nx">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-                <span class="k">if</span> <span class="p">(</span><span class="nx">ref</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="k">return</span> <span class="s2">&quot;f,&quot;</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="nx">ref</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+        <span class="hljs-keyword">var</span> ref;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Recurse through window.frames</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>Recurse through window.parent</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">parent</span> <span class="o">&amp;&amp;</span> <span class="nb">window</span><span class="p">.</span><span class="nx">parent</span> <span class="o">!==</span> <span class="nb">window</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">ref</span> <span class="o">=</span> <span class="nx">transverseLevel</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">parent</span><span class="p">,</span> <span class="nx">target</span><span class="p">,</span> <span class="nx">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">ref</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="s2">&quot;p.&quot;</span> <span class="o">+</span> <span class="nx">ref</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (window.frames &amp;&amp; window.frames.length &gt; <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; window.frames.length; i++) {
+                ref = transverseLevel(window.frames[i], target, level + <span class="hljs-number">1</span>);
+                <span class="hljs-keyword">if</span> (ref) {
+                    <span class="hljs-keyword">return</span> <span class="hljs-string">"f,"</span> + i + <span class="hljs-string">"."</span> + ref;
+                }
+            }
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Recurse through window.parent</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p>Recurse through window.opener</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">opener</span> <span class="o">&amp;&amp;</span> <span class="nb">window</span><span class="p">.</span><span class="nx">opener</span> <span class="o">!==</span> <span class="nb">window</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">ref</span> <span class="o">=</span> <span class="nx">transverseLevel</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">opener</span><span class="p">,</span> <span class="nx">target</span><span class="p">,</span> <span class="nx">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">ref</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="s2">&quot;o&quot;</span> <span class="o">+</span> <span class="nx">ref</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (window.parent &amp;&amp; window.parent !== window) {
+            ref = transverseLevel(window.parent, target, level + <span class="hljs-number">1</span>);
+            <span class="hljs-keyword">if</span> (ref) {
+                <span class="hljs-keyword">return</span> <span class="hljs-string">"p."</span> + ref;
+            }
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Recurse through window.opener</p>
 
-        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
-    <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (window.opener &amp;&amp; window.opener !== window) {
+            ref = transverseLevel(window.opener, target, level + <span class="hljs-number">1</span>);
+            <span class="hljs-keyword">if</span> (ref) {
+                <span class="hljs-keyword">return</span> <span class="hljs-string">"o"</span> + ref;
+            }
+        }
 
-</pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <ol>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <ol>
 <li>Find the relationship between current and target window.</li>
 <li>Serialize a string path from the current to the target window.
 Example: f,0.f,0 translates to window.frames[0].frames[0]
 Example: p.p translates to window.parent.parent</li>
-</ol>             </td>             <td class="code">               <div class="highlight"><pre>
+</ol>
 
-</pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <ul>
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <ul>
 <li>{Window} currentWindow: Starting window</li>
 <li>{Window|string} targetWindow: Window to determine reference to.</li>
-</ul>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">function</span> <span class="nx">serializeWindowReference</span><span class="p">(</span><span class="nx">currentWindow</span><span class="p">,</span> <span class="nx">targetWindow</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <p>If the target window was opened with window.open(), its name is the only
-way to get to it. This makes for a yucky API, unfortunately.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="p">(</span><span class="nx">targetWindow</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="nx">targetWindow</span><span class="p">;</span>
-        <span class="p">}</span>
+</ul>
 
-</pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <p>first see if we can quickly find the reference</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">currentWindow</span> <span class="o">===</span> <span class="nx">targetWindow</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;Trying to postMessage to self. Pointlessly useless.&quot;</span><span class="p">);</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">serializeWindowReference</span><span class="hljs-params">(currentWindow, targetWindow)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>If the target window was opened with window.open(), its name is the only
+way to get to it. This makes for a yucky API, unfortunately.</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <p>see if the target is simple the parent</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">currentWindow</span><span class="p">.</span><span class="nx">parent</span> <span class="o">&amp;&amp;</span> <span class="nx">currentWindow</span><span class="p">.</span><span class="nx">parent</span> <span class="o">!==</span> <span class="nx">currentWindow</span> <span class="o">&amp;&amp;</span> <span class="nx">currentWindow</span><span class="p">.</span><span class="nx">parent</span> <span class="o">===</span> <span class="nx">targetWindow</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="s2">&quot;p&quot;</span><span class="p">;</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> (targetWindow) == <span class="hljs-string">"string"</span>) {
+            <span class="hljs-keyword">return</span> <span class="hljs-string">":"</span> + targetWindow;
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>first see if we can quickly find the reference</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-20">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>               <p>see if the target is simply the opener</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">currentWindow</span><span class="p">.</span><span class="nx">opener</span> <span class="o">&amp;&amp;</span> <span class="nx">currentWindow</span><span class="p">.</span><span class="nx">opener</span> <span class="o">!==</span> <span class="nx">currentWindow</span> <span class="o">&amp;&amp;</span> <span class="nx">currentWindow</span><span class="p">.</span><span class="nx">opener</span> <span class="o">===</span> <span class="nx">targetWindow</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="s2">&quot;o&quot;</span><span class="p">;</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (currentWindow === targetWindow) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Trying to postMessage to self. Pointlessly useless."</span>);
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>see if the target is simple the parent</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-21">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>               <p>Try to determine the relationship through recursion.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="nx">transverseLevel</span><span class="p">(</span><span class="nx">currentWindow</span><span class="p">,</span> <span class="nx">targetWindow</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">ref</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">ref</span><span class="p">;</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t serialize window reference&quot;</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (currentWindow.parent &amp;&amp; currentWindow.parent !== currentWindow &amp;&amp; currentWindow.parent === targetWindow) {
+            <span class="hljs-keyword">return</span> <span class="hljs-string">"p"</span>;
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>see if the target is simply the opener</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-22">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-22">&#182;</a>               </div>               <p>Sends a message to a window in a different domain.
-* {String} message: The message to send
-* {String} targetHost: The domain of the window to which the message should be sent
-                              (i.e. http://www.something.com)
-* {Window} targetWindow: A reference to the target window to which the message should be sent
-* {string} targetWindowName: If the target window is a child window (not a frame), the window name
-                              is required for browsers that don"t support postMessage() natively.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">postMessage</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">targetHost</span><span class="p">,</span> <span class="nx">targetWindow</span><span class="p">,</span> <span class="cm">/* optional */</span> <span class="nx">targetWindowName</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">targetHost</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;targetHost argument was not supplied to jQuery.postMessage&quot;</span><span class="p">);</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (currentWindow.opener &amp;&amp; currentWindow.opener !== currentWindow &amp;&amp; currentWindow.opener === targetWindow) {
+            <span class="hljs-keyword">return</span> <span class="hljs-string">"o"</span>;
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Try to determine the relationship through recursion.</p>
 
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">targetWindow</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;No targetWindow specified&quot;</span><span class="p">);</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> ref = transverseLevel(currentWindow, targetWindow);
+        <span class="hljs-keyword">if</span> (ref) {
+            <span class="hljs-keyword">return</span> ref;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Couldn't serialize window reference"</span>);
+        }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Sends a message to a window in a different domain.</p>
+<ul>
+<li>{String} message: The message to send</li>
+<li>{String} targetHost: The domain of the window to which the message should be sent<pre><code>                        (i.e. http:<span class="hljs-comment">//www.something.com)</span>
+</code></pre></li>
+<li>{Window} targetWindow: A reference to the target window to which the message should be sent</li>
+<li>{string} targetWindowName: If the target window is a child window (not a frame), the window name<pre><code>                        is required <span class="hljs-keyword">for</span> browsers that don<span class="hljs-string">"t support postMessage() natively.</span>
+</code></pre></li>
+</ul>
 
-        <span class="nx">targetHost</span> <span class="o">=</span> <span class="nx">getDomainFromUrl</span><span class="p">(</span><span class="nx">targetHost</span><span class="p">);</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.postMessage = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(message, targetHost, targetWindow, <span class="hljs-comment">/* optional */</span> targetWindowName)</span> {</span>
+        <span class="hljs-keyword">if</span> (!targetHost) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"targetHost argument was not supplied to jQuery.postMessage"</span>);
+        }
 
-</pre></div>             </td>           </tr>                               <tr id="section-23">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-23">&#182;</a>               </div>               <p>native works for:</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="hljs-keyword">if</span> (!targetWindow) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"No targetWindow specified"</span>);
+        }
 
-</pre></div>             </td>           </tr>                               <tr id="section-24">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-24">&#182;</a>               </div>               <ul>
+        targetHost = getDomainFromUrl(targetHost);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>native works for:</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <ul>
 <li>Opera 12.12 (build 1707, x64, Win7)</li>
 <li>Chrome 24.0.1312.56 m (Win7)</li>
 <li>Firefox 18.0.1 (Win7)</li>
-</ul>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">browserSupportsPostMessage</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">try</span> <span class="p">{</span>
-                <span class="nx">targetWindow</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">targetHost</span><span class="p">);</span>
-                <span class="k">return</span><span class="p">;</span>
-            <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">ex</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-25">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-25">&#182;</a>               </div>               <p>In IE (all known versions), postMessage() works only for iframes within the same
-top-level window, and will fail with "No such interface supported" for calls between top-level windows.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+</ul>
 
-</pre></div>             </td>           </tr>                               <tr id="section-26">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-26">&#182;</a>               </div>               <ul>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (browserSupportsPostMessage) {
+            <span class="hljs-keyword">try</span> {
+                targetWindow.postMessage(message, targetHost);
+                <span class="hljs-keyword">return</span>;
+            } <span class="hljs-keyword">catch</span> (ex) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>In IE (all known versions), postMessage() works only for iframes within the same
+top-level window, and will fail with “No such interface supported” for calls between top-level windows.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <ul>
 <li><a href="http://blogs.msdn.com/b/ieinternals/archive/2009/09/16/bugs-in-ie8-support-for-html5-postmessage-sessionstorage-and-localstorage.aspx">http://blogs.msdn.com/b/ieinternals/archive/2009/09/16/bugs-in-ie8-support-for-html5-postmessage-sessionstorage-and-localstorage.aspx</a></li>
 <li><a href="http://blogs.msdn.com/b/thebeebs/archive/2011/12/21/postmessage-popups-and-ie.aspx">http://blogs.msdn.com/b/thebeebs/archive/2011/12/21/postmessage-popups-and-ie.aspx</a></li>
-</ul>             </td>             <td class="code">               <div class="highlight"><pre>
+</ul>
 
-</pre></div>             </td>           </tr>                               <tr id="section-27">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-27">&#182;</a>               </div>               <p>No such interface supported. Fall through to the polyfill technique.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="k">if</span> <span class="p">(</span><span class="nx">ex</span><span class="p">.</span><span class="nx">number</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">2147467262</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="k">throw</span> <span class="nx">ex</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>No such interface supported. Fall through to the polyfill technique.</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-28">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-28">&#182;</a>               </div>               <p>The browser does not support window.postMessage.
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (ex.number != -<span class="hljs-number">2147467262</span>) {
+                    <span class="hljs-keyword">throw</span> ex;
+                }
+            }
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>The browser does not support window.postMessage.
 First, lets see if we can get direct access to the window instead.
-This will only work if the target window is in the same domain.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">try</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">postMessageDirect</span> <span class="o">=</span> <span class="nx">targetWindow</span><span class="p">.</span><span class="nx">__receiveMessageHook</span><span class="p">;</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">postMessageDirect</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">postMessageDirect</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">targetHost</span><span class="p">);</span>
-                <span class="k">return</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">ex</span><span class="p">)</span> <span class="p">{}</span>
+This will only work if the target window is in the same domain.</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-29">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-29">&#182;</a>               </div>               <p>Direct access wont work because the targetWindow is in a different domain.
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">try</span> {
+            <span class="hljs-keyword">var</span> postMessageDirect = targetWindow.__receiveMessageHook;
+            <span class="hljs-keyword">if</span> (postMessageDirect) {
+                postMessageDirect(message, targetHost);
+                <span class="hljs-keyword">return</span>;
+            }
+        } <span class="hljs-keyword">catch</span> (ex) {}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>Direct access wont work because the targetWindow is in a different domain.
 Create an iframe in the same domain as the target window and use it as a proxy to talk
 to the target window. Pass the proxy information in an encoded URL fragment,
-(not a querystring, which would cause it to load from the server)</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="kd">var</span> <span class="nx">serializedWindowRef</span> <span class="o">=</span> <span class="nx">serializeWindowReference</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">targetWindowName</span> <span class="o">||</span> <span class="nx">targetWindow</span><span class="p">),</span>
-            <span class="nx">thisDomain</span> <span class="o">=</span> <span class="nx">getDomainFromUrl</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="p">),</span>
-            <span class="nx">iframe</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;iframe&quot;</span><span class="p">);</span>
+(not a querystring, which would cause it to load from the server)</p>
 
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">targetHost</span> <span class="o">||</span> <span class="nx">targetHost</span> <span class="o">==</span> <span class="s2">&quot;*&quot;</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;$.postMessage(): Must specify targetHost on browsers that don&#39;t support postMessage natively (cannot be &#39;*&#39;).&quot;</span><span class="p">);</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> serializedWindowRef = serializeWindowReference(window, targetWindowName || targetWindow),
+            thisDomain = getDomainFromUrl(document.location.href),
+            iframe = document.createElement(<span class="hljs-string">"iframe"</span>);
 
-        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span>
-            <span class="nx">$</span><span class="p">(</span><span class="nx">iframe</span><span class="p">)</span>
-            <span class="p">.</span><span class="nx">hide</span><span class="p">()</span>
-            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">,</span> <span class="nx">targetHost</span> <span class="o">+</span> <span class="nx">getPolyfillPath</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;#&quot;</span> <span class="o">+</span>
-</pre></div>             </td>           </tr>                               <tr id="section-30">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-30">&#182;</a>               </div>               <p>When server side debugging, add (+new Date()) here</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="p">(</span><span class="o">+</span><span class="k">new</span> <span class="nb">Date</span><span class="p">())</span> <span class="o">+</span> <span class="nx">cacheBuster</span> <span class="o">+</span> <span class="s2">&quot;&amp;&quot;</span> <span class="o">+</span>
-                <span class="nx">serializedWindowRef</span> <span class="o">+</span> <span class="s2">&quot;&amp;&quot;</span> <span class="o">+</span> <span class="nx">thisDomain</span> <span class="o">+</span> <span class="s2">&quot;&amp;&quot;</span> <span class="o">+</span> <span class="nb">encodeURIComponent</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
-            <span class="p">)</span>
-            <span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-31">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-31">&#182;</a>               </div>               <p>remove this DOM iframe once it is no longer needed</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="nx">$</span><span class="p">(</span><span class="nx">iframe</span><span class="p">).</span><span class="nx">remove</span><span class="p">();</span>
-            <span class="p">})</span>
-        <span class="p">);</span>
+        <span class="hljs-keyword">if</span> (!targetHost || targetHost == <span class="hljs-string">"*"</span>) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"$.postMessage(): Must specify targetHost on browsers that don't support postMessage natively (cannot be '*')."</span>);
+        }
 
-        <span class="nx">cacheBuster</span><span class="o">++</span><span class="p">;</span>
-    <span class="p">};</span>
+        $(<span class="hljs-string">"body"</span>).append(
+            $(iframe)
+            .hide()
+            .attr(<span class="hljs-string">"src"</span>, targetHost + getPolyfillPath() + <span class="hljs-string">"#"</span> +</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>When server side debugging, add (+new Date()) here</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-32">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-32">&#182;</a>               </div>               <p>Assigns an event handler (callback) to receive messages sent to the window, from the specified origin.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                (+<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()) + cacheBuster + <span class="hljs-string">"&amp;"</span> +
+                serializedWindowRef + <span class="hljs-string">"&amp;"</span> + thisDomain + <span class="hljs-string">"&amp;"</span> + <span class="hljs-built_in">encodeURIComponent</span>(message)
+            )
+            .load(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>remove this DOM iframe once it is no longer needed</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-33">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-33">&#182;</a>               </div>               <ul>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                $(iframe).remove();
+            })
+        );
+
+        cacheBuster++;
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>Assigns an event handler (callback) to receive messages sent to the window, from the specified origin.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <ul>
 <li>{function(Object)} callback: The event handler function to call when a message is received</li>
-<li>{string|function(string)} allowedOriginOrFunction: Either a domain string (i.e. http://www.something.com),
-                                                a wildcard (i.e. "*"), or a function that takes domain
-                                                strings and returns true or false.</li>
-</ul>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">receiveMessage</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">callback</span><span class="p">,</span> <span class="nx">allowedOriginOrFunction</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;No callback function specified&quot;</span><span class="p">);</span>
-        <span class="p">}</span>
+<li>{string|function(string)} allowedOriginOrFunction: Either a domain string (i.e. <a href="http://www.something.com">http://www.something.com</a>),<pre><code>                                              a wildcard (i.e. <span class="hljs-string">"*"</span>), or a <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">that</span> <span class="hljs-title">takes</span> <span class="hljs-title">domain</span>
+                                              <span class="hljs-title">strings</span> <span class="hljs-title">and</span> <span class="hljs-title">returns</span> <span class="hljs-title">true</span> <span class="hljs-title">or</span> <span class="hljs-title">false</span>.</span>
+</code></pre></li>
+</ul>
 
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">allowedOriginOrFunction</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">allowedOriginOrFunction</span> <span class="o">=</span> <span class="s2">&quot;*&quot;</span><span class="p">;</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.receiveMessage = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(callback, allowedOriginOrFunction)</span> {</span>
+        <span class="hljs-keyword">if</span> (!callback) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"No callback function specified"</span>);
+        }
 
-        <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">origin</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">data</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">originalEvent</span> <span class="o">?</span> <span class="nx">event</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">.</span><span class="nx">data</span> <span class="o">:</span> <span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
-            <span class="p">}</span>
+        <span class="hljs-keyword">if</span> (!allowedOriginOrFunction) {
+            allowedOriginOrFunction = <span class="hljs-string">"*"</span>;
+        }
 
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">origin</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">origin</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">originalEvent</span> <span class="o">?</span> <span class="nx">event</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">.</span><span class="nx">origin</span> <span class="o">:</span> <span class="nx">event</span><span class="p">.</span><span class="nx">origin</span><span class="p">;</span>
-            <span class="p">}</span>
+        $(window).on(<span class="hljs-string">"message"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event, data, origin)</span> {</span>
+            <span class="hljs-keyword">if</span> (!data) {
+                data = event.originalEvent ? event.originalEvent.data : event.data;
+            }
 
-            <span class="k">return</span> <span class="nx">isOriginMatch</span><span class="p">(</span><span class="nx">allowedOriginOrFunction</span><span class="p">,</span> <span class="nx">event</span><span class="p">.</span><span class="nx">originalEvent</span> <span class="o">?</span> <span class="nx">event</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">.</span><span class="nx">origin</span> <span class="o">:</span> <span class="nx">origin</span><span class="p">)</span> <span class="o">?</span>
-                <span class="nx">callback</span><span class="p">({</span>
-                    <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="nx">data</span><span class="p">,</span>
-                    <span class="s2">&quot;origin&quot;</span><span class="o">:</span> <span class="nx">origin</span>
-                <span class="p">})</span> <span class="o">:</span>
-                <span class="kc">false</span><span class="p">;</span>
-        <span class="p">});</span>
-    <span class="p">};</span>
+            <span class="hljs-keyword">if</span> (!origin) {
+                origin = event.originalEvent ? event.originalEvent.origin : event.origin;
+            }
 
-</pre></div>             </td>           </tr>                               <tr id="section-34">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-34">&#182;</a>               </div>               <p>Windows in IE can only handle onmessage events from IFRAMEs within the same parent window only.
-Messages sent between top level windows will fail. Unfortunately, we don't know if the calling window is
-an IFrame or top-level window. To work around, listen for calls from the polyfill technique for IE in all cases.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nb">window</span><span class="p">.</span><span class="nx">__receiveMessageHook</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">origin</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">$evt</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Event</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">);</span>
-        <span class="nx">$evt</span><span class="p">.</span><span class="nx">data</span> <span class="o">=</span> <span class="nx">message</span><span class="p">;</span>
-        <span class="nx">$evt</span><span class="p">.</span><span class="nx">origin</span> <span class="o">=</span> <span class="nx">origin</span><span class="p">;</span>
+            <span class="hljs-keyword">return</span> isOriginMatch(allowedOriginOrFunction, event.originalEvent ? event.originalEvent.origin : origin) ?
+                callback({
+                    <span class="hljs-string">"data"</span>: data,
+                    <span class="hljs-string">"origin"</span>: origin
+                }) :
+                <span class="hljs-literal">false</span>;
+        });
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>Windows in IE can only handle onmessage events from IFRAMEs within the same parent window only.
+Messages sent between top level windows will fail. Unfortunately, we don’t know if the calling window is
+an IFrame or top-level window. To work around, listen for calls from the polyfill technique for IE in all cases.</p>
 
-        <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="nx">$evt</span><span class="p">,</span> <span class="p">[</span><span class="nx">$evt</span><span class="p">.</span><span class="nx">data</span><span class="p">,</span> <span class="nx">$evt</span><span class="p">.</span><span class="nx">origin</span><span class="p">]);</span>
-    <span class="p">};</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    window.__receiveMessageHook = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(message, origin)</span> {</span>
+        <span class="hljs-keyword">var</span> $evt = <span class="hljs-keyword">new</span> $.Event(<span class="hljs-string">"message"</span>);
+        $evt.data = message;
+        $evt.origin = origin;
 
-</pre></div>             </td>           </tr>                               <tr id="section-35">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-35">&#182;</a>               </div>               <p>Convenience wrapper for windows wrapped in jQuery objects</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">postMessage</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">targetHost</span><span class="p">,</span> <span class="cm">/* optional */</span> <span class="nx">targetWindowName</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nx">el</span> <span class="k">instanceof</span> <span class="nx">Window</span><span class="p">))</span> <span class="p">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;postMessage can only be sent to a window&quot;</span><span class="p">);</span>
-            <span class="p">}</span>
+        $(window).trigger($evt, [$evt.data, $evt.origin]);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <p>Convenience wrapper for windows wrapped in jQuery objects</p>
 
-            <span class="nx">$</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">targetHost</span><span class="p">,</span> <span class="nx">el</span><span class="p">,</span> <span class="nx">targetWindowName</span><span class="p">);</span>
-        <span class="p">});</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.fn.postMessage = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(message, targetHost, <span class="hljs-comment">/* optional */</span> targetWindowName)</span> {</span>
+        <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, el)</span> {</span>
+            <span class="hljs-keyword">if</span> (!(el <span class="hljs-keyword">instanceof</span> Window)) {
+                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"postMessage can only be sent to a window"</span>);
+            }
 
-        <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
-    <span class="p">};</span>
+            $.postMessage(message, targetHost, el, targetWindowName);
+        });
 
-    <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">message</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="nx">add</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">handlerData</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">origHandler</span> <span class="o">=</span> <span class="nx">handlerData</span><span class="p">.</span><span class="nx">handler</span><span class="p">;</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+    };
 
-            <span class="nx">handlerData</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">origin</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">e</span><span class="p">.</span><span class="nx">data</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span> <span class="o">?</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">.</span><span class="nx">data</span> <span class="o">:</span> <span class="nx">message</span><span class="p">;</span>
-                <span class="nx">e</span><span class="p">.</span><span class="nx">origin</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span> <span class="o">?</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">.</span><span class="nx">origin</span> <span class="o">:</span> <span class="nx">origin</span><span class="p">;</span>
+    $.event.special.message = {
+        add: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handlerData)</span> {</span>
+            <span class="hljs-keyword">var</span> origHandler = handlerData.handler;
 
-                <span class="k">return</span> <span class="nx">origHandler</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">e</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">origin</span><span class="p">);</span>
-            <span class="p">};</span>
-        <span class="p">}</span>
-    <span class="p">};</span>
+            handlerData.handler = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e, message, origin)</span> {</span>
+                e.data = e.originalEvent ? e.originalEvent.data : message;
+                e.origin = e.originalEvent ? e.originalEvent.origin : origin;
 
-    <span class="kd">var</span> <span class="nx">getPolyfillPath</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">_jqueryPostMessagePolyfillPath</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;Must configure jquery.postMessage() with window._jqueryPostMessagePolyfillPath for IE7 support. Should be &#39;/root-relative-path-on-my-server/postmessage.htm&#39;&quot;</span><span class="p">);</span>
-        <span class="p">}</span>
+                <span class="hljs-keyword">return</span> origHandler.call(<span class="hljs-keyword">this</span>, e, e.data, e.origin);
+            };
+        }
+    };
 
-        <span class="k">return</span> <span class="nb">window</span><span class="p">.</span><span class="nx">_jqueryPostMessagePolyfillPath</span><span class="p">;</span>
-    <span class="p">};</span>
+    <span class="hljs-keyword">var</span> getPolyfillPath = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">if</span> (!window._jqueryPostMessagePolyfillPath) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Must configure jquery.postMessage() with window._jqueryPostMessagePolyfillPath for IE7 support. Should be '/root-relative-path-on-my-server/postmessage.htm'"</span>);
+        }
 
-<span class="p">})(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">jQuery</span><span class="p">);</span>
+        <span class="hljs-keyword">return</span> window._jqueryPostMessagePolyfillPath;
+    };
 
-</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
+})(window, jQuery);</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

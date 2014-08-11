@@ -1,469 +1,1299 @@
-<!DOCTYPE html>  <html> <head>   <title>jquery.modalDialogContent.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="breakpoints.html">                 breakpoints.js               </a>                                           <a class="source" href="date-parse.html">                 date-parse.js               </a>                                           <a class="source" href="jquery.breakpoints.html">                 jquery.breakpoints.js               </a>                                           <a class="source" href="jquery.calcRestrainedPos.html">                 jquery.calcRestrainedPos.js               </a>                                           <a class="source" href="jquery.clientRect.html">                 jquery.clientRect.js               </a>                                           <a class="source" href="jquery.contentSize.html">                 jquery.contentSize.js               </a>                                           <a class="source" href="jquery.cookies.html">                 jquery.cookies.js               </a>                                           <a class="source" href="jquery.css.html">                 jquery.css.js               </a>                                           <a class="source" href="jquery.customEvent.html">                 jquery.customEvent.js               </a>                                           <a class="source" href="jquery.delimitedString.html">                 jquery.delimitedString.js               </a>                                           <a class="source" href="jquery.disableEvent.html">                 jquery.disableEvent.js               </a>                                           <a class="source" href="jquery.hostIframe.html">                 jquery.hostIframe.js               </a>                                           <a class="source" href="jquery.hoverDelay.html">                 jquery.hoverDelay.js               </a>                                           <a class="source" href="jquery.htmlEncode.html">                 jquery.htmlEncode.js               </a>                                           <a class="source" href="jquery.imageSize.html">                 jquery.imageSize.js               </a>                                           <a class="source" href="jquery.isVisibleKeyCode.html">                 jquery.isVisibleKeyCode.js               </a>                                           <a class="source" href="jquery.menu.html">                 jquery.menu.js               </a>                                           <a class="source" href="jquery-menu-exampleskin.html">                 jquery-menu-exampleskin.js               </a>                                           <a class="source" href="jquery.modalDialog.deviceFixes.html">                 jquery.modalDialog.deviceFixes.js               </a>                                           <a class="source" href="jquery.modalDialog.getSettings.html">                 jquery.modalDialog.getSettings.js               </a>                                           <a class="source" href="jquery.modalDialog.header.html">                 jquery.modalDialog.header.js               </a>                                           <a class="source" href="jquery.modalDialog.history.html">                 jquery.modalDialog.history.js               </a>                                           <a class="source" href="jquery.modalDialog.html">                 jquery.modalDialog.js               </a>                                           <a class="source" href="jquery.modalDialog.unobtrusive.html">                 jquery.modalDialog.unobtrusive.js               </a>                                           <a class="source" href="jquery.modalDialog.userAgent.html">                 jquery.modalDialog.userAgent.js               </a>                                           <a class="source" href="jquery.modalDialogContent.header.html">                 jquery.modalDialogContent.header.js               </a>                                           <a class="source" href="jquery.modalDialogContent.html">                 jquery.modalDialogContent.js               </a>                                           <a class="source" href="jquery.msAjax.html">                 jquery.msAjax.js               </a>                                           <a class="source" href="jquery.ns.html">                 jquery.ns.js               </a>                                           <a class="source" href="jquery.partialLoad.html">                 jquery.partialLoad.js               </a>                                           <a class="source" href="jquery.postMessage.html">                 jquery.postMessage.js               </a>                                           <a class="source" href="jquery.proxyAll.html">                 jquery.proxyAll.js               </a>                                           <a class="source" href="jquery.queryString.html">                 jquery.queryString.js               </a>                                           <a class="source" href="jquery.richTooltip.html">                 jquery.richTooltip.js               </a>                                           <a class="source" href="jquery.scrollAnchor.html">                 jquery.scrollAnchor.js               </a>                                           <a class="source" href="jquery.uncomment.html">                 jquery.uncomment.js               </a>                                           <a class="source" href="jquery.url.html">                 jquery.url.js               </a>                                           <a class="source" href="pointy.gestures.html">                 pointy.gestures.js               </a>                                           <a class="source" href="pointy.html">                 pointy.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs"><a href="../index.html">Home</a> | 
-<a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.modalDialogContent.js" target="_blank">View this file on Github</a>
-
-<hr style="height: 1px; border:0; background-color:#4A525A">
-             <h1>               jquery.modalDialogContent.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>This is a library for use in content windows that live inside a FramedDialog.
-All its methods work cross-domain.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="cm">/*</span>
-<span class="cm">Example usage:</span>
-
-<span class="cm">Creating a second level dialog:</span>
-<span class="cm">$.modalDialog.create()</span>
-
-<span class="cm">*/</span>
-
-<span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span> <span class="o">&amp;&amp;</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">_isHost</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;Attempt to load jquery.modalDialogContent.js in the same window as jquery.modalDialog.js.&quot;</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="kd">var</span> <span class="nx">_dialogIdCounter</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-    <span class="kd">var</span> <span class="nx">DIALOG_NAME_PREFIX</span> <span class="o">=</span> <span class="s2">&quot;dialog&quot;</span><span class="p">;</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Gets a unique ID for this window.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">getDialogId</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="nx">_dialogIdCounter</span><span class="o">++</span><span class="p">;</span>
-        <span class="k">return</span> <span class="nx">DIALOG_NAME_PREFIX</span> <span class="o">+</span> <span class="nx">_dialogIdCounter</span><span class="p">;</span>
-    <span class="p">};</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Utility class to manage multiple callbacks.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">DialogProxyEvent</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">eventType</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">eventType</span> <span class="o">=</span> <span class="nx">eventType</span><span class="p">;</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">callbacks</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Callbacks</span><span class="p">();</span>
-
-        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">callbacks</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
-        <span class="p">}</span>
-    <span class="p">};</span>
-
-    <span class="nx">DialogProxyEvent</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Triggers the event and calls all handlers.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="nx">fire</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">evt</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Event</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">eventType</span><span class="p">);</span>
-            <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
-
-            <span class="k">this</span><span class="p">.</span><span class="nx">callbacks</span><span class="p">.</span><span class="nx">fire</span><span class="p">(</span><span class="nx">evt</span><span class="p">);</span>
-
-            <span class="k">return</span> <span class="nx">evt</span><span class="p">;</span>
-        <span class="p">},</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Adds a handler to the event.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="nx">add</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">this</span><span class="p">.</span><span class="nx">callbacks</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">callback</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">};</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Utility to initialize event objects on the FramedDialogProxy.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">initEvent</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">dialogProxy</span><span class="p">,</span> <span class="nx">eventType</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">onEventType</span> <span class="o">=</span> <span class="s2">&quot;on&quot;</span> <span class="o">+</span> <span class="nx">eventType</span><span class="p">;</span>
-        <span class="nx">dialogProxy</span><span class="p">[</span><span class="nx">onEventType</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DialogProxyEvent</span><span class="p">(</span><span class="nx">eventType</span><span class="p">,</span> <span class="nx">dialogProxy</span><span class="p">.</span><span class="nx">settings</span><span class="p">[</span><span class="nx">onEventType</span><span class="p">]);</span>
-        <span class="k">delete</span> <span class="nx">dialogProxy</span><span class="p">.</span><span class="nx">settings</span><span class="p">[</span><span class="nx">onEventType</span><span class="p">];</span>
-    <span class="p">};</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>A proxy object that has all the methods of the host window FramedDialog,
-but uses postMessage to communicate with the host window dialog.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">FramedDialogProxy</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">settings</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">settings</span> <span class="o">=</span> <span class="nx">settings</span><span class="p">;</span>
-
-        <span class="nx">initEvent</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&quot;open&quot;</span><span class="p">);</span>
-        <span class="nx">initEvent</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&quot;close&quot;</span><span class="p">);</span>
-        <span class="nx">initEvent</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&quot;beforeclose&quot;</span><span class="p">);</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>If _window is passed, this is a proxy for the dialog in the specified window.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">_window</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>The window object should not be kept in settings, because it can't be serialized
-and sent to the parent window via postMessage.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">this</span><span class="p">.</span><span class="nx">_window</span> <span class="o">=</span> <span class="nx">settings</span><span class="p">.</span><span class="nx">_window</span><span class="p">;</span>
-            <span class="k">delete</span> <span class="nx">settings</span><span class="p">.</span><span class="nx">_window</span><span class="p">;</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>The ID of this window is stored in its name- 
-This is the one property that can be read from any window, across domains.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">_fullId</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_window</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>dialog ids are in the format grandParentId<em>parentId</em>thisId.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="kd">var</span> <span class="nx">idParts</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">_fullId</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">);</span>
-            <span class="nx">idParts</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="nx">idParts</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">parentId</span> <span class="o">=</span> <span class="nx">idParts</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">);</span>
-                <span class="k">this</span><span class="p">.</span><span class="nx">_parentWindow</span> <span class="o">=</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">frames</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">parentId</span><span class="p">];</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-</pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>If _parentWindow is passed, this is a proxy for a new window, child of the current window</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">_parentWindow</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">parentId</span> <span class="o">=</span> <span class="nx">settings</span><span class="p">.</span><span class="nx">_parentWindow</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">_parentWindow</span> <span class="o">=</span> <span class="nx">settings</span><span class="p">.</span><span class="nx">_parentWindow</span><span class="p">;</span>
-            <span class="k">delete</span> <span class="nx">settings</span><span class="p">.</span><span class="nx">_parentWindow</span><span class="p">;</span>
-
-            <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">_fullId</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">parentId</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nx">getDialogId</span><span class="p">();</span>
-
-            <span class="k">this</span><span class="p">.</span><span class="nx">_postCommandToParent</span><span class="p">(</span><span class="s2">&quot;create&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">};</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>Implements the same interface as the parent FramedDialog, 
-but uses postMessage() to communicate with the parent.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">FramedDialogProxy</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="nx">dialogType</span><span class="o">:</span> <span class="s2">&quot;iframe&quot;</span><span class="p">,</span>
-
-        <span class="nx">open</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">_postCommandToParent</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">);</span>
-        <span class="p">},</span>
-
-        <span class="nx">close</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">_postCommandToParent</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">);</span>
-        <span class="p">},</span>
-
-        <span class="nx">getParent</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_parentDialog</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">this</span><span class="p">.</span><span class="nx">_parentDialog</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-
-                <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">parentId</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="k">this</span><span class="p">.</span><span class="nx">_parentDialog</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FramedDialogProxy</span><span class="p">({</span>
-                        <span class="nx">_window</span><span class="o">:</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">frames</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">parentId</span><span class="p">]</span>
-                    <span class="p">});</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-
-            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_parentDialog</span><span class="p">;</span>
-        <span class="p">},</span>
-
-        <span class="nx">getWindow</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">_window</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">this</span><span class="p">.</span><span class="nx">_window</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_window</span> <span class="o">||</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">frames</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">_fullId</span><span class="p">];</span>
-            <span class="p">}</span>
-
-            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_window</span><span class="p">;</span>
-        <span class="p">},</span>
-
-        <span class="nx">setHeight</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">contentHeight</span><span class="p">,</span> <span class="nx">center</span><span class="p">,</span> <span class="nx">skipAnimation</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">autoSizing</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">_internalCall</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;Auto sizing is enabled, so manual size setting is disallowed.&quot;</span><span class="p">);</span>
-            <span class="p">}</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p>Ensure content height is rounded so its easy to compare to itself</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="nx">contentHeight</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">contentHeight</span><span class="p">);</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p>Optimization: don't set the height if its already set
-Also prevents resizing while a resize animation is progress</p>             </td>             <td class="code">               <div class="highlight"><pre>
-
-</pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <p>TODO: could this be a problem when the content gets too large for the window, and the max height kicks in?
-contentHeight might never match _currentFrameHeight.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_currentFrameHeight</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">_currentFrameHeight</span> <span class="o">==</span> <span class="nx">contentHeight</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span><span class="p">;</span>
-            <span class="p">}</span>
-
-            <span class="k">this</span><span class="p">.</span><span class="nx">_currentFrameHeight</span> <span class="o">=</span> <span class="nx">contentHeight</span><span class="p">;</span>
-
-            <span class="k">this</span><span class="p">.</span><span class="nx">_postCommandToParent</span><span class="p">(</span><span class="s2">&quot;setHeight&quot;</span><span class="p">,</span> <span class="p">{</span>
-                <span class="nx">height</span><span class="o">:</span> <span class="nx">contentHeight</span><span class="p">,</span>
-                <span class="nx">center</span><span class="o">:</span> <span class="o">!!</span> <span class="nx">center</span><span class="p">,</span>
-                <span class="nx">skipAnimation</span><span class="o">:</span> <span class="o">!!</span> <span class="nx">skipAnimation</span>
-            <span class="p">});</span>
-        <span class="p">},</span>
-
-        <span class="nx">setHeightFromContent</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">center</span><span class="p">,</span> <span class="nx">skipAnimation</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">height</span><span class="p">;</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">sizeElement</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <p>This mechanism handles body margins, other factors that affect position.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="kd">var</span> <span class="nx">rect</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">sizeElement</span><span class="p">.</span><span class="nx">clientRect</span><span class="p">();</span>
-                <span class="nx">height</span> <span class="o">=</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">top</span> <span class="o">+</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="nx">height</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">contentSize</span><span class="p">().</span><span class="nx">height</span><span class="p">;</span>
-            <span class="p">}</span>
-
-            <span class="k">this</span><span class="p">.</span><span class="nx">setHeight</span><span class="p">(</span><span class="nx">height</span><span class="p">,</span> <span class="nx">center</span><span class="p">,</span> <span class="nx">skipAnimation</span><span class="p">);</span>
-        <span class="p">},</span>
-
-        <span class="nx">_setHeightFromContentInternal</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">_internalCall</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">setHeightFromContent</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">_internalCall</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-        <span class="p">},</span>
-
-        <span class="nx">center</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">_postCommandToParent</span><span class="p">(</span><span class="s2">&quot;center&quot;</span><span class="p">);</span>
-        <span class="p">},</span>
-
-        <span class="nx">setTitle</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">title</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">_postCommandToParent</span><span class="p">(</span><span class="s2">&quot;setTitle&quot;</span><span class="p">,</span> <span class="p">{</span>
-                <span class="nx">title</span><span class="o">:</span> <span class="nx">title</span>
-            <span class="p">});</span>
-        <span class="p">},</span>
-
-        <span class="nx">setTitleFromContent</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">setTitle</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">title</span><span class="p">);</span>
-        <span class="p">},</span>
-
-        <span class="nx">notifyReady</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <p>Initialize the size element</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">sizeElement</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">sizeElement</span> <span class="k">instanceof</span> <span class="nx">jQuery</span><span class="p">))</span> <span class="p">{</span>
-                    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">sizeElement</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">sizeElement</span><span class="p">);</span>
-                <span class="p">}</span>
-
-                <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">sizeElement</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">sizeElement</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <p>Set the dialog title</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">useTitleTag</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">this</span><span class="p">.</span><span class="nx">setTitleFromContent</span><span class="p">();</span>
-            <span class="p">}</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-20">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>               <p>Don't center, it will be done by the dialog open
-Don't animate, the dialog is invisible anyway</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">this</span><span class="p">.</span><span class="nx">_setHeightFromContentInternal</span><span class="p">(</span><span class="kc">false</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-
-            <span class="kd">var</span> <span class="nx">hostname</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">protocol</span> <span class="o">+</span> <span class="s2">&quot;//&quot;</span> <span class="o">+</span> <span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">hostname</span><span class="p">;</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">port</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">hostname</span> <span class="o">+=</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">port</span><span class="p">;</span>
-            <span class="p">}</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-21">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>               <p>Pass the hostname of the window so that subsequent postMessage() requests can be directed to the right domain.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">this</span><span class="p">.</span><span class="nx">_postCommandToParent</span><span class="p">(</span><span class="s2">&quot;notifyReady&quot;</span><span class="p">,</span> <span class="p">{</span>
-                <span class="nx">hostname</span><span class="o">:</span> <span class="nx">hostname</span>
-            <span class="p">});</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-22">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-22">&#182;</a>               </div>               <p>Poll for content size changes. This appears to be more foolproof and cheaper than any other method
-(i.e. manually calling it, etc</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">autoSizing</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">this</span><span class="p">.</span><span class="nx">enableAutoSizing</span><span class="p">();</span>
-            <span class="p">}</span>
-        <span class="p">},</span>
-
-        <span class="nx">enableAutoSizing</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">enable</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">enable</span> <span class="o">==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">enable</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-            <span class="p">}</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="nx">enable</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">this</span><span class="p">.</span><span class="nx">_autoSizeInterval</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span>
-                    <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-                        <span class="k">this</span><span class="p">.</span><span class="nx">_setHeightFromContentInternal</span><span class="p">(</span><span class="kc">false</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-                    <span class="p">},</span> <span class="k">this</span><span class="p">),</span>
-                    <span class="mi">100</span><span class="p">);</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_autoSizeInterval</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nb">window</span><span class="p">.</span><span class="nx">clearInterval</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_autoSizeInterval</span><span class="p">);</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">},</span>
-
-        <span class="nx">postMessageToParent</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-23">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-23">&#182;</a>               </div>               <p>Try to detect if the parent window is directly accessible.
-This is significantly less expensive on old browsers that don't support postMessage.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="k">this</span><span class="p">.</span><span class="nx">_postMessageDirect</span> <span class="o">==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">try</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-24">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-24">&#182;</a>               </div>               <p>This logs a warning in some browsers if it fails, but it isn't exposed to users, so its not worth worrying about.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                    <span class="k">this</span><span class="p">.</span><span class="nx">_postMessageDirect</span> <span class="o">=</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">_dialogReceiveMessageManual</span><span class="p">;</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">_postMessageDirect</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="k">this</span><span class="p">.</span><span class="nx">_postMessageDirect</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-                    <span class="p">}</span>
-                <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">ex</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="k">this</span><span class="p">.</span><span class="nx">_postMessageDirect</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_postMessageDirect</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">this</span><span class="p">.</span><span class="nx">_postMessageDirect</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">protocol</span> <span class="o">+</span> <span class="s2">&quot;//&quot;</span> <span class="o">+</span> <span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">host</span><span class="p">);</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-25">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-25">&#182;</a>               </div>               <p>parentHostName could be *, but $.postMessage() polyfill requires parentHostName.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">parentHostName</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;Must specify $.modalDialog.parentHostName because the parent is in a different domain&quot;</span><span class="p">);</span>
-                <span class="p">}</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-26">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-26">&#182;</a>               </div>               <p>The postmessage plugin is loaded- its probably because we're on an old browser.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">$</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">parentHostName</span><span class="p">,</span> <span class="nx">parent</span><span class="p">);</span>
-                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                    <span class="nx">parent</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">parentHostName</span><span class="p">);</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">},</span>
-
-        <span class="nx">_postCommandToParent</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">command</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">messageData</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="nx">dialogCmd</span><span class="o">:</span> <span class="nx">command</span><span class="p">,</span>
-                <span class="nx">_fullId</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">_fullId</span>
-            <span class="p">};</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">messageData</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
-            <span class="p">}</span>
-
-            <span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">param</span><span class="p">(</span><span class="nx">messageData</span><span class="p">);</span>
-
-            <span class="k">this</span><span class="p">.</span><span class="nx">postMessageToParent</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
-        <span class="p">},</span>
-
-        <span class="nx">_trigger</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">eventType</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">event</span> <span class="o">=</span> <span class="k">this</span><span class="p">[</span><span class="s2">&quot;on&quot;</span> <span class="o">+</span> <span class="nx">eventType</span><span class="p">];</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">event</span><span class="p">.</span><span class="nx">fire</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">};</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-27">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-27">&#182;</a>               </div>               <p>A map of dialog full IDs to dialog proxy instances (only proxies created in this window)</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">_fullIdMap</span> <span class="o">=</span> <span class="p">{};</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-28">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-28">&#182;</a>               </div>               <p>Duplicates the host window static API, but acts on FramedDialogProxy objects</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span> <span class="o">||</span> <span class="p">{};</span>
-
-    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">_isContent</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-29">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-29">&#182;</a>               </div>               <p>By default, the dialog content will notify the parent when it is ready to be show on load.
-Set this to true to override this behavior. dialog.notifyReady() should be called when it is ready to be shown.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">manualNotifyReady</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-30">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-30">&#182;</a>               </div>               <p>Specifies a selector for an element that determines the size of the dialog content.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">sizeElement</span> <span class="o">=</span> <span class="s2">&quot;.dialog-content-size&quot;</span><span class="p">;</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-31">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-31">&#182;</a>               </div>               <p>If true, the dialog will automatically resize to fit its content, even when it changes dynamically</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">autoSizing</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-32">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-32">&#182;</a>               </div>               <p>If the dialog is in a different domain then the host window, this needs to be set to the host window domain, i.e. "http://www.vistaprint.com"</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">parentHostName</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-33">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-33">&#182;</a>               </div>               <p>If true, the HTML TITLE tag is used for the dialog title automatically (when notifyReady() is called)</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">useTitleTag</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-34">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-34">&#182;</a>               </div>               <p>Creates a new dialog</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">create</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">settings</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">settings</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">settings</span><span class="p">);</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-35">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-35">&#182;</a>               </div>               <p>When creating a new window, FramedDialogProxy needs the parent window
-to choose an ID, because dialog "fullId"s represent the full parent-child relationships.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="nx">settings</span><span class="p">.</span><span class="nx">_parentWindow</span> <span class="o">=</span> <span class="nb">window</span><span class="p">;</span>
-
-        <span class="kd">var</span> <span class="nx">dialogProxy</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FramedDialogProxy</span><span class="p">(</span><span class="nx">settings</span><span class="p">);</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-36">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-36">&#182;</a>               </div>               <p>Cache the dialog.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="nx">_fullIdMap</span><span class="p">[</span><span class="nx">dialogProxy</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">_fullId</span><span class="p">]</span> <span class="o">=</span> <span class="nx">dialogProxy</span><span class="p">;</span>
-
-        <span class="k">return</span> <span class="nx">dialogProxy</span><span class="p">;</span>
-    <span class="p">};</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-37">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-37">&#182;</a>               </div>               <p>Gets the current dialog's object</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">getCurrent</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;dialog&quot;</span><span class="p">)</span> <span class="o">!==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
-        <span class="p">}</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-38">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-38">&#182;</a>               </div>               <p>Get the dialog proxy from the cache if it has been created in this window already.
-This is necessary to preserve settings between calls.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-
-        <span class="kd">var</span> <span class="nx">dialogProxy</span> <span class="o">=</span> <span class="nx">getDialogByFullId</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">dialogProxy</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">dialogProxy</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FramedDialogProxy</span><span class="p">({</span>
-                <span class="nx">_window</span><span class="o">:</span> <span class="nb">window</span>
-            <span class="p">});</span>
-            <span class="nx">_fullIdMap</span><span class="p">[</span><span class="nb">window</span><span class="p">.</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">dialogProxy</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">return</span> <span class="nx">dialogProxy</span><span class="p">;</span>
-    <span class="p">};</span>
-
-    <span class="kd">var</span> <span class="nx">getDialogByFullId</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">fullId</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">_fullIdMap</span><span class="p">[</span><span class="nx">fullId</span><span class="p">];</span>
-    <span class="p">};</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-39">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-39">&#182;</a>               </div>               <p>A map of cross-window command names to actions to be called on the dialog proxy</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">messageActions</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="nx">setHeightFromContent</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">dialog</span><span class="p">,</span> <span class="nx">qs</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">dialog</span><span class="p">.</span><span class="nx">setHeightFromContent</span><span class="p">(</span><span class="nx">qs</span><span class="p">.</span><span class="nx">center</span> <span class="o">===</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span> <span class="nx">qs</span><span class="p">.</span><span class="nx">skipAnimation</span> <span class="o">===</span> <span class="s2">&quot;true&quot;</span><span class="p">);</span>
-        <span class="p">},</span>
-        <span class="nx">setTitleFromContent</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">dialog</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">dialog</span><span class="p">.</span><span class="nx">setTitleFromContent</span><span class="p">();</span>
-        <span class="p">},</span>
-        <span class="nx">eventclose</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">dialog</span><span class="p">,</span> <span class="nx">qs</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">dialog</span><span class="p">.</span><span class="nx">_trigger</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">,</span> <span class="nx">qs</span><span class="p">);</span>
-        <span class="p">},</span>
-        <span class="nx">eventbeforeclose</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">dialog</span><span class="p">,</span> <span class="nx">qs</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">dialog</span><span class="p">.</span><span class="nx">_trigger</span><span class="p">(</span><span class="s2">&quot;beforeclose&quot;</span><span class="p">,</span> <span class="nx">qs</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">};</span>
-
-    <span class="kd">var</span> <span class="nx">messageHandler</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-40">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-40">&#182;</a>               </div>               <p>console.log("content receive: " + (e.originalEvent ? e.originalEvent.data : e.data));</p>             </td>             <td class="code">               <div class="highlight"><pre>
-
-        <span class="kd">var</span> <span class="nx">qs</span><span class="p">;</span>
-
-        <span class="k">try</span> <span class="p">{</span>
-            <span class="nx">qs</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">deparam</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span> <span class="o">?</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">.</span><span class="nx">data</span> <span class="o">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">ex</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-41">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-41">&#182;</a>               </div>               <p>ignore- it wasn't a message for the dialog framework</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="p">}</span>
-
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">qs</span><span class="p">.</span><span class="nx">dialogCmd</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-42">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-42">&#182;</a>               </div>               <p>ignore- it wasn't a message for the dialog framework</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">return</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="kd">var</span> <span class="nx">action</span> <span class="o">=</span> <span class="nx">messageActions</span><span class="p">[</span><span class="nx">qs</span><span class="p">.</span><span class="nx">dialogCmd</span><span class="p">];</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">dialogProxy</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-
-</pre></div>             </td>           </tr>                               <tr id="section-43">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-43">&#182;</a>               </div>               <p>If a ID was passed for a specific dialog, only call the
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>jquery.modalDialogContent.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="breakpoints.html">
+                breakpoints.js
+              </a>
+            
+              
+              <a class="source" href="date-parse.html">
+                date-parse.js
+              </a>
+            
+              
+              <a class="source" href="jquery.breakpoints.html">
+                jquery.breakpoints.js
+              </a>
+            
+              
+              <a class="source" href="jquery.calcRestrainedPos.html">
+                jquery.calcRestrainedPos.js
+              </a>
+            
+              
+              <a class="source" href="jquery.clientRect.html">
+                jquery.clientRect.js
+              </a>
+            
+              
+              <a class="source" href="jquery.contentSize.html">
+                jquery.contentSize.js
+              </a>
+            
+              
+              <a class="source" href="jquery.cookies.html">
+                jquery.cookies.js
+              </a>
+            
+              
+              <a class="source" href="jquery.css.html">
+                jquery.css.js
+              </a>
+            
+              
+              <a class="source" href="jquery.customEvent.html">
+                jquery.customEvent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.delimitedString.html">
+                jquery.delimitedString.js
+              </a>
+            
+              
+              <a class="source" href="jquery.disableEvent.html">
+                jquery.disableEvent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.hostIframe.html">
+                jquery.hostIframe.js
+              </a>
+            
+              
+              <a class="source" href="jquery.hoverDelay.html">
+                jquery.hoverDelay.js
+              </a>
+            
+              
+              <a class="source" href="jquery.htmlEncode.html">
+                jquery.htmlEncode.js
+              </a>
+            
+              
+              <a class="source" href="jquery.imageSize.html">
+                jquery.imageSize.js
+              </a>
+            
+              
+              <a class="source" href="jquery.isVisibleKeyCode.html">
+                jquery.isVisibleKeyCode.js
+              </a>
+            
+              
+              <a class="source" href="jquery.menu.html">
+                jquery.menu.js
+              </a>
+            
+              
+              <a class="source" href="jquery-menu-exampleskin.html">
+                jquery-menu-exampleskin.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.deviceFixes.html">
+                jquery.modalDialog.deviceFixes.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.getSettings.html">
+                jquery.modalDialog.getSettings.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.header.html">
+                jquery.modalDialog.header.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.history.html">
+                jquery.modalDialog.history.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.html">
+                jquery.modalDialog.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.unobtrusive.html">
+                jquery.modalDialog.unobtrusive.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.userAgent.html">
+                jquery.modalDialog.userAgent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialogContent.header.html">
+                jquery.modalDialogContent.header.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialogContent.html">
+                jquery.modalDialogContent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.msAjax.html">
+                jquery.msAjax.js
+              </a>
+            
+              
+              <a class="source" href="jquery.ns.html">
+                jquery.ns.js
+              </a>
+            
+              
+              <a class="source" href="jquery.partialLoad.html">
+                jquery.partialLoad.js
+              </a>
+            
+              
+              <a class="source" href="jquery.postMessage.html">
+                jquery.postMessage.js
+              </a>
+            
+              
+              <a class="source" href="jquery.proxyAll.html">
+                jquery.proxyAll.js
+              </a>
+            
+              
+              <a class="source" href="jquery.queryString.html">
+                jquery.queryString.js
+              </a>
+            
+              
+              <a class="source" href="jquery.richTooltip.html">
+                jquery.richTooltip.js
+              </a>
+            
+              
+              <a class="source" href="jquery.scrollAnchor.html">
+                jquery.scrollAnchor.js
+              </a>
+            
+              
+              <a class="source" href="jquery.uncomment.html">
+                jquery.uncomment.js
+              </a>
+            
+              
+              <a class="source" href="jquery.url.html">
+                jquery.url.js
+              </a>
+            
+              
+              <a class="source" href="pointy.gestures.html">
+                pointy.gestures.js
+              </a>
+            
+              
+              <a class="source" href="pointy.html">
+                pointy.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>jquery.modalDialogContent.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>This is a library for use in content windows that live inside a FramedDialog.
+All its methods work cross-domain.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-comment">/*
+Example usage:
+
+Creating a second level dialog:
+$.modalDialog.create()
+
+*/</span>
+
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span>
+    <span class="hljs-keyword">if</span> ($.modalDialog &amp;&amp; $.modalDialog._isHost) {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Attempt to load jquery.modalDialogContent.js in the same window as jquery.modalDialog.js."</span>);
+    }
+
+    <span class="hljs-keyword">var</span> _dialogIdCounter = -<span class="hljs-number">1</span>;
+    <span class="hljs-keyword">var</span> DIALOG_NAME_PREFIX = <span class="hljs-string">"dialog"</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Gets a unique ID for this window.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> getDialogId = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+        _dialogIdCounter++;
+        <span class="hljs-keyword">return</span> DIALOG_NAME_PREFIX + _dialogIdCounter;
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Utility class to manage multiple callbacks.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> DialogProxyEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventType)</span> {</span>
+        <span class="hljs-keyword">this</span>.eventType = eventType;
+        <span class="hljs-keyword">this</span>.callbacks = <span class="hljs-keyword">new</span> $.Callbacks();
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">1</span>; i &lt; <span class="hljs-built_in">arguments</span>.length; i++) {
+            <span class="hljs-keyword">this</span>.callbacks.add(<span class="hljs-built_in">arguments</span>[i]);
+        }
+    };
+
+    DialogProxyEvent.prototype = {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Triggers the event and calls all handlers.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        fire: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
+            <span class="hljs-keyword">var</span> evt = <span class="hljs-keyword">new</span> $.Event(<span class="hljs-keyword">this</span>.eventType);
+            $.extend(evt, data);
+
+            <span class="hljs-keyword">this</span>.callbacks.fire(evt);
+
+            <span class="hljs-keyword">return</span> evt;
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Adds a handler to the event.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        add: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(callback)</span> {</span>
+            <span class="hljs-keyword">if</span> (callback) {
+                <span class="hljs-keyword">this</span>.callbacks.add(callback);
+            }
+        }
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Utility to initialize event objects on the FramedDialogProxy.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> initEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialogProxy, eventType)</span> {</span>
+        <span class="hljs-keyword">var</span> onEventType = <span class="hljs-string">"on"</span> + eventType;
+        dialogProxy[onEventType] = <span class="hljs-keyword">new</span> DialogProxyEvent(eventType, dialogProxy.settings[onEventType]);
+        <span class="hljs-keyword">delete</span> dialogProxy.settings[onEventType];
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>A proxy object that has all the methods of the host window FramedDialog,
+but uses postMessage to communicate with the host window dialog.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> FramedDialogProxy = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(settings)</span> {</span>
+        <span class="hljs-keyword">this</span>.settings = settings;
+
+        initEvent(<span class="hljs-keyword">this</span>, <span class="hljs-string">"open"</span>);
+        initEvent(<span class="hljs-keyword">this</span>, <span class="hljs-string">"close"</span>);
+        initEvent(<span class="hljs-keyword">this</span>, <span class="hljs-string">"beforeclose"</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>If _window is passed, this is a proxy for the dialog in the specified window.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.settings._window) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>The window object should not be kept in settings, because it can’t be serialized
+and sent to the parent window via postMessage.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">this</span>._window = settings._window;
+            <span class="hljs-keyword">delete</span> settings._window;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>The ID of this window is stored in its name- 
+This is the one property that can be read from any window, across domains.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">this</span>.settings._fullId = <span class="hljs-keyword">this</span>._window.name;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>dialog ids are in the format grandParentId_parentId_thisId.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">var</span> idParts = <span class="hljs-keyword">this</span>.settings._fullId.split(<span class="hljs-string">"_"</span>);
+            idParts.pop();
+
+            <span class="hljs-keyword">if</span> (idParts.length &gt; <span class="hljs-number">0</span>) {
+                <span class="hljs-keyword">this</span>.settings.parentId = idParts.join(<span class="hljs-string">"_"</span>);
+                <span class="hljs-keyword">this</span>._parentWindow = parent.frames[<span class="hljs-keyword">this</span>.settings.parentId];
+            }
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>If _parentWindow is passed, this is a proxy for a new window, child of the current window</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.settings._parentWindow) {
+            <span class="hljs-keyword">this</span>.settings.parentId = settings._parentWindow.name;
+            <span class="hljs-keyword">this</span>._parentWindow = settings._parentWindow;
+            <span class="hljs-keyword">delete</span> settings._parentWindow;
+
+            <span class="hljs-keyword">this</span>.settings._fullId = <span class="hljs-keyword">this</span>.settings.parentId + <span class="hljs-string">"_"</span> + getDialogId();
+
+            <span class="hljs-keyword">this</span>._postCommandToParent(<span class="hljs-string">"create"</span>, <span class="hljs-keyword">this</span>.settings);
+        }
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Implements the same interface as the parent FramedDialog, 
+but uses postMessage() to communicate with the parent.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    FramedDialogProxy.prototype = {
+        dialogType: <span class="hljs-string">"iframe"</span>,
+
+        open: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <span class="hljs-keyword">this</span>._postCommandToParent(<span class="hljs-string">"open"</span>);
+        },
+
+        close: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <span class="hljs-keyword">this</span>._postCommandToParent(<span class="hljs-string">"close"</span>);
+        },
+
+        getParent: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> (<span class="hljs-keyword">this</span>._parentDialog) == <span class="hljs-string">"undefined"</span>) {
+                <span class="hljs-keyword">this</span>._parentDialog = <span class="hljs-literal">null</span>;
+
+                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.settings.parentId) {
+                    <span class="hljs-keyword">this</span>._parentDialog = <span class="hljs-keyword">new</span> FramedDialogProxy({
+                        _window: parent.frames[<span class="hljs-keyword">this</span>.settings.parentId]
+                    });
+                }
+            }
+
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._parentDialog;
+        },
+
+        getWindow: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>._window) {
+                <span class="hljs-keyword">this</span>._window = <span class="hljs-keyword">this</span>._window || parent.frames[<span class="hljs-keyword">this</span>.settings._fullId];
+            }
+
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._window;
+        },
+
+        setHeight: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(contentHeight, center, skipAnimation)</span> {</span>
+            <span class="hljs-keyword">if</span> ($.modalDialog.autoSizing &amp;&amp; !<span class="hljs-keyword">this</span>._internalCall) {
+                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Auto sizing is enabled, so manual size setting is disallowed."</span>);
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Ensure content height is rounded so its easy to compare to itself</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            contentHeight = <span class="hljs-built_in">Math</span>.round(contentHeight);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Optimization: don’t set the height if its already set
+Also prevents resizing while a resize animation is progress</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>TODO: could this be a problem when the content gets too large for the window, and the max height kicks in?
+contentHeight might never match _currentFrameHeight.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._currentFrameHeight &amp;&amp; <span class="hljs-keyword">this</span>._currentFrameHeight == contentHeight) {
+                <span class="hljs-keyword">return</span>;
+            }
+
+            <span class="hljs-keyword">this</span>._currentFrameHeight = contentHeight;
+
+            <span class="hljs-keyword">this</span>._postCommandToParent(<span class="hljs-string">"setHeight"</span>, {
+                height: contentHeight,
+                center: !! center,
+                skipAnimation: !! skipAnimation
+            });
+        },
+
+        setHeightFromContent: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(center, skipAnimation)</span> {</span>
+            <span class="hljs-keyword">var</span> height;
+            <span class="hljs-keyword">if</span> ($.modalDialog.sizeElement) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>This mechanism handles body margins, other factors that affect position.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">var</span> rect = $.modalDialog.sizeElement.clientRect();
+                height = rect.top + rect.height;
+            } <span class="hljs-keyword">else</span> {
+                height = $(window).contentSize().height;
+            }
+
+            <span class="hljs-keyword">this</span>.setHeight(height, center, skipAnimation);
+        },
+
+        _setHeightFromContentInternal: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <span class="hljs-keyword">this</span>._internalCall = <span class="hljs-literal">true</span>;
+            <span class="hljs-keyword">this</span>.setHeightFromContent.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
+            <span class="hljs-keyword">this</span>._internalCall = <span class="hljs-literal">false</span>;
+        },
+
+        center: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <span class="hljs-keyword">this</span>._postCommandToParent(<span class="hljs-string">"center"</span>);
+        },
+
+        setTitle: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(title)</span> {</span>
+            <span class="hljs-keyword">this</span>._postCommandToParent(<span class="hljs-string">"setTitle"</span>, {
+                title: title
+            });
+        },
+
+        setTitleFromContent: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <span class="hljs-keyword">this</span>.setTitle(document.title);
+        },
+
+        notifyReady: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Initialize the size element</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> ($.modalDialog.sizeElement) {
+                <span class="hljs-keyword">if</span> (!($.modalDialog.sizeElement <span class="hljs-keyword">instanceof</span> jQuery)) {
+                    $.modalDialog.sizeElement = $($.modalDialog.sizeElement);
+                }
+
+                <span class="hljs-keyword">if</span> ($.modalDialog.sizeElement.length === <span class="hljs-number">0</span>) {
+                    $.modalDialog.sizeElement = <span class="hljs-literal">null</span>;
+                }
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Set the dialog title</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> ($.modalDialog.useTitleTag) {
+                <span class="hljs-keyword">this</span>.setTitleFromContent();
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Don’t center, it will be done by the dialog open
+Don’t animate, the dialog is invisible anyway</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">this</span>._setHeightFromContentInternal(<span class="hljs-literal">false</span>, <span class="hljs-literal">true</span>);
+
+            <span class="hljs-keyword">var</span> hostname = document.location.protocol + <span class="hljs-string">"//"</span> + document.location.hostname;
+
+            <span class="hljs-keyword">if</span> (document.location.port) {
+                hostname += <span class="hljs-string">":"</span> + document.location.port;
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Pass the hostname of the window so that subsequent postMessage() requests can be directed to the right domain.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">this</span>._postCommandToParent(<span class="hljs-string">"notifyReady"</span>, {
+                hostname: hostname
+            });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Poll for content size changes. This appears to be more foolproof and cheaper than any other method
+(i.e. manually calling it, etc</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> ($.modalDialog.autoSizing) {
+                <span class="hljs-keyword">this</span>.enableAutoSizing();
+            }
+        },
+
+        enableAutoSizing: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(enable)</span> {</span>
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> enable == <span class="hljs-string">"undefined"</span>) {
+                enable = <span class="hljs-literal">true</span>;
+            }
+
+            <span class="hljs-keyword">if</span> (enable) {
+                <span class="hljs-keyword">this</span>._autoSizeInterval = setInterval(
+                    $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        <span class="hljs-keyword">this</span>._setHeightFromContentInternal(<span class="hljs-literal">false</span>, <span class="hljs-literal">true</span>);
+                    }, <span class="hljs-keyword">this</span>),
+                    <span class="hljs-number">100</span>);
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._autoSizeInterval) {
+                    window.clearInterval(<span class="hljs-keyword">this</span>._autoSizeInterval);
+                }
+            }
+        },
+
+        postMessageToParent: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(message)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Try to detect if the parent window is directly accessible.
+This is significantly less expensive on old browsers that don’t support postMessage.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>._postMessageDirect == <span class="hljs-string">"undefined"</span>) {
+                <span class="hljs-keyword">try</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>This logs a warning in some browsers if it fails, but it isn’t exposed to users, so its not worth worrying about.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">this</span>._postMessageDirect = parent._dialogReceiveMessageManual;
+                    <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>._postMessageDirect) {
+                        <span class="hljs-keyword">this</span>._postMessageDirect = <span class="hljs-literal">null</span>;
+                    }
+                } <span class="hljs-keyword">catch</span> (ex) {
+                    <span class="hljs-keyword">this</span>._postMessageDirect = <span class="hljs-literal">null</span>;
+                }
+            }
+
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._postMessageDirect) {
+                <span class="hljs-keyword">this</span>._postMessageDirect(message, document.location.protocol + <span class="hljs-string">"//"</span> + document.location.host);
+            } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>parentHostName could be *, but $.postMessage() polyfill requires parentHostName.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (!$.modalDialog.parentHostName) {
+                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Must specify $.modalDialog.parentHostName because the parent is in a different domain"</span>);
+                }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>The postmessage plugin is loaded- its probably because we’re on an old browser.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> ($.postMessage) {
+                    $.postMessage(message, $.modalDialog.parentHostName, parent);
+                } <span class="hljs-keyword">else</span> {
+                    parent.postMessage(message, $.modalDialog.parentHostName);
+                }
+            }
+        },
+
+        _postCommandToParent: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(command, data)</span> {</span>
+            <span class="hljs-keyword">var</span> messageData = {
+                dialogCmd: command,
+                _fullId: <span class="hljs-keyword">this</span>.settings._fullId
+            };
+
+            <span class="hljs-keyword">if</span> (data) {
+                $.extend(messageData, data);
+            }
+
+            <span class="hljs-keyword">var</span> message = $.param(messageData);
+
+            <span class="hljs-keyword">this</span>.postMessageToParent(message);
+        },
+
+        _trigger: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventType, data)</span> {</span>
+            <span class="hljs-keyword">var</span> event = <span class="hljs-keyword">this</span>[<span class="hljs-string">"on"</span> + eventType];
+            <span class="hljs-keyword">if</span> (event) {
+                event.fire(data);
+            }
+        }
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>A map of dialog full IDs to dialog proxy instances (only proxies created in this window)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> _fullIdMap = {};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>Duplicates the host window static API, but acts on FramedDialogProxy objects</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.modalDialog = $.modalDialog || {};
+
+    $.modalDialog._isContent = <span class="hljs-literal">true</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>By default, the dialog content will notify the parent when it is ready to be show on load.
+Set this to true to override this behavior. dialog.notifyReady() should be called when it is ready to be shown.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.modalDialog.manualNotifyReady = <span class="hljs-literal">false</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>Specifies a selector for an element that determines the size of the dialog content.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.modalDialog.sizeElement = <span class="hljs-string">".dialog-content-size"</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>If true, the dialog will automatically resize to fit its content, even when it changes dynamically</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.modalDialog.autoSizing = <span class="hljs-literal">true</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>If the dialog is in a different domain then the host window, this needs to be set to the host window domain, i.e. “<a href="http://www.vistaprint.com">http://www.vistaprint.com</a>“</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.modalDialog.parentHostName = <span class="hljs-literal">null</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p>If true, the HTML TITLE tag is used for the dialog title automatically (when notifyReady() is called)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.modalDialog.useTitleTag = <span class="hljs-literal">true</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>Creates a new dialog</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.modalDialog.create = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(settings)</span> {</span>
+        settings = $.extend({}, settings);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <p>When creating a new window, FramedDialogProxy needs the parent window
+to choose an ID, because dialog “fullId”s represent the full parent-child relationships.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        settings._parentWindow = window;
+
+        <span class="hljs-keyword">var</span> dialogProxy = <span class="hljs-keyword">new</span> FramedDialogProxy(settings);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              <p>Cache the dialog.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        _fullIdMap[dialogProxy.settings._fullId] = dialogProxy;
+
+        <span class="hljs-keyword">return</span> dialogProxy;
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <p>Gets the current dialog’s object</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.modalDialog.getCurrent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">if</span> (window.name.indexOf(<span class="hljs-string">"dialog"</span>) !== <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <p>Get the dialog proxy from the cache if it has been created in this window already.
+This is necessary to preserve settings between calls.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+        <span class="hljs-keyword">var</span> dialogProxy = getDialogByFullId(window.name);
+        <span class="hljs-keyword">if</span> (!dialogProxy) {
+            dialogProxy = <span class="hljs-keyword">new</span> FramedDialogProxy({
+                _window: window
+            });
+            _fullIdMap[window.name] = dialogProxy;
+        }
+
+        <span class="hljs-keyword">return</span> dialogProxy;
+    };
+
+    <span class="hljs-keyword">var</span> getDialogByFullId = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(fullId)</span> {</span>
+        <span class="hljs-keyword">return</span> _fullIdMap[fullId];
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <p>A map of cross-window command names to actions to be called on the dialog proxy</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> messageActions = {
+        setHeightFromContent: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog, qs)</span> {</span>
+            dialog.setHeightFromContent(qs.center === <span class="hljs-string">"true"</span>, qs.skipAnimation === <span class="hljs-string">"true"</span>);
+        },
+        setTitleFromContent: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog)</span> {</span>
+            dialog.setTitleFromContent();
+        },
+        eventclose: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog, qs)</span> {</span>
+            dialog._trigger(<span class="hljs-string">"close"</span>, qs);
+        },
+        eventbeforeclose: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog, qs)</span> {</span>
+            dialog._trigger(<span class="hljs-string">"beforeclose"</span>, qs);
+        }
+    };
+
+    <span class="hljs-keyword">var</span> messageHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>console.log(“content receive: “ + (e.originalEvent ? e.originalEvent.data : e.data));</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+        <span class="hljs-keyword">var</span> qs;
+
+        <span class="hljs-keyword">try</span> {
+            qs = $.deparam(e.originalEvent ? e.originalEvent.data : e.data);
+        } <span class="hljs-keyword">catch</span> (ex) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
+              </div>
+              <p>ignore- it wasn’t a message for the dialog framework</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        }
+
+        <span class="hljs-keyword">if</span> (!qs.dialogCmd) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-42">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-42">&#182;</a>
+              </div>
+              <p>ignore- it wasn’t a message for the dialog framework</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">return</span>;
+        }
+
+        <span class="hljs-keyword">var</span> action = messageActions[qs.dialogCmd];
+        <span class="hljs-keyword">if</span> (action) {
+            <span class="hljs-keyword">var</span> dialogProxy = <span class="hljs-literal">null</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-43">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-43">&#182;</a>
+              </div>
+              <p>If a ID was passed for a specific dialog, only call the
 methods for that specific dialog. Otherwise, operate on the 
-current dialog. This allows the parent to "broadcast" events
+current dialog. This allows the parent to “broadcast” events
 to all windows, because any one of them may have a dialog proxy
-for the target window.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+for the target window.</p>
 
-            <span class="k">if</span> <span class="p">(</span><span class="nx">qs</span><span class="p">.</span><span class="nx">_eventDialogId</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">dialogProxy</span> <span class="o">=</span> <span class="nx">getDialogByFullId</span><span class="p">(</span><span class="nx">qs</span><span class="p">.</span><span class="nx">_eventDialogId</span><span class="p">);</span>
-                <span class="k">delete</span> <span class="nx">qs</span><span class="p">.</span><span class="nx">_eventDialogId</span><span class="p">;</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="nx">dialogProxy</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">getCurrent</span><span class="p">(</span><span class="nb">window</span><span class="p">);</span>
-            <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+            <span class="hljs-keyword">if</span> (qs._eventDialogId) {
+                dialogProxy = getDialogByFullId(qs._eventDialogId);
+                <span class="hljs-keyword">delete</span> qs._eventDialogId;
+            } <span class="hljs-keyword">else</span> {
+                dialogProxy = $.modalDialog.getCurrent(window);
+            }
 
-            <span class="k">if</span> <span class="p">(</span><span class="nx">dialogProxy</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">action</span><span class="p">(</span><span class="nx">dialogProxy</span><span class="p">,</span> <span class="nx">qs</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">};</span>
+            <span class="hljs-keyword">if</span> (dialogProxy) {
+                action(dialogProxy, qs);
+            }
+        }
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-44">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-44">&#182;</a>
+              </div>
+              <p>If available, use the jQuery.postMessage plugin</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-44">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-44">&#182;</a>               </div>               <p>If available, use the jQuery.postMessage plugin</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">receiveMessage</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">$</span><span class="p">.</span><span class="nx">receiveMessage</span><span class="p">(</span><span class="nx">messageHandler</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">);</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-45">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-45">&#182;</a>               </div>               <p>Use native postMessage</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="nx">messageHandler</span><span class="p">);</span>
-    <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> ($.receiveMessage) {
+        $.receiveMessage(messageHandler, <span class="hljs-string">"*"</span>);
+    } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-45">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-45">&#182;</a>
+              </div>
+              <p>Use native postMessage</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-46">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-46">&#182;</a>               </div>               <p>HACK: Jquery mobile specific hacks.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        $(window).on(<span class="hljs-string">"message"</span>, messageHandler);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-46">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-46">&#182;</a>
+              </div>
+              <p>HACK: Jquery mobile specific hacks.</p>
 
-    <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">mobile</span> <span class="o">&amp;&amp;</span> <span class="nx">$</span><span class="p">.</span><span class="nx">mobile</span><span class="p">.</span><span class="nx">resetActivePageHeight</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-47">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-47">&#182;</a>               </div>               <p>Jquery mobile sets min-heights on page content to the current body width.
-This makes calculating the content height difficult, and isn't necessary within
-an iframe dialog anyway.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+    <span class="hljs-keyword">if</span> ($.mobile &amp;&amp; $.mobile.resetActivePageHeight) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-47">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-47">&#182;</a>
+              </div>
+              <p>Jquery mobile sets min-heights on page content to the current body width.
+This makes calculating the content height difficult, and isn’t necessary within
+an iframe dialog anyway.</p>
 
-        <span class="nx">$</span><span class="p">.</span><span class="nx">mobile</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;pageshow&quot;</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">mobile</span><span class="p">.</span><span class="nx">resetActivePageHeight</span><span class="p">);</span>
-        <span class="nx">$</span><span class="p">.</span><span class="nx">mobile</span><span class="p">.</span><span class="nb">window</span><span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;throttledresize&quot;</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">mobile</span><span class="p">.</span><span class="nx">resetActivePageHeight</span><span class="p">);</span>
-        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.ui-page&quot;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;min-height&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+        $.mobile.document.off(<span class="hljs-string">"pageshow"</span>, $.mobile.resetActivePageHeight);
+        $.mobile.window.off(<span class="hljs-string">"throttledresize"</span>, $.mobile.resetActivePageHeight);
+        $(<span class="hljs-string">".ui-page"</span>).css(<span class="hljs-string">"min-height"</span>, <span class="hljs-number">0</span>);
 
-        <span class="nx">$</span><span class="p">.</span><span class="nx">mobile</span><span class="p">.</span><span class="nx">resetActivePageHeight</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">noop</span><span class="p">;</span>
+        $.mobile.resetActivePageHeight = $.noop;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-48">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-48">&#182;</a>
+              </div>
+              <p>jQuery mobile calls focusPage when the first page initializes. 
+This causes the parent window to scroll to the top of the page.</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-48">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-48">&#182;</a>               </div>               <p>jQuery mobile calls focusPage when the first page initializes. 
-This causes the parent window to scroll to the top of the page.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+        $.mobile.focusPage = $.noop;
+    }
 
-        <span class="nx">$</span><span class="p">.</span><span class="nx">mobile</span><span class="p">.</span><span class="nx">focusPage</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">noop</span><span class="p">;</span>
-    <span class="p">}</span>
+    $(window).load(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">var</span> currentDialog = $.modalDialog.getCurrent();
+        <span class="hljs-keyword">if</span> (currentDialog) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-49">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-49">&#182;</a>
+              </div>
+              <p>Notify the opener that we’re ready to be made visible</p>
 
-    <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">load</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">currentDialog</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">getCurrent</span><span class="p">();</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">currentDialog</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-49">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-49">&#182;</a>               </div>               <p>Notify the opener that we're ready to be made visible</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">$</span><span class="p">.</span><span class="nx">modalDialog</span><span class="p">.</span><span class="nx">manualNotifyReady</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">currentDialog</span><span class="p">.</span><span class="nx">notifyReady</span><span class="p">();</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">});</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (!$.modalDialog.manualNotifyReady) {
+                currentDialog.notifyReady();
+            }
+        }
+    });
 
-<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
-
-</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
+})(jQuery);</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

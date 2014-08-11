@@ -1,93 +1,455 @@
-<!DOCTYPE html>  <html> <head>   <title>jquery.clientRect.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="breakpoints.html">                 breakpoints.js               </a>                                           <a class="source" href="date-parse.html">                 date-parse.js               </a>                                           <a class="source" href="jquery.breakpoints.html">                 jquery.breakpoints.js               </a>                                           <a class="source" href="jquery.calcRestrainedPos.html">                 jquery.calcRestrainedPos.js               </a>                                           <a class="source" href="jquery.clientRect.html">                 jquery.clientRect.js               </a>                                           <a class="source" href="jquery.contentSize.html">                 jquery.contentSize.js               </a>                                           <a class="source" href="jquery.cookies.html">                 jquery.cookies.js               </a>                                           <a class="source" href="jquery.css.html">                 jquery.css.js               </a>                                           <a class="source" href="jquery.customEvent.html">                 jquery.customEvent.js               </a>                                           <a class="source" href="jquery.delimitedString.html">                 jquery.delimitedString.js               </a>                                           <a class="source" href="jquery.disableEvent.html">                 jquery.disableEvent.js               </a>                                           <a class="source" href="jquery.hostIframe.html">                 jquery.hostIframe.js               </a>                                           <a class="source" href="jquery.hoverDelay.html">                 jquery.hoverDelay.js               </a>                                           <a class="source" href="jquery.htmlEncode.html">                 jquery.htmlEncode.js               </a>                                           <a class="source" href="jquery.imageSize.html">                 jquery.imageSize.js               </a>                                           <a class="source" href="jquery.isVisibleKeyCode.html">                 jquery.isVisibleKeyCode.js               </a>                                           <a class="source" href="jquery.menu.html">                 jquery.menu.js               </a>                                           <a class="source" href="jquery-menu-exampleskin.html">                 jquery-menu-exampleskin.js               </a>                                           <a class="source" href="jquery.modalDialog.deviceFixes.html">                 jquery.modalDialog.deviceFixes.js               </a>                                           <a class="source" href="jquery.modalDialog.getSettings.html">                 jquery.modalDialog.getSettings.js               </a>                                           <a class="source" href="jquery.modalDialog.header.html">                 jquery.modalDialog.header.js               </a>                                           <a class="source" href="jquery.modalDialog.history.html">                 jquery.modalDialog.history.js               </a>                                           <a class="source" href="jquery.modalDialog.html">                 jquery.modalDialog.js               </a>                                           <a class="source" href="jquery.modalDialog.unobtrusive.html">                 jquery.modalDialog.unobtrusive.js               </a>                                           <a class="source" href="jquery.modalDialog.userAgent.html">                 jquery.modalDialog.userAgent.js               </a>                                           <a class="source" href="jquery.modalDialogContent.header.html">                 jquery.modalDialogContent.header.js               </a>                                           <a class="source" href="jquery.modalDialogContent.html">                 jquery.modalDialogContent.js               </a>                                           <a class="source" href="jquery.msAjax.html">                 jquery.msAjax.js               </a>                                           <a class="source" href="jquery.ns.html">                 jquery.ns.js               </a>                                           <a class="source" href="jquery.partialLoad.html">                 jquery.partialLoad.js               </a>                                           <a class="source" href="jquery.postMessage.html">                 jquery.postMessage.js               </a>                                           <a class="source" href="jquery.proxyAll.html">                 jquery.proxyAll.js               </a>                                           <a class="source" href="jquery.queryString.html">                 jquery.queryString.js               </a>                                           <a class="source" href="jquery.richTooltip.html">                 jquery.richTooltip.js               </a>                                           <a class="source" href="jquery.scrollAnchor.html">                 jquery.scrollAnchor.js               </a>                                           <a class="source" href="jquery.uncomment.html">                 jquery.uncomment.js               </a>                                           <a class="source" href="jquery.url.html">                 jquery.url.js               </a>                                           <a class="source" href="pointy.gestures.html">                 pointy.gestures.js               </a>                                           <a class="source" href="pointy.html">                 pointy.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs"><a href="../index.html">Home</a> | 
-<a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.clientRect.js" target="_blank">View this file on Github</a>
+<!DOCTYPE html>
 
-<hr style="height: 1px; border:0; background-color:#4A525A">
-             <h1>               jquery.clientRect.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+<html>
+<head>
+  <title>jquery.clientRect.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="breakpoints.html">
+                breakpoints.js
+              </a>
+            
+              
+              <a class="source" href="date-parse.html">
+                date-parse.js
+              </a>
+            
+              
+              <a class="source" href="jquery.breakpoints.html">
+                jquery.breakpoints.js
+              </a>
+            
+              
+              <a class="source" href="jquery.calcRestrainedPos.html">
+                jquery.calcRestrainedPos.js
+              </a>
+            
+              
+              <a class="source" href="jquery.clientRect.html">
+                jquery.clientRect.js
+              </a>
+            
+              
+              <a class="source" href="jquery.contentSize.html">
+                jquery.contentSize.js
+              </a>
+            
+              
+              <a class="source" href="jquery.cookies.html">
+                jquery.cookies.js
+              </a>
+            
+              
+              <a class="source" href="jquery.css.html">
+                jquery.css.js
+              </a>
+            
+              
+              <a class="source" href="jquery.customEvent.html">
+                jquery.customEvent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.delimitedString.html">
+                jquery.delimitedString.js
+              </a>
+            
+              
+              <a class="source" href="jquery.disableEvent.html">
+                jquery.disableEvent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.hostIframe.html">
+                jquery.hostIframe.js
+              </a>
+            
+              
+              <a class="source" href="jquery.hoverDelay.html">
+                jquery.hoverDelay.js
+              </a>
+            
+              
+              <a class="source" href="jquery.htmlEncode.html">
+                jquery.htmlEncode.js
+              </a>
+            
+              
+              <a class="source" href="jquery.imageSize.html">
+                jquery.imageSize.js
+              </a>
+            
+              
+              <a class="source" href="jquery.isVisibleKeyCode.html">
+                jquery.isVisibleKeyCode.js
+              </a>
+            
+              
+              <a class="source" href="jquery.menu.html">
+                jquery.menu.js
+              </a>
+            
+              
+              <a class="source" href="jquery-menu-exampleskin.html">
+                jquery-menu-exampleskin.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.deviceFixes.html">
+                jquery.modalDialog.deviceFixes.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.getSettings.html">
+                jquery.modalDialog.getSettings.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.header.html">
+                jquery.modalDialog.header.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.history.html">
+                jquery.modalDialog.history.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.html">
+                jquery.modalDialog.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.unobtrusive.html">
+                jquery.modalDialog.unobtrusive.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.userAgent.html">
+                jquery.modalDialog.userAgent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialogContent.header.html">
+                jquery.modalDialogContent.header.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialogContent.html">
+                jquery.modalDialogContent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.msAjax.html">
+                jquery.msAjax.js
+              </a>
+            
+              
+              <a class="source" href="jquery.ns.html">
+                jquery.ns.js
+              </a>
+            
+              
+              <a class="source" href="jquery.partialLoad.html">
+                jquery.partialLoad.js
+              </a>
+            
+              
+              <a class="source" href="jquery.postMessage.html">
+                jquery.postMessage.js
+              </a>
+            
+              
+              <a class="source" href="jquery.proxyAll.html">
+                jquery.proxyAll.js
+              </a>
+            
+              
+              <a class="source" href="jquery.queryString.html">
+                jquery.queryString.js
+              </a>
+            
+              
+              <a class="source" href="jquery.richTooltip.html">
+                jquery.richTooltip.js
+              </a>
+            
+              
+              <a class="source" href="jquery.scrollAnchor.html">
+                jquery.scrollAnchor.js
+              </a>
+            
+              
+              <a class="source" href="jquery.uncomment.html">
+                jquery.uncomment.js
+              </a>
+            
+              
+              <a class="source" href="jquery.url.html">
+                jquery.url.js
+              </a>
+            
+              
+              <a class="source" href="pointy.gestures.html">
+                pointy.gestures.js
+              </a>
+            
+              
+              <a class="source" href="pointy.html">
+                pointy.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>jquery.clientRect.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Expose support flag. Aids in unit testing.</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Expose support flag. Aids in unit testing.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">support</span><span class="p">.</span><span class="nx">getBoundingClientRect</span> <span class="o">=</span> <span class="s2">&quot;getBoundingClientRect&quot;</span> <span class="k">in</span> <span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">;</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.support.getBoundingClientRect = <span class="hljs-string">"getBoundingClientRect"</span> <span class="hljs-keyword">in</span> document.documentElement;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Gets the window containing the specified element.</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Gets the window containing the specified element.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">function</span> <span class="nx">getWindow</span><span class="p">(</span><span class="nx">elem</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">isWindow</span><span class="p">(</span><span class="nx">elem</span><span class="p">)</span> <span class="o">?</span>
-            <span class="nx">elem</span> <span class="o">:</span>
-            <span class="nx">elem</span><span class="p">.</span><span class="nx">nodeType</span> <span class="o">===</span> <span class="mi">9</span> <span class="o">?</span>
-            <span class="nx">elem</span><span class="p">.</span><span class="nx">defaultView</span> <span class="o">||</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">parentWindow</span> <span class="o">:</span>
-            <span class="kc">false</span><span class="p">;</span>
-    <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getWindow</span><span class="hljs-params">(elem)</span> {</span>
+        <span class="hljs-keyword">return</span> $.isWindow(elem) ?
+            elem :
+            elem.nodeType === <span class="hljs-number">9</span> ?
+            elem.defaultView || elem.parentWindow :
+            <span class="hljs-literal">false</span>;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Returns a rect for the first element in the jQuery object.</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Returns a rect for the first element in the jQuery object.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">clientRect</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">rect</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="nx">top</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="nx">left</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="nx">width</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="nx">height</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="nx">bottom</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="nx">right</span><span class="o">:</span> <span class="mi">0</span>
-        <span class="p">};</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.fn.clientRect = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">var</span> rect = {
+            top: <span class="hljs-number">0</span>,
+            left: <span class="hljs-number">0</span>,
+            width: <span class="hljs-number">0</span>,
+            height: <span class="hljs-number">0</span>,
+            bottom: <span class="hljs-number">0</span>,
+            right: <span class="hljs-number">0</span>
+        };
 
-        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">rect</span><span class="p">;</span>
-        <span class="p">}</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.length === <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">return</span> rect;
+        }
 
-        <span class="kd">var</span> <span class="nx">elem</span> <span class="o">=</span> <span class="k">this</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-        <span class="kd">var</span> <span class="nx">doc</span> <span class="o">=</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">ownerDocument</span><span class="p">;</span>
-        <span class="kd">var</span> <span class="nx">docElem</span> <span class="o">=</span> <span class="nx">doc</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">;</span>
-        <span class="kd">var</span> <span class="nx">box</span><span class="p">;</span>
+        <span class="hljs-keyword">var</span> elem = <span class="hljs-keyword">this</span>[<span class="hljs-number">0</span>];
+        <span class="hljs-keyword">var</span> doc = elem.ownerDocument;
+        <span class="hljs-keyword">var</span> docElem = doc.documentElement;
+        <span class="hljs-keyword">var</span> box;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Make sure we’re not dealing with a disconnected DOM node</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Make sure we're not dealing with a disconnected DOM node</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">$</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="nx">docElem</span><span class="p">,</span> <span class="nx">elem</span><span class="p">))</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">rect</span><span class="p">;</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (!$.contains(docElem, elem)) {
+            <span class="hljs-keyword">return</span> rect;
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Make modern browsers wicked fast</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Make modern browsers wicked fast</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">support</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>This is derived from the internals of jQuery.fn.offset</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">try</span> <span class="p">{</span>
-                <span class="nx">box</span> <span class="o">=</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
-            <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>OldIE throws an exception when trying to get a client rect for an element
-that hasn't been rendered, or isn't in the DOM.
-For consistency, return a 0 rect.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> ($.support.getBoundingClientRect) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>This is derived from the internals of jQuery.fn.offset</p>
 
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">box</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="nx">rect</span><span class="p">;</span>
-            <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">try</span> {
+                box = elem.getBoundingClientRect();
+            } <span class="hljs-keyword">catch</span> (e) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>OldIE throws an exception when trying to get a client rect for an element
+that hasn’t been rendered, or isn’t in the DOM.
+For consistency, return a 0 rect.</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>TODO needs a unit test to verify the returned rect always has the same properties (i.e. bottom, right)
-If the rect has no area, it needs no further processing</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">box</span><span class="p">.</span><span class="nx">right</span> <span class="o">===</span> <span class="nx">box</span><span class="p">.</span><span class="nx">left</span> <span class="o">&amp;&amp;</span>
-                <span class="nx">box</span><span class="p">.</span><span class="nx">top</span> <span class="o">===</span> <span class="nx">box</span><span class="p">.</span><span class="nx">bottom</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="nx">rect</span><span class="p">;</span>
-            <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            }
 
-</pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>Handles some quirks in the oldIE box model, including some bizarre behavior around the starting coordinates.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="kd">var</span> <span class="nx">win</span> <span class="o">=</span> <span class="nx">getWindow</span><span class="p">(</span><span class="nx">doc</span><span class="p">);</span>
+            <span class="hljs-keyword">if</span> (!box) {
+                <span class="hljs-keyword">return</span> rect;
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>TODO needs a unit test to verify the returned rect always has the same properties (i.e. bottom, right)
+If the rect has no area, it needs no further processing</p>
 
-            <span class="nx">rect</span><span class="p">.</span><span class="nx">top</span> <span class="o">=</span> <span class="nx">box</span><span class="p">.</span><span class="nx">top</span> <span class="o">+</span> <span class="p">(</span><span class="nx">win</span><span class="p">.</span><span class="nx">pageYOffset</span> <span class="o">||</span> <span class="nx">docElem</span><span class="p">.</span><span class="nx">scrollTop</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="nx">docElem</span><span class="p">.</span><span class="nx">clientTop</span> <span class="o">||</span> <span class="mi">0</span><span class="p">);</span>
-            <span class="nx">rect</span><span class="p">.</span><span class="nx">left</span> <span class="o">=</span> <span class="nx">box</span><span class="p">.</span><span class="nx">left</span> <span class="o">+</span> <span class="p">(</span><span class="nx">win</span><span class="p">.</span><span class="nx">pageXOffset</span> <span class="o">||</span> <span class="nx">docElem</span><span class="p">.</span><span class="nx">scrollLeft</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="nx">docElem</span><span class="p">.</span><span class="nx">clientLeft</span> <span class="o">||</span> <span class="mi">0</span><span class="p">);</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (box.right === box.left &amp;&amp;
+                box.top === box.bottom) {
+                <span class="hljs-keyword">return</span> rect;
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Handles some quirks in the oldIE box model, including some bizarre behavior around the starting coordinates.</p>
 
-            <span class="nx">rect</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">box</span><span class="p">.</span><span class="nx">right</span> <span class="o">-</span> <span class="nx">box</span><span class="p">.</span><span class="nx">left</span><span class="p">;</span>
-            <span class="nx">rect</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">box</span><span class="p">.</span><span class="nx">bottom</span> <span class="o">-</span> <span class="nx">box</span><span class="p">.</span><span class="nx">top</span><span class="p">;</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>Support ancient browsers by falling back to jQuery.outerWidth/Height()</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;display&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;none&quot;</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="nx">rect</span><span class="p">;</span>
-            <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">var</span> win = getWindow(doc);
 
-            <span class="nx">rect</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">offset</span><span class="p">();</span>
-            <span class="nx">rect</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">outerWidth</span><span class="p">();</span>
-            <span class="nx">rect</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">outerHeight</span><span class="p">();</span>
-        <span class="p">}</span>
+            rect.top = box.top + (win.pageYOffset || docElem.scrollTop) - (docElem.clientTop || <span class="hljs-number">0</span>);
+            rect.left = box.left + (win.pageXOffset || docElem.scrollLeft) - (docElem.clientLeft || <span class="hljs-number">0</span>);
 
-        <span class="nx">rect</span><span class="p">.</span><span class="nx">bottom</span> <span class="o">=</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">top</span> <span class="o">+</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
-        <span class="nx">rect</span><span class="p">.</span><span class="nx">right</span> <span class="o">=</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">left</span> <span class="o">+</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">width</span><span class="p">;</span>
+            rect.width = box.right - box.left;
+            rect.height = box.bottom - box.top;
+        } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Support ancient browsers by falling back to jQuery.outerWidth/Height()</p>
 
-        <span class="k">return</span> <span class="nx">rect</span><span class="p">;</span>
-    <span class="p">};</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.css(<span class="hljs-string">"display"</span>) == <span class="hljs-string">"none"</span>) {
+                <span class="hljs-keyword">return</span> rect;
+            }
 
-<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
+            rect = <span class="hljs-keyword">this</span>.offset();
+            rect.width = <span class="hljs-keyword">this</span>.outerWidth();
+            rect.height = <span class="hljs-keyword">this</span>.outerHeight();
+        }
 
-</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
+        rect.bottom = rect.top + rect.height;
+        rect.right = rect.left + rect.width;
+
+        <span class="hljs-keyword">return</span> rect;
+    };
+
+})(jQuery);</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

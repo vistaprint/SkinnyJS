@@ -1,72 +1,374 @@
-<!DOCTYPE html>  <html> <head>   <title>jquery.css.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="breakpoints.html">                 breakpoints.js               </a>                                           <a class="source" href="date-parse.html">                 date-parse.js               </a>                                           <a class="source" href="jquery.breakpoints.html">                 jquery.breakpoints.js               </a>                                           <a class="source" href="jquery.calcRestrainedPos.html">                 jquery.calcRestrainedPos.js               </a>                                           <a class="source" href="jquery.clientRect.html">                 jquery.clientRect.js               </a>                                           <a class="source" href="jquery.contentSize.html">                 jquery.contentSize.js               </a>                                           <a class="source" href="jquery.cookies.html">                 jquery.cookies.js               </a>                                           <a class="source" href="jquery.css.html">                 jquery.css.js               </a>                                           <a class="source" href="jquery.customEvent.html">                 jquery.customEvent.js               </a>                                           <a class="source" href="jquery.delimitedString.html">                 jquery.delimitedString.js               </a>                                           <a class="source" href="jquery.disableEvent.html">                 jquery.disableEvent.js               </a>                                           <a class="source" href="jquery.hostIframe.html">                 jquery.hostIframe.js               </a>                                           <a class="source" href="jquery.hoverDelay.html">                 jquery.hoverDelay.js               </a>                                           <a class="source" href="jquery.htmlEncode.html">                 jquery.htmlEncode.js               </a>                                           <a class="source" href="jquery.imageSize.html">                 jquery.imageSize.js               </a>                                           <a class="source" href="jquery.isVisibleKeyCode.html">                 jquery.isVisibleKeyCode.js               </a>                                           <a class="source" href="jquery.menu.html">                 jquery.menu.js               </a>                                           <a class="source" href="jquery-menu-exampleskin.html">                 jquery-menu-exampleskin.js               </a>                                           <a class="source" href="jquery.modalDialog.deviceFixes.html">                 jquery.modalDialog.deviceFixes.js               </a>                                           <a class="source" href="jquery.modalDialog.getSettings.html">                 jquery.modalDialog.getSettings.js               </a>                                           <a class="source" href="jquery.modalDialog.header.html">                 jquery.modalDialog.header.js               </a>                                           <a class="source" href="jquery.modalDialog.history.html">                 jquery.modalDialog.history.js               </a>                                           <a class="source" href="jquery.modalDialog.html">                 jquery.modalDialog.js               </a>                                           <a class="source" href="jquery.modalDialog.unobtrusive.html">                 jquery.modalDialog.unobtrusive.js               </a>                                           <a class="source" href="jquery.modalDialog.userAgent.html">                 jquery.modalDialog.userAgent.js               </a>                                           <a class="source" href="jquery.modalDialogContent.header.html">                 jquery.modalDialogContent.header.js               </a>                                           <a class="source" href="jquery.modalDialogContent.html">                 jquery.modalDialogContent.js               </a>                                           <a class="source" href="jquery.msAjax.html">                 jquery.msAjax.js               </a>                                           <a class="source" href="jquery.ns.html">                 jquery.ns.js               </a>                                           <a class="source" href="jquery.partialLoad.html">                 jquery.partialLoad.js               </a>                                           <a class="source" href="jquery.postMessage.html">                 jquery.postMessage.js               </a>                                           <a class="source" href="jquery.proxyAll.html">                 jquery.proxyAll.js               </a>                                           <a class="source" href="jquery.queryString.html">                 jquery.queryString.js               </a>                                           <a class="source" href="jquery.richTooltip.html">                 jquery.richTooltip.js               </a>                                           <a class="source" href="jquery.scrollAnchor.html">                 jquery.scrollAnchor.js               </a>                                           <a class="source" href="jquery.uncomment.html">                 jquery.uncomment.js               </a>                                           <a class="source" href="jquery.url.html">                 jquery.url.js               </a>                                           <a class="source" href="pointy.gestures.html">                 pointy.gestures.js               </a>                                           <a class="source" href="pointy.html">                 pointy.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs"><a href="../index.html">Home</a> | 
-<a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.css.js" target="_blank">View this file on Github</a>
+<!DOCTYPE html>
 
-<hr style="height: 1px; border:0; background-color:#4A525A">
-             <h1>               jquery.css.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>/ <reference path="jquery.delimitedString.js" /></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">_mapCamelToDash</span> <span class="o">=</span> <span class="p">{};</span>
+<html>
+<head>
+  <title>jquery.css.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="breakpoints.html">
+                breakpoints.js
+              </a>
+            
+              
+              <a class="source" href="date-parse.html">
+                date-parse.js
+              </a>
+            
+              
+              <a class="source" href="jquery.breakpoints.html">
+                jquery.breakpoints.js
+              </a>
+            
+              
+              <a class="source" href="jquery.calcRestrainedPos.html">
+                jquery.calcRestrainedPos.js
+              </a>
+            
+              
+              <a class="source" href="jquery.clientRect.html">
+                jquery.clientRect.js
+              </a>
+            
+              
+              <a class="source" href="jquery.contentSize.html">
+                jquery.contentSize.js
+              </a>
+            
+              
+              <a class="source" href="jquery.cookies.html">
+                jquery.cookies.js
+              </a>
+            
+              
+              <a class="source" href="jquery.css.html">
+                jquery.css.js
+              </a>
+            
+              
+              <a class="source" href="jquery.customEvent.html">
+                jquery.customEvent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.delimitedString.html">
+                jquery.delimitedString.js
+              </a>
+            
+              
+              <a class="source" href="jquery.disableEvent.html">
+                jquery.disableEvent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.hostIframe.html">
+                jquery.hostIframe.js
+              </a>
+            
+              
+              <a class="source" href="jquery.hoverDelay.html">
+                jquery.hoverDelay.js
+              </a>
+            
+              
+              <a class="source" href="jquery.htmlEncode.html">
+                jquery.htmlEncode.js
+              </a>
+            
+              
+              <a class="source" href="jquery.imageSize.html">
+                jquery.imageSize.js
+              </a>
+            
+              
+              <a class="source" href="jquery.isVisibleKeyCode.html">
+                jquery.isVisibleKeyCode.js
+              </a>
+            
+              
+              <a class="source" href="jquery.menu.html">
+                jquery.menu.js
+              </a>
+            
+              
+              <a class="source" href="jquery-menu-exampleskin.html">
+                jquery-menu-exampleskin.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.deviceFixes.html">
+                jquery.modalDialog.deviceFixes.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.getSettings.html">
+                jquery.modalDialog.getSettings.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.header.html">
+                jquery.modalDialog.header.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.history.html">
+                jquery.modalDialog.history.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.html">
+                jquery.modalDialog.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.unobtrusive.html">
+                jquery.modalDialog.unobtrusive.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.userAgent.html">
+                jquery.modalDialog.userAgent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialogContent.header.html">
+                jquery.modalDialogContent.header.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialogContent.html">
+                jquery.modalDialogContent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.msAjax.html">
+                jquery.msAjax.js
+              </a>
+            
+              
+              <a class="source" href="jquery.ns.html">
+                jquery.ns.js
+              </a>
+            
+              
+              <a class="source" href="jquery.partialLoad.html">
+                jquery.partialLoad.js
+              </a>
+            
+              
+              <a class="source" href="jquery.postMessage.html">
+                jquery.postMessage.js
+              </a>
+            
+              
+              <a class="source" href="jquery.proxyAll.html">
+                jquery.proxyAll.js
+              </a>
+            
+              
+              <a class="source" href="jquery.queryString.html">
+                jquery.queryString.js
+              </a>
+            
+              
+              <a class="source" href="jquery.richTooltip.html">
+                jquery.richTooltip.js
+              </a>
+            
+              
+              <a class="source" href="jquery.scrollAnchor.html">
+                jquery.scrollAnchor.js
+              </a>
+            
+              
+              <a class="source" href="jquery.uncomment.html">
+                jquery.uncomment.js
+              </a>
+            
+              
+              <a class="source" href="jquery.url.html">
+                jquery.url.js
+              </a>
+            
+              
+              <a class="source" href="pointy.gestures.html">
+                pointy.gestures.js
+              </a>
+            
+              
+              <a class="source" href="pointy.html">
+                pointy.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>jquery.css.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>/ <reference path="jquery.delimitedString.js" /></p>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span>
+    <span class="hljs-keyword">var</span> _mapCamelToDash = {};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Takes a css property in object syntax (i.e. “textAlign”) and converts it to CSS string syntax (i.e. “text-align”)</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Takes a css property in object syntax (i.e. "textAlign") and converts it to CSS string syntax (i.e. "text-align")</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">camelToDashCase</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">prop</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Cache for performance- big win.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">_mapCamelToDash</span><span class="p">[</span><span class="nx">prop</span><span class="p">];</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">value</span> <span class="o">=</span> <span class="nx">prop</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/([A-Z])/g</span><span class="p">,</span> <span class="s2">&quot;-$1&quot;</span><span class="p">).</span><span class="nx">toLowerCase</span><span class="p">();</span>
-            <span class="nx">_mapCamelToDash</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.camelToDashCase = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(prop)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Cache for performance- big win.</p>
 
-        <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
-    <span class="p">};</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> value = _mapCamelToDash[prop];
+        <span class="hljs-keyword">if</span> (!value) {
+            value = prop.replace(<span class="hljs-regexp">/([A-Z])/g</span>, <span class="hljs-string">"-$1"</span>).toLowerCase();
+            _mapCamelToDash[prop] = value;
+        }
 
-    <span class="kd">var</span> <span class="nx">_mapDashToCamel</span> <span class="o">=</span> <span class="p">{};</span>
+        <span class="hljs-keyword">return</span> value;
+    };
 
-</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Takes a css property in css syntax (i.e. "text-align") and converts it to object syntax (i.e. "textAlign")</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">dashToCamelCase</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">sProperty</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">_mapDashToCamel</span><span class="p">[</span><span class="nx">sProperty</span><span class="p">];</span>
+    <span class="hljs-keyword">var</span> _mapDashToCamel = {};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Takes a css property in css syntax (i.e. “text-align”) and converts it to object syntax (i.e. “textAlign”)</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Cache for performance: big win</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">sProperty</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>convert hyphen-case to camelCase</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="kd">var</span> <span class="nx">aOut</span> <span class="o">=</span> <span class="p">[];</span>
-                <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">sProperty</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="kd">var</span> <span class="nx">sChar</span> <span class="o">=</span> <span class="nx">sProperty</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="nx">sChar</span> <span class="o">==</span> <span class="s2">&quot;-&quot;</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="nx">i</span><span class="o">++</span><span class="p">;</span>
-                        <span class="nx">sChar</span> <span class="o">=</span> <span class="nx">sProperty</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">i</span><span class="p">).</span><span class="nx">toUpperCase</span><span class="p">();</span>
-                        <span class="nx">aOut</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">sChar</span><span class="p">);</span>
-                    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                        <span class="nx">aOut</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">sChar</span><span class="p">);</span>
-                    <span class="p">}</span>
-                <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.dashToCamelCase = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(sProperty)</span> {</span>
+        <span class="hljs-keyword">var</span> value = _mapDashToCamel[sProperty];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Cache for performance: big win</p>
 
-                <span class="nx">value</span> <span class="o">=</span> <span class="nx">aOut</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="nx">value</span> <span class="o">=</span> <span class="nx">sProperty</span><span class="p">;</span>
-            <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (!value) {
+            <span class="hljs-keyword">if</span> (sProperty.indexOf(<span class="hljs-string">"-"</span>) != -<span class="hljs-number">1</span>) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>convert hyphen-case to camelCase</p>
 
-            <span class="nx">_mapDashToCamel</span><span class="p">[</span><span class="nx">sProperty</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">var</span> aOut = [];
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, len = sProperty.length; i &lt; len; ++i) {
+                    <span class="hljs-keyword">var</span> sChar = sProperty.charAt(i);
+                    <span class="hljs-keyword">if</span> (sChar == <span class="hljs-string">"-"</span>) {
+                        i++;
+                        sChar = sProperty.charAt(i).toUpperCase();
+                        aOut.push(sChar);
+                    } <span class="hljs-keyword">else</span> {
+                        aOut.push(sChar);
+                    }
+                }
 
-        <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
-    <span class="p">};</span>
+                value = aOut.join(<span class="hljs-string">""</span>);
+            } <span class="hljs-keyword">else</span> {
+                value = sProperty;
+            }
 
-    <span class="kd">var</span> <span class="nx">cssKeyEncoder</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">trim</span><span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">camelToDashCase</span><span class="p">(</span><span class="nx">s</span><span class="p">));</span> <span class="c1">// trim</span>
-    <span class="p">};</span>
+            _mapDashToCamel[sProperty] = value;
+        }
 
-    <span class="kd">var</span> <span class="nx">cssKeyDecoder</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">trim</span><span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">dashToCamelCase</span><span class="p">(</span><span class="nx">s</span><span class="p">));</span> <span class="c1">// trim</span>
-    <span class="p">};</span>
+        <span class="hljs-keyword">return</span> value;
+    };
 
-    <span class="nx">$</span><span class="p">.</span><span class="nx">encodeCssString</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">encodeDelimitedString</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="s2">&quot;;&quot;</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="nx">cssKeyEncoder</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">trim</span><span class="p">);</span>
-    <span class="p">};</span>
+    <span class="hljs-keyword">var</span> cssKeyEncoder = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> {</span>
+        <span class="hljs-keyword">return</span> $.trim($.camelToDashCase(s)); <span class="hljs-comment">// trim</span>
+    };
 
-    <span class="nx">$</span><span class="p">.</span><span class="nx">parseCssString</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">cssString</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">parseDelimitedString</span><span class="p">(</span><span class="nx">cssString</span><span class="p">,</span> <span class="s2">&quot;;&quot;</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="nx">cssKeyDecoder</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">trim</span><span class="p">);</span>
-    <span class="p">};</span>
+    <span class="hljs-keyword">var</span> cssKeyDecoder = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> {</span>
+        <span class="hljs-keyword">return</span> $.trim($.dashToCamelCase(s)); <span class="hljs-comment">// trim</span>
+    };
 
-<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
+    $.encodeCssString = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
+        <span class="hljs-keyword">return</span> $.encodeDelimitedString(data, <span class="hljs-string">";"</span>, <span class="hljs-string">":"</span>, cssKeyEncoder, $.trim);
+    };
 
-</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
+    $.parseCssString = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(cssString)</span> {</span>
+        <span class="hljs-keyword">return</span> $.parseDelimitedString(cssString, <span class="hljs-string">";"</span>, <span class="hljs-string">":"</span>, cssKeyDecoder, $.trim);
+    };
+
+})(jQuery);</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

@@ -1,207 +1,619 @@
-<!DOCTYPE html>  <html> <head>   <title>jquery.hoverDelay.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="breakpoints.html">                 breakpoints.js               </a>                                           <a class="source" href="date-parse.html">                 date-parse.js               </a>                                           <a class="source" href="jquery.breakpoints.html">                 jquery.breakpoints.js               </a>                                           <a class="source" href="jquery.calcRestrainedPos.html">                 jquery.calcRestrainedPos.js               </a>                                           <a class="source" href="jquery.clientRect.html">                 jquery.clientRect.js               </a>                                           <a class="source" href="jquery.contentSize.html">                 jquery.contentSize.js               </a>                                           <a class="source" href="jquery.cookies.html">                 jquery.cookies.js               </a>                                           <a class="source" href="jquery.css.html">                 jquery.css.js               </a>                                           <a class="source" href="jquery.customEvent.html">                 jquery.customEvent.js               </a>                                           <a class="source" href="jquery.delimitedString.html">                 jquery.delimitedString.js               </a>                                           <a class="source" href="jquery.disableEvent.html">                 jquery.disableEvent.js               </a>                                           <a class="source" href="jquery.hostIframe.html">                 jquery.hostIframe.js               </a>                                           <a class="source" href="jquery.hoverDelay.html">                 jquery.hoverDelay.js               </a>                                           <a class="source" href="jquery.htmlEncode.html">                 jquery.htmlEncode.js               </a>                                           <a class="source" href="jquery.imageSize.html">                 jquery.imageSize.js               </a>                                           <a class="source" href="jquery.isVisibleKeyCode.html">                 jquery.isVisibleKeyCode.js               </a>                                           <a class="source" href="jquery.menu.html">                 jquery.menu.js               </a>                                           <a class="source" href="jquery-menu-exampleskin.html">                 jquery-menu-exampleskin.js               </a>                                           <a class="source" href="jquery.modalDialog.deviceFixes.html">                 jquery.modalDialog.deviceFixes.js               </a>                                           <a class="source" href="jquery.modalDialog.getSettings.html">                 jquery.modalDialog.getSettings.js               </a>                                           <a class="source" href="jquery.modalDialog.header.html">                 jquery.modalDialog.header.js               </a>                                           <a class="source" href="jquery.modalDialog.history.html">                 jquery.modalDialog.history.js               </a>                                           <a class="source" href="jquery.modalDialog.html">                 jquery.modalDialog.js               </a>                                           <a class="source" href="jquery.modalDialog.unobtrusive.html">                 jquery.modalDialog.unobtrusive.js               </a>                                           <a class="source" href="jquery.modalDialog.userAgent.html">                 jquery.modalDialog.userAgent.js               </a>                                           <a class="source" href="jquery.modalDialogContent.header.html">                 jquery.modalDialogContent.header.js               </a>                                           <a class="source" href="jquery.modalDialogContent.html">                 jquery.modalDialogContent.js               </a>                                           <a class="source" href="jquery.msAjax.html">                 jquery.msAjax.js               </a>                                           <a class="source" href="jquery.ns.html">                 jquery.ns.js               </a>                                           <a class="source" href="jquery.partialLoad.html">                 jquery.partialLoad.js               </a>                                           <a class="source" href="jquery.postMessage.html">                 jquery.postMessage.js               </a>                                           <a class="source" href="jquery.proxyAll.html">                 jquery.proxyAll.js               </a>                                           <a class="source" href="jquery.queryString.html">                 jquery.queryString.js               </a>                                           <a class="source" href="jquery.richTooltip.html">                 jquery.richTooltip.js               </a>                                           <a class="source" href="jquery.scrollAnchor.html">                 jquery.scrollAnchor.js               </a>                                           <a class="source" href="jquery.uncomment.html">                 jquery.uncomment.js               </a>                                           <a class="source" href="jquery.url.html">                 jquery.url.js               </a>                                           <a class="source" href="pointy.gestures.html">                 pointy.gestures.js               </a>                                           <a class="source" href="pointy.html">                 pointy.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs"><a href="../index.html">Home</a> | 
-<a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.hoverDelay.js" target="_blank">View this file on Github</a>
+<!DOCTYPE html>
 
-<hr style="height: 1px; border:0; background-color:#4A525A">
-             <h1>               jquery.hoverDelay.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>/ <reference path="pointy.js" /></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">OVER_TIMER</span> <span class="o">=</span> <span class="s1">&#39;skinnyjs-hoverDelay-overTimer&#39;</span><span class="p">;</span>
-    <span class="kd">var</span> <span class="nx">OUT_TIMER</span> <span class="o">=</span> <span class="s1">&#39;skinnyjs-hoverDelay-outTimer&#39;</span><span class="p">;</span>
+<html>
+<head>
+  <title>jquery.hoverDelay.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="breakpoints.html">
+                breakpoints.js
+              </a>
+            
+              
+              <a class="source" href="date-parse.html">
+                date-parse.js
+              </a>
+            
+              
+              <a class="source" href="jquery.breakpoints.html">
+                jquery.breakpoints.js
+              </a>
+            
+              
+              <a class="source" href="jquery.calcRestrainedPos.html">
+                jquery.calcRestrainedPos.js
+              </a>
+            
+              
+              <a class="source" href="jquery.clientRect.html">
+                jquery.clientRect.js
+              </a>
+            
+              
+              <a class="source" href="jquery.contentSize.html">
+                jquery.contentSize.js
+              </a>
+            
+              
+              <a class="source" href="jquery.cookies.html">
+                jquery.cookies.js
+              </a>
+            
+              
+              <a class="source" href="jquery.css.html">
+                jquery.css.js
+              </a>
+            
+              
+              <a class="source" href="jquery.customEvent.html">
+                jquery.customEvent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.delimitedString.html">
+                jquery.delimitedString.js
+              </a>
+            
+              
+              <a class="source" href="jquery.disableEvent.html">
+                jquery.disableEvent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.hostIframe.html">
+                jquery.hostIframe.js
+              </a>
+            
+              
+              <a class="source" href="jquery.hoverDelay.html">
+                jquery.hoverDelay.js
+              </a>
+            
+              
+              <a class="source" href="jquery.htmlEncode.html">
+                jquery.htmlEncode.js
+              </a>
+            
+              
+              <a class="source" href="jquery.imageSize.html">
+                jquery.imageSize.js
+              </a>
+            
+              
+              <a class="source" href="jquery.isVisibleKeyCode.html">
+                jquery.isVisibleKeyCode.js
+              </a>
+            
+              
+              <a class="source" href="jquery.menu.html">
+                jquery.menu.js
+              </a>
+            
+              
+              <a class="source" href="jquery-menu-exampleskin.html">
+                jquery-menu-exampleskin.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.deviceFixes.html">
+                jquery.modalDialog.deviceFixes.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.getSettings.html">
+                jquery.modalDialog.getSettings.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.header.html">
+                jquery.modalDialog.header.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.history.html">
+                jquery.modalDialog.history.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.html">
+                jquery.modalDialog.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.unobtrusive.html">
+                jquery.modalDialog.unobtrusive.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.userAgent.html">
+                jquery.modalDialog.userAgent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialogContent.header.html">
+                jquery.modalDialogContent.header.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialogContent.html">
+                jquery.modalDialogContent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.msAjax.html">
+                jquery.msAjax.js
+              </a>
+            
+              
+              <a class="source" href="jquery.ns.html">
+                jquery.ns.js
+              </a>
+            
+              
+              <a class="source" href="jquery.partialLoad.html">
+                jquery.partialLoad.js
+              </a>
+            
+              
+              <a class="source" href="jquery.postMessage.html">
+                jquery.postMessage.js
+              </a>
+            
+              
+              <a class="source" href="jquery.proxyAll.html">
+                jquery.proxyAll.js
+              </a>
+            
+              
+              <a class="source" href="jquery.queryString.html">
+                jquery.queryString.js
+              </a>
+            
+              
+              <a class="source" href="jquery.richTooltip.html">
+                jquery.richTooltip.js
+              </a>
+            
+              
+              <a class="source" href="jquery.scrollAnchor.html">
+                jquery.scrollAnchor.js
+              </a>
+            
+              
+              <a class="source" href="jquery.uncomment.html">
+                jquery.uncomment.js
+              </a>
+            
+              
+              <a class="source" href="jquery.url.html">
+                jquery.url.js
+              </a>
+            
+              
+              <a class="source" href="pointy.gestures.html">
+                pointy.gestures.js
+              </a>
+            
+              
+              <a class="source" href="pointy.html">
+                pointy.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>jquery.hoverDelay.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>/ <reference path="pointy.js" /></p>
 
-    <span class="kd">var</span> <span class="nx">_defaults</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="nx">over</span><span class="o">:</span> <span class="nx">$</span><span class="p">.</span><span class="nx">noop</span><span class="p">,</span>
-        <span class="nx">out</span><span class="o">:</span> <span class="nx">$</span><span class="p">.</span><span class="nx">noop</span><span class="p">,</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span>
+    <span class="hljs-keyword">var</span> OVER_TIMER = <span class="hljs-string">'skinnyjs-hoverDelay-overTimer'</span>;
+    <span class="hljs-keyword">var</span> OUT_TIMER = <span class="hljs-string">'skinnyjs-hoverDelay-outTimer'</span>;
 
-</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>delays before firing the onOver and onOut callbacks,
-if zero, hoverDelay acts exactly like jQuery's $.fn.hover
-except that it supports pointer events and a few other features</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="nx">delayOver</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="nx">delayOut</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="hljs-keyword">var</span> _defaults = {
+        over: $.noop,
+        out: $.noop,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>delays before firing the onOver and onOut callbacks,
+if zero, hoverDelay acts exactly like jQuery’s $.fn.hover
+except that it supports pointer events and a few other features</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>listen for touch taps as if they're hovering events, this
-is not usually useful or desired and is therefore off by default</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="nx">touch</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        delayOver: <span class="hljs-number">0</span>,
+        delayOut: <span class="hljs-number">0</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>listen for touch taps as if they’re hovering events, this
+is not usually useful or desired and is therefore off by default</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>an array of additional children to consider as-is these were actual
-children of the target element's dom.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="nx">addChildren</span><span class="o">:</span> <span class="kc">null</span>
-    <span class="p">};</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        touch: <span class="hljs-literal">false</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>an array of additional children to consider as-is these were actual
+children of the target element’s dom.</p>
 
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">hoverDelay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">over</span><span class="p">,</span> <span class="nx">out</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">isPlainObject</span><span class="p">(</span><span class="nx">over</span><span class="p">))</span> <span class="p">{</span>
-            <span class="nx">options</span> <span class="o">=</span> <span class="nx">over</span><span class="p">;</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">options</span> <span class="o">=</span> <span class="p">{};</span>
-            <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        addChildren: <span class="hljs-literal">null</span>
+    };
 
-            <span class="nx">options</span><span class="p">.</span><span class="nx">over</span> <span class="o">=</span> <span class="nx">over</span><span class="p">;</span>
-            <span class="nx">options</span><span class="p">.</span><span class="nx">out</span> <span class="o">=</span> <span class="nx">out</span><span class="p">;</span>
-        <span class="p">}</span>
+    $.fn.hoverDelay = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(over, out, options)</span> {</span>
+        <span class="hljs-keyword">if</span> ($.isPlainObject(over)) {
+            options = over;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">if</span> (!options) {
+                options = {};
+            }
 
-        <span class="kd">var</span> <span class="nx">_options</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">_defaults</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+            options.over = over;
+            options.out = out;
+        }
 
-        <span class="kd">var</span> <span class="nx">useTimers</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">delayOver</span> <span class="o">===</span> <span class="s1">&#39;function&#39;</span> <span class="o">||</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">delayOver</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">delayOut</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="hljs-keyword">var</span> _options = $.extend({}, _defaults, options);
 
-        <span class="kd">var</span> <span class="nx">clearTimers</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">useTimers</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span><span class="p">;</span>
-            <span class="p">}</span>
+        <span class="hljs-keyword">var</span> useTimers = <span class="hljs-keyword">typeof</span> _options.delayOver === <span class="hljs-string">'function'</span> || _options.delayOver &gt; <span class="hljs-number">0</span> || _options.delayOut &gt; <span class="hljs-number">0</span>;
 
-            <span class="kd">var</span> <span class="nx">overTimer</span> <span class="o">=</span> <span class="nx">el</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">OVER_TIMER</span><span class="p">);</span>
-            <span class="kd">var</span> <span class="nx">outTimer</span> <span class="o">=</span> <span class="nx">el</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">OUT_TIMER</span><span class="p">);</span>
+        <span class="hljs-keyword">var</span> clearTimers = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(el)</span> {</span>
+            <span class="hljs-keyword">if</span> (!useTimers) {
+                <span class="hljs-keyword">return</span>;
+            }
 
-            <span class="k">if</span> <span class="p">(</span><span class="nx">overTimer</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">clearTimeout</span><span class="p">(</span><span class="nx">overTimer</span><span class="p">);</span>
-                <span class="nx">el</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">OVER_TIMER</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
-            <span class="p">}</span>
+            <span class="hljs-keyword">var</span> overTimer = el.data(OVER_TIMER);
+            <span class="hljs-keyword">var</span> outTimer = el.data(OUT_TIMER);
 
-            <span class="k">if</span> <span class="p">(</span><span class="nx">outTimer</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">clearTimeout</span><span class="p">(</span><span class="nx">outTimer</span><span class="p">);</span>
-                <span class="nx">el</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">OUT_TIMER</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">};</span>
+            <span class="hljs-keyword">if</span> (overTimer) {
+                clearTimeout(overTimer);
+                el.data(OVER_TIMER, <span class="hljs-literal">null</span>);
+            }
 
-        <span class="kd">function</span> <span class="nx">pointerEnter</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>stop propagation because this mouseover event can
-double fire if a child of the element used is the target</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
+            <span class="hljs-keyword">if</span> (outTimer) {
+                clearTimeout(outTimer);
+                el.data(OUT_TIMER, <span class="hljs-literal">null</span>);
+            }
+        };
 
-            <span class="k">if</span> <span class="p">(</span><span class="nx">_options</span><span class="p">.</span><span class="nx">touch</span> <span class="o">||</span> <span class="o">!</span><span class="nx">event</span><span class="p">.</span><span class="nx">pointerType</span> <span class="o">||</span> <span class="nx">event</span><span class="p">.</span><span class="nx">pointerType</span> <span class="o">!==</span> <span class="s1">&#39;touch&#39;</span><span class="p">)</span> <span class="p">{</span>
-                <span class="kd">var</span> <span class="nx">thisObject</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
-                    <span class="nx">$this</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">thisObject</span><span class="p">);</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">pointerEnter</span><span class="hljs-params">(event)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>stop propagation because this mouseover event can
+double fire if a child of the element used is the target</p>
 
-                <span class="nx">clearTimers</span><span class="p">(</span><span class="nx">$this</span><span class="p">);</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            event.stopPropagation();
 
-                <span class="kd">var</span> <span class="nx">call</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">call</span><span class="p">()</span> <span class="p">{</span>
-                    <span class="nx">_options</span><span class="p">.</span><span class="nx">over</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">thisObject</span><span class="p">,</span> <span class="nx">event</span><span class="p">);</span>
-                <span class="p">};</span>
+            <span class="hljs-keyword">if</span> (_options.touch || !event.pointerType || event.pointerType !== <span class="hljs-string">'touch'</span>) {
+                <span class="hljs-keyword">var</span> thisObject = <span class="hljs-keyword">this</span>,
+                    $<span class="hljs-keyword">this</span> = $(thisObject);
 
-                <span class="kd">var</span> <span class="nx">delay</span> <span class="o">=</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">delayOver</span><span class="p">;</span>
+                clearTimers($<span class="hljs-keyword">this</span>);
 
-                <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">delay</span> <span class="o">===</span> <span class="s1">&#39;function&#39;</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">delay</span> <span class="o">=</span> <span class="nx">delay</span><span class="p">();</span>
-                <span class="p">}</span>
+                <span class="hljs-keyword">var</span> call = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">call</span><span class="hljs-params">()</span> {</span>
+                    _options.over.call(thisObject, event);
+                };
 
-                <span class="k">if</span> <span class="p">(</span><span class="nx">delay</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">call</span><span class="p">();</span>
-                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                    <span class="nx">$this</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">OVER_TIMER</span><span class="p">,</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="nx">call</span><span class="p">,</span> <span class="nx">delay</span><span class="p">));</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+                <span class="hljs-keyword">var</span> delay = _options.delayOver;
 
-        <span class="kd">function</span> <span class="nx">pointerLeave</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>stop propagation because this mouseover event can
-double fire if a child of the element used is the target</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
+                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> delay === <span class="hljs-string">'function'</span>) {
+                    delay = delay();
+                }
 
-            <span class="k">if</span> <span class="p">(</span><span class="nx">_options</span><span class="p">.</span><span class="nx">touch</span> <span class="o">||</span> <span class="o">!</span><span class="nx">event</span><span class="p">.</span><span class="nx">pointerType</span> <span class="o">||</span> <span class="nx">event</span><span class="p">.</span><span class="nx">pointerType</span> <span class="o">!==</span> <span class="s1">&#39;touch&#39;</span><span class="p">)</span> <span class="p">{</span>
-                <span class="kd">var</span> <span class="nx">thisObject</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
-                    <span class="nx">$this</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">thisObject</span><span class="p">);</span>
+                <span class="hljs-keyword">if</span> (delay &lt;= <span class="hljs-number">0</span>) {
+                    call();
+                } <span class="hljs-keyword">else</span> {
+                    $<span class="hljs-keyword">this</span>.data(OVER_TIMER, setTimeout(call, delay));
+                }
+            }
+        }
 
-                <span class="nx">clearTimers</span><span class="p">(</span><span class="nx">$this</span><span class="p">);</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">pointerLeave</span><span class="hljs-params">(event)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>stop propagation because this mouseover event can
+double fire if a child of the element used is the target</p>
 
-                <span class="kd">var</span> <span class="nx">call</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">call</span><span class="p">()</span> <span class="p">{</span>
-                    <span class="nx">_options</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">thisObject</span><span class="p">,</span> <span class="nx">event</span><span class="p">);</span>
-                <span class="p">};</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            event.stopPropagation();
 
-</pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>if we do not have a delay when the pointer leaves the target area,
-then call the observer immediately.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="k">if</span> <span class="p">(</span><span class="nx">_options</span><span class="p">.</span><span class="nx">delayOut</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">call</span><span class="p">();</span>
-                    <span class="k">return</span><span class="p">;</span>
-                <span class="p">}</span>
+            <span class="hljs-keyword">if</span> (_options.touch || !event.pointerType || event.pointerType !== <span class="hljs-string">'touch'</span>) {
+                <span class="hljs-keyword">var</span> thisObject = <span class="hljs-keyword">this</span>,
+                    $<span class="hljs-keyword">this</span> = $(thisObject);
 
-</pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>create a timeout for the leave observer, which is cleared
-if the client re-enters the target area before the timer is triggered</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="nx">$this</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">OUT_TIMER</span><span class="p">,</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-                    <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">off</span><span class="p">(</span><span class="s1">&#39;pointermove&#39;</span><span class="p">,</span> <span class="nx">pointerMove</span><span class="p">);</span>
+                clearTimers($<span class="hljs-keyword">this</span>);
 
-                    <span class="k">if</span> <span class="p">(</span><span class="nx">pointerPosition</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="kd">var</span> <span class="nx">overElement</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">elementFromPoint</span><span class="p">(</span><span class="nx">pointerPosition</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">pointerPosition</span><span class="p">.</span><span class="nx">y</span><span class="p">);</span>
-                        <span class="k">if</span> <span class="p">(</span><span class="nx">thisObject</span> <span class="o">===</span> <span class="nx">overElement</span> <span class="o">||</span> <span class="nx">jQuery</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="nx">thisObject</span><span class="p">,</span> <span class="nx">overElement</span><span class="p">)</span> <span class="o">||</span> <span class="nx">overAdditionalChildren</span><span class="p">(</span><span class="nx">overElement</span><span class="p">))</span> <span class="p">{</span>
-                            <span class="k">return</span><span class="p">;</span> <span class="c1">// since it appears the mouse is in fact over the targeted area, do not trigger the callback</span>
-                        <span class="p">}</span>
+                <span class="hljs-keyword">var</span> call = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">call</span><span class="hljs-params">()</span> {</span>
+                    _options.out.call(thisObject, event);
+                };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>if we do not have a delay when the pointer leaves the target area,
+then call the observer immediately.</p>
 
-                        <span class="nx">pointerPosition</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span> <span class="c1">// null the pointerPosition, we do not need it cached now</span>
-                    <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (_options.delayOut &lt;= <span class="hljs-number">0</span>) {
+                    call();
+                    <span class="hljs-keyword">return</span>;
+                }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>create a timeout for the leave observer, which is cleared
+if the client re-enters the target area before the timer is triggered</p>
 
-                    <span class="nx">call</span><span class="p">();</span>
-                <span class="p">},</span> <span class="nx">_options</span><span class="p">.</span><span class="nx">delayOut</span><span class="p">));</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                $<span class="hljs-keyword">this</span>.data(OUT_TIMER, setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                    $(document).off(<span class="hljs-string">'pointermove'</span>, pointerMove);
 
-                <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;pointermove&#39;</span><span class="p">,</span> <span class="nx">pointerMove</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+                    <span class="hljs-keyword">if</span> (pointerPosition) {
+                        <span class="hljs-keyword">var</span> overElement = document.elementFromPoint(pointerPosition.x, pointerPosition.y);
+                        <span class="hljs-keyword">if</span> (thisObject === overElement || jQuery.contains(thisObject, overElement) || overAdditionalChildren(overElement)) {
+                            <span class="hljs-keyword">return</span>; <span class="hljs-comment">// since it appears the mouse is in fact over the targeted area, do not trigger the callback</span>
+                        }
 
-</pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>stores the last known mouse position</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="kd">var</span> <span class="nx">pointerPosition</span><span class="p">;</span>
+                        pointerPosition = <span class="hljs-literal">null</span>; <span class="hljs-comment">// null the pointerPosition, we do not need it cached now</span>
+                    }
 
-</pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>pointer move listener is used when we start a timer on pointer leave,
+                    call();
+                }, _options.delayOut));
+
+                $(document).on(<span class="hljs-string">'pointermove'</span>, pointerMove);
+            }
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>stores the last known mouse position</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> pointerPosition;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>pointer move listener is used when we start a timer on pointer leave,
 we start a listener for mouse move to keep track of the mouse position.
 this position is used on the mouse leave timeout callback to verify the
 mouse is not over a target element.
 this becomes necessary for things like jquery.menu where the menu can
-"appear" under the mouse and no "mouseover" or "pointerover" event is
-triggered when you are already over the element.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="kd">function</span> <span class="nx">pointerMove</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">pointerPosition</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="nx">x</span><span class="o">:</span> <span class="nx">event</span><span class="p">.</span><span class="nx">clientX</span><span class="p">,</span>
-                <span class="nx">y</span><span class="o">:</span> <span class="nx">event</span><span class="p">.</span><span class="nx">clientY</span>
-            <span class="p">};</span>
-        <span class="p">}</span>
+“appear” under the mouse and no “mouseover” or “pointerover” event is
+triggered when you are already over the element.</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>utility to see if we are over another one of the provided jQuery elements</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="kd">function</span> <span class="nx">overAdditionalChildren</span><span class="p">(</span><span class="nx">overElement</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>if we do not have any children, this doesn't do anything</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">_options</span><span class="p">.</span><span class="nx">addChildren</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
-            <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">pointerMove</span><span class="hljs-params">(event)</span> {</span>
+            pointerPosition = {
+                x: event.clientX,
+                y: event.clientY
+            };
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>utility to see if we are over another one of the provided jQuery elements</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>standardize the additional children as an array</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="kd">var</span> <span class="nx">children</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">_options</span><span class="p">.</span><span class="nx">addChildren</span><span class="p">);</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">overAdditionalChildren</span><span class="hljs-params">(overElement)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>if we do not have any children, this doesn’t do anything</p>
 
-            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">children</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">l</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-                <span class="kd">var</span> <span class="nx">target</span> <span class="o">=</span> <span class="nx">children</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
-                <span class="k">if</span> <span class="p">(</span><span class="nx">target</span> <span class="o">===</span> <span class="nx">overElement</span> <span class="o">||</span> <span class="nx">jQuery</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">overElement</span><span class="p">))</span> <span class="p">{</span>
-                    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (!_options.addChildren) {
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>standardize the additional children as an array</p>
 
-            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">var</span> children = <span class="hljs-built_in">Array</span>.prototype.slice.call(_options.addChildren);
 
-        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">({</span>
-            <span class="s1">&#39;pointerenter&#39;</span><span class="o">:</span> <span class="nx">pointerEnter</span><span class="p">,</span>
-            <span class="s1">&#39;pointerleave&#39;</span><span class="o">:</span> <span class="nx">pointerLeave</span>
-        <span class="p">});</span>
-    <span class="p">};</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, l = children.length; i &lt; l; i++) {
+                <span class="hljs-keyword">var</span> target = children[i];
+                <span class="hljs-keyword">if</span> (target === overElement || jQuery.contains(target, overElement)) {
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+                }
+            }
 
-<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }
 
-</pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p>Create a wrapper similar to jQuery's mouseenter/leave events
-using pointer events (pointerover/out) and event-time checks</p>             </td>             <td class="code">               <div class="highlight"><pre>
-<span class="nx">jQuery</span><span class="p">.</span><span class="nx">each</span><span class="p">({</span>
-    <span class="nx">pointerenter</span><span class="o">:</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">pointerEnabled</span> <span class="o">?</span> <span class="s1">&#39;pointerover&#39;</span> <span class="o">:</span> <span class="p">(</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">msPointerEnabled</span> <span class="o">?</span> <span class="s1">&#39;MSPointerOver&#39;</span> <span class="o">:</span> <span class="s1">&#39;mouseover&#39;</span><span class="p">),</span>
-    <span class="nx">pointerleave</span><span class="o">:</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">pointerEnabled</span> <span class="o">?</span> <span class="s1">&#39;pointerout&#39;</span> <span class="o">:</span> <span class="p">(</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">msPointerEnabled</span> <span class="o">?</span> <span class="s1">&#39;MSPointerOut&#39;</span> <span class="o">:</span> <span class="s1">&#39;mouseout&#39;</span><span class="p">)</span>
-<span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">orig</span><span class="p">,</span> <span class="nx">fix</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">jQuery</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">[</span><span class="nx">orig</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="nx">delegateType</span><span class="o">:</span> <span class="nx">fix</span><span class="p">,</span>
-        <span class="nx">bindType</span><span class="o">:</span> <span class="nx">fix</span><span class="p">,</span>
-        <span class="nx">handle</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">ret</span><span class="p">,</span>
-                <span class="nx">target</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
-                <span class="nx">related</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">relatedTarget</span><span class="p">,</span>
-                <span class="nx">handleObj</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">handleObj</span><span class="p">;</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.on({
+            <span class="hljs-string">'pointerenter'</span>: pointerEnter,
+            <span class="hljs-string">'pointerleave'</span>: pointerLeave
+        });
+    };
 
-</pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p>For mousenter/leave call the handler if related is outside the target.
-NB: No relatedTarget if the mouse left/entered the browser window</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">related</span> <span class="o">||</span> <span class="p">(</span><span class="nx">related</span> <span class="o">!==</span> <span class="nx">target</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">related</span><span class="p">)))</span> <span class="p">{</span>
-                <span class="nx">event</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">origType</span><span class="p">;</span>
-                <span class="nx">ret</span> <span class="o">=</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">handler</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
-                <span class="nx">event</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="nx">fix</span><span class="p">;</span>
-            <span class="p">}</span>
-            <span class="k">return</span> <span class="nx">ret</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">};</span>
-<span class="p">});</span>
+})(jQuery);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Create a wrapper similar to jQuery’s mouseenter/leave events
+using pointer events (pointerover/out) and event-time checks</p>
 
-</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>jQuery.each({
+    pointerenter: navigator.pointerEnabled ? <span class="hljs-string">'pointerover'</span> : (navigator.msPointerEnabled ? <span class="hljs-string">'MSPointerOver'</span> : <span class="hljs-string">'mouseover'</span>),
+    pointerleave: navigator.pointerEnabled ? <span class="hljs-string">'pointerout'</span> : (navigator.msPointerEnabled ? <span class="hljs-string">'MSPointerOut'</span> : <span class="hljs-string">'mouseout'</span>)
+}, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(orig, fix)</span> {</span>
+    jQuery.event.special[orig] = {
+        delegateType: fix,
+        bindType: fix,
+        handle: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
+            <span class="hljs-keyword">var</span> ret,
+                target = <span class="hljs-keyword">this</span>,
+                related = event.relatedTarget,
+                handleObj = event.handleObj;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>For mousenter/leave call the handler if related is outside the target.
+NB: No relatedTarget if the mouse left/entered the browser window</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (!related || (related !== target &amp;&amp; !jQuery.contains(target, related))) {
+                event.type = handleObj.origType;
+                ret = handleObj.handler.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
+                event.type = fix;
+            }
+            <span class="hljs-keyword">return</span> ret;
+        }
+    };
+});</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

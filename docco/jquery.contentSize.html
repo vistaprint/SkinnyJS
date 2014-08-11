@@ -1,119 +1,493 @@
-<!DOCTYPE html>  <html> <head>   <title>jquery.contentSize.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="breakpoints.html">                 breakpoints.js               </a>                                           <a class="source" href="date-parse.html">                 date-parse.js               </a>                                           <a class="source" href="jquery.breakpoints.html">                 jquery.breakpoints.js               </a>                                           <a class="source" href="jquery.calcRestrainedPos.html">                 jquery.calcRestrainedPos.js               </a>                                           <a class="source" href="jquery.clientRect.html">                 jquery.clientRect.js               </a>                                           <a class="source" href="jquery.contentSize.html">                 jquery.contentSize.js               </a>                                           <a class="source" href="jquery.cookies.html">                 jquery.cookies.js               </a>                                           <a class="source" href="jquery.css.html">                 jquery.css.js               </a>                                           <a class="source" href="jquery.customEvent.html">                 jquery.customEvent.js               </a>                                           <a class="source" href="jquery.delimitedString.html">                 jquery.delimitedString.js               </a>                                           <a class="source" href="jquery.disableEvent.html">                 jquery.disableEvent.js               </a>                                           <a class="source" href="jquery.hostIframe.html">                 jquery.hostIframe.js               </a>                                           <a class="source" href="jquery.hoverDelay.html">                 jquery.hoverDelay.js               </a>                                           <a class="source" href="jquery.htmlEncode.html">                 jquery.htmlEncode.js               </a>                                           <a class="source" href="jquery.imageSize.html">                 jquery.imageSize.js               </a>                                           <a class="source" href="jquery.isVisibleKeyCode.html">                 jquery.isVisibleKeyCode.js               </a>                                           <a class="source" href="jquery.menu.html">                 jquery.menu.js               </a>                                           <a class="source" href="jquery-menu-exampleskin.html">                 jquery-menu-exampleskin.js               </a>                                           <a class="source" href="jquery.modalDialog.deviceFixes.html">                 jquery.modalDialog.deviceFixes.js               </a>                                           <a class="source" href="jquery.modalDialog.getSettings.html">                 jquery.modalDialog.getSettings.js               </a>                                           <a class="source" href="jquery.modalDialog.header.html">                 jquery.modalDialog.header.js               </a>                                           <a class="source" href="jquery.modalDialog.history.html">                 jquery.modalDialog.history.js               </a>                                           <a class="source" href="jquery.modalDialog.html">                 jquery.modalDialog.js               </a>                                           <a class="source" href="jquery.modalDialog.unobtrusive.html">                 jquery.modalDialog.unobtrusive.js               </a>                                           <a class="source" href="jquery.modalDialog.userAgent.html">                 jquery.modalDialog.userAgent.js               </a>                                           <a class="source" href="jquery.modalDialogContent.header.html">                 jquery.modalDialogContent.header.js               </a>                                           <a class="source" href="jquery.modalDialogContent.html">                 jquery.modalDialogContent.js               </a>                                           <a class="source" href="jquery.msAjax.html">                 jquery.msAjax.js               </a>                                           <a class="source" href="jquery.ns.html">                 jquery.ns.js               </a>                                           <a class="source" href="jquery.partialLoad.html">                 jquery.partialLoad.js               </a>                                           <a class="source" href="jquery.postMessage.html">                 jquery.postMessage.js               </a>                                           <a class="source" href="jquery.proxyAll.html">                 jquery.proxyAll.js               </a>                                           <a class="source" href="jquery.queryString.html">                 jquery.queryString.js               </a>                                           <a class="source" href="jquery.richTooltip.html">                 jquery.richTooltip.js               </a>                                           <a class="source" href="jquery.scrollAnchor.html">                 jquery.scrollAnchor.js               </a>                                           <a class="source" href="jquery.uncomment.html">                 jquery.uncomment.js               </a>                                           <a class="source" href="jquery.url.html">                 jquery.url.js               </a>                                           <a class="source" href="pointy.gestures.html">                 pointy.gestures.js               </a>                                           <a class="source" href="pointy.html">                 pointy.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs"><a href="../index.html">Home</a> | 
-<a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.contentSize.js" target="_blank">View this file on Github</a>
+<!DOCTYPE html>
 
-<hr style="height: 1px; border:0; background-color:#4A525A">
-             <h1>               jquery.contentSize.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>/ <reference path="jquery.clientRect.js" /></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+<html>
+<head>
+  <title>jquery.contentSize.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="breakpoints.html">
+                breakpoints.js
+              </a>
+            
+              
+              <a class="source" href="date-parse.html">
+                date-parse.js
+              </a>
+            
+              
+              <a class="source" href="jquery.breakpoints.html">
+                jquery.breakpoints.js
+              </a>
+            
+              
+              <a class="source" href="jquery.calcRestrainedPos.html">
+                jquery.calcRestrainedPos.js
+              </a>
+            
+              
+              <a class="source" href="jquery.clientRect.html">
+                jquery.clientRect.js
+              </a>
+            
+              
+              <a class="source" href="jquery.contentSize.html">
+                jquery.contentSize.js
+              </a>
+            
+              
+              <a class="source" href="jquery.cookies.html">
+                jquery.cookies.js
+              </a>
+            
+              
+              <a class="source" href="jquery.css.html">
+                jquery.css.js
+              </a>
+            
+              
+              <a class="source" href="jquery.customEvent.html">
+                jquery.customEvent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.delimitedString.html">
+                jquery.delimitedString.js
+              </a>
+            
+              
+              <a class="source" href="jquery.disableEvent.html">
+                jquery.disableEvent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.hostIframe.html">
+                jquery.hostIframe.js
+              </a>
+            
+              
+              <a class="source" href="jquery.hoverDelay.html">
+                jquery.hoverDelay.js
+              </a>
+            
+              
+              <a class="source" href="jquery.htmlEncode.html">
+                jquery.htmlEncode.js
+              </a>
+            
+              
+              <a class="source" href="jquery.imageSize.html">
+                jquery.imageSize.js
+              </a>
+            
+              
+              <a class="source" href="jquery.isVisibleKeyCode.html">
+                jquery.isVisibleKeyCode.js
+              </a>
+            
+              
+              <a class="source" href="jquery.menu.html">
+                jquery.menu.js
+              </a>
+            
+              
+              <a class="source" href="jquery-menu-exampleskin.html">
+                jquery-menu-exampleskin.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.deviceFixes.html">
+                jquery.modalDialog.deviceFixes.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.getSettings.html">
+                jquery.modalDialog.getSettings.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.header.html">
+                jquery.modalDialog.header.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.history.html">
+                jquery.modalDialog.history.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.html">
+                jquery.modalDialog.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.unobtrusive.html">
+                jquery.modalDialog.unobtrusive.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.userAgent.html">
+                jquery.modalDialog.userAgent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialogContent.header.html">
+                jquery.modalDialogContent.header.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialogContent.html">
+                jquery.modalDialogContent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.msAjax.html">
+                jquery.msAjax.js
+              </a>
+            
+              
+              <a class="source" href="jquery.ns.html">
+                jquery.ns.js
+              </a>
+            
+              
+              <a class="source" href="jquery.partialLoad.html">
+                jquery.partialLoad.js
+              </a>
+            
+              
+              <a class="source" href="jquery.postMessage.html">
+                jquery.postMessage.js
+              </a>
+            
+              
+              <a class="source" href="jquery.proxyAll.html">
+                jquery.proxyAll.js
+              </a>
+            
+              
+              <a class="source" href="jquery.queryString.html">
+                jquery.queryString.js
+              </a>
+            
+              
+              <a class="source" href="jquery.richTooltip.html">
+                jquery.richTooltip.js
+              </a>
+            
+              
+              <a class="source" href="jquery.scrollAnchor.html">
+                jquery.scrollAnchor.js
+              </a>
+            
+              
+              <a class="source" href="jquery.uncomment.html">
+                jquery.uncomment.js
+              </a>
+            
+              
+              <a class="source" href="jquery.url.html">
+                jquery.url.js
+              </a>
+            
+              
+              <a class="source" href="pointy.gestures.html">
+                pointy.gestures.js
+              </a>
+            
+              
+              <a class="source" href="pointy.html">
+                pointy.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>jquery.contentSize.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>/ <reference path="jquery.clientRect.js" /></p>
 
-    <span class="kd">var</span> <span class="nx">addMargin</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">styleProp</span><span class="p">,</span> <span class="nx">rectProp</span><span class="p">,</span> <span class="nx">rect</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">margin</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">node</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="nx">styleProp</span><span class="p">),</span> <span class="mi">10</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">margin</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">rect</span><span class="p">[</span><span class="nx">rectProp</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">margin</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">};</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span>
 
-</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Size gets continuously populated as this recurses through the DOM, building the max size of the page.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">var</span> <span class="nx">gatherSize</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">size</span><span class="p">,</span> <span class="nx">node</span><span class="p">,</span> <span class="nx">includeChildrenOnly</span><span class="p">,</span> <span class="nx">includeWidth</span><span class="p">,</span> <span class="nx">includeHeight</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">rect</span><span class="p">;</span>
+    <span class="hljs-keyword">var</span> addMargin = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(node, styleProp, rectProp, rect)</span> {</span>
+        <span class="hljs-keyword">var</span> margin = <span class="hljs-built_in">parseInt</span>($(node).css(styleProp), <span class="hljs-number">10</span>);
+        <span class="hljs-keyword">if</span> (margin) {
+            rect[rectProp] += margin;
+        }
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Size gets continuously populated as this recurses through the DOM, building the max size of the page.</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Only look at elements</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">nodeType</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span><span class="p">;</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> gatherSize = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(size, node, includeChildrenOnly, includeWidth, includeHeight)</span> {</span>
+        <span class="hljs-keyword">var</span> rect;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Only look at elements</p>
 
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">includeChildrenOnly</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">try</span> <span class="p">{</span>
-                <span class="nx">rect</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">node</span><span class="p">).</span><span class="nx">clientRect</span><span class="p">();</span>
-            <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">ex</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Couldn't get the size, so let's just return.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="k">return</span><span class="p">;</span>
-            <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (node.nodeType != <span class="hljs-number">1</span>) {
+            <span class="hljs-keyword">return</span>;
+        }
 
-</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>if the node is not rendered, don't factor in its size</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">rect</span><span class="p">.</span><span class="nx">height</span> <span class="o">===</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">rect</span><span class="p">.</span><span class="nx">width</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span><span class="p">;</span>
-            <span class="p">}</span>
+        <span class="hljs-keyword">if</span> (!includeChildrenOnly) {
+            <span class="hljs-keyword">try</span> {
+                rect = $(node).clientRect();
+            } <span class="hljs-keyword">catch</span> (ex) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Couldn’t get the size, so let’s just return.</p>
 
-            <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">tagName</span> <span class="o">==</span> <span class="s2">&quot;BODY&quot;</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">addMargin</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="s2">&quot;marginRight&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="nx">rect</span><span class="p">);</span>
-                <span class="nx">addMargin</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="s2">&quot;marginBottom&quot;</span><span class="p">,</span> <span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="nx">rect</span><span class="p">);</span>
-            <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">return</span>;
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>if the node is not rendered, don’t factor in its size</p>
 
-            <span class="k">if</span> <span class="p">(</span><span class="nx">includeHeight</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">size</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">rect</span><span class="p">.</span><span class="nx">bottom</span><span class="p">,</span> <span class="nx">size</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
-            <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (rect.height === <span class="hljs-number">0</span> &amp;&amp; rect.width === <span class="hljs-number">0</span>) {
+                <span class="hljs-keyword">return</span>;
+            }
 
-            <span class="k">if</span> <span class="p">(</span><span class="nx">includeWidth</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">size</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">rect</span><span class="p">.</span><span class="nx">right</span><span class="p">,</span> <span class="nx">size</span><span class="p">.</span><span class="nx">width</span><span class="p">);</span>
-            <span class="p">}</span>
+            <span class="hljs-keyword">if</span> (node.tagName == <span class="hljs-string">"BODY"</span>) {
+                addMargin(node, <span class="hljs-string">"marginRight"</span>, <span class="hljs-string">"right"</span>, rect);
+                addMargin(node, <span class="hljs-string">"marginBottom"</span>, <span class="hljs-string">"bottom"</span>, rect);
+            }
 
-</pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>If the node is a vertical scrolling container, don't look at its children for the purposes of calculating height</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">node</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;overflowX&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;visible&quot;</span> <span class="o">&amp;&amp;</span>
-                <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">node</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;height&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;auto&quot;</span> <span class="o">||</span> <span class="nx">$</span><span class="p">(</span><span class="nx">node</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;maxHeight&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;none&quot;</span><span class="p">))</span> <span class="p">{</span>
-                <span class="nx">includeHeight</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-            <span class="p">}</span>
+            <span class="hljs-keyword">if</span> (includeHeight) {
+                size.height = <span class="hljs-built_in">Math</span>.max(rect.bottom, size.height);
+            }
 
-</pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>If the node is a horizontal scrolling container, don't look at its children for the purposes of calculating width</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">node</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;overflowY&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;visible&quot;</span> <span class="o">&amp;&amp;</span>
-                <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">node</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;auto&quot;</span> <span class="o">||</span> <span class="nx">$</span><span class="p">(</span><span class="nx">node</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;maxWidth&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;none&quot;</span><span class="p">))</span> <span class="p">{</span>
-                <span class="nx">includeWidth</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-            <span class="p">}</span>
+            <span class="hljs-keyword">if</span> (includeWidth) {
+                size.width = <span class="hljs-built_in">Math</span>.max(rect.right, size.width);
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>If the node is a vertical scrolling container, don’t look at its children for the purposes of calculating height</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>Optimization- if we don't need to measure any children, stop recursing.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">includeHeight</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">includeWidth</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> ($(node).css(<span class="hljs-string">"overflowX"</span>) != <span class="hljs-string">"visible"</span> &amp;&amp;
+                ($(node).css(<span class="hljs-string">"height"</span>) != <span class="hljs-string">"auto"</span> || $(node).css(<span class="hljs-string">"maxHeight"</span>) != <span class="hljs-string">"none"</span>)) {
+                includeHeight = <span class="hljs-literal">false</span>;
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>If the node is a horizontal scrolling container, don’t look at its children for the purposes of calculating width</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Recurse</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">tagName</span> <span class="o">!==</span> <span class="s2">&quot;OBJECT&quot;</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
-            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">gatherSize</span><span class="p">(</span><span class="nx">size</span><span class="p">,</span> <span class="nx">node</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">includeWidth</span><span class="p">,</span> <span class="nx">includeHeight</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">};</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> ($(node).css(<span class="hljs-string">"overflowY"</span>) != <span class="hljs-string">"visible"</span> &amp;&amp;
+                ($(node).css(<span class="hljs-string">"width"</span>) != <span class="hljs-string">"auto"</span> || $(node).css(<span class="hljs-string">"maxWidth"</span>) != <span class="hljs-string">"none"</span>)) {
+                includeWidth = <span class="hljs-literal">false</span>;
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Optimization- if we don’t need to measure any children, stop recursing.</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>Returns the height and width of the total page: the total scrolling size.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">contentSize</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">excludeScrollbars</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">el</span> <span class="o">=</span> <span class="k">this</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (!includeHeight &amp;&amp; !includeWidth) {
+                <span class="hljs-keyword">return</span>;
+            }
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Recurse</p>
 
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;Element required&quot;</span><span class="p">);</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (node.tagName !== <span class="hljs-string">"OBJECT"</span>) {
+            <span class="hljs-keyword">var</span> len = node.childNodes.length;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; len; i++) {
+                gatherSize(size, node.childNodes[i], <span class="hljs-literal">false</span>, includeWidth, includeHeight);
+            }
+        }
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Returns the height and width of the total page: the total scrolling size.</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>If el is a window or a document, pay attention to excludeScrollbars
-doc will be null if el is not a window or document</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="kd">var</span> <span class="nx">doc</span> <span class="o">=</span> <span class="nx">el</span><span class="p">.</span><span class="nb">document</span> <span class="o">||</span> <span class="p">(</span><span class="nx">el</span><span class="p">.</span><span class="nx">documentElement</span> <span class="o">?</span> <span class="nx">el</span> <span class="o">:</span> <span class="p">(</span><span class="nx">el</span><span class="p">.</span><span class="nx">tagName</span> <span class="o">==</span> <span class="s2">&quot;BODY&quot;</span> <span class="o">?</span> <span class="nx">el</span><span class="p">.</span><span class="nx">ownerDocument</span> <span class="o">:</span> <span class="kc">null</span><span class="p">));</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.fn.contentSize = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(excludeScrollbars)</span> {</span>
+        <span class="hljs-keyword">var</span> el = <span class="hljs-keyword">this</span>[<span class="hljs-number">0</span>];
 
-</pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>Exclude scrollbars- browsers don't offer any way to ignore the scrollbar
-when calculating content dimensions, so just hide/restore</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="hljs-keyword">if</span> (!el) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Element required"</span>);
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>If el is a window or a document, pay attention to excludeScrollbars
+doc will be null if el is not a window or document</p>
 
-        <span class="kd">var</span> <span class="nx">currentOverflow</span><span class="p">;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">excludeScrollbars</span> <span class="o">&amp;&amp;</span> <span class="nx">doc</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">currentOverflow</span> <span class="o">=</span> <span class="nx">doc</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">overflow</span><span class="p">;</span>
-            <span class="nx">doc</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">overflow</span> <span class="o">=</span> <span class="s2">&quot;hidden&quot;</span><span class="p">;</span>
-        <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> doc = el.document || (el.documentElement ? el : (el.tagName == <span class="hljs-string">"BODY"</span> ? el.ownerDocument : <span class="hljs-literal">null</span>));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Exclude scrollbars- browsers don’t offer any way to ignore the scrollbar
+when calculating content dimensions, so just hide/restore</p>
 
-        <span class="kd">var</span> <span class="nx">size</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="nx">width</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="nx">height</span><span class="o">:</span> <span class="mi">0</span>
-        <span class="p">};</span>
-        <span class="kd">var</span> <span class="nx">startingNode</span> <span class="o">=</span> <span class="nx">doc</span> <span class="o">?</span> <span class="nx">doc</span><span class="p">.</span><span class="nx">body</span> <span class="o">:</span> <span class="nx">el</span><span class="p">;</span>
-        <span class="kd">var</span> <span class="nx">includeChildrenOnly</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+        <span class="hljs-keyword">var</span> currentOverflow;
+        <span class="hljs-keyword">if</span> (excludeScrollbars &amp;&amp; doc) {
+            currentOverflow = doc.documentElement.style.overflow;
+            doc.documentElement.style.overflow = <span class="hljs-string">"hidden"</span>;
+        }
 
-        <span class="k">if</span> <span class="p">(</span><span class="nx">startingNode</span><span class="p">.</span><span class="nx">tagName</span> <span class="o">==</span> <span class="s2">&quot;BODY&quot;</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">includeChildrenOnly</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-        <span class="p">}</span>
+        <span class="hljs-keyword">var</span> size = {
+            width: <span class="hljs-number">0</span>,
+            height: <span class="hljs-number">0</span>
+        };
+        <span class="hljs-keyword">var</span> startingNode = doc ? doc.body : el;
+        <span class="hljs-keyword">var</span> includeChildrenOnly = <span class="hljs-literal">false</span>;
 
-        <span class="nx">gatherSize</span><span class="p">(</span><span class="nx">size</span><span class="p">,</span> <span class="nx">doc</span> <span class="o">?</span> <span class="nx">doc</span><span class="p">.</span><span class="nx">body</span> <span class="o">:</span> <span class="nx">el</span><span class="p">,</span> <span class="nx">includeChildrenOnly</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+        <span class="hljs-keyword">if</span> (startingNode.tagName == <span class="hljs-string">"BODY"</span>) {
+            includeChildrenOnly = <span class="hljs-literal">true</span>;
+        }
 
-        <span class="k">if</span> <span class="p">(</span><span class="nx">excludeScrollbars</span> <span class="o">&amp;&amp;</span> <span class="nx">doc</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">doc</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">overflow</span> <span class="o">=</span> <span class="nx">currentOverflow</span><span class="p">;</span>
-        <span class="p">}</span>
+        gatherSize(size, doc ? doc.body : el, includeChildrenOnly, <span class="hljs-literal">true</span>, <span class="hljs-literal">true</span>);
 
-        <span class="k">return</span> <span class="nx">size</span><span class="p">;</span>
-    <span class="p">};</span>
+        <span class="hljs-keyword">if</span> (excludeScrollbars &amp;&amp; doc) {
+            doc.documentElement.style.overflow = currentOverflow;
+        }
 
-<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
+        <span class="hljs-keyword">return</span> size;
+    };
 
-</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
+})(jQuery);</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

@@ -1,233 +1,812 @@
-<!DOCTYPE html>  <html> <head>   <title>pointy.gestures.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="breakpoints.html">                 breakpoints.js               </a>                                           <a class="source" href="date-parse.html">                 date-parse.js               </a>                                           <a class="source" href="jquery.breakpoints.html">                 jquery.breakpoints.js               </a>                                           <a class="source" href="jquery.calcRestrainedPos.html">                 jquery.calcRestrainedPos.js               </a>                                           <a class="source" href="jquery.clientRect.html">                 jquery.clientRect.js               </a>                                           <a class="source" href="jquery.contentSize.html">                 jquery.contentSize.js               </a>                                           <a class="source" href="jquery.cookies.html">                 jquery.cookies.js               </a>                                           <a class="source" href="jquery.css.html">                 jquery.css.js               </a>                                           <a class="source" href="jquery.customEvent.html">                 jquery.customEvent.js               </a>                                           <a class="source" href="jquery.delimitedString.html">                 jquery.delimitedString.js               </a>                                           <a class="source" href="jquery.disableEvent.html">                 jquery.disableEvent.js               </a>                                           <a class="source" href="jquery.hostIframe.html">                 jquery.hostIframe.js               </a>                                           <a class="source" href="jquery.hoverDelay.html">                 jquery.hoverDelay.js               </a>                                           <a class="source" href="jquery.htmlEncode.html">                 jquery.htmlEncode.js               </a>                                           <a class="source" href="jquery.imageSize.html">                 jquery.imageSize.js               </a>                                           <a class="source" href="jquery.isVisibleKeyCode.html">                 jquery.isVisibleKeyCode.js               </a>                                           <a class="source" href="jquery.menu.html">                 jquery.menu.js               </a>                                           <a class="source" href="jquery-menu-exampleskin.html">                 jquery-menu-exampleskin.js               </a>                                           <a class="source" href="jquery.modalDialog.deviceFixes.html">                 jquery.modalDialog.deviceFixes.js               </a>                                           <a class="source" href="jquery.modalDialog.getSettings.html">                 jquery.modalDialog.getSettings.js               </a>                                           <a class="source" href="jquery.modalDialog.header.html">                 jquery.modalDialog.header.js               </a>                                           <a class="source" href="jquery.modalDialog.history.html">                 jquery.modalDialog.history.js               </a>                                           <a class="source" href="jquery.modalDialog.html">                 jquery.modalDialog.js               </a>                                           <a class="source" href="jquery.modalDialog.unobtrusive.html">                 jquery.modalDialog.unobtrusive.js               </a>                                           <a class="source" href="jquery.modalDialog.userAgent.html">                 jquery.modalDialog.userAgent.js               </a>                                           <a class="source" href="jquery.modalDialogContent.header.html">                 jquery.modalDialogContent.header.js               </a>                                           <a class="source" href="jquery.modalDialogContent.html">                 jquery.modalDialogContent.js               </a>                                           <a class="source" href="jquery.msAjax.html">                 jquery.msAjax.js               </a>                                           <a class="source" href="jquery.ns.html">                 jquery.ns.js               </a>                                           <a class="source" href="jquery.partialLoad.html">                 jquery.partialLoad.js               </a>                                           <a class="source" href="jquery.postMessage.html">                 jquery.postMessage.js               </a>                                           <a class="source" href="jquery.proxyAll.html">                 jquery.proxyAll.js               </a>                                           <a class="source" href="jquery.queryString.html">                 jquery.queryString.js               </a>                                           <a class="source" href="jquery.richTooltip.html">                 jquery.richTooltip.js               </a>                                           <a class="source" href="jquery.scrollAnchor.html">                 jquery.scrollAnchor.js               </a>                                           <a class="source" href="jquery.uncomment.html">                 jquery.uncomment.js               </a>                                           <a class="source" href="jquery.url.html">                 jquery.url.js               </a>                                           <a class="source" href="pointy.gestures.html">                 pointy.gestures.js               </a>                                           <a class="source" href="pointy.html">                 pointy.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs"><a href="../index.html">Home</a> | 
-<a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/pointy.gestures.js" target="_blank">View this file on Github</a>
+<!DOCTYPE html>
 
-<hr style="height: 1px; border:0; background-color:#4A525A">
-             <h1>               pointy.gestures.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>/ <reference path="pointy.js" /></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+<html>
+<head>
+  <title>pointy.gestures.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="breakpoints.html">
+                breakpoints.js
+              </a>
+            
+              
+              <a class="source" href="date-parse.html">
+                date-parse.js
+              </a>
+            
+              
+              <a class="source" href="jquery.breakpoints.html">
+                jquery.breakpoints.js
+              </a>
+            
+              
+              <a class="source" href="jquery.calcRestrainedPos.html">
+                jquery.calcRestrainedPos.js
+              </a>
+            
+              
+              <a class="source" href="jquery.clientRect.html">
+                jquery.clientRect.js
+              </a>
+            
+              
+              <a class="source" href="jquery.contentSize.html">
+                jquery.contentSize.js
+              </a>
+            
+              
+              <a class="source" href="jquery.cookies.html">
+                jquery.cookies.js
+              </a>
+            
+              
+              <a class="source" href="jquery.css.html">
+                jquery.css.js
+              </a>
+            
+              
+              <a class="source" href="jquery.customEvent.html">
+                jquery.customEvent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.delimitedString.html">
+                jquery.delimitedString.js
+              </a>
+            
+              
+              <a class="source" href="jquery.disableEvent.html">
+                jquery.disableEvent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.hostIframe.html">
+                jquery.hostIframe.js
+              </a>
+            
+              
+              <a class="source" href="jquery.hoverDelay.html">
+                jquery.hoverDelay.js
+              </a>
+            
+              
+              <a class="source" href="jquery.htmlEncode.html">
+                jquery.htmlEncode.js
+              </a>
+            
+              
+              <a class="source" href="jquery.imageSize.html">
+                jquery.imageSize.js
+              </a>
+            
+              
+              <a class="source" href="jquery.isVisibleKeyCode.html">
+                jquery.isVisibleKeyCode.js
+              </a>
+            
+              
+              <a class="source" href="jquery.menu.html">
+                jquery.menu.js
+              </a>
+            
+              
+              <a class="source" href="jquery-menu-exampleskin.html">
+                jquery-menu-exampleskin.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.deviceFixes.html">
+                jquery.modalDialog.deviceFixes.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.getSettings.html">
+                jquery.modalDialog.getSettings.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.header.html">
+                jquery.modalDialog.header.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.history.html">
+                jquery.modalDialog.history.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.html">
+                jquery.modalDialog.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.unobtrusive.html">
+                jquery.modalDialog.unobtrusive.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialog.userAgent.html">
+                jquery.modalDialog.userAgent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialogContent.header.html">
+                jquery.modalDialogContent.header.js
+              </a>
+            
+              
+              <a class="source" href="jquery.modalDialogContent.html">
+                jquery.modalDialogContent.js
+              </a>
+            
+              
+              <a class="source" href="jquery.msAjax.html">
+                jquery.msAjax.js
+              </a>
+            
+              
+              <a class="source" href="jquery.ns.html">
+                jquery.ns.js
+              </a>
+            
+              
+              <a class="source" href="jquery.partialLoad.html">
+                jquery.partialLoad.js
+              </a>
+            
+              
+              <a class="source" href="jquery.postMessage.html">
+                jquery.postMessage.js
+              </a>
+            
+              
+              <a class="source" href="jquery.proxyAll.html">
+                jquery.proxyAll.js
+              </a>
+            
+              
+              <a class="source" href="jquery.queryString.html">
+                jquery.queryString.js
+              </a>
+            
+              
+              <a class="source" href="jquery.richTooltip.html">
+                jquery.richTooltip.js
+              </a>
+            
+              
+              <a class="source" href="jquery.scrollAnchor.html">
+                jquery.scrollAnchor.js
+              </a>
+            
+              
+              <a class="source" href="jquery.uncomment.html">
+                jquery.uncomment.js
+              </a>
+            
+              
+              <a class="source" href="jquery.url.html">
+                jquery.url.js
+              </a>
+            
+              
+              <a class="source" href="pointy.gestures.html">
+                pointy.gestures.js
+              </a>
+            
+              
+              <a class="source" href="pointy.html">
+                pointy.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>pointy.gestures.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/*!
+ * Pointy.js
+ * Pointer Events polyfill for jQuery
+ * https://github.com/vistaprint/PointyJS
+ *
+ * Depends on jQuery, see http://jquery.org
+ *
+ * Developed by Vistaprint.com
+ *
+ * pointy.gestures.js adds special events to jQuery for added fun.
+ */</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>/ <reference path="pointy.js" /></p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>also handles sweepleft, sweepright</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">sweep</span> <span class="o">=</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>More than this horizontal displacement, and we will suppress scrolling.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="nx">scrollSupressionThreshold</span><span class="o">:</span> <span class="mi">30</span><span class="p">,</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>also handles sweepleft, sweepright</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>More time than this, and it isn't a sweep (swipe) it's a "hold" gesture.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="nx">durationThreshold</span><span class="o">:</span> <span class="mi">750</span><span class="p">,</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.event.special.sweep = {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>More than this horizontal displacement, and we will suppress scrolling.</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Sweep horizontal displacement must be more than this.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="nx">horizontalDistanceThreshold</span><span class="o">:</span> <span class="mi">30</span><span class="p">,</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        scrollSupressionThreshold: <span class="hljs-number">30</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>More time than this, and it isn’t a sweep (swipe) it’s a “hold” gesture.</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Sweep vertical displacement must be less than this.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="nx">verticalDistanceThreshold</span><span class="o">:</span> <span class="mi">75</span><span class="p">,</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        durationThreshold: <span class="hljs-number">750</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Sweep horizontal displacement must be more than this.</p>
 
-        <span class="nx">start</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="nx">time</span><span class="o">:</span> <span class="o">+</span><span class="k">new</span> <span class="nb">Date</span><span class="p">(),</span>
-                <span class="nx">coords</span><span class="o">:</span> <span class="p">[</span><span class="nx">event</span><span class="p">.</span><span class="nx">pageX</span><span class="p">,</span> <span class="nx">event</span><span class="p">.</span><span class="nx">pageY</span><span class="p">],</span>
-                <span class="nx">origin</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">)</span>
-            <span class="p">};</span>
-        <span class="p">},</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        horizontalDistanceThreshold: <span class="hljs-number">30</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Sweep vertical displacement must be less than this.</p>
 
-        <span class="nx">stop</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="nx">time</span><span class="o">:</span> <span class="o">+</span><span class="k">new</span> <span class="nb">Date</span><span class="p">(),</span>
-                <span class="nx">coords</span><span class="o">:</span> <span class="p">[</span><span class="nx">event</span><span class="p">.</span><span class="nx">pageX</span><span class="p">,</span> <span class="nx">event</span><span class="p">.</span><span class="nx">pageY</span><span class="p">]</span>
-            <span class="p">};</span>
-        <span class="p">},</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        verticalDistanceThreshold: <span class="hljs-number">75</span>,
 
-        <span class="nx">isSweep</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">start</span><span class="p">,</span> <span class="nx">stop</span><span class="p">,</span> <span class="nx">checkTime</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="p">(</span><span class="nx">checkTime</span> <span class="o">?</span> <span class="nx">stop</span><span class="p">.</span><span class="nx">time</span> <span class="o">-</span> <span class="nx">start</span><span class="p">.</span><span class="nx">time</span> <span class="o">&lt;</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">sweep</span><span class="p">.</span><span class="nx">durationThreshold</span> <span class="o">:</span> <span class="kc">true</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
-                <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">start</span><span class="p">.</span><span class="nx">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="nx">stop</span><span class="p">.</span><span class="nx">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">sweep</span><span class="p">.</span><span class="nx">horizontalDistanceThreshold</span> <span class="o">&amp;&amp;</span>
-                <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">start</span><span class="p">.</span><span class="nx">coords</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="nx">stop</span><span class="p">.</span><span class="nx">coords</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">sweep</span><span class="p">.</span><span class="nx">verticalDistanceThreshold</span><span class="p">;</span>
-        <span class="p">},</span>
+        start: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
+            <span class="hljs-keyword">return</span> {
+                time: +<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(),
+                coords: [event.pageX, event.pageY],
+                origin: $(event.target)
+            };
+        },
 
-        <span class="nx">add</span><span class="o">:</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">delegateSpecial</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">handleObj</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">thisObject</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
-                <span class="nx">$this</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">thisObject</span><span class="p">);</span>
+        stop: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
+            <span class="hljs-keyword">return</span> {
+                time: +<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(),
+                coords: [event.pageX, event.pageY]
+            };
+        },
 
-            <span class="nx">handleObj</span><span class="p">.</span><span class="nx">pointerdown</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-                <span class="kd">var</span> <span class="nx">start</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">sweep</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="nx">event</span><span class="p">),</span>
-                    <span class="nx">stop</span><span class="p">;</span>
+        isSweep: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(start, stop, checkTime)</span> {</span>
+            <span class="hljs-keyword">return</span> (checkTime ? stop.time - start.time &lt; $.event.special.sweep.durationThreshold : <span class="hljs-literal">true</span>) &amp;&amp;
+                <span class="hljs-built_in">Math</span>.abs(start.coords[<span class="hljs-number">0</span>] - stop.coords[<span class="hljs-number">0</span>]) &gt; $.event.special.sweep.horizontalDistanceThreshold &amp;&amp;
+                <span class="hljs-built_in">Math</span>.abs(start.coords[<span class="hljs-number">1</span>] - stop.coords[<span class="hljs-number">1</span>]) &lt; $.event.special.sweep.verticalDistanceThreshold;
+        },
 
-</pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>we need to call prevent default because on IE browsers,
+        add: $.event.delegateSpecial(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span>
+            <span class="hljs-keyword">var</span> thisObject = <span class="hljs-keyword">this</span>,
+                $<span class="hljs-keyword">this</span> = $(thisObject);
+
+            handleObj.pointerdown = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
+                <span class="hljs-keyword">var</span> start = $.event.special.sweep.start(event),
+                    stop;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>we need to call prevent default because on IE browsers,
 dragging anything with a mouse will start dragging the
-element for "copy and paste" functionality
+element for “copy and paste” functionality
 on other browsers, it will start selecting text
-event.preventDefault();</p>             </td>             <td class="code">               <div class="highlight"><pre>
+event.preventDefault();</p>
 
-                <span class="kd">function</span> <span class="nx">move</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">start</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="k">return</span><span class="p">;</span>
-                    <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">move</span><span class="hljs-params">(event)</span> {</span>
+                    <span class="hljs-keyword">if</span> (!start) {
+                        <span class="hljs-keyword">return</span>;
+                    }
 
-                    <span class="nx">stop</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">sweep</span><span class="p">.</span><span class="nx">stop</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
+                    stop = $.event.special.sweep.stop(event);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>prevent scrolling on touch devices</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>prevent scrolling on touch devices</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                    <span class="k">if</span> <span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">start</span><span class="p">.</span><span class="nx">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="nx">stop</span><span class="p">.</span><span class="nx">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">sweep</span><span class="p">.</span><span class="nx">scrollSupressionThreshold</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
-                    <span class="p">}</span>
-                <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Math</span>.abs(start.coords[<span class="hljs-number">0</span>] - stop.coords[<span class="hljs-number">0</span>]) &gt; $.event.special.sweep.scrollSupressionThreshold) {
+                        event.preventDefault();
+                    }
+                }
 
-                <span class="kd">function</span> <span class="nx">up</span><span class="p">()</span> <span class="p">{</span>
-                    <span class="nx">$this</span><span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;pointermove&quot;</span><span class="p">,</span> <span class="nx">move</span><span class="p">);</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">up</span><span class="hljs-params">()</span> {</span>
+                    $<span class="hljs-keyword">this</span>.off(<span class="hljs-string">"pointermove"</span>, move);
 
-                    <span class="k">if</span> <span class="p">(</span><span class="nx">start</span> <span class="o">&amp;&amp;</span> <span class="nx">stop</span> <span class="o">&amp;&amp;</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">sweep</span><span class="p">.</span><span class="nx">isSweep</span><span class="p">(</span><span class="nx">start</span><span class="p">,</span> <span class="nx">stop</span><span class="p">,</span> <span class="kc">true</span><span class="p">))</span> <span class="p">{</span>
-                        <span class="kd">var</span> <span class="nx">dir</span> <span class="o">=</span> <span class="nx">start</span><span class="p">.</span><span class="nx">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nx">stop</span><span class="p">.</span><span class="nx">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">?</span> <span class="s2">&quot;left&quot;</span> <span class="o">:</span> <span class="s2">&quot;right&quot;</span><span class="p">;</span>
+                    <span class="hljs-keyword">if</span> (start &amp;&amp; stop &amp;&amp; $.event.special.sweep.isSweep(start, stop, <span class="hljs-literal">true</span>)) {
+                        <span class="hljs-keyword">var</span> dir = start.coords[<span class="hljs-number">0</span>] &gt; stop.coords[<span class="hljs-number">0</span>] ? <span class="hljs-string">"left"</span> : <span class="hljs-string">"right"</span>;
 
-                        <span class="nx">event</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="s2">&quot;sweep&quot;</span><span class="p">;</span>
-                        <span class="nx">event</span><span class="p">.</span><span class="nx">direction</span> <span class="o">=</span> <span class="nx">dir</span><span class="p">;</span>
+                        event.type = <span class="hljs-string">"sweep"</span>;
+                        event.direction = dir;
 
-                        <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">thisObject</span><span class="p">,</span> <span class="nx">event</span><span class="p">);</span>
+                        $.event.dispatch.call(thisObject, event);
 
-                        <span class="nx">event</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="s2">&quot;sweep&quot;</span> <span class="o">+</span> <span class="nx">dir</span><span class="p">;</span>
+                        event.type = <span class="hljs-string">"sweep"</span> + dir;
 
-                        <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">thisObject</span><span class="p">,</span> <span class="nx">event</span><span class="p">);</span>
-                    <span class="p">}</span>
+                        $.event.dispatch.call(thisObject, event);
+                    }
 
-                    <span class="nx">start</span> <span class="o">=</span> <span class="nx">stop</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
-                <span class="p">}</span>
+                    start = stop = <span class="hljs-literal">undefined</span>;
+                }
 
-                <span class="nx">$this</span>
-                    <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;pointermove&quot;</span><span class="p">,</span> <span class="nx">move</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nx">one</span><span class="p">(</span><span class="s2">&quot;pointerup&quot;</span><span class="p">,</span> <span class="nx">up</span><span class="p">);</span>
+                $<span class="hljs-keyword">this</span>
+                    .on(<span class="hljs-string">"pointermove"</span>, move)
+                    .one(<span class="hljs-string">"pointerup"</span>, up);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>set a timeout to ensure we cleanup, in case the “pointerup” isn’t fired</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>set a timeout to ensure we cleanup, in case the "pointerup" isn't fired</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-                    <span class="nx">$this</span>
-                        <span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;pointermove&quot;</span><span class="p">,</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">selector</span><span class="p">,</span> <span class="nx">move</span><span class="p">)</span>
-                        <span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;pointerup&quot;</span><span class="p">,</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">selector</span><span class="p">,</span> <span class="nx">up</span><span class="p">);</span>
-                <span class="p">},</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">sweep</span><span class="p">.</span><span class="nx">durationThreshold</span><span class="p">);</span>
-            <span class="p">};</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                    $<span class="hljs-keyword">this</span>
+                        .off(<span class="hljs-string">"pointermove"</span>, handleObj.selector, move)
+                        .off(<span class="hljs-string">"pointerup"</span>, handleObj.selector, up);
+                }, $.event.special.sweep.durationThreshold);
+            };
 
-            <span class="nx">$this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;pointerdown&quot;</span><span class="p">,</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">selector</span><span class="p">,</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">pointerdown</span><span class="p">);</span>
-        <span class="p">}),</span>
+            $<span class="hljs-keyword">this</span>.on(<span class="hljs-string">"pointerdown"</span>, handleObj.selector, handleObj.pointerdown);
+        }),
 
-        <span class="nx">remove</span><span class="o">:</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">delegateSpecial</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">handleObj</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;pointerdown&quot;</span><span class="p">,</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">selector</span><span class="p">,</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">pointerdown</span><span class="p">);</span>
-        <span class="p">})</span>
-    <span class="p">};</span>
+        remove: $.event.delegateSpecial.remove(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span>
+            $(<span class="hljs-keyword">this</span>).off(<span class="hljs-string">"pointerdown"</span>, handleObj.selector, handleObj.pointerdown);
+        })
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>sweepleft and sweepright are just dummies, we have to
+setup the handler for sweep so attach a dummy event</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>sweepleft and sweepright are just dummies, we have to
-setup the handler for sweep so attach a dummy event</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">([</span><span class="s2">&quot;sweepleft&quot;</span><span class="p">,</span> <span class="s2">&quot;sweepright&quot;</span><span class="p">],</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">[</span><span class="nx">event</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="nx">add</span><span class="o">:</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">delegateSpecial</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">handleObj</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">handleObj</span><span class="p">.</span><span class="nx">noop</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">noop</span><span class="p">;</span>
-                <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;sweep&quot;</span><span class="p">,</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">selector</span><span class="p">,</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">noop</span><span class="p">);</span>
-            <span class="p">}),</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.each([<span class="hljs-string">"sweepleft"</span>, <span class="hljs-string">"sweepright"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, event)</span> {</span>
+        $.event.special[event] = {
+            add: $.event.delegateSpecial(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span>
+                handleObj.noop = $.noop;
+                $(<span class="hljs-keyword">this</span>).on(<span class="hljs-string">"sweep"</span>, handleObj.selector, handleObj.noop);
+            }),
 
-            <span class="nx">remove</span><span class="o">:</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">delegateSpecial</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">handleObj</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;sweep&quot;</span><span class="p">,</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">selector</span><span class="p">,</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">noop</span><span class="p">);</span>
-            <span class="p">})</span>
-        <span class="p">};</span>
-    <span class="p">});</span>
+            remove: $.event.delegateSpecial.remove(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span>
+                $(<span class="hljs-keyword">this</span>).off(<span class="hljs-string">"sweep"</span>, handleObj.selector, handleObj.noop);
+            })
+        };
+    });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>utility to return the scroll-y position</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>utility to return the scroll-y position</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="kd">function</span> <span class="nx">scrollY</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nb">window</span><span class="p">.</span><span class="nx">scrollY</span> <span class="o">||</span> <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">scrollTop</span><span class="p">();</span>
-    <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scrollY</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">return</span> window.scrollY || $(window).scrollTop();
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>also handles presshold</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>also handles presshold</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">press</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="nx">pressholdThreshold</span><span class="o">:</span> <span class="mi">750</span><span class="p">,</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.event.special.press = {
+        pressholdThreshold: <span class="hljs-number">750</span>,
 
-        <span class="nx">add</span><span class="o">:</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">delegateSpecial</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">handleObj</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">thisObject</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+        add: $.event.delegateSpecial(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span>
+            <span class="hljs-keyword">var</span> thisObject = <span class="hljs-keyword">this</span>;
 
-            <span class="nx">handleObj</span><span class="p">.</span><span class="nx">pointerdown</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-                <span class="kd">var</span> <span class="nx">start</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">sweep</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="nx">event</span><span class="p">),</span>
-                    <span class="nx">startScroll</span> <span class="o">=</span> <span class="nx">scrollY</span><span class="p">(),</span>
-                    <span class="nx">stop</span><span class="p">,</span>
-                    <span class="nx">timer</span><span class="p">,</span>
-                    <span class="nx">origTarget</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">,</span>
-                    <span class="nx">isPresshold</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
-                    <span class="nx">$this</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+            handleObj.pointerdown = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
+                <span class="hljs-keyword">var</span> start = $.event.special.sweep.start(event),
+                    startScroll = scrollY(),
+                    stop,
+                    timer,
+                    origTarget = event.target,
+                    isPresshold = <span class="hljs-literal">false</span>,
+                    $<span class="hljs-keyword">this</span> = $(<span class="hljs-keyword">this</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>check that on pointermove we haven’t swiped beyond the threshold for sweep</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>check that on pointermove we haven't swiped beyond the threshold for sweep</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="kd">function</span> <span class="nx">move</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">stop</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">sweep</span><span class="p">.</span><span class="nx">stop</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
-                <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">move</span><span class="hljs-params">(e)</span> {</span>
+                    stop = $.event.special.sweep.stop(e);
+                }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>upon “pointerup”, if we didn’t trigger “presshold” then trigger a “press”.</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p>upon "pointerup", if we didn't trigger "presshold" then trigger a "press".</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                <span class="kd">function</span> <span class="nx">up</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">clearTimeout</span><span class="p">(</span><span class="nx">timer</span><span class="p">);</span>
-</pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p>$document.off("pointercancel", clearPressHandlers);</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">up</span><span class="hljs-params">(event)</span> {</span>
+                    clearTimeout(timer);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>$document.off(“pointercancel”, clearPressHandlers);</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <p>unbind the pointer move</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                    <span class="nx">$this</span><span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;pointermove&quot;</span><span class="p">,</span> <span class="nx">move</span><span class="p">);</span>
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>unbind the pointer move</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <p>check to see if they scrolled, even 5 pixels</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                    <span class="k">if</span> <span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">startScroll</span> <span class="o">-</span> <span class="nx">scrollY</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="k">return</span><span class="p">;</span>
-                    <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    $<span class="hljs-keyword">this</span>.off(<span class="hljs-string">"pointermove"</span>, move);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>check to see if they scrolled, even 5 pixels</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <p>check to see the action should be considered a a "sweep" event</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                    <span class="k">if</span> <span class="p">(</span><span class="nx">stop</span> <span class="o">&amp;&amp;</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">sweep</span><span class="p">.</span><span class="nx">isSweep</span><span class="p">(</span><span class="nx">start</span><span class="p">,</span> <span class="nx">stop</span><span class="p">))</span> <span class="p">{</span>
-                        <span class="k">return</span><span class="p">;</span>
-                    <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Math</span>.abs(startScroll - scrollY()) &gt; <span class="hljs-number">5</span>) {
+                        <span class="hljs-keyword">return</span>;
+                    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>check to see the action should be considered a a “sweep” event</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <p>Trigger a "press" event if the start target is the same as the stop target.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isPresshold</span> <span class="o">&amp;&amp;</span> <span class="nx">origTarget</span> <span class="o">===</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="nx">event</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="s2">&quot;press&quot;</span><span class="p">;</span>
-                        <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">thisObject</span><span class="p">,</span> <span class="nx">event</span><span class="p">);</span>
-                    <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">if</span> (stop &amp;&amp; $.event.special.sweep.isSweep(start, stop)) {
+                        <span class="hljs-keyword">return</span>;
+                    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Trigger a “press” event if the start target is the same as the stop target.</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-20">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>               <p>if this was a "presshold", prevent this "pointerup" event from causing more events</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">isPresshold</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
-                    <span class="p">}</span>
-                <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">if</span> (!isPresshold &amp;&amp; origTarget === event.target) {
+                        event.type = <span class="hljs-string">"press"</span>;
+                        $.event.dispatch.call(thisObject, event);
+                    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>if this was a “presshold”, prevent this “pointerup” event from causing more events</p>
 
-                <span class="nx">$this</span>
-                    <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;pointermove&quot;</span><span class="p">,</span> <span class="nx">move</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nx">one</span><span class="p">(</span><span class="s2">&quot;pointerup&quot;</span><span class="p">,</span> <span class="nx">up</span><span class="p">);</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (isPresshold) {
+                        event.stopPropagation();
+                    }
+                }
 
-</pre></div>             </td>           </tr>                               <tr id="section-21">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>               <p>TODO: if the pointer is canceled for some reason, we need to cleanup
-$document.on("pointercancel", clearPressHandlers);</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                $<span class="hljs-keyword">this</span>
+                    .on(<span class="hljs-string">"pointermove"</span>, move)
+                    .one(<span class="hljs-string">"pointerup"</span>, up);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>TODO: if the pointer is canceled for some reason, we need to cleanup
+$document.on(“pointercancel”, clearPressHandlers);</p>
 
-                <span class="nx">timer</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-22">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-22">&#182;</a>               </div>               <p>unbind the pointer move</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                    <span class="nx">$this</span><span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;pointermove&quot;</span><span class="p">,</span> <span class="nx">move</span><span class="p">);</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+                timer = setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>unbind the pointer move</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-23">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-23">&#182;</a>               </div>               <p>toggle signal to ensure when the "pointerup" event we stop propagation</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                    <span class="nx">isPresshold</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    $<span class="hljs-keyword">this</span>.off(<span class="hljs-string">"pointermove"</span>, move);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>toggle signal to ensure when the “pointerup” event we stop propagation</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-24">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-24">&#182;</a>               </div>               <p>check to see if they scrolled, even 5 pixels</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                    <span class="k">if</span> <span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">startScroll</span> <span class="o">-</span> <span class="nx">scrollY</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="k">return</span><span class="p">;</span>
-                    <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    isPresshold = <span class="hljs-literal">true</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>check to see if they scrolled, even 5 pixels</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-25">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-25">&#182;</a>               </div>               <p>check to see the action should be considered a a "sweep" event</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                    <span class="k">if</span> <span class="p">(</span><span class="nx">stop</span> <span class="o">&amp;&amp;</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">sweep</span><span class="p">.</span><span class="nx">isSweep</span><span class="p">(</span><span class="nx">start</span><span class="p">,</span> <span class="nx">stop</span><span class="p">))</span> <span class="p">{</span>
-                        <span class="k">return</span><span class="p">;</span>
-                    <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Math</span>.abs(startScroll - scrollY()) &gt; <span class="hljs-number">5</span>) {
+                        <span class="hljs-keyword">return</span>;
+                    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>check to see the action should be considered a a “sweep” event</p>
 
-</pre></div>             </td>           </tr>                               <tr id="section-26">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-26">&#182;</a>               </div>               <p>Trigger a "presshold" event if the start target is the same as the stop target.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-                    <span class="k">if</span> <span class="p">(</span><span class="nx">origTarget</span> <span class="o">===</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="nx">event</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="s2">&quot;presshold&quot;</span><span class="p">;</span>
-                        <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">thisObject</span><span class="p">,</span> <span class="nx">event</span><span class="p">);</span>
-                    <span class="p">}</span>
-                <span class="p">},</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">press</span><span class="p">.</span><span class="nx">pressholdThreshold</span><span class="p">);</span>
-            <span class="p">};</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">if</span> (stop &amp;&amp; $.event.special.sweep.isSweep(start, stop)) {
+                        <span class="hljs-keyword">return</span>;
+                    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>Trigger a “presshold” event if the start target is the same as the stop target.</p>
 
-            <span class="nx">$</span><span class="p">(</span><span class="nx">thisObject</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;pointerdown&quot;</span><span class="p">,</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">selector</span><span class="p">,</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">pointerdown</span><span class="p">);</span>
-        <span class="p">}),</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">if</span> (origTarget === event.target) {
+                        event.type = <span class="hljs-string">"presshold"</span>;
+                        $.event.dispatch.call(thisObject, event);
+                    }
+                }, $.event.special.press.pressholdThreshold);
+            };
 
-        <span class="nx">remove</span><span class="o">:</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">delegateSpecial</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">handleObj</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;pointerdown&quot;</span><span class="p">,</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">selector</span><span class="p">,</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">pointerdown</span><span class="p">);</span>
-        <span class="p">})</span>
-    <span class="p">};</span>
+            $(thisObject).on(<span class="hljs-string">"pointerdown"</span>, handleObj.selector, handleObj.pointerdown);
+        }),
 
-</pre></div>             </td>           </tr>                               <tr id="section-27">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-27">&#182;</a>               </div>               <p>presshold is just a dummy, it's handled by "press".</p>             </td>             <td class="code">               <div class="highlight"><pre>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">special</span><span class="p">.</span><span class="nx">presshold</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="nx">add</span><span class="o">:</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">delegateSpecial</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">handleObj</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">handleObj</span><span class="p">.</span><span class="nx">noop</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">noop</span><span class="p">;</span>
-            <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;press&quot;</span><span class="p">,</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">selector</span><span class="p">,</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">noop</span><span class="p">);</span>
-        <span class="p">}),</span>
+        remove: $.event.delegateSpecial.remove(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span>
+            $(<span class="hljs-keyword">this</span>).off(<span class="hljs-string">"pointerdown"</span>, handleObj.selector, handleObj.pointerdown);
+        })
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>presshold is just a dummy, it’s handled by “press”.</p>
 
-        <span class="nx">remove</span><span class="o">:</span> <span class="nx">$</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">delegateSpecial</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">handleObj</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">off</span><span class="p">(</span><span class="s2">&quot;press&quot;</span><span class="p">,</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">selector</span><span class="p">,</span> <span class="nx">handleObj</span><span class="p">.</span><span class="nx">noop</span><span class="p">);</span>
-        <span class="p">})</span>
-    <span class="p">};</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.event.special.presshold = {
+        add: $.event.delegateSpecial(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span>
+            handleObj.noop = $.noop;
+            $(<span class="hljs-keyword">this</span>).on(<span class="hljs-string">"press"</span>, handleObj.selector, handleObj.noop);
+        }),
 
-<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
+        remove: $.event.delegateSpecial.remove(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span>
+            $(<span class="hljs-keyword">this</span>).off(<span class="hljs-string">"press"</span>, handleObj.selector, handleObj.noop);
+        })
+    };
 
-</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
+})(jQuery);</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
