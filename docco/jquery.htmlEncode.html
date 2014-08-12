@@ -236,7 +236,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span>
+            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{
     <span class="hljs-keyword">var</span> map = {
         <span class="hljs-string">"&amp;"</span>: <span class="hljs-string">"&amp;amp;"</span>,
         <span class="hljs-string">"'"</span>: <span class="hljs-string">"&amp;#39;"</span>,
@@ -245,8 +245,8 @@
         <span class="hljs-string">"&gt;"</span>: <span class="hljs-string">"&amp;gt;"</span>
     };
 
-    $.htmlEncode = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> {</span>
-        <span class="hljs-keyword">return</span> s.replace(<span class="hljs-regexp">/[&amp;"'&lt;&gt;]/g</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(c)</span> {</span>
+    $.htmlEncode = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> </span>{
+        <span class="hljs-keyword">return</span> s.replace(<span class="hljs-regexp">/[&amp;"'&lt;&gt;]/g</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(c)</span> </span>{
             <span class="hljs-keyword">return</span> map[c];
         });
     };

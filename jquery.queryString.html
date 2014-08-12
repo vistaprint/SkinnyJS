@@ -124,7 +124,7 @@
     </div>
     
 
-    <h2 id='jqueryquerystring'>jQuery.queryString</h2>
+    <h2 id="jqueryquerystring">jQuery.queryString</h2>
 
 <p>Parses querystrings. For example, the following querystring:</p>
 
@@ -137,30 +137,30 @@
         <span class='s2'>&quot;phone&quot;</span><span class='o'>:</span> <span class='s2'>&quot;(123) 123-1234&quot;</span>
     <span class='p'>}</span>
 </code></pre></div>
-<p>This is the inverse of <a href='http://api.jquery.com/jQuery.param/'>jQuery.param()</a></p>
+<p>This is the inverse of <a href="http://api.jquery.com/jQuery.param/">jQuery.param()</a></p>
 
-<h3 id='usage'>Usage</h3>
+<h3 id="usage">Usage</h3>
 
-<h4 id='deparamquerystring'>$.deparam(queryString)</h4>
+<h4 id="deparamquerystring">$.deparam(queryString)</h4>
 
 <p>Parse a querystring to a JavaScript object:</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='kd'>var</span> <span class='nx'>qs</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>deparam</span><span class='p'>(</span><span class='s2'>&quot;icecream=vanilla&amp;brownie=chocolate&quot;</span><span class='p'>);</span>
     <span class='nx'>qs</span><span class='p'>.</span><span class='nx'>brownie</span> <span class='o'>===</span> <span class='s2'>&quot;chocolate&quot;</span><span class='p'>;</span>  <span class='c1'>// true</span>
 </code></pre></div>
-<h4 id='currentquerystring'>$.currentQueryString()</h4>
+<h4 id="currentquerystring">$.currentQueryString()</h4>
 
 <p>Get the querystring from the current document.location as a parsed object:</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='c1'>// Current document.location: http://www.foo.com?icecream=vanilla&amp;brownie=chocolate</span>
     <span class='kd'>var</span> <span class='nx'>qs</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>currentQueryString</span><span class='p'>();</span>
     <span class='nx'>qs</span><span class='p'>.</span><span class='nx'>icecream</span> <span class='o'>===</span> <span class='s2'>&quot;vanilla&quot;</span><span class='p'>;</span> <span class='c1'>// true</span>
 </code></pre></div>
-<h4 id='appendquerystringurl_parsedquerystring'>$.appendQueryString(url, parsedQueryString)</h4>
+<h4 id="appendquerystringurl_parsedquerystring">$.appendQueryString(url, parsedQueryString)</h4>
 
-<p>There&#8217;s also a method to append a parsed querystring to a URL:</p>
+<p>There’s also a method to append a parsed querystring to a URL:</p>
 <div class='highlight'><pre><code class='javascript'>    <span class='kd'>var</span> <span class='nx'>url</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>appendQueryString</span><span class='p'>(</span><span class='s2'>&quot;http://www.foo.com&quot;</span><span class='p'>,</span> <span class='p'>{</span> <span class='s2'>&quot;icecream&quot;</span><span class='o'>:</span> <span class='s2'>&quot;vanilla&quot;</span><span class='p'>,</span> <span class='s2'>&quot;brownie&quot;</span><span class='o'>:</span> <span class='s2'>&quot;chocolate&quot;</span><span class='p'>});</span>
     <span class='nx'>url</span> <span class='o'>===</span> <span class='s2'>&quot;http://www.foo.com?icecream=vanilla&amp;brownie=chocolate&quot;</span><span class='p'>;</span>  <span class='c1'>// true</span>
 </code></pre></div>
-<h3 id='dependencies'>Dependencies</h3>
+<h3 id="dependencies">Dependencies</h3>
 
 <p>This library uses jquery.delimitedString (part of skinny.js), which abstracts encoding/decoding of key-value pairs.</p>
   </div>

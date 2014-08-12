@@ -899,6 +899,7 @@
     IFrameDialog.prototype._finishClose = function (e) {
         ModalDialog.prototype._finishClose.call(this, e);
 
+        this.$frame[0].src = "about:blank";
         this.$frame.remove();
     };
 
@@ -2166,6 +2167,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
         return deferred;
     };
+
 
 
 })(jQuery);

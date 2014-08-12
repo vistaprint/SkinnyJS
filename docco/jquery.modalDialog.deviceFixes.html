@@ -307,11 +307,11 @@ data-dialog-hide-onopen=”true”</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span>
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{
     <span class="hljs-keyword">var</span> SELECTOR_MAIN_PANEL = <span class="hljs-string">"[data-dialog-main-panel='true']"</span>;
     <span class="hljs-keyword">var</span> SELECTOR_BAD_ELEMENT = <span class="hljs-string">"[data-dialog-hide-onopen='true']"</span>;
 
-    <span class="hljs-keyword">var</span> preventWindowTouchEvents = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog, fix)</span> {</span></pre></div></div>
+    <span class="hljs-keyword">var</span> preventWindowTouchEvents = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog, fix)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -330,14 +330,14 @@ data-dialog-hide-onopen=”true”</p>
             <span class="hljs-keyword">return</span>;
         }
 
-        $([window, document]).enableEvent(<span class="hljs-string">"touchmove touchstart touchend"</span>, !fix);
+        $([<span class="hljs-built_in">window</span>, <span class="hljs-built_in">document</span>]).enableEvent(<span class="hljs-string">"touchmove touchstart touchend"</span>, !fix);
     };
 
-    <span class="hljs-keyword">var</span> getWindowHeight = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-        <span class="hljs-keyword">return</span> window.innerHeight || $(window).height();
+    <span class="hljs-keyword">var</span> getWindowHeight = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">window</span>.innerHeight || $(<span class="hljs-built_in">window</span>).height();
     };
 
-    <span class="hljs-keyword">var</span> initializeShimming = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+    <span class="hljs-keyword">var</span> initializeShimming = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -388,7 +388,7 @@ If so, it’s the best choice of elements to hide.</p>
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> _scrollTop = <span class="hljs-number">0</span>;
         <span class="hljs-keyword">var</span> _height = <span class="hljs-number">0</span>;
 
-        $.modalDialog.onbeforeopen.add(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+        $.modalDialog.onbeforeopen.add(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
             <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.level === <span class="hljs-number">0</span>) {</pre></div></div>
             
         </li>
@@ -404,8 +404,8 @@ If so, it’s the best choice of elements to hide.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                _scrollTop = $(document).scrollTop();
-                _height = document.body.style.height;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                _scrollTop = $(<span class="hljs-built_in">document</span>).scrollTop();
+                _height = <span class="hljs-built_in">document</span>.body.style.height;</pre></div></div>
             
         </li>
         
@@ -422,7 +422,7 @@ Hiding them wont do it.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                $badEls.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, el)</span> {</span>
+            <div class="content"><div class='highlight'><pre>                $badEls.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, el)</span> </span>{
                     $(el).data(<span class="hljs-string">"dialog-parent"</span>, el.parentNode);
                 })
                     .detach();</pre></div></div>
@@ -440,13 +440,13 @@ Hiding them wont do it.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                document.body.style.height = (getWindowHeight() + <span class="hljs-number">50</span>) + <span class="hljs-string">"px"</span>;
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-built_in">document</span>.body.style.height = (getWindowHeight() + <span class="hljs-number">50</span>) + <span class="hljs-string">"px"</span>;
 
-                window.scrollTo(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
+                <span class="hljs-built_in">window</span>.scrollTo(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
             }
         });
 
-        $.modalDialog.onopen.add(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+        $.modalDialog.onopen.add(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
             <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.level === <span class="hljs-number">0</span>) {</pre></div></div>
             
         </li>
@@ -466,16 +466,16 @@ of the dialog.</p>
             
             <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">var</span> height = <span class="hljs-built_in">Math</span>.max(<span class="hljs-keyword">this</span>.$container.height(), getWindowHeight()) + <span class="hljs-number">20</span>;
 
-                document.body.style.height = height + <span class="hljs-string">"px"</span>;
+                <span class="hljs-built_in">document</span>.body.style.height = height + <span class="hljs-string">"px"</span>;
                 $(<span class="hljs-string">".dialog-background"</span>).css({
                     height: height
                 });
 
-                window.scrollTo(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
+                <span class="hljs-built_in">window</span>.scrollTo(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
             }
         });
 
-        $.modalDialog.onclose.add(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+        $.modalDialog.onclose.add(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
             <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.level === <span class="hljs-number">0</span>) {</pre></div></div>
             
         </li>
@@ -491,18 +491,18 @@ of the dialog.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                document.body.style.height = _height;
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-built_in">document</span>.body.style.height = _height;
 
-                $badEls.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, el)</span> {</span>
+                $badEls.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, el)</span> </span>{
                     $($(el).data(<span class="hljs-string">"dialog-parent"</span>)).append(el);
                 });
 
-                window.scrollTo(<span class="hljs-number">0</span>, _scrollTop);
+                <span class="hljs-built_in">window</span>.scrollTo(<span class="hljs-number">0</span>, _scrollTop);
             }
         });
     };
 
-    $(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+    $(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
         <span class="hljs-keyword">if</span> (!$.modalDialog.isSmallScreen()) {
             <span class="hljs-keyword">return</span>;
         }</pre></div></div>
@@ -538,7 +538,7 @@ of the dialog.</p>
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> ($.modalDialog &amp;&amp; $.modalDialog._isContent) {
             <span class="hljs-keyword">var</span> dialog = $.modalDialog.getCurrent();
             <span class="hljs-keyword">if</span> (dialog) {
-                $(window).on(<span class="hljs-string">"load"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                $(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">"load"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     preventWindowTouchEvents(dialog, <span class="hljs-literal">true</span>);
                 });
             }
@@ -557,10 +557,10 @@ of the dialog.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            $.modalDialog.onopen.add(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>            $.modalDialog.onopen.add(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                 preventWindowTouchEvents(<span class="hljs-keyword">this</span>, <span class="hljs-literal">true</span>);
             });
-            $.modalDialog.onbeforeclose.add(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            $.modalDialog.onbeforeclose.add(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                 preventWindowTouchEvents(<span class="hljs-keyword">this</span>, <span class="hljs-literal">false</span>);
             });
 

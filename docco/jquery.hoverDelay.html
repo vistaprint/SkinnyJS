@@ -238,7 +238,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span>
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{
     <span class="hljs-keyword">var</span> OVER_TIMER = <span class="hljs-string">'skinnyjs-hoverDelay-overTimer'</span>;
     <span class="hljs-keyword">var</span> OUT_TIMER = <span class="hljs-string">'skinnyjs-hoverDelay-outTimer'</span>;
 
@@ -297,7 +297,7 @@ children of the target element’s dom.</p>
             <div class="content"><div class='highlight'><pre>        addChildren: <span class="hljs-literal">null</span>
     };
 
-    $.fn.hoverDelay = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(over, out, options)</span> {</span>
+    $.fn.hoverDelay = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(over, out, options)</span> </span>{
         <span class="hljs-keyword">if</span> ($.isPlainObject(over)) {
             options = over;
         } <span class="hljs-keyword">else</span> {
@@ -313,7 +313,7 @@ children of the target element’s dom.</p>
 
         <span class="hljs-keyword">var</span> useTimers = <span class="hljs-keyword">typeof</span> _options.delayOver === <span class="hljs-string">'function'</span> || _options.delayOver &gt; <span class="hljs-number">0</span> || _options.delayOut &gt; <span class="hljs-number">0</span>;
 
-        <span class="hljs-keyword">var</span> clearTimers = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(el)</span> {</span>
+        <span class="hljs-keyword">var</span> clearTimers = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(el)</span> </span>{
             <span class="hljs-keyword">if</span> (!useTimers) {
                 <span class="hljs-keyword">return</span>;
             }
@@ -332,7 +332,7 @@ children of the target element’s dom.</p>
             }
         };
 
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">pointerEnter</span><span class="hljs-params">(event)</span> {</span></pre></div></div>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">pointerEnter</span><span class="hljs-params">(event)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -356,7 +356,7 @@ double fire if a child of the element used is the target</p>
 
                 clearTimers($<span class="hljs-keyword">this</span>);
 
-                <span class="hljs-keyword">var</span> call = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">call</span><span class="hljs-params">()</span> {</span>
+                <span class="hljs-keyword">var</span> call = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">call</span><span class="hljs-params">()</span> </span>{
                     _options.over.call(thisObject, event);
                 };
 
@@ -374,7 +374,7 @@ double fire if a child of the element used is the target</p>
             }
         }
 
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">pointerLeave</span><span class="hljs-params">(event)</span> {</span></pre></div></div>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">pointerLeave</span><span class="hljs-params">(event)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -398,7 +398,7 @@ double fire if a child of the element used is the target</p>
 
                 clearTimers($<span class="hljs-keyword">this</span>);
 
-                <span class="hljs-keyword">var</span> call = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">call</span><span class="hljs-params">()</span> {</span>
+                <span class="hljs-keyword">var</span> call = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">call</span><span class="hljs-params">()</span> </span>{
                     _options.out.call(thisObject, event);
                 };</pre></div></div>
             
@@ -435,11 +435,11 @@ if the client re-enters the target area before the timer is triggered</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                $<span class="hljs-keyword">this</span>.data(OUT_TIMER, setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                    $(document).off(<span class="hljs-string">'pointermove'</span>, pointerMove);
+            <div class="content"><div class='highlight'><pre>                $<span class="hljs-keyword">this</span>.data(OUT_TIMER, setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                    $(<span class="hljs-built_in">document</span>).off(<span class="hljs-string">'pointermove'</span>, pointerMove);
 
                     <span class="hljs-keyword">if</span> (pointerPosition) {
-                        <span class="hljs-keyword">var</span> overElement = document.elementFromPoint(pointerPosition.x, pointerPosition.y);
+                        <span class="hljs-keyword">var</span> overElement = <span class="hljs-built_in">document</span>.elementFromPoint(pointerPosition.x, pointerPosition.y);
                         <span class="hljs-keyword">if</span> (thisObject === overElement || jQuery.contains(thisObject, overElement) || overAdditionalChildren(overElement)) {
                             <span class="hljs-keyword">return</span>; <span class="hljs-comment">// since it appears the mouse is in fact over the targeted area, do not trigger the callback</span>
                         }
@@ -450,7 +450,7 @@ if the client re-enters the target area before the timer is triggered</p>
                     call();
                 }, _options.delayOut));
 
-                $(document).on(<span class="hljs-string">'pointermove'</span>, pointerMove);
+                $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">'pointermove'</span>, pointerMove);
             }
         }</pre></div></div>
             
@@ -488,7 +488,7 @@ triggered when you are already over the element.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">pointerMove</span><span class="hljs-params">(event)</span> {</span>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">pointerMove</span><span class="hljs-params">(event)</span> </span>{
             pointerPosition = {
                 x: event.clientX,
                 y: event.clientY
@@ -508,7 +508,7 @@ triggered when you are already over the element.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">overAdditionalChildren</span><span class="hljs-params">(overElement)</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">overAdditionalChildren</span><span class="hljs-params">(overElement)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -577,11 +577,11 @@ using pointer events (pointerover/out) and event-time checks</p>
             <div class="content"><div class='highlight'><pre>jQuery.each({
     pointerenter: navigator.pointerEnabled ? <span class="hljs-string">'pointerover'</span> : (navigator.msPointerEnabled ? <span class="hljs-string">'MSPointerOver'</span> : <span class="hljs-string">'mouseover'</span>),
     pointerleave: navigator.pointerEnabled ? <span class="hljs-string">'pointerout'</span> : (navigator.msPointerEnabled ? <span class="hljs-string">'MSPointerOut'</span> : <span class="hljs-string">'mouseout'</span>)
-}, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(orig, fix)</span> {</span>
+}, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(orig, fix)</span> </span>{
     jQuery.event.special[orig] = {
         delegateType: fix,
         bindType: fix,
-        handle: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
+        handle: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
             <span class="hljs-keyword">var</span> ret,
                 target = <span class="hljs-keyword">this</span>,
                 related = event.relatedTarget,

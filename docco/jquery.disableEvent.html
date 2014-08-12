@@ -236,7 +236,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -252,7 +252,7 @@ whereas earlier versions stored using in the public fn.data() method.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> _data = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($el, key, value)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> _data = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($el, key, value)</span> </span>{
         <span class="hljs-keyword">return</span> $[$._data ? <span class="hljs-string">"_data"</span> : <span class="hljs-string">"data"</span>]($el[<span class="hljs-number">0</span>], key, value);
     };</pre></div></div>
             
@@ -270,7 +270,7 @@ If an object already exists, return it. If not, store and return the default obj
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ensureData</span><span class="hljs-params">($el, key, defaultObject)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ensureData</span><span class="hljs-params">($el, key, defaultObject)</span> </span>{
         <span class="hljs-keyword">var</span> data = _data($el, key);
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> data == <span class="hljs-string">"undefined"</span>) {
             data = defaultObject || {};
@@ -293,7 +293,7 @@ If an object already exists, return it. If not, store and return the default obj
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseEventTypes</span><span class="hljs-params">(types)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseEventTypes</span><span class="hljs-params">(types)</span> </span>{
         <span class="hljs-keyword">return</span> $.trim(types).split(<span class="hljs-string">" "</span>); <span class="hljs-comment">// TODO: hoverHack in jQuery does something else here...</span>
     }</pre></div></div>
             
@@ -310,7 +310,7 @@ If an object already exists, return it. If not, store and return the default obj
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.fn.isEventDisabled = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventType)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    $.fn.isEventDisabled = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventType)</span> </span>{
         <span class="hljs-keyword">return</span> eventType <span class="hljs-keyword">in</span> (_data(<span class="hljs-keyword">this</span>, <span class="hljs-string">"eventsDisabled"</span>) || {});
     };
 
@@ -331,7 +331,7 @@ pay the overhead to monkey patch $.event.add().</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initialize</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initialize</span><span class="hljs-params">()</span> </span>{
         <span class="hljs-keyword">if</span> (_initialized) {
             <span class="hljs-keyword">return</span>;
         }
@@ -355,7 +355,7 @@ pay the overhead to monkey patch $.event.add().</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> addEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(elem, types, handler, data, selector)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> addEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(elem, types, handler, data, selector)</span> </span>{
         <span class="hljs-keyword">var</span> eventsDisabled = _data($(elem), <span class="hljs-string">"eventsDisabled"</span>);
         <span class="hljs-keyword">if</span> (eventsDisabled) {
             <span class="hljs-keyword">var</span> eventTypes = parseEventTypes(types);
@@ -456,7 +456,7 @@ Handlers added after this is called will be cached, but not actually added</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.fn.disableEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventType)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    $.fn.disableEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventType)</span> </span>{
         initialize();</pre></div></div>
             
         </li>
@@ -487,7 +487,7 @@ Handlers added after this is called will be cached, but not actually added</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, el)</span> {</span>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, el)</span> </span>{
             <span class="hljs-keyword">var</span> $el = $(el);</pre></div></div>
             
         </li>
@@ -504,7 +504,7 @@ delete and re-add them with jQuery so the same mechanism can work on them.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            $.each(eventTypes, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, eventType)</span> {</span>
+            <div class="content"><div class='highlight'><pre>            $.each(eventTypes, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, eventType)</span> </span>{
                 <span class="hljs-keyword">var</span> attr = $el.attr(<span class="hljs-string">"on"</span> + eventType.toLowerCase());
                 <span class="hljs-keyword">if</span> (attr) {</pre></div></div>
             
@@ -556,7 +556,7 @@ delete and re-add them with jQuery so the same mechanism can work on them.</p>
             
             <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">var</span> events = _data($el, <span class="hljs-string">"events"</span>);
             <span class="hljs-keyword">if</span> (events) {
-                $.each(eventTypes, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, eventType)</span> {</span></pre></div></div>
+                $.each(eventTypes, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, eventType)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -633,7 +633,7 @@ delete and re-add them with jQuery so the same mechanism can work on them.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.fn.enableEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventType, enable)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    $.fn.enableEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventType, enable)</span> </span>{
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> enable != <span class="hljs-string">"undefined"</span>) {
             <span class="hljs-keyword">if</span> (!enable) {
                 <span class="hljs-keyword">this</span>.disableEvent(eventType);
@@ -641,15 +641,15 @@ delete and re-add them with jQuery so the same mechanism can work on them.</p>
             }
         }
 
-        <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, el)</span> {</span>
+        <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, el)</span> </span>{
             <span class="hljs-keyword">var</span> $el = $(el);
             <span class="hljs-keyword">var</span> eventsDisabled = _data($el, <span class="hljs-string">"eventsDisabled"</span>);
             <span class="hljs-keyword">if</span> (eventsDisabled) {
                 <span class="hljs-keyword">var</span> eventTypes = parseEventTypes(eventType);
-                $.each(eventTypes, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, eventType)</span> {</span>
+                $.each(eventTypes, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, eventType)</span> </span>{
                     <span class="hljs-keyword">var</span> handlers = eventsDisabled[eventType];
                     <span class="hljs-keyword">if</span> (handlers) {
-                        $.each(handlers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(j, handler)</span> {</span>
+                        $.each(handlers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(j, handler)</span> </span>{
                             _originalAddEvent($el[<span class="hljs-number">0</span>], eventType, handler);
                         });
 

@@ -236,10 +236,10 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(window, $)</span> {</span>
+            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(window, $)</span> </span>{
     <span class="hljs-keyword">var</span> _currentScripts;
 
-    $.fn.partialLoad = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(url, target, data, callback)</span> {</span></pre></div></div>
+    $.fn.partialLoad = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(url, target, data, callback)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -346,7 +346,7 @@ if target is a function, assume its a callback</p>
             type: type,
             dataType: <span class="hljs-string">"html"</span>,
             data: data
-        }).done(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(responseText)</span> {</span></pre></div></div>
+        }).done(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(responseText)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -363,7 +363,7 @@ if target is a function, assume its a callback</p>
             
             <div class="content"><div class='highlight'><pre>            response = <span class="hljs-built_in">arguments</span>;
 
-            self.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, el)</span> {</span>
+            self.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, el)</span> </span>{
                 <span class="hljs-keyword">var</span> $el = $(el);
                 <span class="hljs-keyword">var</span> scripts = [];
                 <span class="hljs-keyword">var</span> fragment = getFragmentAndScripts(responseText, target, $el, scripts);</pre></div></div>
@@ -399,7 +399,7 @@ if target is a function, assume its a callback</p>
             <div class="content"><div class='highlight'><pre>                    $el.html(fragment);
 
                     <span class="hljs-keyword">if</span> (scripts.length) {
-                        $.each(scripts, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, elem)</span> {</span>
+                        $.each(scripts, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, elem)</span> </span>{
                             <span class="hljs-keyword">if</span> (elem.src) {</pre></div></div>
             
         </li>
@@ -453,14 +453,14 @@ if target is a function, assume its a callback</p>
             <div class="content"><div class='highlight'><pre>                }
             });
 
-        }).complete(callback &amp;&amp; <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(jqXHR, status)</span> {</span>
+        }).complete(callback &amp;&amp; <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(jqXHR, status)</span> </span>{
             self.each(callback, response || [jqXHR.responseText, status, jqXHR]);
         });
 
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
     };
 
-    <span class="hljs-keyword">var</span> execScriptUnique = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(src)</span> {</span>
+    <span class="hljs-keyword">var</span> execScriptUnique = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(src)</span> </span>{
         <span class="hljs-keyword">var</span> srcLower = src.toLowerCase();</pre></div></div>
             
         </li>
@@ -480,7 +480,7 @@ that they don’t get loaded more than once.</p>
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (!_currentScripts) {
             _currentScripts = {};
 
-            <span class="hljs-keyword">var</span> currentScripts = document.getElementsByTagName(<span class="hljs-string">"SCRIPT"</span>);
+            <span class="hljs-keyword">var</span> currentScripts = <span class="hljs-built_in">document</span>.getElementsByTagName(<span class="hljs-string">"SCRIPT"</span>);
             <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; currentScripts.length; i++) {
                 <span class="hljs-keyword">if</span> (currentScripts[i].src) {
                     _currentScripts[currentScripts[i].src.toLowerCase()] = <span class="hljs-literal">true</span>;
@@ -518,7 +518,7 @@ that they don’t get loaded more than once.</p>
 
     <span class="hljs-keyword">var</span> _currentStylesheets;
 
-    <span class="hljs-keyword">var</span> isStylesheetUnique = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(href)</span> {</span>
+    <span class="hljs-keyword">var</span> isStylesheetUnique = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(href)</span> </span>{
         <span class="hljs-keyword">var</span> hrefLower = href.toLowerCase();</pre></div></div>
             
         </li>
@@ -538,7 +538,7 @@ that they don’t get loaded more than once.</p>
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (!_currentStylesheets) {
             _currentStylesheets = {};
 
-            <span class="hljs-keyword">var</span> currentStylesheets = document.getElementsByTagName(<span class="hljs-string">"LINK"</span>);
+            <span class="hljs-keyword">var</span> currentStylesheets = <span class="hljs-built_in">document</span>.getElementsByTagName(<span class="hljs-string">"LINK"</span>);
             <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; currentStylesheets.length; i++) {
                 <span class="hljs-keyword">if</span> (currentStylesheets[i].href) {
                     _currentStylesheets[currentStylesheets[i].href.toLowerCase()] = <span class="hljs-literal">true</span>;
@@ -570,7 +570,7 @@ that they don’t get loaded more than once.</p>
 
     <span class="hljs-keyword">var</span> rcleanScript = <span class="hljs-regexp">/^\s*&lt;!(?:\[CDATA\[|\-\-)/</span>;
 
-    <span class="hljs-keyword">var</span> getFragmentAndScripts = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(responseText, selector, context, scripts)</span> {</span>
+    <span class="hljs-keyword">var</span> getFragmentAndScripts = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(responseText, selector, context, scripts)</span> </span>{
         <span class="hljs-keyword">var</span> $target;
 
         <span class="hljs-keyword">if</span> (selector) {
@@ -595,7 +595,7 @@ This will cause scripts in the fragment to be executed by jQuery.fn.html().</p>
 
             $target = $temp.find(selector);
 
-            $target.find(<span class="hljs-string">"script"</span>).map(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, elem)</span> {</span>
+            $target.find(<span class="hljs-string">"script"</span>).map(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, elem)</span> </span>{
                 scripts.push(elem);
             });
 
@@ -638,7 +638,7 @@ whereas previous versions expected a jQuery object, and would look up its ownerD
         }
 
         <span class="hljs-keyword">if</span> (scripts.length) {
-            $.each(scripts, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, elem)</span> {</span>
+            $.each(scripts, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, elem)</span> </span>{
                 <span class="hljs-keyword">if</span> (elem.parentNode) {
                     elem.parentNode.removeChild(elem);
                 }
@@ -701,15 +701,15 @@ to get the title of the dialog.</p>
         <span class="hljs-keyword">return</span> $target;
     };
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">jqueryVersion</span><span class="hljs-params">()</span> {</span>
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">jqueryVersion</span><span class="hljs-params">()</span> </span>{
         <span class="hljs-keyword">return</span> $.map(
             $.fn.jquery.split(<span class="hljs-string">"."</span>),
-            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> {</span>
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> </span>{
                 <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(value, <span class="hljs-number">10</span>);
             });
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareVersion</span><span class="hljs-params">(v1, v2)</span> {</span>
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareVersion</span><span class="hljs-params">(v1, v2)</span> </span>{
         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i++) {
             <span class="hljs-keyword">if</span> (v1[i] != v2[i]) {
                 <span class="hljs-keyword">return</span> (v1[i] &gt; v2[i]) ? <span class="hljs-number">1</span> : -<span class="hljs-number">1</span>;
@@ -719,7 +719,7 @@ to get the title of the dialog.</p>
         <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
     }
 
-})(window, jQuery);</pre></div></div>
+})(<span class="hljs-built_in">window</span>, jQuery);</pre></div></div>
             
         </li>
         

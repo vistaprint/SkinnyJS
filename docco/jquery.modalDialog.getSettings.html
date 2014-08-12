@@ -238,10 +238,10 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span>
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{
     <span class="hljs-keyword">var</span> ATTR_PREFIX = <span class="hljs-string">"data-dialog-"</span>;
 
-    <span class="hljs-keyword">var</span> getKeys = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj)</span> {</span>
+    <span class="hljs-keyword">var</span> getKeys = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj)</span> </span>{
 
         <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Object</span>.keys) {
             <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.keys(obj);
@@ -256,14 +256,14 @@
         <span class="hljs-keyword">return</span> keys;
     };
 
-    <span class="hljs-keyword">var</span> parseNone = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> {</span>
+    <span class="hljs-keyword">var</span> parseNone = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> </span>{
         <span class="hljs-keyword">if</span> (s === <span class="hljs-string">""</span>) {
             <span class="hljs-keyword">return</span> s;
         }
         <span class="hljs-keyword">return</span> s || <span class="hljs-literal">null</span>;
     };
 
-    <span class="hljs-keyword">var</span> parseBool = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> {</span>
+    <span class="hljs-keyword">var</span> parseBool = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> </span>{
         <span class="hljs-keyword">if</span> (s) {
             s = s.toString().toLowerCase();
             <span class="hljs-keyword">switch</span> (s) {
@@ -279,7 +279,7 @@
         <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
     };
 
-    <span class="hljs-keyword">var</span> parseFunction = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(body)</span> {</span></pre></div></div>
+    <span class="hljs-keyword">var</span> parseFunction = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(body)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -348,10 +348,10 @@ to the dialog settings object</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.modalDialog.getSettings = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($el)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    $.modalDialog.getSettings = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($el)</span> </span>{
         <span class="hljs-keyword">var</span> settings = {};
 
-        $.each(getKeys(_props), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, key)</span> {</span></pre></div></div>
+        $.each(getKeys(_props), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, key)</span> </span>{</pre></div></div>
             
         </li>
         

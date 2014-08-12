@@ -236,7 +236,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -252,12 +252,12 @@ using the specified delimiters and encoders</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.encodeDelimitedString = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data, itemDelimiter, pairDelimiter, keyEncoder, valueEncoder)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    $.encodeDelimitedString = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data, itemDelimiter, pairDelimiter, keyEncoder, valueEncoder)</span> </span>{
         <span class="hljs-keyword">if</span> (!data) {
             <span class="hljs-keyword">return</span> <span class="hljs-string">""</span>;
         }
 
-        keyEncoder = keyEncoder || <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> {</span>
+        keyEncoder = keyEncoder || <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> </span>{
             <span class="hljs-keyword">return</span> s;
         };
         valueEncoder = valueEncoder || keyEncoder;
@@ -287,8 +287,8 @@ using the specified delimiters and decoders</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.parseDelimitedString = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(delimitedString, itemDelimiter, pairDelimiter, keyDecoder, valueDecoder)</span> {</span>
-        keyDecoder = keyDecoder || <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    $.parseDelimitedString = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(delimitedString, itemDelimiter, pairDelimiter, keyDecoder, valueDecoder)</span> </span>{
+        keyDecoder = keyDecoder || <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> </span>{
             <span class="hljs-keyword">return</span> s;
         };
         valueDecoder = valueDecoder || keyDecoder;
