@@ -744,6 +744,7 @@
     IFrameDialog.prototype._finishClose = function (e) {
         ModalDialog.prototype._finishClose.call(this, e);
 
+        this.$frame[0].src = "about:blank";
         this.$frame.remove();
     };
 
