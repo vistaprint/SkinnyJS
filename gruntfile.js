@@ -273,7 +273,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask("copyDist", ["copy:distJs", "copy:distCss", "copy:distOther"]);
 
-    grunt.registerTask("build", ["update", "clean", "less", "copyDist", "concat:modalDialog", "concat:modalDialogContent", "strip_code", "uglify"]);
+    grunt.registerTask("build", ["clean", "less", "copyDist", "concat:modalDialog", "concat:modalDialogContent", "strip_code", "uglify"]);
 
     grunt.registerTask("beautify", ["jsbeautifier", "lineending"]);
 
