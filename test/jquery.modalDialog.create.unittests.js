@@ -1,3 +1,8 @@
+/// <reference path="jquery.modalDialog.setup.html" />
+/// <reference path="jquery.modalDialog.setup.js" />
+
+/// <reference path="../dependencies/jquery.timeout.js" />
+
 $.modalDialog.animationDuration = 100;
 
 describe("jquery.modalDialog.create", function () {

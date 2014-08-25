@@ -1,3 +1,5 @@
+/// <reference path="../js/jquery.imageSize.js" />
+
 describe("jquery.imageSize plugin", function () {
     var assert = chai.assert;
 

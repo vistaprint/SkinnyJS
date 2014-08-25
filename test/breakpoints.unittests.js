@@ -1,3 +1,4 @@
+/// <reference path="../js/breakpoints.js" />
 /* globals skinny */
 
 describe("breakpoints", function () {

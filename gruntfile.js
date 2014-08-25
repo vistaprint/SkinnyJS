@@ -23,34 +23,45 @@ module.exports = function (grunt) {
                 jshintrc: ".jshintrc"
             }
         },
-        connect: {
-            server: {
+        'js-test': {
+            options: {
+                pattern: 'test/*.unittests.js',
+                deps: [
+                    'dependencies/jquery.js',
+                    'test/unittests.shared.js'
+                ]
+            },
+            jquery17: {
                 options: {
-                    port: 9001,
-                    keepalive: false
+                    pattern: [
+                        'test/jquery.partialLoad.unittests.js',
+                        'test/jquery.disableEvent.unittests.js',
+                    ],
+                    deps: [
+                        'dependencies/jquery-1.7.2.js',
+                        'test/unittests.shared.js'
+                    ]
                 }
-            }
-        },
-        mocha: {
-            all: {
+            },
+            jquery110: {
                 options: {
-                    urls: ["test/*.unittests.html"]
+                    pattern: 'test/jquery.partialLoad.unittests.js',
+                    deps: [
+                        'dependencies/jquery-1.10.2.js',
+                        'test/unittests.shared.js'
+                    ]
                 }
             },
             dialogSmallScreen: {
                 options: {
-                    urls: ["test/jquery.modalDialog.*.unittests.html"]
+                    pattern: 'test/jquery.modalDialog.*.unittests.html',
+                    deps: [
+                        'dependencies/jquery.js',
+                        'test/unittests.shared.js'
+                    ],
+                    inject: 'smallscreen=1'
                 }
             },
-            specific: {
-                options: {
-                    urls: ["http://localhost:9001/test/jquery.modalDialog.history.unittests.html"]
-                }
-            },
-            options: {
-                reporter: "Spec",
-                timeout: 20000
-            }
         },
         copy: {
             distJs: {
@@ -212,10 +223,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-contrib-less");
-    grunt.loadNpmTasks("grunt-mocha");
+    grunt.loadNpmTasks("grunt-js-test");
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-concat");
-    grunt.loadNpmTasks("grunt-contrib-connect");
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-contrib-compress");
     grunt.loadNpmTasks("grunt-contrib-watch");
@@ -224,50 +234,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-lineending");
     grunt.loadNpmTasks("grunt-wget");
 
-    // Wrap the mocha task
-    grunt.renameTask("mocha", "orig-mocha");
-
-    grunt.registerTask("mocha", function (target) {
-        var config = grunt.config.get("mocha");
-
-        // Turn mocha.files into urls for conrib-mocha
-        var urls = grunt.util._.map(grunt.file.expand(config.all.options.urls), function (file) {
-            return "http://localhost:9001/" + file;
-        });
-
-        config.all.options.urls = urls;
-
-        // Turn mocha.files into urls for conrib-mocha
-        var smallScreenUrls = grunt.util._.map(grunt.file.expand(config.dialogSmallScreen.options.urls), function (file) {
-            return "http://localhost:9001/" + file + "?smallscreen=true";
-        });
-
-        config.dialogSmallScreen.options.urls = smallScreenUrls;
-
-        grunt.config.set("orig-mocha", config);
-
-        var taskName = "orig-mocha";
-        if (target) {
-            taskName += ":" + target;
-        }
-
-        grunt.task.run(taskName);
-    });
-
-    grunt.registerTask("connect-keepalive", function () {
-        var config = grunt.config.get("connect");
-        config.server.options.keepalive = true;
-        grunt.config.set("connect", config);
-        grunt.task.run("connect");
-    });
-
     grunt.registerTask("travis", "default");
 
     grunt.registerTask("default", ["verify", "build"]);
 
-    grunt.registerTask("test", ["less", "connect", "mocha"]);
-
-    //grunt.registerTask("testSpecific", ["less", "connect", "mocha:specific"]);
+    grunt.registerTask("test", ["less", "js-test:jquery19", "js-test:jquery17", "js-test:jquery110", "js-test:dialogSmallScreen"]);
 
     grunt.registerTask("verify", ["jshint", "test"]);
 

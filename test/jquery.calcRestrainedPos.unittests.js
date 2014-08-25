@@ -1,3 +1,5 @@
+/// <reference path="../js/jquery.calcRestrainedPos.js" />
+
 describe('jquery.calcRestrainedPos', function () {
     describe('$.doBoundingBoxesIntersect', function () {
         function rect(width, height, x, y) {

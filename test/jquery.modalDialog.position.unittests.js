@@ -1,3 +1,6 @@
+/// <reference path="jquery.modalDialog.setup.html" />
+/// <reference path="jquery.modalDialog.setup.js" />
+
  /*jshint quotmark:false */
 
  // Scrollbars are messing up measurements of the window size

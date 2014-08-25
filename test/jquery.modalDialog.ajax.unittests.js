@@ -1,3 +1,6 @@
+/// <reference path="jquery.modalDialog.setup.html" />
+/// <reference path="jquery.modalDialog.setup.js" />
+
 $.modalDialog.iframeLoadTimeout = 1000;
 $.modalDialog.animationDuration = 100;
 
@@ -6,7 +9,7 @@ describe("AjaxDialog", function () {
 
     it("should load content from a full HTML document", function (done) {
         var dialog = $.modalDialog.create({
-            url: "content/jquery.modalDialog.ajaxContent.fullHtml.html",
+            url: "/test/content/jquery.modalDialog.ajaxContent.fullHtml.html",
             ajax: true
         });
 
@@ -25,7 +28,7 @@ describe("AjaxDialog", function () {
 
     it("should load content from a partial HTML document", function (done) {
         var dialog = $.modalDialog.create({
-            url: "content/jquery.modalDialog.ajaxContent.html",
+            url: "/test/content/jquery.modalDialog.ajaxContent.html",
             ajax: true
         });
 
@@ -42,7 +45,7 @@ describe("AjaxDialog", function () {
 
     it("should set the dialog title from settings if specified", function (done) {
         var dialog = $.modalDialog.create({
-            url: "content/jquery.modalDialog.ajaxContent.fullHtml.html",
+            url: "/test/content/jquery.modalDialog.ajaxContent.fullHtml.html",
             ajax: true,
             title: "Title from settings"
         });

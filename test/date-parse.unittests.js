@@ -1,3 +1,6 @@
+/// <reference path="../dependencies/json2.js" />
+/// <reference path="../js/date-parse.js" />
+
 describe("Date", function () {
     var assert = chai.assert;
 

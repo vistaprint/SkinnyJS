@@ -1,3 +1,6 @@
+/// <reference path="jquery.modalDialog.setup.html" />
+/// <reference path="jquery.modalDialog.setup.js" />
+
  /* jshint quotmark:false */
 
  $.modalDialog.iframeLoadTimeout = 1000;

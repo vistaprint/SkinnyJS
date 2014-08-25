@@ -1,3 +1,14 @@
+/// <reference path="jquery.modalDialog.setup.html" />
+/// <reference path="jquery.modalDialog.setup.js" />
+
+/// <reference path="../js/jquery.modalDialog.history.js" />
+
+/// <reference path="../dependencies/jquery.timeout.js" />
+
+/// <reference path="../dependencies/history.adapter.jquery.js" />
+/// <reference path="../dependencies/history.html4.js" />
+/// <reference path="../dependencies/history.js" />
+
 /* globals History */
 
 $.modalDialog.iframeLoadTimeout = 1000;
@@ -198,11 +209,11 @@ describe("jquery.modalDialog.history", function () {
         });
 
         testDialogHistoryManagement("iframe", {
-            url: "content/jquery.modalDialog.iframeContent.html"
+            url: "/test/content/jquery.modalDialog.iframeContent.html"
         });
 
         testDialogHistoryManagement("ajax", {
-            url: "content/jquery.modalDialog.ajaxContent.html",
+            url: "/test/content/jquery.modalDialog.ajaxContent.html",
             ajax: true
         });
 

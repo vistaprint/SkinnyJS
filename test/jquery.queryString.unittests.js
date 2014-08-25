@@ -1,3 +1,6 @@
+/// <reference path="../js/jquery.delimitedString.js" />
+/// <reference path="../js/jquery.queryString.js" />
+
 describe("jquery", function () {
     var assert = chai.assert;
 

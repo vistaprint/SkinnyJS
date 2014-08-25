@@ -1,3 +1,6 @@
+/// <reference path="../js/breakpoints.js" />
+/// <reference path="../js/jquery.breakpoints.js" />
+
 describe("jquery.breakpoints", function () {
     var assert = chai.assert;
     describe("jquery.breakpoints", function () {
