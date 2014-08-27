@@ -2,7 +2,8 @@
 /// <reference path="content/jquery.partialLoad.contentScriptLoadOnce.js" />
 /// <reference path="content/somecss-alreadyloaded.css" />
 
- /* globals CONTENT_SCRIPT_GLOBAL1, INLINE_GLOBAL1 */
+ /* globals INLINE_GLOBAL1 */
+ // re-add CONTENT_SCRIPT_GLOBAL1as a global once the sync loading of javascript is fixed for cross-origin
  mocha.setup({
      globals: ["CONTENT_SCRIPT_GLOBAL1", "INLINE_GLOBAL1"]
  });
@@ -10,7 +11,7 @@
  describe("jquery.partialLoad()", function () {
      var assert = chai.assert;
 
-     $('<div id="contentContainer">').appendTo('body');
+     $("<div id=\"contentContainer\">").appendTo("body");
 
      function cleanup() {
          $("#contentContainer").empty();

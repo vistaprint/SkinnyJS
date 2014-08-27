@@ -23,43 +23,43 @@ module.exports = function (grunt) {
                 jshintrc: ".jshintrc"
             }
         },
-        'js-test': {
+        "js-test": {
             options: {
-                pattern: 'test/*.unittests.js',
+                pattern: "test/*.unittests.js",
                 deps: [
-                    'dependencies/jquery.js',
-                    'test/unittests.shared.js'
+                    "dependencies/jquery.js",
+                    "test/unittests.shared.js"
                 ]
             },
             jquery17: {
                 options: {
                     pattern: [
-                        'test/jquery.partialLoad.unittests.js',
-                        'test/jquery.disableEvent.unittests.js',
+                        "test/jquery.partialLoad.unittests.js",
+                        "test/jquery.disableEvent.unittests.js",
                     ],
                     deps: [
-                        'dependencies/jquery-1.7.2.js',
-                        'test/unittests.shared.js'
+                        "dependencies/jquery-1.7.2.js",
+                        "test/unittests.shared.js"
                     ]
                 }
             },
             jquery110: {
                 options: {
-                    pattern: 'test/jquery.partialLoad.unittests.js',
+                    pattern: "test/jquery.partialLoad.unittests.js",
                     deps: [
-                        'dependencies/jquery-1.10.2.js',
-                        'test/unittests.shared.js'
+                        "dependencies/jquery-1.10.2.js",
+                        "test/unittests.shared.js"
                     ]
                 }
             },
             dialogSmallScreen: {
                 options: {
-                    pattern: 'test/jquery.modalDialog.*.unittests.html',
+                    pattern: "test/jquery.modalDialog.*.unittests.html",
                     deps: [
-                        'dependencies/jquery.js',
-                        'test/unittests.shared.js'
+                        "dependencies/jquery.js",
+                        "test/unittests.shared.js"
                     ],
-                    inject: 'smallscreen=1'
+                    inject: "smallscreen=1"
                 }
             },
         },
