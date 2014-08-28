@@ -657,7 +657,7 @@ sadly, no browser currently supports this and only sends us the single “button
               </div>
               <p>indicator to mark whether touch events are in progress
 when null, it means we have never received a touch event
-when true, user is currently touching something
+when number, user is currently touching something
 when false, user just released their finger (reset on mousedown if needed)</p>
 
             </div>
@@ -841,7 +841,7 @@ browsers that do not support the HTML DOM LEVEL 3 events spec</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (event.type === <span class="hljs-string">"pointermove"</span> &amp;&amp; _touching === <span class="hljs-literal">null</span> &amp;&amp; _buttons !== event.buttons) {
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (event.type !== <span class="hljs-string">"pointerdown"</span> &amp;&amp; event.pointerType === <span class="hljs-string">"mouse"</span> &amp;&amp; _touching === <span class="hljs-literal">null</span> &amp;&amp; _buttons !== event.buttons) {
                 event.buttons = _buttons;
             }</pre></div></div>
             
@@ -888,8 +888,8 @@ browsers that do not support the HTML DOM LEVEL 3 events spec</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
-              <p>prevent the follow native click event from occurring, can be used to prevent
-clicks on pointerdown or pointerup or from gestures like press and presshold</p>
+              <p>prevent the following native “click” event from occurring, can be used to prevent
+clicks on “pointerdown” or “pointerup” or from gestures like “press” and “presshold”</p>
 
             </div>
             
@@ -928,10 +928,10 @@ which means we need to fire multiple events per touch</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
-              <p>the problem with this is that on touchend it will remove the
+              <p>the problem with this is that on “touchend” it will remove the
 touch which has ended from the touches list, this means we do
-not want to fire pointerup for touches that are still there,
-we instead want to send a pointerup with the removed touch’s identifier</p>
+not want to fire “pointerup” for touches that are still there,
+we instead want to send a “pointerup” with the removed touch’s identifier</p>
 
             </div>
             
@@ -1002,8 +1002,9 @@ we instead want to send a pointerup with the removed touch’s identifier</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
-              <p>on pointerdown we need to only trigger a new pointerdown for the touch,
-and not the touches that were already there</p>
+              <p>on “pointerdown” we need to only trigger a new “pointerdown” for the new touches (fingers),
+and not the touches that were already active. Therefore we filter out all of the touches
+based on their identifier that we already knew were active before</p>
 
             </div>
             
@@ -1225,7 +1226,7 @@ create special custom events to mimic them</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-51">&#182;</a>
               </div>
-              <p>stores the scroll-y offest on touchstart and is compared
+              <p>stores the scroll-y offest on “touchstart” and is compared
 on touchend to see if we should trigger a click event</p>
 
             </div>
@@ -1261,11 +1262,11 @@ on touchend to see if we should trigger a click event</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-53">&#182;</a>
               </div>
-              <p>set the pointer as currently down to prevent chorded PointerDown events</p>
+              <p>set the pointer as currently down to prevent chorded “pointerdown” events</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                _touching = <span class="hljs-literal">true</span>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                _touching = event.timeStamp;</pre></div></div>
             
         </li>
         
@@ -1276,7 +1277,7 @@ on touchend to see if we should trigger a click event</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-54">&#182;</a>
               </div>
-              <p>trigger a new PointerDown event</p>
+              <p>trigger a new “pointerdown” event</p>
 
             </div>
             
@@ -1295,9 +1296,7 @@ on touchend to see if we should trigger a click event</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                _startScrollOffset = scrollY();
-            },
-            mouse: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                _startScrollOffset = scrollY();</pre></div></div>
             
         </li>
         
@@ -1308,13 +1307,13 @@ on touchend to see if we should trigger a click event</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-56">&#182;</a>
               </div>
-              <p>if we just had a touchstart, ignore this MouseDown event, to prevent double firing of PointerDown</p>
+              <p>no matter what, you cannot simply always call preventDefault() on “touchstart”
+this disables scrolling when touching the binded element, which is not appropriate.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (_touching === <span class="hljs-literal">true</span>) {
-                    <span class="hljs-keyword">return</span>;
-                }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            },
+            mouse: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -1325,11 +1324,13 @@ on touchend to see if we should trigger a click event</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-57">&#182;</a>
               </div>
-              <p>we reset the touch to null, to indicate that we’re listening to mouse events currently</p>
+              <p>if we just had a “touchstart”, ignore this “mousedown” event, to prevent double firing of “pointerdown”</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                _touching = <span class="hljs-literal">null</span>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> _touching === <span class="hljs-string">"number"</span>) {
+                    <span class="hljs-keyword">return</span>;
+                }</pre></div></div>
             
         </li>
         
@@ -1339,6 +1340,21 @@ on touchend to see if we should trigger a click event</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-58">&#182;</a>
+              </div>
+              <p>we reset the touch to null, to indicate that we’re listening to mouse events currently</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                _touching = <span class="hljs-literal">null</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-59">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-59">&#182;</a>
               </div>
               <p>update the _buttons bitmask</p>
 
@@ -1351,13 +1367,14 @@ on touchend to see if we should trigger a click event</p>
         </li>
         
         
-        <li id="section-59">
+        <li id="section-60">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-59">&#182;</a>
+                <a class="pilcrow" href="#section-60">&#182;</a>
               </div>
-              <p>do not trigger another PointerDown event if currently down, prevent chorded PointerDown events</p>
+              <p>do not trigger another “pointerdown” event if a button is currently down,
+this prevents chorded “pointerdown” events which is defined in the Pointer Events spec</p>
 
             </div>
             
@@ -1366,13 +1383,13 @@ on touchend to see if we should trigger a click event</p>
         </li>
         
         
-        <li id="section-60">
+        <li id="section-61">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-60">&#182;</a>
+                <a class="pilcrow" href="#section-61">&#182;</a>
               </div>
-              <p>per the Pointer Events spec, when the active buttons change it fires only a PointerMove event</p>
+              <p>per the Pointer Events spec, when the active buttons change it fires only a “pointermove” event</p>
 
             </div>
             
@@ -1387,11 +1404,11 @@ on touchend to see if we should trigger a click event</p>
         </li>
         
         
-        <li id="section-61">
+        <li id="section-62">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-61">&#182;</a>
+                <a class="pilcrow" href="#section-62">&#182;</a>
               </div>
               <p>bind to touch events, some devices (chromebook) can send both touch and mouse events</p>
 
@@ -1404,11 +1421,11 @@ on touchend to see if we should trigger a click event</p>
         </li>
         
         
-        <li id="section-62">
+        <li id="section-63">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-62">&#182;</a>
+                <a class="pilcrow" href="#section-63">&#182;</a>
               </div>
               <p>bind to mouse events</p>
 
@@ -1419,11 +1436,11 @@ on touchend to see if we should trigger a click event</p>
         </li>
         
         
-        <li id="section-63">
+        <li id="section-64">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-63">&#182;</a>
+                <a class="pilcrow" href="#section-64">&#182;</a>
               </div>
               <p>ensure we also bind to “pointerup” to properly clear signals and fire click event on “touchend”</p>
 
@@ -1437,11 +1454,11 @@ on touchend to see if we should trigger a click event</p>
         </li>
         
         
-        <li id="section-64">
+        <li id="section-65">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-64">&#182;</a>
+                <a class="pilcrow" href="#section-65">&#182;</a>
               </div>
               <p>unbind touch events</p>
 
@@ -1454,11 +1471,11 @@ on touchend to see if we should trigger a click event</p>
         </li>
         
         
-        <li id="section-65">
+        <li id="section-66">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-65">&#182;</a>
+                <a class="pilcrow" href="#section-66">&#182;</a>
               </div>
               <p>unbind mouse events</p>
 
@@ -1469,11 +1486,11 @@ on touchend to see if we should trigger a click event</p>
         </li>
         
         
-        <li id="section-66">
+        <li id="section-67">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-66">&#182;</a>
+                <a class="pilcrow" href="#section-67">&#182;</a>
               </div>
               <p>unbind the special “pointerup” we added for cleanup</p>
 
@@ -1491,11 +1508,11 @@ on touchend to see if we should trigger a click event</p>
         </li>
         
         
-        <li id="section-67">
+        <li id="section-68">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-67">&#182;</a>
+                <a class="pilcrow" href="#section-68">&#182;</a>
               </div>
               <p>prevent default to prevent the emulated “mouseup” event from being triggered</p>
 
@@ -1506,11 +1523,11 @@ on touchend to see if we should trigger a click event</p>
         </li>
         
         
-        <li id="section-68">
+        <li id="section-69">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-68">&#182;</a>
+                <a class="pilcrow" href="#section-69">&#182;</a>
               </div>
               <p>safety check, if _touching is null then we just had a mouse event and shouldn’t
 listen to touch events right now</p>
@@ -1524,37 +1541,18 @@ listen to touch events right now</p>
         </li>
         
         
-        <li id="section-69">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-69">&#182;</a>
-              </div>
-              <p>indicate that currently release the pointerdown lock</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                _touching = <span class="hljs-literal">false</span>;
-
-                <span class="hljs-keyword">var</span> jEvent = triggerCustomEvent(<span class="hljs-keyword">this</span>, <span class="hljs-string">"pointerup"</span>, event);</pre></div></div>
-            
-        </li>
-        
-        
         <li id="section-70">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-70">&#182;</a>
               </div>
-              <p>if we are preventing the next click event, then simply don’t trigger one below</p>
+              <p>timeStamp of when the last “touchstart” event was triggered,
+used to prevent double fire issues on iOS 7+ devices when needed</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (jEvent.isClickPrevented()) {
-                    $(event.target).off(<span class="hljs-string">"click"</span>, returnFalse);
-                    <span class="hljs-keyword">return</span>;
-                }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">var</span> lastTouchStarted = _touching;</pre></div></div>
             
         </li>
         
@@ -1565,23 +1563,11 @@ listen to touch events right now</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-71">&#182;</a>
               </div>
-              <p>on “touchend”, calling prevent default prevents the “mouseup” and “click” event
-however on native “mouseup” events preventing default does not cancel the “click” event
-as per the pointer event spec on “pointerup” preventing default should not cancel the “click” event</p>
-<p>we really do want to call this all the time, because if the function binded to this emulated
-“poiunterup” triggered above called prevent default it would also prevent the click, which
-would cause inconsistent behavior. To prevent the possibility of two click events though,
-we want to call prevent default all the time (as we do above) and then force trigger the click here</p>
-<p>we confirm that the user did not scroll, as touch events are very related to scrolling on
-touch devices, it’s possible we may mis-fire a click event on an <a> anchor tag causing
-navigation even though this was a scroll attempt. Do the the browser’s built in threshold
-to prevent accidental scrolling we do not add a threshold here.</p>
+              <p>trigger the emulated “pointerup” event, getting back the event</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (event.target &amp;&amp; event.target.click &amp;&amp; _startScrollOffset === scrollY()) {
-                    event.target.click();
-                }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">var</span> jEvent = triggerCustomEvent(<span class="hljs-keyword">this</span>, <span class="hljs-string">"pointerup"</span>, event);</pre></div></div>
             
         </li>
         
@@ -1592,22 +1578,14 @@ to prevent accidental scrolling we do not add a threshold here.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-72">&#182;</a>
               </div>
-              <p>on iOS 5 there is no native click function on elements, therefore we need to let jQuery handle it (AR-16405)
-on Android 4.1, you cannot prevent it from firing the native click event on touchend (GD-155106)</p>
+              <p>ensure we have a target before we attempt to deal with a “click” event</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (event.target &amp;&amp; _startScrollOffset === scrollY()) {
-                    <span class="hljs-keyword">var</span> clickTimer = setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-                        $(event.target).click();
-                    }, <span class="hljs-number">200</span>);
-
-                    $(event.target).one(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-                        clearTimeout(clickTimer);
-                    });
-                }
-            },
-            mouse: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (!event.target) {
+                    _touching = <span class="hljs-literal">false</span>; <span class="hljs-comment">// release the "pointerdown" lock</span>
+                    <span class="hljs-keyword">return</span>;
+                }</pre></div></div>
             
         </li>
         
@@ -1618,15 +1596,13 @@ on Android 4.1, you cannot prevent it from firing the native click event on touc
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-73">&#182;</a>
               </div>
-              <p>if originally we had a TouchStart or we ended with a TouchEnd event, ignore this MouseUp</p>
+              <p>while you may think if we are preventing the next “click” event (see jEvent.isClickPrevented)
+we could simply not trigger one below, that turns out to be a bad assumption. Due to the
+complex issue of dealing with various devices, often a click event is triggered regardless of
+calling preventDefault on “touchend” so we have to still go on and determine if a “click”
+event was triggered, if so, render it noop, if not, we don’t have to trigger one then.</p>
 
             </div>
-            
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (_touching === <span class="hljs-literal">false</span>) {
-                    <span class="hljs-keyword">return</span>;
-                }
-
-                _buttons ^= getStandardizedButtonsProperty(event);</pre></div></div>
             
         </li>
         
@@ -1637,7 +1613,141 @@ on Android 4.1, you cannot prevent it from firing the native click event on touc
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-74">&#182;</a>
               </div>
-              <p>we only trigger a PointerUp event if no buttons are down, prevent chorded PointerDown events</p>
+              <p>we confirm that the user did not scroll, as touch events are very related to scrolling on
+touch devices, it’s possible we may mis-fire a click event on an <a> anchor tag causing
+navigation even though this was a scroll attempt. We let the browser’s built in scrolling
+threshold prevent accidental scrolling so we only need to check if they scrolled at all.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (_startScrollOffset !== scrollY()) {
+                    _touching = <span class="hljs-literal">false</span>; <span class="hljs-comment">// release the "pointerdown" lock</span>
+                    <span class="hljs-keyword">return</span>;
+                }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-75">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-75">&#182;</a>
+              </div>
+              <p>on “touchend”, calling prevent default prevents the “mouseup” and “click” event
+however on native “mouseup” events preventing default does not cancel the “click” event
+as per the pointer event spec on “pointerup” preventing default should not cancel the “click” event</p>
+<p>so we really want to have a “click” event all the time. If a function binded to this emulated
+“poiunterup” calls prevent default it would result in preventing the “click” event, which would
+cause inconsistent behavior. To prevent the possibility of two click events though, we call
+prevent default all the time (see above) and then trigger a “click” event here.</p>
+<p>Additionally, we are currently looking at the “touchend” event, mobile devices usually add a 300ms
+delay before triggering click to check for double tap events (zooming action on most devices).
+In certain situations the mobile device will still fire a “click” event even if preventDefault is
+called on “touchend”, so we wait the 300ms and look for a click, then only fire a click if none
+was fired by the browser</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">var</span> clickTimer = setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                    <span class="hljs-keyword">if</span> (_touching === lastTouchStarted) {
+                        _touching = <span class="hljs-literal">false</span>; <span class="hljs-comment">// release the "pointerdown" lock</span>
+                    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-76">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-76">&#182;</a>
+              </div>
+              <p>at this point, if no click event was triggered, and we don’t want to to trigger a “click”
+event, we can simply not trigger one to begin with.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">if</span> (jEvent.isClickPrevented()) {
+                        $(event.target).off(<span class="hljs-string">"click"</span>, returnFalse);
+                        <span class="hljs-keyword">return</span>;
+                    }
+
+                    <span class="hljs-keyword">if</span> (event.target.click) {
+                        event.target.click();
+                    } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-77">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-77">&#182;</a>
+              </div>
+              <p>iOS 5 and older Android browsers do not define native .click events on all elements</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                        $(event.target).click();
+                    }
+                }, <span class="hljs-number">300</span>);
+
+                $(event.target).one(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                    <span class="hljs-keyword">if</span> (_touching === lastTouchStarted) {
+                        _touching = <span class="hljs-literal">false</span>;
+                    }
+
+                    <span class="hljs-keyword">if</span> (clickTimer) {
+                        clearTimeout(clickTimer);
+                    }
+                });
+            },
+            mouse: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-78">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-78">&#182;</a>
+              </div>
+              <p>if originally we had a “touchstart” or we ended with a “touchend” event, ignore this “mouseup”</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (_touching !== <span class="hljs-literal">null</span>) {
+                    <span class="hljs-keyword">return</span>;
+                }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-79">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-79">&#182;</a>
+              </div>
+              <p>on mouseup, the event.button will be the button that was just released</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                _buttons ^= getStandardizedButtonsProperty(event);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-80">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-80">&#182;</a>
+              </div>
+              <p>we only trigger a “pointerup” event if no buttons are down, prevent chorded PointerDown events</p>
 
             </div>
             
@@ -1648,11 +1758,11 @@ on Android 4.1, you cannot prevent it from firing the native click event on touc
         </li>
         
         
-        <li id="section-75">
+        <li id="section-81">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-75">&#182;</a>
+                <a class="pilcrow" href="#section-81">&#182;</a>
               </div>
               <p>per the Pointer Events spec, when the active buttons change it fires only a PointerMove event</p>
 
@@ -1664,14 +1774,14 @@ on Android 4.1, you cannot prevent it from firing the native click event on touc
         </li>
         
         
-        <li id="section-76">
+        <li id="section-82">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-76">&#182;</a>
+                <a class="pilcrow" href="#section-82">&#182;</a>
               </div>
-              <p>Mouse Events spec shows that after a MouseUp it fires a MouseMove, which will trigger
-the PointerMove needed to follow the Pointer Events spec which describes the same thing</p>
+              <p>Mouse Events spec shows that after a “mouseup” it fires a “mousemove”, which will trigger
+the “pointermove” needed to follow the Pointer Events spec which describes the same thing</p>
 
             </div>
             
@@ -1681,11 +1791,11 @@ the PointerMove needed to follow the Pointer Events spec which describes the sam
         </li>
         
         
-        <li id="section-77">
+        <li id="section-83">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-77">&#182;</a>
+                <a class="pilcrow" href="#section-83">&#182;</a>
               </div>
               <p>bind to touch events, some devices (chromebook) can send both touch and mouse events</p>
 
@@ -1698,11 +1808,11 @@ the PointerMove needed to follow the Pointer Events spec which describes the sam
         </li>
         
         
-        <li id="section-78">
+        <li id="section-84">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-78">&#182;</a>
+                <a class="pilcrow" href="#section-84">&#182;</a>
               </div>
               <p>bind mouse events</p>
 
@@ -1715,11 +1825,11 @@ the PointerMove needed to follow the Pointer Events spec which describes the sam
         </li>
         
         
-        <li id="section-79">
+        <li id="section-85">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-79">&#182;</a>
+                <a class="pilcrow" href="#section-85">&#182;</a>
               </div>
               <p>unbind touch events</p>
 
@@ -1732,11 +1842,11 @@ the PointerMove needed to follow the Pointer Events spec which describes the sam
         </li>
         
         
-        <li id="section-80">
+        <li id="section-86">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-80">&#182;</a>
+                <a class="pilcrow" href="#section-86">&#182;</a>
               </div>
               <p>unbind mouse events</p>
 
@@ -1755,20 +1865,20 @@ the PointerMove needed to follow the Pointer Events spec which describes the sam
         </li>
         
         
-        <li id="section-81">
+        <li id="section-87">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-81">&#182;</a>
+                <a class="pilcrow" href="#section-87">&#182;</a>
               </div>
-              <p>_touching will be true if they currently have their finger (touch only) down
+              <p>_touching will be a number if they currently have their finger (touch only) down
 because we cannot call preventDefault on the “touchmove” without preventing
 scrolling on most things, we do this check to ensure we don’t double fire
 move events.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (_touching === <span class="hljs-literal">true</span>) {
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> _touching === <span class="hljs-string">"number"</span>) {
                     <span class="hljs-keyword">return</span>;
                 }
 
@@ -1779,11 +1889,11 @@ move events.</p>
         </li>
         
         
-        <li id="section-82">
+        <li id="section-88">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-82">&#182;</a>
+                <a class="pilcrow" href="#section-88">&#182;</a>
               </div>
               <p>bind to touch events, some devices (chromebook) can send both touch and mouse events</p>
 
@@ -1796,11 +1906,11 @@ move events.</p>
         </li>
         
         
-        <li id="section-83">
+        <li id="section-89">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-83">&#182;</a>
+                <a class="pilcrow" href="#section-89">&#182;</a>
               </div>
               <p>bind mouse events</p>
 
@@ -1813,11 +1923,11 @@ move events.</p>
         </li>
         
         
-        <li id="section-84">
+        <li id="section-90">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-84">&#182;</a>
+                <a class="pilcrow" href="#section-90">&#182;</a>
               </div>
               <p>unbind touch events</p>
 
@@ -1830,11 +1940,11 @@ move events.</p>
         </li>
         
         
-        <li id="section-85">
+        <li id="section-91">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-85">&#182;</a>
+                <a class="pilcrow" href="#section-91">&#182;</a>
               </div>
               <p>unbind mouse events</p>
 
@@ -1855,7 +1965,26 @@ move events.</p>
                 touch: <span class="hljs-string">"touchcancel"</span>
             }
         }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(pointerEventType, natives)</span> </span>{
-            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onTouch</span><span class="hljs-params">(event)</span> </span>{
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onTouch</span><span class="hljs-params">(event)</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-92">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-92">&#182;</a>
+              </div>
+              <p>pointercancel, reset everything</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (event.type === <span class="hljs-string">"touchcancel"</span>) {
+                    _touching = <span class="hljs-literal">null</span>;
+                    _buttons = <span class="hljs-number">0</span>;
+                }
+
                 triggerCustomEvent(<span class="hljs-keyword">this</span>, pointerEventType, event);
             }
 
@@ -1887,11 +2016,11 @@ move events.</p>
         </li>
         
         
-        <li id="section-86">
+        <li id="section-93">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-86">&#182;</a>
+                <a class="pilcrow" href="#section-93">&#182;</a>
               </div>
               <p>for IE10 specific, we proxy though events so we do not need to deal
 with the various names or renaming of events.</p>
@@ -1939,11 +2068,11 @@ with the various names or renaming of events.</p>
         </li>
         
         
-        <li id="section-87">
+        <li id="section-94">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-87">&#182;</a>
+                <a class="pilcrow" href="#section-94">&#182;</a>
               </div>
               <p>add support for pointerenter and pointerlave
 pointerenter and pointerleave were added in IE11, they do not exist in IE10</p>
@@ -1955,11 +2084,11 @@ pointerenter and pointerleave were added in IE11, they do not exist in IE10</p>
         </li>
         
         
-        <li id="section-88">
+        <li id="section-95">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-88">&#182;</a>
+                <a class="pilcrow" href="#section-95">&#182;</a>
               </div>
               <p>Create a wrapper similar to jQuery’s mouseenter/leave events
 using pointer events (pointerover/out) and event-time checks</p>
@@ -1982,11 +2111,11 @@ using pointer events (pointerover/out) and event-time checks</p>
         </li>
         
         
-        <li id="section-89">
+        <li id="section-96">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-89">&#182;</a>
+                <a class="pilcrow" href="#section-96">&#182;</a>
               </div>
               <p>For mousenter/leave call the handler if related is outside the target.
 NB: No relatedTarget if the mouse left/entered the browser window</p>
