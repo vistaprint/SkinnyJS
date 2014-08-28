@@ -59,7 +59,7 @@ module.exports = function (grunt) {
                         "dependencies/jquery.js",
                         "test/unittests.shared.js"
                     ],
-                    inject: "smallscreen=1"
+                    injectQueryString: "smallscreen=1"
                 }
             },
         },
