@@ -13,6 +13,21 @@
 
 (function ($) {
 
+    // return a cloned copy of a given event that has been slightly modified
+    function copyEvent(originaljQEvent, type, extras) {
+        var event = originaljQEvent; // TODO: this should clone the originaljQEvent object
+
+        event.type = type;
+        event.isPropagationStopped = function () { return false; };
+        event.isDefaultPrevented = function () { return false; };
+
+        if (extras) {
+            $.extend(event, extras);
+        }
+
+        return event;
+    }
+
     // also handles sweepleft, sweepright
     $.event.special.sweep = {
         // More than this horizontal displacement, and we will suppress scrolling.
@@ -81,14 +96,8 @@
                     if (start && stop && $.event.special.sweep.isSweep(start, stop, true)) {
                         var dir = start.coords[0] > stop.coords[0] ? "left" : "right";
 
-                        event.type = "sweep";
-                        event.direction = dir;
-
-                        $.event.dispatch.call(thisObject, event);
-
-                        event.type = "sweep" + dir;
-
-                        $.event.dispatch.call(thisObject, event);
+                        $.event.dispatch.call(thisObject, copyEvent(event, "sweep", { direction: dir }));
+                        $.event.dispatch.call(thisObject, copyEvent(event, "sweep" + dir, { direction: dir }));
                     }
 
                     start = stop = undefined;
@@ -175,8 +184,7 @@
 
                     // Trigger a "press" event if the start target is the same as the stop target.
                     if (!isPresshold && origTarget === event.target) {
-                        event.type = "press";
-                        $.event.dispatch.call(thisObject, event);
+                        $.event.dispatch.call(thisObject, copyEvent(event, "press"));
                     }
 
                     // if this was a "presshold", prevent this "pointerup" event from causing more events
@@ -211,8 +219,7 @@
 
                     // Trigger a "presshold" event if the start target is the same as the stop target.
                     if (origTarget === event.target) {
-                        event.type = "presshold";
-                        $.event.dispatch.call(thisObject, event);
+                        $.event.dispatch.call(thisObject, copyEvent(event, "presshold"));
                     }
                 }, $.event.special.press.pressholdThreshold);
             };
