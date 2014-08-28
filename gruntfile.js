@@ -54,12 +54,12 @@ module.exports = function (grunt) {
             },
             dialogSmallScreen: {
                 options: {
-                    pattern: "test/jquery.modalDialog.*.unittests.html",
+                    pattern: "test/jquery.modalDialog.*.unittests.js",
                     deps: [
                         "dependencies/jquery.js",
                         "test/unittests.shared.js"
                     ],
-                    inject: "smallscreen=1"
+                    injectQueryString: "smallscreen=1"
                 }
             },
         },
