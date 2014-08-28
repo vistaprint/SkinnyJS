@@ -54,7 +54,7 @@ module.exports = function (grunt) {
             },
             dialogSmallScreen: {
                 options: {
-                    pattern: "test/jquery.modalDialog.*.unittests.html",
+                    pattern: "test/jquery.modalDialog.*.unittests.js",
                     deps: [
                         "dependencies/jquery.js",
                         "test/unittests.shared.js"
@@ -238,7 +238,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask("default", ["verify", "build"]);
 
-    grunt.registerTask("test", ["less", "js-test:jquery19", "js-test:jquery17", "js-test:jquery110", "js-test:dialogSmallScreen"]);
+    grunt.registerTask("test", ["less", "js-test", "js-test:jquery17", "js-test:jquery110", "js-test:dialogSmallScreen"]);
 
     grunt.registerTask("verify", ["jshint", "test"]);
 
