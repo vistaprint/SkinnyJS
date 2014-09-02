@@ -783,7 +783,7 @@
             var box = $.extend({}, content, pos);
 
             // verify position is not over the context and within expected limits
-            if (!_isPointInRange(pos, maxBounds) ||
+            if (/*!_isPointInRange(pos, maxBounds) || */
                 (options.cornerAdjacent && !isCornerAdjacent(direction, pos)) ||
                 $.doBoundingBoxesIntersect(box, context)) {
                 // check to see if we are about to start over
