@@ -1,4 +1,4 @@
-/// <reference path="jquery.querystring.js" />
+/// <reference path="jquery.queryString.js" />
 
 (function ($) {
 

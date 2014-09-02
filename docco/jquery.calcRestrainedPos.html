@@ -2338,7 +2338,7 @@ Now calculate the position closest to the ideal (centered relative to context).<
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (!_isPointInRange(pos, maxBounds) ||
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (<span class="hljs-comment">/*!_isPointInRange(pos, maxBounds) || */</span>
                 (options.cornerAdjacent &amp;&amp; !isCornerAdjacent(direction, pos)) ||
                 $.doBoundingBoxesIntersect(box, context)) {</pre></div></div>
             
