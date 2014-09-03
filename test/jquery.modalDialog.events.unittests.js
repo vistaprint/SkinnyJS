@@ -6,6 +6,8 @@ $.modalDialog.animationDuration = 100;
 
 // Events unit test
 describe("jquery.modalDialog", function () {
+    this.timeout(6000);
+
     var assert = chai.assert;
 
     describe("#create()", function () {

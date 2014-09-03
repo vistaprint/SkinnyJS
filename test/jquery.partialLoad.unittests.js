@@ -9,6 +9,8 @@
  });
 
  describe("jquery.partialLoad()", function () {
+     this.timeout(6000);
+
      var assert = chai.assert;
 
      $("<div id=\"contentContainer\">").appendTo("body");

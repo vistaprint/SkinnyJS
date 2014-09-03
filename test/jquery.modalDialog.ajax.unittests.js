@@ -5,6 +5,8 @@ $.modalDialog.iframeLoadTimeout = 1000;
 $.modalDialog.animationDuration = 100;
 
 describe("AjaxDialog", function () {
+    this.timeout(6000);
+
     var assert = chai.assert;
 
     it("should load content from a full HTML document", function (done) {

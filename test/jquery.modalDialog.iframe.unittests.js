@@ -7,6 +7,8 @@ $.modalDialog.animationDuration = 100;
 
 describe("jquery.modalDialog.create", function () {
 
+    this.timeout(6000);
+
     var assert = chai.assert;
 
     var wait = function () {

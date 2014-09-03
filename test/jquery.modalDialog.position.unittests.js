@@ -10,7 +10,9 @@
  $.modalDialog.animationDuration = 100;
 
  describe("jquery.modalDialog.position", function () {
-     var assert = chai.assert;
+     this.timeout(6000);
+
+    var assert = chai.assert;
 
      it("is centered when opened", function (done) {
          var dialog = $.modalDialog.create({

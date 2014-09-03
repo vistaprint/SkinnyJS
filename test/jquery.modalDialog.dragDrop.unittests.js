@@ -5,6 +5,8 @@ $.modalDialog.iframeLoadTimeout = 1000;
 $.modalDialog.animationDuration = 100;
 
 describe("jquery.modalDialog", function () {
+    this.timeout(6000);
+
     var assert = chai.assert;
 
     function trigger($el, eventName, props) {

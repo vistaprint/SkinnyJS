@@ -18,6 +18,8 @@ describe("jquery.modalDialog.history", function () {
 
     /* jshint quotmark:false */
 
+    this.timeout(6000);
+
     var assert = chai.assert;
 
     var wait = function () {

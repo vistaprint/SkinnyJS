@@ -4,6 +4,8 @@
  /*jshint quotmark:false */
 
  describe("jquery.modalDialog.multiple", function () {
+     this.timeout(6000);
+
      var assert = chai.assert;
 
      $.modalDialog.iframeLoadTimeout = 1000;

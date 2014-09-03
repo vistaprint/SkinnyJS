@@ -7,6 +7,8 @@
  $.modalDialog.animationDuration = 100;
 
  describe("$.modalDialog.getSettings()", function () {
+     this.timeout(6000);
+
      var assert = chai.assert;
 
      function createDiv(attrs) {

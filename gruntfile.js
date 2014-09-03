@@ -29,7 +29,10 @@ module.exports = function (grunt) {
                 deps: [
                     "dependencies/jquery.js",
                     "test/unittests.shared.js"
-                ]
+                ],
+                mocha: { 
+                    timeout: 6000
+                }
             },
             jquery17: {
                 options: {
