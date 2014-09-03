@@ -2743,7 +2743,25 @@ associated with the DOM element.</p>
             dialog.setHeight(<span class="hljs-built_in">parseInt</span>(qs.height, <span class="hljs-number">10</span>), qs.center === <span class="hljs-string">"true"</span>, qs.skipAnimation === <span class="hljs-string">"true"</span>);
         },
 
-        setTitle: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog, qs)</span> </span>{
+        setTitle: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog, qs)</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-105">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-105">&#182;</a>
+              </div>
+              <p>If settings.title is specified explicitly, it should win over
+an iframe dialog’s HTML title</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (qs.initializing &amp;&amp; dialog.settings.title) {
+                <span class="hljs-keyword">return</span>;
+            }
             dialog.setTitle(qs.title);
         },
 
@@ -2760,11 +2778,11 @@ associated with the DOM element.</p>
         </li>
         
         
-        <li id="section-105">
+        <li id="section-106">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-105">&#182;</a>
+                <a class="pilcrow" href="#section-106">&#182;</a>
               </div>
               <p>do nothing- the dialog was created already</p>
 
@@ -2791,11 +2809,11 @@ associated with the DOM element.</p>
         </li>
         
         
-        <li id="section-106">
+        <li id="section-107">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-106">&#182;</a>
+                <a class="pilcrow" href="#section-107">&#182;</a>
               </div>
               <p>ignore- it wasn’t a message for the dialog framework</p>
 
@@ -2806,11 +2824,11 @@ associated with the DOM element.</p>
         </li>
         
         
-        <li id="section-107">
+        <li id="section-108">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-107">&#182;</a>
+                <a class="pilcrow" href="#section-108">&#182;</a>
               </div>
               <p>messages in the dialog framework contain “dialogCmd”</p>
 
@@ -2826,11 +2844,11 @@ associated with the DOM element.</p>
         </li>
         
         
-        <li id="section-108">
+        <li id="section-109">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-108">&#182;</a>
+                <a class="pilcrow" href="#section-109">&#182;</a>
               </div>
               <p>If a fullId is passed, it can be either for a new dialog or an existing dialog.
 $.modalDialog.create() handles both cases.</p>
@@ -2854,11 +2872,11 @@ $.modalDialog.create() handles both cases.</p>
         </li>
         
         
-        <li id="section-109">
+        <li id="section-110">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-109">&#182;</a>
+                <a class="pilcrow" href="#section-110">&#182;</a>
               </div>
               <p>Note: It is a bit odd that even though we have the jquery.postMessage() plugin,
 we’re still checking its availability and calling the native implementation here.
@@ -2877,11 +2895,11 @@ and it may not be desirable to load it at all.</p>
         </li>
         
         
-        <li id="section-110">
+        <li id="section-111">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-110">&#182;</a>
+                <a class="pilcrow" href="#section-111">&#182;</a>
               </div>
               <p>Global hook to simplify non-cross domain communication</p>
 
@@ -2902,11 +2920,11 @@ and it may not be desirable to load it at all.</p>
         </li>
         
         
-        <li id="section-111">
+        <li id="section-112">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-111">&#182;</a>
+                <a class="pilcrow" href="#section-112">&#182;</a>
               </div>
               <p>jQuery mobile support</p>
 
@@ -2920,11 +2938,11 @@ and it may not be desirable to load it at all.</p>
         </li>
         
         
-        <li id="section-112">
+        <li id="section-113">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-112">&#182;</a>
+                <a class="pilcrow" href="#section-113">&#182;</a>
               </div>
               <p>Alternate defaults when jQuery mobile is loaded. Work around JQM’s quirks.</p>
 
@@ -2936,11 +2954,11 @@ and it may not be desirable to load it at all.</p>
         </li>
         
         
-        <li id="section-113">
+        <li id="section-114">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-113">&#182;</a>
+                <a class="pilcrow" href="#section-114">&#182;</a>
               </div>
               <p>JQM widgets must be in the active data-role=”page” element to work
 containerElement: “.ui-page.ui-page-active”,</p>
@@ -2950,11 +2968,11 @@ containerElement: “.ui-page.ui-page-active”,</p>
         </li>
         
         
-        <li id="section-114">
+        <li id="section-115">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-114">&#182;</a>
+                <a class="pilcrow" href="#section-115">&#182;</a>
               </div>
               <p>Event bubbling breaks many JQM widgets</p>
 

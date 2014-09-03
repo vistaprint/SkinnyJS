@@ -617,14 +617,15 @@ contentHeight might never match _currentFrameHeight.</p>
             <span class="hljs-keyword">this</span>._postCommandToParent(<span class="hljs-string">"center"</span>);
         },
 
-        setTitle: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(title)</span> </span>{
+        setTitle: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(title, initializing)</span> </span>{
             <span class="hljs-keyword">this</span>._postCommandToParent(<span class="hljs-string">"setTitle"</span>, {
-                title: title
+                title: title,
+                initializing: !!initializing
             });
         },
 
-        setTitleFromContent: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-            <span class="hljs-keyword">this</span>.setTitle(<span class="hljs-built_in">document</span>.title);
+        setTitleFromContent: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(initializing)</span> </span>{
+            <span class="hljs-keyword">this</span>.setTitle(<span class="hljs-built_in">document</span>.title, initializing);
         },
 
         notifyReady: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
@@ -666,7 +667,7 @@ contentHeight might never match _currentFrameHeight.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> ($.modalDialog.useTitleTag) {
-                <span class="hljs-keyword">this</span>.setTitleFromContent();
+                <span class="hljs-keyword">this</span>.setTitleFromContent(<span class="hljs-literal">true</span>);
             }</pre></div></div>
             
         </li>

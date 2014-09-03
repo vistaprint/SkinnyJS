@@ -1394,6 +1394,12 @@
         },
 
         setTitle: function (dialog, qs) {
+
+            // If settings.title is specified explicitly, it should win over
+            // an iframe dialog's HTML title
+            if (qs.initializing && dialog.settings.title) {
+                return;
+            }
             dialog.setTitle(qs.title);
         },
 
