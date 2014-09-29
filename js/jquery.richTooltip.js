@@ -42,9 +42,6 @@
         // add functional classes
         this.content.addClass('rich-tooltip-pos-' + this.options.pos);
 
-        // move the content to the body to avoid positioning conflicts
-        this.content.appendTo('body');
-
         // configure the context
         this.context.attr('data-rel', 'tooltip');
 
@@ -107,11 +104,50 @@
         }
     };
 
+    //Borrowed from the JQuery UI core method zIndex. 
+    //See https://github.com/jquery/jquery-ui/blob/master/ui/core.js 
+    function findZIndex( elem ) {
+        var pos;
+        var zIndexVal;
+        if ( this.length ) {
+            while ( elem.length && elem[ 0 ] !== $(document) ) {
+                // Ignore z-index if position is set to a value where z-index is ignored by the browser
+                // This makes behavior of this function consistent across browsers
+                // WebKit always returns auto if the element is positioned
+                pos = elem.css( "position" );
+                if ( pos === "absolute" || pos === "relative" || pos === "fixed" ) {
+                    // IE returns 0 when zIndex is not specified
+                    // other browsers return a string
+                    // we ignore the case of nested elements with an explicit value of 0
+                    // <div style="z-index: -10;"><div style="z-index: 0;"></div></div>
+                    zIndexVal = parseInt( elem.css( "zIndex" ), 10 );
+                    if ( !isNaN( zIndexVal ) && zIndexVal !== 0 ) {
+                        return zIndexVal;
+                    }
+                }
+                elem = elem.parent();
+            }
+        }
+        return 0;
+    }
+
     Tooltip.prototype.show = function () {
         this._clearHoverTimeout();
 
         if (this.visible) {
             return;
+        }
+
+        var zIndex = findZIndex(this.content.parent());
+        // if the tooltip has a parent with z-index, set tooltip's one higher.
+        // In case the tooltip being used inside a control like a modal dialog.
+        if (zIndex > 0) {
+            this.content.css('z-index', zIndex + 1);
+        }
+
+        // move the content to the body to avoid positioning conflicts
+        if (!this.content.parent().is('body')) { 
+            this.content.appendTo('body');
         }
 
         // tell other ui events we are opening, hopefully they all close themselves
