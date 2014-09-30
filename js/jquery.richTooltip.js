@@ -109,6 +109,7 @@
     function findZIndex( elem ) {
         var pos;
         var zIndexVal;
+        var maxZIndexVal = 0;
         if ( this.length ) {
             while ( elem.length && elem[ 0 ] !== $(document) ) {
                 // Ignore z-index if position is set to a value where z-index is ignored by the browser
@@ -122,13 +123,16 @@
                     // <div style="z-index: -10;"><div style="z-index: 0;"></div></div>
                     zIndexVal = parseInt( elem.css( 'zIndex' ), 10 );
                     if ( !isNaN( zIndexVal ) && zIndexVal !== 0 ) {
-                        return zIndexVal;
+                        if (zIndexVal > maxZIndexVal) {
+                            maxZIndexVal = zIndexVal;
+                        }
                     }
                 }
                 elem = elem.parent();
             }
         }
-        return 0;
+
+        return maxZIndexVal;
     }
 
     Tooltip.prototype.show = function () {
@@ -304,7 +308,7 @@
 
         case 'east':
         case 'west':
-            arrowPos.top = contextRect.top - pos.top + (contextRect.height / 2) - ARROW_WIDTH;
+            arrowPos.top = contextRect.top - pos.top + contextRect.height - ARROW_WIDTH;
             arrowPos[restrainedPos.direction === 'east' ? 'left' : 'right'] = 0;
             break;
         }
