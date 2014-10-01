@@ -63,6 +63,9 @@
         // NOTE: This option is ignored when showOnHover is false.
         linksWithSubmenusEnabled: false,
 
+        // When true, a click on a top level menu that's open (hover) will navigate rather than just close the menu
+        navigateOnHoverPress: true,
+
         // Event which fires when a menu item is selected.
         selected: null,
 
@@ -471,10 +474,13 @@
 
         // At this point we know this is a touch event, and we want to toggle the panel.
 
-        // Prevent the click event to prevent navigation
-        e.preventDefault();
-        e.preventClick();
-
+        // If the menu is closed, or if it's open and we want a click to hide the menu and not navigate, then prevent navigation
+        if (!this.options.navigateOnHoverPress || !this.isOpen)
+        {
+            e.preventDefault();
+            e.preventClick();
+        }
+        
         if (this.transitioning) {
             return;
         }
