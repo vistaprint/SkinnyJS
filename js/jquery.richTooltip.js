@@ -111,7 +111,7 @@
         var zIndexVal;
         var maxZIndexVal = 0;
         if ( this.length ) {
-            while ( elem.length && elem[ 0 ] !== $(document) ) {
+            while ( elem.length && elem[ 0 ] !== document ) {
                 // Ignore z-index if position is set to a value where z-index is ignored by the browser
                 // This makes behavior of this function consistent across browsers
                 // WebKit always returns auto if the element is positioned
