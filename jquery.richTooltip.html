@@ -126,24 +126,85 @@
 
     <h2 id="jqueryrichtooltip">jQuery.richTooltip</h2>
 
-<p>jQuery.richTooltip is a tooltip replacement which, unlike traditional tooltips, is designed to work on both desktop and touch/mobile devices.</p>
+<p>jQuery.richTooltip is a responsive tooltip which is designed to be optimized for both mouse and touch driven devices. It relies on <a href="https://github.com/vistaprint/PointyJS">Pointy.js</a> to standardize user driven events.</p>
 
 <h3 id="usage">Usage</h3>
+
+<p>Tooltips can be created both unobtrusively through data attributes or through a programmatic API.</p>
+
+<h4 id="data_attributes">Data attributes</h4>
+
+<h5 id="by_convention">By convention</h5>
+
+<p>You can create tooltips by convention using an <code>&lt;aside&gt;</code> element adjacent to any other element containing a the <code>data-rel=&quot;tooltip&quot;</code> attribute.</p>
 <div class='highlight'><pre><code class='html'>	<span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;#&quot;</span> <span class='na'>data-rel=</span><span class='s'>&quot;tooltip&quot;</span><span class='nt'>&gt;</span>Help?<span class='nt'>&lt;/a&gt;</span>
 	<span class='nt'>&lt;aside&gt;</span>
 		Your tooltip content!
 	<span class='nt'>&lt;/aside&gt;</span>
-</code></pre></div><div class='highlight'><pre><code class='html'>	<span class='nt'>&lt;div&gt;</span>
+</code></pre></div>
+<h5 id="with_a_selector">With a selector</h5>
+
+<p>Alternatively you can specify the tooltip content element via the <code>data-tooltip</code> attribute giving a selector to tooltip content.</p>
+<div class='highlight'><pre><code class='html'>	<span class='nt'>&lt;div&gt;</span>
 		<span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;#&quot;</span> <span class='na'>data-tooltip=</span><span class='s'>&quot;#mytooltip&quot;</span><span class='nt'>&gt;</span>Help?<span class='nt'>&lt;/a&gt;</span>
 	<span class='nt'>&lt;/div&gt;</span>
 	..
 	<span class='nt'>&lt;aside</span> <span class='na'>id=</span><span class='s'>&quot;mytooltip&quot;</span> <span class='na'>class=</span><span class='s'>&quot;rich-tooltip&quot;</span><span class='nt'>&gt;</span>
 		Your tooltip content!
 	<span class='nt'>&lt;/aside&gt;</span>
-</code></pre></div><div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#el&#39;</span><span class='p'>).</span><span class='nx'>richTooltip</span><span class='p'>({</span>
-    	<span class='nx'>content</span><span class='o'>:</span> <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#mytooltip&#39;</span><span class='p'>)</span>
-    <span class='p'>});</span>
 </code></pre></div>
+<h4 id="programmatic_api">Programmatic API</h4>
+
+<p>To create a tooltip programmatically you simply call <code>$(context).richTooltip(options);</code>. Here is a simple example:</p>
+<div class='highlight'><pre><code class='javascript'>	<span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#el&#39;</span><span class='p'>).</span><span class='nx'>richTooltip</span><span class='p'>({</span>
+		<span class='nx'>content</span><span class='o'>:</span> <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#mytooltip&#39;</span><span class='p'>)</span>
+	<span class='p'>});</span>
+</code></pre></div>
+<p>The programmatic API allows you to also programmatically hide and show a tooltip via:</p>
+<div class='highlight'><pre><code class='javascript'>	<span class='c1'>// to show a tootlip</span>
+	<span class='nx'>$</span><span class='p'>(</span><span class='nx'>context</span><span class='p'>).</span><span class='nx'>richTooltip</span><span class='p'>(</span><span class='s1'>&#39;show&#39;</span><span class='p'>);</span>
+
+	<span class='c1'>// to hide a tooltip</span>
+	<span class='nx'>$</span><span class='p'>(</span><span class='nx'>context</span><span class='p'>).</span><span class='nx'>richTooltip</span><span class='p'>(</span><span class='s1'>&#39;hide&#39;</span><span class='p'>);</span>
+
+	<span class='c1'>// to toggle the tooltip</span>
+	<span class='nx'>$</span><span class='p'>(</span><span class='nx'>context</span><span class='p'>).</span><span class='nx'>richTooltip</span><span class='p'>(</span><span class='s1'>&#39;toggle&#39;</span><span class='p'>);</span>
+</code></pre></div>
+<h4 id="events">Events</h4>
+
+<h5 id="richtooltipopen">richTooltip:open</h5>
+
+<p>A jQuery event <code>richTooltip:open</code> is triggered on the tooltip context whenever a wired up tooltip is opened.</p>
+<div class='highlight'><pre><code class='javascript'>	<span class='nx'>$</span><span class='p'>(</span><span class='nx'>context</span><span class='p'>).</span><span class='nx'>on</span><span class='p'>(</span><span class='s1'>&#39;richTooltip:open&#39;</span><span class='p'>,</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>event</span><span class='p'>,</span> <span class='nx'>tooltip</span><span class='p'>)</span> <span class='p'>{</span>
+		<span class='c1'>// tooltip will be the instance of the internal Tooltip class</span>
+	<span class='p'>});</span>
+</code></pre></div>
+<h5 id="richtooltipclose">richTooltip:close</h5>
+
+<p>A jQuery event <code>richTooltip:close</code> is triggered on the tooltip context whenever a wired up tooltip is closed.</p>
+<div class='highlight'><pre><code class='javascript'>	<span class='nx'>$</span><span class='p'>(</span><span class='nx'>context</span><span class='p'>).</span><span class='nx'>on</span><span class='p'>(</span><span class='s1'>&#39;richTooltip:close&#39;</span><span class='p'>,</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>event</span><span class='p'>,</span> <span class='nx'>tooltip</span><span class='p'>)</span> <span class='p'>{</span>
+		<span class='c1'>// tooltip will be the instance of the internal Tooltip class</span>
+	<span class='p'>});</span>
+</code></pre></div>
+<h4 id="options">Options</h4>
+
+<h5 id="position">Position</h5>
+
+<p>Set via <code>pos</code> or <code>data-tooltip-pos</code>. Acceptable values are: north, east, south or west. This specifies the desired position for the tooltip to appear, however it is not a guarantee the tooltip will appear in the desired position. Positioning is determined by <a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.calcRestrainedPos.js">jquery.calcRestrainedPos.js</a>, which calculates where the tooltip will be visible within the viewport, within any containers provided, and not overlapping any obstacles specified. Additionally on small screens, such as mobile devices, east and west directions are ignored and it will default to south if either is used.</p>
+
+<h5 id="arrow_style">Arrow Style</h5>
+
+<p>Set via the <code>arrowStyle</code> or <code>data-tooltip-arrow-style</code>. Known values are ‘outset’ or ‘inset’, by default the value is ‘outset’. This styling is used when calculating the optimized position for a tooltip. When the value is outset, the arrow is known to be outside the tooltip’s bounding box and therefore increases the positioning distance from the tooltip context. When the styling is inset, it is assumed the arrow is overlapping the tooltip.</p>
+
+<h5 id="optout_functionality">Opt-out functionality</h5>
+
+<h6 id="dont_close_on_window_resize">Don’t close on window resize</h6>
+
+<p>By default, tooltips are closed on window resize. If you’d like to disable this, you can either set the property <code>closeOnWindowResize: false</code> or add the data attribute <code>data-tooltip-ignore-window-resize</code> to the tooltip context.</p>
+
+<h6 id="dont_close_on_document_click">Don’t close on document click</h6>
+
+<p>By default, tooltips are closed on document clicks that aren’t to the tooltip itself or its context. If you’d like to disable this, you can either set the property <code>closeOnDocumentClick: false</code> or add the data attribute <code>data-tooltip-ignore-document-click</code> to the tooltip context.</p>
   </div>
 </div>
  
