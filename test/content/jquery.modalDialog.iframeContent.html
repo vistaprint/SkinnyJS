@@ -4,23 +4,23 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <link rel="stylesheet" href="../../dist/css/jquery.modalDialogContent.css" />
+  <link rel="stylesheet" href="/dist/css/jquery.modalDialogContent.css" />
 
-  <script type="text/javascript" src="../../dependencies/jquery.js"></script>
-  <script type="text/javascript" src="../../js/jquery.delimitedString.js" /></script>
-  <script type="text/javascript" src="../../js/jquery.queryString.js" /></script>
-  <script type="text/javascript" src="../../js/jquery.postMessage.js" /></script>
-  <script type="text/javascript" src="../../js/jquery.customEvent.js" /></script>
-  <script type="text/javascript" src="../../js/jquery.clientRect.js" /></script>
-  <script type="text/javascript" src="../../js/jquery.contentSize.js" /></script>
-  <script type="text/javascript" src="../../js/jquery.disableEvent.js" /></script>
+  <script type="text/javascript" src="/dependencies/jquery.js"></script>
+  <script type="text/javascript" src="/js/jquery.delimitedString.js" /></script>
+  <script type="text/javascript" src="/js/jquery.queryString.js" /></script>
+  <script type="text/javascript" src="/js/jquery.postMessage.js" /></script>
+  <script type="text/javascript" src="/js/jquery.customEvent.js" /></script>
+  <script type="text/javascript" src="/js/jquery.clientRect.js" /></script>
+  <script type="text/javascript" src="/js/jquery.contentSize.js" /></script>
+  <script type="text/javascript" src="/js/jquery.disableEvent.js" /></script>
 
-  <script type="text/javascript" src="../../js/jquery.modalDialogContent.header.js"></script>
-  <script type="text/javascript" src="../../js/jquery.modalDialog.userAgent.js"></script>
-  <script type="text/javascript" src="../../js/jquery.modalDialog.getSettings.js"></script>
-  <script type="text/javascript" src="../../js/jquery.modalDialogContent.js"></script>
-  <script type="text/javascript" src="../../js/jquery.modalDialog.deviceFixes.js"></script> 
-  <script type="text/javascript" src="../../js/jquery.modalDialog.unobtrusive.js"></script>
+  <script type="text/javascript" src="/js/jquery.modalDialogContent.header.js"></script>
+  <script type="text/javascript" src="/js/jquery.modalDialog.userAgent.js"></script>
+  <script type="text/javascript" src="/js/jquery.modalDialog.getSettings.js"></script>
+  <script type="text/javascript" src="/js/jquery.modalDialogContent.js"></script>
+  <script type="text/javascript" src="/js/jquery.modalDialog.deviceFixes.js"></script> 
+  <script type="text/javascript" src="/js/jquery.modalDialog.unobtrusive.js"></script>
 
   <title>ModalDialog iframe content</title>
   <meta name="description" content="Skinny JS">
@@ -52,7 +52,7 @@
       $.modalDialog.getCurrent().postMessageToParent("testmsg:hi there", "*");
   });
 
-  //$.modalDialog.parentHostName = "http://alternatehostname";
+  $.modalDialog.parentHostName = "http://localhost:8981";
 </script>
 </body>
 </html>

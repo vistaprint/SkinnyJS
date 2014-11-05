@@ -1,3 +1,8 @@
+/// <reference path="../dependencies/jquery.mockjax.js" />
+/// <reference path="../dependencies/json2.js" />
+/// <reference path="../js/date-parse.js" />
+/// <reference path="../js/jquery.msAjax.js" />
+
 describe("jquery.msAjax_private.msJsonDateOnlySanitizer()", function () {
 
     var assert = chai.assert;

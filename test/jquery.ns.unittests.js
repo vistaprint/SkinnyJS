@@ -1,3 +1,5 @@
+/// <reference path="../js/jquery.ns.js" />
+
  /* global ns1 */
 
  describe("jQuery.ns()", function () {

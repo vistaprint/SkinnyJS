@@ -1,3 +1,5 @@
+/// <reference path="../js/jquery.hoverDelay.js" />
+
 describe("jquery.hoverDelay", function () {
     var assert = chai.assert;
 

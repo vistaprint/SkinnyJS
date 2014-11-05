@@ -23,47 +23,48 @@ module.exports = function (grunt) {
                 jshintrc: ".jshintrc"
             }
         },
-        connect: {
-            server: {
-                options: {
-                    port: 9001,
-                    keepalive: false
+        "js-test": {
+            options: {
+                pattern: "test/*.unittests.js",
+                deps: [
+                    "dependencies/jquery.js",
+                    "test/unittests.shared.js"
+                ],
+                mocha: { 
+                    timeout: 6000
                 }
-            }
-        },
-        mocha: {
-            all: {
+            },
+            jquery17: {
                 options: {
-                    urls: ["test/*.unittests.html"]
+                    pattern: [
+                        "test/jquery.partialLoad.unittests.js",
+                        "test/jquery.disableEvent.unittests.js",
+                    ],
+                    deps: [
+                        "dependencies/jquery-1.7.2.js",
+                        "test/unittests.shared.js"
+                    ]
+                }
+            },
+            jquery110: {
+                options: {
+                    pattern: "test/jquery.partialLoad.unittests.js",
+                    deps: [
+                        "dependencies/jquery-1.10.2.js",
+                        "test/unittests.shared.js"
+                    ]
                 }
             },
             dialogSmallScreen: {
                 options: {
-                    urls: ["test/jquery.modalDialog.*.unittests.html"]
+                    pattern: "test/jquery.modalDialog.*.unittests.js",
+                    deps: [
+                        "dependencies/jquery.js",
+                        "test/unittests.shared.js"
+                    ],
+                    injectQueryString: "smallscreen=1"
                 }
             },
-            specific: {
-                options: {
-                    urls: ["http://localhost:9001/test/jquery.modalDialog.history.unittests.html"]
-                }
-            },
-            options: {
-                reporter: "Spec",
-                timeout: 20000
-            }
-        },
-        docco: {
-            javascript: {
-                src: ["js/**/*.js"],
-                dest: "./site/_site/docco/"
-            }
-        },
-        mkdir: {
-            docco: {
-                options: {
-                    create: ["./site/_site/docco/"]
-                }
-            }
         },
         copy: {
             distJs: {
@@ -96,37 +97,6 @@ module.exports = function (grunt) {
                     cwd: "./dependencies/",
                     src: ["./*.js"],
                     dest: "dist/dependencies/"
-                }]
-            },
-            distSite: {
-                files: [{
-                    expand: true,
-                    cwd: "./dist",
-                    src: ["**"],
-                    dest: "./site/_site/dist/"
-                }, {
-                    expand: true,
-                    flatten: true,
-                    src: ["LICENSE"],
-                    processFile: true,
-                    dest: "./site/_site/"
-                }]
-            },
-            doccoFix: {
-                files: [{
-                    expand: true,
-                    cwd: "./site/_docco/",
-                    src: ["**"],
-                    dest: "./site/_site/docco"
-                }]
-            },
-            deploy: {
-                files: [{
-                    expand: true,
-                    cwd: "./site/_site/",
-                    flatten: false,
-                    src: ["**"],
-                    dest: "./.git/docs-temp/"
                 }]
             }
         },
@@ -173,9 +143,7 @@ module.exports = function (grunt) {
             options: {
                 force: true
             },
-            build: ["./dist"],
-            deploy: ["./.git/docs-temp"],
-            docs: ["./site/_site"]
+            build: ["./dist"]
         },
         less: {
             main: {
@@ -188,47 +156,6 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        jekyll: {
-            docs: {
-                options: {
-                    src: "./site/",
-                    config: "./site/_config.yml",
-                    dest: "./site/_site"
-                }
-            }
-        },
-        compress: {
-            main: {
-                options: {
-                    archive: "./site/skinnyjs.zip"
-                },
-                files: [{
-                    // includes files in path
-                    expand: true,
-                    src: ["**"],
-                    cwd: "./dist",
-                    dest: "",
-                    filter: "isFile"
-                }]
-            }
-        },
-        "string-replace": {
-            site: {
-                files: [{
-                    expand: true,
-                    cwd: "./site/_site/",
-                    flatten: false,
-                    src: ["*.html"],
-                    dest: "./site/_site/"
-                }],
-                options: {
-                    replacements: [{
-                        pattern: /\.\.\/dist\//ig,
-                        replacement: "dist/"
-                    }]
-                }
-            }
-        },
         "strip_code": {
             options: {},
             all: {
@@ -238,19 +165,15 @@ module.exports = function (grunt) {
         watch: {
             modalDialog: {
                 files: ["./js/**/*.modalDialog*.js"],
-                tasks: ["concat:modalDialog", "concat:modalDialogContent", "copy:distSite"]
+                tasks: ["concat:modalDialog", "concat:modalDialogContent"]
             },
             copyJs: {
                 files: ["./js/**/*.js", "!**modalDialog**"],
-                tasks: ["copy:distJs", "copy:distSite"]
+                tasks: ["copy:distJs"]
             },
             less: {
                 files: ["./css/**/*.less"],
-                tasks: ["less", "copy:distSite"]
-            },
-            jekyll: {
-                files: ["./site/**/*", "!./site/_site/*"],
-                tasks: ["sitePages"]
+                tasks: ["less"]
             },
             options: {
                 spawn: false
@@ -258,7 +181,7 @@ module.exports = function (grunt) {
         },
         jsbeautifier : {
             all: {
-                src: ["js/**/*.js", "test/**/*.js", "site/javascript/**/*.js"],
+                src: ["js/**/*.js", "test/**/*.js"],
                 options: { js: { jslintHappy: true } }
             }
         },
@@ -275,15 +198,22 @@ module.exports = function (grunt) {
                         cwd: "./test/",
                         src: ["./**/*.js"],
                         dest: "./test/"
-                    }, {
-                        expand: true,
-                        cwd: "./site/javascript/",
-                        src: ["./**/*.js"],
-                        dest: "./site/javascript/"
                     }
                 ],
                 options: {
                     eol: "crlf"
+                }
+            }
+        },
+        wget: {
+            basic: {
+                options: {
+                    overwrite: true,
+                    baseUrl: "http://vistaprint.github.io/PointyJS/"
+                },
+                files: {
+                    "js/pointy.js": "dist/pointy.js",
+                    "js/pointy.gestures.js": "dist/pointy.gestures.js"
                 }
             }
         }
@@ -296,68 +226,22 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-contrib-less");
-    grunt.loadNpmTasks("grunt-mocha");
+    grunt.loadNpmTasks("grunt-js-test");
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-concat");
-    grunt.loadNpmTasks("grunt-contrib-connect");
     grunt.loadNpmTasks("grunt-contrib-clean");
-    grunt.loadNpmTasks("grunt-docco");
     grunt.loadNpmTasks("grunt-contrib-compress");
-    grunt.loadNpmTasks("grunt-string-replace");
     grunt.loadNpmTasks("grunt-contrib-watch");
-    grunt.loadNpmTasks("grunt-jekyll");
-    grunt.loadNpmTasks("grunt-mkdir");
     grunt.loadNpmTasks("grunt-strip-code");
     grunt.loadNpmTasks("grunt-jsbeautifier");
     grunt.loadNpmTasks("grunt-lineending");
-
-    // Wrap the mocha task
-    grunt.renameTask("mocha", "orig-mocha");
-
-    grunt.registerTask("mocha", function (target) {
-        var config = grunt.config.get("mocha");
-
-        // Turn mocha.files into urls for conrib-mocha
-        var urls = grunt.util._.map(grunt.file.expand(config.all.options.urls), function (file) {
-            return "http://localhost:9001/" + file;
-        });
-
-        config.all.options.urls = urls;
-
-        // Turn mocha.files into urls for conrib-mocha
-        var smallScreenUrls = grunt.util._.map(grunt.file.expand(config.dialogSmallScreen.options.urls), function (file) {
-            return "http://localhost:9001/" + file + "?smallscreen=true";
-        });
-
-        config.dialogSmallScreen.options.urls = smallScreenUrls;
-
-        grunt.config.set("orig-mocha", config);
-
-        var taskName = "orig-mocha";
-        if (target) {
-            taskName += ":" + target;
-        }
-
-        grunt.task.run(taskName);
-    });
-
-    grunt.registerTask("connect-keepalive", function () {
-        var config = grunt.config.get("connect");
-        config.server.options.keepalive = true;
-        grunt.config.set("connect", config);
-        grunt.task.run("connect");
-    });
-
-    // Custom tasks
-    grunt.loadTasks("./site/_tasks");
+    grunt.loadNpmTasks("grunt-wget");
 
     grunt.registerTask("travis", "default");
 
     grunt.registerTask("default", ["verify", "build"]);
 
-    grunt.registerTask("test", ["less", "connect", "mocha"]);
-
-    //grunt.registerTask("testSpecific", ["less", "connect", "mocha:specific"]);
+    grunt.registerTask("test", ["less", "js-test", "js-test:jquery17", "js-test:jquery110", "js-test:dialogSmallScreen"]);
 
     grunt.registerTask("verify", ["jshint", "test"]);
 
@@ -365,13 +249,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask("build", ["clean", "less", "copyDist", "concat:modalDialog", "concat:modalDialogContent", "strip_code", "uglify"]);
 
-    grunt.registerTask("docs", ["mkdir:docco", "docco", "docco-add-links", "copy:doccoFix"]);
-
-    grunt.registerTask("site", ["default", "compress", "sitePages", "docs", "copy:deploy"]);
-
-    grunt.registerTask("siteNoVerify", ["build", "compress", "sitePages", "docs", "copy:deploy"]);
-
-    grunt.registerTask("sitePages", ["jekyll", "string-replace:site", "copy:distSite"]);
-
     grunt.registerTask("beautify", ["jsbeautifier", "lineending"]);
+
+    grunt.registerTask("update", ["wget"]);
 };

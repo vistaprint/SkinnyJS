@@ -1,3 +1,5 @@
+/// <reference path="../js/jquery.disableEvent.js" />
+
 describe("jquery.disableEvent plugin", function () {
     mocha.globals(["_linkGlobalClick", "_linkGlobalMousedown", "_buttonGlobalClick"]);
 

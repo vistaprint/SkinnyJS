@@ -184,14 +184,15 @@ $.modalDialog.create()
             this._postCommandToParent("center");
         },
 
-        setTitle: function (title) {
+        setTitle: function (title, initializing) {
             this._postCommandToParent("setTitle", {
-                title: title
+                title: title,
+                initializing: !!initializing
             });
         },
 
-        setTitleFromContent: function () {
-            this.setTitle($("head title").text());
+        setTitleFromContent: function (initializing) {
+            this.setTitle(document.title, initializing);
         },
 
         notifyReady: function () {
@@ -208,7 +209,7 @@ $.modalDialog.create()
 
             // Set the dialog title
             if ($.modalDialog.useTitleTag) {
-                this.setTitleFromContent();
+                this.setTitleFromContent(true);
             }
 
             // Don't center, it will be done by the dialog open

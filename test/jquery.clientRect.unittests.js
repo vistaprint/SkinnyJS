@@ -1,3 +1,5 @@
+/// <reference path="../js/jquery.clientRect.js" />
+
 describe("jquery.clientRect()", function () {
     var assert = chai.assert;
 

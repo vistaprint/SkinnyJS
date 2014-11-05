@@ -29,7 +29,7 @@
 
         var deferred = new $.Deferred();
 
-        updateFromUrl()
+        updateFromUrl(true) // Disable animation when the dialog state is restored from the URL
             .then(
                 function () {
                     try {
@@ -303,7 +303,7 @@
     };
 
     // Listen to URL changes and open/close dialogs accordingly
-    var updateFromUrl = function () {
+    var updateFromUrl = function (disableAnimation) {
         var deferred = new $.Deferred();
 
         // An array of parsed dialog parameters from the URL
@@ -346,7 +346,7 @@
                 // If the handlers were enabled, we'd get infinite looping.
                 _disableHandlers = true;
 
-                dialog.open()
+                dialog.open(disableAnimation) // Disable animation when the dialog state is being restored from the URL on page init
                     .then(function () {
                         // Recurse until all dialogs embedded in the URL are open
                         topmostStackPos++;

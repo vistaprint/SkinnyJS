@@ -1,0 +1,85 @@
+@import url(lib/mixin_lib.less);
+@import url(css-arrows.less);
+
+[data-rel="tooltip"] + aside,
+.rich-tooltip-content
+{
+	@white:		#fff;
+	@silver:	#b5babf;
+	@charcoal:	#111a22;
+
+	display: none; // hide all tooltips by default
+	position: absolute; // position is calculated by JavaScript
+	box-sizing: border-box;
+	z-index: 10; // content should appear above the context
+	min-height: 30px;
+
+	// default styling
+	background: @white;
+	border: 1px solid @silver;
+	padding: 6px;
+
+	// box shadow
+	.drop-shadow(0, 2px, 2px, 2px, 0.4);
+
+	// javascript applies:
+	// top
+	// left
+	// margin
+
+	.rich-tooltip-close
+	{
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+
+	.rich-tooltip-arrow
+	{
+		@size: 15px;
+		@border-width: 1px;
+
+		.css-arrow(@size, @border-width, @silver, @white);
+	}
+
+	@media screen and (max-device-width: 480px)
+	{
+		max-width: 100%;
+		width: 100%;
+		left: 0;
+	}
+
+	&.rich-tooltip-skin-large,
+	&.large
+	{
+		// adjust default styling for skin
+		padding: 0;
+		.drop-shadow(5px, 5px, 5px, 0.6);
+
+		header
+		{
+			padding: 20px 30px 15px 30px;
+			background: inherit;    
+		}
+
+		section
+		{
+			padding: 0 30px;
+			background: inherit;
+		}
+
+		footer
+		{
+			padding: 20px;
+		}
+	}
+}
+
+// allow access without javascript by hovering or by clicking and holding
+// body.nojs [data-rel="tooltip"]:hover + aside,
+// body.nojs [data-rel="tooltip"] + aside:hover,
+// body.nojs [data-rel="tooltip"]:active + aside,
+// body.nojs [data-rel="tooltip"] + aside:active
+// {
+// 	display: block;
+// }

@@ -1,3 +1,5 @@
+/// <reference path="../js/jquery.cookies.js" />
+
 describe("jquery.cookies", function () {
     var assert = chai.assert;
     var _lastCookie;

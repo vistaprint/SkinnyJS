@@ -1,9 +1,20 @@
+/// <reference path="jquery.modalDialog.setup.html" />
+/// <reference path="jquery.modalDialog.setup.js" />
+
+/// <reference path="../js/jquery.modalDialog.history.js" />
+
+/// <reference path="../dependencies/history.adapter.jquery.js" />
+/// <reference path="../dependencies/history.html4.js" />
+/// <reference path="../dependencies/history.js" />
+
  /* globals History */
 
  $.modalDialog.iframeLoadTimeout = 1000;
  $.modalDialog.animationDuration = 100;
 
  describe("jQuery.moddalDialog.enableHistory()", function () {
+     this.timeout(6000);
+
      var assert = chai.assert;
 
      var DIALOG_PARAM_NAME = "testdialogparam";

@@ -1,3 +1,5 @@
+/// <reference path="../js/jquery.scrollAnchor.js" />
+
 describe('jquery.scrollAnchor', function () {
     var assert = chai.assert;
 

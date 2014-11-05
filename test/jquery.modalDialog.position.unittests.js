@@ -1,3 +1,6 @@
+/// <reference path="jquery.modalDialog.setup.html" />
+/// <reference path="jquery.modalDialog.setup.js" />
+
  /*jshint quotmark:false */
 
  // Scrollbars are messing up measurements of the window size
@@ -7,7 +10,9 @@
  $.modalDialog.animationDuration = 100;
 
  describe("jquery.modalDialog.position", function () {
-     var assert = chai.assert;
+     this.timeout(6000);
+
+    var assert = chai.assert;
 
      it("is centered when opened", function (done) {
          var dialog = $.modalDialog.create({

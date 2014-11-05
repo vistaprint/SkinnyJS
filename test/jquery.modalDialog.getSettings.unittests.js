@@ -1,9 +1,14 @@
+/// <reference path="jquery.modalDialog.setup.html" />
+/// <reference path="jquery.modalDialog.setup.js" />
+
  /* jshint quotmark:false */
 
  $.modalDialog.iframeLoadTimeout = 1000;
  $.modalDialog.animationDuration = 100;
 
  describe("$.modalDialog.getSettings()", function () {
+     this.timeout(6000);
+
      var assert = chai.assert;
 
      function createDiv(attrs) {
@@ -15,6 +20,15 @@
          var settings = $.modalDialog.getSettings($div);
 
          assert.equal(settings.title, "foo");
+
+         $div.remove();
+     });
+
+     it("should parse an empty title attribute as an empty string", function () {
+         var $div = createDiv('data-dialog-title=""');
+         var settings = $.modalDialog.getSettings($div);
+
+         assert.equal(settings.title, "");
 
          $div.remove();
      });

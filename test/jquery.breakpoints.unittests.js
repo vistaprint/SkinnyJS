@@ -1,3 +1,6 @@
+/// <reference path="../js/breakpoints.js" />
+/// <reference path="../js/jquery.breakpoints.js" />
+
 describe("jquery.breakpoints", function () {
     var assert = chai.assert;
     describe("jquery.breakpoints", function () {
@@ -55,7 +58,7 @@ describe("jquery.breakpoints", function () {
             assert.equal($el.attr("class"), "breakpoint-large");
         });
 
-        it("should update on breakpoints:refresh", function () {
+        it("should update on breakpoints:refresh on the window", function () {
             var $el = $("<div />").appendTo("body").css({
                 width: "300px"
             });
@@ -71,6 +74,46 @@ describe("jquery.breakpoints", function () {
             });
 
             $(window).trigger("breakpoints:refresh");
+
+            assert.equal($el.attr("class"), "breakpoint-large");
+        });
+
+        it("should update on breakpoints:refresh on the element", function () {
+            var $el = $("<div />").appendTo("body").css({
+                width: "300px"
+            });
+
+            $el.breakpoints({
+                small: 200,
+                medium: 400,
+                large: 600
+            });
+
+            $el.css({
+                width: "500px "
+            });
+
+            $el.trigger("breakpoints:refresh");
+
+            assert.equal($el.attr("class"), "breakpoint-large");
+        });
+
+        it("should update on breakpoints:refresh on one of the element's ancestors", function () {
+            var $el = $("<div />").appendTo("body").css({
+                width: "300px"
+            });
+
+            $el.breakpoints({
+                small: 200,
+                medium: 400,
+                large: 600
+            });
+
+            $el.css({
+                width: "500px "
+            });
+
+            $("body").trigger("breakpoints:refresh");
 
             assert.equal($el.attr("class"), "breakpoint-large");
         });

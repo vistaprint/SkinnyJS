@@ -1,7 +1,13 @@
+/// <reference path="jquery.modalDialog.setup.html" />
+/// <reference path="jquery.modalDialog.setup.js" />
+
 $.modalDialog.iframeLoadTimeout = 1000;
 $.modalDialog.animationDuration = 100;
 
+// Events unit test
 describe("jquery.modalDialog", function () {
+    this.timeout(6000);
+
     var assert = chai.assert;
 
     describe("#create()", function () {
@@ -176,11 +182,11 @@ describe("jquery.modalDialog", function () {
     });
 
     describeForDialogType("IFrameDialog", {
-        url: "content/jquery.modalDialog.iframeContent.html"
+        url: "/test/content/jquery.modalDialog.iframeContent.html"
     });
 
     describeForDialogType("AjaxDialog", {
-        url: "content/jquery.modalDialog.ajaxContent.html",
+        url: "/test/content/jquery.modalDialog.ajaxContent.html",
         ajax: true
     });
 
@@ -206,7 +212,7 @@ describe("jquery.modalDialog", function () {
                         assert.ok(!$.modalDialog.getCurrent(), "There should be no current dialog");
 
                         dialog2 = $.modalDialog.create({
-                            url: "content/jquery.modalDialog.ajaxContent.html",
+                            url: "/test/content/jquery.modalDialog.ajaxContent.html",
                             ajax: true
                         });
                         return dialog2.open();
@@ -248,7 +254,7 @@ describe("jquery.modalDialog", function () {
                         // Verify that the state of the framework is not messed up from failing to load the previous dialog.
 
                         dialog2 = $.modalDialog.create({
-                            url: "content/jquery.modalDialog.iframeContent.html"
+                            url: "/test/content/jquery.modalDialog.iframeContent.html"
                         });
                         return dialog2.open();
                     })
@@ -269,7 +275,7 @@ describe("jquery.modalDialog", function () {
 
         it("should resolve promises for open() and close()", function (done) {
             var dialog = $.modalDialog.create({
-                url: "content/jquery.modalDialog.iframeContent.html"
+                url: "/test/content/jquery.modalDialog.iframeContent.html"
             });
 
             dialog

@@ -1,5 +1,3 @@
-// TODO what to do with preventEventBubbling?
-
 (function ($) {
     if ($.modalDialog && $.modalDialog._isContent) {
         throw new Error("Attempt to load jquery.modalDialogContent.js in the same window as jquery.modalDialog.js.");
@@ -26,7 +24,7 @@
         content: null, // A CSS selector or jQuery object for a content node to use for a node dialog
         destroyOnClose: false, // If true, the dialog DOM will be destroyed and all events removed when the dialog closes
         containerElement: "body", // A CSS selector or jQuery object for the element that should be the parent for the dialog DOM (useful for working with jQuery mobile)
-        preventEventBubbling: true, // If true, click and touch events are prevented from bubbling up to the document
+        preventEventBubbling: false, // If true, click and touch events are prevented from bubbling up to the document
         enableHistory: true, // If the history module is enabled, this can be used to disable history if set false
         onopen: null,
         onclose: null,
@@ -34,8 +32,6 @@
         onbeforeclose: null,
         onajaxerror: null
     };
-
-    var _easing = $.fn.transition ? "out" : "swing";
 
     var _ua = $.modalDialog._ua;
 
@@ -114,7 +110,7 @@
     };
 
     // Opens the dialog
-    ModalDialog.prototype.open = function () {
+    ModalDialog.prototype.open = function (disableAnimation) {
         var deferred = this._initDeferred("open", deferred);
 
         // Ensure the dialog doesn't open once its already opened.. 
@@ -211,11 +207,18 @@
 
                 }, this);
 
-                this.$container.animate({
-                    top: initialTop
-                }, $.modalDialog.animationDuration, _easing)
-                    .promise()
-                    .then(animationCallback, animationCallback);
+                if (disableAnimation) {
+                    // If animation is disabled, just move the dialog into position synchronously, 
+                    // and then do the callback on the next event loop tick.
+                    this.$container.css({ top: initialTop });
+                    setTimeout(animationCallback, 0);
+                } else {
+                    // Otherwise, animate open
+                    this.$container.animate({ top: initialTop}, $.modalDialog.animationDuration, "swing")
+                        .promise()
+                        .then(animationCallback, animationCallback);
+                }
+
             } else {
                 this._clearDeferred("open");
             }
@@ -313,7 +316,7 @@
                 top: STARTING_TOP
             },
             $.modalDialog.animationDuration,
-            _easing
+            "swing"
         )
             .promise()
             .then(
@@ -364,8 +367,6 @@
 
         if (this.settings.destroyOnClose) {
             this._destroy();
-            this._destroyed = true;
-            delete _fullIdMap[this.settings._fullId];
         }
 
         if ($.modalDialog.isSmallScreen() && this.triggerWindowResize) {
@@ -388,10 +389,17 @@
     };
 
     ModalDialog.prototype._destroy = function () {
+        if (this._destroyed) {
+            return;
+        }
+
         // Put the content node back on the body.
         // It could be used again.
         this.$content.detach().appendTo("body");
         this.$el.remove();
+
+        delete _fullIdMap[this.settings._fullId];
+        this._destroyed = true;
     };
 
     ModalDialog.prototype._updateZIndexes = function () {
@@ -404,6 +412,16 @@
         this.$bg.css("z-index", zIndex);
         zIndex += 2;
         this.$container.css("z-index", zIndex);
+    };
+
+    ModalDialog.prototype._preventClickBubbling = function ($el) {
+        var me = this;
+
+        $el.on("click mousedown mouseup touchstart touchend", function (e) {
+                if (me.settings.preventEventBubbling) {
+                    e.stopPropagation();
+                }
+            });
     };
 
     // Builds the DOM for the dialog chrome
@@ -421,12 +439,15 @@
                 '<div class="dialog-container" id="' + this.settings._fullId + 'Container">' +
                 '  <div class="dialog-header">' +
                 '    <a href="#" class="dialog-close-button"><span class="dialog-close-button-icon"></span></a>' +
-                '    <h1>' + this.settings.title + '</h1>' +
+                '    <h1>' + (this.settings.title || "") + '</h1>' +
                 '  </div>' +
                 '  <div class="dialog-content-container">' +
                 '  </div>' +
                 '</div>'
             );
+
+            this._preventClickBubbling(this.$bg);
+            this._preventClickBubbling(this.$container);
 
             this.$el = $([this.$bg[0], this.$container[0]]).addClass("dialog-skin-" + this.settings.skin);
 
@@ -448,7 +469,7 @@
 
             this._buildContent();
 
-            this.$content.find('*[data-action="close"]').on("click", this._close);
+            this.$contentContainer.on("click", '*[data-action="close"]', this._close);
 
             this.$contentContainer.append(this.$content);
 
@@ -466,7 +487,13 @@
 
     // Subclasses should override to do something when a cached DOM is used
     ModalDialog.prototype._alreadyBuilt = function () {
-        // noop
+
+        // Two node dialogs can share the same content node (this isn't true of AJAX or IFRAME dialogs).
+        // Ensure the content node is still owned by this dialog
+        if (this.$content.parent()[0] !== this.$contentContainer[0]) {
+            this._buildContent();
+            this.$contentContainer.append(this.$content);
+        }
     };
 
     ModalDialog.prototype._getChromeHeight = function () {
@@ -549,9 +576,14 @@
         this._initialMousePos = getMousePos(e);
         this._initialDialogPos = this.$container.offset();
 
-        $(document)
-            .on("pointermove", this._drag)
-            .one("pointerup", this._stopDrag);
+        $(document).on("pointermove", this._drag);
+
+        // For pointerup events, we can't use the document, because the option
+        // "preventEventBubbling" will prevent "click-like" events from bubbling to the 
+        // document. Use $bg in addition to the header in case the dialog hasn't caught
+        // up with the mouse when the pointerup event occurs.
+        this.$header.on("pointerup", this._stopDrag);
+        this.$bg.on("pointerup", this._stopDrag);
 
         // when there is an iframe and your cursor goes over
         // the iframe content it stops firing on the parent window
@@ -586,6 +618,8 @@
         delete this._initialDialogPos;
 
         $(document).off("pointermove", this._drag);
+        this.$header.off("pointerup", this._stopDrag);
+        this.$bg.off("pointerup", this._stopDrag);
 
         if (this._overlay) {
             this._overlay.remove();
@@ -667,7 +701,7 @@
 
     // Sets the title of the dialog in the header.
     ModalDialog.prototype.setTitle = function (title) {
-        this.$container.find(".dialog-header h1").text(title);
+        this.$container.find(".dialog-header h1").text(title || "");
     };
 
     // Gets the title of the dialog in the header.
@@ -710,6 +744,7 @@
     IFrameDialog.prototype._finishClose = function (e) {
         ModalDialog.prototype._finishClose.call(this, e);
 
+        this.$frame[0].src = "about:blank";
         this.$frame.remove();
     };
 
@@ -730,7 +765,7 @@
         this.$frame = $('<iframe src="' + this.settings.url +
             '" name="' + this.settings._fullId +
             '" seamless allowtransparency="true" width="100%" style="height:' +
-            this.settings.initialHeight + 'px;" class="dialog-frame" scrolling="no" frameborder="0" framespacing="0"></iframe>');
+            (this.height || this.settings.initialHeight) + 'px;" class="dialog-frame" scrolling="no" frameborder="0" framespacing="0"></iframe>');
 
         if ($.modalDialog.iframeLoadTimeout > 0) {
             // When the iframe loads, even if its a failed status (i.e. 404), the load event will fire.
@@ -804,7 +839,7 @@
     IFrameDialog.prototype.postMessage = function (message) {
         var win = this.getWindow();
 
-        var hostname = this.settings.frameHostname;
+        var hostname = this.frameHostname;
         if (!hostname) {
             // Get the domain of the target window. If the URL is relative, its the same as the current page.
             hostname = this.settings.url.indexOf("http") === 0 ? this.settings.url : document.location.href;
@@ -819,14 +854,8 @@
 
     IFrameDialog.prototype.setHeight = function (contentHeight, center, skipAnimation) {
         var applyChange = skipAnimation ?
-                function ($content, css) {
-                    $content.css(css);
-                } :
-                function ($content, css) {
-                    $content.animate(css, {
-                        duration: 400
-                    });
-                };
+                function ($content, css) { $content.css(css); } :
+                function ($content, css) { $content.animate(css, { duration: 400 }); };
 
         applyChange(this.$content, {
             height: contentHeight
@@ -839,7 +868,7 @@
             });
         }
 
-        this.settings.initialHeight = contentHeight;
+        this.height = contentHeight;
     };
 
     // Sets the height of the iframe to the detected height of the iframe content document.
@@ -862,7 +891,7 @@
             this._iframeLoadTimer = null;
         }
 
-        this.settings.frameHostname = hostname;
+        this.frameHostname = hostname;
 
         ModalDialog.prototype._finishOpen.apply(this);
     };
@@ -985,7 +1014,7 @@
     // 1. default value
     // 2. setting provided on content element
     // 3. settings passed
-    var ensureSettings = function (explicitSettings) {
+    $.modalDialog._ensureSettings = function (explicitSettings) {
         var settings = $.extend({}, $.modalDialog.defaults);
 
         // An iframe dialog may have sent a reference to dialog content,
@@ -1035,6 +1064,27 @@
         return settings;
     };
 
+    $.modalDialog._areSettingsEqual = function (a, b) {
+        for (var key in a) {
+            if (key == "_fullId") {
+                continue;
+            }
+            var aVal = a[key];
+            var bVal = b[key];
+            if (aVal !== bVal) {
+                // Comparison of jQuery objects will
+                // always return false because the object references are different.
+                // Instead, compare the DOM nodes.
+                if (aVal.jquery && bVal.jquery && aVal[0] === bVal[0]) {
+                    continue;
+                }
+                return false;
+            }
+        }
+
+        return true;
+    };
+
     // Gets the dialog by the fullId.
 
     // * {string} fullId The full ID of the dialog (including all parent ids)
@@ -1055,7 +1105,7 @@
 
     // Creates a new dialog from the specified settings.
     $.modalDialog.create = function (settings) {
-        settings = ensureSettings(settings);
+        settings = $.modalDialog._ensureSettings(settings);
 
         var dialog = getDialog(settings._fullId);
 
@@ -1189,6 +1239,12 @@
         },
 
         setTitle: function (dialog, qs) {
+
+            // If settings.title is specified explicitly, it should win over
+            // an iframe dialog's HTML title
+            if (qs.initializing && dialog.settings.title) {
+                return;
+            }
             dialog.setTitle(qs.title);
         },
 
