@@ -36,7 +36,7 @@
     var _ua = $.modalDialog._ua;
 
     $.modalDialog.iframeLoadTimeout = 0;
-    $.modalDialog.animationDuration = 600;
+    $.modalDialog.animationDuration = 500;
 
     // Class which creates a jQuery mobile dialog
     var ModalDialog = function (settings) {
@@ -151,6 +151,7 @@
         // Stop any animations on the container
         this.$container.stop(true, true);
 
+        // show the background veil
         this.$el.show();
 
         this._showLoadingIndicator();
@@ -168,9 +169,11 @@
                     width: widthData.width
                 });
 
+                // set opacity to 0 so that we can fade it in
+                this.$container.css("opacity", 0);
+
                 var initialPos = this._getDefaultPosition();
-                var initialTop = initialPos.top;
-                initialPos.top = STARTING_TOP; // we're going to animate this to slide down
+                var initialTop = initialPos.top;                
                 this.$container.css(initialPos);
 
                 var animationCallback = $.proxy(function () {
@@ -214,9 +217,10 @@
                     setTimeout(animationCallback, 0);
                 } else {
                     // Otherwise, animate open
-                    this.$container.animate({ top: initialTop}, $.modalDialog.animationDuration, "swing")
-                        .promise()
-                        .then(animationCallback, animationCallback);
+                    this.$container.animate({ opacity: 1 }, $.modalDialog.animationDuration, "swing")
+                       .promise()
+                       .then(animationCallback, animationCallback);
+
                 }
 
             } else {
@@ -311,9 +315,11 @@
 
         $(document).off("keydown", this._keydownHandler);
 
+        // hide the veil
         this.$el.removeClass("dialog-visible");
+        
         this.$container.animate({
-                top: STARTING_TOP
+                opacity: 0
             },
             $.modalDialog.animationDuration,
             "swing"
