@@ -36,7 +36,7 @@
     var _ua = $.modalDialog._ua;
 
     $.modalDialog.iframeLoadTimeout = 0;
-    $.modalDialog.animationDuration = 500;
+    $.modalDialog.animationDuration = 250;
 
     // Class which creates a jQuery mobile dialog
     var ModalDialog = function (settings) {
@@ -343,7 +343,6 @@
         if (this._orientationchange) {
             $(window).off("orientationchange resize", this._orientationchange);
         }
-
         return deferred.promise();
     };
 
@@ -472,6 +471,7 @@
             this.$contentContainer = this.$el.find(".dialog-content-container");
             this.$header = this.$el.find(".dialog-header");
             this.$closeButton = this.$el.find(".dialog-close-button").on("click", this._close);
+            this.$el.siblings(".dialog-background").on("click", this._close); // clicks on the background veil also close the dialog
 
             this._buildContent();
 
