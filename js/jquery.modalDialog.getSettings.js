@@ -67,6 +67,7 @@
         "destroyOnClose": parseBool,
         "skin": parseNone,
         "enableHistory": parseBool,
+        "closeOnBackgroundClick": parseBool,
         "zIndex": parseInt
     };
 

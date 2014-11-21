@@ -13,6 +13,7 @@ Uses declarative syntax to define a dialog. Syntax:
     data-dialog-skin="{skin}"
     data-dialog-ajax="{true or false}"
     data-dialog-destroyonclose="{true or false}"
+    data-dialog-closeonbackgroundclick="{true or false}"
     data-dialog-zIndex="{default zIndex}"
     >link</a>
 
