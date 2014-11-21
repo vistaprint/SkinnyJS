@@ -30,11 +30,6 @@ describe("jquery.modalDialog", function () {
                 closeOnBackgroundClick: true
             });
 
-            var dialogClosed = false;
-            var closeHandler = function () {
-                dialogClosed = true;
-            };
-            dialog.onclose.add(closeHandler);
 
             dialog
                 .open()
@@ -49,9 +44,9 @@ describe("jquery.modalDialog", function () {
 
                 })
                 .then(function () {
-                    assert.isTrue(dialogClosed);
-                })
-                .then(done);
+                    assert.ok(true);
+                    done();
+                });
         });
 
         it("should not close the dialog when the background is clicked and closeOnBackgroundClick is false", function (done) {
@@ -62,10 +57,10 @@ describe("jquery.modalDialog", function () {
             });
 
             var dialogClosed = false;
-            var closeHandler = function () {
+            dialog.onclose.add(function () {
                 dialogClosed = true;
-            };
-            dialog.onclose.add(closeHandler);
+            });
+
 
             dialog
                 .open()
@@ -78,7 +73,9 @@ describe("jquery.modalDialog", function () {
                     assert.isFalse(dialogClosed);
                 })
                 .then(function() {
-                    dialog.close();
+                    return dialog.close();
+                })
+                .then(function() {
                     done();
                 });
         });
