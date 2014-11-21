@@ -23,7 +23,7 @@ describe("jquery.modalDialog", function () {
     };
 
     describe("#create()", function () {
-        it("a click on the background should close the dialog when closeOnBackgroundClick is true", function (done) {
+        it("should close the dialog when the background is clicked and closeOnBackgroundClick is true", function (done) {
             
             var dialog = $.modalDialog.create({
                 content: "#simpleDialog",
@@ -54,7 +54,7 @@ describe("jquery.modalDialog", function () {
                 .then(done);
         });
 
-        it("a click on the background should not close the dialog when closeOnBackgroundClick is false", function (done) {
+        it("should not close the dialog when the background is clicked and closeOnBackgroundClick is false", function (done) {
             
             var dialog = $.modalDialog.create({
                 content: "#simpleDialog",

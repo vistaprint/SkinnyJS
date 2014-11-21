@@ -474,7 +474,7 @@
             this.$closeButton = this.$el.find(".dialog-close-button").on("click", this._close);
             if (this.settings.closeOnBackgroundClick)
             {
-                this.$el.siblings(".dialog-background").on("click", this._close); // clicks on the background veil also close the dialog
+                this.$bg.on("click", this._close); // clicks on the background veil also close the dialog
             }
 
             this._buildContent();
