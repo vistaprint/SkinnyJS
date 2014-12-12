@@ -2,7 +2,7 @@
 /// <reference path="jquery.modalDialog.setup.js" />
 
 $.modalDialog.iframeLoadTimeout = 1000;
-$.modalDialog.animationDuration = 100;
+$.modalDialog.animationDuration = 10;
 
 // Events unit test
 describe("jquery.modalDialog", function () {
