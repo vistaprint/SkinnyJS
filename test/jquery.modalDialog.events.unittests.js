@@ -118,7 +118,7 @@ describe("jquery.modalDialog", function () {
                     assert.equal(phase, 5, "global beforeclose");
                     phase++;
                 };
-
+                /*
                 $.modalDialog.onbeforeclose.add(beforeCloseHandler);
 
                 dialog.onclose.add(function () {
@@ -151,6 +151,7 @@ describe("jquery.modalDialog", function () {
 
                         done();
                     });
+                */
             });
 
             var ensureDialogCancellable = function (delay) {
