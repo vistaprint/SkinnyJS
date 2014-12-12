@@ -113,12 +113,12 @@ describe("jquery.modalDialog", function () {
                     phase++;
                 });
 
-                var beforeCloseHandler = function () {
+                /*var beforeCloseHandler = function () {
                     assert.equal(this, dialog, "Current dialog refs match: global beforeclose");
                     assert.equal(phase, 5, "global beforeclose");
                     phase++;
                 };
-                /*
+                
                 $.modalDialog.onbeforeclose.add(beforeCloseHandler);
 
                 dialog.onclose.add(function () {
