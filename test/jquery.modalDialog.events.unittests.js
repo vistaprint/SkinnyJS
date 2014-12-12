@@ -134,7 +134,7 @@ describe("jquery.modalDialog", function () {
                 };
 
                 $.modalDialog.onclose.add(closeHandler);
-
+                */
                 dialog
                     .open()
                     .then(function () {
@@ -151,7 +151,6 @@ describe("jquery.modalDialog", function () {
 
                         done();
                     });
-                */
             });
 
             var ensureDialogCancellable = function (delay) {
