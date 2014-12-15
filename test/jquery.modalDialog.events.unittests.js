@@ -73,13 +73,13 @@ describe("jquery.modalDialog", function () {
         });
     });
 
-    //var describeForDialogType = function (dialogType, dialogSettings) {
-    var describeForDialogType = function (dialogType) {
+    var describeForDialogType = function (dialogType, dialogSettings) {
+    //var describeForDialogType = function (dialogType) {
         describe(dialogType, function () {
             it("should fire lifecycle events in the correct order", function (done) {
-                //var dialog = $.modalDialog.create(dialogSettings);
-                //var phase = 0;
-                /*
+                var dialog = $.modalDialog.create(dialogSettings);
+                var phase = 0;
+                
                 dialog.onbeforeopen.add(function () {
                     assert.equal(this, dialog, "Current dialog refs match: beforeopen");
                     assert.equal(phase, 0, "beforeopen");
@@ -134,9 +134,9 @@ describe("jquery.modalDialog", function () {
                     phase++;
                 };
 
-                $.modalDialog.onclose.add(closeHandler);*/
+                $.modalDialog.onclose.add(closeHandler);
                 
-                /*dialog
+                dialog
                     .open()
                     .then(function () {
                         assert.equal(this, dialog, "Ensure context of promise is the dialog");
@@ -145,14 +145,13 @@ describe("jquery.modalDialog", function () {
                     .then(function () {
                         assert.equal(this, dialog, "Ensure context of promise is the dialog");
 
-                        //$.modalDialog.onbeforeopen.remove(beforeOpenHandler);
-                        //$.modalDialog.onopen.remove(openHandler);
-                        //$.modalDialog.onbeforeclose.remove(beforeCloseHandler);
-                        //$.modalDialog.onclose.remove(closeHandler);
+                        $.modalDialog.onbeforeopen.remove(beforeOpenHandler);
+                        $.modalDialog.onopen.remove(openHandler);
+                        $.modalDialog.onbeforeclose.remove(beforeCloseHandler);
+                        $.modalDialog.onclose.remove(closeHandler);
 
                         done();
-                    });*/
-                done();
+                    });
             });
 
             
