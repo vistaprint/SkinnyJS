@@ -77,7 +77,7 @@ describe("jquery.modalDialog", function () {
         describe(dialogType, function () {
             it("should fire lifecycle events in the correct order", function (done) {
                 var dialog = $.modalDialog.create(dialogSettings);
-                var phase = 0;
+                //var phase = 0;
                 /*
                 dialog.onbeforeopen.add(function () {
                     assert.equal(this, dialog, "Current dialog refs match: beforeopen");
