@@ -154,6 +154,7 @@ describe("jquery.modalDialog", function () {
                 done();
             });
 
+            /*
             var ensureDialogCancellable = function (delay) {
                 it("should close when cancel() method is called after " + delay + " ms", function (done) {
                     var dialog = $.modalDialog.create(dialogSettings);
@@ -171,10 +172,11 @@ describe("jquery.modalDialog", function () {
                 });
             };
 
-            //ensureDialogCancellable(0);
-            //ensureDialogCancellable(10);
-            //ensureDialogCancellable(50);
-            //ensureDialogCancellable(300); // After close event finished
+            ensureDialogCancellable(0);
+            ensureDialogCancellable(10);
+            ensureDialogCancellable(50);
+            ensureDialogCancellable(300); // After close event finished
+            */
         });
     };
 
