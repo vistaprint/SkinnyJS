@@ -92,7 +92,7 @@ describe("jquery.modalDialog", function () {
                 };
 
                 $.modalDialog.onbeforeopen.add(beforeOpenHandler);
-
+                /*
                 dialog.onopen.add(function () {
                     assert.equal(this, dialog, "Current dialog refs match: open");
                     assert.equal(phase, 2, "open");
@@ -106,7 +106,7 @@ describe("jquery.modalDialog", function () {
                 };
 
                 $.modalDialog.onopen.add(openHandler);
-                /*
+                
                 dialog.onbeforeclose.add(function () {
                     assert.equal(this, dialog, "Current dialog refs match: beforeclose");
                     assert.equal(phase, 4, "beforeclose");
@@ -145,7 +145,7 @@ describe("jquery.modalDialog", function () {
                         assert.equal(this, dialog, "Ensure context of promise is the dialog");
 
                         $.modalDialog.onbeforeopen.remove(beforeOpenHandler);
-                        $.modalDialog.onopen.remove(openHandler);
+                        //$.modalDialog.onopen.remove(openHandler);
                         //$.modalDialog.onbeforeclose.remove(beforeCloseHandler);
                         //$.modalDialog.onclose.remove(closeHandler);
 
