@@ -106,7 +106,7 @@ describe("jquery.modalDialog", function () {
                 };
 
                 $.modalDialog.onopen.add(openHandler);
-
+                /*
                 dialog.onbeforeclose.add(function () {
                     assert.equal(this, dialog, "Current dialog refs match: beforeclose");
                     assert.equal(phase, 4, "beforeclose");
@@ -133,7 +133,7 @@ describe("jquery.modalDialog", function () {
                     phase++;
                 };
 
-                $.modalDialog.onclose.add(closeHandler);
+                $.modalDialog.onclose.add(closeHandler);*/
                 
                 dialog
                     .open()
@@ -146,8 +146,8 @@ describe("jquery.modalDialog", function () {
 
                         $.modalDialog.onbeforeopen.remove(beforeOpenHandler);
                         $.modalDialog.onopen.remove(openHandler);
-                        $.modalDialog.onbeforeclose.remove(beforeCloseHandler);
-                        $.modalDialog.onclose.remove(closeHandler);
+                        //$.modalDialog.onbeforeclose.remove(beforeCloseHandler);
+                        //$.modalDialog.onclose.remove(closeHandler);
 
                         done();
                     });
