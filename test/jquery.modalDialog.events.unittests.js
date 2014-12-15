@@ -73,7 +73,8 @@ describe("jquery.modalDialog", function () {
         });
     });
 
-    var describeForDialogType = function (dialogType, dialogSettings) {
+    //var describeForDialogType = function (dialogType, dialogSettings) {
+    var describeForDialogType = function (dialogType) {
         describe(dialogType, function () {
             it("should fire lifecycle events in the correct order", function (done) {
                 //var dialog = $.modalDialog.create(dialogSettings);
