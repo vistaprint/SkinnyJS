@@ -26,6 +26,7 @@
         containerElement: "body", // A CSS selector or jQuery object for the element that should be the parent for the dialog DOM (useful for working with jQuery mobile)
         preventEventBubbling: false, // If true, click and touch events are prevented from bubbling up to the document
         enableHistory: true, // If the history module is enabled, this can be used to disable history if set false
+        closeOnBackgroundClick: true, // If true, a click on the background veil will close the dialog
         onopen: null,
         onclose: null,
         onbeforeopen: null,
@@ -36,7 +37,7 @@
     var _ua = $.modalDialog._ua;
 
     $.modalDialog.iframeLoadTimeout = 0;
-    $.modalDialog.animationDuration = 500;
+    $.modalDialog.animationDuration = 250;
 
     // Class which creates a jQuery mobile dialog
     var ModalDialog = function (settings) {
@@ -472,6 +473,10 @@
             this.$contentContainer = this.$el.find(".dialog-content-container");
             this.$header = this.$el.find(".dialog-header");
             this.$closeButton = this.$el.find(".dialog-close-button").on("click", this._close);
+            if (this.settings.closeOnBackgroundClick)
+            {
+                this.$bg.on("click", this._close); // clicks on the background veil also close the dialog
+            }
 
             this._buildContent();
 

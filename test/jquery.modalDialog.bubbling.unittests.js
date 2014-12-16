@@ -26,20 +26,22 @@ describe("jquery.modalDialog", function () {
                 .open()
                 .then(function () {
 
-                    dialog.$bg.trigger("click");
-                    assert.isTrue(bodyClicked);
-
-                    // Reset and try again on the container
-                    bodyClicked = false;
-
+                    // try on the dialog
                     dialog.$container.trigger("click");
                     assert.isTrue(bodyClicked);
 
-                    return dialog.close();
-                })
-                .then(function () {
-                    assert.ok(true);
-                    done();
+                    // reset and try again on the background veil
+                    bodyClicked = false;
+
+                    dialog.onclose.add(function () {
+                        assert.ok(true);
+                        done();
+                    });
+
+                    dialog.$bg.trigger("click");
+                    assert.isTrue(bodyClicked);
+
+                    return;
                 });
         });
 
@@ -59,18 +61,20 @@ describe("jquery.modalDialog", function () {
                 .open()
                 .then(function () {
 
-                    dialog.$bg.trigger("click");
-                    assert.isFalse(bodyClicked);
-
-                    // try again on the container
+                    // try on the dialog
                     dialog.$container.trigger("click");
                     assert.isFalse(bodyClicked);
 
-                    return dialog.close();
-                })
-                .then(function () {
-                    assert.ok(true);
-                    done();
+                    // try again on the background veil
+                    dialog.onclose.add(function () {
+                        assert.ok(true);
+                        done();
+                    });
+
+                    dialog.$bg.trigger("click");
+                    assert.isFalse(bodyClicked);
+
+                    return;
                 });
         });
     });
