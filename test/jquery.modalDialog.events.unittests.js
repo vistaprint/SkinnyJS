@@ -2,7 +2,7 @@
 /// <reference path="jquery.modalDialog.setup.js" />
 
 $.modalDialog.iframeLoadTimeout = 1000;
-$.modalDialog.animationDuration = 10;
+$.modalDialog.animationDuration = 100;
 
 // Events unit test
 describe("jquery.modalDialog", function () {
@@ -74,8 +74,7 @@ describe("jquery.modalDialog", function () {
     });
 
     var describeForDialogType = function (dialogType, dialogSettings) {
-    //var describeForDialogType = function (dialogType) {
-        describe(dialogType, function () {
+            describe(dialogType, function () {
             it("should fire lifecycle events in the correct order", function (done) {
                 var dialog = $.modalDialog.create(dialogSettings);
                 var phase = 0;
@@ -155,7 +154,6 @@ describe("jquery.modalDialog", function () {
             });
 
             
-            
             var ensureDialogCancellable = function (delay) {
                 it("should close when cancel() method is called after " + delay + " ms", function (done) {
                     var dialog = $.modalDialog.create(dialogSettings);
@@ -173,13 +171,10 @@ describe("jquery.modalDialog", function () {
                 });
             };
             
-            
             ensureDialogCancellable(0);
-            /*
             ensureDialogCancellable(10);            
             ensureDialogCancellable(50);
             ensureDialogCancellable(300); // After close event finished
-            */
         });
     };
 
