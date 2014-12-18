@@ -1857,6 +1857,15 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
     // If history is disabled for any dialog in the stack, it should be disabled
     // for all of them.
     var isHistoryEnabled = function (dialog) {
+
+        // History is completely broken in IE8 for IFrame dialogs because the iframes
+        // inject entries into history
+        if ($.modalDialog._ua.ie && $.modalDialog._ua.version <= 8) {
+            if (dialog.settings.url && !dialog.settings.ajax) {
+                return false;
+            }
+        }
+
         var parent = dialog;
 
         do {
@@ -2020,6 +2029,10 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
         }
 
         if (this.settings.enableHistory === false) {
+            return;
+        }
+
+        if (!isHistoryEnabled(this)) {
             return;
         }
 

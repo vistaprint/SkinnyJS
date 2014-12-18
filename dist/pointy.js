@@ -345,6 +345,20 @@
         };
     };
 
+    var indexOfArray = function (arr, obj) {
+        if (arr.indexOf) {
+            return arr.indexOf(obj);
+        }
+
+        for (var i=0; i<arr.length; i++) {
+            if (arr[i] === obj) {
+                return i;
+            }
+        }
+
+        return -1;
+    };
+
     $.event.delegateSpecial.remove = function (teardown) {
         return function (handleObj) {
             var handlers,
@@ -357,7 +371,7 @@
 
             handlers = data.pointerEvents[handleObj.type];
 
-            handlers.splice(handlers.indexOf(handleObj), 1);
+            handlers.splice(indexOfArray(handlers, handleObj), 1);
 
             if (!handlers.length) {
                 teardown.call(thisObject, handleObj);
