@@ -110,7 +110,11 @@
   background-color: #ffffff;
 }
 .dialog-skin-lightbox.dialog-background.dialog-veil {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: black;
+  filter: alpha(opacity=60);
+  -webkit-opacity: 0.6;
+  -moz-opacity: 0.6;
+  opacity: 0.6;
 }
 .dialog-skin-lightbox.dialog-background.dialog-veil-opaque {
   display: none;
