@@ -254,7 +254,7 @@ TODO require history.js</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span>
     <span class="hljs-keyword">var</span> DEFAULT_DIALOG_PARAM_NAME = <span class="hljs-string">"sdialogid"</span>;
     <span class="hljs-keyword">var</span> _dialogParamName;</pre></div></div>
             
@@ -273,7 +273,7 @@ or if there is no dialog specified, immediately</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.modalDialog.enableHistory = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialogParamName)</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    $.modalDialog.enableHistory = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialogParamName)</span> {</span></pre></div></div>
             
         </li>
         
@@ -319,7 +319,7 @@ case it was meant to be part of the initial page state.</p>
 
         updateFromUrl(<span class="hljs-literal">true</span>) <span class="hljs-comment">// Disable animation when the dialog state is restored from the URL</span>
             .then(
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                     <span class="hljs-keyword">try</span> {
                         $.modalDialog.onopen.add(openHandler);
                         $.modalDialog.onclose.add(closeHandler);</pre></div></div>
@@ -338,21 +338,21 @@ case it was meant to be part of the initial page state.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-                        History.Adapter.bind(<span class="hljs-built_in">window</span>, <span class="hljs-string">"statechange"</span>, popstateHandler);
+                        History.Adapter.bind(window, <span class="hljs-string">"statechange"</span>, popstateHandler);
 
                         deferred.resolve();
                     } <span class="hljs-keyword">catch</span> (ex) {
                         deferred.reject(ex);
                     }
                 },
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(ex)</span> </span>{
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(ex)</span> {</span>
                     deferred.reject(ex);
                 });
 
         <span class="hljs-keyword">return</span> deferred;
     };
 
-    $.modalDialog.isHistoryEnabled = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    $.modalDialog.isHistoryEnabled = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">return</span> _historyEnabled;
     };</pre></div></div>
             
@@ -369,22 +369,22 @@ case it was meant to be part of the initial page state.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> currentQueryStringOrHash = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-        <span class="hljs-keyword">if</span> (History.emulated.pushState &amp;&amp; <span class="hljs-built_in">window</span>.location.hash) {
-            <span class="hljs-keyword">var</span> qPos = <span class="hljs-built_in">window</span>.location.hash.indexOf(<span class="hljs-string">"?"</span>);
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> currentQueryStringOrHash = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">if</span> (History.emulated.pushState &amp;&amp; window.location.hash) {
+            <span class="hljs-keyword">var</span> qPos = window.location.hash.indexOf(<span class="hljs-string">"?"</span>);
             <span class="hljs-keyword">if</span> (qPos &gt;= <span class="hljs-number">0</span>) {
-                <span class="hljs-keyword">return</span> $.deparam(<span class="hljs-built_in">window</span>.location.hash.substr(qPos));
+                <span class="hljs-keyword">return</span> $.deparam(window.location.hash.substr(qPos));
             }
         }
 
-        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">window</span>.location.search) {
+        <span class="hljs-keyword">if</span> (window.location.search) {
             <span class="hljs-keyword">return</span> $.currentQueryString();
         }
 
         <span class="hljs-keyword">return</span> {};
     };
 
-    <span class="hljs-keyword">var</span> disableHistoryForOpenDialogs = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">var</span> disableHistoryForOpenDialogs = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">var</span> parent = $.modalDialog.getCurrent();
 
         <span class="hljs-keyword">while</span> (parent) {
@@ -410,7 +410,7 @@ for all of them.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> isHistoryEnabled = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog)</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> isHistoryEnabled = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog)</span> {</span></pre></div></div>
             
         </li>
         
@@ -451,7 +451,7 @@ inject entries into history</p>
     <span class="hljs-keyword">var</span> _disableHandlers = <span class="hljs-literal">false</span>;
     <span class="hljs-keyword">var</span> _historyEnabled = <span class="hljs-literal">false</span>;
 
-    <span class="hljs-keyword">var</span> getDialogParams = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog)</span> </span>{
+    <span class="hljs-keyword">var</span> getDialogParams = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog)</span> {</span>
         <span class="hljs-keyword">var</span> dialogParams = {
             dialogType: <span class="hljs-string">"node"</span>,
             dialogId: <span class="hljs-literal">null</span>
@@ -500,7 +500,7 @@ inject entries into history</p>
         <span class="hljs-keyword">return</span> dialogParams;
     };
 
-    <span class="hljs-keyword">var</span> getDialogSettingsFromParams = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialogParams)</span> </span>{
+    <span class="hljs-keyword">var</span> getDialogSettingsFromParams = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialogParams)</span> {</span>
         <span class="hljs-keyword">var</span> settings = <span class="hljs-literal">null</span>;
 
         <span class="hljs-keyword">if</span> (dialogParams.dialogType == <span class="hljs-string">"iframe"</span>) {
@@ -527,29 +527,29 @@ inject entries into history</p>
         <span class="hljs-keyword">return</span> settings;
     };
 
-    <span class="hljs-keyword">var</span> doParamsMatchDialog = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialogParams, dialog)</span> </span>{
+    <span class="hljs-keyword">var</span> doParamsMatchDialog = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialogParams, dialog)</span> {</span>
         <span class="hljs-keyword">var</span> d1 = getDialogParams(dialog);
 
         <span class="hljs-keyword">return</span> d1.dialogType == dialogParams.dialogType &amp;&amp;
             d1.dialogId == dialogParams.dialogId;
     };
 
-    <span class="hljs-keyword">var</span> encodeDialogId = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> </span>{
+    <span class="hljs-keyword">var</span> encodeDialogId = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> {</span>
         <span class="hljs-keyword">return</span> s.replace(<span class="hljs-string">"#"</span>, <span class="hljs-string">"-hash-"</span>);
     };
 
-    <span class="hljs-keyword">var</span> decodeDialogId = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> </span>{
+    <span class="hljs-keyword">var</span> decodeDialogId = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> {</span>
         <span class="hljs-keyword">return</span> s.replace(<span class="hljs-string">"-hash-"</span>, <span class="hljs-string">"#"</span>);
     };
 
-    <span class="hljs-keyword">var</span> parseDialogParams = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> </span>{
+    <span class="hljs-keyword">var</span> parseDialogParams = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
         <span class="hljs-keyword">if</span> (!data) {
             <span class="hljs-keyword">return</span> [];
         }
 
         <span class="hljs-keyword">var</span> items = data.split(<span class="hljs-string">" "</span>);
 
-        <span class="hljs-keyword">return</span> $.map(items, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(item)</span> </span>{
+        <span class="hljs-keyword">return</span> $.map(items, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(item)</span> {</span>
             <span class="hljs-keyword">var</span> delimPos = item.indexOf(<span class="hljs-string">"_"</span>);
 
             <span class="hljs-keyword">if</span> (delimPos &lt; <span class="hljs-number">0</span>) {
@@ -563,8 +563,8 @@ inject entries into history</p>
         });
     };
 
-    <span class="hljs-keyword">var</span> encodeDialogParams = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialogParamsList)</span> </span>{
-        <span class="hljs-keyword">return</span> $.map(dialogParamsList, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(item)</span> </span>{
+    <span class="hljs-keyword">var</span> encodeDialogParams = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialogParamsList)</span> {</span>
+        <span class="hljs-keyword">return</span> $.map(dialogParamsList, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(item)</span> {</span>
             <span class="hljs-keyword">return</span> item.dialogType + <span class="hljs-string">"_"</span> + encodeDialogId(item.dialogId);
         })
             .join(<span class="hljs-string">" "</span>);
@@ -583,7 +583,7 @@ inject entries into history</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> openHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> openHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
             
         </li>
         
@@ -659,7 +659,7 @@ when the dialog was opened by the history plugin itself</p>
         dialogParamsList.push(dialogParams);
         qs[_dialogParamName] = encodeDialogParams(dialogParamsList);
 
-        <span class="hljs-keyword">var</span> url = $.appendQueryString(<span class="hljs-built_in">document</span>.location.pathname, qs);</pre></div></div>
+        <span class="hljs-keyword">var</span> url = $.appendQueryString(document.location.pathname, qs);</pre></div></div>
             
         </li>
         
@@ -690,7 +690,7 @@ and the dialog is already open, so it shouldn’t do any more work.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        History.pushState(<span class="hljs-literal">null</span>, <span class="hljs-built_in">document</span>.title, url);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        History.pushState(<span class="hljs-literal">null</span>, document.title, url);</pre></div></div>
             
         </li>
         
@@ -722,7 +722,7 @@ it should add a history entry when closing dialogs</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> closeHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> closeHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">if</span> (_disableHandlers) {
             <span class="hljs-keyword">return</span>;
         }
@@ -779,9 +779,9 @@ clean up if not</p>
                 qs[_dialogParamName] = encodeDialogParams(dialogParamsList);
             }
 
-            <span class="hljs-keyword">var</span> url = $.appendQueryString(<span class="hljs-built_in">document</span>.location.pathname, qs);
+            <span class="hljs-keyword">var</span> url = $.appendQueryString(document.location.pathname, qs);
 
-            History.pushState(<span class="hljs-literal">null</span>, <span class="hljs-built_in">document</span>.title, url);
+            History.pushState(<span class="hljs-literal">null</span>, document.title, url);
         } <span class="hljs-keyword">else</span> {</pre></div></div>
             
         </li>
@@ -833,7 +833,7 @@ when the popstate event fires. This prevents an infinite loop.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> popstateHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> popstateHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
             
         </li>
         
@@ -870,7 +870,7 @@ then the UI has been updated already, and we shouldn’t update anything.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> updateFromUrl = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(disableAnimation)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> updateFromUrl = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(disableAnimation)</span> {</span>
         <span class="hljs-keyword">var</span> deferred = <span class="hljs-keyword">new</span> $.Deferred();</pre></div></div>
             
         </li>
@@ -922,7 +922,7 @@ open them in order</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> openDialogsUntilUrlMatches = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> openDialogsUntilUrlMatches = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
             <span class="hljs-keyword">if</span> (dialogParamsList.length &gt; topmostStackPos) {
                 <span class="hljs-keyword">var</span> dialogParams = dialogParamsList[topmostStackPos];
 
@@ -998,7 +998,7 @@ If the handlers were enabled, we’d get infinite looping.</p>
             <div class="content"><div class='highlight'><pre>                _disableHandlers = <span class="hljs-literal">true</span>;
 
                 dialog.open(disableAnimation) <span class="hljs-comment">// Disable animation when the dialog state is being restored from the URL on page init</span>
-                    .then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
+                    .then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
             
         </li>
         
@@ -1021,7 +1021,7 @@ If the handlers were enabled, we’d get infinite looping.</p>
                         }
                     });
             } <span class="hljs-keyword">else</span> {
-                setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                         deferred.resolve();
                         _disableHandlers = <span class="hljs-literal">false</span>;
                     },
@@ -1047,7 +1047,7 @@ close them until they match</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> closeDialogsUntilUrlMatches = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> closeDialogsUntilUrlMatches = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
             <span class="hljs-keyword">if</span> (dialogParamsList.length &lt; topmostStackPos) {
                 <span class="hljs-keyword">var</span> currentDialog = $.modalDialog.getCurrent();
                 <span class="hljs-keyword">if</span> (currentDialog) {
@@ -1075,7 +1075,7 @@ If the handlers were enabled, we’d get infinite looping.</p>
             <div class="content"><div class='highlight'><pre>                    _disableHandlers = <span class="hljs-literal">true</span>;
 
                     currentDialog.close()
-                        .then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                        .then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                             topmostStackPos--;
 
                             <span class="hljs-keyword">try</span> {</pre></div></div>
@@ -1103,7 +1103,7 @@ If the handlers were enabled, we’d get infinite looping.</p>
                     deferred.reject(<span class="hljs-string">"There was a mismatch between the URL and the current open dialog stack"</span>);
                 }
             } <span class="hljs-keyword">else</span> {
-                setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                     deferred.resolve();
                     _disableHandlers = <span class="hljs-literal">false</span>;
                 });

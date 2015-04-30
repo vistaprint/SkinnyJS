@@ -238,10 +238,10 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span>
     <span class="hljs-keyword">var</span> PLUS_RE = <span class="hljs-regexp">/\+/gi</span>;
 
-    <span class="hljs-keyword">var</span> urlDecode = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> </span>{</pre></div></div>
+    <span class="hljs-keyword">var</span> urlDecode = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> {</span></pre></div></div>
             
         </li>
         
@@ -290,7 +290,7 @@ and decodeURIComponent explicitly does not.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.deparam = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(queryString)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.deparam = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(queryString)</span> {</span>
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> queryString != <span class="hljs-string">"string"</span>) {
             <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"$.deparam() expects a string for 'queryString' argument."</span>);
         }</pre></div></div>
@@ -343,8 +343,8 @@ and decodeURIComponent explicitly does not.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.currentQueryString = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-        <span class="hljs-keyword">return</span> $.deparam(<span class="hljs-built_in">window</span>.location.search);
+            <div class="content"><div class='highlight'><pre>    $.currentQueryString = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">return</span> $.deparam(window.location.search);
     };</pre></div></div>
             
         </li>
@@ -360,7 +360,7 @@ and decodeURIComponent explicitly does not.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.appendQueryString = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(url, parsedQueryString)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.appendQueryString = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(url, parsedQueryString)</span> {</span>
         <span class="hljs-keyword">var</span> qs = $.param(parsedQueryString);
         <span class="hljs-keyword">if</span> (qs.length &gt; <span class="hljs-number">0</span>) {
             qs = <span class="hljs-string">"?"</span> + qs;

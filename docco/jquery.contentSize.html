@@ -238,9 +238,9 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span>
 
-    <span class="hljs-keyword">var</span> addMargin = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(node, styleProp, rectProp, rect)</span> </span>{
+    <span class="hljs-keyword">var</span> addMargin = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(node, styleProp, rectProp, rect)</span> {</span>
         <span class="hljs-keyword">var</span> margin = <span class="hljs-built_in">parseInt</span>($(node).css(styleProp), <span class="hljs-number">10</span>);
         <span class="hljs-keyword">if</span> (margin) {
             rect[rectProp] += margin;
@@ -260,7 +260,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> gatherSize = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(size, node, includeChildrenOnly, includeWidth, includeHeight)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> gatherSize = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(size, node, includeChildrenOnly, includeWidth, includeHeight)</span> {</span>
         <span class="hljs-keyword">var</span> rect;</pre></div></div>
             
         </li>
@@ -419,7 +419,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.fn.contentSize = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(excludeScrollbars)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.fn.contentSize = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(excludeScrollbars)</span> {</span>
         <span class="hljs-keyword">var</span> el = <span class="hljs-keyword">this</span>[<span class="hljs-number">0</span>];
 
         <span class="hljs-keyword">if</span> (!el) {

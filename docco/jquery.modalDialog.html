@@ -236,7 +236,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{
+            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span>
     <span class="hljs-keyword">if</span> ($.modalDialog &amp;&amp; $.modalDialog._isContent) {
         <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Attempt to load jquery.modalDialogContent.js in the same window as jquery.modalDialog.js."</span>);
     }
@@ -326,7 +326,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> ModalDialog = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(settings)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> ModalDialog = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(settings)</span> {</span>
         <span class="hljs-keyword">this</span>.settings = settings;
         <span class="hljs-keyword">this</span>.parent = $(<span class="hljs-keyword">this</span>.settings.containerElement || <span class="hljs-string">"body"</span>);</pre></div></div>
             
@@ -376,7 +376,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype._setupCustomEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, eventName)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype._setupCustomEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, eventName)</span> {</span>
         <span class="hljs-keyword">var</span> onEvent = <span class="hljs-string">"on"</span> + eventName;
         <span class="hljs-keyword">var</span> evt = $.CustomEvent.create(<span class="hljs-keyword">this</span>, eventName);
 
@@ -388,14 +388,14 @@
         <span class="hljs-keyword">return</span> evt;
     };
 
-    ModalDialog.prototype._initDeferred = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(action, deferred)</span> </span>{
+    ModalDialog.prototype._initDeferred = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(action, deferred)</span> {</span>
         <span class="hljs-keyword">this</span>._deferreds = <span class="hljs-keyword">this</span>._deferreds || {};
         deferred = deferred || <span class="hljs-keyword">new</span> $.Deferred();
         <span class="hljs-keyword">this</span>._deferreds[action] = deferred;
         <span class="hljs-keyword">return</span> deferred;
     };
 
-    ModalDialog.prototype._completeDeferred = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(action, resolution, args)</span> </span>{
+    ModalDialog.prototype._completeDeferred = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(action, resolution, args)</span> {</span>
         <span class="hljs-keyword">var</span> deferred = <span class="hljs-keyword">this</span>._deferreds[action];
         <span class="hljs-keyword">if</span> (deferred) {
             deferred[resolution + <span class="hljs-string">"With"</span>](<span class="hljs-keyword">this</span>, args);</pre></div></div>
@@ -420,28 +420,28 @@
         <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"No deferred initialized for action '"</span> + action + <span class="hljs-string">"'"</span>);
     };
 
-    ModalDialog.prototype._resolveDeferred = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(action, args)</span> </span>{
+    ModalDialog.prototype._resolveDeferred = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(action, args)</span> {</span>
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._completeDeferred(action, <span class="hljs-string">"resolve"</span>, args);
     };
 
-    ModalDialog.prototype._rejectDeferred = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(action, args)</span> </span>{
+    ModalDialog.prototype._rejectDeferred = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(action, args)</span> {</span>
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._completeDeferred(action, <span class="hljs-string">"reject"</span>, args);
     };
 
-    ModalDialog.prototype._clearDeferred = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(action)</span> </span>{
+    ModalDialog.prototype._clearDeferred = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(action)</span> {</span>
         <span class="hljs-keyword">this</span>._deferreds[action] = <span class="hljs-literal">null</span>;
     };
 
-    ModalDialog.prototype._getDeferred = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(action)</span> </span>{
+    ModalDialog.prototype._getDeferred = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(action)</span> {</span>
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._deferreds[action];
     };
 
-    ModalDialog.prototype._isDeferredComplete = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(action)</span> </span>{
+    ModalDialog.prototype._isDeferredComplete = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(action)</span> {</span>
         <span class="hljs-keyword">var</span> deferred = <span class="hljs-keyword">this</span>._getDeferred(action);
         <span class="hljs-keyword">return</span> !deferred || deferred.state() != <span class="hljs-string">"pending"</span>;
     };
 
-    ModalDialog.prototype.isOpen = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    ModalDialog.prototype.isOpen = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">return</span> !!<span class="hljs-keyword">this</span>._open;
     };</pre></div></div>
             
@@ -458,7 +458,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype.open = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(disableAnimation)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype.open = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(disableAnimation)</span> {</span>
         <span class="hljs-keyword">var</span> deferred = <span class="hljs-keyword">this</span>._initDeferred(<span class="hljs-string">"open"</span>, deferred);</pre></div></div>
             
         </li>
@@ -600,9 +600,9 @@ Otherwise, you could end up pushing it on to the stack more than once.</p>
 
         <span class="hljs-keyword">this</span>._showLoadingIndicator();
 
-        $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">"keydown"</span>, <span class="hljs-keyword">this</span>._keydownHandler);
+        $(document).on(<span class="hljs-string">"keydown"</span>, <span class="hljs-keyword">this</span>._keydownHandler);
 
-        <span class="hljs-keyword">this</span>._finishOpenAction = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">this</span>._finishOpenAction = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
             <span class="hljs-keyword">if</span> (deferred.state() != <span class="hljs-string">"rejected"</span>) {
                 <span class="hljs-keyword">this</span>.$bg.addClass($.modalDialog.veilClass);</pre></div></div>
             
@@ -644,7 +644,7 @@ on the layout for that width.</p>
                 <span class="hljs-keyword">var</span> initialTop = initialPos.top;                
                 <span class="hljs-keyword">this</span>.$container.css(initialPos);
 
-                <span class="hljs-keyword">var</span> animationCallback = $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                <span class="hljs-keyword">var</span> animationCallback = $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                     <span class="hljs-keyword">try</span> {
                         <span class="hljs-keyword">this</span>.$el.addClass(<span class="hljs-string">"dialog-visible"</span>);
 
@@ -669,13 +669,13 @@ Force dialogs that are on small screens to trigger a window resize event when cl
             
             <div class="content"><div class='highlight'><pre>
                             <span class="hljs-keyword">this</span>.triggerWindowResize = <span class="hljs-literal">false</span>;
-                            <span class="hljs-keyword">this</span>._orientationchange = $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
+                            <span class="hljs-keyword">this</span>._orientationchange = $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
                                     <span class="hljs-keyword">this</span>.triggerWindowResize = <span class="hljs-literal">true</span>;
                                     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.pos(event);
                                 },
                                 <span class="hljs-keyword">this</span>);
 
-                            $(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">"orientationchange resize"</span>, <span class="hljs-keyword">this</span>._orientationchange);
+                            $(window).on(<span class="hljs-string">"orientationchange resize"</span>, <span class="hljs-keyword">this</span>._orientationchange);
                         }
 
                         <span class="hljs-keyword">this</span>.onopen.fire();
@@ -742,7 +742,7 @@ and then do the callback on the next event loop tick.</p>
         <span class="hljs-keyword">return</span> deferred.promise();
     };
 
-    ModalDialog.prototype._finishOpen = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    ModalDialog.prototype._finishOpen = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._finishOpenAction) {
             <span class="hljs-keyword">try</span> {
                 <span class="hljs-keyword">this</span>._finishOpenAction();
@@ -768,7 +768,7 @@ and then do the callback on the next event loop tick.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype._keydownHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype._keydownHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> {</span>
         <span class="hljs-keyword">if</span> (e.keyCode == <span class="hljs-number">27</span>) {
             <span class="hljs-keyword">if</span> ($.modalDialog.getCurrent() === <span class="hljs-keyword">this</span>) {
                 <span class="hljs-keyword">this</span>.cancel();
@@ -776,7 +776,7 @@ and then do the callback on the next event loop tick.</p>
         }
     };
 
-    ModalDialog.prototype.cancel = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
+    ModalDialog.prototype.cancel = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
             
         </li>
         
@@ -801,7 +801,7 @@ stop it right where it is.</p>
         }
     };
 
-    ModalDialog.prototype._showLoadingIndicator = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    ModalDialog.prototype._showLoadingIndicator = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.$loadingIndicator) {
             <span class="hljs-keyword">this</span>.$loadingIndicator = $(<span class="hljs-string">"&lt;div class='dialog-loading-indicator'&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;"</span>)
                 .appendTo(<span class="hljs-keyword">this</span>.$bg);</pre></div></div>
@@ -822,12 +822,12 @@ stop it right where it is.</p>
             <div class="content"><div class='highlight'><pre>        }
     };
 
-    ModalDialog.prototype._hideLoadingIndicator = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    ModalDialog.prototype._hideLoadingIndicator = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">this</span>.$loadingIndicator.remove();
         <span class="hljs-keyword">this</span>.$loadingIndicator = <span class="hljs-literal">null</span>;
     };
 
-    ModalDialog.prototype._popDialogStack = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    ModalDialog.prototype._popDialogStack = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">if</span> ($.modalDialog.getCurrent() === <span class="hljs-keyword">this</span>) {
             _dialogStack.pop();
         }
@@ -847,7 +847,7 @@ isDialogCloseButton Indicates the cancel button in the dialog’s header was cli
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype.close = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(isDialogCloseButton)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype.close = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(isDialogCloseButton)</span> {</span>
         <span class="hljs-keyword">var</span> deferred = <span class="hljs-keyword">this</span>._initDeferred(<span class="hljs-string">"close"</span>, deferred);
 
         <span class="hljs-keyword">if</span> ($.modalDialog.getCurrent() !== <span class="hljs-keyword">this</span>) {
@@ -894,7 +894,7 @@ isDialogCloseButton Indicates the cancel button in the dialog’s header was cli
 
         <span class="hljs-keyword">this</span>._popDialogStack();
 
-        $(<span class="hljs-built_in">document</span>).off(<span class="hljs-string">"keydown"</span>, <span class="hljs-keyword">this</span>._keydownHandler);</pre></div></div>
+        $(document).off(<span class="hljs-string">"keydown"</span>, <span class="hljs-keyword">this</span>._keydownHandler);</pre></div></div>
             
         </li>
         
@@ -919,7 +919,7 @@ isDialogCloseButton Indicates the cancel button in the dialog’s header was cli
         )
             .promise()
             .then(
-                $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                     <span class="hljs-keyword">try</span> {
                         <span class="hljs-keyword">this</span>._finishClose(eventSettings);
                     } <span class="hljs-keyword">catch</span> (ex) {
@@ -927,7 +927,7 @@ isDialogCloseButton Indicates the cancel button in the dialog’s header was cli
                         <span class="hljs-keyword">this</span>._clearDeferred(<span class="hljs-string">"close"</span>);
                     }
                 }, <span class="hljs-keyword">this</span>),
-                $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(ex)</span> </span>{
+                $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(ex)</span> {</span>
                     <span class="hljs-keyword">this</span>._rejectDeferred(<span class="hljs-string">"close"</span>, ex);
                     <span class="hljs-keyword">this</span>._clearDeferred(<span class="hljs-string">"close"</span>);
                 }, <span class="hljs-keyword">this</span>));</pre></div></div>
@@ -946,18 +946,18 @@ isDialogCloseButton Indicates the cancel button in the dialog’s header was cli
             </div>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._orientationchange) {
-            $(<span class="hljs-built_in">window</span>).off(<span class="hljs-string">"orientationchange resize"</span>, <span class="hljs-keyword">this</span>._orientationchange);
+            $(window).off(<span class="hljs-string">"orientationchange resize"</span>, <span class="hljs-keyword">this</span>._orientationchange);
         }
 
         <span class="hljs-keyword">return</span> deferred.promise();
     };
 
-    ModalDialog.prototype._close = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
+    ModalDialog.prototype._close = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> {</span>
         e.preventDefault();
         <span class="hljs-keyword">this</span>.close(<span class="hljs-literal">true</span>);
     };
 
-    ModalDialog.prototype._reset = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    ModalDialog.prototype._reset = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">this</span>._open = <span class="hljs-literal">false</span>;
 
         <span class="hljs-keyword">this</span>.$container.stop(<span class="hljs-literal">true</span>, <span class="hljs-literal">true</span>);
@@ -968,12 +968,12 @@ isDialogCloseButton Indicates the cancel button in the dialog’s header was cli
         <span class="hljs-keyword">this</span>.$el.hide();
     };
 
-    ModalDialog.prototype._resetFailed = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    ModalDialog.prototype._resetFailed = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">this</span>._reset();
         <span class="hljs-keyword">this</span>._popDialogStack();
     };
 
-    ModalDialog.prototype._finishClose = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
+    ModalDialog.prototype._finishClose = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> {</span>
         <span class="hljs-keyword">this</span>._reset();
 
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.settings.destroyOnClose) {
@@ -981,7 +981,7 @@ isDialogCloseButton Indicates the cancel button in the dialog’s header was cli
         }
 
         <span class="hljs-keyword">if</span> ($.modalDialog.isSmallScreen() &amp;&amp; <span class="hljs-keyword">this</span>.triggerWindowResize) {
-            $(<span class="hljs-built_in">window</span>).trigger(<span class="hljs-string">"resize"</span>);
+            $(window).trigger(<span class="hljs-string">"resize"</span>);
         }</pre></div></div>
             
         </li>
@@ -1001,7 +1001,7 @@ the iframe isn’t recognized as a new element.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        setTimeout(
-            $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                 <span class="hljs-keyword">this</span>.onclose.fire(e);
 
                 $.modalDialog.onclose.fire(e, <span class="hljs-keyword">this</span>);
@@ -1011,7 +1011,7 @@ the iframe isn’t recognized as a new element.</p>
             <span class="hljs-number">0</span>);
     };
 
-    ModalDialog.prototype._destroy = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    ModalDialog.prototype._destroy = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._destroyed) {
             <span class="hljs-keyword">return</span>;
         }</pre></div></div>
@@ -1037,7 +1037,7 @@ It could be used again.</p>
         <span class="hljs-keyword">this</span>._destroyed = <span class="hljs-literal">true</span>;
     };
 
-    ModalDialog.prototype._updateZIndexes = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    ModalDialog.prototype._updateZIndexes = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">var</span> zIndex = <span class="hljs-keyword">this</span>.settings.zIndex;
         <span class="hljs-keyword">var</span> parent = <span class="hljs-keyword">this</span>.getParent();
         <span class="hljs-keyword">if</span> (parent) {
@@ -1049,10 +1049,10 @@ It could be used again.</p>
         <span class="hljs-keyword">this</span>.$container.css(<span class="hljs-string">"z-index"</span>, zIndex);
     };
 
-    ModalDialog.prototype._preventClickBubbling = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($el)</span> </span>{
+    ModalDialog.prototype._preventClickBubbling = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($el)</span> {</span>
         <span class="hljs-keyword">var</span> me = <span class="hljs-keyword">this</span>;
 
-        $el.on(<span class="hljs-string">"click mousedown mouseup touchstart touchend"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
+        $el.on(<span class="hljs-string">"click mousedown mouseup touchstart touchend"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> {</span>
                 <span class="hljs-keyword">if</span> (me.settings.preventEventBubbling) {
                     e.stopPropagation();
                 }
@@ -1072,7 +1072,7 @@ It could be used again.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype._build = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype._build = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-comment">/*jshint quotmark:false*/</span>
 
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._destroyed) {
@@ -1173,7 +1173,7 @@ and we are not in Internet Explorer 7, because it handles positioning oddly.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype._alreadyBuilt = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype._alreadyBuilt = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
             
         </li>
         
@@ -1195,7 +1195,7 @@ Ensure the content node is still owned by this dialog</p>
         }
     };
 
-    ModalDialog.prototype._getChromeHeight = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    ModalDialog.prototype._getChromeHeight = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>._chromeHeight) {
             <span class="hljs-keyword">this</span>._chromeHeight = <span class="hljs-keyword">this</span>.$container.height() - <span class="hljs-keyword">this</span>.$content.height();
         }
@@ -1203,9 +1203,9 @@ Ensure the content node is still owned by this dialog</p>
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._chromeHeight;
     };
 
-    ModalDialog.prototype._getDefaultWidthData = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-        <span class="hljs-keyword">var</span> $win = $(<span class="hljs-built_in">window</span>);
-        <span class="hljs-keyword">var</span> windowWidth = <span class="hljs-keyword">this</span>.parent.is(<span class="hljs-string">"body"</span>) ? (<span class="hljs-built_in">window</span>.innerWidth || $win.width()) : <span class="hljs-keyword">this</span>.parent.width();
+    ModalDialog.prototype._getDefaultWidthData = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">var</span> $win = $(window);
+        <span class="hljs-keyword">var</span> windowWidth = <span class="hljs-keyword">this</span>.parent.is(<span class="hljs-string">"body"</span>) ? (window.innerWidth || $win.width()) : <span class="hljs-keyword">this</span>.parent.width();
 
         <span class="hljs-keyword">return</span> {
             windowWidth: windowWidth,
@@ -1213,9 +1213,9 @@ Ensure the content node is still owned by this dialog</p>
         };
     };
 
-    ModalDialog.prototype._getDefaultPosition = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(contentHeight)</span> </span>{
+    ModalDialog.prototype._getDefaultPosition = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(contentHeight)</span> {</span>
         <span class="hljs-keyword">var</span> widthData = <span class="hljs-keyword">this</span>._getDefaultWidthData();
-        <span class="hljs-keyword">var</span> scrollTop = $(<span class="hljs-built_in">document</span>).scrollTop();
+        <span class="hljs-keyword">var</span> scrollTop = $(document).scrollTop();
 
         <span class="hljs-keyword">var</span> pos = {
             width: widthData.width,
@@ -1265,7 +1265,7 @@ For larger devices, center vertically.</p>
             
             <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">var</span> containerHeight = <span class="hljs-keyword">this</span>._getChromeHeight() + contentHeight;
 
-            <span class="hljs-keyword">var</span> parentHeight = <span class="hljs-keyword">this</span>.parent.is(<span class="hljs-string">"body"</span>) ? $(<span class="hljs-built_in">window</span>).height() : <span class="hljs-keyword">this</span>.parent.height();
+            <span class="hljs-keyword">var</span> parentHeight = <span class="hljs-keyword">this</span>.parent.is(<span class="hljs-string">"body"</span>) ? $(window).height() : <span class="hljs-keyword">this</span>.parent.height();
             <span class="hljs-keyword">var</span> idealTop = ((parentHeight / <span class="hljs-number">2</span>) - (containerHeight / <span class="hljs-number">2</span>)) + scrollTop;
 
             pos.top = <span class="hljs-built_in">Math</span>.max(idealTop, pos.top);
@@ -1274,7 +1274,7 @@ For larger devices, center vertically.</p>
         <span class="hljs-keyword">return</span> pos;
     };
 
-    ModalDialog.prototype._makeDraggable = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
+    ModalDialog.prototype._makeDraggable = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
             
         </li>
         
@@ -1298,7 +1298,7 @@ Where you gonna drag to?</p>
         <span class="hljs-keyword">this</span>.$header.addClass(<span class="hljs-string">"draggable"</span>).on(<span class="hljs-string">"pointerdown"</span>, <span class="hljs-keyword">this</span>._startDrag);
     };
 
-    ModalDialog.prototype._startDrag = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
+    ModalDialog.prototype._startDrag = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> {</span>
         <span class="hljs-keyword">var</span> $target = $(e.target);</pre></div></div>
             
         </li>
@@ -1324,7 +1324,7 @@ Where you gonna drag to?</p>
         <span class="hljs-keyword">this</span>._initialMousePos = getMousePos(e);
         <span class="hljs-keyword">this</span>._initialDialogPos = <span class="hljs-keyword">this</span>.$container.offset();
 
-        $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">"pointermove"</span>, <span class="hljs-keyword">this</span>._drag);</pre></div></div>
+        $(document).on(<span class="hljs-string">"pointermove"</span>, <span class="hljs-keyword">this</span>._drag);</pre></div></div>
             
         </li>
         
@@ -1366,9 +1366,9 @@ the iframe content it stops firing on the parent window</p>
         <span class="hljs-keyword">this</span>._isDragging = <span class="hljs-literal">true</span>;
     };
 
-    ModalDialog.prototype._drag = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
+    ModalDialog.prototype._drag = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> {</span>
         <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>._isDragging) {
-            $(<span class="hljs-built_in">document</span>).off(<span class="hljs-string">"pointermove"</span>, <span class="hljs-keyword">this</span>._drag);
+            $(document).off(<span class="hljs-string">"pointermove"</span>, <span class="hljs-keyword">this</span>._drag);
             <span class="hljs-keyword">return</span>;
         }
 
@@ -1385,11 +1385,11 @@ the iframe content it stops firing on the parent window</p>
         <span class="hljs-keyword">this</span>.$container.css(newPos);
     };
 
-    ModalDialog.prototype._stopDrag = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    ModalDialog.prototype._stopDrag = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">delete</span> <span class="hljs-keyword">this</span>._initialMousePos;
         <span class="hljs-keyword">delete</span> <span class="hljs-keyword">this</span>._initialDialogPos;
 
-        $(<span class="hljs-built_in">document</span>).off(<span class="hljs-string">"pointermove"</span>, <span class="hljs-keyword">this</span>._drag);
+        $(document).off(<span class="hljs-string">"pointermove"</span>, <span class="hljs-keyword">this</span>._drag);
         <span class="hljs-keyword">this</span>.$header.off(<span class="hljs-string">"pointerup"</span>, <span class="hljs-keyword">this</span>._stopDrag);
         <span class="hljs-keyword">this</span>.$bg.off(<span class="hljs-string">"pointerup"</span>, <span class="hljs-keyword">this</span>._stopDrag);
 
@@ -1415,7 +1415,7 @@ returns an object with top and left</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> getMousePos = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> getMousePos = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> {</span>
         <span class="hljs-keyword">var</span> mousePos = {
             left: e.pageX,
             top: e.pageY
@@ -1434,7 +1434,7 @@ returns an object with top and left</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (e.target.ownerDocument != <span class="hljs-built_in">window</span>.document) {
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (e.target.ownerDocument != window.document) {
             <span class="hljs-keyword">var</span> $iframe = $(e.target.ownerDocument).hostIframe();
             <span class="hljs-keyword">if</span> ($iframe.length &gt; <span class="hljs-number">0</span>) {
                 <span class="hljs-keyword">var</span> rect = $iframe.clientRect();
@@ -1460,7 +1460,7 @@ Should be overridden by subclasses.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype._buildContent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype._buildContent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">this</span>.$content = $(<span class="hljs-keyword">this</span>.settings.content);
         <span class="hljs-keyword">this</span>.$content.detach();
     };</pre></div></div>
@@ -1479,8 +1479,8 @@ This will be overriden by an iframe dialog.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype.getWindow = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-        <span class="hljs-keyword">return</span> <span class="hljs-built_in">window</span>;
+            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype.getWindow = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">return</span> window;
     };</pre></div></div>
             
         </li>
@@ -1497,7 +1497,7 @@ This is null if the dialog was opened by the main window.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype.getParent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype.getParent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.settings.parentId) {
             <span class="hljs-keyword">return</span> getDialog(<span class="hljs-keyword">this</span>.settings.parentId);
         }
@@ -1518,7 +1518,7 @@ This is null if the dialog was opened by the main window.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype.center = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype.center = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">var</span> pos = <span class="hljs-keyword">this</span>._getDefaultPosition();
         <span class="hljs-keyword">this</span>.$container.animate({
             top: pos.top
@@ -1538,7 +1538,7 @@ This is null if the dialog was opened by the main window.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype.pos = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(animate)</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype.pos = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(animate)</span> {</span></pre></div></div>
             
         </li>
         
@@ -1581,7 +1581,7 @@ This is null if the dialog was opened by the main window.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype.setTitle = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(title)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype.setTitle = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(title)</span> {</span>
         <span class="hljs-keyword">this</span>.$container.find(<span class="hljs-string">".dialog-header h1"</span>).text(title || <span class="hljs-string">""</span>);
     };</pre></div></div>
             
@@ -1598,7 +1598,7 @@ This is null if the dialog was opened by the main window.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype.getTitle = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    ModalDialog.prototype.getTitle = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.$container.find(<span class="hljs-string">".dialog-header h1"</span>).text();
     };</pre></div></div>
             
@@ -1615,11 +1615,11 @@ This is null if the dialog was opened by the main window.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> IFrameDialog = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> IFrameDialog = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         ModalDialog.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
 
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.settings.parentId) {
-            <span class="hljs-keyword">this</span>._parentWindow = <span class="hljs-built_in">window</span>.frames[<span class="hljs-keyword">this</span>.settings.parentId];
+            <span class="hljs-keyword">this</span>._parentWindow = window.frames[<span class="hljs-keyword">this</span>.settings.parentId];
         }
     };
 
@@ -1627,7 +1627,7 @@ This is null if the dialog was opened by the main window.</p>
 
     IFrameDialog.prototype.dialogType = <span class="hljs-string">"iframe"</span>;
 
-    IFrameDialog.prototype._setupCustomEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    IFrameDialog.prototype._setupCustomEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">var</span> evt = ModalDialog.prototype._setupCustomEvent.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
         evt.add(_crossWindowEventHandler);
     };</pre></div></div>
@@ -1645,7 +1645,7 @@ This is null if the dialog was opened by the main window.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> _crossWindowEventHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> _crossWindowEventHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> {</span></pre></div></div>
             
         </li>
         
@@ -1683,14 +1683,14 @@ This is null if the dialog was opened by the main window.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    IFrameDialog.prototype._finishClose = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    IFrameDialog.prototype._finishClose = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> {</span>
         ModalDialog.prototype._finishClose.call(<span class="hljs-keyword">this</span>, e);
 
         <span class="hljs-keyword">this</span>.$frame[<span class="hljs-number">0</span>].src = <span class="hljs-string">"about:blank"</span>;
         <span class="hljs-keyword">this</span>.$frame.remove();
     };
 
-    IFrameDialog.prototype._destroy = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    IFrameDialog.prototype._destroy = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">this</span>.$el.remove();
     };</pre></div></div>
             
@@ -1707,7 +1707,7 @@ This is null if the dialog was opened by the main window.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    IFrameDialog.prototype._buildContent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    IFrameDialog.prototype._buildContent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-comment">/* jshint quotmark:false */</span>
 
         <span class="hljs-keyword">this</span>._iframeLoadTimer = <span class="hljs-literal">null</span>;
@@ -1740,7 +1740,7 @@ eventually fire, causing the open() promise to be rejected, and the dialog state
             
             <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">this</span>.$frame.on(
                 <span class="hljs-string">"load"</span>,
-                $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
+                $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
             
         </li>
         
@@ -1774,7 +1774,7 @@ Otherwise, the “open” promise will be rejected.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>                        <span class="hljs-keyword">this</span>._iframeLoadTimer = setTimeout(
-                            $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                            $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                                 <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._isDeferredComplete(<span class="hljs-string">"open"</span>)) {
                                     <span class="hljs-keyword">return</span>;
                                 }
@@ -1796,7 +1796,7 @@ Otherwise, the “open” promise will be rejected.</p>
         <span class="hljs-keyword">this</span>.$content = <span class="hljs-keyword">this</span>.$frame;
     };
 
-    IFrameDialog.prototype._alreadyBuilt = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    IFrameDialog.prototype._alreadyBuilt = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">this</span>._buildContent();</pre></div></div>
             
         </li>
@@ -1815,7 +1815,7 @@ Otherwise, the “open” promise will be rejected.</p>
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.$contentContainer.append(<span class="hljs-keyword">this</span>.$content);
     };
 
-    IFrameDialog.prototype.getWindow = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    IFrameDialog.prototype.getWindow = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.$frame.iframeWindow()[<span class="hljs-number">0</span>];
     };</pre></div></div>
             
@@ -1837,7 +1837,7 @@ Used for orchestrating cross-window communication with dialog proxies.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    IFrameDialog.prototype._postCommand = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(command, data)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    IFrameDialog.prototype._postCommand = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(command, data)</span> {</span>
         <span class="hljs-keyword">var</span> messageData = {
             dialogCmd: command
         };
@@ -1868,7 +1868,7 @@ Used for orchestrating cross-window communication with dialog proxies.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    IFrameDialog.prototype.postMessage = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(message)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    IFrameDialog.prototype.postMessage = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(message)</span> {</span>
         <span class="hljs-keyword">var</span> win = <span class="hljs-keyword">this</span>.getWindow();
 
         <span class="hljs-keyword">var</span> hostname = <span class="hljs-keyword">this</span>.frameHostname;
@@ -1887,7 +1887,7 @@ Used for orchestrating cross-window communication with dialog proxies.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            hostname = <span class="hljs-keyword">this</span>.settings.url.indexOf(<span class="hljs-string">"http"</span>) === <span class="hljs-number">0</span> ? <span class="hljs-keyword">this</span>.settings.url : <span class="hljs-built_in">document</span>.location.href;
+            <div class="content"><div class='highlight'><pre>            hostname = <span class="hljs-keyword">this</span>.settings.url.indexOf(<span class="hljs-string">"http"</span>) === <span class="hljs-number">0</span> ? <span class="hljs-keyword">this</span>.settings.url : document.location.href;
         }
 
         <span class="hljs-keyword">if</span> ($.postMessage) {
@@ -1897,10 +1897,10 @@ Used for orchestrating cross-window communication with dialog proxies.</p>
         }
     };
 
-    IFrameDialog.prototype.setHeight = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(contentHeight, center, skipAnimation)</span> </span>{
+    IFrameDialog.prototype.setHeight = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(contentHeight, center, skipAnimation)</span> {</span>
         <span class="hljs-keyword">var</span> applyChange = skipAnimation ?
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($content, css)</span> </span>{ $content.css(css); } :
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($content, css)</span> </span>{ $content.animate(css, { duration: <span class="hljs-number">400</span> }); };
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($content, css)</span> {</span> $content.css(css); } :
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($content, css)</span> {</span> $content.animate(css, { duration: <span class="hljs-number">400</span> }); };
 
         applyChange(<span class="hljs-keyword">this</span>.$content, {
             height: contentHeight
@@ -1929,7 +1929,7 @@ Used for orchestrating cross-window communication with dialog proxies.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    IFrameDialog.prototype.setHeightFromContent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(center, skipAnimation)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    IFrameDialog.prototype.setHeightFromContent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(center, skipAnimation)</span> {</span>
         <span class="hljs-keyword">this</span>._postCommand(<span class="hljs-string">"setHeightFromContent"</span>, {
             center: !! center,
             skipAnimation: !! skipAnimation
@@ -1949,11 +1949,11 @@ Used for orchestrating cross-window communication with dialog proxies.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    IFrameDialog.prototype.setTitleFromContent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    IFrameDialog.prototype.setTitleFromContent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">this</span>._postCommand(<span class="hljs-string">"setTitleFromContent"</span>);
     };
 
-    IFrameDialog.prototype.notifyReady = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(hostname)</span> </span>{</pre></div></div>
+    IFrameDialog.prototype.notifyReady = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(hostname)</span> {</span></pre></div></div>
             
         </li>
         
@@ -1978,7 +1978,7 @@ Used for orchestrating cross-window communication with dialog proxies.</p>
         ModalDialog.prototype._finishOpen.apply(<span class="hljs-keyword">this</span>);
     };
 
-    IFrameDialog.prototype._finishOpen = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{};</pre></div></div>
+    IFrameDialog.prototype._finishOpen = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>};</pre></div></div>
             
         </li>
         
@@ -1994,7 +1994,7 @@ Loads content via ajax</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> AjaxDialog = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> AjaxDialog = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         ModalDialog.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
     };
 
@@ -2002,7 +2002,7 @@ Loads content via ajax</p>
 
     AjaxDialog.prototype.dialogType = <span class="hljs-string">"ajax"</span>;
 
-    AjaxDialog.prototype.open = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    AjaxDialog.prototype.open = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">var</span> deferred = ModalDialog.prototype.open.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
 
         <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>._ajaxComplete) {</pre></div></div>
@@ -2025,11 +2025,11 @@ adding scripts, but not if they’re already loaded.</p>
                 <span class="hljs-keyword">this</span>.settings.url,
                 <span class="hljs-literal">null</span>,
                 $.proxy(
-                    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(responseText, status, xhr)</span> </span>{
+                    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(responseText, status, xhr)</span> {</span>
                         <span class="hljs-keyword">this</span>._ajaxComplete = <span class="hljs-literal">true</span>;
 
                         xhr.fail(
-                            $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                            $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                                 <span class="hljs-keyword">this</span>._resetFailed();
 
                                 <span class="hljs-keyword">var</span> errEvent = {
@@ -2090,7 +2090,7 @@ adding scripts, but not if they’re already loaded.</p>
         <span class="hljs-keyword">return</span> deferred.promise();
     };
 
-    AjaxDialog.prototype._finishOpen = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
+    AjaxDialog.prototype._finishOpen = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
             
         </li>
         
@@ -2108,7 +2108,7 @@ Base implementation will be called manually.</p>
             
             <div class="content"><div class='highlight'><pre>    };
 
-    AjaxDialog.prototype._buildContent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
+    AjaxDialog.prototype._buildContent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
             
         </li>
         
@@ -2126,7 +2126,7 @@ Base implementation will be called manually.</p>
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.$content = $(<span class="hljs-string">"&lt;div class='dialog-content'&gt;&lt;/div&gt;"</span>);
     };
 
-    AjaxDialog.prototype._destroy = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    AjaxDialog.prototype._destroy = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">this</span>.$el.remove();
     };
 
@@ -2146,7 +2146,7 @@ Base implementation will be called manually.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> isSelector = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> isSelector = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> {</span>
         <span class="hljs-keyword">var</span> firstChar = s.charAt(<span class="hljs-number">0</span>);
         <span class="hljs-keyword">if</span> (firstChar == <span class="hljs-string">"#"</span>) {</pre></div></div>
             
@@ -2272,7 +2272,7 @@ Settings go in order:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.modalDialog._ensureSettings = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(explicitSettings)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.modalDialog._ensureSettings = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(explicitSettings)</span> {</span>
         <span class="hljs-keyword">var</span> settings = $.extend({}, $.modalDialog.defaults);</pre></div></div>
             
         </li>
@@ -2395,7 +2395,7 @@ a child dialog. The child will become the “parent dialog” of the new dialog.
         <span class="hljs-keyword">return</span> settings;
     };
 
-    $.modalDialog._areSettingsEqual = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(a, b)</span> </span>{
+    $.modalDialog._areSettingsEqual = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(a, b)</span> {</span>
         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> a) {
             <span class="hljs-keyword">if</span> (key == <span class="hljs-string">"_fullId"</span>) {
                 <span class="hljs-keyword">continue</span>;
@@ -2457,7 +2457,7 @@ Instead, compare the DOM nodes.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> getDialog = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(fullId)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> getDialog = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(fullId)</span> {</span>
         <span class="hljs-keyword">return</span> _fullIdMap[fullId];
     };</pre></div></div>
             
@@ -2521,7 +2521,7 @@ When removing the host window content from the DOM, make the veil opaque to hide
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.modalDialog.create = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(settings)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.modalDialog.create = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(settings)</span> {</span>
         settings = $.modalDialog._ensureSettings(settings);
 
         <span class="hljs-keyword">var</span> dialog = getDialog(settings._fullId);</pre></div></div>
@@ -2596,7 +2596,7 @@ When removing the host window content from the DOM, make the veil opaque to hide
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.modalDialog.getCurrent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.modalDialog.getCurrent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">return</span> _dialogStack.length &gt; <span class="hljs-number">0</span> ? _dialogStack[_dialogStack.length - <span class="hljs-number">1</span>] : <span class="hljs-literal">null</span>;
     };</pre></div></div>
             
@@ -2613,7 +2613,7 @@ When removing the host window content from the DOM, make the veil opaque to hide
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.modalDialog.getExisting = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(settings)</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    $.modalDialog.getExisting = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(settings)</span> {</span></pre></div></div>
             
         </li>
         
@@ -2647,7 +2647,7 @@ When removing the host window content from the DOM, make the veil opaque to hide
             </div>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> ($content &amp;&amp; $content.length) {
-            isMatch = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(existingSettings)</span> </span>{
+            isMatch = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(existingSettings)</span> {</span>
                 <span class="hljs-keyword">return</span> existingSettings.content &amp;&amp;
                     $(existingSettings.content)[<span class="hljs-number">0</span>] === $content[<span class="hljs-number">0</span>];
             };
@@ -2667,7 +2667,7 @@ When removing the host window content from the DOM, make the veil opaque to hide
             </div>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (settings.url) {
-            isMatch = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(existingSettings)</span> </span>{
+            isMatch = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(existingSettings)</span> {</span>
                 <span class="hljs-keyword">return</span> existingSettings.url &amp;&amp;
                     existingSettings.url === settings.url &amp;&amp; !! existingSettings.ajax === !! settings.ajax;
             };
@@ -2705,7 +2705,7 @@ When removing the host window content from the DOM, make the veil opaque to hide
 
     <span class="hljs-keyword">var</span> JQUERY_DATA_KEY = <span class="hljs-string">"modalDialog"</span>;
 
-    $.fn.modalDialogInstance = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog)</span> </span>{
+    $.fn.modalDialogInstance = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog)</span> {</span>
         <span class="hljs-keyword">return</span> !dialog ? <span class="hljs-keyword">this</span>.data(JQUERY_DATA_KEY) : <span class="hljs-keyword">this</span>.data(JQUERY_DATA_KEY, dialog);
     };</pre></div></div>
             
@@ -2722,7 +2722,7 @@ When removing the host window content from the DOM, make the veil opaque to hide
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.fn.modalDialog = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(settings)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.fn.modalDialog = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(settings)</span> {</span>
         <span class="hljs-keyword">var</span> dialog;</pre></div></div>
             
         </li>
@@ -2786,11 +2786,11 @@ associated with the DOM element.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> messageActions = {
-        setHeight: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog, qs)</span> </span>{
+        setHeight: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog, qs)</span> {</span>
             dialog.setHeight(<span class="hljs-built_in">parseInt</span>(qs.height, <span class="hljs-number">10</span>), qs.center === <span class="hljs-string">"true"</span>, qs.skipAnimation === <span class="hljs-string">"true"</span>);
         },
 
-        setTitle: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog, qs)</span> </span>{</pre></div></div>
+        setTitle: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog, qs)</span> {</span></pre></div></div>
             
         </li>
         
@@ -2812,15 +2812,15 @@ an iframe dialog’s HTML title</p>
             dialog.setTitle(qs.title);
         },
 
-        open: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog)</span> </span>{
+        open: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog)</span> {</span>
             dialog.open();
         },
 
-        close: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog)</span> </span>{
+        close: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog)</span> {</span>
             dialog.close();
         },
 
-        create: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
+        create: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
             
         </li>
         
@@ -2837,16 +2837,16 @@ an iframe dialog’s HTML title</p>
             
             <div class="content"><div class='highlight'><pre>        },
 
-        center: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog)</span> </span>{
+        center: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog)</span> {</span>
             dialog.center();
         },
 
-        notifyReady: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog, qs)</span> </span>{
+        notifyReady: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dialog, qs)</span> {</span>
             dialog.notifyReady(qs.hostname);
         }
     };
 
-    <span class="hljs-keyword">var</span> messageHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
+    <span class="hljs-keyword">var</span> messageHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> {</span>
         <span class="hljs-keyword">var</span> qs;
 
         <span class="hljs-keyword">try</span> {
@@ -2936,7 +2936,7 @@ and it may not be desirable to load it at all.</p>
     <span class="hljs-keyword">if</span> ($.receiveMessage) {
         $.receiveMessage(messageHandler, <span class="hljs-string">"*"</span>);
     } <span class="hljs-keyword">else</span> {
-        $(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">"message"</span>, messageHandler);
+        $(window).on(<span class="hljs-string">"message"</span>, messageHandler);
     }</pre></div></div>
             
         </li>
@@ -2952,7 +2952,7 @@ and it may not be desirable to load it at all.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">window</span>._dialogReceiveMessageManual = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(message, origin)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    window._dialogReceiveMessageManual = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(message, origin)</span> {</span>
         <span class="hljs-keyword">if</span> (!messageHandler({
             data: message,
             origin: origin
@@ -2960,7 +2960,7 @@ and it may not be desirable to load it at all.</p>
             <span class="hljs-keyword">var</span> evt = <span class="hljs-keyword">new</span> $.Event(<span class="hljs-string">"message"</span>);
             evt.data = message;
             evt.origin = origin;
-            $(<span class="hljs-built_in">window</span>).trigger(evt, [message, origin]);
+            $(window).trigger(evt, [message, origin]);
         }
     };</pre></div></div>
             
@@ -2977,7 +2977,7 @@ and it may not be desirable to load it at all.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $(<span class="hljs-built_in">document</span>).ready(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $(document).ready(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">if</span> (!$.mobile) {
             <span class="hljs-keyword">return</span>;
         }</pre></div></div>

@@ -262,7 +262,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{</pre></div></div>
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span></pre></div></div>
             
         </li>
         
@@ -277,12 +277,12 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">copyEvent</span><span class="hljs-params">(originaljQEvent, type, extras)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">copyEvent</span><span class="hljs-params">(originaljQEvent, type, extras)</span> {</span>
         <span class="hljs-keyword">var</span> event = originaljQEvent; <span class="hljs-comment">// TODO: this should clone the originaljQEvent object</span>
 
         event.type = type;
-        event.isPropagationStopped = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; };
-        event.isDefaultPrevented = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; };
+        event.isPropagationStopped = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span> <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; };
+        event.isDefaultPrevented = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span> <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; };
 
         <span class="hljs-keyword">if</span> (extras) {
             $.extend(event, extras);
@@ -366,7 +366,7 @@
             
             <div class="content"><div class='highlight'><pre>        verticalDistanceThreshold: <span class="hljs-number">75</span>,
 
-        start: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
+        start: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
             <span class="hljs-keyword">return</span> {
                 time: +<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(),
                 coords: [event.pageX, event.pageY],
@@ -374,24 +374,24 @@
             };
         },
 
-        stop: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
+        stop: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
             <span class="hljs-keyword">return</span> {
                 time: +<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(),
                 coords: [event.pageX, event.pageY]
             };
         },
 
-        isSweep: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(start, stop, checkTime)</span> </span>{
+        isSweep: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(start, stop, checkTime)</span> {</span>
             <span class="hljs-keyword">return</span> (checkTime ? stop.time - start.time &lt; $.event.special.sweep.durationThreshold : <span class="hljs-literal">true</span>) &amp;&amp;
                 <span class="hljs-built_in">Math</span>.abs(start.coords[<span class="hljs-number">0</span>] - stop.coords[<span class="hljs-number">0</span>]) &gt; $.event.special.sweep.horizontalDistanceThreshold &amp;&amp;
                 <span class="hljs-built_in">Math</span>.abs(start.coords[<span class="hljs-number">1</span>] - stop.coords[<span class="hljs-number">1</span>]) &lt; $.event.special.sweep.verticalDistanceThreshold;
         },
 
-        add: $.event.delegateSpecial(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> </span>{
+        add: $.event.delegateSpecial(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span>
             <span class="hljs-keyword">var</span> thisObject = <span class="hljs-keyword">this</span>,
                 $<span class="hljs-keyword">this</span> = $(thisObject);
 
-            handleObj.pointerdown = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
+            handleObj.pointerdown = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
                 <span class="hljs-keyword">var</span> start = $.event.special.sweep.start(event),
                     stop;</pre></div></div>
             
@@ -413,7 +413,7 @@ event.preventDefault();</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">move</span><span class="hljs-params">(event)</span> </span>{
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">move</span><span class="hljs-params">(event)</span> {</span>
                     <span class="hljs-keyword">if</span> (!start) {
                         <span class="hljs-keyword">return</span>;
                     }
@@ -438,7 +438,7 @@ event.preventDefault();</p>
                     }
                 }
 
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">up</span><span class="hljs-params">()</span> </span>{
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">up</span><span class="hljs-params">()</span> {</span>
                     $<span class="hljs-keyword">this</span>.off(<span class="hljs-string">"pointermove"</span>, move);
 
                     <span class="hljs-keyword">if</span> (start &amp;&amp; stop &amp;&amp; $.event.special.sweep.isSweep(start, stop, <span class="hljs-literal">true</span>)) {
@@ -468,7 +468,7 @@ event.preventDefault();</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>                setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                     $<span class="hljs-keyword">this</span>
                         .off(<span class="hljs-string">"pointermove"</span>, handleObj.selector, move)
                         .off(<span class="hljs-string">"pointerup"</span>, handleObj.selector, up);
@@ -478,7 +478,7 @@ event.preventDefault();</p>
             $<span class="hljs-keyword">this</span>.on(<span class="hljs-string">"pointerdown"</span>, handleObj.selector, handleObj.pointerdown);
         }),
 
-        remove: $.event.delegateSpecial.remove(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> </span>{
+        remove: $.event.delegateSpecial.remove(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span>
             $(<span class="hljs-keyword">this</span>).off(<span class="hljs-string">"pointerdown"</span>, handleObj.selector, handleObj.pointerdown);
         })
     };</pre></div></div>
@@ -497,14 +497,14 @@ setup the handler for sweep so attach a dummy event</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.each([<span class="hljs-string">"sweepleft"</span>, <span class="hljs-string">"sweepright"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, event)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.each([<span class="hljs-string">"sweepleft"</span>, <span class="hljs-string">"sweepright"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, event)</span> {</span>
         $.event.special[event] = {
-            add: $.event.delegateSpecial(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> </span>{
+            add: $.event.delegateSpecial(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span>
                 handleObj.noop = $.noop;
                 $(<span class="hljs-keyword">this</span>).on(<span class="hljs-string">"sweep"</span>, handleObj.selector, handleObj.noop);
             }),
 
-            remove: $.event.delegateSpecial.remove(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> </span>{
+            remove: $.event.delegateSpecial.remove(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span>
                 $(<span class="hljs-keyword">this</span>).off(<span class="hljs-string">"sweep"</span>, handleObj.selector, handleObj.noop);
             })
         };
@@ -523,8 +523,8 @@ setup the handler for sweep so attach a dummy event</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scrollY</span><span class="hljs-params">()</span> </span>{
-        <span class="hljs-keyword">return</span> <span class="hljs-built_in">window</span>.scrollY || $(<span class="hljs-built_in">window</span>).scrollTop();
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scrollY</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">return</span> window.scrollY || $(window).scrollTop();
     }</pre></div></div>
             
         </li>
@@ -543,10 +543,10 @@ setup the handler for sweep so attach a dummy event</p>
             <div class="content"><div class='highlight'><pre>    $.event.special.press = {
         pressholdThreshold: <span class="hljs-number">750</span>,
 
-        add: $.event.delegateSpecial(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> </span>{
+        add: $.event.delegateSpecial(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span>
             <span class="hljs-keyword">var</span> thisObject = <span class="hljs-keyword">this</span>;
 
-            handleObj.pointerdown = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
+            handleObj.pointerdown = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
                 <span class="hljs-keyword">var</span> start = $.event.special.sweep.start(event),
                     startScroll = scrollY(),
                     stop,
@@ -568,7 +568,7 @@ setup the handler for sweep so attach a dummy event</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">move</span><span class="hljs-params">(e)</span> </span>{
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">move</span><span class="hljs-params">(e)</span> {</span>
                     stop = $.event.special.sweep.stop(e);
                 }</pre></div></div>
             
@@ -585,7 +585,7 @@ setup the handler for sweep so attach a dummy event</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">up</span><span class="hljs-params">(event)</span> </span>{
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">up</span><span class="hljs-params">(event)</span> {</span>
                     clearTimeout(timer);</pre></div></div>
             
         </li>
@@ -704,7 +704,7 @@ $document.on(“pointercancel”, clearPressHandlers);</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-                timer = setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
+                timer = setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
             
         </li>
         
@@ -792,7 +792,7 @@ $document.on(“pointercancel”, clearPressHandlers);</p>
             $(thisObject).on(<span class="hljs-string">"pointerdown"</span>, handleObj.selector, handleObj.pointerdown);
         }),
 
-        remove: $.event.delegateSpecial.remove(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> </span>{
+        remove: $.event.delegateSpecial.remove(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span>
             $(<span class="hljs-keyword">this</span>).off(<span class="hljs-string">"pointerdown"</span>, handleObj.selector, handleObj.pointerdown);
         })
     };</pre></div></div>
@@ -811,12 +811,12 @@ $document.on(“pointercancel”, clearPressHandlers);</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    $.event.special.presshold = {
-        add: $.event.delegateSpecial(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> </span>{
+        add: $.event.delegateSpecial(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span>
             handleObj.noop = $.noop;
             $(<span class="hljs-keyword">this</span>).on(<span class="hljs-string">"press"</span>, handleObj.selector, handleObj.noop);
         }),
 
-        remove: $.event.delegateSpecial.remove(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> </span>{
+        remove: $.event.delegateSpecial.remove(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span>
             $(<span class="hljs-keyword">this</span>).off(<span class="hljs-string">"press"</span>, handleObj.selector, handleObj.noop);
         })
     };

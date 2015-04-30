@@ -252,10 +252,10 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($, doc)</span> </span>{
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($, doc)</span> {</span>
     <span class="hljs-keyword">var</span> loc = doc.location;
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isInternalHash</span><span class="hljs-params">(uri, anchor)</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isInternalHash</span><span class="hljs-params">(uri, anchor)</span> {</span>
         <span class="hljs-keyword">var</span> i = uri.indexOf(<span class="hljs-string">'#'</span>);
         <span class="hljs-keyword">if</span> (i === <span class="hljs-number">0</span>) {
             <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
@@ -281,7 +281,7 @@
         }
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onClick</span><span class="hljs-params">(event)</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onClick</span><span class="hljs-params">(event)</span> {</span>
         <span class="hljs-keyword">var</span> target = jQuery(<span class="hljs-keyword">this</span>),
             href = target.attr(<span class="hljs-string">'href'</span>),
             data = target.data();
@@ -297,7 +297,7 @@
                     scrollTop: destination
                 },
                 timing,
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onAnchorScrollAnimationComplete</span><span class="hljs-params">()</span> </span>{
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onAnchorScrollAnimationComplete</span><span class="hljs-params">()</span> {</span>
                     loc.hash = target.attr(<span class="hljs-string">'href'</span>);
                 }
             );
@@ -306,7 +306,7 @@
         }
     }
 
-    $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-string">'[data-scroll-anchor]'</span>, onClick);</pre></div></div>
+    $(document).on(<span class="hljs-string">'click'</span>, <span class="hljs-string">'[data-scroll-anchor]'</span>, onClick);</pre></div></div>
             
         </li>
         
@@ -321,7 +321,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.fn.scrollAnchor = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.fn.scrollAnchor = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">return</span> $(<span class="hljs-keyword">this</span>).on(<span class="hljs-string">'click'</span>, onClick);
     };</pre></div></div>
             
@@ -342,7 +342,7 @@
         isInternalHash: isInternalHash
     };
 
-})(jQuery, <span class="hljs-built_in">document</span>);</pre></div></div>
+})(jQuery, document);</pre></div></div>
             
         </li>
         

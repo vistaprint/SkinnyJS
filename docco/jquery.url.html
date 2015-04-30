@@ -238,7 +238,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{</pre></div></div>
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span></pre></div></div>
             
         </li>
         
@@ -253,10 +253,10 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.Url = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(url)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.Url = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(url)</span> {</span>
         <span class="hljs-keyword">var</span> me = <span class="hljs-keyword">this</span>;
 
-        <span class="hljs-keyword">var</span> _normalize = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(input)</span> </span>{
+        <span class="hljs-keyword">var</span> _normalize = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(input)</span> {</span>
             <span class="hljs-keyword">if</span> (input == <span class="hljs-literal">null</span> || input === <span class="hljs-string">""</span>) {
                 <span class="hljs-keyword">return</span> <span class="hljs-string">""</span>;
             }
@@ -279,7 +279,7 @@
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> _protocol = <span class="hljs-string">""</span>;
 
-        <span class="hljs-keyword">this</span>.protocol = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> </span>{
+        <span class="hljs-keyword">this</span>.protocol = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> {</span>
             <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> value != <span class="hljs-string">"undefined"</span>) {
                 _protocol = _normalize(value);
 
@@ -308,7 +308,7 @@
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> _hostname = <span class="hljs-string">""</span>;
 
-        <span class="hljs-keyword">this</span>.hostname = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> </span>{
+        <span class="hljs-keyword">this</span>.hostname = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> {</span>
             <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> value != <span class="hljs-string">"undefined"</span>) {
                 _hostname = _normalize(value);
             } <span class="hljs-keyword">else</span> {
@@ -331,7 +331,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.port = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.port = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> {</span>
             <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> value != <span class="hljs-string">"undefined"</span>) {
                 _port = _normalize(value);
             } <span class="hljs-keyword">else</span> {
@@ -353,7 +353,7 @@ Includes port string if specified- example www.vistaprint.com:80</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.host = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.host = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> {</span>
             <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> value != <span class="hljs-string">"undefined"</span>) {
                 value = _normalize(value);</pre></div></div>
             
@@ -407,7 +407,7 @@ Includes port string if specified- example www.vistaprint.com:80</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.pathname = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.pathname = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> {</span>
             <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> value != <span class="hljs-string">"undefined"</span>) {
                 _pathname = _normalize(value);
             } <span class="hljs-keyword">else</span> {
@@ -443,7 +443,7 @@ Includes port string if specified- example www.vistaprint.com:80</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.search = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.search = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> {</span>
             <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> value != <span class="hljs-string">"undefined"</span>) {
                 value = _normalize(value);
                 me.queryString = $.deparam(value);
@@ -468,7 +468,7 @@ Includes port string if specified- example www.vistaprint.com:80</p>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> _hash = <span class="hljs-string">""</span>;
 
-        <span class="hljs-keyword">this</span>.hash = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> </span>{
+        <span class="hljs-keyword">this</span>.hash = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> {</span>
             <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> value != <span class="hljs-string">"undefined"</span>) {
                 value = _normalize(value);</pre></div></div>
             
@@ -496,7 +496,7 @@ Includes port string if specified- example www.vistaprint.com:80</p>
             }
         };
 
-        <span class="hljs-keyword">var</span> load = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(url)</span> </span>{
+        <span class="hljs-keyword">var</span> load = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(url)</span> {</span>
             <span class="hljs-keyword">var</span> nextPartPos;
             <span class="hljs-keyword">var</span> temp = url;</pre></div></div>
             
@@ -659,7 +659,7 @@ search: same as querystring with initial question mark (i.e. ?myval1=1&amp;myval
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.toString = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.toString = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
             <span class="hljs-keyword">var</span> url = <span class="hljs-string">""</span>;
             <span class="hljs-keyword">var</span> host = me.host();
             <span class="hljs-keyword">if</span> (host) {
@@ -681,7 +681,7 @@ search: same as querystring with initial question mark (i.e. ?myval1=1&amp;myval
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.get = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, defaultValue)</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.get = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, defaultValue)</span> {</span>
             <span class="hljs-keyword">if</span> (!me.queryString.hasOwnProperty(key)) {
                 <span class="hljs-keyword">return</span> defaultValue;
             }
@@ -702,7 +702,7 @@ search: same as querystring with initial question mark (i.e. ?myval1=1&amp;myval
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.set = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, value)</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.set = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, value)</span> {</span>
             <span class="hljs-keyword">if</span> (key == <span class="hljs-literal">null</span> || key === <span class="hljs-string">""</span>) {
                 <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Invalid key: "</span> + key);
             }
@@ -723,7 +723,7 @@ search: same as querystring with initial question mark (i.e. ?myval1=1&amp;myval
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.remove = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key)</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.remove = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key)</span> {</span>
             <span class="hljs-keyword">delete</span> me.queryString[key];
         };
 

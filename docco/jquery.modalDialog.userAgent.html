@@ -236,10 +236,10 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{
+            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span>
     $.modalDialog = $.modalDialog || {};
 
-    <span class="hljs-keyword">var</span> _ua = $.modalDialog._ua = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">var</span> _ua = $.modalDialog._ua = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">var</span> ua = navigator.userAgent;</pre></div></div>
             
         </li>
@@ -291,7 +291,7 @@
 
     <span class="hljs-keyword">var</span> _isSmallScreenOverride;
 
-    $.modalDialog.setSmallScreen = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(isSmallScreen)</span> </span>{
+    $.modalDialog.setSmallScreen = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(isSmallScreen)</span> {</span>
         _isSmallScreenOverride = isSmallScreen;
     };</pre></div></div>
             
@@ -309,7 +309,7 @@ Dialogs behave slightly different on small screens, by convention.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.modalDialog.isSmallScreen = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.modalDialog.isSmallScreen = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> (_isSmallScreenOverride) != <span class="hljs-string">"undefined"</span>) {
             <span class="hljs-keyword">return</span> _isSmallScreenOverride;
         }</pre></div></div>
@@ -331,8 +331,8 @@ Dialogs behave slightly different on small screens, by convention.</p>
             <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
         }
 
-        <span class="hljs-keyword">var</span> width = $(<span class="hljs-built_in">window</span>).width();
-        <span class="hljs-keyword">return</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">window</span>.orientation == <span class="hljs-string">"number"</span> ? <span class="hljs-built_in">Math</span>.min(width, $(<span class="hljs-built_in">window</span>).height()) : width) &lt;= <span class="hljs-number">480</span>;
+        <span class="hljs-keyword">var</span> width = $(window).width();
+        <span class="hljs-keyword">return</span> (<span class="hljs-keyword">typeof</span> window.orientation == <span class="hljs-string">"number"</span> ? <span class="hljs-built_in">Math</span>.min(width, $(window).height()) : width) &lt;= <span class="hljs-number">480</span>;
     };
 
 })(jQuery);</pre></div></div>

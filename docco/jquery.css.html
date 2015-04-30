@@ -238,7 +238,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span>
     <span class="hljs-keyword">var</span> _mapCamelToDash = {};</pre></div></div>
             
         </li>
@@ -254,7 +254,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.camelToDashCase = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(prop)</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    $.camelToDashCase = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(prop)</span> {</span></pre></div></div>
             
         </li>
         
@@ -293,7 +293,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.dashToCamelCase = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(sProperty)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.dashToCamelCase = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(sProperty)</span> {</span>
         <span class="hljs-keyword">var</span> value = _mapDashToCamel[sProperty];</pre></div></div>
             
         </li>
@@ -348,19 +348,19 @@
         <span class="hljs-keyword">return</span> value;
     };
 
-    <span class="hljs-keyword">var</span> cssKeyEncoder = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> </span>{
+    <span class="hljs-keyword">var</span> cssKeyEncoder = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> {</span>
         <span class="hljs-keyword">return</span> $.trim($.camelToDashCase(s)); <span class="hljs-comment">// trim</span>
     };
 
-    <span class="hljs-keyword">var</span> cssKeyDecoder = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> </span>{
+    <span class="hljs-keyword">var</span> cssKeyDecoder = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> {</span>
         <span class="hljs-keyword">return</span> $.trim($.dashToCamelCase(s)); <span class="hljs-comment">// trim</span>
     };
 
-    $.encodeCssString = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> </span>{
+    $.encodeCssString = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
         <span class="hljs-keyword">return</span> $.encodeDelimitedString(data, <span class="hljs-string">";"</span>, <span class="hljs-string">":"</span>, cssKeyEncoder, $.trim);
     };
 
-    $.parseCssString = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(cssString)</span> </span>{
+    $.parseCssString = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(cssString)</span> {</span>
         <span class="hljs-keyword">return</span> $.parseDelimitedString(cssString, <span class="hljs-string">";"</span>, <span class="hljs-string">":"</span>, cssKeyDecoder, $.trim);
     };
 

@@ -263,7 +263,7 @@ the trigger tag unobtrusive
 TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 */</span>
 
-(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span>
     <span class="hljs-keyword">var</span> DIALOG_DATA_KEY = <span class="hljs-string">"modalDialogUnobtrusive"</span>;</pre></div></div>
             
         </li>
@@ -279,7 +279,7 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> dialogLinkHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> dialogLinkHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> {</span>
         e.preventDefault();
 
         <span class="hljs-keyword">var</span> $link = $(e.currentTarget);
@@ -431,7 +431,7 @@ cache the dialog object so it won’t be initialized again</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">"click"</span>, <span class="hljs-string">"[data-rel='modalDialog']"</span>, dialogLinkHandler);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    $(document).on(<span class="hljs-string">"click"</span>, <span class="hljs-string">"[data-rel='modalDialog']"</span>, dialogLinkHandler);</pre></div></div>
             
         </li>
         
@@ -446,7 +446,7 @@ cache the dialog object so it won’t be initialized again</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">"click"</span>, <span class="hljs-string">".close-dialog"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $(document).on(<span class="hljs-string">"click"</span>, <span class="hljs-string">".close-dialog"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> {</span>
         e.preventDefault();</pre></div></div>
             
         </li>
@@ -464,7 +464,7 @@ run before any other handlers.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>        setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
             <span class="hljs-keyword">var</span> dialog = $.modalDialog.getCurrent();
             <span class="hljs-keyword">if</span> (dialog) {
                 dialog.close();

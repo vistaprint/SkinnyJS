@@ -1,0 +1,254 @@
+<!doctype html>
+<!--[if !IE]>      <html class="no-js non-ie" lang="en-US"> <![endif]-->
+<!--[if IE 7 ]>    <html class="no-js ie7" lang="en-US"> <![endif]-->
+<!--[if IE 8 ]>    <html class="no-js ie8" lang="en-US"> <![endif]-->
+<!--[if IE 9 ]>    <html class="no-js ie9" lang="en-US"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js" lang="en-US"> <!--<![endif]-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <!--[if lt IE 9]> <script src="javascripts/html5shiv.js"></script> <![endif]-->
+
+  <link rel='stylesheet' id='responsive-style-css' href='stylesheets/style.css' type='text/css' />
+  <link rel='stylesheet' id='responsive-media-queries-css'  href='stylesheets/media-queries.css' type='text/css'/>
+  <link rel="stylesheet" href="stylesheets/syntax-highlighting.css"/>
+
+  <script type='text/javascript' src='javascripts/jquery.js'></script>
+  <script type='text/javascript' src='javascripts/jquery-migrate.min.js'></script>
+  <script type='text/javascript' src='javascripts/responsive-modernizr.js'></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+  <script type="text/javascript" src="javascripts/toc.js"></script>
+
+  <title>skinny.js</title>
+
+  <meta name="description" content="Skinny JS">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body class="home blog front-page">
+                 
+  <div id="container" class="hfeed">
+           
+      <div id="header">
+                 
+        <div id="logo" class="skinny-logo">
+            <a href="./">skinny.js</a>
+        </div>
+            
+        <div class="main-nav">
+          <ul class="menu">
+            <li class="current_page_item"><a href="./" title="Home">Home</a></li>
+            <li class="page_item"><a href="download-builder.html">Download</a></li>
+            <li class="page_item"><a href="#" onclick="return false;">Documentation</a>
+              <ul class='children'>
+                <li class="page_item"><a href="#" onclick="return false;">Libraries</a>
+                  <ul class="children">
+                    <li class="page_item"><a href='date-parse.html'>date-parse</a></li>
+
+                    <li class="page_item"><a href='jquery.breakpoints.html'>jQuery.breakpoints</a></li>
+
+                    <li class="page_item"><a href='jquery.clientRect.html'>jQuery.clientRect</a></li>
+
+                    <li class="page_item"><a href='jquery.cookies.html'>jQuery.cookies</a></li>
+
+                    <li class="page_item"><a href='jquery.css.html'>jQuery.css</a></li>
+
+                    <li class="page_item"><a href='jquery.customEvent.html'>jQuery.customEvent</a></li>
+
+                    <li class="page_item"><a href='jquery.delimitedString.html'>jQuery.delimitedString</a></li>
+
+                    <li class="page_item"><a href='jquery.disableEvent.html'>jQuery.disableEvent</a></li>
+
+                    <li class="page_item"><a href='jquery.hostIframe.html'>jQuery.hostIframe</a></li>
+
+                    <li class="page_item"><a href='jquery.hoverDelay.html'>jQuery.hoverDelay</a></li>
+
+                    <li class="page_item"><a href='jquery.htmlEncode.html'>jQuery.htmlEncode</a></li>
+
+                    <li class="page_item"><a href='jquery.imageSize.html'>jQuery.imageSize</a></li>
+
+                    <li class="page_item"><a href='jquery.isVisibleKeyCode.html'>jQuery.isVisibleKeyCode</a></li>
+
+                    <li class="page_item"><a href='jquery.partialLoad.html'>jQuery.partialLoad</a></li>
+
+                    <li class="page_item"><a href='jquery.pointerEvents.html'>jQuery.pointerEvents</a></li>
+
+                    <li class="page_item"><a href='jquery.pointerGestures.html'>jQuery.pointerGestures</a></li>
+
+                    <li class="page_item"><a href='jquery.postMessage.html'>jQuery.postMessage</a></li>
+
+                    <li class="page_item"><a href='jquery.proxyAll.html'>jQuery.proxyAll</a></li>
+
+                    <li class="page_item"><a href='jquery.msAjax.html'>jQuery.msAjax</a></li>
+
+                    <li class="page_item"><a href='jquery.ns.html'>jQuery.ns</a></li>
+
+                    <li class="page_item"><a href='jquery.queryString.html'>jQuery.queryString</a></li>
+
+                    <li class="page_item"><a href='jquery.scrollAnchor.html'>jQuery.scrollAnchor</a></li>
+
+                    <li class="page_item"><a href='jquery.uncomment.html'>jQuery.uncomment</a></li>
+
+                    <li class="page_item"><a href='jquery.url.html'>jQuery.url</a></li>
+
+                  </ul>
+                </li>
+                <li class="page_item"><a href="#" onclick="return false;">UI Components</a>
+                  <ul class="children">
+                    <li class="page_item"><a href='jquery.menu.html'>jQuery.menu</a></li>
+
+                    <li class="page_item"><a href='jquery.modalDialog.html'>jQuery.modalDialog</a></li>
+
+                    <li class="page_item"><a href='jquery.richTooltip.html'>jQuery.richTooltip</a></li>
+                </ul>
+              </li>
+              </ul>
+            </li>
+          </ul>
+      </div>                
+                   
+    </div>
+          
+    <div id="wrapper" class="clearfix">
+
+      <div class="grid col-940">
+  <div class="widget-wrapper markdown-body">
+
+     
+    <div class="source-links">
+        <a href="https://github.com/vistaprint/SkinnyJS/blob/master/js/jquery.cookies.js" class="github-source-link" target="_blank">View on github</a> |
+        <a href="docco/jquery.cookies.html" class="docco-link">Annotated source</a>
+    </div>
+    
+
+    <h2 id="jquerycookies">jQuery.cookies</h2>
+
+<p>jQuery.cookies is a general purpose cookie library with several distinguishing design features:</p>
+
+<ol>
+  <li>Ability to specify defaults for domain, path, and “permanent” cookie expiration date</li>
+  <li>Presumes that most cookies are intended as either session scoped or permanent. Most web developers don’t want to set expiration dates manually.</li>
+  <li>Ability to easily manage sub-values within top-level cookies.</li>
+</ol>
+
+<h3 id="usage">Usage</h3>
+
+<p>jQuery.cookies allows setting a default path, domain, and expiration date (for permanent cookies) for all usages of its API where these values are not explicitly specified. To set defaults, use $.cookies.setDefaults(). The options include:</p>
+
+<ul>
+  <li><strong>path</strong>: Sets the default path. By default, it is “/”.</li>
+  <li><strong>domain</strong>: Sets the default domain. By default, it is “”.</li>
+  <li><strong>permanentDate</strong>: Sets the expiration date to use for cookies you declare “permanent”. By default, it is 1 year into the future. This should be specified as a UTC date.</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="nx">setDefaults</span><span class="p">({</span> 
+        <span class="nx">path</span><span class="o">:</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span> 
+        <span class="nx">domain</span><span class="o">:</span> <span class="s2">&quot;vistaprint.com&quot;</span><span class="p">,</span>
+        <span class="nx">permanentDate</span><span class="o">:</span> <span class="s2">&quot;Sun, 13 Oct 2100 19:53:24 GMT&quot;</span>
+    <span class="p">});</span></code></pre></div>
+
+<h4 id="setting-and-getting-cookies">Setting and getting cookies</h4>
+
+<p>Here’s a basic example of setting and getting a top-level cookie:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Sets a top-level session cookie</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">&quot;userid&quot;</span><span class="p">,</span> <span class="s2">&quot;12345&quot;</span><span class="p">);</span>
+
+    <span class="c1">// Gets the value of a cookie</span>
+    <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;userid&quot;</span><span class="p">);</span></code></pre></div>
+
+<p>Some more examples of setting cookies:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Sets a top-level session cookie using the object syntax </span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span> 
+        <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;userid&quot;</span><span class="p">,</span> 
+        <span class="nx">value</span><span class="o">:</span> <span class="s2">&quot;12345&quot;</span> 
+    <span class="p">});</span>
+
+    <span class="c1">// Sets a top-level permanent cookie using the object syntax </span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span> 
+        <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;userid&quot;</span><span class="p">,</span> 
+        <span class="nx">value</span><span class="o">:</span> <span class="s2">&quot;12345&quot;</span><span class="p">,</span>
+        <span class="nx">permanent</span><span class="o">:</span> <span class="kc">true</span>
+    <span class="p">});</span>
+
+    <span class="c1">// Overrides domain and path</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span> 
+        <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;userid&quot;</span><span class="p">,</span> 
+        <span class="nx">value</span><span class="o">:</span> <span class="s2">&quot;12345&quot;</span><span class="p">,</span>
+        <span class="nx">permanent</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nx">domain</span><span class="o">:</span> <span class="s2">&quot;somesubdomain.vistaprint.com&quot;</span><span class="p">,</span>
+        <span class="nx">path</span><span class="o">:</span> <span class="s2">&quot;/special-directory&quot;</span>
+    <span class="p">});</span></code></pre></div>
+
+<h4 id="working-with-sub-values">Working with sub values</h4>
+<p>You can use an object to specify sub-values for a cookie:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Use an object literal to pass key-value pairs</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s2">&quot;12345&quot;</span><span class="p">,</span> <span class="nx">favoriteColor</span><span class="o">:</span> <span class="s2">&quot;blue&quot;</span> <span class="p">});</span>
+
+    <span class="c1">// When retrieving a cookie with sub-values, the return value is an object.</span>
+    <span class="kd">var</span> <span class="nx">userId</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">).</span><span class="nx">id</span><span class="p">;</span>
+
+    <span class="c1">// You can also use this alternate syntax to avoid potential null reference errors</span>
+    <span class="kd">var</span> <span class="nx">userId</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">);</span>
+
+    <span class="c1">// Setting a cookie with sub-values, using object syntax</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span> 
+        <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;userid&quot;</span><span class="p">,</span> 
+        <span class="nx">value</span><span class="o">:</span> <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s2">&quot;12345&quot;</span><span class="p">,</span> <span class="nx">favoriteColor</span><span class="o">:</span> <span class="s2">&quot;blue&quot;</span> <span class="p">}</span>    
+    <span class="p">});</span></code></pre></div>
+
+<h4 id="removing-cookies">Removing cookies</h4>
+<p>To remove/delete a cookie, use jQuery.cookie.remove():</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">);</span></code></pre></div>
+
+<h4 id="checking-if-cookies-are-enabled">Checking if cookies are enabled</h4>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="nx">enabled</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="c1">// use cookies</span>
+    <span class="p">}</span></code></pre></div>
+
+
+  </div>
+</div>
+ 
+
+    </div><!-- end of #wrapper -->
+  </div><!-- end of #container -->
+
+  <div id="footer" class="clearfix">
+    
+      <div id="footer-wrapper">
+      
+          <div class="grid col-940">
+          
+            <div class="grid col-540"></div><!-- end of col-540 -->
+           
+            <div class="grid col-380 fit">
+              <ul class="social-icons"></ul><!-- end of .social-icons -->         
+            </div><!-- end of col-380 fit -->
+           
+          </div><!-- end of col-940 -->
+                               
+          <div class="grid col-300 copyright">
+              &copy; 2013 <a href="http://www.vistaprint.com/" title="Vistaprint | Business Cards, Websites, Postcards, T-shirts And More">Vistaprint</a>
+          </div><!-- end of .copyright -->
+          
+          <div class="grid col-300 scroll-top"><a href="#scroll-top" title="scroll to top">&uarr;</a></div>
+          
+          <div class="grid col-300 fit powered">
+          </div><!-- end .powered -->
+          
+      </div><!-- end #footer-wrapper -->
+      
+  </div><!-- end #footer -->
+
+  <script type='text/javascript' src='javascripts/responsive.js'></script>
+</body>
+</html>

@@ -243,7 +243,7 @@ TODO: Accessibility: Keyboard navigation (tab navigation already works)- close s
             </div>
             
             <div class="content"><div class='highlight'><pre>
-(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span>
     <span class="hljs-keyword">var</span> _skins = {};</pre></div></div>
             
         </li>
@@ -259,7 +259,7 @@ TODO: Accessibility: Keyboard navigation (tab navigation already works)- close s
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.registerDropDownMenuSkin = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(name, skin)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.registerDropDownMenuSkin = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(name, skin)</span> {</span>
         _skins[name] = skin;
     };</pre></div></div>
             
@@ -280,7 +280,7 @@ for Windows/MacOS style menus don’t follow the same rules.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">highlightMenuItem</span><span class="hljs-params">($item, enabled)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">highlightMenuItem</span><span class="hljs-params">($item, enabled)</span> {</span>
         <span class="hljs-keyword">var</span> classToAdd = enabled ? <span class="hljs-string">'hover'</span> : <span class="hljs-string">'nohover'</span>;
         <span class="hljs-keyword">var</span> classToRemove = enabled ? <span class="hljs-string">'nohover'</span> : <span class="hljs-string">'hover'</span>;
 
@@ -304,7 +304,7 @@ with the specified class, and then stop searching in that node.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">findUntilInternal</span><span class="hljs-params">(elem, fnIsMatch, results)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">findUntilInternal</span><span class="hljs-params">(elem, fnIsMatch, results)</span> {</span>
         <span class="hljs-keyword">if</span> (elem.nodeType !== <span class="hljs-number">1</span>) {
             <span class="hljs-keyword">return</span>;
         }
@@ -331,10 +331,10 @@ with the specified class, and then stop searching in that node.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">findUntil</span><span class="hljs-params">($elem, fnIsMatch)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">findUntil</span><span class="hljs-params">($elem, fnIsMatch)</span> {</span>
         <span class="hljs-keyword">var</span> results = [];
 
-        $elem.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+        $elem.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
             findUntilInternal(<span class="hljs-keyword">this</span>, fnIsMatch, results);
         });
 
@@ -526,7 +526,7 @@ This is defined by the skin by default, but can be overridden for any instance o
             <div class="content"><div class='highlight'><pre>        skin: <span class="hljs-string">'basic'</span>
     };
 
-    <span class="hljs-keyword">var</span> Panel = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MenuPanel</span><span class="hljs-params">(menu, panel, item)</span> </span>{
+    <span class="hljs-keyword">var</span> Panel = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MenuPanel</span><span class="hljs-params">(menu, panel, item)</span> {</span>
         $.proxyAll(<span class="hljs-keyword">this</span>, <span class="hljs-string">'onPress'</span>, <span class="hljs-string">'onPointerOver'</span>, <span class="hljs-string">'onPointerOut'</span>, <span class="hljs-string">'showComplete'</span>, <span class="hljs-string">'hideComplete'</span>);
         <span class="hljs-keyword">var</span> me = <span class="hljs-keyword">this</span>;
 
@@ -636,7 +636,7 @@ This is defined by the skin by default, but can be overridden for any instance o
             <span class="hljs-keyword">var</span> delayOver = <span class="hljs-number">200</span>;
 
             <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isTopLevel &amp;&amp; <span class="hljs-keyword">this</span>.menu.siblings.length &gt; <span class="hljs-number">0</span>) {
-                delayOver = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                delayOver = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; me.menu.siblings.length; i++) {
                         <span class="hljs-keyword">var</span> menu = me.menu.siblings[i];
                         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> j = <span class="hljs-number">0</span>; j &lt; menu.rootMenu.children.length; j++) {
@@ -684,7 +684,7 @@ This is defined by the skin by default, but can be overridden for any instance o
             </div>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isTopLevel) {
-            <span class="hljs-keyword">this</span>.$item.on(<span class="hljs-string">'pointerout'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
+            <span class="hljs-keyword">this</span>.$item.on(<span class="hljs-string">'pointerout'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> {</span>
                 <span class="hljs-keyword">if</span> (!me.isOpen) {</pre></div></div>
             
         </li>
@@ -740,7 +740,7 @@ Handles firing the “selected” event.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">this</span>.$panel.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">this</span>.$panel.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> {</span></pre></div></div>
             
         </li>
         
@@ -852,7 +852,7 @@ the sub menu to toggle.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.options.linksWithSubmenusEnabled) {
-                <span class="hljs-keyword">this</span>.getLinksWithSubmenus().on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{</pre></div></div>
+                <span class="hljs-keyword">this</span>.getLinksWithSubmenus().on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span></pre></div></div>
             
         </li>
         
@@ -889,8 +889,8 @@ document and elements beneath this menu item</p>
         }
     };
 
-    Panel.prototype.getLinksWithSubmenus = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PanelGetLinksWithSubmenus</span><span class="hljs-params">()</span> </span>{
-        <span class="hljs-keyword">return</span> findUntil(<span class="hljs-keyword">this</span>.$item, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(elem, results)</span> </span>{</pre></div></div>
+    Panel.prototype.getLinksWithSubmenus = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PanelGetLinksWithSubmenus</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">return</span> findUntil(<span class="hljs-keyword">this</span>.$item, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(elem, results)</span> {</span></pre></div></div>
             
         </li>
         
@@ -946,7 +946,7 @@ to the parent’s children property.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    Panel.prototype.resolveParent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PanelResolveParent</span><span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    Panel.prototype.resolveParent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PanelResolveParent</span><span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">this</span>.parent = <span class="hljs-keyword">this</span>.$parentPanel.data(<span class="hljs-string">'PanelInstance'</span>) || <span class="hljs-keyword">this</span>.menu.rootMenu;
         <span class="hljs-keyword">this</span>.parent.children.push(<span class="hljs-keyword">this</span>);
     };</pre></div></div>
@@ -964,7 +964,7 @@ to the parent’s children property.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    Panel.prototype.getEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PanelGetEvent</span><span class="hljs-params">(type, e)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    Panel.prototype.getEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PanelGetEvent</span><span class="hljs-params">(type, e)</span> {</span>
         <span class="hljs-keyword">return</span> $.Event(type || <span class="hljs-string">'DropDownMenuPanelEvent'</span>, {
             $panel: <span class="hljs-keyword">this</span>.$panel,
             panel: <span class="hljs-keyword">this</span>,
@@ -990,7 +990,7 @@ to the parent’s children property.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    Panel.prototype.getLevel = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PanelGetLevel</span><span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    Panel.prototype.getLevel = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PanelGetLevel</span><span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>._level) {
             <span class="hljs-keyword">this</span>._level = -<span class="hljs-number">1</span>; <span class="hljs-comment">// Account for rootMenu: first level menu should be level 0</span>
             <span class="hljs-keyword">var</span> current = <span class="hljs-keyword">this</span>.parent;
@@ -1016,14 +1016,14 @@ to the parent’s children property.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    Panel.prototype.getSiblings = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PanelGetSiblings</span><span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    Panel.prototype.getSiblings = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PanelGetSiblings</span><span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">var</span> me = <span class="hljs-keyword">this</span>;
 
         <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>._siblings) {
             <span class="hljs-keyword">var</span> _siblings = [];
 
             <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.parent) {
-                $.each(<span class="hljs-keyword">this</span>.parent.children, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, child)</span> </span>{
+                $.each(<span class="hljs-keyword">this</span>.parent.children, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, child)</span> {</span>
                     <span class="hljs-keyword">if</span> (child !== me) {
                         _siblings.push(child);
                     }
@@ -1049,7 +1049,7 @@ to the parent’s children property.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    Panel.prototype.shouldShowSubmenuOnHover = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    Panel.prototype.shouldShowSubmenuOnHover = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
         <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.isTopLevel) {
             <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
         }</pre></div></div>
@@ -1088,7 +1088,7 @@ events still fire</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    Panel.prototype.onPointerOver = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    Panel.prototype.onPointerOver = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span></pre></div></div>
             
         </li>
         
@@ -1114,7 +1114,7 @@ events still fire</p>
         <span class="hljs-keyword">this</span>.show(event);
     };
 
-    Panel.prototype.onPointerOut = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
+    Panel.prototype.onPointerOut = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isTopLevel &amp;&amp; !<span class="hljs-keyword">this</span>.options.showOnHover) {
             <span class="hljs-keyword">return</span>;
         }
@@ -1139,7 +1139,7 @@ events still fire</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    Panel.prototype.show = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PanelShow</span><span class="hljs-params">(e)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    Panel.prototype.show = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PanelShow</span><span class="hljs-params">(e)</span> {</span>
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.transitioning || <span class="hljs-keyword">this</span>.isOpen) {
             <span class="hljs-keyword">return</span>;
         }
@@ -1182,7 +1182,7 @@ events still fire</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        $(<span class="hljs-built_in">document</span>).trigger(<span class="hljs-string">'ui.element.open'</span>, <span class="hljs-keyword">this</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        $(document).trigger(<span class="hljs-string">'ui.element.open'</span>, <span class="hljs-keyword">this</span>);</pre></div></div>
             
         </li>
         
@@ -1197,7 +1197,7 @@ events still fire</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        $.each(<span class="hljs-keyword">this</span>.getSiblings(), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, sibling)</span> </span>{
+            <div class="content"><div class='highlight'><pre>        $.each(<span class="hljs-keyword">this</span>.getSiblings(), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, sibling)</span> {</span>
             sibling.hide(e);
         });
 
@@ -1263,7 +1263,7 @@ to calculate positioning for the menu</p>
         }
     };
 
-    Panel.prototype.showComplete = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PanelShowComplete</span><span class="hljs-params">(event)</span> </span>{
+    Panel.prototype.showComplete = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PanelShowComplete</span><span class="hljs-params">(event)</span> {</span>
         <span class="hljs-keyword">this</span>.isOpen = <span class="hljs-literal">true</span>;
         <span class="hljs-keyword">this</span>.transitioning = <span class="hljs-literal">false</span>;
 
@@ -1272,7 +1272,7 @@ to calculate positioning for the menu</p>
         }
     };
 
-    Panel.prototype.hide = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PanelHide</span><span class="hljs-params">(e)</span> </span>{
+    Panel.prototype.hide = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PanelHide</span><span class="hljs-params">(e)</span> {</span>
         <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.isOpen || <span class="hljs-keyword">this</span>.transitioning) {
             <span class="hljs-keyword">return</span>;
         }
@@ -1310,7 +1310,7 @@ to calculate positioning for the menu</p>
 
         <span class="hljs-keyword">this</span>.transitioning = <span class="hljs-literal">true</span>;
 
-        $.each(<span class="hljs-keyword">this</span>.children, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, childPanel)</span> </span>{
+        $.each(<span class="hljs-keyword">this</span>.children, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, childPanel)</span> {</span>
             childPanel.hide(e);
         });
 
@@ -1322,7 +1322,7 @@ to calculate positioning for the menu</p>
         }
     };
 
-    Panel.prototype.hideComplete = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PanelHideComplete</span><span class="hljs-params">(event)</span> </span>{
+    Panel.prototype.hideComplete = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PanelHideComplete</span><span class="hljs-params">(event)</span> {</span>
         <span class="hljs-keyword">this</span>.isOpen = <span class="hljs-literal">false</span>;
         <span class="hljs-keyword">this</span>.transitioning = <span class="hljs-literal">false</span>;
 
@@ -1331,7 +1331,7 @@ to calculate positioning for the menu</p>
         }
     };
 
-    Panel.prototype.onPress = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{</pre></div></div>
+    Panel.prototype.onPress = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> {</span></pre></div></div>
             
         </li>
         
@@ -1465,7 +1465,7 @@ It doesn’t have a Panel object of its own, so it should act like a regular lin
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    Panel.prototype.forceHide = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    Panel.prototype.forceHide = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
         <span class="hljs-keyword">this</span>.menu.clickHoverActivated = <span class="hljs-literal">false</span>;
         <span class="hljs-keyword">this</span>.hide(event);
     };
@@ -1478,7 +1478,7 @@ It doesn’t have a Panel object of its own, so it should act like a regular lin
      * Menus are actually the "root" panel, and contain an array of sub panels.
      * Each Panel contains the actual menu items (links).
      */</span>
-    <span class="hljs-keyword">var</span> Menu = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($topLevelItems, options)</span> </span>{
+    <span class="hljs-keyword">var</span> Menu = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($topLevelItems, options)</span> {</span>
         <span class="hljs-keyword">var</span> me = <span class="hljs-keyword">this</span>;
 
         <span class="hljs-keyword">this</span>.options = options;</pre></div></div>
@@ -1527,7 +1527,7 @@ and sub menus.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.siblings = <span class="hljs-keyword">this</span>.options.siblings.map(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, sibling)</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.siblings = <span class="hljs-keyword">this</span>.options.siblings.map(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, sibling)</span> {</span>
             <span class="hljs-keyword">return</span> $(sibling).data(<span class="hljs-string">'dropDownMenu'</span>);
         });</pre></div></div>
             
@@ -1594,7 +1594,7 @@ the click came from the menu, so it should be ignored.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.$topLevelItems.find(<span class="hljs-string">'.menu-panel'</span>).each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, panelElement)</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.$topLevelItems.find(<span class="hljs-string">'.menu-panel'</span>).each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, panelElement)</span> {</span>
             me.panels.push(<span class="hljs-keyword">new</span> Panel(me, panelElement));
         });</pre></div></div>
             
@@ -1611,7 +1611,7 @@ the click came from the menu, so it should be ignored.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.$topLevelItems.not(<span class="hljs-string">'.menu-item-with-submenu'</span>).each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, panelElement)</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.$topLevelItems.not(<span class="hljs-string">'.menu-item-with-submenu'</span>).each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, panelElement)</span> {</span>
             me.panels.push(<span class="hljs-keyword">new</span> Panel(me, <span class="hljs-literal">null</span>, panelElement));
         });</pre></div></div>
             
@@ -1628,7 +1628,7 @@ the click came from the menu, so it should be ignored.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        $.each(<span class="hljs-keyword">this</span>.panels, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, panel)</span> </span>{
+            <div class="content"><div class='highlight'><pre>        $.each(<span class="hljs-keyword">this</span>.panels, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, panel)</span> {</span>
             panel.resolveParent();
         });</pre></div></div>
             
@@ -1650,14 +1650,14 @@ which is the top level menu items.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.$topLevelItems.find(<span class="hljs-string">'.menu-item'</span>).hoverDelay(
-            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                 highlightMenuItem($(<span class="hljs-keyword">this</span>), <span class="hljs-literal">true</span>);
             },
-            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                 highlightMenuItem($(<span class="hljs-keyword">this</span>), <span class="hljs-literal">false</span>);
             }
         )
-        .each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+        .each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
             highlightMenuItem($(<span class="hljs-keyword">this</span>), <span class="hljs-literal">false</span>);
         });</pre></div></div>
             
@@ -1674,7 +1674,7 @@ which is the top level menu items.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">'click'</span>, $.proxy(<span class="hljs-keyword">this</span>.onDocumentClick, <span class="hljs-keyword">this</span>));
+            <div class="content"><div class='highlight'><pre>        $(document).on(<span class="hljs-string">'click'</span>, $.proxy(<span class="hljs-keyword">this</span>.onDocumentClick, <span class="hljs-keyword">this</span>));
     };</pre></div></div>
             
         </li>
@@ -1690,10 +1690,10 @@ which is the top level menu items.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    Menu.prototype.hideAllPanels = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    Menu.prototype.hideAllPanels = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
         <span class="hljs-keyword">this</span>.ignoreDocumentClick = +(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>());
 
-        $.each(<span class="hljs-keyword">this</span>.rootMenu.children, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, child)</span> </span>{
+        $.each(<span class="hljs-keyword">this</span>.rootMenu.children, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, child)</span> {</span>
             child.forceHide(event);
         });
     };</pre></div></div>
@@ -1713,7 +1713,7 @@ attached to the document click event to do so.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    Menu.prototype.onDocumentClick = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">documentClickHandler</span><span class="hljs-params">(e)</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    Menu.prototype.onDocumentClick = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">documentClickHandler</span><span class="hljs-params">(e)</span> {</span></pre></div></div>
             
         </li>
         
@@ -1772,7 +1772,7 @@ Each item in the jQuery collection becomes a menu “group”.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.fn.dropDownMenu = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.fn.dropDownMenu = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options)</span> {</span>
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.length === <span class="hljs-number">0</span>) {
             <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
         }</pre></div></div>
@@ -1855,7 +1855,7 @@ Each item in the jQuery collection becomes a menu “group”.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
             
         </li>
         
@@ -1870,7 +1870,7 @@ Each item in the jQuery collection becomes a menu “group”.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">var</span> $topLevelItems = findUntil($(<span class="hljs-keyword">this</span>), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(elem, results)</span> </span>{
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">var</span> $topLevelItems = findUntil($(<span class="hljs-keyword">this</span>), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(elem, results)</span> {</span>
                 <span class="hljs-keyword">if</span> ($(elem).hasClass(<span class="hljs-string">'menu-item'</span>)) {
                     results.push(elem);
                     <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
@@ -1921,8 +1921,8 @@ Each item in the jQuery collection becomes a menu “group”.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hideOtherMenus</span><span class="hljs-params">(ignoreMenu, e)</span> </span>{
-        $.each(_menus, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, menu)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hideOtherMenus</span><span class="hljs-params">(ignoreMenu, e)</span> {</span>
+        $.each(_menus, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, menu)</span> {</span>
             <span class="hljs-keyword">if</span> (!ignoreMenu || ignoreMenu !== menu) {
                 menu.hideAllPanels(e);
             }
