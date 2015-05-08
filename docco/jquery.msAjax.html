@@ -239,7 +239,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(window, $)</span> {</span></pre></div></div>
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(window, $)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -254,7 +254,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> msJsonSanitizer = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, value)</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> msJsonSanitizer = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, value)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -308,7 +308,7 @@ This isn’t useful most of the time.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> msJsonDateOnlySanitizer = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, value)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> msJsonDateOnlySanitizer = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, value)</span> </span>{
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> (value) == <span class="hljs-string">"string"</span>) {</pre></div></div>
             
         </li>
@@ -352,7 +352,7 @@ Example of a full ISO8601 date:  “2013-08-07T21:40:05.121+06:00”</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.parseMsJSON = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(text, preserveType)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    $.parseMsJSON = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(text, preserveType)</span> </span>{
         <span class="hljs-keyword">if</span> (!text) {
             <span class="hljs-keyword">return</span> {};
         }
@@ -380,7 +380,7 @@ Example of a full ISO8601 date:  “2013-08-07T21:40:05.121+06:00”</p>
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> json.d != <span class="hljs-string">"undefined"</span> ? json.d : json;
     };
 
-    $.parseMsJSON.isNumericString = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> {</span>
+    $.parseMsJSON.isNumericString = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> </span>{
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(<span class="hljs-regexp">/^-?[0-9]+\.?[0-9]*$/</span>).test(value);
     };</pre></div></div>
             
@@ -397,7 +397,7 @@ Example of a full ISO8601 date:  “2013-08-07T21:40:05.121+06:00”</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> recurseJSON = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(holder, key, reviver)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> recurseJSON = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(holder, key, reviver)</span> </span>{
         <span class="hljs-keyword">var</span> k, v, value = holder[key];
         <span class="hljs-keyword">if</span> (value &amp;&amp; <span class="hljs-keyword">typeof</span> value == <span class="hljs-string">"object"</span>) {
             <span class="hljs-keyword">for</span> (k <span class="hljs-keyword">in</span> value) {
@@ -428,7 +428,7 @@ Example of a full ISO8601 date:  “2013-08-07T21:40:05.121+06:00”</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.recurseJSON = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(json, reviver)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    $.recurseJSON = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(json, reviver)</span> </span>{
         <span class="hljs-keyword">return</span> recurseJSON({
             <span class="hljs-string">""</span>: json
         }, <span class="hljs-string">""</span>, reviver);
@@ -447,7 +447,7 @@ Example of a full ISO8601 date:  “2013-08-07T21:40:05.121+06:00”</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.reviveMsJSON = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(json, datesOnly)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    $.reviveMsJSON = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(json, datesOnly)</span> </span>{
         <span class="hljs-keyword">return</span> $.recurseJSON(json, datesOnly ? msJsonDateOnlySanitizer : msJsonSanitizer);
     };
 
@@ -475,7 +475,7 @@ Example of a full ISO8601 date:  “2013-08-07T21:40:05.121+06:00”</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.stringifyMsDate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, value)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    $.stringifyMsDate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, value)</span> </span>{
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> value == <span class="hljs-string">"string"</span>) {
             <span class="hljs-keyword">var</span> a = reISO.exec(value);
             <span class="hljs-keyword">if</span> (a) {
@@ -502,7 +502,7 @@ Otherwise identical to $.ajax() (same settings, arguments, and return values).</
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.msAjax = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(url, settings)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    $.msAjax = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(url, settings)</span> </span>{
         <span class="hljs-keyword">if</span> (!settings) {
             settings = {};
         }
@@ -597,7 +597,7 @@ Otherwise identical to $.ajax() (same settings, arguments, and return values).</
     };
     <span class="hljs-comment">/* end-test-code */</span>
 
-})(window, jQuery);</pre></div></div>
+})(<span class="hljs-built_in">window</span>, jQuery);</pre></div></div>
             
         </li>
         

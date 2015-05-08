@@ -236,7 +236,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -255,11 +255,11 @@ it crops, rather than stretches, the image. The container should have overflow:h
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.fn.fillClosest = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(src, closestSelector, callback)</span> {</span>
-        <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>    $.fn.fillClosest = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(src, closestSelector, callback)</span> </span>{
+        <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
             <span class="hljs-keyword">var</span> img = <span class="hljs-keyword">this</span>;
 
-            <span class="hljs-keyword">var</span> callbackWrapper = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(size)</span> {</span>
+            <span class="hljs-keyword">var</span> callbackWrapper = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(size)</span> </span>{
                 <span class="hljs-keyword">var</span> css = fillClosest.call(img, size, closestSelector);
                 $(img).css(css);
 
@@ -276,7 +276,7 @@ it crops, rather than stretches, the image. The container should have overflow:h
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
     };
 
-    <span class="hljs-keyword">var</span> fillClosest = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rect, closestSelector)</span> {</span>
+    <span class="hljs-keyword">var</span> fillClosest = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rect, closestSelector)</span> </span>{
         <span class="hljs-keyword">var</span> aspectRatio = rect.width / rect.height;
         <span class="hljs-keyword">var</span> $container = $(<span class="hljs-keyword">this</span>).closest(closestSelector);
         <span class="hljs-keyword">var</span> containerHeight = $container.height();
@@ -357,11 +357,11 @@ callback: Optional callback once image has been resized</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.fn.fitToBoundingBox = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(src, boundingBox, callback, error)</span> {</span>
-        <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>    $.fn.fitToBoundingBox = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(src, boundingBox, callback, error)</span> </span>{
+        <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
             <span class="hljs-keyword">var</span> img = <span class="hljs-keyword">this</span>;
 
-            <span class="hljs-keyword">var</span> callbackWrapper = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(size)</span> {</span>
+            <span class="hljs-keyword">var</span> callbackWrapper = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(size)</span> </span>{
                 <span class="hljs-keyword">var</span> boundedSize = $.fitToBoundingBox(size, boundingBox);
                 $(img).css(boundedSize);
 
@@ -378,7 +378,7 @@ callback: Optional callback once image has been resized</p>
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>; <span class="hljs-comment">// TODO can this return a promise?</span>
     };
 
-    $.fitToBoundingBox = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rect, boundingBox)</span> {</span>
+    $.fitToBoundingBox = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rect, boundingBox)</span> </span>{
         <span class="hljs-keyword">var</span> aspectRatio = rect.width / rect.height;
         <span class="hljs-keyword">return</span> $.rectWithAspectRatio(boundingBox, aspectRatio);
     };</pre></div></div>
@@ -400,12 +400,12 @@ error: A function will be called if there is an error loading the image.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.naturalSize = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(src, success, error)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    $.naturalSize = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(src, success, error)</span> </span>{
         <span class="hljs-keyword">var</span> deferred = <span class="hljs-keyword">new</span> $.Deferred();
 
         <span class="hljs-keyword">var</span> img = <span class="hljs-keyword">new</span> Image();
 
-        <span class="hljs-keyword">var</span> successWrapper = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+        <span class="hljs-keyword">var</span> successWrapper = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -424,8 +424,8 @@ Simulate behavior of other browsers by manually queuing the callback.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            window.setTimeout(
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-built_in">window</span>.setTimeout(
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">var</span> size = {
                         width: img.width,
                         height: img.height
@@ -441,7 +441,7 @@ Simulate behavior of other browsers by manually queuing the callback.</p>
         };
 
         img.onload = successWrapper;
-        img.onerror = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> {</span>
+        img.onerror = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
             deferred.reject(e);
 
             <span class="hljs-keyword">if</span> (error) {
@@ -468,7 +468,7 @@ using the specified aspect ratio.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.rectWithAspectRatio = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(containerRect, aspectRatio)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    $.rectWithAspectRatio = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(containerRect, aspectRatio)</span> </span>{
         <span class="hljs-keyword">var</span> rect = {
             top: <span class="hljs-number">0</span>,
             left: <span class="hljs-number">0</span>,

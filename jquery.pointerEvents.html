@@ -128,38 +128,41 @@
 
 <p>jQuery.pointerEvents is a polyfill for the new <a href="http://www.w3.org/Submission/pointer-events/">pointer events api</a>. It is an abstraction on top of touch and mouse events which mimics native pointer events. This is particularly useful because it will work across all devices which support either the Apple-style touch events (i.e. iOS, Android, Chrome OS) and those that support pointer events (i.e. Windows 8 and Windows Phone 7).</p>
 
-<h3 id="event-types">Event types</h3>
+<h3 id="event_types">Event types</h3>
 
 <ul>
-  <li>pointerdown: abstraction on top of mousedown and touchstart</li>
-  <li>pointermove: abstraction on top of mousemove and touchmove</li>
-  <li>pointerup: abstraction on top of mouseup and touchend</li>
-  <li>pointerover: abstraction on top of mouseover (no touch equivalent)</li>
-  <li>pointerout: abstraction on top of mouseout (no touch equivalent)</li>
+<li>pointerdown: abstraction on top of mousedown and touchstart</li>
+
+<li>pointermove: abstraction on top of mousemove and touchmove</li>
+
+<li>pointerup: abstraction on top of mouseup and touchend</li>
+
+<li>pointerover: abstraction on top of mouseover (no touch equivalent)</li>
+
+<li>pointerout: abstraction on top of mouseout (no touch equivalent)</li>
 </ul>
 
-<h3 id="why-this-is-important">Why this is important</h3>
+<h3 id="why_this_is_important">Why this is important</h3>
 
 <p>The PointerEvents API is a new standard that is likely to be adopted by major browsers. The existing APIs for user input, the MouseEvents and the TouchEvents APIS, offer many inconsistent behaviors that pointer events attempts to standardize. Some of inconsistencies are:</p>
 
 <ul>
-  <li>Upon touchstart or touchend, if you call preventDefault() it will prevent the emulated mouse event (mousedown or mouseup respectively) and click event. Whereas if you call preventDefault() upon a mousedown or mouseup event, the click event is always fired. Pointer Events never canceled the click event.</li>
+<li>Upon touchstart or touchend, if you call preventDefault() it will prevent the emulated mouse event (mousedown or mouseup respectively) and click event. Whereas if you call preventDefault() upon a mousedown or mouseup event, the click event is always fired. Pointer Events never canceled the click event.</li>
 </ul>
 
 <h3 id="usage">Usage</h3>
+<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#el&#39;</span><span class='p'>).</span><span class='nx'>on</span><span class='p'>(</span><span class='s1'>&#39;pointerdown&#39;</span><span class='p'>,</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> <span class='p'>{</span>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#el&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;pointerdown&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class='c1'>// Getting coordinates</span>
+        <span class='kd'>var</span> <span class='nx'>top</span> <span class='o'>=</span> <span class='nx'>e</span><span class='p'>.</span><span class='nx'>clientX</span><span class='p'>;</span>
+        <span class='kd'>var</span> <span class='nx'>left</span> <span class='o'>=</span> <span class='nx'>e</span><span class='p'>.</span><span class='nx'>clientY</span><span class='p'>;</span>
 
-        <span class="c1">// Getting coordinates</span>
-        <span class="kd">var</span> <span class="nx">top</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientX</span><span class="p">;</span>
-        <span class="kd">var</span> <span class="nx">left</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientY</span><span class="p">;</span>
+        <span class='c1'>// Detecting the underlying event type</span>
+        <span class='c1'>// Can be &quot;mouse&quot;, &quot;touch&quot;, or &quot;pen&quot;</span>
+        <span class='kd'>var</span> <span class='nx'>underlyingEvent</span> <span class='o'>=</span> <span class='nx'>e</span><span class='p'>.</span><span class='nx'>originalType</span><span class='p'>.</span><span class='nx'>pointerType</span><span class='p'>;</span>
 
-        <span class="c1">// Detecting the underlying event type</span>
-        <span class="c1">// Can be &quot;mouse&quot;, &quot;touch&quot;, or &quot;pen&quot;</span>
-        <span class="kd">var</span> <span class="nx">underlyingEvent</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalType</span><span class="p">.</span><span class="nx">pointerType</span><span class="p">;</span>
-
-    <span class="p">});</span></code></pre></div>
-
+    <span class='p'>});</span>
+</code></pre></div>
   </div>
 </div>
  

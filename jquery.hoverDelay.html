@@ -126,21 +126,17 @@
 
     <h2 id="jqueryhoverdelay">jQuery.hoverDelay</h2>
 
-<p>Assigns mouseover and mouseout handlers to the specified element, but the handlers
-are only fired after the specified delay. This is particularly useful in preventing widgets from
-activating on mouseover when the user mouses over them while attempting to activate a different object.</p>
+<p>Assigns mouseover and mouseout handlers to the specified element, but the handlers are only fired after the specified delay. This is particularly useful in preventing widgets from activating on mouseover when the user mouses over them while attempting to activate a different object.</p>
 
 <h3 id="usage">Usage</h3>
-
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.menu-item&quot;</span><span class="p">).</span><span class="nx">hoverDelay</span><span class="p">({</span>
-        <span class="nx">over</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span> <span class="nx">activateWidget</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span> <span class="p">},</span> <span class="c1">// mouseover handler</span>
-        <span class="nx">out</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span> <span class="nx">activateWidget</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span> <span class="p">},</span> <span class="c1">// mouseout handler</span>
-        <span class="nx">delayOver</span><span class="o">:</span> <span class="mi">350</span><span class="p">,</span> <span class="c1">// fire mouseover after 350 milliseconds</span>
-        <span class="nx">delayOut</span><span class="o">:</span> <span class="mi">0</span> <span class="c1">// fire mouseout immediately</span>
-    <span class="p">});</span></code></pre></div>
-
+<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.menu-item&quot;</span><span class='p'>).</span><span class='nx'>hoverDelay</span><span class='p'>({</span>
+        <span class='nx'>over</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> <span class='p'>{</span> <span class='nx'>activateWidget</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>);</span> <span class='p'>},</span> <span class='c1'>// mouseover handler</span>
+        <span class='nx'>out</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> <span class='p'>{</span> <span class='nx'>activateWidget</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>);</span> <span class='p'>},</span> <span class='c1'>// mouseout handler</span>
+        <span class='nx'>delayOver</span><span class='o'>:</span> <span class='mi'>350</span><span class='p'>,</span> <span class='c1'>// fire mouseover after 350 milliseconds</span>
+        <span class='nx'>delayOut</span><span class='o'>:</span> <span class='mi'>0</span> <span class='c1'>// fire mouseout immediately</span>
+    <span class='p'>});</span>
+</code></pre></div>
 <p>The jQuery.Event object is passed to the handlers just as if they were added via jQuery.fn.on()</p>
-
   </div>
 </div>
  

@@ -126,33 +126,30 @@
 
     <h2 id="jqueryhostiframe">jQuery.hostIframe</h2>
 
-<p>This plugin provides methods to get references to the host iframe element from within the iframe, 
-and to get a window/document reference for a specified iframe.</p>
+<p>This plugin provides methods to get references to the host iframe element from within the iframe, and to get a window/document reference for a specified iframe.</p>
 
 <h3 id="usage">Usage</h3>
 
 <h4 id="jqueryfnhostiframe">jQuery.fn.hostIframe()</h4>
+
 <p>From a document within an iframe, you can get a jQuery object containing the iframe:</p>
-
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">$iframe</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">hostIframe</span><span class="p">();</span></code></pre></div>
-
+<div class='highlight'><pre><code class='javascript'>    <span class='kd'>var</span> <span class='nx'>$iframe</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>(</span><span class='nb'>document</span><span class='p'>).</span><span class='nx'>hostIframe</span><span class='p'>();</span>
+</code></pre></div>
 <p>This may be useful if you want information about the iframe, e.g. the dimensions:</p>
-
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">width</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">hostIframe</span><span class="p">().</span><span class="nx">width</span><span class="p">();</span></code></pre></div>
-
+<div class='highlight'><pre><code class='javascript'>    <span class='kd'>var</span> <span class='nx'>width</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>(</span><span class='nb'>document</span><span class='p'>).</span><span class='nx'>hostIframe</span><span class='p'>().</span><span class='nx'>width</span><span class='p'>();</span>
+</code></pre></div>
 <h4 id="jqueryfniframedocument">jQuery.fn.iframeDocument()</h4>
+
 <p>You can get a reference from the iframe element to the document inside it:</p>
-
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Get the URL of the iframe&#39;s document, which may be different from that of the iframe&#39;s src property</span>
-    <span class="kd">var</span> <span class="nx">iframeUrl</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;iframe&quot;</span><span class="p">).</span><span class="nx">iframeDocument</span><span class="p">()[</span><span class="mi">0</span><span class="p">].</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span></code></pre></div>
-
+<div class='highlight'><pre><code class='javascript'>    <span class='c1'>// Get the URL of the iframe&#39;s document, which may be different from that of the iframe&#39;s src property</span>
+    <span class='kd'>var</span> <span class='nx'>iframeUrl</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;iframe&quot;</span><span class='p'>).</span><span class='nx'>iframeDocument</span><span class='p'>()[</span><span class='mi'>0</span><span class='p'>].</span><span class='nx'>location</span><span class='p'>.</span><span class='nx'>href</span>
+</code></pre></div>
 <h4 id="jqueryfniframewindow">jQuery.fn.iframeWindow()</h4>
+
 <p>You can get a reference from the iframe element to the window inside it:</p>
-
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Post a message to the iframe&#39;s window using skinny.js&#39;s $.postMessage() plugin</span>
-    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;iframe&quot;</span><span class="p">).</span><span class="nx">iframeWindow</span><span class="p">().</span><span class="nx">postMessage</span><span class="p">(</span><span class="s2">&quot;hi there&quot;</span><span class="p">,</span> <span class="s2">&quot;http://www.foo.com&quot;</span><span class="p">);</span></code></pre></div>
-
-
+<div class='highlight'><pre><code class='javascript'>    <span class='c1'>// Post a message to the iframe&#39;s window using skinny.js&#39;s $.postMessage() plugin</span>
+    <span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;iframe&quot;</span><span class='p'>).</span><span class='nx'>iframeWindow</span><span class='p'>().</span><span class='nx'>postMessage</span><span class='p'>(</span><span class='s2'>&quot;hi there&quot;</span><span class='p'>,</span> <span class='s2'>&quot;http://www.foo.com&quot;</span><span class='p'>);</span>
+</code></pre></div>
   </div>
 </div>
  

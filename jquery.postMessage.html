@@ -124,10 +124,9 @@
     </div>
     
 
-    <h2 id="jquery-postmessage-plugin">jQuery postMessage plugin</h2>
+    <h2 id="jquery_postmessage_plugin">jQuery postMessage plugin</h2>
 
-<p>Wraps HTML5 postMessage for cross-origin message sending between windows.
-Fallback implementation works on browsers that don’t support postMessage.</p>
+<p>Wraps HTML5 postMessage for cross-origin message sending between windows. Fallback implementation works on browsers that don’t support postMessage.</p>
 
 <p>Based on concepts from: <a href="http://benalman.com/projects/jquery-postmessage-plugin/">http://benalman.com/projects/jquery-postmessage-plugin/</a></p>
 
@@ -137,86 +136,73 @@ Fallback implementation works on browsers that don’t support postMessage.</p>
 
 <h3 id="usage">Usage</h3>
 
-<h4 id="polyfill-setup">Polyfill setup</h4>
+<h4 id="polyfill_setup">Polyfill setup</h4>
 
-<p>To support IE6-7 (and IE8-10 for non-frame windows), you need to make the polyfill HTML file (postmessage.htm) available on your web server.
-For example, you could put the file here:</p>
+<p>To support IE6-7 (and IE8-10 for non-frame windows), you need to make the polyfill HTML file (postmessage.htm) available on your web server. For example, you could put the file here:</p>
 
-<pre><code>http://www.mysite.com/scripts/thirdparty/skinnyjs/postmessage.htm
-</code></pre>
+<pre><code>http://www.mysite.com/scripts/thirdparty/skinnyjs/postmessage.htm</code></pre>
 
 <p>IMPORTANT: This file must be on the same domain as the content you want to communicate with. It cannot be hosted on a different domain (i.e. Google CDN).</p>
 
 <p>Once the file is available, you need to configure the postMessage plugin to point to it. Add this line anywhere on your page (or as the first/last line of jquery.postMessage.js):</p>
-
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">window</span><span class="p">.</span><span class="nx">_jqueryPostMessagePolyfillPath</span> <span class="o">=</span> <span class="s2">&quot;/scripts/thirdparty/skinnyjs/postmessage.htm&quot;</span><span class="p">;</span></code></pre></div>
-
-<h4 id="sending-a-message-to-another-window">Sending a message to another window</h4>
+<div class='highlight'><pre><code class='javascript'>    <span class='nb'>window</span><span class='p'>.</span><span class='nx'>_jqueryPostMessagePolyfillPath</span> <span class='o'>=</span> <span class='s2'>&quot;/scripts/thirdparty/skinnyjs/postmessage.htm&quot;</span><span class='p'>;</span>
+</code></pre></div>
+<h4 id="sending_a_message_to_another_window">Sending a message to another window</h4>
 
 <p>$.postMessage() has the following signature:</p>
-
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span>
-        <span class="nx">message</span><span class="p">,</span> <span class="c1">// The message to send (string)</span>
-        <span class="nx">targetHost</span><span class="p">,</span> <span class="c1">// The host of the target window (i.e. http://www.vistaprint.com)</span>
-        <span class="nx">targetWindow</span> <span class="c1">// A reference to the target window</span>
-        <span class="p">);</span></code></pre></div>
-
-<p>Note that the $.postMessage() API is slightly different from the HTML5 standard window.postMessage(),
-in that it requires explicitly specifying the domain of the target window. This is necessary because there’s
-no way to determine the target window’s domain programatically, and the domain is required for the
-polyfill technique to work.</p>
+<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>postMessage</span><span class='p'>(</span>
+        <span class='nx'>message</span><span class='p'>,</span> <span class='c1'>// The message to send (string)</span>
+        <span class='nx'>targetHost</span><span class='p'>,</span> <span class='c1'>// The host of the target window (i.e. http://www.vistaprint.com)</span>
+        <span class='nx'>targetWindow</span> <span class='c1'>// A reference to the target window</span>
+        <span class='p'>);</span>
+</code></pre></div>
+<p>Note that the $.postMessage() API is slightly different from the HTML5 standard window.postMessage(), in that it requires explicitly specifying the domain of the target window. This is necessary because there’s no way to determine the target window’s domain programatically, and the domain is required for the polyfill technique to work.</p>
 
 <p>Example usage:</p>
-
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span>
-        <span class="s2">&quot;this is a message&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;http://www.foo.com&quot;</span><span class="p">,</span>
-        <span class="nb">window</span><span class="p">.</span><span class="nx">frames</span><span class="p">[</span><span class="s2">&quot;fooWindow&quot;</span><span class="p">]</span>
-        <span class="p">);</span></code></pre></div>
-
-<h4 id="listening-to-messages-from-another-window">Listening to messages from another window</h4>
+<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>postMessage</span><span class='p'>(</span>
+        <span class='s2'>&quot;this is a message&quot;</span><span class='p'>,</span>
+        <span class='s2'>&quot;http://www.foo.com&quot;</span><span class='p'>,</span>
+        <span class='nb'>window</span><span class='p'>.</span><span class='nx'>frames</span><span class='p'>[</span><span class='s2'>&quot;fooWindow&quot;</span><span class='p'>]</span>
+        <span class='p'>);</span>
+</code></pre></div>
+<h4 id="listening_to_messages_from_another_window">Listening to messages from another window</h4>
 
 <p>To listen for messages from another window, use jQuery’s built in event handling infrastructure and listen for “message” events on the window object:</p>
 
 <p>This example simply alerts every message it receives, from any origin:</p>
-
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">alert</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span> <span class="c1">// Alerts &quot;this is a message&quot;</span>
-    <span class="p">});</span></code></pre></div>
-
+<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>(</span><span class='nb'>window</span><span class='p'>).</span><span class='nx'>on</span><span class='p'>(</span><span class='s2'>&quot;message&quot;</span><span class='p'>,</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> <span class='p'>{</span>
+        <span class='nx'>alert</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>.</span><span class='nx'>data</span><span class='p'>);</span> <span class='c1'>// Alerts &quot;this is a message&quot;</span>
+    <span class='p'>});</span>
+</code></pre></div>
 <p>In general, its a good idea to filter out requests from unknown domains. This example filters messages not from http://www.foo.com:</p>
-
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">origin</span> <span class="o">!==</span> <span class="s2">&quot;http://www.foo.com&quot;</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span><span class="p">;</span>
-            <span class="p">}</span>
-            <span class="nx">alert</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span> <span class="c1">// Alerts &quot;this is a message&quot;</span>
-        <span class="p">});</span></code></pre></div>
-
+<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>(</span><span class='nb'>window</span><span class='p'>).</span><span class='nx'>on</span><span class='p'>(</span><span class='s2'>&quot;message&quot;</span><span class='p'>,</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> <span class='p'>{</span>
+            <span class='k'>if</span> <span class='p'>(</span><span class='nx'>e</span><span class='p'>.</span><span class='nx'>origin</span> <span class='o'>!==</span> <span class='s2'>&quot;http://www.foo.com&quot;</span><span class='p'>)</span> <span class='p'>{</span>
+                <span class='k'>return</span><span class='p'>;</span>
+            <span class='p'>}</span>
+            <span class='nx'>alert</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>.</span><span class='nx'>data</span><span class='p'>);</span> <span class='c1'>// Alerts &quot;this is a message&quot;</span>
+        <span class='p'>});</span>
+</code></pre></div>
 <p>This example alerts every message it receives, from any subdomain of foo.com:</p>
-
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">origin</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="sr">/http:\/\/[^\.]*\.foo\.com$/gi</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="nx">alert</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span> <span class="c1">// Alerts &quot;this is a message&quot;</span>
-    <span class="p">});</span></code></pre></div>
-
+<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>(</span><span class='nb'>window</span><span class='p'>).</span><span class='nx'>on</span><span class='p'>(</span><span class='s2'>&quot;message&quot;</span><span class='p'>,</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> <span class='p'>{</span>
+        <span class='k'>if</span> <span class='p'>(</span><span class='nx'>origin</span><span class='p'>.</span><span class='nx'>search</span><span class='p'>(</span><span class='sr'>/http:\/\/[^\.]*\.foo\.com$/gi</span><span class='p'>)</span> <span class='o'>&lt;</span> <span class='mi'>0</span><span class='p'>)</span> <span class='p'>{</span>
+            <span class='k'>return</span><span class='p'>;</span>
+        <span class='p'>}</span>
+        <span class='nx'>alert</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>.</span><span class='nx'>data</span><span class='p'>);</span> <span class='c1'>// Alerts &quot;this is a message&quot;</span>
+    <span class='p'>});</span>
+</code></pre></div>
 <p>Its also a common practice to “namespace” messages so your handlers don’t respond to messages they don’t know how to handle:</p>
-
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">origin</span> <span class="o">!==</span> <span class="s2">&quot;http://www.foo.com&quot;</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span><span class="p">;</span>
-        <span class="p">}</span>
+<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>(</span><span class='nb'>window</span><span class='p'>).</span><span class='nx'>on</span><span class='p'>(</span><span class='s2'>&quot;message&quot;</span><span class='p'>,</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> <span class='p'>{</span>
+        <span class='k'>if</span> <span class='p'>(</span><span class='nx'>e</span><span class='p'>.</span><span class='nx'>origin</span> <span class='o'>!==</span> <span class='s2'>&quot;http://www.foo.com&quot;</span><span class='p'>)</span> <span class='p'>{</span>
+            <span class='k'>return</span><span class='p'>;</span>
+        <span class='p'>}</span>
         
-        <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;fruit:&quot;</span><span class="p">)</span> <span class="o">!==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span><span class="p">;</span>
-        <span class="p">}</span>
+        <span class='k'>if</span> <span class='p'>(</span><span class='nx'>e</span><span class='p'>.</span><span class='nx'>data</span><span class='p'>.</span><span class='nx'>indexOf</span><span class='p'>(</span><span class='s2'>&quot;fruit:&quot;</span><span class='p'>)</span> <span class='o'>!==</span> <span class='mi'>0</span><span class='p'>)</span> <span class='p'>{</span>
+            <span class='k'>return</span><span class='p'>;</span>
+        <span class='p'>}</span>
          
-        <span class="c1">// TODO: Remove the &quot;fruit:&quot; namespace and do something with the message</span>
-    <span class="p">});</span></code></pre></div>
-
-
+        <span class='c1'>// TODO: Remove the &quot;fruit:&quot; namespace and do something with the message</span>
+    <span class='p'>});</span>
+</code></pre></div>
   </div>
 </div>
  

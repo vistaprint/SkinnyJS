@@ -246,16 +246,16 @@
  * Developed by Vistaprint.com
  */</span>
 
-(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($, window, document, undefined)</span> {</span>
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($, window, document, undefined)</span> </span>{
 
     <span class="hljs-keyword">var</span> support = {
-        touch: <span class="hljs-string">"ontouchend"</span> <span class="hljs-keyword">in</span> document,
+        touch: <span class="hljs-string">"ontouchend"</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">document</span>,
         pointer: !! (navigator.pointerEnabled || navigator.msPointerEnabled)
     };
 
     $.extend($.support, support);
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">triggerCustomEvent</span><span class="hljs-params">(elem, eventType, originalEvent)</span> {</span></pre></div></div>
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">triggerCustomEvent</span><span class="hljs-params">(elem, eventType, originalEvent)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -270,7 +270,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        originalEvent = originalEvent || window.event;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        originalEvent = originalEvent || <span class="hljs-built_in">window</span>.event;</pre></div></div>
             
         </li>
         
@@ -323,7 +323,7 @@ Fix target property (#1925)</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (!event.target) {
-            event.target = originalEvent.srcElement || document;
+            event.target = originalEvent.srcElement || <span class="hljs-built_in">document</span>;
         }</pre></div></div>
             
         </li>
@@ -391,7 +391,7 @@ which means we need to trigger independent events</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> ($.isArray(event)) {
-            $.each(event, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, ev)</span> {</span>
+            $.each(event, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, ev)</span> </span>{
                 $.event.dispatch.call(elem, ev);
             });
         } <span class="hljs-keyword">else</span> {
@@ -414,7 +414,7 @@ which means we need to trigger independent events</p>
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">return</span> event;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addEvent</span><span class="hljs-params">(elem, type, selector, func)</span> {</span></pre></div></div>
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addEvent</span><span class="hljs-params">(elem, type, selector, func)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -430,7 +430,7 @@ which means we need to trigger independent events</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (selector) {
-            func._pointerEventWrapper = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
+            func._pointerEventWrapper = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
                 <span class="hljs-keyword">return</span> func.call(elem, event.originalEvent);
             };
 
@@ -468,7 +468,7 @@ which means we need to trigger independent events</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                func._pointerEventWrapper = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> {</span>
+            <div class="content"><div class='highlight'><pre>                func._pointerEventWrapper = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
                     <span class="hljs-keyword">return</span> func.call(elem, e);
                 };
 
@@ -477,7 +477,7 @@ which means we need to trigger independent events</p>
         }
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">removeEvent</span><span class="hljs-params">(elem, type, selector, func)</span> {</span></pre></div></div>
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">removeEvent</span><span class="hljs-params">(elem, type, selector, func)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -516,7 +516,7 @@ which means we need to trigger independent events</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getStandardizedButtonsProperty</span><span class="hljs-params">(event)</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getStandardizedButtonsProperty</span><span class="hljs-params">(event)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -638,8 +638,8 @@ sadly, no browser currently supports this and only sends us the single “button
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">returnFalse</span><span class="hljs-params">()</span> {</span> <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; }
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">returnTrue</span><span class="hljs-params">()</span> {</span> <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>; }
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">returnFalse</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; }
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">returnTrue</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>; }
 
     <span class="hljs-keyword">var</span> POINTER_TYPE_UNAVAILABLE = <span class="hljs-string">"unavailable"</span>;
     <span class="hljs-keyword">var</span> POINTER_TYPE_TOUCH = <span class="hljs-string">"touch"</span>;
@@ -751,7 +751,7 @@ pen contact with eraser button pressed               32</p>
             
             <div class="content"><div class='highlight'><pre>    $.event.pointerHooks = {
         props: <span class="hljs-string">"pointerType pointerId pressure buttons clientX clientY relatedTarget fromElement offsetX offsetY pageX pageY screenX screenY width height toElement"</span>.split(<span class="hljs-string">" "</span>),
-        filter: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event, original)</span> {</span></pre></div></div>
+        filter: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event, original)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -768,7 +768,7 @@ this is just copied from jQuery’s standard pageX/pageY fix</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (!original.touches &amp;&amp; event.pageX == <span class="hljs-literal">null</span> &amp;&amp; original.clientX != <span class="hljs-literal">null</span>) {
-                <span class="hljs-keyword">var</span> eventDoc = event.target.ownerDocument || document;
+                <span class="hljs-keyword">var</span> eventDoc = event.target.ownerDocument || <span class="hljs-built_in">document</span>;
                 <span class="hljs-keyword">var</span> doc = eventDoc.documentElement;
                 <span class="hljs-keyword">var</span> body = eventDoc.body;
 
@@ -893,7 +893,7 @@ clicks on “pointerdown” or “pointerup” or from gestures like “press”
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            event.preventClick = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>            event.preventClick = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                 event.isClickPrevented = returnTrue;
                 $(event.target).one(<span class="hljs-string">"click"</span>, returnFalse);
             };
@@ -1138,8 +1138,8 @@ polyfill slowing down the application</p>
         }
     };
 
-    $.event.delegateSpecial = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(setup)</span> {</span>
-        <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span>
+    $.event.delegateSpecial = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(setup)</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> </span>{
             <span class="hljs-keyword">var</span> thisObject = <span class="hljs-keyword">this</span>,
                 data = jQuery._data(thisObject);
 
@@ -1159,7 +1159,7 @@ polyfill slowing down the application</p>
         };
     };
 
-    <span class="hljs-keyword">var</span> indexOfArray = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(arr, obj)</span> {</span>
+    <span class="hljs-keyword">var</span> indexOfArray = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(arr, obj)</span> </span>{
         <span class="hljs-keyword">if</span> (arr.indexOf) {
             <span class="hljs-keyword">return</span> arr.indexOf(obj);
         }
@@ -1173,8 +1173,8 @@ polyfill slowing down the application</p>
         <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
     };
 
-    $.event.delegateSpecial.remove = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(teardown)</span> {</span>
-        <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span>
+    $.event.delegateSpecial.remove = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(teardown)</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> </span>{
             <span class="hljs-keyword">var</span> handlers,
                 thisObject = <span class="hljs-keyword">this</span>,
                 data = jQuery._data(thisObject);
@@ -1260,12 +1260,12 @@ on touchend to see if we should trigger a click event</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> scrollY = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-            <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.floor(window.scrollY || $(window).scrollTop());
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> scrollY = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">window</span>.scrollY || $(<span class="hljs-built_in">window</span>).scrollTop());
         };
 
         $.event.special.pointerdown = {
-            touch: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span></pre></div></div>
+            touch: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -1327,7 +1327,7 @@ this disables scrolling when touching the binded element, which is not appropria
             </div>
             
             <div class="content"><div class='highlight'><pre>            },
-            mouse: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span></pre></div></div>
+            mouse: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -1413,7 +1413,7 @@ this prevents chorded “pointerdown” events which is defined in the Pointer E
 
                 triggerCustomEvent(<span class="hljs-keyword">this</span>, <span class="hljs-string">"pointerdown"</span>, event);
             },
-            add: $.event.delegateSpecial(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span></pre></div></div>
+            add: $.event.delegateSpecial(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -1463,7 +1463,7 @@ this prevents chorded “pointerdown” events which is defined in the Pointer E
             <div class="content"><div class='highlight'><pre>                handleObj.pointerup = $.noop;
                 $(<span class="hljs-keyword">this</span>).on(<span class="hljs-string">"pointerup"</span>, handleObj.selector, handleObj.pointerup);
             }),
-            remove: $.event.delegateSpecial.remove(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span></pre></div></div>
+            remove: $.event.delegateSpecial.remove(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -1517,7 +1517,7 @@ this prevents chorded “pointerdown” events which is defined in the Pointer E
         };
 
         $.event.special.pointerup = {
-            touch: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span></pre></div></div>
+            touch: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -1663,7 +1663,7 @@ was fired by the browser</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">var</span> clickTimer = setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">var</span> clickTimer = setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">if</span> (_touching === lastTouchStarted) {
                         _touching = <span class="hljs-literal">false</span>; <span class="hljs-comment">// release the "pointerdown" lock</span>
                     }</pre></div></div>
@@ -1708,7 +1708,7 @@ event, we can simply not trigger one to begin with.</p>
                     }
                 }, <span class="hljs-number">300</span>);
 
-                $(event.target).one(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                $(event.target).one(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">if</span> (_touching === lastTouchStarted) {
                         _touching = <span class="hljs-literal">false</span>;
                     }
@@ -1718,7 +1718,7 @@ event, we can simply not trigger one to begin with.</p>
                     }
                 });
             },
-            mouse: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span></pre></div></div>
+            mouse: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -1800,7 +1800,7 @@ the “pointermove” needed to follow the Pointer Events spec which describes t
             </div>
             
             <div class="content"><div class='highlight'><pre>            },
-            add: $.event.delegateSpecial(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span></pre></div></div>
+            add: $.event.delegateSpecial(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -1834,7 +1834,7 @@ the “pointermove” needed to follow the Pointer Events spec which describes t
             
             <div class="content"><div class='highlight'><pre>                addEvent(<span class="hljs-keyword">this</span>, <span class="hljs-string">"mouseup"</span>, handleObj.selector, $.event.special.pointerup.mouse);
             }),
-            remove: $.event.delegateSpecial.remove(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span></pre></div></div>
+            remove: $.event.delegateSpecial.remove(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -1871,10 +1871,10 @@ the “pointermove” needed to follow the Pointer Events spec which describes t
         };
 
         $.event.special.pointermove = {
-            touch: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
+            touch: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
                 triggerCustomEvent(<span class="hljs-keyword">this</span>, <span class="hljs-string">"pointermove"</span>, event);
             },
-            mouse: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span></pre></div></div>
+            mouse: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -1898,7 +1898,7 @@ move events.</p>
 
                 triggerCustomEvent(<span class="hljs-keyword">this</span>, <span class="hljs-string">"pointermove"</span>, event);
             },
-            add: $.event.delegateSpecial(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span></pre></div></div>
+            add: $.event.delegateSpecial(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -1932,7 +1932,7 @@ move events.</p>
             
             <div class="content"><div class='highlight'><pre>                addEvent(<span class="hljs-keyword">this</span>, <span class="hljs-string">"mousemove"</span>, handleObj.selector, $.event.special.pointermove.mouse);
             }),
-            remove: $.event.delegateSpecial.remove(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> {</span></pre></div></div>
+            remove: $.event.delegateSpecial.remove(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handleObj)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -1978,8 +1978,8 @@ move events.</p>
             pointercancel: {
                 touch: <span class="hljs-string">"touchcancel"</span>
             }
-        }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(pointerEventType, natives)</span> {</span>
-            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onTouch</span><span class="hljs-params">(event)</span> {</span></pre></div></div>
+        }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(pointerEventType, natives)</span> </span>{
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onTouch</span><span class="hljs-params">(event)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -2002,12 +2002,12 @@ move events.</p>
                 triggerCustomEvent(<span class="hljs-keyword">this</span>, pointerEventType, event);
             }
 
-            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onMouse</span><span class="hljs-params">(event)</span> {</span>
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onMouse</span><span class="hljs-params">(event)</span> </span>{
                 triggerCustomEvent(<span class="hljs-keyword">this</span>, pointerEventType, event);
             }
 
             $.event.special[pointerEventType] = {
-                setup: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                setup: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">if</span> (support.touch &amp;&amp; natives.touch) {
                         addEvent(<span class="hljs-keyword">this</span>, natives.touch, <span class="hljs-literal">null</span>, onTouch);
                     }
@@ -2015,7 +2015,7 @@ move events.</p>
                         addEvent(<span class="hljs-keyword">this</span>, natives.mouse, <span class="hljs-literal">null</span>, onMouse);
                     }
                 },
-                teardown: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                teardown: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">if</span> (support.touch &amp;&amp; natives.touch) {
                         removeEvent(<span class="hljs-keyword">this</span>, natives.touch, <span class="hljs-literal">null</span>, onTouch);
                     }
@@ -2112,11 +2112,11 @@ using pointer events (pointerover/out) and event-time checks</p>
             <div class="content"><div class='highlight'><pre>        jQuery.each({
             pointerenter: navigator.msPointerEnabled ? <span class="hljs-string">"MSPointerOver"</span> : <span class="hljs-string">"mouseover"</span>,
             pointerleave: navigator.msPointerEnabled ? <span class="hljs-string">"MSPointerOut"</span> : <span class="hljs-string">"mouseout"</span>
-        }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(orig, fix)</span> {</span>
+        }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(orig, fix)</span> </span>{
             jQuery.event.special[orig] = {
                 delegateType: fix,
                 bindType: fix,
-                handle: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
+                handle: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
                     <span class="hljs-keyword">var</span> ret,
                         target = <span class="hljs-keyword">this</span>,
                         related = event.relatedTarget,
@@ -2147,7 +2147,7 @@ NB: No relatedTarget if the mouse left/entered the browser window</p>
         });
     }
 
-})(jQuery, window, document);</pre></div></div>
+})(jQuery, <span class="hljs-built_in">window</span>, <span class="hljs-built_in">document</span>);</pre></div></div>
             
         </li>
         

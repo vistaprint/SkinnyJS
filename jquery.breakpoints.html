@@ -125,6 +125,7 @@
     
 
     <h2 id="jquerybreakpoints">jQuery.breakpoints</h2>
+
 <p>Applies CSS classes automatically to an element according on its pixel width. This is designed to be similar in concept to media queries, but using the size of an element instead of the size of the browser window. This is useful for designing components to be responsive, without assuming that they will be 100% of the window size.</p>
 
 <h3 id="usage">Usage</h3>
@@ -132,48 +133,43 @@
 <p>The easiest way to create breakpoints for an element is to specify them in terms of max widths, and let the plugin calculate the corresponding min widths:</p>
 
 <p>Unobtrusive syntax:</p>
-
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;foo&quot;</span> <span class="na">data-breakpoints=</span><span class="s">&quot;mobile:480; medium:760;&quot;</span><span class="nt">&gt;&lt;/div&gt;</span></code></pre></div>
-
+<div class='highlight'><pre><code class='html'><span class='nt'>&lt;div</span> <span class='na'>class=</span><span class='s'>&quot;foo&quot;</span> <span class='na'>data-breakpoints=</span><span class='s'>&quot;mobile:480; medium:760;&quot;</span><span class='nt'>&gt;&lt;/div&gt;</span>
+</code></pre></div>
 <p>Or, you can use the equivalent JavaScript call:</p>
-
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.foo&quot;</span><span class="p">).</span><span class="nx">breakpoints</span><span class="p">({</span> <span class="s2">&quot;mobile&quot;</span><span class="o">:</span> <span class="mi">480</span><span class="p">,</span> <span class="s2">&quot;medium&quot;</span><span class="o">:</span> <span class="mi">760</span> <span class="p">});</span></code></pre></div>
-
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.foo&quot;</span><span class='p'>).</span><span class='nx'>breakpoints</span><span class='p'>({</span> <span class='s2'>&quot;mobile&quot;</span><span class='o'>:</span> <span class='mi'>480</span><span class='p'>,</span> <span class='s2'>&quot;medium&quot;</span><span class='o'>:</span> <span class='mi'>760</span> <span class='p'>});</span>
+</code></pre></div>
 <p>Then, you can target these breakpoints with css classes based on the names you assigned:</p>
+<div class='highlight'><pre><code class='css'><span class='nc'>.foo</span>
+<span class='p'>{</span>
+    <span class='k'>background-image</span><span class='o'>:</span> <span class='sx'>url(large-size.jpg)</span><span class='p'>;</span>
+<span class='p'>}</span>
 
-<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nc">.foo</span>
-<span class="p">{</span>
-    <span class="k">background-image</span><span class="o">:</span> <span class="sx">url(large-size.jpg)</span><span class="p">;</span>
-<span class="p">}</span>
+<span class='nc'>.foo.breakpoint-medium</span>
+<span class='p'>{</span>
+    <span class='k'>background-image</span><span class='o'>:</span> <span class='sx'>url(medium-size.jpg)</span><span class='p'>;</span>
+<span class='p'>}</span>
 
-<span class="nc">.foo.breakpoint-medium</span>
-<span class="p">{</span>
-    <span class="k">background-image</span><span class="o">:</span> <span class="sx">url(medium-size.jpg)</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="nc">.foo.breakpoint-mobile</span>
-<span class="p">{</span>
-    <span class="k">background-image</span><span class="o">:</span> <span class="sx">url(small-size.jpg)</span><span class="p">;</span>
-<span class="p">}</span></code></pre></div>
-
-<h4 id="overlapping-breakpoints">Overlapping breakpoints</h4>
+<span class='nc'>.foo.breakpoint-mobile</span>
+<span class='p'>{</span>
+    <span class='k'>background-image</span><span class='o'>:</span> <span class='sx'>url(small-size.jpg)</span><span class='p'>;</span>
+<span class='p'>}</span>
+</code></pre></div>
+<h4 id="overlapping_breakpoints">Overlapping breakpoints</h4>
 
 <p>You can create overlapping breakpoints. Note in this example, that the “mobile” and “mobileOrTablet” breakpoints overlap:</p>
-
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.foo&quot;</span><span class="p">).</span><span class="nx">breakpoints</span><span class="p">({</span> <span class="s2">&quot;mobile&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="nx">min</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">max</span><span class="o">:</span> <span class="mi">480</span> <span class="p">},</span> <span class="s2">&quot;mobileOrTablet&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="nx">min</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">max</span><span class="o">:</span> <span class="mi">760</span> <span class="p">}});</span></code></pre></div>
-
-<h4 id="triggering-breakpoints-manually">Triggering breakpoints manually</h4>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.foo&quot;</span><span class='p'>).</span><span class='nx'>breakpoints</span><span class='p'>({</span> <span class='s2'>&quot;mobile&quot;</span><span class='o'>:</span> <span class='p'>{</span> <span class='nx'>min</span><span class='o'>:</span> <span class='mi'>0</span><span class='p'>,</span> <span class='nx'>max</span><span class='o'>:</span> <span class='mi'>480</span> <span class='p'>},</span> <span class='s2'>&quot;mobileOrTablet&quot;</span><span class='o'>:</span> <span class='p'>{</span> <span class='nx'>min</span><span class='o'>:</span> <span class='mi'>0</span><span class='p'>,</span> <span class='nx'>max</span><span class='o'>:</span> <span class='mi'>760</span> <span class='p'>}});</span>
+</code></pre></div>
+<h4 id="triggering_breakpoints_manually">Triggering breakpoints manually</h4>
 
 <p>Breakpoints are updated automatically when the screen resizes (i.e. the “resize” or “orientationchange” event). If you modify content manually (i.e. through script), and want to trigger a recalculation of the breakpoints, you can do this by triggering the breakpoints:refresh event:</p>
+<div class='highlight'><pre><code class='javascript'><span class='c1'>// Set up breakpoints</span>
+<span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.foo&quot;</span><span class='p'>).</span><span class='nx'>breakpoints</span><span class='p'>();</span>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Set up breakpoints</span>
-<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.foo&quot;</span><span class="p">).</span><span class="nx">breakpoints</span><span class="p">();</span>
+<span class='c1'>// Later...</span>
 
-<span class="c1">// Later...</span>
-
-<span class="c1">// Trigger a recalculation of breakpoints:</span>
-<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.foo&quot;</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;breakpoints:refresh&quot;</span><span class="p">);</span></code></pre></div>
-
+<span class='c1'>// Trigger a recalculation of breakpoints:</span>
+<span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.foo&quot;</span><span class='p'>).</span><span class='nx'>trigger</span><span class='p'>(</span><span class='s2'>&quot;breakpoints:refresh&quot;</span><span class='p'>);</span>
+</code></pre></div>
 <h4 id="optimization">Optimization</h4>
 
 <p>On highly optimized websites, it is a best practice to load most JavaScript files asynchronously and after content is loaded. However, if you’re using jquery.breakpoints, you would want to have the plugin run and set CSS classes as early as possible to avoid unnecessary reflows.</p>
@@ -181,31 +177,31 @@
 <p>To support this scenario, the jquery.breakpoints plugin is separated into 2 parts:</p>
 
 <ol>
-  <li><strong>The core breakpoints logic</strong>. This is designed to be put at the top of the page. It has <em>no</em> dependencies, not even jQuery.</li>
-  <li><strong>The jquery.breakpoints plugin</strong>. This should go at the bottom of the page, with your other scripts.</li>
+<li><strong>The core breakpoints logic</strong>. This is designed to be put at the top of the page. It has <em>no</em> dependencies, not even jQuery.</li>
+
+<li><strong>The jquery.breakpoints plugin</strong>. This should go at the bottom of the page, with your other scripts.</li>
 </ol>
 
 <p>The core breakpoints file supplies the method <em>skinny.breakpoints.setup()</em>, which you can call on an element inline: this ensures that it has its CSS classes available as early as possible. For example:</p>
+<div class='highlight'><pre><code class='html'><span class='nt'>&lt;html&gt;</span>
+  <span class='nt'>&lt;head&gt;</span>
+    <span class='nt'>&lt;link</span> <span class='na'>rel=</span><span class='s'>&quot;stylesheet&quot;</span> <span class='na'>href=</span><span class='s'>&quot;content.css&quot;</span><span class='nt'>&gt;&lt;/script&gt;</span>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;html&gt;</span>
-  <span class="nt">&lt;head&gt;</span>
-    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;content.css&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class='c'>&lt;!-- Load the core breakpoints logic here --&gt;</span>
+    <span class='nt'>&lt;script </span><span class='na'>type=</span><span class='s'>&quot;text/javascript&quot;</span> <span class='na'>src=</span><span class='s'>&quot;breakpoints.js&quot;</span><span class='nt'>&gt;&lt;/script&gt;</span>
+  <span class='nt'>&lt;/head&gt;</span>
+  <span class='nt'>&lt;body&gt;</span>
 
-    <span class="c">&lt;!-- Load the core breakpoints logic here --&gt;</span>
-    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;breakpoints.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-  <span class="nt">&lt;/head&gt;</span>
-  <span class="nt">&lt;body&gt;</span>
+    <span class='nt'>&lt;div</span> <span class='na'>id=</span><span class='s'>&quot;someContent&quot;</span> <span class='na'>class=</span><span class='s'>&quot;some-content&quot;</span> <span class='na'>breakpoints=</span><span class='s'>&quot;small:480; medium:760;&quot;</span><span class='nt'>&gt;</span>(content goes here)<span class='nt'>&lt;/div&gt;</span>
+    <span class='c'>&lt;!-- Call the breakpoints plugin as soon as the content is loaded --&gt;</span>
+    <span class='nt'>&lt;script </span><span class='na'>type=</span><span class='s'>&quot;text/javascript&quot;</span><span class='nt'>&gt;</span><span class='nx'>skinny</span><span class='p'>.</span><span class='nx'>breakpoints</span><span class='p'>.</span><span class='nx'>setup</span><span class='p'>(</span><span class='s1'>&#39;someContent&#39;</span><span class='p'>);</span><span class='nt'>&lt;/script&gt;</span>
 
-    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;someContent&quot;</span> <span class="na">class=</span><span class="s">&quot;some-content&quot;</span> <span class="na">breakpoints=</span><span class="s">&quot;small:480; medium:760;&quot;</span><span class="nt">&gt;</span>(content goes here)<span class="nt">&lt;/div&gt;</span>
-    <span class="c">&lt;!-- Call the breakpoints plugin as soon as the content is loaded --&gt;</span>
-    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span><span class="nx">skinny</span><span class="p">.</span><span class="nx">breakpoints</span><span class="p">.</span><span class="nx">setup</span><span class="p">(</span><span class="s1">&#39;someContent&#39;</span><span class="p">);</span><span class="nt">&lt;/script&gt;</span>
-
-    <span class="c">&lt;!-- The bulk of your javascript should go at the bottom of the page, including jquery.breakpoints.js. --&gt;</span>
-    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;jquery.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;jquery.breakpoints.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-  <span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span></code></pre></div>
-
+    <span class='c'>&lt;!-- The bulk of your javascript should go at the bottom of the page, including jquery.breakpoints.js. --&gt;</span>
+    <span class='nt'>&lt;script </span><span class='na'>type=</span><span class='s'>&quot;text/javascript&quot;</span> <span class='na'>src=</span><span class='s'>&quot;jquery.js&quot;</span><span class='nt'>&gt;&lt;/script&gt;</span>
+    <span class='nt'>&lt;script </span><span class='na'>type=</span><span class='s'>&quot;text/javascript&quot;</span> <span class='na'>src=</span><span class='s'>&quot;jquery.breakpoints.js&quot;</span><span class='nt'>&gt;&lt;/script&gt;</span>
+  <span class='nt'>&lt;/body&gt;</span>
+<span class='nt'>&lt;/html&gt;</span>
+</code></pre></div>
   </div>
 </div>
  
