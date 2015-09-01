@@ -1114,7 +1114,7 @@
     // When removing the host window content from the DOM, make the veil opaque to hide it.
     $.modalDialog.veilClass = "dialog-veil";
 
-    // initializer functions. can be pre-pended in register plug in
+    // initializer functions. can be pre-pended by plugins 
     var _typeInitializers = [
 
       // creates ajax or iframe dialog from url
@@ -1158,7 +1158,7 @@
     // add an initialization function to the beginning of the initializers array to create the plugin type
     $.modalDialog.registerPlugin = function (f) {
         f.call(this, ModalDialog, _typeInitializers);
-    }
+    };
 
     // Creates a new dialog from the specified settings.
     $.modalDialog.create = function (settings) {
