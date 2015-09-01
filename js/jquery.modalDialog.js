@@ -1114,10 +1114,10 @@
     // When removing the host window content from the DOM, make the veil opaque to hide it.
     $.modalDialog.veilClass = "dialog-veil";
 
-    var _dialogTypes = []; // array of objects/factory that returns a dialog instance from settings
-
     // initializer functions. can be pre-pended in register plug in
-    var _initializers = [
+    var _typeInitializers = [
+
+      // creates ajax or iframe dialog from url
       function(settings) {
         if (settings.url) {
            if (settings.content) {
@@ -1131,9 +1131,9 @@
        return null;
       },
 
+      // creates node dialog
       function(settings) {
         if (settings.content) {
-
             var $content = $(settings.content);
             if ($content.length === 0) {
                 throw new Error("ModalDialog content not found");
@@ -1154,8 +1154,10 @@
       }
     ];
 
+    // allows for extending the ModalDialog prototype for other types of dialogs
+    // add an initialization function to the beginning of the initializers array to create the plugin type
     $.modalDialog.registerPlugin = function (f) {
-        f.call(ModalDialog, _initializers);
+        f.call(this, ModalDialog, _typeInitializers);
     }
 
     // Creates a new dialog from the specified settings.
@@ -1178,9 +1180,8 @@
 
         if (!dialog) {
           // loop over the initializers, creating a dialog object
-          for(var i = 0; i < _initializers.length; i++ ) {
-            dialog = _initializers[i];
-
+          for(var i = 0; i < _typeInitializers.length; i++ ) {
+            dialog = _typeInitializers[i].call(this, settings);
             if(dialog) {
               break;
             }
@@ -1194,46 +1195,6 @@
         }
 
         return dialog;
-    };
-
-    // Gets the currently active dialog (topmost visually).
-    $.modalDialog.getCurrent = function () {
-        return _dialogStack.length > 0 ? _dialogStack[_dialogStack.length - 1] : null;
-    };
-
-    // Gets an existing dialog if it's settings match the specified setting's content node or URL
-    $.modalDialog.getExisting = function (settings) {
-        // Supresses warnings about using !! to coerce a falsy value to boolean
-        /* jshint -W018 */
-
-        var $content = $(settings.content);
-        var isMatch;
-
-        // Match a node dialog
-        if ($content && $content.length) {
-            isMatch = function (existingSettings) {
-                return existingSettings.content &&
-                    $(existingSettings.content)[0] === $content[0];
-            };
-        }
-        // match an iframe or ajax dialog
-        else if (settings.url) {
-            isMatch = function (existingSettings) {
-                return existingSettings.url &&
-                    existingSettings.url === settings.url && !! existingSettings.ajax === !! settings.ajax;
-            };
-        }
-
-        if (isMatch) {
-            for (var key in _fullIdMap) {
-                var dialog = _fullIdMap[key];
-                if (isMatch(dialog.settings)) {
-                    return dialog;
-                }
-            }
-        }
-
-        return null;
     };
 
     // Global events (not associated with an instance)
