@@ -114,7 +114,7 @@
     ModalDialog.prototype.open = function (disableAnimation) {
         var deferred = this._initDeferred("open", deferred);
 
-        // Ensure the dialog doesn't open once its already opened.. 
+        // Ensure the dialog doesn't open once its already opened..
         // Otherwise, you could end up pushing it on to the stack more than once.
         if (this._open) {
             return this._rejectDeferred("open");
@@ -174,7 +174,7 @@
                 this.$container.css("opacity", 0);
 
                 var initialPos = this._getDefaultPosition();
-                var initialTop = initialPos.top;                
+                var initialTop = initialPos.top;
                 this.$container.css(initialPos);
 
                 var animationCallback = $.proxy(function () {
@@ -212,7 +212,7 @@
                 }, this);
 
                 if (disableAnimation) {
-                    // If animation is disabled, just move the dialog into position synchronously, 
+                    // If animation is disabled, just move the dialog into position synchronously,
                     // and then do the callback on the next event loop tick.
                     this.$container.css({ top: initialTop });
                     setTimeout(animationCallback, 0);
@@ -289,7 +289,7 @@
         }
     };
 
-    // Closes the dialog. 
+    // Closes the dialog.
     // isDialogCloseButton Indicates the cancel button in the dialog's header was clicked.
     ModalDialog.prototype.close = function (isDialogCloseButton) {
         var deferred = this._initDeferred("close", deferred);
@@ -318,7 +318,7 @@
 
         // hide the veil
         this.$el.removeClass("dialog-visible");
-        
+
         this.$container.animate({
                 opacity: 0
             },
@@ -381,7 +381,7 @@
         }
 
         // Fire events on a timeout so that the event loop
-        // has a chance to process DOM changes. 
+        // has a chance to process DOM changes.
         // Without this, close handlers can't re-open the same iframe dialog:
         // the iframe isn't recognized as a new element.
         setTimeout(
@@ -590,7 +590,7 @@
         $(document).on("pointermove", this._drag);
 
         // For pointerup events, we can't use the document, because the option
-        // "preventEventBubbling" will prevent "click-like" events from bubbling to the 
+        // "preventEventBubbling" will prevent "click-like" events from bubbling to the
         // document. Use $bg in addition to the header in case the dialog hasn't caught
         // up with the mouse when the pointerup event occurs.
         this.$header.on("pointerup", this._stopDrag);
@@ -826,7 +826,7 @@
         return this.$frame.iframeWindow()[0];
     };
 
-    // Sends a message to the iframe content window. 
+    // Sends a message to the iframe content window.
     // Used for orchestrating cross-window communication with dialog proxies.
     // * {string} command: The name of the command to send to the content window
     // * {object} data: A simple data object to serialize (as a querystring) and send with the command
@@ -843,7 +843,7 @@
         this.postMessage(message);
     };
 
-    // Sends a message to the iframe content window. 
+    // Sends a message to the iframe content window.
     // Used for orchestrating cross-window communication with dialog proxies.
     // * {string} command: The name of the command to send to the content window
     // * {object} data: A simple data object to serialize (as a querystring) and send with the command
@@ -909,7 +909,7 @@
 
     IFrameDialog.prototype._finishOpen = function () {};
 
-    // AjaxDialog: Extends ModalDialog 
+    // AjaxDialog: Extends ModalDialog
     // Loads content via ajax
     var AjaxDialog = function () {
         ModalDialog.apply(this, arguments);
@@ -1053,7 +1053,7 @@
 
         var id;
 
-        // A fullId was specified, passed from an existing dialog's content window via a message. 
+        // A fullId was specified, passed from an existing dialog's content window via a message.
         // Calculate the parentId from the fullId.
         if (settings._fullId) {
             var idParts = settings._fullId.split("_");
@@ -1065,7 +1065,7 @@
             // Ensure a unique ID for the dialog
             id = DIALOG_NAME_PREFIX + (settings.id || ++_dialogIdCounter);
 
-            // If a parentId was specified, this is a new dialog being created from 
+            // If a parentId was specified, this is a new dialog being created from
             // a child dialog. The child will become the "parent dialog" of the new dialog.
             var parentId = settings.parentId ? settings.parentId + "_" : "";
 
@@ -1114,6 +1114,52 @@
     // When removing the host window content from the DOM, make the veil opaque to hide it.
     $.modalDialog.veilClass = "dialog-veil";
 
+    // initializer functions. can be pre-pended by plugins 
+    var _typeInitializers = [
+
+      // creates ajax or iframe dialog from url
+      function(settings) {
+        if (settings.url) {
+           if (settings.content) {
+               throw new Error("Both url and content cannot be specified.");
+           } else if (settings.ajax) {
+               return new AjaxDialog(settings);
+           } else {
+               return new IFrameDialog(settings);
+           }
+       }
+       return null;
+      },
+
+      // creates node dialog
+      function(settings) {
+        if (settings.content) {
+            var $content = $(settings.content);
+            if ($content.length === 0) {
+                throw new Error("ModalDialog content not found");
+            }
+
+            settings.content = $content;
+
+            var dialog = new ModalDialog(settings);
+
+            if (!settings.destroyOnClose) {
+                $content.modalDialogInstance(dialog);
+            }
+
+            return dialog;
+        }
+
+        return null;
+      }
+    ];
+
+    // allows for extending the ModalDialog prototype for other types of dialogs
+    // add an initialization function to the beginning of the initializers array to create the plugin type
+    $.modalDialog.registerPlugin = function (f) {
+        f.call(this, ModalDialog, _typeInitializers);
+    };
+
     // Creates a new dialog from the specified settings.
     $.modalDialog.create = function (settings) {
         settings = $.modalDialog._ensureSettings(settings);
@@ -1133,76 +1179,22 @@
         }
 
         if (!dialog) {
-            if (settings.url) {
-                if (settings.content) {
-                    throw new Error("Both url and content cannot be specified.");
-                } else if (settings.ajax) {
-                    dialog = new AjaxDialog(settings);
-                } else {
-                    dialog = new IFrameDialog(settings);
-                }
-            } else if (settings.content) {
-
-                var $content = $(settings.content);
-                if ($content.length === 0) {
-                    throw new Error("ModalDialog content not found");
-                }
-
-                settings.content = $content;
-
-                dialog = new ModalDialog(settings);
-
-                if (!settings.destroyOnClose) {
-                    $content.modalDialogInstance(dialog);
-                }
-            } else {
-                throw new Error("No url or content node specified");
+          // loop over the initializers, creating a dialog object
+          for(var i = 0; i < _typeInitializers.length; i++ ) {
+            dialog = _typeInitializers[i].call(this, settings);
+            if(dialog) {
+              break;
             }
+          }
 
-            _fullIdMap[settings._fullId] = dialog;
+          if(!dialog) {
+            throw new Error("No url or content node specified");
+          }
+
+          _fullIdMap[settings._fullId] = dialog;
         }
 
         return dialog;
-    };
-
-    // Gets the currently active dialog (topmost visually).
-    $.modalDialog.getCurrent = function () {
-        return _dialogStack.length > 0 ? _dialogStack[_dialogStack.length - 1] : null;
-    };
-
-    // Gets an existing dialog if it's settings match the specified setting's content node or URL
-    $.modalDialog.getExisting = function (settings) {
-        // Supresses warnings about using !! to coerce a falsy value to boolean
-        /* jshint -W018 */
-
-        var $content = $(settings.content);
-        var isMatch;
-
-        // Match a node dialog
-        if ($content && $content.length) {
-            isMatch = function (existingSettings) {
-                return existingSettings.content &&
-                    $(existingSettings.content)[0] === $content[0];
-            };
-        }
-        // match an iframe or ajax dialog
-        else if (settings.url) {
-            isMatch = function (existingSettings) {
-                return existingSettings.url &&
-                    existingSettings.url === settings.url && !! existingSettings.ajax === !! settings.ajax;
-            };
-        }
-
-        if (isMatch) {
-            for (var key in _fullIdMap) {
-                var dialog = _fullIdMap[key];
-                if (isMatch(dialog.settings)) {
-                    return dialog;
-                }
-            }
-        }
-
-        return null;
     };
 
     // Global events (not associated with an instance)
@@ -1314,7 +1306,7 @@
 
     // Note: It is a bit odd that even though we have the jquery.postMessage() plugin,
     // we're still checking its availability and calling the native implementation here.
-    // The reason is that for most browsers (besides old IE) the plugin is unnecessary, 
+    // The reason is that for most browsers (besides old IE) the plugin is unnecessary,
     // and it may not be desirable to load it at all.
 
     if ($.receiveMessage) {
