@@ -5,6 +5,8 @@ describe("Plugins", function () {
 	
 	it("should render the plugin modal", function (done) {
 		
+		var assert = chai.assert;
+		
 		// add a fake plugin
 		$.modalDialog.registerPlugin(function(modalDialog, initializers) {			
 			// create the test dialog
