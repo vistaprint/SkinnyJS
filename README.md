@@ -49,6 +49,16 @@ heart's content using your own project's build system.
 All dependencies in skinny.js plugins are marked at the top using the following syntax:
 
     /// <reference path="{path}" />
+    
+Contributing
+------------------
+Pull requests must build and pass unit tests to be accepted. New functionality should also include unit tests. To build and run unit tests:
+
+1. Ensure you have node.js installed
+2. ```cd {repo dir}```
+3. ```npm install grunt-cli -g```
+4. ```npm install```
+5. ```grunt```
 
 Origin
 ------------------
