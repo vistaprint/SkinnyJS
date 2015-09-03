@@ -1269,6 +1269,59 @@
     // we will be hiding all content within the DOM and scrolling them to top.
     // When removing the host window content from the DOM, make the veil opaque to hide it.
     $.modalDialog.veilClass = "dialog-veil";
+    
+    // Initializer functions. The order determines the priority for creating dialog types.
+    var _typeInitializers = [
+    
+        // creates ajax or iframe dialog from url
+        function (settings) {
+            if (settings.url) {
+                if (settings.content) {
+                    throw new Error("Both url and content cannot be specified.");
+                } else if (settings.ajax) {
+                    return new AjaxDialog(settings);
+                } else {
+                    return new IFrameDialog(settings);
+                }
+            }
+            return null;
+        },
+    
+        // creates node dialog
+        function (settings) {
+            if (settings.content) {
+                var $content = $(settings.content);
+                if ($content.length === 0) {
+                    throw new Error("ModalDialog content not found");
+                }
+    
+                settings.content = $content;
+    
+                var dialog = new ModalDialog(settings);
+    
+                if (!settings.destroyOnClose) {
+                    $content.modalDialogInstance(dialog);
+                }
+    
+                return dialog;
+            }
+    
+            return null;
+        }
+    ];
+
+    // Allows for extending the ModalDialog prototype for other types of dialogs
+    // {function} f. A callback accepting the ModalDialog class to allow for extensibility. The function should return a type initializer function.
+    // {bool} addToBeginning. A flag determining whether the initializer function should go at the beginning or end of the the type initializers array.
+    $.modalDialog.registerPlugin = function (f, addToBeginning) {
+       var initializer = f.call(this, ModalDialog);
+       if(addToBeginning) {
+           _typeInitializers.unshift(initializer);
+       }
+       else {
+           _typeInitializers.push(initializer);
+       }
+    };
 
     // Creates a new dialog from the specified settings.
     $.modalDialog.create = function (settings) {
@@ -1289,29 +1342,15 @@
         }
 
         if (!dialog) {
-            if (settings.url) {
-                if (settings.content) {
-                    throw new Error("Both url and content cannot be specified.");
-                } else if (settings.ajax) {
-                    dialog = new AjaxDialog(settings);
-                } else {
-                    dialog = new IFrameDialog(settings);
+            // Loop over the initializers, creating a dialog object.
+            for (var i = 0; i < _typeInitializers.length; i++) {
+                dialog = _typeInitializers[i].call(this, settings);
+                if (dialog) {
+                    break;
                 }
-            } else if (settings.content) {
-
-                var $content = $(settings.content);
-                if ($content.length === 0) {
-                    throw new Error("ModalDialog content not found");
-                }
-
-                settings.content = $content;
-
-                dialog = new ModalDialog(settings);
-
-                if (!settings.destroyOnClose) {
-                    $content.modalDialogInstance(dialog);
-                }
-            } else {
+            }
+            
+            if (!dialog) {
                 throw new Error("No url or content node specified");
             }
 

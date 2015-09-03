@@ -2517,6 +2517,107 @@ When removing the host window content from the DOM, make the veil opaque to hide
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-96">&#182;</a>
               </div>
+              <p>Initializer functions. The order determines the priority for creating dialog types.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> _typeInitializers = [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-97">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-97">&#182;</a>
+              </div>
+              <p>creates ajax or iframe dialog from url</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(settings)</span> </span>{
+            <span class="hljs-keyword">if</span> (settings.url) {
+                <span class="hljs-keyword">if</span> (settings.content) {
+                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Both url and content cannot be specified."</span>);
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (settings.ajax) {
+                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> AjaxDialog(settings);
+                } <span class="hljs-keyword">else</span> {
+                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> IFrameDialog(settings);
+                }
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-98">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-98">&#182;</a>
+              </div>
+              <p>creates node dialog</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(settings)</span> </span>{
+            <span class="hljs-keyword">if</span> (settings.content) {
+                <span class="hljs-keyword">var</span> $content = $(settings.content);
+                <span class="hljs-keyword">if</span> ($content.length === <span class="hljs-number">0</span>) {
+                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"ModalDialog content not found"</span>);
+                }
+    
+                settings.content = $content;
+    
+                <span class="hljs-keyword">var</span> dialog = <span class="hljs-keyword">new</span> ModalDialog(settings);
+    
+                <span class="hljs-keyword">if</span> (!settings.destroyOnClose) {
+                    $content.modalDialogInstance(dialog);
+                }
+    
+                <span class="hljs-keyword">return</span> dialog;
+            }
+    
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+        }
+    ];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-99">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-99">&#182;</a>
+              </div>
+              <p>Allows for extending the ModalDialog prototype for other types of dialogs
+{function} f. A callback accepting the ModalDialog class to allow for extensibility. The function should return a type initializer function.
+{bool} addToBeginning. A flag determining whether the initializer function should go at the beginning or end of the the type initializers array.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.modalDialog.registerPlugin = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(f, addToBeginning)</span> </span>{
+       <span class="hljs-keyword">var</span> initializer = f.call(<span class="hljs-keyword">this</span>, ModalDialog);
+       <span class="hljs-keyword">if</span>(addToBeginning) {
+           _typeInitializers.unshift(initializer);
+       }
+       <span class="hljs-keyword">else</span> {
+           _typeInitializers.push(initializer);
+       }
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-100">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-100">&#182;</a>
+              </div>
               <p>Creates a new dialog from the specified settings.</p>
 
             </div>
@@ -2529,11 +2630,11 @@ When removing the host window content from the DOM, make the veil opaque to hide
         </li>
         
         
-        <li id="section-97">
+        <li id="section-101">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-97">&#182;</a>
+                <a class="pilcrow" href="#section-101">&#182;</a>
               </div>
               <p>Validate that there isn’t an existing dialog open using the same content</p>
 
@@ -2550,30 +2651,29 @@ When removing the host window content from the DOM, make the veil opaque to hide
             }
         }
 
-        <span class="hljs-keyword">if</span> (!dialog) {
-            <span class="hljs-keyword">if</span> (settings.url) {
-                <span class="hljs-keyword">if</span> (settings.content) {
-                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Both url and content cannot be specified."</span>);
-                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (settings.ajax) {
-                    dialog = <span class="hljs-keyword">new</span> AjaxDialog(settings);
-                } <span class="hljs-keyword">else</span> {
-                    dialog = <span class="hljs-keyword">new</span> IFrameDialog(settings);
+        <span class="hljs-keyword">if</span> (!dialog) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-102">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-102">&#182;</a>
+              </div>
+              <p>Loop over the initializers, creating a dialog object.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; _typeInitializers.length; i++) {
+                dialog = _typeInitializers[i].call(<span class="hljs-keyword">this</span>, settings);
+                <span class="hljs-keyword">if</span> (dialog) {
+                    <span class="hljs-keyword">break</span>;
                 }
-            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (settings.content) {
-
-                <span class="hljs-keyword">var</span> $content = $(settings.content);
-                <span class="hljs-keyword">if</span> ($content.length === <span class="hljs-number">0</span>) {
-                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"ModalDialog content not found"</span>);
-                }
-
-                settings.content = $content;
-
-                dialog = <span class="hljs-keyword">new</span> ModalDialog(settings);
-
-                <span class="hljs-keyword">if</span> (!settings.destroyOnClose) {
-                    $content.modalDialogInstance(dialog);
-                }
-            } <span class="hljs-keyword">else</span> {
+            }
+            
+            <span class="hljs-keyword">if</span> (!dialog) {
                 <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"No url or content node specified"</span>);
             }
 
@@ -2586,11 +2686,11 @@ When removing the host window content from the DOM, make the veil opaque to hide
         </li>
         
         
-        <li id="section-98">
+        <li id="section-103">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-98">&#182;</a>
+                <a class="pilcrow" href="#section-103">&#182;</a>
               </div>
               <p>Gets the currently active dialog (topmost visually).</p>
 
@@ -2603,11 +2703,11 @@ When removing the host window content from the DOM, make the veil opaque to hide
         </li>
         
         
-        <li id="section-99">
+        <li id="section-104">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-99">&#182;</a>
+                <a class="pilcrow" href="#section-104">&#182;</a>
               </div>
               <p>Gets an existing dialog if it’s settings match the specified setting’s content node or URL</p>
 
@@ -2618,11 +2718,11 @@ When removing the host window content from the DOM, make the veil opaque to hide
         </li>
         
         
-        <li id="section-100">
+        <li id="section-105">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-100">&#182;</a>
+                <a class="pilcrow" href="#section-105">&#182;</a>
               </div>
               <p>Supresses warnings about using !! to coerce a falsy value to boolean</p>
 
@@ -2636,11 +2736,11 @@ When removing the host window content from the DOM, make the veil opaque to hide
         </li>
         
         
-        <li id="section-101">
+        <li id="section-106">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-101">&#182;</a>
+                <a class="pilcrow" href="#section-106">&#182;</a>
               </div>
               <p>Match a node dialog</p>
 
@@ -2656,11 +2756,11 @@ When removing the host window content from the DOM, make the veil opaque to hide
         </li>
         
         
-        <li id="section-102">
+        <li id="section-107">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-102">&#182;</a>
+                <a class="pilcrow" href="#section-107">&#182;</a>
               </div>
               <p>match an iframe or ajax dialog</p>
 
@@ -2688,11 +2788,11 @@ When removing the host window content from the DOM, make the veil opaque to hide
         </li>
         
         
-        <li id="section-103">
+        <li id="section-108">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-103">&#182;</a>
+                <a class="pilcrow" href="#section-108">&#182;</a>
               </div>
               <p>Global events (not associated with an instance)</p>
 
@@ -2712,11 +2812,11 @@ When removing the host window content from the DOM, make the veil opaque to hide
         </li>
         
         
-        <li id="section-104">
+        <li id="section-109">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-104">&#182;</a>
+                <a class="pilcrow" href="#section-109">&#182;</a>
               </div>
               <p>Idiomatic jQuery interface for node dialogs.</p>
 
@@ -2728,11 +2828,11 @@ When removing the host window content from the DOM, make the veil opaque to hide
         </li>
         
         
-        <li id="section-105">
+        <li id="section-110">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-105">&#182;</a>
+                <a class="pilcrow" href="#section-110">&#182;</a>
               </div>
               <p>If the first argument is a string, it is a method name to call on the dialog
 associated with the DOM element.</p>
@@ -2750,11 +2850,11 @@ associated with the DOM element.</p>
         </li>
         
         
-        <li id="section-106">
+        <li id="section-111">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-106">&#182;</a>
+                <a class="pilcrow" href="#section-111">&#182;</a>
               </div>
               <p>Otherwise, create a new dialog.</p>
 
@@ -2775,11 +2875,11 @@ associated with the DOM element.</p>
         </li>
         
         
-        <li id="section-107">
+        <li id="section-112">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-107">&#182;</a>
+                <a class="pilcrow" href="#section-112">&#182;</a>
               </div>
               <p>A map of actions that can be passed as the “dialogCmd” argument in posted messages from IFrameDialog dialog proxies.</p>
 
@@ -2795,11 +2895,11 @@ associated with the DOM element.</p>
         </li>
         
         
-        <li id="section-108">
+        <li id="section-113">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-108">&#182;</a>
+                <a class="pilcrow" href="#section-113">&#182;</a>
               </div>
               <p>If settings.title is specified explicitly, it should win over
 an iframe dialog’s HTML title</p>
@@ -2825,11 +2925,11 @@ an iframe dialog’s HTML title</p>
         </li>
         
         
-        <li id="section-109">
+        <li id="section-114">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-109">&#182;</a>
+                <a class="pilcrow" href="#section-114">&#182;</a>
               </div>
               <p>do nothing- the dialog was created already</p>
 
@@ -2856,11 +2956,11 @@ an iframe dialog’s HTML title</p>
         </li>
         
         
-        <li id="section-110">
+        <li id="section-115">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-110">&#182;</a>
+                <a class="pilcrow" href="#section-115">&#182;</a>
               </div>
               <p>ignore- it wasn’t a message for the dialog framework</p>
 
@@ -2871,11 +2971,11 @@ an iframe dialog’s HTML title</p>
         </li>
         
         
-        <li id="section-111">
+        <li id="section-116">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-111">&#182;</a>
+                <a class="pilcrow" href="#section-116">&#182;</a>
               </div>
               <p>messages in the dialog framework contain “dialogCmd”</p>
 
@@ -2891,11 +2991,11 @@ an iframe dialog’s HTML title</p>
         </li>
         
         
-        <li id="section-112">
+        <li id="section-117">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-112">&#182;</a>
+                <a class="pilcrow" href="#section-117">&#182;</a>
               </div>
               <p>If a fullId is passed, it can be either for a new dialog or an existing dialog.
 $.modalDialog.create() handles both cases.</p>
@@ -2919,11 +3019,11 @@ $.modalDialog.create() handles both cases.</p>
         </li>
         
         
-        <li id="section-113">
+        <li id="section-118">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-113">&#182;</a>
+                <a class="pilcrow" href="#section-118">&#182;</a>
               </div>
               <p>Note: It is a bit odd that even though we have the jquery.postMessage() plugin,
 we’re still checking its availability and calling the native implementation here.
@@ -2942,11 +3042,11 @@ and it may not be desirable to load it at all.</p>
         </li>
         
         
-        <li id="section-114">
+        <li id="section-119">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-114">&#182;</a>
+                <a class="pilcrow" href="#section-119">&#182;</a>
               </div>
               <p>Global hook to simplify non-cross domain communication</p>
 
@@ -2967,11 +3067,11 @@ and it may not be desirable to load it at all.</p>
         </li>
         
         
-        <li id="section-115">
+        <li id="section-120">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-115">&#182;</a>
+                <a class="pilcrow" href="#section-120">&#182;</a>
               </div>
               <p>jQuery mobile support</p>
 
@@ -2985,11 +3085,11 @@ and it may not be desirable to load it at all.</p>
         </li>
         
         
-        <li id="section-116">
+        <li id="section-121">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-116">&#182;</a>
+                <a class="pilcrow" href="#section-121">&#182;</a>
               </div>
               <p>Alternate defaults when jQuery mobile is loaded. Work around JQM’s quirks.</p>
 
@@ -3001,11 +3101,11 @@ and it may not be desirable to load it at all.</p>
         </li>
         
         
-        <li id="section-117">
+        <li id="section-122">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-117">&#182;</a>
+                <a class="pilcrow" href="#section-122">&#182;</a>
               </div>
               <p>JQM widgets must be in the active data-role=”page” element to work
 containerElement: “.ui-page.ui-page-active”,</p>
@@ -3015,11 +3115,11 @@ containerElement: “.ui-page.ui-page-active”,</p>
         </li>
         
         
-        <li id="section-118">
+        <li id="section-123">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-118">&#182;</a>
+                <a class="pilcrow" href="#section-123">&#182;</a>
               </div>
               <p>Event bubbling breaks many JQM widgets</p>
 
