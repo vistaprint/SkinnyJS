@@ -237,9 +237,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(window, $)</span> </span>{
-    <span class="hljs-keyword">var</span> _currentScripts;
-
-    $.fn.partialLoad = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(url, target, data, callback)</span> </span>{</pre></div></div>
+    <span class="hljs-keyword">var</span> _currentScripts;</pre></div></div>
             
         </li>
         
@@ -249,6 +247,80 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Load the given html with no scripts
+Scripts passed back through uniqueScripts parameter</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $.fn.partialLoadHtml = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(html, uniqueScripts, target)</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>This function is run on every script, it defines how we handle duplicates and inline scripts</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> scriptFunction = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(i, script)</span></span>{
+            <span class="hljs-keyword">if</span> (script.src) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Add scripts that haven’t yet been loaded</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span>(isScriptUnique(script.src)){
+                    uniqueScripts.push(script);
+                }
+            } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Add inline scripts. No way to de-dupe these.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                uniqueScripts.push(script);
+            }
+        };
+        <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, el)</span> </span>{
+            loadHtml(i, el, html, target, scriptFunction);
+        });
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+    };
+    
+    $.fn.partialLoad = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(url, target, data, callback)</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>Default to a GET request</p>
 
@@ -260,11 +332,11 @@
         </li>
         
         
-        <li id="section-3">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>Overload simulation
 if target is a function, assume its a callback</p>
@@ -279,11 +351,11 @@ if target is a function, assume its a callback</p>
         </li>
         
         
-        <li id="section-4">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>If the third param is a function, assume that it’s the callback</p>
 
@@ -297,11 +369,11 @@ if target is a function, assume its a callback</p>
         </li>
         
         
-        <li id="section-5">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>Otherwise, its data to POST</p>
 
@@ -318,11 +390,11 @@ if target is a function, assume its a callback</p>
         </li>
         
         
-        <li id="section-6">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>This section derived from the internals of jQuery.fn.load()</p>
 
@@ -331,11 +403,11 @@ if target is a function, assume its a callback</p>
         </li>
         
         
-        <li id="section-7">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p>Request the remote document</p>
 
@@ -351,91 +423,17 @@ if target is a function, assume its a callback</p>
         </li>
         
         
-        <li id="section-8">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
-              </div>
-              <p>Save response for use in complete callback</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            response = <span class="hljs-built_in">arguments</span>;
-
-            self.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, el)</span> </span>{
-                <span class="hljs-keyword">var</span> $el = $(el);
-                <span class="hljs-keyword">var</span> scripts = [];
-                <span class="hljs-keyword">var</span> fragment = getFragmentAndScripts(responseText, target, $el, scripts);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-9">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
-              </div>
-              <p>This call might cause exceptions, but we still want the callbacks to happen</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">try</span> {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-10">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
-              </div>
-              <p>See if a selector was specified</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                    $el.html(fragment);
-
-                    <span class="hljs-keyword">if</span> (scripts.length) {
-                        $.each(scripts, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, elem)</span> </span>{
-                            <span class="hljs-keyword">if</span> (elem.src) {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-11">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
-              </div>
-              <p>Load scripts that haven’t yet been loaded</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                                execScriptUnique(elem.src);
-                            } <span class="hljs-keyword">else</span> {</pre></div></div>
-            
-        </li>
-        
-        
         <li id="section-12">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
-              <p>Execute inline scripts. No way to de-dupe these.</p>
+              <p>Save response for use in complete callback</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                                $.globalEval((elem.text || elem.textContent || elem.innerHTML || <span class="hljs-string">""</span>).replace(rcleanScript, <span class="hljs-string">"/*$0*/"</span>));
-                            }
-                        });
-                    }
-                } <span class="hljs-keyword">catch</span> (e) {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            response = <span class="hljs-built_in">arguments</span>;</pre></div></div>
             
         </li>
         
@@ -446,22 +444,12 @@ if target is a function, assume its a callback</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
-              <p>suppressing these errors</p>
+              <p>This function is run on every script, it defines how we handle duplicates and inline scripts</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                }
-            });
-
-        }).complete(callback &amp;&amp; <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(jqXHR, status)</span> </span>{
-            self.each(callback, response || [jqXHR.responseText, status, jqXHR]);
-        });
-
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
-    };
-
-    <span class="hljs-keyword">var</span> execScriptUnique = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(src)</span> </span>{
-        <span class="hljs-keyword">var</span> srcLower = src.toLowerCase();</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">var</span> scriptFunction = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(i, script)</span></span>{
+                <span class="hljs-keyword">if</span> (script.src) {</pre></div></div>
             
         </li>
         
@@ -471,6 +459,117 @@ if target is a function, assume its a callback</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Load scripts that haven’t yet been loaded</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">if</span>(isScriptUnique(script.src)){
+                        $.ajax({
+                            type: <span class="hljs-string">"GET"</span>,
+                            global: <span class="hljs-literal">false</span>,
+                            url: script.src,
+                            async: <span class="hljs-literal">false</span>,
+                            dataType: <span class="hljs-string">"script"</span>
+                        });
+                    }
+                } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Execute inline scripts. No way to de-dupe these.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    $.globalEval((script.text || script.textContent || script.innerHTML || <span class="hljs-string">""</span>).replace(rcleanScript, <span class="hljs-string">"/*$0*/"</span>));
+                }
+            };
+
+            self.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, el)</span> </span>{
+                loadHtml(i, el, responseText, target, scriptFunction);
+            });
+
+        }).complete(callback &amp;&amp; <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(jqXHR, status)</span> </span>{
+            self.each(callback, response || [jqXHR.responseText, status, jqXHR]);
+        });
+
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+    };
+    
+    <span class="hljs-keyword">var</span> loadHtml = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(i, el, responseText, target, scriptFunction)</span></span>{
+        <span class="hljs-keyword">var</span> $el = $(el);
+        <span class="hljs-keyword">var</span> scripts = [];
+        <span class="hljs-keyword">var</span> fragment = getFragmentAndScripts(responseText, target, $el, scripts);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>This call might cause exceptions, but we still want the callbacks to happen</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">try</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>See if a selector was specified</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            $el.html(fragment);
+
+            <span class="hljs-keyword">if</span> (scripts.length) {
+                $.each(scripts, scriptFunction);
+            }
+        } <span class="hljs-keyword">catch</span> (e) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>suppressing these errors</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        }
+    };
+
+    <span class="hljs-keyword">var</span> isScriptUnique = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(src)</span> </span>{
+        <span class="hljs-keyword">var</span> srcLower = src.toLowerCase();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>Build a ‘set’ of already loaded scripts so we can ensure
 that they don’t get loaded more than once.</p>
@@ -491,29 +590,23 @@ that they don’t get loaded more than once.</p>
         </li>
         
         
-        <li id="section-15">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>This script is already loaded. Don’t load it again.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (_currentScripts[srcLower]) {
-            <span class="hljs-keyword">return</span>;
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
         }
 
         _currentScripts[srcLower] = <span class="hljs-literal">true</span>;
 
-        $.ajax({
-            type: <span class="hljs-string">"GET"</span>,
-            global: <span class="hljs-literal">false</span>,
-            url: src,
-            async: <span class="hljs-literal">false</span>,
-            dataType: <span class="hljs-string">"script"</span>
-        });
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
     };
 
     <span class="hljs-keyword">var</span> _currentStylesheets;
@@ -524,11 +617,11 @@ that they don’t get loaded more than once.</p>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>Build a ‘set’ of already loaded scripts so we can ensure
 that they don’t get loaded more than once.</p>
@@ -549,11 +642,11 @@ that they don’t get loaded more than once.</p>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>This stylesheet is already loaded. Don’t load it again.</p>
 
@@ -580,11 +673,11 @@ that they don’t get loaded more than once.</p>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>A selector was specified. Load only the fragment.
 This will cause scripts in the fragment to be executed by jQuery.fn.html().</p>
@@ -604,11 +697,11 @@ This will cause scripts in the fragment to be executed by jQuery.fn.html().</p>
         </li>
         
         
-        <li id="section-19">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>HACK: jQuery 1.9 changed the signature of $.buildFragment() to expect a raw DOM document object,
 whereas previous versions expected a jQuery object, and would look up its ownerDocument.</p>
@@ -622,11 +715,11 @@ whereas previous versions expected a jQuery object, and would look up its ownerD
         </li>
         
         
-        <li id="section-20">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>No selector was specified. Load all scripts on the page, as long as they haven’t been loaded before.</p>
 
@@ -648,11 +741,11 @@ whereas previous versions expected a jQuery object, and would look up its ownerD
         </li>
         
         
-        <li id="section-21">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Remove meta, link
 Preserve title: These don’t hurt anything, and the modal dialog framework uses them
@@ -677,11 +770,11 @@ to get the title of the dialog.</p>
         </li>
         
         
-        <li id="section-22">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>Only remove stylesheets that have already been added</p>
 
