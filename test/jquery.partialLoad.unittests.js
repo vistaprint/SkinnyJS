@@ -106,3 +106,69 @@
              });
      });
  });
+ 
+ describe("jquery.partialLoadHtml()", function () {
+     this.timeout(6000);
+
+     var assert = chai.assert;
+
+     $("<div id=\"contentContainer\">").appendTo("body");
+
+     function cleanup() {
+         $("#contentContainer").empty();
+     }
+
+     beforeEach(cleanup);
+     afterEach(cleanup);
+
+     it("should load content, but not return the scripts if they're not in the target element", function (done) {
+         var scripts = [];
+         var html = "<body><div id=\'interestingContent1\'><span class=\'interestingContentSpan\'></span></div><div id=\'withContentScript1\'><span class=\'withContentScript1Span\'></span><script src=\'contentScript.js\'></script></div></body>";
+         $("#contentContainer").partialLoadHtml(html, scripts, "#interestingContent1");
+         var content = $("#contentContainer").html();
+
+         assert.equal(content, "<div id=\"interestingContent1\"><span class=\"interestingContentSpan\"></span></div>");
+         assert.equal(scripts.length, 0, "scripts returned outside of the target element");
+
+         done();
+     });
+     
+     it("should load content, and return scripts if they're in the target element", function (done) {
+         var scripts = [];
+         var html = "<body><div id=\'interestingContent1\'><span class=\'interestingContentSpan\'></span></div><div id=\'withContentScript1\'><span class=\'withContentScript1Span\'></span><script src=\'contentScript.js\'></script></div></body>";
+         $("#contentContainer").partialLoadHtml(html, scripts, "#withContentScript1");
+         var content = $("#contentContainer").html();
+
+         assert.equal(content, "<div id=\"withContentScript1\"><span class=\"withContentScript1Span\"></span></div>");
+         assert.equal(scripts.length, 1, "incorrect number of scripts returned");
+         assert.equal(scripts[0].src.indexOf("contentScript.js") >= 0, true, "incorrect scripts returned");
+
+         done();
+     });
+     
+     it("should load content, but not return duplicate scripts", function (done) {
+         var html = "<body><div id=\'withContentScript2\'><script src=\'contentScript1.js\'></script><script src=\'contentScript2.js\'></script><script src=\'contentScript2.js\'></script></div></body>";
+         var scripts = [];
+         $("#contentContainer").partialLoadHtml(html, scripts, "#withContentScript2");
+
+         assert.equal(scripts.length, 2, "incorrect number of scripts returned");
+         assert.equal(scripts[0].src.indexOf("contentScript1.js") >= 0, true, "incorrect first script returned");
+         assert.equal(scripts[1].src.indexOf("contentScript2.js") >= 0, true, "incorrect second script returned");
+
+         done();
+     });    
+     
+     it("should load content without a selector", function (done) {
+         var html = "<body><div id=\'withContentScript2\'><script src=\'contentScript3.js\'></script><script src=\'contentScript3.js\'></script><script src=\'contentScript4.js\'></script></div></body>";
+         var scripts = [];
+         $("#contentContainer").partialLoadHtml(html, scripts);
+         var content = $("#contentContainer").html();
+
+         assert.equal(content, "<div id=\"withContentScript2\"></div>");
+         assert.equal(scripts.length, 2, "incorrect number of scripts returned");
+         assert.equal(scripts[0].src.indexOf("contentScript3.js") >= 0, true, "incorrect first script returned");
+         assert.equal(scripts[1].src.indexOf("contentScript4.js") >= 0, true, "incorrect second script returned");
+
+         done();
+     });
+ });

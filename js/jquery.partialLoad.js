@@ -1,6 +1,27 @@
 (function (window, $) {
     var _currentScripts;
 
+    //Load the given html with no scripts
+    //Scripts passed back through uniqueScripts parameter
+    $.fn.partialLoadHtml = function (html, uniqueScripts, target) {
+        //This function is run on every script, it defines how we handle duplicates and inline scripts
+        var scriptFunction = function(i, script){
+            if (script.src) {
+                // Add scripts that haven't yet been loaded
+                if(isScriptUnique(script.src)){
+                    uniqueScripts.push(script);
+                }
+            } else {
+                // Add inline scripts. No way to de-dupe these.
+                uniqueScripts.push(script);
+            }
+        };
+        this.each(function (i, el) {
+            loadHtml(i, el, html, target, scriptFunction);
+        });
+        return this;
+    };
+    
     $.fn.partialLoad = function (url, target, data, callback) {
         // Default to a GET request
         var type = "GET";
@@ -37,31 +58,28 @@
         }).done(function (responseText) {
             // Save response for use in complete callback
             response = arguments;
-
-            self.each(function (i, el) {
-                var $el = $(el);
-                var scripts = [];
-                var fragment = getFragmentAndScripts(responseText, target, $el, scripts);
-
-                // This call might cause exceptions, but we still want the callbacks to happen
-                try {
-                    // See if a selector was specified
-                    $el.html(fragment);
-
-                    if (scripts.length) {
-                        $.each(scripts, function (i, elem) {
-                            if (elem.src) {
-                                // Load scripts that haven't yet been loaded
-                                execScriptUnique(elem.src);
-                            } else {
-                                // Execute inline scripts. No way to de-dupe these.
-                                $.globalEval((elem.text || elem.textContent || elem.innerHTML || "").replace(rcleanScript, "/*$0*/"));
-                            }
+            
+            //This function is run on every script, it defines how we handle duplicates and inline scripts
+            var scriptFunction = function(i, script){
+                if (script.src) {
+                    // Load scripts that haven't yet been loaded
+                    if(isScriptUnique(script.src)){
+                        $.ajax({
+                            type: "GET",
+                            global: false,
+                            url: script.src,
+                            async: false,
+                            dataType: "script"
                         });
                     }
-                } catch (e) {
-                    // suppressing these errors
+                } else {
+                    // Execute inline scripts. No way to de-dupe these.
+                    $.globalEval((script.text || script.textContent || script.innerHTML || "").replace(rcleanScript, "/*$0*/"));
                 }
+            };
+
+            self.each(function (i, el) {
+                loadHtml(i, el, responseText, target, scriptFunction);
             });
 
         }).complete(callback && function (jqXHR, status) {
@@ -70,8 +88,26 @@
 
         return this;
     };
+    
+    var loadHtml = function(i, el, responseText, target, scriptFunction){
+        var $el = $(el);
+        var scripts = [];
+        var fragment = getFragmentAndScripts(responseText, target, $el, scripts);
 
-    var execScriptUnique = function (src) {
+        // This call might cause exceptions, but we still want the callbacks to happen
+        try {
+            // See if a selector was specified
+            $el.html(fragment);
+
+            if (scripts.length) {
+                $.each(scripts, scriptFunction);
+            }
+        } catch (e) {
+            // suppressing these errors
+        }
+    };
+
+    var isScriptUnique = function (src) {
         var srcLower = src.toLowerCase();
 
         // Build a 'set' of already loaded scripts so we can ensure
@@ -89,18 +125,12 @@
 
         // This script is already loaded. Don't load it again.
         if (_currentScripts[srcLower]) {
-            return;
+            return false;
         }
 
         _currentScripts[srcLower] = true;
 
-        $.ajax({
-            type: "GET",
-            global: false,
-            url: src,
-            async: false,
-            dataType: "script"
-        });
+        return true;
     };
 
     var _currentStylesheets;
