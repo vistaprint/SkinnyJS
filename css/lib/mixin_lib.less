@@ -4,7 +4,7 @@
 
 //
 // rounded corners
-// (IE 6-8 will gracefully degrade to square corners)
+// (IE <=8 will gracefully degrade to square corners)
 //
 .rounded(@radius: 4px) 
 {
@@ -69,62 +69,52 @@
 .opacity(@opacity: 0.5) 
 {
   @filteropacity: @opacity * 100;
-  filter: ~"alpha(opacity=@{filteropacity})"; // for IE 6-8
-  -webkit-opacity: @opacity;
-  -moz-opacity:    @opacity;
+  filter: ~"alpha(opacity=@{filteropacity})"; // for IE<=-8
   opacity:         @opacity;
 }
 
 //
 // shadows
-// (IE 6-8 will gracefully degrade to no shadow)
+// (IE <=8 will gracefully degrade to no shadow)
 //
 .drop-shadow(@x-axis: 4px, @y-axis: 4px, @blur: 4px, @alpha: 0.4) 
 { 
   -webkit-box-shadow: @x-axis @y-axis @blur rgba(0, 0, 0, @alpha);
-  -moz-box-shadow:    @x-axis @y-axis @blur rgba(0, 0, 0, @alpha);
   box-shadow:         @x-axis @y-axis @blur rgba(0, 0, 0, @alpha);
 }
 .drop-shadow(@x-axis: 4px, @y-axis: 4px, @blur: 4px, @spread: 1px, @alpha: 0.4) // for shadows that need the spread property
 { 
   -webkit-box-shadow: @x-axis @y-axis @blur @spread rgba(0, 0, 0, @alpha);
-  -moz-box-shadow:    @x-axis @y-axis @blur @spread rgba(0, 0, 0, @alpha);
   box-shadow:         @x-axis @y-axis @blur @spread rgba(0, 0, 0, @alpha);
 }
 .inner-shadow(@x-axis:0, @y-axis:1px, @blur:2px, @alpha: 0.4) 
 {
   -webkit-box-shadow: inset @x-axis @y-axis @blur rgba(0, 0, 0, @alpha);
-  -moz-box-shadow:    inset @x-axis @y-axis @blur rgba(0, 0, 0, @alpha);
   box-shadow:         inset @x-axis @y-axis @blur rgba(0, 0, 0, @alpha);
 }
 .inner-shadow(@x-axis:0, @y-axis:1px, @blur:2px, @spread: 1px, @alpha: 0.4) // for shadows that need the spread property
 {
   -webkit-box-shadow: inset @x-axis @y-axis @blur @spread rgba(0, 0, 0, @alpha);
-  -moz-box-shadow:    inset @x-axis @y-axis @blur @spread rgba(0, 0, 0, @alpha);
   box-shadow:         inset @x-axis @y-axis @blur @spread rgba(0, 0, 0, @alpha);
 }
 .box-shadow(@arguments)  // use .drop-shadow or .inner-shadow (above) instead unless you need this level of precision
 { 
   -webkit-box-shadow: @arguments;
-  -moz-box-shadow:    @arguments;
   box-shadow:         @arguments;
 }
 .box-shadow(@arguments1, @arguments2)  // for specifying two shadows on the same element
 { 
   -webkit-box-shadow: @arguments1, @arguments2;
-  -moz-box-shadow:    @arguments1, @arguments2;
   box-shadow:         @arguments1, @arguments2;
 }
 .box-shadow(@arguments1, @arguments2, @arguments3)  // for specifying three shadows on the same element
 { 
   -webkit-box-shadow: @arguments1, @arguments2, @arguments3;
-  -moz-box-shadow:    @arguments1, @arguments2, @arguments3;
   box-shadow:         @arguments1, @arguments2, @arguments3;
 }
 .drop-shadow-none()
 {
 	-webkit-box-shadow: none;
-	-moz-box-shadow:    none;
 	box-shadow:         none;
 }
 .box-shadow-none()
@@ -134,25 +124,21 @@
 .text-shadow-black(@x-axis: 0px, @y-axis: 1px, @blur: 1px, @alpha: 0.4) 
 { 
   -webkit-text-shadow: @x-axis @y-axis @blur rgba(0, 0, 0, @alpha);
-  -moz-text-shadow:    @x-axis @y-axis @blur rgba(0, 0, 0, @alpha);
   text-shadow:         @x-axis @y-axis @blur rgba(0, 0, 0, @alpha);
 }
 .text-shadow-white(@x-axis: 0px, @y-axis: 1px, @blur: 1px, @alpha: 0.4) 
 { 
   -webkit-text-shadow: @x-axis @y-axis @blur rgba(255, 255, 255, @alpha);
-  -moz-text-shadow:    @x-axis @y-axis @blur rgba(255, 255, 255, @alpha);
   text-shadow:         @x-axis @y-axis @blur rgba(255, 255, 255, @alpha);
 }
 .text-shadow(@x-axis: 0px, @y-axis: 1px, @blur: 1px, @color) // if the shadow is black or white, use .text-shadow-black or .text-shadow-white instead
 {
   -webkit-text-shadow: @x-axis @y-axis @blur @color;
-  -moz-text-shadow:    @x-axis @y-axis @blur @color;
   text-shadow:         @x-axis @y-axis @blur @color;
 }
 .text-shadow-none() 
 {
   -webkit-text-shadow: none;
-  -moz-text-shadow:    none;
   text-shadow:         none;
 }
 
@@ -172,7 +158,7 @@
 //
 // vertical linear gradients
 // (older IE will gracefully degrade to a flat color)
-// @color: fallback flat color (for IE 6 to 9)
+// @color: fallback flat color (for IE <=9)
 // @start: color at the top of the gradient
 // @stop:  color at the bottom of the gradient
 //
@@ -219,7 +205,6 @@
   background-image: e(%("url(%s)", @imageurl)), linear-gradient(to bottom,
                                   @start,
                                   @stop);							   
-  .ie6to8 &,
   .ie9 &
   {
 	background-color: @color; 
@@ -229,7 +214,7 @@
 
 //
 // backgrounds
-// note: this provides NO graceful degradation for IE6-8!
+// note: this provides NO graceful degradation for IE<=8!
 //
 .background-size(@value) 
 {
@@ -275,17 +260,14 @@
 	&:after
 	{
 		clear: both;
-	}
-	
-  // IE 6 and 7 don't support :before and :after, so they get this backfill
-	*zoom: 1;
+	}	
 }
 
 
 //
 // CSS3 transforms and animations
-// note: there is no support or backfill for IE6-8!
-// If you use these mixins, you will need to develop an alternate treatment for IE6-8.
+// note: there is no support or backfill for IE<=8!
+// If you use these mixins, you will need to develop an alternate treatment for IE<=8.
 //
 .transform(@arguments) 
 {
