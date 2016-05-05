@@ -85,7 +85,7 @@
 
         // no arrow found, create one
         if (this.arrow.length === 0) {
-            this.arrow = $('<div class="rich-tooltip-arrow"><div class="hack" /></div>').appendTo(this.content);
+            this.arrow = $('<div class="rich-tooltip-arrow"></div>').appendTo(this.content);
         }
 
         // anything with [data-rel="close"] can be used to close the tooltip
@@ -254,7 +254,7 @@
         }
     };
 
-    // padding constant used during position calculations
+    // padding constant used during position calculations. TODO: compute these dynamically based on the control's actual CSS
     var PADDING = 10;
     var ARROW_WIDTH = 15;
 
@@ -281,13 +281,6 @@
         });
 
         var pos = restrainedPos.pos;
-        var contextRect = this.context.clientRect();
-        var arrowPos = {
-            top: 'auto',
-            right: 'auto',
-            bottom: 'auto',
-            left: 'auto'
-        };
 
         if (restrainedPos.direction !== this.options.pos) {
             this.content
@@ -298,51 +291,13 @@
         // determine the new arrow direction
         var arrowDirection = this.options.arrowDirection || arrowDirections[restrainedPos.direction];
 
-        // position the arrow for top and bottom
-        switch (restrainedPos.direction) {
-        case 'north':
-        case 'south':
-            arrowPos.left = contextRect.left - pos.left + (contextRect.width / 2) - ARROW_WIDTH;
-            arrowPos[restrainedPos.direction === 'north' ? 'bottom' : 'top'] = 0;
-            break;
-
-        case 'east':
-        case 'west':
-            arrowPos.top = contextRect.top - pos.top + contextRect.height - ARROW_WIDTH;
-            arrowPos[restrainedPos.direction === 'east' ? 'left' : 'right'] = 0;
-            break;
-        }
-
-        // if we are changing the default behavior we have to adjust slightly
-        if (this.options.arrowStyle === 'inset') {
-            switch (arrowDirection) {
-            case 'north':
-                arrowPos.top += 1;
-                break;
-
-            case 'east':
-                arrowPos.left -= 1;
-                break;
-
-            case 'south':
-                arrowPos.top -= 1;
-                break;
-
-            case 'west':
-                arrowPos.left += 1;
-                break;
-            }
-        }
-
         this.content.css(pos);
 
         this.arrow
             // remove any previously added tooltip arrow direction class
             .removeClass(directions.join(' '))
             // add the tooltip arrow direction class
-            .addClass(arrowDirection)
-            // assign the new arrow styling
-            .css(arrowPos);
+            .addClass(arrowDirection);
     };
 
     $.fn.tooltip = $.fn.richTooltip = function jQueryTooltip(options) {
