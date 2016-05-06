@@ -18,8 +18,6 @@
 .dialog-background.dialog-veil {
   background-color: black;
   filter: alpha(opacity=25);
-  -webkit-opacity: 0.25;
-  -moz-opacity: 0.25;
   opacity: 0.25;
 }
 .dialog-background.dialog-veil-opaque {
@@ -51,7 +49,6 @@
   box-sizing: border-box;
 }
 .dialog-container .dialog-header {
-  *zoom: 1;
   padding: 3px;
   height: 40px;
 }

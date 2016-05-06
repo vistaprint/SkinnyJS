@@ -92,10 +92,8 @@
 .dialog-skin-primary.dialog-container.dialog-visible,
 .dialog-skin-neutral.dialog-container.dialog-visible {
   -webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4);
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4);
   -webkit-box-shadow: 4px 4px 4px 1px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 4px 4px 4px 1px rgba(0, 0, 0, 0.4);
   box-shadow: 4px 4px 4px 1px rgba(0, 0, 0, 0.4);
 }
 .dialog-skin-neutral.dialog-container .dialog-header {
@@ -112,8 +110,6 @@
 .dialog-skin-lightbox.dialog-background.dialog-veil {
   background-color: black;
   filter: alpha(opacity=60);
-  -webkit-opacity: 0.6;
-  -moz-opacity: 0.6;
   opacity: 0.6;
 }
 .dialog-skin-lightbox.dialog-background.dialog-veil-opaque {

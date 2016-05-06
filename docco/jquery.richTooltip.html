@@ -556,7 +556,7 @@ prevent navigation, preventDefault must happen within click event</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.arrow.length === <span class="hljs-number">0</span>) {
-            <span class="hljs-keyword">this</span>.arrow = $(<span class="hljs-string">'&lt;div class="rich-tooltip-arrow"&gt;&lt;div class="hack" /&gt;&lt;/div&gt;'</span>).appendTo(<span class="hljs-keyword">this</span>.content);
+            <span class="hljs-keyword">this</span>.arrow = $(<span class="hljs-string">'&lt;div class="rich-tooltip-arrow"&gt;&lt;/div&gt;'</span>).appendTo(<span class="hljs-keyword">this</span>.content);
         }</pre></div></div>
             
         </li>
@@ -965,7 +965,7 @@ was not to the tooltip or a child of the tooltip</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
-              <p>padding constant used during position calculations</p>
+              <p>padding constant used during position calculations. TODO: compute these dynamically based on the control’s actual CSS</p>
 
             </div>
             
@@ -1007,13 +1007,6 @@ was not to the tooltip or a child of the tooltip</p>
         });
 
         <span class="hljs-keyword">var</span> pos = restrainedPos.pos;
-        <span class="hljs-keyword">var</span> contextRect = <span class="hljs-keyword">this</span>.context.clientRect();
-        <span class="hljs-keyword">var</span> arrowPos = {
-            top: <span class="hljs-string">'auto'</span>,
-            right: <span class="hljs-string">'auto'</span>,
-            bottom: <span class="hljs-string">'auto'</span>,
-            left: <span class="hljs-string">'auto'</span>
-        };
 
         <span class="hljs-keyword">if</span> (restrainedPos.direction !== <span class="hljs-keyword">this</span>.options.pos) {
             <span class="hljs-keyword">this</span>.content
@@ -1034,7 +1027,11 @@ was not to the tooltip or a child of the tooltip</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> arrowDirection = <span class="hljs-keyword">this</span>.options.arrowDirection || arrowDirections[restrainedPos.direction];</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> arrowDirection = <span class="hljs-keyword">this</span>.options.arrowDirection || arrowDirections[restrainedPos.direction];
+
+        <span class="hljs-keyword">this</span>.content.css(pos);
+
+        <span class="hljs-keyword">this</span>.arrow</pre></div></div>
             
         </li>
         
@@ -1045,23 +1042,11 @@ was not to the tooltip or a child of the tooltip</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
-              <p>position the arrow for top and bottom</p>
+              <p>remove any previously added tooltip arrow direction class</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">switch</span> (restrainedPos.direction) {
-        <span class="hljs-keyword">case</span> <span class="hljs-string">'north'</span>:
-        <span class="hljs-keyword">case</span> <span class="hljs-string">'south'</span>:
-            arrowPos.left = contextRect.left - pos.left + (contextRect.width / <span class="hljs-number">2</span>) - ARROW_WIDTH;
-            arrowPos[restrainedPos.direction === <span class="hljs-string">'north'</span> ? <span class="hljs-string">'bottom'</span> : <span class="hljs-string">'top'</span>] = <span class="hljs-number">0</span>;
-            <span class="hljs-keyword">break</span>;
-
-        <span class="hljs-keyword">case</span> <span class="hljs-string">'east'</span>:
-        <span class="hljs-keyword">case</span> <span class="hljs-string">'west'</span>:
-            arrowPos.top = contextRect.top - pos.top + contextRect.height - ARROW_WIDTH;
-            arrowPos[restrainedPos.direction === <span class="hljs-string">'east'</span> ? <span class="hljs-string">'left'</span> : <span class="hljs-string">'right'</span>] = <span class="hljs-number">0</span>;
-            <span class="hljs-keyword">break</span>;
-        }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            .removeClass(directions.join(<span class="hljs-string">' '</span>))</pre></div></div>
             
         </li>
         
@@ -1072,78 +1057,11 @@ was not to the tooltip or a child of the tooltip</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
-              <p>if we are changing the default behavior we have to adjust slightly</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.arrowStyle === <span class="hljs-string">'inset'</span>) {
-            <span class="hljs-keyword">switch</span> (arrowDirection) {
-            <span class="hljs-keyword">case</span> <span class="hljs-string">'north'</span>:
-                arrowPos.top += <span class="hljs-number">1</span>;
-                <span class="hljs-keyword">break</span>;
-
-            <span class="hljs-keyword">case</span> <span class="hljs-string">'east'</span>:
-                arrowPos.left -= <span class="hljs-number">1</span>;
-                <span class="hljs-keyword">break</span>;
-
-            <span class="hljs-keyword">case</span> <span class="hljs-string">'south'</span>:
-                arrowPos.top -= <span class="hljs-number">1</span>;
-                <span class="hljs-keyword">break</span>;
-
-            <span class="hljs-keyword">case</span> <span class="hljs-string">'west'</span>:
-                arrowPos.left += <span class="hljs-number">1</span>;
-                <span class="hljs-keyword">break</span>;
-            }
-        }
-
-        <span class="hljs-keyword">this</span>.content.css(pos);
-
-        <span class="hljs-keyword">this</span>.arrow</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-45">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-45">&#182;</a>
-              </div>
-              <p>remove any previously added tooltip arrow direction class</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            .removeClass(directions.join(<span class="hljs-string">' '</span>))</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-46">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-46">&#182;</a>
-              </div>
               <p>add the tooltip arrow direction class</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            .addClass(arrowDirection)</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-47">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-47">&#182;</a>
-              </div>
-              <p>assign the new arrow styling</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            .css(arrowPos);
+            <div class="content"><div class='highlight'><pre>            .addClass(arrowDirection);
     };
 
     $.fn.tooltip = $.fn.richTooltip = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">jQueryTooltip</span><span class="hljs-params">(options)</span> </span>{
@@ -1158,11 +1076,11 @@ was not to the tooltip or a child of the tooltip</p>
         </li>
         
         
-        <li id="section-48">
+        <li id="section-45">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-48">&#182;</a>
+                <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
               <p>allow this to be used to run methods on the tooltips</p>
 
@@ -1190,11 +1108,11 @@ was not to the tooltip or a child of the tooltip</p>
         </li>
         
         
-        <li id="section-49">
+        <li id="section-46">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-49">&#182;</a>
+                <a class="pilcrow" href="#section-46">&#182;</a>
               </div>
               <p>initialize all existing tooltips</p>
 
@@ -1205,11 +1123,11 @@ was not to the tooltip or a child of the tooltip</p>
         </li>
         
         
-        <li id="section-50">
+        <li id="section-47">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-50">&#182;</a>
+                <a class="pilcrow" href="#section-47">&#182;</a>
               </div>
               <p>translate data attributes to options</p>
 
@@ -1237,11 +1155,11 @@ was not to the tooltip or a child of the tooltip</p>
         </li>
         
         
-        <li id="section-51">
+        <li id="section-48">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-51">&#182;</a>
+                <a class="pilcrow" href="#section-48">&#182;</a>
               </div>
               <p>convert <span data-rel="tooltip" /><aside /> to tooltips</p>
 
@@ -1257,11 +1175,11 @@ was not to the tooltip or a child of the tooltip</p>
         </li>
         
         
-        <li id="section-52">
+        <li id="section-49">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-52">&#182;</a>
+                <a class="pilcrow" href="#section-49">&#182;</a>
               </div>
               <p>allow instances without the <aside> directly after the context</p>
 
