@@ -39,7 +39,14 @@
         sText = sText.replace(/\+/gi, "%20").replace(/\%2B/gi, "+");
 
         // now urldecode
-        return decodeURIComponent(sText);
+        try {
+            return decodeURIComponent(sText);
+        } catch (ex) {
+            // If URI decoding fails, it is probably because another library wrote to a cookie value
+            // without URI encoding. Certain types of values can fail (i.e. "%u", which is a malformed unicode escape sequence)
+            return sText;
+        }
+        
     };
 
     var _defaultPermanentDate = function () {
