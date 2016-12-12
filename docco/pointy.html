@@ -250,7 +250,7 @@
 
     <span class="hljs-keyword">var</span> support = {
         touch: <span class="hljs-string">"ontouchend"</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">document</span>,
-        pointer: !! (navigator.pointerEnabled || navigator.msPointerEnabled)
+        pointer: !! (navigator.pointerEnabled || navigator.msPointerEnabled || <span class="hljs-built_in">window</span>.PointerEvent)
     };
 
     $.extend($.support, support);
