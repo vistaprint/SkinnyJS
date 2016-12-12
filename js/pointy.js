@@ -12,7 +12,7 @@
 
     var support = {
         touch: "ontouchend" in document,
-        pointer: !! (navigator.pointerEnabled || navigator.msPointerEnabled)
+        pointer: !! (navigator.pointerEnabled || navigator.msPointerEnabled || window.PointerEvent)
     };
 
     $.extend($.support, support);
