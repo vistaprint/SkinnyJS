@@ -74,11 +74,11 @@ describe("jquery.modalDialog", function () {
     });
 
     var describeForDialogType = function (dialogType, dialogSettings) {
-        describe(dialogType, function () {
+            describe(dialogType, function () {
             it("should fire lifecycle events in the correct order", function (done) {
                 var dialog = $.modalDialog.create(dialogSettings);
                 var phase = 0;
-
+                
                 dialog.onbeforeopen.add(function () {
                     assert.equal(this, dialog, "Current dialog refs match: beforeopen");
                     assert.equal(phase, 0, "beforeopen");
@@ -92,7 +92,7 @@ describe("jquery.modalDialog", function () {
                 };
 
                 $.modalDialog.onbeforeopen.add(beforeOpenHandler);
-
+                
                 dialog.onopen.add(function () {
                     assert.equal(this, dialog, "Current dialog refs match: open");
                     assert.equal(phase, 2, "open");
@@ -106,7 +106,7 @@ describe("jquery.modalDialog", function () {
                 };
 
                 $.modalDialog.onopen.add(openHandler);
-
+                
                 dialog.onbeforeclose.add(function () {
                     assert.equal(this, dialog, "Current dialog refs match: beforeclose");
                     assert.equal(phase, 4, "beforeclose");
@@ -118,9 +118,9 @@ describe("jquery.modalDialog", function () {
                     assert.equal(phase, 5, "global beforeclose");
                     phase++;
                 };
-
+                
                 $.modalDialog.onbeforeclose.add(beforeCloseHandler);
-
+                
                 dialog.onclose.add(function () {
                     assert.equal(this, dialog, "Current dialog refs match: close");
                     assert.equal(phase, 6, "close");
@@ -134,7 +134,7 @@ describe("jquery.modalDialog", function () {
                 };
 
                 $.modalDialog.onclose.add(closeHandler);
-
+                
                 dialog
                     .open()
                     .then(function () {
@@ -153,6 +153,7 @@ describe("jquery.modalDialog", function () {
                     });
             });
 
+            
             var ensureDialogCancellable = function (delay) {
                 it("should close when cancel() method is called after " + delay + " ms", function (done) {
                     var dialog = $.modalDialog.create(dialogSettings);
@@ -169,9 +170,9 @@ describe("jquery.modalDialog", function () {
                     }, delay);
                 });
             };
-
+            
             ensureDialogCancellable(0);
-            ensureDialogCancellable(10);
+            ensureDialogCancellable(10);            
             ensureDialogCancellable(50);
             ensureDialogCancellable(300); // After close event finished
         });

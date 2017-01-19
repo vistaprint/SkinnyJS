@@ -344,7 +344,6 @@
         if (this._orientationchange) {
             $(window).off("orientationchange resize", this._orientationchange);
         }
-
         return deferred.promise();
     };
 
