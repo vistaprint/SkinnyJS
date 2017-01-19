@@ -210,6 +210,22 @@
             .join(" ");
     };
 
+    //Chrome 42+ (and possibly earlier?) sometimes scrolls the window to the top when the dialog is shown
+    //  - possibly scrolling the dialog out of view. This occurs every other opening and may be due
+    //  to some third-party javascript, but this fix appears to keep the browser from scrolling.  The
+    //  situation does not occur if History.pushState is not used.
+    var pushStateScrollFix = function () {
+        var $window = $(window);
+        if ($window.scrollTop() === 0) {    //Ignore the event if it's not scrolled to the very top of the window - it's likely a user-initiated scroll.
+            var state = History.getState(true, false);
+            // If we don't know where to scroll back to, or the original scrollTop was 0, then noop.
+            if (state && state.data && state.data.scrollTop) {
+                $(window).scrollTop(state.data.scrollTop);
+                return false;
+            }
+        }
+    };
+
     // Handler for dialogs opening
     var openHandler = function () {
         // Hook to ensure the history handler doesn't run infinitely
@@ -244,12 +260,19 @@
         // and the dialog is already open, so it shouldn't do any more work.
         _stateAlreadyProcessed = true;
 
+        var $window = $(window);
+
         // Update the URL
-        History.pushState(null, document.title, url);
+        History.pushState({scrollTop: $window.scrollTop()}, document.title, url);
 
         // Mark the page as not in its initial state so the close handler will know if
         // it should add a history entry when closing dialogs
         _pageIsAtInitialState = false;
+
+        // If the window scrolls while the dialog is open, ignore it.  But only ignore it the first time after pushState.
+        //  This may be confusing to the user when the first attempt to scroll doesn't work, but there's no good way to differentiate
+        //  between a user-initiated scroll and when the browser causes it due to the pushState.
+        $window.one("scroll", pushStateScrollFix);
     };
 
     // Handler which fires when dialogs are closed
@@ -299,6 +322,9 @@
 
             History.back();
         }
+
+        // If a scroll event was not fired while the dialog was open, then remove the listener now.
+        $(window).off("scroll", pushStateScrollFix);
 
         _pageIsAtInitialState = false;
     };
