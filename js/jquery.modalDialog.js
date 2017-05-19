@@ -27,6 +27,7 @@
         preventEventBubbling: false, // If true, click and touch events are prevented from bubbling up to the document
         enableHistory: true, // If the history module is enabled, this can be used to disable history if set false
         closeOnBackgroundClick: true, // If true, a click on the background veil will close the dialog
+        closeOnEscape: true,// If true, hitting the escape key will close the dialog
         onopen: null,
         onclose: null,
         onbeforeopen: null,
@@ -251,7 +252,7 @@
 
     // If a user hits the ESC key, close the dialog or cancel it's opening.
     ModalDialog.prototype._keydownHandler = function (e) {
-        if (e.keyCode == 27) {
+        if (e.keyCode == 27 && this.settings.closeOnEscape) {
             if ($.modalDialog.getCurrent() === this) {
                 this.cancel();
             }
