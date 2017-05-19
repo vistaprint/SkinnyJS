@@ -68,6 +68,7 @@
         "skin": parseNone,
         "enableHistory": parseBool,
         "closeOnBackgroundClick": parseBool,
+        "closeOnEscape": parseBool,
         "zIndex": parseInt
     };
 
