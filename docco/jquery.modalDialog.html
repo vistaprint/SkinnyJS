@@ -301,6 +301,7 @@
         preventEventBubbling: <span class="hljs-literal">false</span>, <span class="hljs-comment">// If true, click and touch events are prevented from bubbling up to the document</span>
         enableHistory: <span class="hljs-literal">true</span>, <span class="hljs-comment">// If the history module is enabled, this can be used to disable history if set false</span>
         closeOnBackgroundClick: <span class="hljs-literal">true</span>, <span class="hljs-comment">// If true, a click on the background veil will close the dialog</span>
+        closeOnEscape: <span class="hljs-literal">true</span>,<span class="hljs-comment">// If true, hitting the escape key will close the dialog</span>
         onopen: <span class="hljs-literal">null</span>,
         onclose: <span class="hljs-literal">null</span>,
         onbeforeopen: <span class="hljs-literal">null</span>,
@@ -769,7 +770,7 @@ and then do the callback on the next event loop tick.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    ModalDialog.prototype._keydownHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
-        <span class="hljs-keyword">if</span> (e.keyCode == <span class="hljs-number">27</span>) {
+        <span class="hljs-keyword">if</span> (e.keyCode == <span class="hljs-number">27</span> &amp;&amp; <span class="hljs-keyword">this</span>.settings.closeOnEscape) {
             <span class="hljs-keyword">if</span> ($.modalDialog.getCurrent() === <span class="hljs-keyword">this</span>) {
                 <span class="hljs-keyword">this</span>.cancel();
             }

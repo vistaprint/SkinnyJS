@@ -127,6 +127,7 @@
         "skin": parseNone,
         "enableHistory": parseBool,
         "closeOnBackgroundClick": parseBool,
+        "closeOnEscape": parseBool,
         "zIndex": parseInt
     };
 
@@ -773,6 +774,7 @@ Uses declarative syntax to define a dialog. Syntax:
     data-dialog-ajax="{true or false}"
     data-dialog-destroyonclose="{true or false}"
     data-dialog-closeonbackgroundclick="{true or false}"
+    data-dialog-closeonescape="{true or false}"
     data-dialog-zIndex="{default zIndex}"
     >link</a>
 
