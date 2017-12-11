@@ -6,10 +6,10 @@
  * http://nodejs.org/download/
 
 * Install grunt
- * You can install grunt by using npm, run the following command: 
+ * You can install grunt by using npm. Run the following command: 
  * ```npm install -g grunt-cli```
 
-* From the repo's working directory, install NPM packages
+* From the repo's working directory, install NPM packages:
  * ```npm install```
 
 * Before committing, run grunt (default task)
@@ -21,7 +21,6 @@
 skinny.js has a hard dependency on pointy.js, and keeps a local copy of pointy.js just as if it was a regular skinny.js module. 
 
 To update pointy.js:
-
 * Run ```grunt update
 * Then commit any changes to pointy.js or pointy.gestures.js
 
