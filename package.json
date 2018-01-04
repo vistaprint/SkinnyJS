@@ -22,7 +22,7 @@
     "grunt-jsbeautifier": "~0.2.7",
     "grunt-lineending": "~0.2.2",
     "grunt-mkdir": "~0.1.2",
-    "grunt-js-test": "~1.4.8",
+    "grunt-js-test": "~1.5.12",
     "grunt-string-replace": "~0.2.7",
     "grunt-strip-code": "~0.1.2",
     "grunt-wget": "~0.1.2",
@@ -58,6 +58,9 @@
     },
     {
       "name": "Ilya Volodin"
+    },
+    {
+      "name": "Jeff Yaus"
     }
   ],
   "license": "Apache 2"
