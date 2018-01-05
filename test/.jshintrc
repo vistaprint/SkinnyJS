@@ -18,7 +18,6 @@
     "undef": true,
     "strict": false,
     "quotmark": true,
-    "undef": true,
     "unused": true,
     "globals":
     {
