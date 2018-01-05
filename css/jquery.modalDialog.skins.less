@@ -108,7 +108,9 @@
     {
         &.dialog-veil
         {
-            background-color: rgba(0, 0, 0, .6); // gracefully degrades to transparent for IE7-8
+            //rgba can be used if support for IE8 and earlier is not needed
+            background-color: black;
+            .opacity(.6);
         }
 
         // used on small mobile

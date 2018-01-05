@@ -1,5 +1,4 @@
 @import url(lib/mixin_lib.less);
-@import url(css-arrows.less);
 
 [data-rel="tooltip"] + aside,
 .rich-tooltip-content
@@ -20,7 +19,7 @@
 	padding: 6px;
 
 	// box shadow
-	.drop-shadow(0, 2px, 2px, 2px, 0.4);
+	.drop-shadow(0, 2px, 4px, 0, 0.4);
 
 	// javascript applies:
 	// top
@@ -36,10 +35,72 @@
 
 	.rich-tooltip-arrow
 	{
-		@size: 15px;
-		@border-width: 1px;
+        // container that holds the arrowhead, and clips it via overflow:hidden
+        position: absolute;
+        overflow: hidden;
+        width: 39px;
+        height: 14px;
+        
+        &.north
+        {
+            top: -13px;
+            left: 50%;
+            .transform(translateX(-50%)); 
+        }
+        &.south
+        {
+            left: 50%;
+            bottom: -13px;
+            .transform(translateX(-50%) rotate(180deg)); 
+        }
+        &.west
+        {
+            top: 50%;
+            left: -26px;
+            .transform(translateY(-50%) rotate(-90deg));
+            border-bottom: 1px solid @white;
+        }
+        &.east
+        {
+            top: 50%;
+            right: -26px;
+            .transform(translateY(-50%) rotate(90deg));
+            border-top: 1px solid @white;
+        }
 
-		.css-arrow(@size, @border-width, @silver, @white);
+        // the arrowhead itself. Naturally a diamond shape, it is turned into a triangle when clipped by its parent
+        &:before 
+        {
+            display: block;
+            content: " ";
+            position: absolute;
+            top: 3px;
+            left: 10px;
+            .transform(rotate(-45deg) skew(15deg, 15deg));  
+            width: 20px;
+            height: 20px;
+            background: @white;
+            pointer-events: none;
+        }
+        // getting the arrowhead's drop shadows to blend decently involved a lot of just eyeballing the numbers
+        &.north:before 
+        {
+            .drop-shadow(1px, -1px, 2px, 0, 0.4);
+        }
+        &.south:before 
+        {
+            .drop-shadow(3px, -4px, 3px, 0, 0.3);
+        }
+        &.west:before 
+        {
+            top: 4px;
+            .drop-shadow(-2px, 2px, 3px, 4px, 0.3);
+        }
+        &.east:before 
+        {
+            top: 4px;
+            .drop-shadow(0, 2px, 4px, 4px, 0.3);
+        }
 	}
 
 	@media screen and (max-device-width: 480px)
@@ -74,12 +135,3 @@
 		}
 	}
 }
-
-// allow access without javascript by hovering or by clicking and holding
-// body.nojs [data-rel="tooltip"]:hover + aside,
-// body.nojs [data-rel="tooltip"] + aside:hover,
-// body.nojs [data-rel="tooltip"]:active + aside,
-// body.nojs [data-rel="tooltip"] + aside:active
-// {
-// 	display: block;
-// }

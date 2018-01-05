@@ -396,6 +396,7 @@ $.modalDialog.create()
             qs = $.deparam(e.originalEvent ? e.originalEvent.data : e.data);
         } catch (ex) {
             //ignore- it wasn't a message for the dialog framework
+            return;
         }
 
         if (!qs.dialogCmd) {

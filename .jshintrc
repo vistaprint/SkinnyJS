@@ -9,7 +9,7 @@
     "expr": true,
     "immed": true,
     "jquery": true,
-    "latedef": true,
+    "latedef": false,
     "laxcomma": false,
     "newcap": false,
     "noarg": true,

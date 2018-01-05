@@ -17,6 +17,10 @@
  * This will run jshint, unit tests, etc. 
  * Pull requests must grunt successfully before they will be considered.
 
+* To run unit tests in the browser
+ * ```grunt js-test-server``` 
+ * This will start the grunt-js-test server and open a browser allowing you to run tests
+
 # Integration with pointy.js
 skinny.js has a hard dependency on pointy.js, and keeps a local copy of pointy.js just as if it was a regular skinny.js module. 
 
