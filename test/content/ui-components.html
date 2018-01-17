@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<title>SkinnyJS UI Components test page</title>
+
+<link rel="stylesheet" href="../../css/jquery.modalDialog.css" />
+<link rel="stylesheet" href="../../css/jquery.modalDialog.skins.css" />
+<link rel="stylesheet" href="../../css/jquery.richTooltip.css" />
+
+<script type="text/javascript" src="../../dependencies/jquery.js"></script>
+<script type="text/javascript" src="../../dependencies/pointy.js"></script>
+
+<script type="text/javascript" src="../../js/jquery.clientRect.js" /></script>
+<script type="text/javascript" src="../../js/jquery.customEvent.js" /></script>
+<script type="text/javascript" src="../../js/jquery.delimitedString.js" /></script>
+<script type="text/javascript" src="../../js/jquery.hostIframe.js" /></script>
+<script type="text/javascript" src="../../js/jquery.partialLoad.js" /></script>
+<script type="text/javascript" src="../../js/jquery.postMessage.js" /></script>
+<script type="text/javascript" src="../../js/jquery.proxyAll.js" /></script>
+<script type="text/javascript" src="../../js/jquery.queryString.js" /></script>
+<script type="text/javascript" src="../../js/jquery.postMessage.js" /></script>
+<script type="text/javascript" src="../../js/jquery.customEvent.js" /></script>
+<script type="text/javascript" src="../../js/jquery.contentSize.js" /></script>
+<script type="text/javascript" src="../../js/jquery.disableEvent.js" /></script>
+<script type="text/javascript" src="../../js/jquery.calcRestrainedPos.js" /></script>
+
+<script type="text/javascript" src="../../js/jquery.modalDialogContent.header.js"></script>
+<script type="text/javascript" src="../../js/jquery.modalDialog.userAgent.js"></script>
+<script type="text/javascript" src="../../js/jquery.modalDialog.getSettings.js"></script>
+<script type="text/javascript" src="../../js/jquery.modalDialog.deviceFixes.js"></script> 
+<script type="text/javascript" src="../../js/jquery.modalDialog.unobtrusive.js"></script>
+<script type="text/javascript" src="../../js/jquery.modalDialog.js"></script>
+<script type="text/javascript" src="../../js/jquery.richTooltip.js"></script>
+
+<style>
+body
+{
+    font-family: sans-serif;
+    padding: 0 2em;
+}
+.skinny-heading
+{
+    margin-top: 2em;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-weight: bold;
+    color: #63A52A;
+    text-decoration: none;
+}
+</style>
+
+</head>
+<body>
+<h1 class="skinny-heading">skinny.js UI Components test page</h1>
+<p>
+    (For local development/testing of skinny.js components)
+</p>
+
+<h2 class="skinny-heading">Modal dialogs</h2>
+<p>
+    To launch a modal dialog that uses the unobtrusive syntax, <a href="#modalUnobtrusive" data-rel="modalDialog">click here</a>.
+</p>
+
+<p>
+    To launch a modal dialog that uses the programmatic syntax, <a href="#modalUnobtrusive" id="modalProgrammaticLauncher">click here</a>.
+</p>
+
+<div class="dialog-content" id="modalUnobtrusive" data-dialog-title="Unobtrusive Syntax">
+    <div>Modal dialogs are delicious, and good for you too.</div>
+</div>
+
+<script>
+$("#modalProgrammaticLauncher").click(function() {
+    $("#modalProgrammatic").modalDialog();
+});
+</script>
+
+<div class="dialog-content" id="modalProgrammatic" data-dialog-title="Programmatic Syntax">
+    Modal dialogs are delicious, and good for you too.
+</div>
+
+<h2 class="skinny-heading">Rich Tooltips</h2>
+<p>
+    To see a tooltip that uses a selector, <a href="#" data-tooltip="#myTooltip">click here</a>.
+</p>
+<aside id="myTooltip" class="rich-tooltip">
+    Tooltip content for "selector" usage.
+</aside>
+
+<a href="#" data-rel="tooltip">Click here</a> to see a tooltip that uses the "adjacent elements" convention.
+<aside>
+    Tooltip content for "adjacent elements" usage.
+</aside>
+
+</body>
+</html>

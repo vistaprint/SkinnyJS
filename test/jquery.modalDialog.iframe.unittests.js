@@ -26,7 +26,7 @@ describe("jquery.modalDialog.create", function () {
             .open()
             .then(wait)
             .then(function () {
-                var title = $.trim($(".dialog-header h1").text());
+                var title = $.trim($(".dialog-header .dialog-header-text").text());
 
                 assert.equal(title, "explicit title");
 
@@ -49,7 +49,7 @@ describe("jquery.modalDialog.create", function () {
             .open()
             .then(wait)
             .then(function () {
-                var title = $.trim($(".dialog-header h1").text());
+                var title = $.trim($(".dialog-header .dialog-header-text").text());
 
                 assert.equal(title, "ModalDialog iframe content");
 

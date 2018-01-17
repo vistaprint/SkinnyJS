@@ -1,0 +1,90 @@
+.dialog-content {
+  display: none;
+}
+.dialog-content-container .dialog-content {
+  display: inherit;
+}
+.dialog-background {
+  position: absolute;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  display: none;
+}
+.dialog-background.dialog-veil {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+.dialog-background.dialog-veil-opaque {
+  background-color: #4F514F;
+}
+.dialog-background .dialog-loading-indicator {
+  position: absolute;
+  margin: auto;
+  top: 50%;
+  margin-top: -25px;
+  height: 50px;
+  width: 100%;
+  text-align: center;
+  z-index: 10001;
+}
+.dialog-background .dialog-loading-indicator span {
+  display: inline-block;
+}
+.dialog-container {
+  z-index: 10002;
+  position: absolute;
+  top: -700px;
+}
+.dialog-container.smallscreen {
+  width: 95%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.dialog-container .dialog-header {
+  *zoom: 1;
+  padding: 3px;
+  height: 40px;
+}
+.dialog-container .dialog-header:before,
+.dialog-container .dialog-header:after {
+  content: ".";
+  display: block;
+  height: 0;
+  overflow: hidden;
+}
+.dialog-container .dialog-header:after {
+  clear: both;
+}
+.dialog-container .dialog-header .dialog-header-text {
+  float: left;
+  margin-left: 10px;
+  margin-top: 13px;
+  margin-bottom: 0;
+}
+.dialog-container .dialog-header .dialog-close-button {
+  float: right;
+  display: block;
+}
+.dialog-container .dialog-header.draggable {
+  cursor: move;
+}
+.dialog-container .dialog-content-container {
+  position: relative;
+}
+.dialog-container .dialog-content-container iframe {
+  background-color: transparent;
+  z-index: 1;
+}
+.dialog-container .dialog-content-container .dialog-content-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}

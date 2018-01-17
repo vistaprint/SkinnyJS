@@ -7,10 +7,7 @@
 
 .dialog-content-container .dialog-content
 {
-	display: inherit;
-	
-	// IE7 does not properly recalculate display:inherit; when the parent changes
-	*display: block;
+	display: inherit;	
 }
 
 // Core dialog structure
@@ -69,20 +66,18 @@
 		.box-sizing(border-box);
 	}
 
-	// add spacing in case this is a large dialog
-	// padding-bottom: 10px; // padding breaks the drop shadows
-
 	.dialog-header
 	{
 		.clearfix();
 		padding: 3px;
 		height: 40px;
 
-		h1
+		.dialog-header-text
 		{
 			float: left;
 			margin-left: 10px;
 			margin-top: 13px;
+            margin-bottom: 0;
 		}
 
 		.dialog-close-button
