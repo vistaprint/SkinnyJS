@@ -3,7 +3,6 @@
 }
 .dialog-content-container .dialog-content {
   display: inherit;
-  *display: block;
 }
 .dialog-background {
   position: absolute;
@@ -62,10 +61,11 @@
 .dialog-container .dialog-header:after {
   clear: both;
 }
-.dialog-container .dialog-header h1 {
+.dialog-container .dialog-header .dialog-header-text {
   float: left;
   margin-left: 10px;
   margin-top: 13px;
+  margin-bottom: 0;
 }
 .dialog-container .dialog-header .dialog-close-button {
   float: right;

@@ -236,16 +236,16 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{
+            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">$</span>) </span>{
     <span class="hljs-keyword">var</span> TRANSITION_TIME = <span class="hljs-number">300</span>;
 
     $.registerDropDownMenuSkin(
         <span class="hljs-string">"exampleskin"</span>, {
-            position: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
+            <span class="hljs-attr">position</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
                 <span class="hljs-keyword">if</span> (e.level === <span class="hljs-number">0</span>) {
                     e.$panel.css({
-                        top: e.$item.innerHeight(),
-                        left: <span class="hljs-string">"-"</span> + e.$item.css(<span class="hljs-string">"borderLeftWidth"</span>)
+                        <span class="hljs-attr">top</span>: e.$item.innerHeight(),
+                        <span class="hljs-attr">left</span>: <span class="hljs-string">"-"</span> + e.$item.css(<span class="hljs-string">"borderLeftWidth"</span>)
                     });
                     <span class="hljs-keyword">return</span>;
                 }
@@ -253,12 +253,12 @@
                 <span class="hljs-keyword">var</span> pos = e.$item.position();
 
                 e.$panel.css({
-                    left: pos.left + e.$item.innerWidth(),
-                    top: <span class="hljs-number">0</span>
+                    <span class="hljs-attr">left</span>: pos.left + e.$item.innerWidth(),
+                    <span class="hljs-attr">top</span>: <span class="hljs-number">0</span>
                 });
             },
 
-            animationShow: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e, callback)</span> </span>{</pre></div></div>
+            <span class="hljs-attr">animationShow</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e, callback</span>) </span>{</pre></div></div>
             
         </li>
         
@@ -281,7 +281,7 @@
                 e.$panel.fadeIn(TRANSITION_TIME, callback);
             },
 
-            animationHide: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e, callback)</span> </span>{</pre></div></div>
+            <span class="hljs-attr">animationHide</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e, callback</span>) </span>{</pre></div></div>
             
         </li>
         

@@ -236,7 +236,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">$</span>) </span>{</pre></div></div>
             
         </li>
         
@@ -267,7 +267,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.CustomEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(host, eventType)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.CustomEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">host, eventType</span>) </span>{
         <span class="hljs-keyword">this</span>._host = host;
         <span class="hljs-keyword">this</span>.eventType = eventType;
         <span class="hljs-keyword">this</span>._callbacks = <span class="hljs-keyword">new</span> $.Callbacks();
@@ -302,7 +302,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.CustomEvent.prototype.fire = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data, host)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.CustomEvent.prototype.fire = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">data, host</span>) </span>{
         <span class="hljs-keyword">var</span> evt = <span class="hljs-keyword">new</span> $.Event(<span class="hljs-keyword">this</span>.eventType);
         $.extend(evt, data);
         evt.data = $.extend({}, evt.data, data);
@@ -340,7 +340,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.CustomEvent.prototype.add = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(callback)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.CustomEvent.prototype.add = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">callback</span>) </span>{
         <span class="hljs-keyword">if</span> (callback) {
             <span class="hljs-keyword">this</span>._callbacks.add(callback);
         }
@@ -361,14 +361,14 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.CustomEvent.prototype.one = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(callback)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.CustomEvent.prototype.one = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">callback</span>) </span>{
         <span class="hljs-keyword">if</span> (!callback) {
             <span class="hljs-keyword">return</span>;
         }
 
         <span class="hljs-keyword">var</span> me = <span class="hljs-keyword">this</span>;
 
-        <span class="hljs-keyword">var</span> wrapper = $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">var</span> wrapper = $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
             <span class="hljs-keyword">try</span> {
                 callback.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
             } <span class="hljs-keyword">finally</span> {
@@ -396,7 +396,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.CustomEvent.prototype.remove = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(callback)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.CustomEvent.prototype.remove = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">callback</span>) </span>{
         <span class="hljs-keyword">if</span> (callback) {
             <span class="hljs-keyword">this</span>._callbacks.remove(callback);
         }
@@ -415,7 +415,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.CustomEvent.prototype.empty = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.CustomEvent.prototype.empty = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">this</span>._callbacks.empty();
     };</pre></div></div>
             
@@ -448,7 +448,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.CustomEvent.create = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(host, eventType)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.CustomEvent.create = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">host, eventType</span>) </span>{
         <span class="hljs-keyword">var</span> onEventType = <span class="hljs-string">"on"</span> + eventType;
         <span class="hljs-keyword">var</span> evt = <span class="hljs-keyword">new</span> $.CustomEvent(host, eventType);
         host[onEventType] = evt;

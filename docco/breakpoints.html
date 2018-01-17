@@ -236,7 +236,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</pre></div></div>
             
         </li>
         
@@ -252,7 +252,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">String</span>.prototype.trim) {
-        <span class="hljs-built_in">String</span>.prototype.trim = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+        <span class="hljs-built_in">String</span>.prototype.trim = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
             <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.replace(<span class="hljs-regexp">/^\s+|\s+$/g</span>, <span class="hljs-string">""</span>);
         };
     }</pre></div></div>
@@ -270,9 +270,9 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> compareInts = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compare</span><span class="hljs-params">(a, b)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> compareInts = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compare</span>(<span class="hljs-params">a, b</span>) </span>{
         <span class="hljs-keyword">if</span> (a &lt; b) {
-            <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+            <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
         }
 
         <span class="hljs-keyword">if</span> (a &gt; b) {
@@ -295,7 +295,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> isNumeric = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> isNumeric = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">obj</span>) </span>{
         <span class="hljs-keyword">return</span> !<span class="hljs-built_in">isNaN</span>(<span class="hljs-built_in">parseFloat</span>(obj)) &amp;&amp; <span class="hljs-built_in">isFinite</span>(obj);
     };</pre></div></div>
             
@@ -313,7 +313,7 @@ which can contain min, max, and name</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> setMaxWidths = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(breakpoints)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> setMaxWidths = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">breakpoints</span>) </span>{
         <span class="hljs-keyword">var</span> maxWidths = [];
 
         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> name <span class="hljs-keyword">in</span> breakpoints) {
@@ -322,7 +322,7 @@ which can contain min, max, and name</p>
             <span class="hljs-keyword">if</span> (isNumeric(breakpoint)) {
                 <span class="hljs-keyword">var</span> max = <span class="hljs-built_in">parseInt</span>(breakpoint, <span class="hljs-number">10</span>);
                 breakpoint = {
-                    max: max
+                    <span class="hljs-attr">max</span>: max
                 };
 
                 breakpoints[name] = breakpoint;
@@ -356,7 +356,7 @@ existing breakpoints “max” values.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> setMinWidths = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(breakpoints, maxWidths)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> setMinWidths = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">breakpoints, maxWidths</span>) </span>{
         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> name <span class="hljs-keyword">in</span> breakpoints) {
             <span class="hljs-keyword">var</span> breakpoint = breakpoints[name];
 
@@ -391,7 +391,7 @@ going from the largest breakpoint’s max value to infinity</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> addMaxBreakpoint = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(breakpoints, maxWidths)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> addMaxBreakpoint = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">breakpoints, maxWidths</span>) </span>{
         <span class="hljs-keyword">if</span> (!maxWidths || maxWidths.length === <span class="hljs-number">0</span>) {
             <span class="hljs-keyword">return</span>;
         }
@@ -399,8 +399,8 @@ going from the largest breakpoint’s max value to infinity</p>
         <span class="hljs-keyword">var</span> largestBreakpoint = maxWidths[maxWidths.length - <span class="hljs-number">1</span>];
 
         breakpoints.max = {
-            min: largestBreakpoint + <span class="hljs-number">1</span>,
-            max: <span class="hljs-literal">Infinity</span>
+            <span class="hljs-attr">min</span>: largestBreakpoint + <span class="hljs-number">1</span>,
+            <span class="hljs-attr">max</span>: <span class="hljs-literal">Infinity</span>
         };
     };</pre></div></div>
             
@@ -418,7 +418,7 @@ converts to a fully normalized breakpoints object with breakpoint objects for va
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> normalize = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(breakpoints)</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> normalize = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">breakpoints</span>) </span>{</pre></div></div>
             
         </li>
         
@@ -452,7 +452,7 @@ e.g. small:300;medium:400;large:500;</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> parseBreakpointsAttr = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(attr)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> parseBreakpointsAttr = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">attr</span>) </span>{
         <span class="hljs-keyword">if</span> (!attr) {
             <span class="hljs-keyword">return</span> {};
         }
@@ -493,7 +493,7 @@ e.g. small:300;medium:400;large:500;</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> getBreakpointsFromAttr = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(el)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> getBreakpointsFromAttr = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">el</span>) </span>{
         <span class="hljs-keyword">var</span> attr = el.attributes[<span class="hljs-string">"data-breakpoints"</span>];
         <span class="hljs-keyword">if</span> (!attr || !attr.value) {
             <span class="hljs-keyword">return</span>;
@@ -514,7 +514,7 @@ e.g. small:300;medium:400;large:500;</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> getEl = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(el)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> getEl = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">el</span>) </span>{
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> el == <span class="hljs-string">"string"</span>) {
             <span class="hljs-keyword">return</span> <span class="hljs-built_in">document</span>.getElementById(el);
         }
@@ -535,7 +535,7 @@ e.g. small:300;medium:400;large:500;</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> parseClassMap = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(className)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> parseClassMap = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">className</span>) </span>{
         <span class="hljs-keyword">var</span> classesArr = className ? className.split(<span class="hljs-string">" "</span>) : [];
         <span class="hljs-keyword">var</span> classes = {};
         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; classesArr.length; i++) {
@@ -557,7 +557,7 @@ e.g. small:300;medium:400;large:500;</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> serializeClassMap = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(classMap)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> serializeClassMap = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">classMap</span>) </span>{
         <span class="hljs-keyword">var</span> classes = [];
         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> prop <span class="hljs-keyword">in</span> classMap) {
             <span class="hljs-keyword">if</span> (classMap.hasOwnProperty(prop)) {
@@ -599,7 +599,7 @@ this will modify the CSS classes on the element to reflect its current width.</p
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        setup: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(el, breakpoints)</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        setup: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">el, breakpoints</span>) </span>{</pre></div></div>
             
         </li>
         
@@ -663,12 +663,12 @@ this will modify the CSS classes on the element to reflect its current width.</p
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">this</span>.all.push({ el: el, breakpoints: breakpoints, startWidth: width });
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">this</span>.all.push({ <span class="hljs-attr">el</span>: el, <span class="hljs-attr">breakpoints</span>: breakpoints, <span class="hljs-attr">startWidth</span>: width });
 
             <span class="hljs-keyword">return</span> breakpoints;
         },
 
-        update: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(el, breakpoints)</span> </span>{</pre></div></div>
+        <span class="hljs-attr">update</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">el, breakpoints</span>) </span>{</pre></div></div>
             
         </li>
         
@@ -733,19 +733,19 @@ this will modify the CSS classes on the element to reflect its current width.</p
             el.className = serializeClassMap(classMap);
         },
 
-        all: []
+        <span class="hljs-attr">all</span>: []
     };
 
     <span class="hljs-comment">/* test-code */</span>
 
     <span class="hljs-built_in">window</span>.skinny.breakpoints._private = {
-        parseClassMap: parseClassMap,
-        serializeClassMap: serializeClassMap,
-        getBreakpointsFromAttr: getBreakpointsFromAttr,
-        parseBreakpointsAttr: parseBreakpointsAttr,
-        setMaxWidths: setMaxWidths,
-        setMinWidths: setMinWidths,
-        addMaxBreakpoint: addMaxBreakpoint
+        <span class="hljs-attr">parseClassMap</span>: parseClassMap,
+        <span class="hljs-attr">serializeClassMap</span>: serializeClassMap,
+        <span class="hljs-attr">getBreakpointsFromAttr</span>: getBreakpointsFromAttr,
+        <span class="hljs-attr">parseBreakpointsAttr</span>: parseBreakpointsAttr,
+        <span class="hljs-attr">setMaxWidths</span>: setMaxWidths,
+        <span class="hljs-attr">setMinWidths</span>: setMinWidths,
+        <span class="hljs-attr">addMaxBreakpoint</span>: addMaxBreakpoint
     };
 
     <span class="hljs-comment">/* end-test-code */</span>

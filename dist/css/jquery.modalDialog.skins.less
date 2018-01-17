@@ -4,9 +4,8 @@
 // It is intended to be modified by developers to skin modal dialogs.
 
 @gradient-top:      #4D4D4F;
-@gradient-bottom:      #313131;
-@white:         #fff;
-
+@gradient-bottom:   #313131;
+@white:             #fff;
 
 @border-rounding-amount: 10px;
 
@@ -64,7 +63,7 @@
         .border-radius(@border-rounding-amount, 0, 0, @border-rounding-amount);
         .gradient(@gradient-top, @gradient-top, @gradient-bottom);
 
-        h1
+        .dialog-header-text
         {
             font-size: 16px;
             color: white;
@@ -141,7 +140,7 @@
         {
             background-color: @gradient-bottom;
 
-            h1
+            .dialog-header-text
             {
                 font-size: 16px;
                 color: white;
@@ -155,7 +154,8 @@
             background-color: @gradient-bottom;
             color: @white;
 
-            a:hover {
+            a:hover 
+            {
                 color: inherit;
             }
         }
@@ -168,17 +168,5 @@
         margin: 0;
         padding: 0 13px;
         min-height: 100px;
-    }
-}
-
-// OldIE fixes for skins
-.dialog-skin-primary, .dialog-skin-neutral
-{
-    // Only put the drop shadow on when its visible
-    &.dialog-visible.dialog-container
-    {
-        // The \9 is an IE hack that targets IE 6,7,8
-        background-color: #fff\9;
-        border: 1px #555 solid\9;
     }
 }

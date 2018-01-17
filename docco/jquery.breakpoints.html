@@ -239,11 +239,11 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-comment">/* globals skinny */</span>
 
-(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{
+(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">$</span>) </span>{
 
     <span class="hljs-keyword">var</span> EVENTS_KEY = <span class="hljs-string">"breakpoints-events"</span>;
 
-    <span class="hljs-keyword">var</span> setupEvents = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(el, breakpoints)</span> </span>{
+    <span class="hljs-keyword">var</span> setupEvents = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">el, breakpoints</span>) </span>{
         <span class="hljs-keyword">var</span> $el = $(el);</pre></div></div>
             
         </li>
@@ -265,7 +265,7 @@
 
         $el.data(EVENTS_KEY, <span class="hljs-literal">true</span>);
 
-        <span class="hljs-keyword">var</span> update = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{</pre></div></div>
+        <span class="hljs-keyword">var</span> update = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{</pre></div></div>
             
         </li>
         
@@ -306,8 +306,8 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.fn.breakpoints = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(breakpoints)</span> </span>{
-        <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, el)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.fn.breakpoints = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">breakpoints</span>) </span>{
+        <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">i, el</span>) </span>{
             <span class="hljs-keyword">var</span> bp = skinny.breakpoints.setup(el, breakpoints);
             setupEvents(el, bp);
         });
@@ -315,7 +315,7 @@
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
     };
 
-    $(<span class="hljs-built_in">document</span>).ready(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
+    $(<span class="hljs-built_in">document</span>).ready(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</pre></div></div>
             
         </li>
         
@@ -330,7 +330,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        $.each(skinny.breakpoints.all, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, item)</span> </span>{
+            <div class="content"><div class='highlight'><pre>        $.each(skinny.breakpoints.all, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">i, item</span>) </span>{
             setupEvents(item.el, item.breakpoints);
         });</pre></div></div>
             

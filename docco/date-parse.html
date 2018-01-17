@@ -236,7 +236,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(Date, undefined)</span> </span>{
+            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">Date, undefined</span>) </span>{
     <span class="hljs-keyword">var</span> origParse = <span class="hljs-built_in">Date</span>.parse,
         numericKeys = [<span class="hljs-number">1</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>];</pre></div></div>
             
@@ -254,7 +254,7 @@ If “strict” is true Whether or not to perform a strict parse, which requires
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">Date</span>.parseISO = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(date, strict)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">Date</span>.parseISO = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">date, strict</span>) </span>{
         <span class="hljs-keyword">var</span> struct, minutesOffset = <span class="hljs-number">0</span>;
 
         strict = !! strict;</pre></div></div>
@@ -372,7 +372,7 @@ If “strict” is true Whether or not to perform a strict parse, which requires
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">Date</span>.parseMsDate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(date)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">Date</span>.parseMsDate = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">date</span>) </span>{
         <span class="hljs-keyword">if</span> (msDateRegEx.test(date)) {
             <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseFloat</span>(<span class="hljs-built_in">RegExp</span>.$<span class="hljs-number">1</span>, <span class="hljs-number">10</span>);
         } <span class="hljs-keyword">else</span> {
@@ -396,7 +396,7 @@ do this on all browsers, so it needs to be overwritten to force this behavior an
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">Date</span>.parse = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(date)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">Date</span>.parse = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">date</span>) </span>{
         <span class="hljs-keyword">return</span> origParse(date) || <span class="hljs-built_in">Date</span>.parseMsDate(date) || <span class="hljs-built_in">Date</span>.parseISO(date) || <span class="hljs-literal">NaN</span>;
     };
 

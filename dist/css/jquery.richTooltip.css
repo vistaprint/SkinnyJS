@@ -5,7 +5,7 @@
   box-sizing: border-box;
   z-index: 10;
   min-height: 30px;
-  background: #ffffff;
+  background: #fff;
   border: 1px solid #b5babf;
   padding: 6px;
   -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
@@ -50,7 +50,7 @@
   -moz-transform: translateY(-50%) rotate(-90deg);
   -ms-transform: translateY(-50%) rotate(-90deg);
   transform: translateY(-50%) rotate(-90deg);
-  border-bottom: 1px solid #ffffff;
+  border-bottom: 1px solid #fff;
 }
 [data-rel="tooltip"] + aside .rich-tooltip-arrow.east,
 .rich-tooltip-content .rich-tooltip-arrow.east {
@@ -60,7 +60,7 @@
   -moz-transform: translateY(-50%) rotate(90deg);
   -ms-transform: translateY(-50%) rotate(90deg);
   transform: translateY(-50%) rotate(90deg);
-  border-top: 1px solid #ffffff;
+  border-top: 1px solid #fff;
 }
 [data-rel="tooltip"] + aside .rich-tooltip-arrow:before,
 .rich-tooltip-content .rich-tooltip-arrow:before {
@@ -75,7 +75,7 @@
   transform: rotate(-45deg) skew(15deg, 15deg);
   width: 20px;
   height: 20px;
-  background: #ffffff;
+  background: #fff;
   pointer-events: none;
 }
 [data-rel="tooltip"] + aside .rich-tooltip-arrow.north:before,

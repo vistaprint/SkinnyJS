@@ -32,15 +32,15 @@
   -webkit-background-clip: padding-box;
   -moz-background-clip: padding-box;
   background-clip: padding-box;
-  background: #4d4d4f;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #4d4d4f), color-stop(1, #313131));
-  background: -webkit-linear-gradient(top, #4d4d4f, #313131);
-  background: -moz-linear-gradient(center top, #4d4d4f 0%, #313131 100%);
-  background: -ms-linear-gradient(top, #4d4d4f, #313131);
-  background: linear-gradient(to bottom, #4d4d4f, #313131);
+  background: #4D4D4F;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #4D4D4F), color-stop(1, #313131));
+  background: -webkit-linear-gradient(top, #4D4D4F, #313131);
+  background: -moz-linear-gradient(center top, #4D4D4F 0%, #313131 100%);
+  background: -ms-linear-gradient(top, #4D4D4F, #313131);
+  background: linear-gradient(to bottom, #4D4D4F, #313131);
 }
-.dialog-skin-primary.dialog-container .dialog-header h1,
-.dialog-skin-neutral.dialog-container .dialog-header h1 {
+.dialog-skin-primary.dialog-container .dialog-header .dialog-header-text,
+.dialog-skin-neutral.dialog-container .dialog-header .dialog-header-text {
   font-size: 16px;
   color: white;
 }
@@ -58,7 +58,7 @@
   background-clip: padding-box;
   height: 24px;
   width: 24px;
-  background-color: #ffffff;
+  background-color: #fff;
 }
 .dialog-skin-primary.dialog-container .dialog-header .dialog-close-button-icon,
 .dialog-skin-neutral.dialog-container .dialog-header .dialog-close-button-icon {
@@ -71,7 +71,7 @@
 }
 .dialog-skin-primary.dialog-container .dialog-content-container,
 .dialog-skin-neutral.dialog-container .dialog-content-container {
-  background-color: #ffffff;
+  background-color: #fff;
   -webkit-border-top-right-radius: 0;
   -moz-border-radius-topright: 0;
   border-top-right-radius: 0;
@@ -98,14 +98,14 @@
 }
 .dialog-skin-neutral.dialog-container .dialog-header {
   background: #7f7f83;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #7f7f83), color-stop(1, #4d4d4f));
-  background: -webkit-linear-gradient(top, #7f7f83, #4d4d4f);
-  background: -moz-linear-gradient(center top, #7f7f83 0%, #4d4d4f 100%);
-  background: -ms-linear-gradient(top, #7f7f83, #4d4d4f);
-  background: linear-gradient(to bottom, #7f7f83, #4d4d4f);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #7f7f83), color-stop(1, #4D4D4F));
+  background: -webkit-linear-gradient(top, #7f7f83, #4D4D4F);
+  background: -moz-linear-gradient(center top, #7f7f83 0%, #4D4D4F 100%);
+  background: -ms-linear-gradient(top, #7f7f83, #4D4D4F);
+  background: linear-gradient(to bottom, #7f7f83, #4D4D4F);
 }
 .dialog-skin-neutral.dialog-container .dialog-content-container {
-  background-color: #ffffff;
+  background-color: #fff;
 }
 .dialog-skin-lightbox.dialog-background.dialog-veil {
   background-color: black;
@@ -127,7 +127,7 @@
 .dialog-skin-lightbox.dialog-container .dialog-header {
   background-color: #313131;
 }
-.dialog-skin-lightbox.dialog-container .dialog-header h1 {
+.dialog-skin-lightbox.dialog-container .dialog-header .dialog-header-text {
   font-size: 16px;
   color: white;
 }
@@ -144,7 +144,7 @@
   background-clip: padding-box;
   height: 24px;
   width: 24px;
-  background-color: #ffffff;
+  background-color: #fff;
 }
 .dialog-skin-lightbox.dialog-container .dialog-header .dialog-close-button-icon {
   display: inline-block;
@@ -156,7 +156,7 @@
 }
 .dialog-skin-lightbox.dialog-container .dialog-content-container {
   background-color: #313131;
-  color: #ffffff;
+  color: #fff;
 }
 .dialog-skin-lightbox.dialog-container .dialog-content-container a:hover {
   color: inherit;
@@ -165,9 +165,4 @@
   margin: 0;
   padding: 0 13px;
   min-height: 100px;
-}
-.dialog-skin-primary.dialog-visible.dialog-container,
-.dialog-skin-neutral.dialog-visible.dialog-container {
-  background-color: #fff\9;
-  border: 1px #555 solid\9;
 }

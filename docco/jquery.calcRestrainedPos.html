@@ -238,14 +238,14 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{
+(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">$</span>) </span>{
 
     <span class="hljs-keyword">var</span> defaults = {
-        apply: <span class="hljs-literal">false</span>,
-        container: <span class="hljs-literal">null</span>,
-        direction: <span class="hljs-string">'north'</span>,
-        offsets: {},
-        viewport: <span class="hljs-literal">true</span>
+        <span class="hljs-attr">apply</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">container</span>: <span class="hljs-literal">null</span>,
+        <span class="hljs-attr">direction</span>: <span class="hljs-string">'north'</span>,
+        <span class="hljs-attr">offsets</span>: {},
+        <span class="hljs-attr">viewport</span>: <span class="hljs-literal">true</span>
     };
 
     <span class="hljs-keyword">var</span> nextDirection = {
@@ -268,7 +268,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.calcRestrainedPos = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options)</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    $.calcRestrainedPos = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">options</span>) </span>{</pre></div></div>
             
         </li>
         
@@ -374,8 +374,8 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> viewport = options.viewportBounds || {
-            width: <span class="hljs-built_in">document</span>.documentElement.clientWidth,
-            height: <span class="hljs-built_in">document</span>.documentElement.clientHeight
+            <span class="hljs-attr">width</span>: <span class="hljs-built_in">document</span>.documentElement.clientWidth,
+            <span class="hljs-attr">height</span>: <span class="hljs-built_in">document</span>.documentElement.clientHeight
         };</pre></div></div>
             
         </li>
@@ -392,8 +392,8 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> scroll = {
-            x: $(<span class="hljs-built_in">window</span>).scrollLeft(),
-            y: $(<span class="hljs-built_in">window</span>).scrollTop()
+            <span class="hljs-attr">x</span>: $(<span class="hljs-built_in">window</span>).scrollLeft(),
+            <span class="hljs-attr">y</span>: $(<span class="hljs-built_in">window</span>).scrollTop()
         };</pre></div></div>
             
         </li>
@@ -410,7 +410,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> offsets = $.extend({
-            padding: <span class="hljs-number">0</span>,</pre></div></div>
+            <span class="hljs-attr">padding</span>: <span class="hljs-number">0</span>,</pre></div></div>
             
         </li>
         
@@ -456,7 +456,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>            vertical: <span class="hljs-number">0</span>,
-            horizontal: <span class="hljs-number">0</span>
+            <span class="hljs-attr">horizontal</span>: <span class="hljs-number">0</span>
         }, options.offsets || {});</pre></div></div>
             
         </li>
@@ -474,7 +474,7 @@
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> pos = options.reset || {};
 
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getContentSize</span><span class="hljs-params">(direction)</span> </span>{
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getContentSize</span>(<span class="hljs-params">direction</span>) </span>{
             <span class="hljs-keyword">var</span> bounds;
             <span class="hljs-keyword">if</span> (contentSizes) {
                 bounds = contentSizes[direction];
@@ -485,7 +485,7 @@
             <span class="hljs-keyword">return</span> bounds;
         }
 
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">attemptDirection</span><span class="hljs-params">(direction)</span> </span>{
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">attemptDirection</span>(<span class="hljs-params">direction</span>) </span>{
             <span class="hljs-keyword">switch</span> (direction) {
             <span class="hljs-keyword">case</span> <span class="hljs-string">'north'</span>:</pre></div></div>
             
@@ -646,7 +646,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compensateContainer</span><span class="hljs-params">(direction, posLimits)</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compensateContainer</span>(<span class="hljs-params">direction, posLimits</span>) </span>{
             <span class="hljs-keyword">if</span> (container !== <span class="hljs-literal">null</span>) {</pre></div></div>
             
         </li>
@@ -804,7 +804,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compensateViewport</span><span class="hljs-params">(direction, posLimits)</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compensateViewport</span>(<span class="hljs-params">direction, posLimits</span>) </span>{
             <span class="hljs-keyword">if</span> (options.viewport === <span class="hljs-literal">true</span>) {</pre></div></div>
             
         </li>
@@ -1012,8 +1012,8 @@
                         intersections[i] = <span class="hljs-literal">true</span>;
 
                         <span class="hljs-keyword">var</span> newPos = {
-                            top: box.top,
-                            left: box.left
+                            <span class="hljs-attr">top</span>: box.top,
+                            <span class="hljs-attr">left</span>: box.left
                         };
                         <span class="hljs-keyword">switch</span> (direction) {
                         <span class="hljs-keyword">case</span> <span class="hljs-string">'north'</span>:
@@ -1044,7 +1044,7 @@
   Solution:
          ------------
 </code></pre><p>   <strong><strong>_</strong></strong> |     rect |</p>
-<h2 id="-__box____-">  |<strong>box__</strong>|——————</h2>
+<h2 id="-__box____-">  |<strong>box__</strong>|————</h2>
 <pre><code>   |     context      |
 
         OR
@@ -1208,7 +1208,7 @@ stop checking obstacles</p>
          OR
          ------------
 </code></pre><p>   <strong><strong>_</strong></strong> |     rect |</p>
-<h2 id="-__box____-">  |<strong>box__</strong>|——————</h2>
+<h2 id="-__box____-">  |<strong>box__</strong>|————</h2>
 <pre><code>   |     context      |
 </code></pre>
             </div>
@@ -1350,32 +1350,32 @@ stop checking obstacles</p>
               </div>
               <pre><code>  Example cases:
     _________   ___
-</code></pre><p>  ——-|<strong>box__</strong>| |
+</code></pre><p>  —–|<strong>box__</strong>| |
   | rect     |     |
-  ——————     | context
+  ————     | context
                    |
-                   |<em>_</em></p>
+                   |___</p>
 <pre><code>     ________   ___
-</code></pre><p>  ———| box    | |
+</code></pre><p>  ——| box    | |
   | rect|        | |
-  ———|        | | context
+  ——|        | | context
         |<strong><em>__</em></strong>| |
-                   |<em>_</em></p>
+                   |___</p>
 <pre><code>  Solution:
                 ___
     _________  |
    |__box____| |
-</code></pre><p>  ——————     | context
+</code></pre><p>  ————     | context
   | rect     |     |
-  ——————     |<em>_</em>
+  ————     |___
          OR</p>
 <pre><code>                ___
-</code></pre><p>  ——————     |
+</code></pre><p>  ————     |
   | rect     |     |
-  ——————     | context
+  ————     | context
         <strong><strong>_</strong></strong>  |
        |<strong>box__</strong>| |
-                   |<em>_</em></p>
+                   |___</p>
 
             </div>
             
@@ -1510,32 +1510,32 @@ stop checking obstacles</p>
               </div>
               <pre><code>  Example cases:
                 ___
-</code></pre><p>  ——————     |
+</code></pre><p>  ————     |
   | rect<strong>_</strong>|<strong>_  |
-  ——-|</strong>box<strong><em>_| | context
+  —–|</strong>box<strong>_<em>| | context
                    |
                    |</em></strong></p>
 <pre><code>                ___
-</code></pre><p>  ——————     |
+</code></pre><p>  ————     |
   | rect<strong>_</strong>|<strong>_  |
-  |    |</strong>box<strong><em>_| | context
+  |    |</strong>box<strong>_<em>| | context
   |          |     |
-  ——————     |</em></strong></p>
+  ————     |</em></strong></p>
 <pre><code>  Solution:
                 ___
-</code></pre><p>  ——————     |
+</code></pre><p>  ————     |
   | rect     |     |
-  ——————     | context
+  ————     | context
         <strong><strong>_</strong></strong>  |
        |<strong>box__</strong>| |
-                   |<em>_</em></p>
+                   |___</p>
 <pre><code>     OR
                 ___
     _________  |
    |__box____| |
-</code></pre><p>  ——————     | context
+</code></pre><p>  ————     | context
   | rect     |     |
-  ——————     |<em>_</em></p>
+  ————     |___</p>
 
             </div>
             
@@ -1686,7 +1686,7 @@ stop checking obstacles</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_getBestPositionInRange</span><span class="hljs-params">(minPos, maxPos, contentSize, offset, nextObstacle)</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_getBestPositionInRange</span>(<span class="hljs-params">minPos, maxPos, contentSize, offset, nextObstacle</span>) </span>{
             <span class="hljs-comment">/*
              * For each object { pos, size } in nextObstacle:
              *  For each range in ranges:
@@ -1719,8 +1719,8 @@ stop checking obstacles</p>
              */</span>
 
             <span class="hljs-keyword">var</span> ranges = [{
-                min: minPos,
-                max: maxPos
+                <span class="hljs-attr">min</span>: minPos,
+                <span class="hljs-attr">max</span>: maxPos
             }];
             <span class="hljs-keyword">var</span> i, obstacleStart, obstacleEnd, range;
             <span class="hljs-keyword">var</span> obstacle;
@@ -1767,8 +1767,8 @@ stop checking obstacles</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>                            <span class="hljs-keyword">var</span> newRange = {
-                                min: obstacleEnd,
-                                max: range.max
+                                <span class="hljs-attr">min</span>: obstacleEnd,
+                                <span class="hljs-attr">max</span>: range.max
                             };
                             range.max = obstacleStart;
                             <span class="hljs-keyword">if</span> (newRange.min &lt; newRange.max) {</pre></div></div>
@@ -1927,7 +1927,7 @@ Now calculate the position closest to the ideal (centered relative to context).<
             <span class="hljs-keyword">return</span> newPos;
         }
 
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compensateObstacles2</span><span class="hljs-params">(direction, posLimits)</span> </span>{
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compensateObstacles2</span>(<span class="hljs-params">direction, posLimits</span>) </span>{
             <span class="hljs-keyword">if</span> (!obstacles) {
                 <span class="hljs-keyword">return</span>;
             }
@@ -1956,10 +1956,10 @@ Now calculate the position closest to the ideal (centered relative to context).<
             </div>
             
             <div class="content"><div class='highlight'><pre>                    occupiedRects.splice(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, {
-                        left: left,
-                        width: right - left,
-                        top: (context.top + context.height) - content.height,
-                        height: content.height - context.height
+                        <span class="hljs-attr">left</span>: left,
+                        <span class="hljs-attr">width</span>: right - left,
+                        <span class="hljs-attr">top</span>: (context.top + context.height) - content.height,
+                        <span class="hljs-attr">height</span>: content.height - context.height
                     });
                 }</pre></div></div>
             
@@ -1976,7 +1976,7 @@ Now calculate the position closest to the ideal (centered relative to context).<
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                newPos = _getBestPositionInRange(minPos, maxPos, contentSize, offsets.vertical, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                newPos = _getBestPositionInRange(minPos, maxPos, contentSize, offsets.vertical, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</pre></div></div>
             
         </li>
         
@@ -1997,8 +1997,8 @@ Now calculate the position closest to the ideal (centered relative to context).<
                         rect = occupiedRects[i];
                         <span class="hljs-keyword">if</span> ((rect.left &lt;= right) &amp;&amp; (rect.left + rect.width &gt;= left)) {
                             next = {
-                                pos: rect.top,
-                                size: rect.height
+                                <span class="hljs-attr">pos</span>: rect.top,
+                                <span class="hljs-attr">size</span>: rect.height
                             };
                         }
                     }
@@ -2047,10 +2047,10 @@ Now calculate the position closest to the ideal (centered relative to context).<
             </div>
             
             <div class="content"><div class='highlight'><pre>                    occupiedRects.splice(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, {
-                        top: top,
-                        height: bottom - top,
-                        left: (context.left + context.width) - content.width,
-                        width: content.width - context.width
+                        <span class="hljs-attr">top</span>: top,
+                        <span class="hljs-attr">height</span>: bottom - top,
+                        <span class="hljs-attr">left</span>: (context.left + context.width) - content.width,
+                        <span class="hljs-attr">width</span>: content.width - context.width
                     });
                 }</pre></div></div>
             
@@ -2067,7 +2067,7 @@ Now calculate the position closest to the ideal (centered relative to context).<
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                newPos = _getBestPositionInRange(minPos, maxPos, contentSize, offsets.horizontal, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                newPos = _getBestPositionInRange(minPos, maxPos, contentSize, offsets.horizontal, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</pre></div></div>
             
         </li>
         
@@ -2088,8 +2088,8 @@ Now calculate the position closest to the ideal (centered relative to context).<
                         rect = occupiedRects[i];
                         <span class="hljs-keyword">if</span> ((rect.top &lt;= bottom) &amp;&amp; (rect.top + rect.height &gt;= top)) {
                             next = {
-                                pos: rect.left,
-                                size: rect.width
+                                <span class="hljs-attr">pos</span>: rect.left,
+                                <span class="hljs-attr">size</span>: rect.width
                             };
                         }
                     }
@@ -2119,7 +2119,7 @@ Now calculate the position closest to the ideal (centered relative to context).<
             }
         }
 
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">calculateMaxPositions</span><span class="hljs-params">(direction, limits)</span> </span>{
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">calculateMaxPositions</span>(<span class="hljs-params">direction, limits</span>) </span>{
             <span class="hljs-keyword">switch</span> (direction) {
             <span class="hljs-keyword">case</span> <span class="hljs-string">'north'</span>:
             <span class="hljs-keyword">case</span> <span class="hljs-string">'south'</span>:</pre></div></div>
@@ -2222,7 +2222,7 @@ Now calculate the position closest to the ideal (centered relative to context).<
             <span class="hljs-keyword">return</span> limits;
         }
 
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isCornerAdjacent</span><span class="hljs-params">(direction, position)</span> </span>{
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isCornerAdjacent</span>(<span class="hljs-params">direction, position</span>) </span>{
             <span class="hljs-keyword">var</span> adjacent = <span class="hljs-literal">true</span>;
             <span class="hljs-keyword">switch</span> (direction) {
             <span class="hljs-keyword">case</span> <span class="hljs-string">'north'</span>:
@@ -2240,7 +2240,7 @@ Now calculate the position closest to the ideal (centered relative to context).<
             <span class="hljs-keyword">return</span> adjacent;
         }
 
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_isPointInRange</span><span class="hljs-params">(position, maxPositions)</span> </span>{
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_isPointInRange</span>(<span class="hljs-params">position, maxPositions</span>) </span>{
             <span class="hljs-keyword">return</span> (position.left &gt;= maxPositions.minX) &amp;&amp; (position.left &lt;= maxPositions.maxX) &amp;&amp;
                 (position.top &gt;= maxPositions.minY) &amp;&amp; (position.top &lt;= maxPositions.maxY);
         }</pre></div></div>
@@ -2313,10 +2313,10 @@ Now calculate the position closest to the ideal (centered relative to context).<
             content = getContentSize(direction);
             attemptDirection(direction);
             maxBounds = calculateMaxPositions(direction, {
-                minX: origMinX,
-                minY: origMinY,
-                maxX: origMaxX,
-                maxY: origMaxY
+                <span class="hljs-attr">minX</span>: origMinX,
+                <span class="hljs-attr">minY</span>: origMinY,
+                <span class="hljs-attr">maxX</span>: origMaxX,
+                <span class="hljs-attr">maxY</span>: origMaxY
             });
             compensateContainer(direction, maxBounds);
             compensateViewport(direction, maxBounds);
@@ -2446,12 +2446,12 @@ Now calculate the position closest to the ideal (centered relative to context).<
         }
 
         <span class="hljs-keyword">return</span> {
-            direction: direction,
-            pos: pos
+            <span class="hljs-attr">direction</span>: direction,
+            <span class="hljs-attr">pos</span>: pos
         };
     };
 
-    $.doBoundingBoxesIntersect = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">doBoundingBoxesIntersect</span><span class="hljs-params">(a, b)</span> </span>{
+    $.doBoundingBoxesIntersect = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">doBoundingBoxesIntersect</span>(<span class="hljs-params">a, b</span>) </span>{
         <span class="hljs-keyword">return</span> (a.left &lt; b.left + b.width &amp;&amp; a.left + a.width &gt; b.left &amp;&amp; a.top &lt; b.top + b.height &amp;&amp; a.top + a.height &gt; b.top);
     };
 

@@ -604,7 +604,7 @@
                 '<div class="dialog-container" id="' + this.settings._fullId + 'Container">' +
                 '  <div class="dialog-header">' +
                 '    <a href="#" class="dialog-close-button"><span class="dialog-close-button-icon"></span></a>' +
-                '    <h1>' + (this.settings.title || "") + '</h1>' +
+                '    <h2 class="dialog-header-text">' + (this.settings.title || "") + '</h2>' +
                 '  </div>' +
                 '  <div class="dialog-content-container">' +
                 '  </div>' +
@@ -870,12 +870,12 @@
 
     // Sets the title of the dialog in the header.
     ModalDialog.prototype.setTitle = function (title) {
-        this.$container.find(".dialog-header h1").text(title || "");
+        this.$container.find(".dialog-header .dialog-header-text").text(title || "");
     };
 
     // Gets the title of the dialog in the header.
     ModalDialog.prototype.getTitle = function () {
-        return this.$container.find(".dialog-header h1").text();
+        return this.$container.find(".dialog-header .dialog-header-text").text();
     };
 
     // Extends ModalDialog such that the content is an iframe.
@@ -2241,7 +2241,6 @@ TODO Make the dialog veil hide earlier when closing dialogs. It takes too long.
 
         return deferred;
     };
-
 
 
 })(jQuery);

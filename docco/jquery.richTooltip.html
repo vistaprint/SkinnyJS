@@ -241,12 +241,12 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($, undefined)</span> </span>{
+(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">$, undefined</span>) </span>{
     <span class="hljs-keyword">var</span> arrowDirections = {
-        south: <span class="hljs-string">'north'</span>,
-        north: <span class="hljs-string">'south'</span>,
-        east: <span class="hljs-string">'west'</span>,
-        west: <span class="hljs-string">'east'</span>
+        <span class="hljs-attr">south</span>: <span class="hljs-string">'north'</span>,
+        <span class="hljs-attr">north</span>: <span class="hljs-string">'south'</span>,
+        <span class="hljs-attr">east</span>: <span class="hljs-string">'west'</span>,
+        <span class="hljs-attr">west</span>: <span class="hljs-string">'east'</span>
     };</pre></div></div>
             
         </li>
@@ -265,14 +265,14 @@
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> directions = [<span class="hljs-string">'north'</span>, <span class="hljs-string">'south'</span>, <span class="hljs-string">'west'</span>, <span class="hljs-string">'east'</span>];
 
     <span class="hljs-keyword">var</span> defaults = {
-        pos: <span class="hljs-string">'south'</span>,
-        arrowDirection: <span class="hljs-literal">null</span>,
-        arrowStyle: <span class="hljs-string">'outset'</span>,
-        closeOnWindowResize: <span class="hljs-literal">true</span>,
-        closeOnDocumentClick: <span class="hljs-literal">true</span>
+        <span class="hljs-attr">pos</span>: <span class="hljs-string">'south'</span>,
+        <span class="hljs-attr">arrowDirection</span>: <span class="hljs-literal">null</span>,
+        <span class="hljs-attr">arrowStyle</span>: <span class="hljs-string">'outset'</span>,
+        <span class="hljs-attr">closeOnWindowResize</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">closeOnDocumentClick</span>: <span class="hljs-literal">true</span>
     };
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Tooltip</span><span class="hljs-params">(context, options)</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Tooltip</span>(<span class="hljs-params">context, options</span>) </span>{
         $.proxyAll(<span class="hljs-keyword">this</span>, <span class="hljs-string">'show'</span>, <span class="hljs-string">'hide'</span>, <span class="hljs-string">'toggle'</span>, <span class="hljs-string">'pos'</span>, <span class="hljs-string">'unhover'</span>, <span class="hljs-string">'onWindowResize'</span>, <span class="hljs-string">'onDocumentClick'</span>, <span class="hljs-string">'onUiElementOpen'</span>);</pre></div></div>
             
         </li>
@@ -410,7 +410,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">this</span>.context.hoverDelay(<span class="hljs-keyword">this</span>.show, <span class="hljs-keyword">this</span>.unhover, { delayOver: <span class="hljs-number">200</span>, delayOut: <span class="hljs-number">500</span>, addChildren: <span class="hljs-keyword">this</span>.content });</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">this</span>.context.hoverDelay(<span class="hljs-keyword">this</span>.show, <span class="hljs-keyword">this</span>.unhover, { <span class="hljs-attr">delayOver</span>: <span class="hljs-number">200</span>, <span class="hljs-attr">delayOut</span>: <span class="hljs-number">500</span>, <span class="hljs-attr">addChildren</span>: <span class="hljs-keyword">this</span>.content });</pre></div></div>
             
         </li>
         
@@ -425,7 +425,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">this</span>.content.hoverDelay(<span class="hljs-keyword">this</span>.show, <span class="hljs-keyword">this</span>.unhover, { delayOver: <span class="hljs-number">200</span>, delayOut: <span class="hljs-number">500</span>, addChildren: <span class="hljs-keyword">this</span>.context });
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">this</span>.content.hoverDelay(<span class="hljs-keyword">this</span>.show, <span class="hljs-keyword">this</span>.unhover, { <span class="hljs-attr">delayOver</span>: <span class="hljs-number">200</span>, <span class="hljs-attr">delayOut</span>: <span class="hljs-number">500</span>, <span class="hljs-attr">addChildren</span>: <span class="hljs-keyword">this</span>.context });
             } <span class="hljs-keyword">else</span> {</pre></div></div>
             
         </li>
@@ -474,7 +474,7 @@ prevent navigation, preventDefault must happen within click event</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">this</span>.context.on(<span class="hljs-string">'press'</span>, $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">this</span>.context.on(<span class="hljs-string">'press'</span>, $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) </span>{</pre></div></div>
             
         </li>
         
@@ -575,12 +575,12 @@ prevent navigation, preventDefault must happen within click event</p>
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.content.on(<span class="hljs-string">'click'</span>, <span class="hljs-string">'[data-rel="close"]'</span>, <span class="hljs-keyword">this</span>.hide);
     }
 
-    Tooltip.prototype.unhover = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    Tooltip.prototype.unhover = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">this</span>._clearHoverTimeout();
         <span class="hljs-keyword">this</span>.hoverTimeout = setTimeout(<span class="hljs-keyword">this</span>.hide, <span class="hljs-number">250</span>);
     };
 
-    Tooltip.prototype._clearHoverTimeout = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    Tooltip.prototype._clearHoverTimeout = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.hoverTimeout) {
             clearTimeout(<span class="hljs-keyword">this</span>.hoverTimeout);
             <span class="hljs-keyword">this</span>.hoverTimeout = <span class="hljs-literal">null</span>;
@@ -601,7 +601,7 @@ See <a href="https://github.com/jquery/jquery-ui/blob/master/ui/core.js">https:/
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">findZIndex</span><span class="hljs-params">( elem )</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">findZIndex</span>(<span class="hljs-params"> elem </span>) </span>{
         <span class="hljs-keyword">var</span> pos;
         <span class="hljs-keyword">var</span> zIndexVal;
         <span class="hljs-keyword">var</span> maxZIndexVal = <span class="hljs-number">0</span>;
@@ -656,7 +656,7 @@ we ignore the case of nested elements with an explicit value of 0</p>
         <span class="hljs-keyword">return</span> maxZIndexVal;
     }
 
-    Tooltip.prototype.show = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    Tooltip.prototype.show = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">this</span>._clearHoverTimeout();
 
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.visible) {
@@ -749,8 +749,8 @@ In case the tooltip being used inside a control like a modal dialog.</p>
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.context.addClass(<span class="hljs-string">'rich-tooltip-open'</span>).trigger(<span class="hljs-string">'richTooltip:open'</span>);
 
         <span class="hljs-keyword">this</span>.viewportSize = {
-            height: $(<span class="hljs-built_in">window</span>).height(),
-            width: $(<span class="hljs-built_in">window</span>).width()
+            <span class="hljs-attr">height</span>: $(<span class="hljs-built_in">window</span>).height(),
+            <span class="hljs-attr">width</span>: $(<span class="hljs-built_in">window</span>).width()
         };</pre></div></div>
             
         </li>
@@ -803,7 +803,7 @@ In case the tooltip being used inside a control like a modal dialog.</p>
             <div class="content"><div class='highlight'><pre>        $(<span class="hljs-built_in">document</span>).one(<span class="hljs-string">'ui.element.open'</span>, <span class="hljs-keyword">this</span>.onUiElementOpen);
     };
 
-    Tooltip.prototype.hide = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    Tooltip.prototype.hide = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">this</span>._clearHoverTimeout();
 
         <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.visible) {
@@ -879,7 +879,7 @@ In case the tooltip being used inside a control like a modal dialog.</p>
             <div class="content"><div class='highlight'><pre>        $(<span class="hljs-built_in">document</span>).off(<span class="hljs-string">'ui.element.open'</span>, <span class="hljs-keyword">this</span>.onUiElementOpen);
     };
 
-    Tooltip.prototype.toggle = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
+    Tooltip.prototype.toggle = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) </span>{
         <span class="hljs-keyword">if</span> (event) {
             event.preventDefault();</pre></div></div>
             
@@ -907,7 +907,7 @@ up to the document and result in closing the tooltip.</p>
         }
     };
 
-    Tooltip.prototype.onUiElementOpen = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event, item)</span> </span>{
+    Tooltip.prototype.onUiElementOpen = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">event, item</span>) </span>{
         <span class="hljs-keyword">if</span> (item !== <span class="hljs-keyword">this</span>) {
             <span class="hljs-keyword">this</span>.hide();
         }
@@ -929,7 +929,7 @@ this includes elements becoming visible or hidding
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    Tooltip.prototype.onWindowResize = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    Tooltip.prototype.onWindowResize = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">if</span> ($(<span class="hljs-built_in">window</span>).height() != <span class="hljs-keyword">this</span>.viewportSize.height || $(<span class="hljs-built_in">window</span>).width() != <span class="hljs-keyword">this</span>.viewportSize.width) {
             <span class="hljs-keyword">this</span>.hide();
         }
@@ -949,7 +949,7 @@ was not to the tooltip or a child of the tooltip</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    Tooltip.prototype.onDocumentClick = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    Tooltip.prototype.onDocumentClick = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
         <span class="hljs-keyword">var</span> target = $(e.target);
         <span class="hljs-keyword">if</span> (!target.is(<span class="hljs-keyword">this</span>.content) &amp;&amp; !target.isChildOf(<span class="hljs-keyword">this</span>.content)) {
             <span class="hljs-keyword">this</span>.hide();
@@ -972,7 +972,7 @@ was not to the tooltip or a child of the tooltip</p>
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> PADDING = <span class="hljs-number">10</span>;
     <span class="hljs-keyword">var</span> ARROW_WIDTH = <span class="hljs-number">15</span>;
 
-    Tooltip.prototype.pos = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
+    Tooltip.prototype.pos = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</pre></div></div>
             
         </li>
         
@@ -991,18 +991,18 @@ was not to the tooltip or a child of the tooltip</p>
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> arrowSize = <span class="hljs-keyword">this</span>.options.arrowStyle === <span class="hljs-string">'inset'</span> || <span class="hljs-keyword">this</span>.arrow.css(<span class="hljs-string">'display'</span>) == <span class="hljs-string">'none'</span> ? <span class="hljs-number">0</span> : ARROW_WIDTH;
 
         <span class="hljs-keyword">var</span> restrainedPos = $.calcRestrainedPos({
-            giveMeSomething: <span class="hljs-literal">true</span>,
-            direction: <span class="hljs-keyword">this</span>.options.pos,
-            content: <span class="hljs-keyword">this</span>.content.css(<span class="hljs-string">'max-width'</span>, <span class="hljs-string">'100%'</span>),
-            context: <span class="hljs-keyword">this</span>.context,
-            container: <span class="hljs-keyword">this</span>.container,
-            reset: {
-                margin: <span class="hljs-number">0</span>
+            <span class="hljs-attr">giveMeSomething</span>: <span class="hljs-literal">true</span>,
+            <span class="hljs-attr">direction</span>: <span class="hljs-keyword">this</span>.options.pos,
+            <span class="hljs-attr">content</span>: <span class="hljs-keyword">this</span>.content.css(<span class="hljs-string">'max-width'</span>, <span class="hljs-string">'100%'</span>),
+            <span class="hljs-attr">context</span>: <span class="hljs-keyword">this</span>.context,
+            <span class="hljs-attr">container</span>: <span class="hljs-keyword">this</span>.container,
+            <span class="hljs-attr">reset</span>: {
+                <span class="hljs-attr">margin</span>: <span class="hljs-number">0</span>
             },
-            offsets: {
-                viewport: PADDING,
-                vertical: arrowSize,
-                horizontal: arrowSize
+            <span class="hljs-attr">offsets</span>: {
+                <span class="hljs-attr">viewport</span>: PADDING,
+                <span class="hljs-attr">vertical</span>: arrowSize,
+                <span class="hljs-attr">horizontal</span>: arrowSize
             }
         });
 
@@ -1064,7 +1064,7 @@ was not to the tooltip or a child of the tooltip</p>
             <div class="content"><div class='highlight'><pre>            .addClass(arrowDirection);
     };
 
-    $.fn.tooltip = $.fn.richTooltip = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">jQueryTooltip</span><span class="hljs-params">(options)</span> </span>{
+    $.fn.tooltip = $.fn.richTooltip = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">jQueryTooltip</span>(<span class="hljs-params">options</span>) </span>{
         <span class="hljs-keyword">var</span> el = $(<span class="hljs-keyword">this</span>);
         <span class="hljs-keyword">var</span> tooltip = el.data(<span class="hljs-string">'__tooltip'</span>);
 
@@ -1093,7 +1093,7 @@ was not to the tooltip or a child of the tooltip</p>
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
     };
 
-    $.fn.isChildOf = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">jQueryIsChildOf</span><span class="hljs-params">(filter_string)</span> </span>{
+    $.fn.isChildOf = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">jQueryIsChildOf</span>(<span class="hljs-params">filter_string</span>) </span>{
         <span class="hljs-keyword">var</span> parents = $(<span class="hljs-keyword">this</span>).parents();
 
         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> j = <span class="hljs-number">0</span>; j &lt; parents.length; j++) {
@@ -1118,7 +1118,7 @@ was not to the tooltip or a child of the tooltip</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    $(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</pre></div></div>
             
         </li>
         
@@ -1133,7 +1133,7 @@ was not to the tooltip or a child of the tooltip</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getOptionsFromData</span><span class="hljs-params">(context, content)</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getOptionsFromData</span>(<span class="hljs-params">context, content</span>) </span>{
             <span class="hljs-keyword">var</span> data = context.data();
 
             <span class="hljs-keyword">if</span> (!content) {
@@ -1141,14 +1141,14 @@ was not to the tooltip or a child of the tooltip</p>
             }
 
             <span class="hljs-keyword">return</span> {
-                content: content,
-                action: data.tooltipAction || <span class="hljs-string">'click'</span>,
-                pos: data.tooltipPos || <span class="hljs-string">'south'</span>,
-                container: data.tooltipContainer || <span class="hljs-literal">undefined</span>,
-                arrowDirection: data.tooltipArrowDirection || <span class="hljs-literal">null</span>,
-                arrowStyle: data.tooltipArrowStyle || <span class="hljs-literal">null</span>,
-                closeOnWindowResize: data.tooltipIgnoreWindowResize === <span class="hljs-literal">undefined</span>,
-                closeOnDocumentClick: data.tooltipIgnoreDocumentClick === <span class="hljs-literal">undefined</span>
+                <span class="hljs-attr">content</span>: content,
+                <span class="hljs-attr">action</span>: data.tooltipAction || <span class="hljs-string">'click'</span>,
+                <span class="hljs-attr">pos</span>: data.tooltipPos || <span class="hljs-string">'south'</span>,
+                <span class="hljs-attr">container</span>: data.tooltipContainer || <span class="hljs-literal">undefined</span>,
+                <span class="hljs-attr">arrowDirection</span>: data.tooltipArrowDirection || <span class="hljs-literal">null</span>,
+                <span class="hljs-attr">arrowStyle</span>: data.tooltipArrowStyle || <span class="hljs-literal">null</span>,
+                <span class="hljs-attr">closeOnWindowResize</span>: data.tooltipIgnoreWindowResize === <span class="hljs-literal">undefined</span>,
+                <span class="hljs-attr">closeOnDocumentClick</span>: data.tooltipIgnoreDocumentClick === <span class="hljs-literal">undefined</span>
             };
         }</pre></div></div>
             
@@ -1165,7 +1165,7 @@ was not to the tooltip or a child of the tooltip</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        $(<span class="hljs-string">'[data-rel="tooltip"] + aside'</span>).each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, el)</span> </span>{
+            <div class="content"><div class='highlight'><pre>        $(<span class="hljs-string">'[data-rel="tooltip"] + aside'</span>).each(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">i, el</span>) </span>{
             <span class="hljs-keyword">var</span> content = $(el); <span class="hljs-comment">// this is the aside</span>
             <span class="hljs-keyword">var</span> context = content.prev(); <span class="hljs-comment">// element prior to aside</span>
 
@@ -1185,7 +1185,7 @@ was not to the tooltip or a child of the tooltip</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        $(<span class="hljs-string">'[data-tooltip]'</span>).each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, context)</span> </span>{
+            <div class="content"><div class='highlight'><pre>        $(<span class="hljs-string">'[data-tooltip]'</span>).each(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">i, context</span>) </span>{
             context = $(context);
             context.richTooltip(getOptionsFromData(context));
         });

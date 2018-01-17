@@ -236,10 +236,10 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{
+            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">$</span>) </span>{
     $.modalDialog = $.modalDialog || {};
 
-    <span class="hljs-keyword">var</span> _ua = $.modalDialog._ua = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">var</span> _ua = $.modalDialog._ua = (<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">var</span> ua = navigator.userAgent;</pre></div></div>
             
         </li>
@@ -257,10 +257,10 @@
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (ua.indexOf(<span class="hljs-string">"MSIE 7.0"</span>) &gt; <span class="hljs-number">0</span>) {
             <span class="hljs-keyword">return</span> {
-                ie: <span class="hljs-literal">true</span>,
-                ie7: <span class="hljs-literal">true</span>,
-                version: <span class="hljs-number">7</span>,
-                compat: ua.indexOf(<span class="hljs-string">"compatible"</span>) &gt; <span class="hljs-number">0</span>
+                <span class="hljs-attr">ie</span>: <span class="hljs-literal">true</span>,
+                <span class="hljs-attr">ie7</span>: <span class="hljs-literal">true</span>,
+                <span class="hljs-attr">version</span>: <span class="hljs-number">7</span>,
+                <span class="hljs-attr">compat</span>: ua.indexOf(<span class="hljs-string">"compatible"</span>) &gt; <span class="hljs-number">0</span>
             };
         }</pre></div></div>
             
@@ -279,10 +279,10 @@
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (ua.indexOf(<span class="hljs-string">"MSIE 8.0"</span>) &gt; <span class="hljs-number">0</span>) {
             <span class="hljs-keyword">return</span> {
-                ie: <span class="hljs-literal">true</span>,
-                ie8: <span class="hljs-literal">true</span>,
-                version: <span class="hljs-number">8</span>,
-                compat: ua.indexOf(<span class="hljs-string">"compatible"</span>) &gt; <span class="hljs-number">0</span>
+                <span class="hljs-attr">ie</span>: <span class="hljs-literal">true</span>,
+                <span class="hljs-attr">ie8</span>: <span class="hljs-literal">true</span>,
+                <span class="hljs-attr">version</span>: <span class="hljs-number">8</span>,
+                <span class="hljs-attr">compat</span>: ua.indexOf(<span class="hljs-string">"compatible"</span>) &gt; <span class="hljs-number">0</span>
             };
         }
 
@@ -291,7 +291,7 @@
 
     <span class="hljs-keyword">var</span> _isSmallScreenOverride;
 
-    $.modalDialog.setSmallScreen = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(isSmallScreen)</span> </span>{
+    $.modalDialog.setSmallScreen = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">isSmallScreen</span>) </span>{
         _isSmallScreenOverride = isSmallScreen;
     };</pre></div></div>
             
@@ -309,7 +309,7 @@ Dialogs behave slightly different on small screens, by convention.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.modalDialog.isSmallScreen = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.modalDialog.isSmallScreen = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> (_isSmallScreenOverride) != <span class="hljs-string">"undefined"</span>) {
             <span class="hljs-keyword">return</span> _isSmallScreenOverride;
         }</pre></div></div>

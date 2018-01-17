@@ -236,7 +236,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{
+            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">$</span>) </span>{
 
     $.cookies = {};</pre></div></div>
             
@@ -257,7 +257,7 @@ server.
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> _cookieEncode = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(sText)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> _cookieEncode = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">sText</span>) </span>{
         <span class="hljs-keyword">if</span> (!sText) {
             <span class="hljs-keyword">return</span> <span class="hljs-string">""</span>;
         } <span class="hljs-keyword">else</span> {
@@ -326,7 +326,7 @@ and %2b with +. This undoes _cookieEncode().
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> _cookieDecode = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(sText)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> _cookieDecode = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">sText</span>) </span>{
         <span class="hljs-keyword">if</span> (!sText) {
             <span class="hljs-keyword">return</span> <span class="hljs-string">""</span>;
         } <span class="hljs-keyword">else</span> {
@@ -384,26 +384,26 @@ without URI encoding. Certain types of values can fail (i.e. “%u”, which is 
         
     };
 
-    <span class="hljs-keyword">var</span> _defaultPermanentDate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">var</span> _defaultPermanentDate = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">var</span> d = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
         d.setFullYear(d.getFullYear() + <span class="hljs-number">1</span>);
         <span class="hljs-keyword">return</span> d.toUTCString();
     };
 
     <span class="hljs-keyword">var</span> _defaults = {
-        domain: <span class="hljs-literal">null</span>,
-        path: <span class="hljs-string">"/"</span>,
-        permanentDate: _defaultPermanentDate(),
-        watcher: $.noop
+        <span class="hljs-attr">domain</span>: <span class="hljs-literal">null</span>,
+        <span class="hljs-attr">path</span>: <span class="hljs-string">"/"</span>,
+        <span class="hljs-attr">permanentDate</span>: _defaultPermanentDate(),
+        <span class="hljs-attr">watcher</span>: $.noop
     };
 
     <span class="hljs-keyword">var</span> _settings = _defaults;
 
-    $.cookies.setDefaults = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(settings)</span> </span>{
+    $.cookies.setDefaults = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">settings</span>) </span>{
         _settings = $.extend({}, _defaults, settings);
     };
 
-    <span class="hljs-keyword">var</span> _getDefault = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, overrideValue)</span> </span>{
+    <span class="hljs-keyword">var</span> _getDefault = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">key, overrideValue</span>) </span>{
         <span class="hljs-keyword">if</span> (overrideValue) {
             <span class="hljs-keyword">return</span> overrideValue;
         }
@@ -425,7 +425,7 @@ without URI encoding. Certain types of values can fail (i.e. “%u”, which is 
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.cookies.enabled = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.cookies.enabled = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         $.cookies.set(<span class="hljs-string">"cookietest"</span>, <span class="hljs-string">"value"</span>);
         <span class="hljs-keyword">if</span> ($.cookies.get(<span class="hljs-string">"cookietest"</span>) == <span class="hljs-string">"value"</span>) {
             $.cookies.remove(<span class="hljs-string">"cookietest"</span>);
@@ -451,7 +451,7 @@ without URI encoding. Certain types of values can fail (i.e. “%u”, which is 
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.cookies.get = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(name, <span class="hljs-comment">/* optional */</span> subCookie)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.cookies.get = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">name, <span class="hljs-regexp">/* optional */</span> subCookie</span>) </span>{
         <span class="hljs-keyword">var</span> cookies = <span class="hljs-keyword">new</span> Cookies();
         <span class="hljs-keyword">var</span> cookie = cookies[name];
         <span class="hljs-keyword">if</span> (cookie) {
@@ -491,7 +491,7 @@ without URI encoding. Certain types of values can fail (i.e. “%u”, which is 
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.cookies.set = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(nameOrData, value, domain, permanent, clearExistingSubCookies)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.cookies.set = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">nameOrData, value, domain, permanent, clearExistingSubCookies</span>) </span>{
         <span class="hljs-keyword">var</span> name = nameOrData;
         <span class="hljs-keyword">var</span> path;
 
@@ -591,7 +591,7 @@ without URI encoding. Certain types of values can fail (i.e. “%u”, which is 
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.cookies.remove = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(name, domain, path)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.cookies.remove = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">name, domain, path</span>) </span>{
         <span class="hljs-keyword">var</span> cookie = _cookieEncode(name) + <span class="hljs-string">"=a; path="</span> + _getDefault(<span class="hljs-string">"path"</span>, path) + <span class="hljs-string">"; expires=Wed, 17 Jan 1979 07:01:00 GMT"</span>;
 
         domain = _getDefault(<span class="hljs-string">"domain"</span>, domain);
@@ -618,7 +618,7 @@ Exposes the cookies as a dictionary of cookie names and cookie objects.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> Cookies = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> Cookies = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">var</span> me = <span class="hljs-keyword">this</span>;
         <span class="hljs-keyword">var</span> cookie = <span class="hljs-built_in">document</span>.cookie.toString();
         <span class="hljs-keyword">var</span> cookieArray = cookie.split(<span class="hljs-string">";"</span>);
@@ -647,7 +647,7 @@ Exposes the cookies as a dictionary of cookie names and cookie objects.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> Cookie = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> Cookie = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">var</span> me = <span class="hljs-keyword">this</span>;</pre></div></div>
             
         </li>
@@ -740,7 +740,7 @@ Exposes the cookies as a dictionary of cookie names and cookie objects.</p>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.isPermanent = <span class="hljs-literal">false</span>;
 
-        <span class="hljs-keyword">var</span> _validateName = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">var</span> _validateName = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
             <span class="hljs-keyword">if</span> (!me.name) {
                 <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Cookie: Cookie name is null."</span>);
             }
@@ -760,7 +760,7 @@ Exposes the cookies as a dictionary of cookie names and cookie objects.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.serialize = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.serialize = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
             _validateName();
 
             <span class="hljs-keyword">var</span> cookie = _cookieEncode(me.name) + <span class="hljs-string">"="</span> + _getEncodedValue();
@@ -792,7 +792,7 @@ Exposes the cookies as a dictionary of cookie names and cookie objects.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.save = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.save = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
             _validateName();
 
             <span class="hljs-keyword">var</span> cookie = me.serialize();
@@ -815,7 +815,7 @@ Exposes the cookies as a dictionary of cookie names and cookie objects.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.parse = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(sUnparsedValue)</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.parse = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">sUnparsedValue</span>) </span>{
             <span class="hljs-keyword">if</span> (!sUnparsedValue) {
                 <span class="hljs-keyword">return</span>;
             }</pre></div></div>
@@ -856,7 +856,7 @@ Exposes the cookies as a dictionary of cookie names and cookie objects.</p>
             me.name = _cookieDecode(sUnparsedValue.substr(<span class="hljs-number">0</span>, iPosEquals));
 
             <span class="hljs-keyword">var</span> sValue = sUnparsedValue.substr(iPosEquals + <span class="hljs-number">1</span>);
-            <span class="hljs-keyword">if</span> (sValue.indexOf(<span class="hljs-string">"="</span>) == -<span class="hljs-number">1</span>) {
+            <span class="hljs-keyword">if</span> (sValue.indexOf(<span class="hljs-string">"="</span>) == <span class="hljs-number">-1</span>) {
                 me.value = _cookieDecode(sValue);
                 <span class="hljs-keyword">return</span>;
             }
@@ -889,7 +889,7 @@ Exposes the cookies as a dictionary of cookie names and cookie objects.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> _getEncodedValue = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> _getEncodedValue = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
             <span class="hljs-keyword">if</span> (me.subCookies) {
                 <span class="hljs-keyword">var</span> aOut = [];
                 <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> sSub <span class="hljs-keyword">in</span> me.subCookies) {
@@ -904,14 +904,14 @@ Exposes the cookies as a dictionary of cookie names and cookie objects.</p>
         <span class="hljs-comment">/* test-code */</span>
 
         $.cookies.private = {
-            _getEncodedValue: _getEncodedValue,
-            _cookieEncode: _cookieEncode,
-            _cookieDecode: _cookieDecode,
-            _validateName: _validateName,
-            _defaultPermanentDate: _defaultPermanentDate,
-            _getDefault: _getDefault,
-            Cookies: Cookies,
-            Cookie: Cookie
+            <span class="hljs-attr">_getEncodedValue</span>: _getEncodedValue,
+            <span class="hljs-attr">_cookieEncode</span>: _cookieEncode,
+            <span class="hljs-attr">_cookieDecode</span>: _cookieDecode,
+            <span class="hljs-attr">_validateName</span>: _validateName,
+            <span class="hljs-attr">_defaultPermanentDate</span>: _defaultPermanentDate,
+            <span class="hljs-attr">_getDefault</span>: _getDefault,
+            <span class="hljs-attr">Cookies</span>: Cookies,
+            <span class="hljs-attr">Cookie</span>: Cookie
         };
 
         <span class="hljs-comment">/* end-test-code */</span>

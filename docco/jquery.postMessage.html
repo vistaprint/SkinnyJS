@@ -238,7 +238,7 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-comment">/* globals Window */</span>
 
-(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(window, $)</span> </span>{
+(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">window, $</span>) </span>{
     <span class="hljs-keyword">var</span> cacheBuster = <span class="hljs-number">1</span>;
 
     <span class="hljs-keyword">var</span> browserSupportsPostMessage = !! <span class="hljs-built_in">window</span>.postMessage;</pre></div></div>
@@ -256,7 +256,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getDomainFromUrl</span><span class="hljs-params">(url)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getDomainFromUrl</span>(<span class="hljs-params">url</span>) </span>{
         <span class="hljs-keyword">return</span> url.replace(<span class="hljs-regexp">/([^:]+:\/\/[^\/]+).*/</span>, <span class="hljs-string">"$1"</span>);
     }</pre></div></div>
             
@@ -289,7 +289,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isOriginMatch</span><span class="hljs-params">(originPatternOrFunction, sourceOrigin)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isOriginMatch</span>(<span class="hljs-params">originPatternOrFunction, sourceOrigin</span>) </span>{
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> (originPatternOrFunction) == <span class="hljs-string">"string"</span> &amp;&amp;
             sourceOrigin !== originPatternOrFunction &amp;&amp;
             originPatternOrFunction !== <span class="hljs-string">"*"</span>) {
@@ -345,7 +345,7 @@ and a provided window reference.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">transverseLevel</span><span class="hljs-params">(window, target, level)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">transverseLevel</span>(<span class="hljs-params">window, target, level</span>) </span>{
         <span class="hljs-keyword">var</span> i;
 
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> level == <span class="hljs-string">"undefined"</span>) {
@@ -373,14 +373,14 @@ and a provided window reference.</p>
                             <span class="hljs-keyword">return</span> <span class="hljs-string">"f,"</span> + i;
                         }
                     } <span class="hljs-keyword">catch</span> (e) {
-                        <span class="hljs-keyword">if</span> (e.number !== -<span class="hljs-number">2147024891</span>) <span class="hljs-comment">// WTF is this?</span>
+                        <span class="hljs-keyword">if</span> (e.number !== <span class="hljs-number">-2147024891</span>) <span class="hljs-comment">// WTF is this?</span>
                         {
                             <span class="hljs-keyword">throw</span> e;
                         }
                     }
                 }
             } <span class="hljs-keyword">catch</span> (ex) {
-                <span class="hljs-keyword">if</span> (ex.number !== -<span class="hljs-number">2146823279</span>) <span class="hljs-comment">// and, WTF is this?</span>
+                <span class="hljs-keyword">if</span> (ex.number !== <span class="hljs-number">-2146823279</span>) <span class="hljs-comment">// and, WTF is this?</span>
                 {
                     <span class="hljs-keyword">throw</span> ex;
                 }
@@ -540,7 +540,7 @@ Example: p.p translates to window.parent.parent</li>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">serializeWindowReference</span><span class="hljs-params">(currentWindow, targetWindow)</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">serializeWindowReference</span>(<span class="hljs-params">currentWindow, targetWindow</span>) </span>{</pre></div></div>
             
         </li>
         
@@ -653,7 +653,7 @@ way to get to it. This makes for a yucky API, unfortunately.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.postMessage = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(message, targetHost, targetWindow, <span class="hljs-comment">/* optional */</span> targetWindowName)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.postMessage = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">message, targetHost, targetWindow, <span class="hljs-regexp">/* optional */</span> targetWindowName</span>) </span>{
         <span class="hljs-keyword">if</span> (!targetHost) {
             <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"targetHost argument was not supplied to jQuery.postMessage"</span>);
         }
@@ -743,7 +743,7 @@ top-level window, and will fail with “No such interface supported” for calls
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (ex.number != -<span class="hljs-number">2147467262</span>) {
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (ex.number != <span class="hljs-number">-2147467262</span>) {
                     <span class="hljs-keyword">throw</span> ex;
                 }
             }
@@ -817,7 +817,7 @@ to the target window. Pass the proxy information in an encoded URL fragment,
             <div class="content"><div class='highlight'><pre>                (+<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()) + cacheBuster + <span class="hljs-string">"&amp;"</span> +
                 serializedWindowRef + <span class="hljs-string">"&amp;"</span> + thisDomain + <span class="hljs-string">"&amp;"</span> + <span class="hljs-built_in">encodeURIComponent</span>(message)
             )
-            .load(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
+            .load(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</pre></div></div>
             
         </li>
         
@@ -870,7 +870,7 @@ to the target window. Pass the proxy information in an encoded URL fragment,
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.receiveMessage = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(callback, allowedOriginOrFunction)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.receiveMessage = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">callback, allowedOriginOrFunction</span>) </span>{
         <span class="hljs-keyword">if</span> (!callback) {
             <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"No callback function specified"</span>);
         }
@@ -879,7 +879,7 @@ to the target window. Pass the proxy information in an encoded URL fragment,
             allowedOriginOrFunction = <span class="hljs-string">"*"</span>;
         }
 
-        $(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">"message"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event, data, origin)</span> </span>{
+        $(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">"message"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">event, data, origin</span>) </span>{
             <span class="hljs-keyword">if</span> (!data) {
                 data = event.originalEvent ? event.originalEvent.data : event.data;
             }
@@ -912,7 +912,7 @@ an IFrame or top-level window. To work around, listen for calls from the polyfil
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">window</span>.__receiveMessageHook = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(message, origin)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">window</span>.__receiveMessageHook = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">message, origin</span>) </span>{
         <span class="hljs-keyword">var</span> $evt = <span class="hljs-keyword">new</span> $.Event(<span class="hljs-string">"message"</span>);
         $evt.data = message;
         $evt.origin = origin;
@@ -933,8 +933,8 @@ an IFrame or top-level window. To work around, listen for calls from the polyfil
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $.fn.postMessage = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(message, targetHost, <span class="hljs-comment">/* optional */</span> targetWindowName)</span> </span>{
-        <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, el)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    $.fn.postMessage = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">message, targetHost, <span class="hljs-regexp">/* optional */</span> targetWindowName</span>) </span>{
+        <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">i, el</span>) </span>{
             <span class="hljs-keyword">if</span> (!(el <span class="hljs-keyword">instanceof</span> Window)) {
                 <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"postMessage can only be sent to a window"</span>);
             }
@@ -946,10 +946,10 @@ an IFrame or top-level window. To work around, listen for calls from the polyfil
     };
 
     $.event.special.message = {
-        add: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handlerData)</span> </span>{
+        <span class="hljs-attr">add</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">handlerData</span>) </span>{
             <span class="hljs-keyword">var</span> origHandler = handlerData.handler;
 
-            handlerData.handler = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e, message, origin)</span> </span>{
+            handlerData.handler = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e, message, origin</span>) </span>{
                 e.data = e.originalEvent ? e.originalEvent.data : message;
                 e.origin = e.originalEvent ? e.originalEvent.origin : origin;
 
@@ -958,7 +958,7 @@ an IFrame or top-level window. To work around, listen for calls from the polyfil
         }
     };
 
-    <span class="hljs-keyword">var</span> getPolyfillPath = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">var</span> getPolyfillPath = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">window</span>._jqueryPostMessagePolyfillPath) {
             <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Must configure jquery.postMessage() with window._jqueryPostMessagePolyfillPath for IE7 support. Should be '/root-relative-path-on-my-server/postmessage.htm'"</span>);
         }
