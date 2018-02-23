@@ -31,7 +31,7 @@ module.exports = function (grunt) {
                     "test/unittests.shared.js"
                 ],
                 mocha: { 
-                    timeout: 6000
+                    timeout: 10000
                 }
             },
             jquery17: {

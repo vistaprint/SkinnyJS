@@ -58,6 +58,7 @@ describe("jquery.modalDialog", function () {
         };
 
         var eventMappings = {
+            "pointer": ["pointerdown", "pointermove", "pointerup"],
             "mouse": ["mousedown", "mousemove", "mouseup"],
             "touch": ["touchstart", "touchmove", "touchend"]
         };
