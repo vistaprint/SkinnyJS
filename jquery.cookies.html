@@ -124,96 +124,97 @@
     </div>
     
 
-    <h2 id='jquerycookies'>jQuery.cookies</h2>
+    <h2 id="jquerycookies">jQuery.cookies</h2>
 
 <p>jQuery.cookies is a general purpose cookie library with several distinguishing design features:</p>
 
 <ol>
-<li>Ability to specify defaults for domain, path, and &#8220;permanent&#8221; cookie expiration date</li>
-
-<li>Presumes that most cookies are intended as either session scoped or permanent. Most web developers don&#8217;t want to set expiration dates manually.</li>
-
-<li>Ability to easily manage sub-values within top-level cookies.</li>
+  <li>Ability to specify defaults for domain, path, and “permanent” cookie expiration date</li>
+  <li>Presumes that most cookies are intended as either session scoped or permanent. Most web developers don’t want to set expiration dates manually.</li>
+  <li>Ability to easily manage sub-values within top-level cookies.</li>
 </ol>
 
-<h3 id='usage'>Usage</h3>
+<h3 id="usage">Usage</h3>
 
 <p>jQuery.cookies allows setting a default path, domain, and expiration date (for permanent cookies) for all usages of its API where these values are not explicitly specified. To set defaults, use $.cookies.setDefaults(). The options include:</p>
 
 <ul>
-<li><strong>path</strong>: Sets the default path. By default, it is &#8221;/&#8221;.</li>
-
-<li><strong>domain</strong>: Sets the default domain. By default, it is &#8221;&#8221;.</li>
-
-<li><strong>permanentDate</strong>: Sets the expiration date to use for cookies you declare &#8220;permanent&#8221;. By default, it is 1 year into the future. This should be specified as a UTC date.</li>
+  <li><strong>path</strong>: Sets the default path. By default, it is “/”.</li>
+  <li><strong>domain</strong>: Sets the default domain. By default, it is “”.</li>
+  <li><strong>permanentDate</strong>: Sets the expiration date to use for cookies you declare “permanent”. By default, it is 1 year into the future. This should be specified as a UTC date.</li>
 </ul>
-<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>cookies</span><span class='p'>.</span><span class='nx'>setDefaults</span><span class='p'>({</span> 
-        <span class='nx'>path</span><span class='o'>:</span> <span class='s2'>&quot;/&quot;</span><span class='p'>,</span> 
-        <span class='nx'>domain</span><span class='o'>:</span> <span class='s2'>&quot;vistaprint.com&quot;</span><span class='p'>,</span>
-        <span class='nx'>permanentDate</span><span class='o'>:</span> <span class='s2'>&quot;Sun, 13 Oct 2100 19:53:24 GMT&quot;</span>
-    <span class='p'>});</span>
-</code></pre></div>
-<h4 id='setting_and_getting_cookies'>Setting and getting cookies</h4>
 
-<p>Here&#8217;s a basic example of setting and getting a top-level cookie:</p>
-<div class='highlight'><pre><code class='javascript'>    <span class='c1'>// Sets a top-level session cookie</span>
-    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>cookies</span><span class='p'>.</span><span class='nx'>set</span><span class='p'>(</span><span class='s2'>&quot;userid&quot;</span><span class='p'>,</span> <span class='s2'>&quot;12345&quot;</span><span class='p'>);</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">    <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="nx">setDefaults</span><span class="p">({</span> 
+        <span class="na">path</span><span class="p">:</span> <span class="s2">"/"</span><span class="p">,</span> 
+        <span class="na">domain</span><span class="p">:</span> <span class="s2">"vistaprint.com"</span><span class="p">,</span>
+        <span class="na">permanentDate</span><span class="p">:</span> <span class="s2">"Sun, 13 Oct 2100 19:53:24 GMT"</span>
+    <span class="p">});</span></code></pre></figure>
 
-    <span class='c1'>// Gets the value of a cookie</span>
-    <span class='kd'>var</span> <span class='nx'>value</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>cookies</span><span class='p'>.</span><span class='nx'>get</span><span class='p'>(</span><span class='s2'>&quot;userid&quot;</span><span class='p'>);</span>
-</code></pre></div>
+<h4 id="setting-and-getting-cookies">Setting and getting cookies</h4>
+
+<p>Here’s a basic example of setting and getting a top-level cookie:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">    <span class="c1">// Sets a top-level session cookie</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="s2">"userid"</span><span class="p">,</span> <span class="s2">"12345"</span><span class="p">);</span>
+
+    <span class="c1">// Gets the value of a cookie</span>
+    <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s2">"userid"</span><span class="p">);</span></code></pre></figure>
+
 <p>Some more examples of setting cookies:</p>
-<div class='highlight'><pre><code class='javascript'>    <span class='c1'>// Sets a top-level session cookie using the object syntax </span>
-    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>cookies</span><span class='p'>.</span><span class='nx'>set</span><span class='p'>({</span> 
-        <span class='nx'>name</span><span class='o'>:</span> <span class='s2'>&quot;userid&quot;</span><span class='p'>,</span> 
-        <span class='nx'>value</span><span class='o'>:</span> <span class='s2'>&quot;12345&quot;</span> 
-    <span class='p'>});</span>
 
-    <span class='c1'>// Sets a top-level permanent cookie using the object syntax </span>
-    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>cookies</span><span class='p'>.</span><span class='nx'>set</span><span class='p'>({</span> 
-        <span class='nx'>name</span><span class='o'>:</span> <span class='s2'>&quot;userid&quot;</span><span class='p'>,</span> 
-        <span class='nx'>value</span><span class='o'>:</span> <span class='s2'>&quot;12345&quot;</span><span class='p'>,</span>
-        <span class='nx'>permanent</span><span class='o'>:</span> <span class='kc'>true</span>
-    <span class='p'>});</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">    <span class="c1">// Sets a top-level session cookie using the object syntax </span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="kd">set</span><span class="p">({</span> 
+        <span class="na">name</span><span class="p">:</span> <span class="s2">"userid"</span><span class="p">,</span> 
+        <span class="na">value</span><span class="p">:</span> <span class="s2">"12345"</span> 
+    <span class="p">});</span>
 
-    <span class='c1'>// Overrides domain and path</span>
-    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>cookies</span><span class='p'>.</span><span class='nx'>set</span><span class='p'>({</span> 
-        <span class='nx'>name</span><span class='o'>:</span> <span class='s2'>&quot;userid&quot;</span><span class='p'>,</span> 
-        <span class='nx'>value</span><span class='o'>:</span> <span class='s2'>&quot;12345&quot;</span><span class='p'>,</span>
-        <span class='nx'>permanent</span><span class='o'>:</span> <span class='kc'>true</span><span class='p'>,</span>
-        <span class='nx'>domain</span><span class='o'>:</span> <span class='s2'>&quot;somesubdomain.vistaprint.com&quot;</span><span class='p'>,</span>
-        <span class='nx'>path</span><span class='o'>:</span> <span class='s2'>&quot;/special-directory&quot;</span>
-    <span class='p'>});</span>
-</code></pre></div>
-<h4 id='working_with_sub_values'>Working with sub values</h4>
+    <span class="c1">// Sets a top-level permanent cookie using the object syntax </span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="kd">set</span><span class="p">({</span> 
+        <span class="na">name</span><span class="p">:</span> <span class="s2">"userid"</span><span class="p">,</span> 
+        <span class="na">value</span><span class="p">:</span> <span class="s2">"12345"</span><span class="p">,</span>
+        <span class="na">permanent</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">});</span>
 
+    <span class="c1">// Overrides domain and path</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="kd">set</span><span class="p">({</span> 
+        <span class="na">name</span><span class="p">:</span> <span class="s2">"userid"</span><span class="p">,</span> 
+        <span class="na">value</span><span class="p">:</span> <span class="s2">"12345"</span><span class="p">,</span>
+        <span class="na">permanent</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="na">domain</span><span class="p">:</span> <span class="s2">"somesubdomain.vistaprint.com"</span><span class="p">,</span>
+        <span class="na">path</span><span class="p">:</span> <span class="s2">"/special-directory"</span>
+    <span class="p">});</span></code></pre></figure>
+
+<h4 id="working-with-sub-values">Working with sub values</h4>
 <p>You can use an object to specify sub-values for a cookie:</p>
-<div class='highlight'><pre><code class='javascript'>    <span class='c1'>// Use an object literal to pass key-value pairs</span>
-    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>cookies</span><span class='p'>.</span><span class='nx'>set</span><span class='p'>(</span><span class='s2'>&quot;user&quot;</span><span class='p'>,</span> <span class='p'>{</span> <span class='nx'>id</span><span class='o'>:</span> <span class='s2'>&quot;12345&quot;</span><span class='p'>,</span> <span class='nx'>favoriteColor</span><span class='o'>:</span> <span class='s2'>&quot;blue&quot;</span> <span class='p'>});</span>
 
-    <span class='c1'>// When retrieving a cookie with sub-values, the return value is an object.</span>
-    <span class='kd'>var</span> <span class='nx'>userId</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>cookies</span><span class='p'>.</span><span class='nx'>get</span><span class='p'>(</span><span class='s2'>&quot;user&quot;</span><span class='p'>).</span><span class='nx'>id</span><span class='p'>;</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">    <span class="c1">// Use an object literal to pass key-value pairs</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="s2">"user"</span><span class="p">,</span> <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="s2">"12345"</span><span class="p">,</span> <span class="na">favoriteColor</span><span class="p">:</span> <span class="s2">"blue"</span> <span class="p">});</span>
 
-    <span class='c1'>// You can also use this alternate syntax to avoid potential null reference errors</span>
-    <span class='kd'>var</span> <span class='nx'>userId</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>cookies</span><span class='p'>.</span><span class='nx'>get</span><span class='p'>(</span><span class='s2'>&quot;user&quot;</span><span class='p'>,</span> <span class='s2'>&quot;id&quot;</span><span class='p'>);</span>
+    <span class="c1">// When retrieving a cookie with sub-values, the return value is an object.</span>
+    <span class="kd">var</span> <span class="nx">userId</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s2">"user"</span><span class="p">).</span><span class="nx">id</span><span class="p">;</span>
 
-    <span class='c1'>// Setting a cookie with sub-values, using object syntax</span>
-    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>cookies</span><span class='p'>.</span><span class='nx'>set</span><span class='p'>({</span> 
-        <span class='nx'>name</span><span class='o'>:</span> <span class='s2'>&quot;userid&quot;</span><span class='p'>,</span> 
-        <span class='nx'>value</span><span class='o'>:</span> <span class='p'>{</span> <span class='nx'>id</span><span class='o'>:</span> <span class='s2'>&quot;12345&quot;</span><span class='p'>,</span> <span class='nx'>favoriteColor</span><span class='o'>:</span> <span class='s2'>&quot;blue&quot;</span> <span class='p'>}</span>    
-    <span class='p'>});</span>
-</code></pre></div>
-<h4 id='removing_cookies'>Removing cookies</h4>
+    <span class="c1">// You can also use this alternate syntax to avoid potential null reference errors</span>
+    <span class="kd">var</span> <span class="nx">userId</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s2">"user"</span><span class="p">,</span> <span class="s2">"id"</span><span class="p">);</span>
 
+    <span class="c1">// Setting a cookie with sub-values, using object syntax</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="kd">set</span><span class="p">({</span> 
+        <span class="na">name</span><span class="p">:</span> <span class="s2">"userid"</span><span class="p">,</span> 
+        <span class="na">value</span><span class="p">:</span> <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="s2">"12345"</span><span class="p">,</span> <span class="na">favoriteColor</span><span class="p">:</span> <span class="s2">"blue"</span> <span class="p">}</span>    
+    <span class="p">});</span></code></pre></figure>
+
+<h4 id="removing-cookies">Removing cookies</h4>
 <p>To remove/delete a cookie, use jQuery.cookie.remove():</p>
-<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>cookies</span><span class='p'>.</span><span class='nx'>remove</span><span class='p'>(</span><span class='s2'>&quot;user&quot;</span><span class='p'>);</span>
-</code></pre></div>
-<h4 id='checking_if_cookies_are_enabled'>Checking if cookies are enabled</h4>
-<div class='highlight'><pre><code class='javascript'>    <span class='k'>if</span> <span class='p'>(</span><span class='nx'>$</span><span class='p'>.</span><span class='nx'>cookies</span><span class='p'>.</span><span class='nx'>enabled</span><span class='p'>())</span>
-    <span class='p'>{</span>
-        <span class='c1'>// use cookies</span>
-    <span class='p'>}</span>
-</code></pre></div>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">    <span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s2">"user"</span><span class="p">);</span></code></pre></figure>
+
+<h4 id="checking-if-cookies-are-enabled">Checking if cookies are enabled</h4>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">    <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="nx">enabled</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="c1">// use cookies</span>
+    <span class="p">}</span></code></pre></figure>
+
+
   </div>
 </div>
  

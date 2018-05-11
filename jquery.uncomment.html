@@ -124,23 +124,26 @@
     </div>
     
 
-    <h2 id='jqueryuncomment'>jQuery.uncomment</h2>
+    <h2 id="jqueryuncomment">jQuery.uncomment</h2>
 
 <p>Allows lazy evaluation of HTML blobs by removing them from comment blocks.</p>
 
-<h3 id='usage'>Usage</h3>
+<h3 id="usage">Usage</h3>
 
-<p>Emit expensive content from the server in comment blocks to ensure lazy loading across all browsers:</p>
-<div class='highlight'><pre><code class='html'>    <span class='nt'>&lt;div</span> <span class='na'>class=</span><span class='s'>&quot;commented-container&quot;</span><span class='nt'>&gt;</span>
-      <span class='c'>&lt;!--</span>
-<span class='c'>      &lt;script src=&quot;some-expensive-widget.js&quot;&gt;&lt;/script&gt;</span>
-<span class='c'>      &lt;img src=&quot;some-expensive-widget-logo.jpg&quot; /&gt;</span>
-<span class='c'>      --&gt;</span>
-    <span class='nt'>&lt;/div&gt;</span>
-</code></pre></div>
+<p>Emit expensive content from the server in comment blocks
+to ensure lazy loading across all browsers:</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"commented-container"</span><span class="nt">&gt;</span>
+      <span class="c">&lt;!--
+      &lt;script src="some-expensive-widget.js"&gt;&lt;/script&gt;
+      &lt;img src="some-expensive-widget-logo.jpg" /&gt;
+      --&gt;</span>
+    <span class="nt">&lt;/div&gt;</span></code></pre></figure>
+
 <p>Then, use this plugin to remove the comments and load the content:</p>
-<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.commented-container&quot;</span><span class='p'>).</span><span class='nx'>uncomment</span><span class='p'>();</span>
-</code></pre></div>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">    <span class="nx">$</span><span class="p">(</span><span class="s2">".commented-container"</span><span class="p">).</span><span class="nx">uncomment</span><span class="p">();</span></code></pre></figure>
+
   </div>
 </div>
  

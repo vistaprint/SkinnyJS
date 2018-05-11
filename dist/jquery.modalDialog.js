@@ -633,7 +633,13 @@
             this.$closeButton = this.$el.find(".dialog-close-button").on("click", this._close);
             if (this.settings.closeOnBackgroundClick)
             {
-                this.$bg.on("click", this._close); // clicks on the background veil also close the dialog
+                // clicks on the background veil also close the dialog
+                var curDialog = this;
+                this.$bg.on("click", function(e) {
+                    if (curDialog === $.modalDialog.getCurrent()) {
+                        curDialog._close(e);
+                    }
+                });
             }
 
             this._buildContent();

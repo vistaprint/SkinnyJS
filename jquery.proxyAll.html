@@ -124,29 +124,32 @@
     </div>
     
 
-    <h2 id='jqueryproxyall'>jQuery.proxyAll</h2>
+    <h2 id="jqueryproxyall">jQuery.proxyAll</h2>
 
-<p>Uses jQuery.proxy() to bind all methods of an object to the object in a batch. Binding a method to an object ensures that the &#8220;this&#8221; variable always refers to the object.</p>
+<p>Uses jQuery.proxy() to bind all methods of an object to the object in a batch.
+Binding a method to an object ensures that the “this” variable always refers to the object.</p>
 
-<h3 id='usage'>Usage</h3>
-<div class='highlight'><pre><code class='javascript'>    <span class='kd'>var</span> <span class='nx'>Car</span> <span class='o'>=</span> <span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
-        <span class='nx'>$</span><span class='p'>.</span><span class='nx'>proxyAll</span><span class='p'>(</span><span class='k'>this</span><span class='p'>);</span>
-    <span class='p'>};</span>
+<h3 id="usage">Usage</h3>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">    <span class="kd">var</span> <span class="nx">Car</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">$</span><span class="p">.</span><span class="nx">proxyAll</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+    <span class="p">};</span>
      
-    <span class='nx'>Car</span><span class='p'>.</span><span class='nx'>prototype</span> <span class='o'>=</span> <span class='p'>{</span>
-        <span class='nx'>drive</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>speed</span><span class='p'>)</span> <span class='p'>{</span>
-            <span class='c1'>// some implementation</span>
-        <span class='p'>},</span>
+    <span class="nx">Car</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="na">drive</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">speed</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// some implementation</span>
+        <span class="p">},</span>
      
-        <span class='nx'>driveFast</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
-            <span class='k'>this</span><span class='p'>.</span><span class='nx'>drive</span><span class='p'>(</span><span class='s2'>&quot;120mph&quot;</span><span class='p'>);</span>
-        <span class='p'>},</span>
+        <span class="na">driveFast</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">drive</span><span class="p">(</span><span class="s2">"120mph"</span><span class="p">);</span>
+        <span class="p">},</span>
      
-        <span class='nx'>driveSlow</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
-            <span class='k'>this</span><span class='p'>.</span><span class='nx'>drive</span><span class='p'>(</span><span class='s2'>&quot;15mph&quot;</span><span class='p'>);</span>
-        <span class='p'>}</span>
-    <span class='p'>};</span>
-</code></pre></div>
+        <span class="na">driveSlow</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">drive</span><span class="p">(</span><span class="s2">"15mph"</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">};</span></code></pre></figure>
+
+
   </div>
 </div>
  

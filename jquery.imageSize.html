@@ -124,46 +124,48 @@
     </div>
     
 
-    <h2 id='jqueryimagesize'>jquery.imageSize</h2>
+    <h2 id="jqueryimagesize">jquery.imageSize</h2>
 
 <p>This is a library of utilities for loading images and adding them to the DOM.</p>
 
-<h3 id='jquerynaturalsize'>jQuery.naturalSize()</h3>
+<h3 id="jquerynaturalsize">jQuery.naturalSize()</h3>
 
 <p>$.naturalSize() loads an image asynchronously and calls back when the image has been loaded, passing the size of the image to the callback.</p>
-<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>naturalSize</span><span class='p'>(</span><span class='s2'>&quot;/someimage.png&quot;</span><span class='p'>,</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>size</span><span class='p'>)</span> <span class='p'>{</span>        
-        <span class='c1'>// the image has been loaded</span>
-        <span class='nx'>doSomethingWithSize</span><span class='p'>(</span><span class='nx'>size</span><span class='p'>.</span><span class='nx'>width</span><span class='p'>,</span> <span class='nx'>size</span><span class='p'>.</span><span class='nx'>height</span><span class='p'>);</span>
-    <span class='p'>});</span>
 
-    <span class='c1'>// $.naturalSize() also returns a promise</span>
-    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>naturalSize</span><span class='p'>(</span><span class='s2'>&quot;/someimage.png&quot;</span><span class='p'>)</span>
-        <span class='p'>.</span><span class='nx'>then</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>(</span><span class='nx'>size</span><span class='p'>){</span>
-                <span class='nx'>doSomethingWithSize</span><span class='p'>(</span><span class='nx'>size</span><span class='p'>);</span>
-            <span class='p'>},</span>
-            <span class='kd'>function</span><span class='p'>(</span><span class='nx'>err</span><span class='p'>){</span>
-                <span class='nx'>handleSomeError</span><span class='p'>(</span><span class='nx'>err</span><span class='p'>.</span><span class='nx'>message</span><span class='p'>);</span>
-            <span class='p'>});</span>
-</code></pre></div>
-<h3 id='jqueryrectwithaspectratio'>jQuery.rectWithAspectRatio()</h3>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">    <span class="nx">$</span><span class="p">.</span><span class="nx">naturalSize</span><span class="p">(</span><span class="s2">"/someimage.png"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">size</span><span class="p">)</span> <span class="p">{</span>        
+        <span class="c1">// the image has been loaded</span>
+        <span class="nx">doSomethingWithSize</span><span class="p">(</span><span class="nx">size</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span> <span class="nx">size</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+    <span class="p">});</span>
+
+    <span class="c1">// $.naturalSize() also returns a promise</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">naturalSize</span><span class="p">(</span><span class="s2">"/someimage.png"</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">size</span><span class="p">){</span>
+                <span class="nx">doSomethingWithSize</span><span class="p">(</span><span class="nx">size</span><span class="p">);</span>
+            <span class="p">},</span>
+            <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
+                <span class="nx">handleSomeError</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
+            <span class="p">});</span></code></pre></figure>
+
+<h3 id="jqueryrectwithaspectratio">jQuery.rectWithAspectRatio()</h3>
 
 <p>$.rectWithAspectRatio() finds the maximum rectangle size of the specified aspect ratio that can fit in the specified container rectangle.</p>
-<div class='highlight'><pre><code class='javascript'>    <span class='kd'>var</span> <span class='nx'>boundingBox</span> <span class='o'>=</span> <span class='p'>{</span>
-        <span class='nx'>top</span><span class='o'>:</span> <span class='mi'>0</span><span class='p'>,</span>
-        <span class='nx'>left</span><span class='o'>:</span> <span class='mi'>0</span><span class='p'>,</span>
-        <span class='nx'>width</span><span class='o'>:</span> <span class='mi'>100</span><span class='p'>,</span>
-        <span class='nx'>height</span><span class='o'>:</span> <span class='mi'>100</span>
-    <span class='p'>};</span>
 
-    <span class='c1'>// &#39;rect&#39; will be the maximum size rectangle possible with the specified aspect ratio, </span>
-    <span class='c1'>// centered within the bounding box</span>
-    <span class='kd'>var</span> <span class='nx'>rect</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>rectWithAspectRatio</span><span class='p'>(</span><span class='nx'>boundingBox</span><span class='p'>,</span> <span class='mf'>0.5</span><span class='p'>);</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">    <span class="kd">var</span> <span class="nx">boundingBox</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="na">top</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="na">left</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="na">width</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="na">height</span><span class="p">:</span> <span class="mi">100</span>
+    <span class="p">};</span>
 
-    <span class='nx'>assert</span><span class='p'>.</span><span class='nx'>equal</span><span class='p'>(</span><span class='nx'>rect</span><span class='p'>.</span><span class='nx'>top</span><span class='p'>,</span> <span class='mi'>0</span><span class='p'>);</span>
-    <span class='nx'>assert</span><span class='p'>.</span><span class='nx'>equal</span><span class='p'>(</span><span class='nx'>rect</span><span class='p'>.</span><span class='nx'>left</span><span class='p'>,</span> <span class='mi'>25</span><span class='p'>);</span>
-    <span class='nx'>assert</span><span class='p'>.</span><span class='nx'>equal</span><span class='p'>(</span><span class='nx'>rect</span><span class='p'>.</span><span class='nx'>width</span><span class='p'>,</span> <span class='mi'>50</span><span class='p'>);</span>
-    <span class='nx'>assert</span><span class='p'>.</span><span class='nx'>equal</span><span class='p'>(</span><span class='nx'>rect</span><span class='p'>.</span><span class='nx'>height</span><span class='p'>,</span> <span class='mi'>100</span><span class='p'>);</span>
-</code></pre></div>
+    <span class="c1">// 'rect' will be the maximum size rectangle possible with the specified aspect ratio, </span>
+    <span class="c1">// centered within the bounding box</span>
+    <span class="kd">var</span> <span class="nx">rect</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">rectWithAspectRatio</span><span class="p">(</span><span class="nx">boundingBox</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">);</span>
+
+    <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">rect</span><span class="p">.</span><span class="nx">top</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">rect</span><span class="p">.</span><span class="nx">left</span><span class="p">,</span> <span class="mi">25</span><span class="p">);</span>
+    <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">rect</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span>
+    <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">rect</span><span class="p">.</span><span class="nx">height</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span></code></pre></figure>
+
   </div>
 </div>
  

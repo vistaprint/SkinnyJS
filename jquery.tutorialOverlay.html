@@ -124,152 +124,155 @@
     </div>
     
 
-    <h1 id='tutorial_overlay'>Tutorial overlay</h1>
-<div class='toc'>toc</div>
+    <h1 id="tutorial-overlay">Tutorial overlay</h1>
+
+<div class="toc">toc</div>
+
 <p>The <strong>jquery.tutorialOverlay</strong> plugin is a UI widget used to orient a user to a page that is either newly redesigned or is highly interactive. It serves to point out key interface elements in context of viewing a specific screen. It is used to explain the use of 1-5 features in a way that is quickly read and then dismissed.</p>
 
-<h2 id='features'>Features</h2>
+<h2 id="features">Features</h2>
 
-<h3 id='content'>Content</h3>
+<h3 id="content">Content</h3>
 
-<p>An overlay can display arbitrary content centered on the screen. This may be a button, and white window-like panel, or any other object. Tips/callouts can be specified to appear relative to an element on the underlaying screen. Each tip may be an image, text, or any other object.</p>
+<p>An overlay can display arbitrary content centered on the screen.  This may be a button, and white window-like panel, or any other object.
+Tips/callouts can be specified to appear relative to an element on the underlaying screen.  Each tip may be an image, text, or any other object.</p>
 
-<h3 id='unobtrusive_syntax'>Unobtrusive syntax</h3>
+<h3 id="unobtrusive-syntax">Unobtrusive syntax</h3>
 
 <p>Overlays can be created with a simple markup-based syntax, or, if you need more control, you can use the JavaScript API.</p>
 
-<h2 id='demo'>Demo</h2>
+<h2 id="demo">Demo</h2>
+<p><a href="tutorial-overlay-demo.html">Live demo »</a></p>
 
-<p><a href='tutorial-overlay-demo.html'>Live demo&#160;&#187;</a></p>
+<h2 id="usage">Usage</h2>
 
-<h2 id='usage'>Usage</h2>
+<h3 id="adding-jquerytutorialoverlay-to-your-site">Adding jQuery.tutorialOverlay to your site</h3>
 
-<h3 id='adding_jquerytutorialoverlay_to_your_site'>Adding jQuery.tutorialOverlay to your site</h3>
+<p>Using the <a href="download-builder.html">skinny.js Download Builder</a>, create a custom build which includes jquery.tutorialOverlay, along with any other skinny.js libraries you want. Include the following CSS and JavaScript files:</p>
 
-<p>Using the <a href='download-builder.html'>skinny.js Download Builder</a>, create a custom build which includes jquery.tutorialOverlay, along with any other skinny.js libraries you want. Include the following CSS and JavaScript files:</p>
-<div class='highlight'><pre><code class='html'><span class='c'>&lt;!--Tutorial overlay css--&gt;</span>
-<span class='nt'>&lt;link</span> <span class='na'>rel=</span><span class='s'>&quot;stylesheet&quot;</span> <span class='na'>href=</span><span class='s'>&quot;skinnyjs/css/jquery.tutorialOverlay.css&quot;</span> <span class='nt'>/&gt;</span>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!--Tutorial overlay css--&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"skinnyjs/css/jquery.tutorialOverlay.css"</span> <span class="nt">/&gt;</span>
 
-<span class='c'>&lt;!--Include jquery before skinny.js--&gt;</span>
-<span class='nt'>&lt;script </span><span class='na'>type=</span><span class='s'>&quot;text/javascript&quot;</span> <span class='na'>src=</span><span class='s'>&quot;jquery.js&quot;</span><span class='nt'>&gt;&lt;/script&gt;</span>
+<span class="c">&lt;!--Include jquery before skinny.js--&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"jquery.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
 
-<span class='c'>&lt;!--Custom build of skinny.js from the download builder. Should include all dependencies for tutorial overlays--&gt;</span>
-<span class='nt'>&lt;script </span><span class='na'>type=</span><span class='s'>&quot;text/javascript&quot;</span> <span class='na'>src=</span><span class='s'>&quot;skinnyjs/skinny.js&quot;</span><span class='nt'>&gt;&lt;/script&gt;</span>
-</code></pre></div>
-<h3 id='creating_an_overlay'>Creating an overlay</h3>
+<span class="c">&lt;!--Custom build of skinny.js from the download builder. Should include all dependencies for tutorial overlays--&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"skinnyjs/skinny.js"</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
+
+<h3 id="creating-an-overlay">Creating an overlay</h3>
 
 <p>Overlays are designed to be used unobtrusively, but the entire programmatic API is exposed as well.</p>
 
-<p>Tutorial Overlays can be specified in the HTML via the <strong>tutorial-overlay</strong> class. Any element within this overlay element that has the <strong>tutorial-overlay-tip</strong> class will be a tip on the overaly. The main content to render in the center of the overlay is indicated with the <strong>tutorial-overlay-content</strong> class. By default, any element with a class of <strong>close-overlay</strong> will close the overlay when clicked.</p>
+<p>Tutorial Overlays can be specified in the HTML via the <strong>tutorial-overlay</strong> class.  Any element within this overlay element that has the <strong>tutorial-overlay-tip</strong> class will be a tip on the overaly.  The main content to render in the center of the overlay is indicated with the <strong>tutorial-overlay-content</strong> class.
+By default, any element with a class of <strong>close-overlay</strong> will close the overlay when clicked.</p>
 
-<p>Here&#8217;s an example of unobtrusive usage:</p>
-<div class='highlight'><pre><code class='html'><span class='nt'>&lt;div</span> <span class='na'>class=</span><span class='s'>&quot;tutorial-overlay&quot;</span> <span class='na'>data-overlay-autoload=</span><span class='s'>&quot;true&quot;</span> <span class='na'>data-overlay-hideonclick=</span><span class='s'>&quot;false&quot;</span><span class='nt'>&gt;</span>
-    <span class='nt'>&lt;div</span> <span class='na'>class=</span><span class='s'>&quot;tutorial-overlay-content&quot;</span><span class='nt'>&gt;</span> Some content to display in the center of the overlay.
-        <span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;#&quot;</span> <span class='na'>class=</span><span class='s'>&quot;close-overlay&quot;</span><span class='nt'>&gt;</span>Close Overlay<span class='nt'>&lt;/a&gt;</span>
-    <span class='nt'>&lt;/div&gt;</span>
-    <span class='c'>&lt;!-- tips specify their content, target element, and position relative to the target --&gt;</span>
-    <span class='nt'>&lt;div</span> <span class='na'>class=</span><span class='s'>&quot;tutorial-overlay-tip&quot;</span> <span class='na'>data-overlay-tip-target=</span><span class='s'>&quot;#invalidID&quot;</span> <span class='na'>data-overlay-tip-position=</span><span class='s'>&quot;north&quot;</span><span class='nt'>&gt;</span>This tip will not be shown, because it has an invalid target.<span class='nt'>&lt;/div&gt;</span>
-    <span class='nt'>&lt;div</span> <span class='na'>class=</span><span class='s'>&quot;tutorial-overlay-tip&quot;</span> <span class='na'>data-overlay-tip-target=</span><span class='s'>&quot;img.example-image&quot;</span> <span class='na'>data-overlay-tip-position=</span><span class='s'>&quot;east&quot;</span><span class='nt'>&gt;</span>This tip will appear east of all <span class='ni'>&amp;lt;</span>img<span class='ni'>&amp;gt;</span> tags with the .example-image class.<span class='nt'>&lt;/div&gt;</span>
-<span class='nt'>&lt;/div&gt;</span>
-</code></pre></div>
+<p>Here’s an example of unobtrusive usage:</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"tutorial-overlay"</span> <span class="na">data-overlay-autoload=</span><span class="s">"true"</span> <span class="na">data-overlay-hideonclick=</span><span class="s">"false"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"tutorial-overlay-content"</span><span class="nt">&gt;</span> Some content to display in the center of the overlay.
+        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"close-overlay"</span><span class="nt">&gt;</span>Close Overlay<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="c">&lt;!-- tips specify their content, target element, and position relative to the target --&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"tutorial-overlay-tip"</span> <span class="na">data-overlay-tip-target=</span><span class="s">"#invalidID"</span> <span class="na">data-overlay-tip-position=</span><span class="s">"north"</span><span class="nt">&gt;</span>This tip will not be shown, because it has an invalid target.<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"tutorial-overlay-tip"</span> <span class="na">data-overlay-tip-target=</span><span class="s">"img.example-image"</span> <span class="na">data-overlay-tip-position=</span><span class="s">"east"</span><span class="nt">&gt;</span>This tip will appear east of all <span class="ni">&amp;lt;</span>img<span class="ni">&amp;gt;</span> tags with the .example-image class.<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span></code></pre></figure>
+
 <p>To create an overlay programmatically, use one of the following methods:</p>
-<div class='highlight'><pre><code class='javascript'><span class='c1'>// Returns a jQuery object. Used for function/jQuery style code/chaining.</span>
-<span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;#tutorialOverlay&quot;</span><span class='p'>).</span><span class='nx'>tutorialOverlay</span><span class='p'>();</span>
 
-<span class='c1'>// Returns a tutorialOverlay object that can be used in OO style code.</span>
-<span class='nx'>$</span><span class='p'>.</span><span class='nx'>tutorialOverlay</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>({</span> <span class='nx'>overlay</span><span class='o'>:</span> <span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;#overlay&quot;</span><span class='p'>)[</span><span class='mi'>0</span><span class='p'>]</span> <span class='p'>}).</span><span class='nx'>show</span><span class='p'>();</span>
-</code></pre></div>
-<p>For more information on the OO style, see <a href='#overlay_object_methods'>Tutorial Overlay object methods</a>.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Returns a jQuery object. Used for function/jQuery style code/chaining.</span>
+<span class="nx">$</span><span class="p">(</span><span class="s2">"#tutorialOverlay"</span><span class="p">).</span><span class="nx">tutorialOverlay</span><span class="p">();</span>
 
-<h4 id='declarative_overlay_attributes'>Declarative overlay attributes</h4>
+<span class="c1">// Returns a tutorialOverlay object that can be used in OO style code.</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">tutorialOverlay</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span> <span class="na">overlay</span><span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">"#overlay"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="p">}).</span><span class="nx">show</span><span class="p">();</span></code></pre></figure>
 
-<p>When using the programmatic syntax to show overlays, you can use the following attributes to declaratively define settings for the overlay (note that these correspond exactly to the <a href='#settings'>Settings</a> you can pass to the tutorialOverlay programmatic API):</p>
+<p>For more information on the OO style, see <a href="#overlay_object_methods">Tutorial Overlay object methods</a>.</p>
 
-<ul>
-<li><strong>data-overlay-zindex</strong>: Can be used to set the z-index for the overlay. Don&#8217;t use this unless you need to participate in a pre-existing z-index arms race. Defaults to 10000. <br />//* <strong>data-overlay-destroyOnClose</strong>: If true, the overlay DOM will be destroyed and all events removed when the overlay closes. Defaults to &#8221;false&#8221;.</li>
+<h4 id="declarative-overlay-attributes">Declarative overlay attributes</h4>
 
-<li><strong>data-overlay-hideOnClick</strong>: If true, the overlay will be closed when the user clicks on it. Defaults to &#8221;true&#8221;.</li>
-</ul>
-<div class='highlight'><pre><code class='html'><span class='nt'>&lt;div</span>
-    <span class='na'>id=</span><span class='s'>&quot;tutorialOverlay&quot;</span>
-    <span class='na'>class=</span><span class='s'>&quot;tutorial-overlay&quot;</span>
-    <span class='na'>data-overlay-zindex=</span><span class='s'>20000</span>
-    <span class='na'>data-overlay-autoload=</span><span class='s'>&quot;true&quot;</span>
-  <span class='err'>&lt;</span><span class='na'>div</span> <span class='na'>class=</span><span class='s'>&quot;tutorial-overlay-tip&quot;</span> <span class='na'>data-overlay-tip-target=</span><span class='s'>&quot;#someImage&quot;</span> <span class='na'>data-overlay-tip-position=</span><span class='s'>&quot;east&quot;</span><span class='nt'>&gt;</span>This tip will appear to the right of #someImage.<span class='nt'>&lt;/div&gt;</span>
-<span class='nt'>&lt;/div&gt;</span>
-</code></pre></div>
-<h4 id='declarative_tip_attributes'>Declarative tip attributes</h4>
-
-<p>When using the programmatic syntax to show overlays, you can use the following attributes to declaratively define settings for the tips/callouts in the overlay (note that these correspond exactly to the <a href='#settings'>Settings</a> you can pass to the tutorialOverlay programmatic API):</p>
+<p>When using the programmatic syntax to show overlays, you can use the following attributes to declaratively define settings for the overlay (note that these correspond exactly to the <a href="#settings">Settings</a> you can pass to the tutorialOverlay programmatic API):</p>
 
 <ul>
-<li><strong>data-overlay-tip-target</strong>: Set the target element to which the the tip will be relatively positioned.</li>
-
-<li><strong>data-overlay-tip-position</strong>: &#8220;north&#8221;, &#8220;south&#8221;, &#8220;east&#8221;, or &#8220;west. Describes the desired position relative to the target element.</li>
-
-<li><strong>data-overlay-tip-color</strong>: The color of the tip arrow.</li>
-
-<li><strong>data-overlay-tip-offset</strong>: The number of pixels of space between the tip and the target.</li>
-</ul>
-<div class='highlight'><pre><code class='html'><span class='nt'>&lt;div</span> <span class='na'>class=</span><span class='s'>&quot;tutorial-overlay-tip&quot;</span> <span class='na'>data-overlay-tip-target=</span><span class='s'>&quot;#someImage&quot;</span> <span class='na'>data-overlay-tip-position=</span><span class='s'>&quot;east&quot;</span><span class='nt'>&gt;</span>This tip will appear to the right of #someImage.<span class='nt'>&lt;/div&gt;</span>
-</code></pre></div>
-<h4 id='settings'>Settings</h4>
-
-<p><code>$(selector).tutorialOverlay()</code> (and <code>$.tutorialOverlay.create()</code>) takes a settings object as an argument. Here are the available settings:</p>
-
-<ul>
-<li><strong>zindex</strong>: Can be used to set the z-index for the overlay. Don&#8217;t use this unless you need to participate in a pre-existing z-index arms race. Defaults to 10000. <br />//* <strong>destroyOnClose</strong>: If true, the overlay DOM will be destroyed and all events removed when the overlay closes. Defaults to &#8221;false&#8221;.</li>
-
-<li><strong>hideOnClick</strong>: If true, the overlay will be closed when the user clicks on it. Defaults to &#8221;true&#8221;.</li>
-
-<li><strong>autoLoad</strong>: Specifies whether to show this overlay on page load.</li>
+  <li><strong>data-overlay-zindex</strong>: Can be used to set the z-index for the overlay. Don’t use this unless you need to participate in a pre-existing z-index arms race. Defaults to 10000.       <br />
+//* <strong>data-overlay-destroyOnClose</strong>: If true, the overlay DOM will be destroyed and all events removed when the overlay closes. Defaults to ‘‘false’’.</li>
+  <li><strong>data-overlay-hideOnClick</strong>: If true, the overlay will be closed when the user clicks on it.  Defaults to ‘‘true’’.</li>
 </ul>
 
-<p>Here&#8217;s an example. Note that you can (and usually should) do this all with <em>data-overlay</em> attributes:</p>
-<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;#tutorialOverlay&quot;</span><span class='p'>).</span><span class='nx'>tutorialOverlay</span><span class='p'>({</span> 
-    <span class='nx'>hideOnClick</span><span class='o'>:</span> <span class='s2'>&quot;false&quot;</span><span class='p'>,</span>
-    <span class='nx'>autoLoad</span><span class='o'>:</span> <span class='s2'>&quot;true&quot;</span>
-<span class='p'>});</span>
-</code></pre></div><div class='highlight'><pre><code class='html'><span class='nt'>&lt;div</span> <span class='na'>id=</span><span class='s'>&quot;#tutorialOverlay&quot;</span> <span class='na'>class=</span><span class='s'>&quot;tutorial-overlay&quot;</span><span class='nt'>&gt;</span>
-    <span class='nt'>&lt;div</span> <span class='na'>class=</span><span class='s'>&quot;tutorial-overlay-tip&quot;</span> <span class='na'>data-overlay-tip-target=</span><span class='s'>&quot;#someImage&quot;</span> <span class='na'>data-overlay-tip-position=</span><span class='s'>&quot;east&quot;</span><span class='nt'>&gt;</span>This tip will appear east of #someImage.<span class='nt'>&lt;/div&gt;</span>
-<span class='nt'>&lt;/div&gt;</span>
-</code></pre></div>
-<h3 id='overlay_object_methods'>Overlay object methods</h3>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span>
+    <span class="na">id=</span><span class="s">"tutorialOverlay"</span>
+    <span class="na">class=</span><span class="s">"tutorial-overlay"</span>
+    <span class="na">data-overlay-zindex=</span><span class="s">20000</span>
+    <span class="na">data-overlay-autoload=</span><span class="s">"true"</span>
+  <span class="err">&lt;</span><span class="na">div</span> <span class="na">class=</span><span class="s">"tutorial-overlay-tip"</span> <span class="na">data-overlay-tip-target=</span><span class="s">"#someImage"</span> <span class="na">data-overlay-tip-position=</span><span class="s">"east"</span><span class="nt">&gt;</span>This tip will appear to the right of #someImage.<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span></code></pre></figure>
 
-<p><code>$.tutorialOverlay.create()</code> returns an overlay object with the following methods:</p>
+<h4 id="declarative-tip-attributes">Declarative tip attributes</h4>
+
+<p>When using the programmatic syntax to show overlays, you can use the following attributes to declaratively define settings for the tips/callouts in the overlay (note that these correspond exactly to the <a href="#settings">Settings</a> you can pass to the tutorialOverlay programmatic API):</p>
 
 <ul>
-<li><strong>show()</strong>: Shows the overlay.</li>
+  <li><strong>data-overlay-tip-target</strong>: Set the target element to which the the tip will be relatively positioned.</li>
+  <li><strong>data-overlay-tip-position</strong>: “north”, “south”, “east”, or “west.  Describes the desired position relative to the target element.</li>
+  <li><strong>data-overlay-tip-color</strong>: The color of the tip arrow.</li>
+  <li><strong>data-overlay-tip-offset</strong>: The number of pixels of space between the tip and the target.</li>
+</ul>
 
-<li><strong>hide()</strong>: Closes the overlay.</li>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"tutorial-overlay-tip"</span> <span class="na">data-overlay-tip-target=</span><span class="s">"#someImage"</span> <span class="na">data-overlay-tip-position=</span><span class="s">"east"</span><span class="nt">&gt;</span>This tip will appear to the right of #someImage.<span class="nt">&lt;/div&gt;</span></code></pre></figure>
 
-<li><strong>destroy()</strong>: Removes the overlay from the DOM and removes all events.</li>
+<h4 id="settings">Settings</h4>
 
-<li><strong>isShowing()</strong>: Returns true iff the overlay is currently being displayed.</li>
+<p><code class="highlighter-rouge">$(selector).tutorialOverlay()</code> (and <code class="highlighter-rouge">$.tutorialOverlay.create()</code>) takes a settings object as an argument. Here are the available settings:</p>
 
-<li><strong>setHideOnClick()</strong>: Specify whether the overlay should hide when the user clicks on it.</li>
+<ul>
+  <li><strong>zindex</strong>: Can be used to set the z-index for the overlay. Don’t use this unless you need to participate in a pre-existing z-index arms race. Defaults to 10000.       <br />
+//* <strong>destroyOnClose</strong>: If true, the overlay DOM will be destroyed and all events removed when the overlay closes. Defaults to ‘‘false’’.</li>
+  <li><strong>hideOnClick</strong>: If true, the overlay will be closed when the user clicks on it.  Defaults to ‘‘true’’.</li>
+  <li><strong>autoLoad</strong>: Specifies whether to show this overlay on page load.</li>
+</ul>
 
-<li><strong>addTip()</strong>: Add a tip to the overlay.</li>
+<p>Here’s an example. Note that you can (and usually should) do this all with <em>data-overlay</em> attributes:</p>
 
-<li><strong>setCenterContent()</strong>: Set the content to display in the center of the overlay.</li>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s2">"#tutorialOverlay"</span><span class="p">).</span><span class="nx">tutorialOverlay</span><span class="p">({</span> 
+    <span class="na">hideOnClick</span><span class="p">:</span> <span class="s2">"false"</span><span class="p">,</span>
+    <span class="na">autoLoad</span><span class="p">:</span> <span class="s2">"true"</span>
+<span class="p">});</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"#tutorialOverlay"</span> <span class="na">class=</span><span class="s">"tutorial-overlay"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"tutorial-overlay-tip"</span> <span class="na">data-overlay-tip-target=</span><span class="s">"#someImage"</span> <span class="na">data-overlay-tip-position=</span><span class="s">"east"</span><span class="nt">&gt;</span>This tip will appear east of #someImage.<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span></code></pre></figure>
+
+<h3 id="overlay-object-methods">Overlay object methods</h3>
+
+<p><code class="highlighter-rouge">$.tutorialOverlay.create()</code> returns an overlay object with the following methods:</p>
+
+<ul>
+  <li><strong>show()</strong>: Shows the overlay.</li>
+  <li><strong>hide()</strong>: Closes the overlay.</li>
+  <li><strong>destroy()</strong>: Removes the overlay from the DOM and removes all events.</li>
+  <li><strong>isShowing()</strong>: Returns true iff the overlay is currently being displayed.</li>
+  <li><strong>setHideOnClick()</strong>: Specify whether the overlay should hide when the user clicks on it.</li>
+  <li><strong>addTip()</strong>: Add a tip to the overlay.</li>
+  <li><strong>setCenterContent()</strong>:  Set the content to display in the center of the overlay.</li>
 </ul>
 
 <p>For example:</p>
-<div class='highlight'><pre><code class='javascript'><span class='kd'>var</span> <span class='nx'>overlay</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>tutorialOverlay</span><span class='p'>.</span><span class='nx'>create</span><span class='p'>({</span> <span class='nx'>autoLoad</span><span class='o'>:</span> <span class='s2'>&quot;false&quot;</span> <span class='p'>});</span>
-<span class='nx'>overlay</span><span class='p'>.</span><span class='nx'>show</span><span class='p'>();</span>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">overlay</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">tutorialOverlay</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span> <span class="na">autoLoad</span><span class="p">:</span> <span class="s2">"false"</span> <span class="p">});</span>
+<span class="nx">overlay</span><span class="p">.</span><span class="nx">show</span><span class="p">();</span>
  
-<span class='c1'>//close overlay</span>
-<span class='nx'>overlay</span><span class='p'>.</span><span class='nx'>hide</span><span class='p'>();</span>
-</code></pre></div>
+<span class="c1">//close overlay</span>
+<span class="nx">overlay</span><span class="p">.</span><span class="nx">hide</span><span class="p">();</span></code></pre></figure>
+
 <p>You can call any overlay methods using the jQuery idiomatic syntax as well:</p>
-<div class='highlight'><pre><code class='javascript'><span class='c1'>// Creates and opens the overlay</span>
-<span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;#tutorialOverlay&quot;</span><span class='p'>).</span><span class='nx'>tutorialOverlay</span><span class='p'>(</span><span class='s2'>&quot;show&quot;</span><span class='p'>,</span> <span class='nx'>options</span><span class='p'>);</span>
 
-<span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;&quot;</span><span class='err'>#</span><span class='nx'>tutorialOverlay</span><span class='s2'>&quot;).tutorialOverlay(&quot;</span><span class='nx'>addTip</span><span class='s2'>&quot;, tooltipOptions);</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Creates and opens the overlay</span>
+<span class="nx">$</span><span class="p">(</span><span class="s2">"#tutorialOverlay"</span><span class="p">).</span><span class="nx">tutorialOverlay</span><span class="p">(</span><span class="s2">"show"</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
 
-<span class='s2'>// Closes the overlay</span>
-<span class='s2'>$(&quot;</span><span class='err'>#</span><span class='nx'>tutorialOverlay</span><span class='s2'>&quot;).tutorialOverlay(&quot;</span><span class='nx'>hide</span><span class='err'>&quot;</span><span class='p'>);</span>
-</code></pre></div>
+<span class="nx">$</span><span class="p">(</span><span class="s2">""</span><span class="err">#</span><span class="nx">tutorialOverlay</span><span class="s2">").tutorialOverlay("</span><span class="nx">addTip</span><span class="s2">", tooltipOptions);
+
+// Closes the overlay
+$("</span><span class="err">#</span><span class="nx">tutorialOverlay</span><span class="s2">").tutorialOverlay("</span><span class="nx">hide</span><span class="s2">");</span></code></pre></figure>
+
+
   </div>
 </div>
  

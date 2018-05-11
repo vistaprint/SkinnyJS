@@ -124,29 +124,26 @@
     </div>
     
 
-    <h2 id='jquerypointergestures'>jQuery.pointerGestures</h2>
+    <h2 id="jquerypointergestures">jQuery.pointerGestures</h2>
 
-<p>jQuery.pointerGestures is a set of jQuery custom events that mimic <a href='http://api.jquerymobile.com/category/events/'>jQuery mobile&#8217;s touch events</a> which also support the <a href='http://www.w3.org/Submission/pointer-events/'>pointer events api</a>.</p>
+<p>jQuery.pointerGestures is a set of jQuery custom events that mimic <a href="http://api.jquerymobile.com/category/events/">jQuery mobile’s touch events</a> which also support the <a href="http://www.w3.org/Submission/pointer-events/">pointer events api</a>.</p>
 
-<h3 id='event_types'>Event types</h3>
+<h3 id="event-types">Event types</h3>
 
 <ul>
-<li>sweep: Triggered when a horizontal drag of 30px or more (and less than 75px vertically) occurs within 1 second duration.</li>
-
-<li>sweepleft: Triggered when a sweep event occurs moving in the left direction.</li>
-
-<li>sweepright: Triggered when a swipe event occurs moving in the right direction.</li>
-
-<li>press: Triggered after a quick, complete touch or click event.</li>
-
-<li>presshold: Triggered after a sustained complete touch event.</li>
+  <li>sweep: Triggered when a horizontal drag of 30px or more (and less than 75px vertically) occurs within 1 second duration.</li>
+  <li>sweepleft: Triggered when a sweep event occurs moving in the left direction.</li>
+  <li>sweepright: Triggered when a swipe event occurs moving in the right direction.</li>
+  <li>press: Triggered after a quick, complete touch or click event.</li>
+  <li>presshold: Triggered after a sustained complete touch event.</li>
 </ul>
 
-<h3 id='usage'>Usage</h3>
-<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#el&#39;</span><span class='p'>).</span><span class='nx'>on</span><span class='p'>(</span><span class='s1'>&#39;presshold&#39;</span><span class='p'>,</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> <span class='p'>{</span>
-        <span class='nx'>alert</span><span class='p'>(</span><span class='s1'>&#39;Don\&#39;t be trying to hold me down!&#39;</span><span class='p'>);</span>
-    <span class='p'>});</span>
-</code></pre></div>
+<h3 id="usage">Usage</h3>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">    <span class="nx">$</span><span class="p">(</span><span class="s1">'#el'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'presshold'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s1">'Don</span><span class="se">\'</span><span class="s1">t be trying to hold me down!'</span><span class="p">);</span>
+    <span class="p">});</span></code></pre></figure>
+
   </div>
 </div>
  

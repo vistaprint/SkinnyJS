@@ -124,21 +124,25 @@
     </div>
     
 
-    <h2 id='jquerydisableevent'>jQuery.disableEvent</h2>
+    <h2 id="jquerydisableevent">jQuery.disableEvent</h2>
 
 <p>This plugin allows temporary disabling/enabling of all event handlers for a specific event type and element.</p>
 
-<h3 id='usage'>Usage</h3>
-
+<h3 id="usage">Usage</h3>
 <p>To disable an event for a link:</p>
-<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.disabled-link&quot;</span><span class='p'>).</span><span class='nx'>disableEvent</span><span class='p'>(</span><span class='s2'>&quot;click&quot;</span><span class='p'>);</span>
-</code></pre></div>
-<p>Click handlers set with jQuery will no longer fire. These event handlers can be re-enabled:</p>
-<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.disabled-link&quot;</span><span class='p'>).</span><span class='nx'>enableEvent</span><span class='p'>(</span><span class='s2'>&quot;click&quot;</span><span class='p'>);</span>
-</code></pre></div>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">    <span class="nx">$</span><span class="p">(</span><span class="s2">".disabled-link"</span><span class="p">).</span><span class="nx">disableEvent</span><span class="p">(</span><span class="s2">"click"</span><span class="p">);</span></code></pre></figure>
+
+<p>Click handlers set with jQuery will no longer fire.
+These event handlers can be re-enabled:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">    <span class="nx">$</span><span class="p">(</span><span class="s2">".disabled-link"</span><span class="p">).</span><span class="nx">enableEvent</span><span class="p">(</span><span class="s2">"click"</span><span class="p">);</span></code></pre></figure>
+
 <p>These methods take any number of space-delimited event names:</p>
-<div class='highlight'><pre><code class='javascript'>    <span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;.disabled-link&quot;</span><span class='p'>).</span><span class='nx'>disableEvent</span><span class='p'>(</span><span class='s2'>&quot;click touchstart touchdown mousedown&quot;</span><span class='p'>);</span>
-</code></pre></div>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">    <span class="nx">$</span><span class="p">(</span><span class="s2">".disabled-link"</span><span class="p">).</span><span class="nx">disableEvent</span><span class="p">(</span><span class="s2">"click touchstart touchdown mousedown"</span><span class="p">);</span></code></pre></figure>
+
+
   </div>
 </div>
  
