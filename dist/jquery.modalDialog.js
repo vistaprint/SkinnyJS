@@ -453,7 +453,7 @@
         var deferred = this._initDeferred("close", deferred);
 
         if ($.modalDialog.getCurrent() !== this) {
-            throw new Error("Can't close a dialog that isn't currently displayed on top.");
+            return this._rejectDeferred("close");
         }
 
         var eventSettings = {
@@ -633,13 +633,7 @@
             this.$closeButton = this.$el.find(".dialog-close-button").on("click", this._close);
             if (this.settings.closeOnBackgroundClick)
             {
-                // clicks on the background veil also close the dialog
-                var curDialog = this;
-                this.$bg.on("click", function(e) {
-                    if (curDialog === $.modalDialog.getCurrent()) {
-                        curDialog._close(e);
-                    }
-                });
+                this.$bg.on("click", this._close); // clicks on the background veil also close the dialog
             }
 
             this._buildContent();
