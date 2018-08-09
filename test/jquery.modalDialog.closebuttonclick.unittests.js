@@ -13,7 +13,7 @@ describe("jquery.modalDialog", function () {
     var delayedResolver = function (deferred) {
         return function (e) {
             setTimeout(function () {
-                if (e.isDialogCloseButton == false) {
+                if (e.isDialogCloseButton == true) {
                     deferred.resolve();
                 }
                 else {
@@ -23,15 +23,34 @@ describe("jquery.modalDialog", function () {
         };
     };
 
-    var wait = function () {
-        return $.timeout(100);
-    };
-
     describe("#create()", function () {
-        it("should close the dialog with isDialogCloseButton false when the background is clicked and closeOnBackgroundClick is true", function (done) {
+        it("should close the dialog with isDialogCloseButton true when the close button is clicked", function (done) {
             
             var dialog = $.modalDialog.create({
-                content: "#simpleDialog",
+                content: "#simpleDialog"
+            });
+
+
+            dialog
+                .open()
+                .then(function () {
+                    var deferred = $.Deferred();
+                    dialog.onclose.one(delayedResolver(deferred));
+
+                    dialog.$el.find(".dialog-close-button").trigger("click");
+
+                    return deferred;
+                })
+                .then(function () {
+                    assert.ok(true);
+                    done();
+                });
+        });
+
+        it("should close the dialog with isDialogCloseButton true when an element with the data-action=close property is clicked", function (done) {
+
+            var dialog = $.modalDialog.create({
+                content: '<a data-action="close">link</a>',//jshint ignore:line
                 closeOnBackgroundClick: true
             });
 
@@ -42,45 +61,14 @@ describe("jquery.modalDialog", function () {
 
                     var deferred = $.Deferred();
                     dialog.onclose.one(delayedResolver(deferred));
-                    
-                    dialog.$bg.trigger("click");
-                    
+
+                    dialog.$contentContainer.find('*[data-action="close"]').first().trigger("click");//jshint ignore:line
+
                     return deferred;
 
                 })
                 .then(function () {
                     assert.ok(true);
-                    done();
-                });
-        });
-
-        it("should not close the dialog when the background is clicked and closeOnBackgroundClick is false", function (done) {
-            
-            var dialog = $.modalDialog.create({
-                content: "#simpleDialog",
-                closeOnBackgroundClick: false
-            });
-
-            var dialogClosed = false;
-            dialog.onclose.add(function () {
-                dialogClosed = true;
-            });
-
-
-            dialog
-                .open()
-                .then(wait)
-                .then(function () {
-                    dialog.$bg.trigger("click");
-                })
-                .then(wait)
-                .then(function () {
-                    assert.isFalse(dialogClosed);
-                })
-                .then(function() {
-                    return dialog.close();
-                })
-                .then(function() {
                     done();
                 });
         });
