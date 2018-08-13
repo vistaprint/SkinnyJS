@@ -359,7 +359,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        $.proxyAll(<span class="hljs-keyword">this</span>, <span class="hljs-string">"_drag"</span>, <span class="hljs-string">"_startDrag"</span>, <span class="hljs-string">"_stopDrag"</span>, <span class="hljs-string">"_close"</span>, <span class="hljs-string">"_keydownHandler"</span>);
+            <div class="content"><div class='highlight'><pre>        $.proxyAll(<span class="hljs-keyword">this</span>, <span class="hljs-string">"_drag"</span>, <span class="hljs-string">"_startDrag"</span>, <span class="hljs-string">"_stopDrag"</span>, <span class="hljs-string">"_close"</span>, <span class="hljs-string">"_clickclose"</span>, <span class="hljs-string">"_keydownHandler"</span>);
     };
 
     ModalDialog.prototype.dialogType = <span class="hljs-string">"node"</span>;</pre></div></div>
@@ -921,7 +921,7 @@ isDialogCloseButton Indicates the cancel button in the dialog’s header was cli
             .promise()
             .then(
                 $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-                    <span class="hljs-keyword">try</span> {
+                <span class="hljs-keyword">try</span> {
                         <span class="hljs-keyword">this</span>._finishClose(eventSettings);
                     } <span class="hljs-keyword">catch</span> (ex) {
                         <span class="hljs-keyword">this</span>._rejectDeferred(<span class="hljs-string">"close"</span>, ex);
@@ -954,6 +954,11 @@ isDialogCloseButton Indicates the cancel button in the dialog’s header was cli
     };
 
     ModalDialog.prototype._close = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+        e.preventDefault();
+        <span class="hljs-keyword">this</span>.close(<span class="hljs-literal">false</span>);
+    };
+
+    ModalDialog.prototype._clickclose = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
         e.preventDefault();
         <span class="hljs-keyword">this</span>.close(<span class="hljs-literal">true</span>);
     };
@@ -1125,7 +1130,7 @@ TODO: Move this to a jQuery mobile fixes specific module</p>
 
             <span class="hljs-keyword">this</span>.$contentContainer = <span class="hljs-keyword">this</span>.$el.find(<span class="hljs-string">".dialog-content-container"</span>);
             <span class="hljs-keyword">this</span>.$header = <span class="hljs-keyword">this</span>.$el.find(<span class="hljs-string">".dialog-header"</span>);
-            <span class="hljs-keyword">this</span>.$closeButton = <span class="hljs-keyword">this</span>.$el.find(<span class="hljs-string">".dialog-close-button"</span>).on(<span class="hljs-string">"click"</span>, <span class="hljs-keyword">this</span>._close);
+            <span class="hljs-keyword">this</span>.$closeButton = <span class="hljs-keyword">this</span>.$el.find(<span class="hljs-string">".dialog-close-button"</span>).on(<span class="hljs-string">"click"</span>, <span class="hljs-keyword">this</span>._clickclose);
             <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.settings.closeOnBackgroundClick)
             {
                 <span class="hljs-keyword">this</span>.$bg.on(<span class="hljs-string">"click"</span>, <span class="hljs-keyword">this</span>._close); <span class="hljs-comment">// clicks on the background veil also close the dialog</span>
@@ -1133,7 +1138,7 @@ TODO: Move this to a jQuery mobile fixes specific module</p>
 
             <span class="hljs-keyword">this</span>._buildContent();
 
-            <span class="hljs-keyword">this</span>.$contentContainer.on(<span class="hljs-string">"click"</span>, <span class="hljs-string">'*[data-action="close"]'</span>, <span class="hljs-keyword">this</span>._close);
+            <span class="hljs-keyword">this</span>.$contentContainer.on(<span class="hljs-string">"click"</span>, <span class="hljs-string">'*[data-action="close"]'</span>, <span class="hljs-keyword">this</span>._clickclose);
 
             <span class="hljs-keyword">this</span>.$contentContainer.append(<span class="hljs-keyword">this</span>.$content);</pre></div></div>
             
