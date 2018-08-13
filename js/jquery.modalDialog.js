@@ -49,7 +49,7 @@
         $.each(["open", "beforeopen", "close", "beforeclose", "ajaxerror"], $.proxy(this._setupCustomEvent, this));
 
         // Bind methods called as handlers so "this" works
-        $.proxyAll(this, "_drag", "_startDrag", "_stopDrag", "_close", "_keydownHandler");
+        $.proxyAll(this, "_drag", "_startDrag", "_stopDrag", "_close", "_clickclose", "_keydownHandler");
     };
 
     ModalDialog.prototype.dialogType = "node";
@@ -329,7 +329,7 @@
             .promise()
             .then(
                 $.proxy(function () {
-                    try {
+                try {
                         this._finishClose(eventSettings);
                     } catch (ex) {
                         this._rejectDeferred("close", ex);
@@ -350,6 +350,11 @@
     };
 
     ModalDialog.prototype._close = function (e) {
+        e.preventDefault();
+        this.close(false);
+    };
+
+    ModalDialog.prototype._clickclose = function (e) {
         e.preventDefault();
         this.close(true);
     };
@@ -473,7 +478,7 @@
 
             this.$contentContainer = this.$el.find(".dialog-content-container");
             this.$header = this.$el.find(".dialog-header");
-            this.$closeButton = this.$el.find(".dialog-close-button").on("click", this._close);
+            this.$closeButton = this.$el.find(".dialog-close-button").on("click", this._clickclose);
             if (this.settings.closeOnBackgroundClick)
             {
                 this.$bg.on("click", this._close); // clicks on the background veil also close the dialog
@@ -481,7 +486,7 @@
 
             this._buildContent();
 
-            this.$contentContainer.on("click", '*[data-action="close"]', this._close);
+            this.$contentContainer.on("click", '*[data-action="close"]', this._clickclose);
 
             this.$contentContainer.append(this.$content);
 
