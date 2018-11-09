@@ -239,6 +239,10 @@ host window. This fix disables them while iFrame dialogs are open.</p>
 
             </div>
             
+            <div class="content"><div class='highlight'><pre>
+(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">$</span>) </span>{
+    <span class="hljs-keyword">var</span> preventWindowTouchEvents = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">dialog, fix</span>) </span>{</pre></div></div>
+            
         </li>
         
         
@@ -247,80 +251,6 @@ host window. This fix disables them while iFrame dialogs are open.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
-              </div>
-              <p>Android
-Older versions of Android stock browser, particularly ones whose manufacturers customized the browser
-with proprietary text field overlays, have trouble with complex positioning and transforms.
-This becomes exacerbated by the complexity of the modal dialog DOM, especially when an IFrame 
-is involved.
-The result is that the proprietary text field overlays are positioned incorrectly (best case),
-or that they start producing nonsensical focus events, which cause the browser to scroll wildly.
-<a href="http://stackoverflow.com/questions/8860914/on-android-browser-the-whole-page-jumps-up-and-down-when-typing-inside-a-textbo">http://stackoverflow.com/questions/8860914/on-android-browser-the-whole-page-jumps-up-and-down-when-typing-inside-a-textbo</a></p>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-3">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
-              </div>
-              <p>Newer android browsers (4+) support the CSS property: -webkit-user-modify: read-write-plaintext-only;
-This will prevent the proprietary text field overlay from showing (though also HTML5 custom ones, such as email keyboards).
-<a href="http://stackoverflow.com/questions/9423101/disable-android-browsers-input-overlays">http://stackoverflow.com/questions/9423101/disable-android-browsers-input-overlays</a>
-<a href="https://code.google.com/p/android/issues/detail?id=30964">https://code.google.com/p/android/issues/detail?id=30964</a></p>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>To work around this problem in older Android (2.3), we have to hide elements that have any CSS transforms.
-The cleanest way is to remove ALL content in the DOM in the main panel. This will make the screen behind the dialog turn
-completely gray, which isn’t a big deal- many dialog frameworks do this anyway.
-To do this, add the attribute to the element:
-data-dialog-main-panel=”true”</p>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-5">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
-              </div>
-              <p>Otherwise, you can hide specific problematic elements by adding this attribute:
-data-dialog-hide-onopen=”true”</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
-(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">$</span>) </span>{
-    <span class="hljs-keyword">var</span> SELECTOR_MAIN_PANEL = <span class="hljs-string">"[data-dialog-main-panel='true']"</span>;
-    <span class="hljs-keyword">var</span> SELECTOR_BAD_ELEMENT = <span class="hljs-string">"[data-dialog-hide-onopen='true']"</span>;
-
-    <span class="hljs-keyword">var</span> preventWindowTouchEvents = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">dialog, fix</span>) </span>{</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-6">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>The bug only affects iFrame dialogs</p>
 
@@ -342,44 +272,11 @@ data-dialog-hide-onopen=”true”</p>
         </li>
         
         
-        <li id="section-7">
+        <li id="section-3">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
-              </div>
-              <p>First, see if the main panel is specified.
-If so, it’s the best choice of elements to hide.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> $badEls = $(SELECTOR_MAIN_PANEL);
-        <span class="hljs-keyword">if</span> ($badEls.length === <span class="hljs-number">0</span>) {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-8">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
-              </div>
-              <p>Otherwise, look for individually marked bad elements to hide.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            $badEls = $(SELECTOR_BAD_ELEMENT);
-        }</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-9">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
               <p>Cache original values to restore when the dialog closes</p>
 
@@ -394,11 +291,11 @@ If so, it’s the best choice of elements to hide.</p>
         </li>
         
         
-        <li id="section-10">
+        <li id="section-4">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>Cache scroll height and body height so we can restore them when the dialog is closed</p>
 
@@ -410,31 +307,11 @@ If so, it’s the best choice of elements to hide.</p>
         </li>
         
         
-        <li id="section-11">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
-              </div>
-              <p>Cache the parent for each element we need to remove from the DOM.
-This is important to fix the various WebKit text overlay bugs (described above in the header).
-Hiding them wont do it.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                $badEls.each(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">i, el</span>) </span>{
-                    $(el).data(<span class="hljs-string">"dialog-parent"</span>, el.parentNode);
-                })
-                    .detach();</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-12">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>HACK: setting the body to be larger than the screen height prevents the address bar from showing up in iOS</p>
 
@@ -452,11 +329,11 @@ Hiding them wont do it.</p>
         </li>
         
         
-        <li id="section-13">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>Ensure the body/background is bigger than the dialog,
 otherwise we see the background “end” above the bottom
@@ -481,21 +358,17 @@ of the dialog.</p>
         </li>
         
         
-        <li id="section-14">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>Restore body height, elements, and scroll position</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>                <span class="hljs-built_in">document</span>.body.style.height = _height;
-
-                $badEls.each(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">i, el</span>) </span>{
-                    $($(el).data(<span class="hljs-string">"dialog-parent"</span>)).append(el);
-                });
 
                 <span class="hljs-built_in">window</span>.scrollTo(<span class="hljs-number">0</span>, _scrollTop);
             }
@@ -510,13 +383,13 @@ of the dialog.</p>
         </li>
         
         
-        <li id="section-15">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <p>When removing the host window content from the DOM, make the veil opaque to hide it.</p>
+              <p>Make the veil opaque</p>
 
             </div>
             
@@ -525,11 +398,11 @@ of the dialog.</p>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>This will run in a content window. They need the events disabled immediately.</p>
 
@@ -547,11 +420,11 @@ of the dialog.</p>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>This is for the host window.</p>
 
