@@ -1,3 +1,8 @@
+//
+// DEPRECATED as of 2019-01-17
+// $.partialLoad() uses $.buildFragment(), which is not exposed in jQuery 2+, so it only works in jQuery 1.X.
+//
+
 (function (window, $) {
     var _currentScripts;
 
